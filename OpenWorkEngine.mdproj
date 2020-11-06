@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Default</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ItemType>GenericProject</ItemType>
+    <PackageRoot>npm-packages\</PackageRoot>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(PackageRoot)**\node_modules\**;$(PackageRoot)**\dist\**;</DefaultItemExcludes>
+    <ProjectGuid>{2B457169-02B5-46D0-A5DF-4F18391F8826}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Default|AnyCPU' ">
+    <OutputPath>.\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="$(PackageRoot)**" />
+    <None Remove="$(PackageRoot)**" />
+    <None Include="$(PackageRoot)**" Exclude="$(PackageRoot)*\node_modules\**;$(PackageRoot)*\dist\**;" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="npm-packages\lib\dist\.DS_Store" />
+    <Content Include="npm-packages\lib\dist\package.json" />
+    <Content Include="npm-packages\lib\package.json" />
+    <Content Include="npm-packages\lib\rollup.config.js" />
+    <Content Include="npm-packages\lib\src\.DS_Store" />
+    <Content Include="npm-packages\lib\tsconfig.json" />
+    <Content Include="npm-packages\lib\tsconfig.tsbuildinfo" />
+    <Content Include="npm-packages\ui\dist\package.json" />
+    <Content Include="npm-packages\ui\package.json" />
+    <Content Include="npm-packages\ui\rollup.config.js" />
+    <Content Include="npm-packages\ui\tsconfig.json" />
+    <Content Include="npm-packages\ui\tsconfig.tsbuildinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="npm-packages\lib\src\api\ApiCall.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\api\Auth.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\api\index.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\api\Users.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\index.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\OpenWorkShopContext.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\OpenWorkShopCore.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\OpenWorkShopSettings.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\store.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\utils\cookies.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\utils\i18n.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\utils\index.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\utils\logging\index.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\utils\logging\Logger.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\utils\logging\LogManager.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\utils\logging\LogOptions.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\utils\urls.ts" />
+    <TypeScriptCompile Include="npm-packages\ui\src\components\Cards\CardStyles.ts" />
+    <TypeScriptCompile Include="npm-packages\ui\src\components\ErrorList\ErrorList.tsx" />
+    <TypeScriptCompile Include="npm-packages\ui\src\components\FullCentered\FullCentered.tsx" />
+    <TypeScriptCompile Include="npm-packages\ui\src\components\index.ts" />
+    <TypeScriptCompile Include="npm-packages\ui\src\components\MachineProfiles\index.ts" />
+    <TypeScriptCompile Include="npm-packages\ui\src\components\MachineProfiles\MachineProfileSearchBar.tsx" />
+    <TypeScriptCompile Include="npm-packages\ui\src\components\OpenWorkShopCore.tsx" />
+    <TypeScriptCompile Include="npm-packages\ui\src\components\OpenWorkShopProvider.tsx" />
+    <TypeScriptCompile Include="npm-packages\ui\src\components\Preloader\Preloader.tsx" />
+    <TypeScriptCompile Include="npm-packages\ui\src\index.ts" />
+    <TypeScriptCompile Include="npm-packages\ui\src\themes\Cabin.ts" />
+    <TypeScriptCompile Include="npm-packages\ui\src\themes\Colors.ts" />
+    <TypeScriptCompile Include="npm-packages\ui\src\themes\index.ts" />
+    <TypeScriptCompile Include="npm-packages\ui\src\themes\Palette.ts" />
+    <TypeScriptCompile Include="npm-packages\ui\src\themes\Spacing.ts" />
+    <TypeScriptCompile Include="npm-packages\ui\src\themes\Styles.ts" />
+    <TypeScriptCompile Include="npm-packages\ui\src\themes\Wizard.ts" />
+  </ItemGroup>
+</Project>

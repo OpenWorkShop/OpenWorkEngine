@@ -1,0 +1,11 @@
+import { LogManager } from "./LogManager";
+export { LogManager } from "./LogManager";
+export declare type LogLevel = "trace" | "debug" | "info" | "error" | "warn";
+export interface LogEntry {
+    level: LogLevel;
+    context: string;
+    location?: string;
+    message: any[];
+}
+declare const logManager: LogManager;
+export default logManager;

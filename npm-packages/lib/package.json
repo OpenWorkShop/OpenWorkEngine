@@ -1,0 +1,71 @@
+{
+  "name": "@openworkshop/lib",
+  "version": "1.0.2",
+  "type": "module",
+  "description": "API & utilities for OWS apps",
+  "main": "./index.js",
+  "module": "./index.es.js",
+  "jsnext:main": "./index.es.js",
+  "types": "./index.d.ts",
+  "scripts": {
+    "clean": "find . -regex \"./dist/.*\\.[jt]s$\" -type f -delete && find . -regex \"./dist/.*\\.map$\" -type f -delete",
+    "uninstall": "rm -rf ./node_modules && rm -rf yarn.lock",
+    "reinstall": "yarn run uninstall && yarn",
+    "rebuild": "yarn run reinstall && yarn run build",
+    "repackage": "mkdir -p dist && cp package.json dist/",
+    "link": "yarn link react && yarn link prop-types && cd dist && yarn link",
+    "dev": "yarn run repackage && tsc -b -w",
+    "build": "tsc -b --verbose --force && rollup -c",
+    "lint": "tslint --fix -p ./tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OpenWorkShop/OpenWorkShop.git"
+  },
+  "author": "OpenWorkShop, Inc.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OpenWorkShop/OpenWorkShop/issues"
+  },
+  "homepage": "https://github.com/OpenWorkShop/OpenWorkShop#readme",
+  "dependencies": {},
+  "peerDependiences": {
+    "@apollo/client": "^3.2.5",
+    "graphql": "^15.4.0",
+    "history": "4.10.1",
+    "redux-oidc": "^4.0.0-beta1",
+    "oidc-client": "^1.10.1",
+    "react": "16.11.0",
+    "i18next": "^19.8.2",
+    "i18next-browser-languagedetector": "^6.0.1",
+    "i18next-http-backend": "^1.0.21",
+    "js-logger": "^1.6.0",
+    "react-i18next": "^11.7.3"
+  },
+  "devDependencies": {
+    "@apollo/client": "^3.2.5",
+    "@reduxjs/toolkit": "^1.4.0",
+    "@rollup/plugin-commonjs": "^16.0.0",
+    "@rollup/plugin-node-resolve": "^10.0.0",
+    "@types/node": "^14.14.6",
+    "@types/react": "^16.9.55",
+    "@types/redux-logger": "^3.0.8",
+    "graphql": "^15.4.0",
+    "i18next": "^19.8.2",
+    "i18next-browser-languagedetector": "^6.0.1",
+    "i18next-http-backend": "^1.0.21",
+    "immutable": "^4.0.0-rc.12",
+    "js-logger": "^1.6.0",
+    "oidc-client": "^1.10.1",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-i18next": "^11.7.3",
+    "redux-logger": "^3.0.6",
+    "redux-oidc": "^4.0.0-beta1",
+    "redux-thunk": "^2.3.0",
+    "rollup": "^2.33.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-typescript2": "^0.29.0",
+    "typescript": "^4.0.5"
+  }
+}

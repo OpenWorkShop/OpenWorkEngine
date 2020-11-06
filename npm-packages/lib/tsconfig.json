@@ -1,0 +1,23 @@
+// `tsconfig.json` for react native TypeScript package
+//    "declarationDir": "../dist/dist",
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "es6",
+    "declaration": true,
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "rootDir": "src",
+    "baseUrl": "src",
+    "strict": true,
+    "composite": true,
+    "allowSyntheticDefaultImports": true,
+    "importHelpers": true,
+    "jsx": "react"
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": ["node_modules"]
+}
