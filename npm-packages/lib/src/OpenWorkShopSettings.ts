@@ -1,9 +1,9 @@
-import { Store } from "@reduxjs/toolkit";
-import { UserManagerSettings } from "oidc-client";
-import { IOwsState } from "./store";
-import { LogOptions } from "./utils/logging/LogOptions";
+import { Store, AnyAction } from '@reduxjs/toolkit';
+import { UserManagerSettings } from 'oidc-client';
+import { IOwsState } from './store';
+import { LogOptions } from './utils/logging/LogOptions';
 
-export type OwsEnvironment = "Development" | "Staging" | "Production";
+export type OwsEnvironment = 'Development' | 'Staging' | 'Production';
 
 export interface IOwsSettings {
   environment: OwsEnvironment;
@@ -17,20 +17,20 @@ export interface IOwsOptions {
   client: UserManagerSettings;
   environment?: OwsEnvironment;
   hostnameMap?: HostnameMap;
-  i18nMiddleware?: any;
+  i18nMiddleware?: AnyAction[];
   logOptions?: LogOptions;
 }
 
 function getServerUrl(env: OwsEnvironment): URL {
-  if (env === "Development") {
-    return new URL("http://dev.openwork.shop:5000");
-  } else if (env === "Staging") {
-    return new URL("https://staging.openwork.shop");
+  if (env === 'Development') {
+    return new URL('http://dev.openwork.shop:5000');
+  } else if (env === 'Staging') {
+    return new URL('https://staging.openwork.shop');
   }
-  return new URL("https://openwork.shop");
+  return new URL('https://openwork.shop');
 }
 
-const defaultEnv: OwsEnvironment = "Production";
+const defaultEnv: OwsEnvironment = 'Production';
 
 const settings: IOwsSettings = {
   environment: defaultEnv,

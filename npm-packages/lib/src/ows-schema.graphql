@@ -1,0 +1,168 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+}
+
+type MachineAxis {
+    accuracy: Decimal!
+    id: String!
+    machineProfiles: [MachineProfile!]!
+    max: Decimal!
+    min: Decimal!
+    name: AxisName!
+    precision: Decimal!
+}
+
+type MachineCommand {
+    id: String!
+    machineProfiles: [MachineProfile!]!
+    name: String!
+    value: String!
+}
+
+type MachineFeature {
+    description: String
+    disabled: Boolean!
+    icon: String
+    id: String!
+    key: String!
+    machineProfiles: [MachineProfile!]!
+    title: String
+}
+
+type MachineFirmware {
+    baudRate: Decimal!
+    controllerType: ControllerType!
+    downloadUrl: String!
+    edition: String!
+    helpUrl: String!
+    id: String!
+    machineProfiles: [MachineProfile!]!
+    name: String!
+    requiredVersion: Decimal!
+    rtscts: Boolean!
+    suggestedVersion: Decimal!
+}
+
+type MachinePart {
+    dataBlob: String!
+    description: String
+    id: String!
+    machineProfiles: [MachineProfile!]!
+    optional: Boolean!
+    partType: MachinePartType!
+    settings: [MachineSetting]
+    sortOrder: Int!
+    specs: [MachineSpec]
+    title: String
+}
+
+type MachineProfile {
+    axes: [MachineAxis]
+    brand: String
+    commands: [MachineCommand]
+    description: String
+    discontinued: Boolean!
+    features: [MachineFeature]
+    firmware: [MachineFirmware]
+    icon: String!
+    id: String!
+    machineCategory: MachineCategory!
+    model: String!
+    name: String!
+    parts: [MachinePart]
+}
+
+type MachineSetting {
+    id: String!
+    key: String!
+    machineParts: [MachinePart!]!
+    settingType: MachineSettingType!
+    title: String
+    value: String!
+}
+
+type MachineSpec {
+    id: String!
+    machineParts: [MachinePart!]!
+    specType: MachineSpecType!
+    value: Decimal!
+}
+
+type Query {
+    machineProfiles(query: String): [MachineProfile!]!
+    me: UserProfile
+    userProfile(id: String!): UserProfile!
+}
+
+type UserProfile {
+    authenticationType: String
+    email: String
+    id: String
+    username: String
+}
+
+enum ApplyPolicy {
+    AFTER_RESOLVER
+    BEFORE_RESOLVER
+}
+
+enum AxisName {
+    X
+    Y
+    Z
+}
+
+enum ControllerType {
+    GRBL
+    MARLIN
+    MASLOW
+    SMOOTHIE
+    TINY_G
+}
+
+enum MachineCategory {
+    CNC
+    TDP
+}
+
+enum MachinePartType {
+    AXIS_MOTOR
+    BOARD
+    EMERGENCY_STOP
+    HEATBED
+    HOTEND
+    LIMIT_SWITCHES
+    MMU
+    PSU
+    SHIELD
+    SLED
+    SPINDLE
+    UNKNOWN
+}
+
+enum MachineSettingType {
+    GRBL
+    KV
+}
+
+enum MachineSpecType {
+    LIMIT_SWITCHES
+    MAX_AMPS
+    MAX_LAYER_HEIGHT
+    MAX_RPM
+    MAX_TEMP
+    MAX_TRAVEL_SPEED
+    MAX_VOLTS
+    MAX_WATTS
+    MIN_LAYER_HEIGHT
+    NUMBER_OF_MATERIALS
+    TIP_SIZE
+    WATTS
+    WAVE_LENGTH
+}
+
+
+"The built-in `Decimal` scalar type."
+scalar Decimal

@@ -8,8 +8,8 @@ import {
   Reducer,
   Slice,
   SliceCaseReducers,
-} from "@reduxjs/toolkit";
-import owsCore from "../OpenWorkShopCore";
+} from '@reduxjs/toolkit';
+import owsCore from '../OpenWorkShopCore';
 
 export enum ApiCallStatus {
   LOADING = -1,
@@ -69,10 +69,10 @@ export interface IApiCallState<TResponse extends IApiResponse> {
 
 function getEndpointName(endpoint: string) {
   return endpoint
-    .split("/")
+    .split('/')
     .filter((p) => p.length > 0)
     .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
-    .join("");
+    .join('');
 }
 
 type SuccessCallback<TResponse> = (state: IApiCallState<TResponse>) => void;
@@ -119,17 +119,17 @@ export default class ApiCall<TArgs, TResponse extends IApiResponse> {
 
   // eslint-disable-next-line @typescript-eslint/require-await,@typescript-eslint/no-unused-vars
   async getEndpoint(args: TArgs): Promise<string> {
-    return `${owsCore.settings.url}api/${this.endpoint}`;
+    return `${owsCore.settings.url.toString()}api/${this.endpoint}`;
   }
 
   // eslint-disable-next-line @typescript-eslint/require-await
   async prepare(args: TArgs): Promise<RequestInit> {
-    const body = this.method === "POST" ? JSON.stringify(args) : null;
+    const body = this.method === 'POST' ? JSON.stringify(args) : null;
     return {
       method: this.method,
       headers: {
-        "Content-Type": "application/json",
-        Authorization: ApiCall.Auth || "",
+        'Content-Type': 'application/json',
+        Authorization: ApiCall.Auth || '',
       },
       body,
     };
@@ -165,7 +165,7 @@ export default class ApiCall<TArgs, TResponse extends IApiResponse> {
       const st = state as IApiCallState<TResponse>;
       st.response = action.payload;
       const errors = st.response?.errors;
-      console.log("response", st.response);
+      console.log('response', st.response);
       if (errors && errors.length > 0) {
         state.status = ApiCallStatus.ERROR;
         errors.forEach((e) => {
@@ -181,8 +181,8 @@ export default class ApiCall<TArgs, TResponse extends IApiResponse> {
     builder.addCase(this.action.rejected, (state, action) => {
       state.status = ApiCallStatus.ERROR;
       state.errors.push({
-        message: action.error.message ?? "Unknown",
-        type: "Client",
+        message: action.error.message ?? 'Unknown',
+        type: 'Client',
       });
     });
   }

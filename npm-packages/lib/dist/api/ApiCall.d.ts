@@ -1,4 +1,4 @@
-import { Action, ActionReducerMapBuilder, AsyncThunk, Dispatch, Reducer, Slice, SliceCaseReducers } from "@reduxjs/toolkit";
+import { Action, ActionReducerMapBuilder, AsyncThunk, Dispatch, Reducer, Slice, SliceCaseReducers } from '@reduxjs/toolkit';
 export declare enum ApiCallStatus {
     LOADING = -1,
     IDLE = 0,

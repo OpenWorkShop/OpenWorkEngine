@@ -1,6 +1,7 @@
-import api, { IApiState } from "./api";
-import * as Oidc from "redux-oidc";
-import thunk from "redux-thunk";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import api, { IApiState } from './api';
+import * as Oidc from 'redux-oidc';
+import thunk from 'redux-thunk';
 import {
   AnyAction,
   applyMiddleware,
@@ -11,21 +12,21 @@ import {
   Reducer,
   ReducersMapObject,
   Store,
-} from "@reduxjs/toolkit";
+} from '@reduxjs/toolkit';
 
 export interface IOwsState extends IApiState {
   oidc: Oidc.UserState;
 }
 
-export function configureMiddleware(...args: any[]): any[] {
+export function configureMiddleware(...args: unknown[]): any[] {
   // const logger = createLogger({ logger: logManager.getLogger("redux") });
-  const middleware = [thunk];
+  const middleware: unknown[] = [thunk];
 
   return middleware.concat(args);
 }
 
 export function configureReducers<TState extends IOwsState>(
-  reducers?: ReducersMapObject<any, any>
+  reducers?: ReducersMapObject<any, AnyAction>
 ): Reducer<TState, AnyAction> {
   const ret = reducers ?? {};
   ret.oidc = Oidc.reducer;
@@ -39,7 +40,7 @@ export function configureReducers<TState extends IOwsState>(
 }
 
 export function configureStore<TState extends IOwsState>(
-  reducers?: ReducersMapObject<any, any>,
+  reducers?: ReducersMapObject<unknown, AnyAction>,
   additionalMiddleware?: any[],
   enhancers?: any[],
   initialState?: PreloadedState<TState>

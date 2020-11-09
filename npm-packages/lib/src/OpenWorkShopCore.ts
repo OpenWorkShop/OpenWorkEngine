@@ -1,28 +1,29 @@
-import OidcClient from "oidc-client";
+import OidcClient from 'oidc-client';
 import JsLogger from 'js-logger';
-import { Store } from "redux";
+import { Store } from 'redux';
 import {
   HttpLink,
   InMemoryCache,
   ApolloClient,
   NormalizedCacheObject,
-} from "@apollo/client";
-import { Logger } from "./utils/logging/Logger";
-import logManager, { LogManager } from "./utils/logging";
+} from '@apollo/client';
+import { Logger } from './utils/logging/Logger';
+import logManager, { LogManager } from './utils/logging';
 import {
   developmentLogOptions,
   defaultLogOptions,
-} from "./utils/logging/LogOptions";
+} from './utils/logging/LogOptions';
 import {
   IOwsOptions,
   IOwsSettings,
   loadSettings,
-} from "./OpenWorkShopSettings";
-import { createUserManager, loadUser } from "redux-oidc";
-import { IOwsState } from "./store";
-import i18n from "i18next";
-import Backend from "i18next-http-backend";
-import LanguageDetector from "i18next-browser-languagedetector";
+} from './OpenWorkShopSettings';
+import { createUserManager, loadUser } from 'redux-oidc';
+import { IOwsState } from './store';
+import i18n from 'i18next';
+import Backend from 'i18next-http-backend';
+import LanguageDetector from 'i18next-browser-languagedetector';
+import { AnyAction } from '@reduxjs/toolkit';
 
 export class OpenWorkShopCore {
   private _settings?: IOwsSettings = undefined;
@@ -56,7 +57,7 @@ export class OpenWorkShopCore {
     });
 
     // Configure the logger
-    const isDev = this._settings.environment === "Development";
+    const isDev = this._settings.environment === 'Development';
     const logOpts = isDev ? developmentLogOptions : defaultLogOptions;
     logManager.configure(logOpts).registerConsoleLogger();
     this._log = undefined;
@@ -66,25 +67,30 @@ export class OpenWorkShopCore {
     OidcClient.Log.logger = oidcLogger;
     OidcClient.Log.level = OidcClient.Log.DEBUG;
 
-    this.i18n = await i18n
+    let i = i18n;
+    if (opts.i18nMiddleware) {
+      opts.i18nMiddleware.forEach((mw) => {
+        i = i.use(mw);
+      });
+    }
+
+    this.i18n = await i
       // load translation using http -> see /public/locales (i.e. https://github.com/i18next/react-i18next/tree/master/example/react/public/locales)
       // learn more: https://github.com/i18next/i18next-http-backend
       .use(Backend)
       // detect user language
       // learn more: https://github.com/i18next/i18next-browser-languageDetector
       .use(LanguageDetector)
-      // pass the i18n instance to react-i18next.
-      .use(opts.i18nMiddleware)
       // init i18next
       // for all options read: https://www.i18next.com/overview/configuration-options
       .init({
-        fallbackLng: "en",
+        fallbackLng: 'en',
         // debug: true,
 
         backend: {
           loadPath: `${root}{{lng}}/{{ns}}.json`,
           requestOptions: {
-            mode: "no-cors",
+            mode: 'no-cors',
           },
         },
 
@@ -99,9 +105,12 @@ export class OpenWorkShopCore {
 
     this._user = await loadUser(this._store, this._authManager);
 
-    this.log.debug("OWS Startup", this.isLoaded, this.settings, this._user);
+    this.log.debug('OWS Startup', this.isLoaded, this.settings, this._user, this);
 
     return this.isLoaded;
+  }
+
+  useAllI18nMiddleware(middleware: AnyAction[]) {
   }
 
   get isLoaded(): boolean {
@@ -109,7 +118,7 @@ export class OpenWorkShopCore {
   }
 
   get log(): Logger {
-    if (!this._log) this._log = this.logManager.getLogger("ows-core");
+    if (!this._log) this._log = this.logManager.getLogger('ows-core');
     return this._log;
   }
 
@@ -143,7 +152,7 @@ export class OpenWorkShopCore {
 
   private check() {
     if (!this.isLoaded) {
-      throw new Error("OWS Core not loaded.");
+      throw new Error('OWS Core not loaded.');
     }
     return true;
   }

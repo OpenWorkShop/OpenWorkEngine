@@ -1,5 +1,5 @@
-import { EventEmitter } from "events";
-import { LogEntry, LogLevel } from "./index";
+import { EventEmitter } from 'events';
+import { LogEntry, LogLevel } from './index';
 
 export class Logger {
   private logManager: EventEmitter;
@@ -37,9 +37,9 @@ export class Logger {
   /**
    * Central logging method.
    * @param logLevel
-   * @param message
+   * @param args
    */
-  public log(logLevel: LogLevel, ...args: any[]): void {
+  public log(logLevel: LogLevel, ...args: unknown[]): void {
     const level = this.levelToInt(logLevel);
     if (level < this.minLevel) return;
 
@@ -62,22 +62,22 @@ export class Logger {
     //   }
     // }
 
-    this.logManager.emit("log", logEntry);
+    this.logManager.emit('log', logEntry);
   }
 
-  public trace(...args: any[]): void {
-    this.log("trace", ...args);
+  public trace(...args: unknown[]): void {
+    this.log('trace', ...args);
   }
-  public debug(...args: any[]): void {
-    this.log("debug", ...args);
+  public debug(...args: unknown[]): void {
+    this.log('debug', ...args);
   }
-  public info(...args: any[]): void {
-    this.log("info", ...args);
+  public info(...args: unknown[]): void {
+    this.log('info', ...args);
   }
-  public warn(...args: any[]): void {
-    this.log("warn", ...args);
+  public warn(...args: unknown[]): void {
+    this.log('warn', ...args);
   }
-  public error(...args: any[]): void {
-    this.log("error", ...args);
+  public error(...args: unknown[]): void {
+    this.log('error', ...args);
   }
 }

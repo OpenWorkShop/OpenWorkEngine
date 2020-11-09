@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <Content Remove="$(PackageRoot)**" />
+    <Content Include="README.md" />
     <None Remove="$(PackageRoot)**" />
     <None Include="$(PackageRoot)**" Exclude="$(PackageRoot)*\node_modules\**;$(PackageRoot)*\dist\**;" />
   </ItemGroup>
@@ -34,9 +35,10 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="npm-packages\lib\src\api\ApiCall.ts" />
-    <TypeScriptCompile Include="npm-packages\lib\src\api\Auth.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\api\Identity\Auth.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\api\Identity\Users.ts" />
     <TypeScriptCompile Include="npm-packages\lib\src\api\index.ts" />
-    <TypeScriptCompile Include="npm-packages\lib\src\api\Users.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\api\Machines\MachineProfiles.ts" />
     <TypeScriptCompile Include="npm-packages\lib\src\index.ts" />
     <TypeScriptCompile Include="npm-packages\lib\src\OpenWorkShopContext.ts" />
     <TypeScriptCompile Include="npm-packages\lib\src\OpenWorkShopCore.ts" />
@@ -49,6 +51,7 @@
     <TypeScriptCompile Include="npm-packages\lib\src\utils\logging\Logger.ts" />
     <TypeScriptCompile Include="npm-packages\lib\src\utils\logging\LogManager.ts" />
     <TypeScriptCompile Include="npm-packages\lib\src\utils\logging\LogOptions.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\utils\logging\UseLogger.ts" />
     <TypeScriptCompile Include="npm-packages\lib\src\utils\urls.ts" />
     <TypeScriptCompile Include="npm-packages\ui\src\components\Cards\CardStyles.ts" />
     <TypeScriptCompile Include="npm-packages\ui\src\components\ErrorList\ErrorList.tsx" />
@@ -67,5 +70,10 @@
     <TypeScriptCompile Include="npm-packages\ui\src\themes\Spacing.ts" />
     <TypeScriptCompile Include="npm-packages\ui\src\themes\Styles.ts" />
     <TypeScriptCompile Include="npm-packages\ui\src\themes\Wizard.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="npm-packages\g-wiz" />
+    <Folder Include="npm-packages\open-controller" />
+    <Folder Include="open-controller" />
   </ItemGroup>
 </Project>

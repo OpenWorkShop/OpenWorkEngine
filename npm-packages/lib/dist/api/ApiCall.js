@@ -1,6 +1,6 @@
 import { __awaiter } from "tslib";
-import { createAsyncThunk, createSlice, } from "@reduxjs/toolkit";
-import owsCore from "../OpenWorkShopCore";
+import { createAsyncThunk, createSlice, } from '@reduxjs/toolkit';
+import owsCore from '../OpenWorkShopCore';
 export var ApiCallStatus;
 (function (ApiCallStatus) {
     ApiCallStatus[ApiCallStatus["LOADING"] = -1] = "LOADING";
@@ -10,10 +10,10 @@ export var ApiCallStatus;
 })(ApiCallStatus || (ApiCallStatus = {}));
 function getEndpointName(endpoint) {
     return endpoint
-        .split("/")
+        .split('/')
         .filter((p) => p.length > 0)
         .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
-        .join("");
+        .join('');
 }
 export default class ApiCall {
     constructor(method, endpoint) {
@@ -39,18 +39,18 @@ export default class ApiCall {
     // eslint-disable-next-line @typescript-eslint/require-await,@typescript-eslint/no-unused-vars
     getEndpoint(args) {
         return __awaiter(this, void 0, void 0, function* () {
-            return `${owsCore.settings.url}api/${this.endpoint}`;
+            return `${owsCore.settings.url.toString()}api/${this.endpoint}`;
         });
     }
     // eslint-disable-next-line @typescript-eslint/require-await
     prepare(args) {
         return __awaiter(this, void 0, void 0, function* () {
-            const body = this.method === "POST" ? JSON.stringify(args) : null;
+            const body = this.method === 'POST' ? JSON.stringify(args) : null;
             return {
                 method: this.method,
                 headers: {
-                    "Content-Type": "application/json",
-                    Authorization: ApiCall.Auth || "",
+                    'Content-Type': 'application/json',
+                    Authorization: ApiCall.Auth || '',
                 },
                 body,
             };
@@ -81,7 +81,7 @@ export default class ApiCall {
             const st = state;
             st.response = action.payload;
             const errors = (_a = st.response) === null || _a === void 0 ? void 0 : _a.errors;
-            console.log("response", st.response);
+            console.log('response', st.response);
             if (errors && errors.length > 0) {
                 state.status = ApiCallStatus.ERROR;
                 errors.forEach((e) => {
@@ -99,8 +99,8 @@ export default class ApiCall {
             var _a;
             state.status = ApiCallStatus.ERROR;
             state.errors.push({
-                message: (_a = action.error.message) !== null && _a !== void 0 ? _a : "Unknown",
-                type: "Client",
+                message: (_a = action.error.message) !== null && _a !== void 0 ? _a : 'Unknown',
+                type: 'Client',
             });
         });
     }

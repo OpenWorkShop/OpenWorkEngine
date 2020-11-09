@@ -1,11 +1,11 @@
-import ApiCall, { IApiResponseRecord, IRecord, IApiCallState } from "./ApiCall";
-import owsCore from "../OpenWorkShopCore";
-import { UserManager, UserManagerSettings } from "oidc-client";
+import ApiCall, { IApiResponseRecord, IRecord, IApiCallState } from '../ApiCall';
+import owsCore from '../../OpenWorkShopCore';
+import { UserManager, UserManagerSettings } from 'oidc-client';
 
 // This data could be loaded via /api/auth/config/OpenWorkShop
 // However, it is more efficient to simply hardcode it.
 
-export const DefaultClientId = "OpenWorkShopAPI";
+export const DefaultClientId = 'OpenWorkShopAPI';
 
 export interface IClientConfig extends IRecord, UserManagerSettings {}
 
@@ -69,7 +69,7 @@ class LoginApiCall<TArgs extends ILoginArgs> extends ApiCall<
     const manager = args.ClientManager ?? owsCore.authManager;
     delete args.ClientManager;
     const requestedUrl = new URLSearchParams(window.location.search).get(
-      "ReturnUrl"
+      'ReturnUrl'
     );
     args.returnUrl = requestedUrl || (await manager.createSigninRequest()).url;
     return args;
@@ -77,7 +77,7 @@ class LoginApiCall<TArgs extends ILoginArgs> extends ApiCall<
 
   async prepare(args: TArgs) {
     const ret = await super.prepare(args);
-    ret.credentials = "include";
+    ret.credentials = 'include';
     return ret;
   }
 }
@@ -103,15 +103,15 @@ export interface IState {
 }
 
 export default {
-  postAuthLogin: new LoginApiCall<ILoginInternalArgs>("POST", "auth/login"),
-  postAuthRegister: new LoginApiCall<IRegisterArgs>("POST", "auth/register"),
-  postAuthSendEmail: new LoginApiCall<IUserArgs>("POST", "auth/send/email"),
-  postAuthForgot: new LoginApiCall<IForgotPasswordArgs>("POST", "auth/forgot"),
-  postAuthReset: new LoginApiCall<IResetPasswordArgs>("POST", "auth/reset"),
-  postAuthCallback: new LoginApiCall<ILoginArgs>("POST", "auth/callback"),
+  postAuthLogin: new LoginApiCall<ILoginInternalArgs>('POST', 'auth/login'),
+  postAuthRegister: new LoginApiCall<IRegisterArgs>('POST', 'auth/register'),
+  postAuthSendEmail: new LoginApiCall<IUserArgs>('POST', 'auth/send/email'),
+  postAuthForgot: new LoginApiCall<IForgotPasswordArgs>('POST', 'auth/forgot'),
+  postAuthReset: new LoginApiCall<IResetPasswordArgs>('POST', 'auth/reset'),
+  postAuthCallback: new LoginApiCall<ILoginArgs>('POST', 'auth/callback'),
   postAuthVerifyEmail: new ApiCall<IVerifyEmailArgs, ILoginResponse>(
-    "POST",
-    "auth/verify/email"
+    'POST',
+    'auth/verify/email'
   ),
-  getAuthConfig: new ConfigApiCall("GET", "auth/config"),
+  getAuthConfig: new ConfigApiCall('GET', 'auth/config'),
 };

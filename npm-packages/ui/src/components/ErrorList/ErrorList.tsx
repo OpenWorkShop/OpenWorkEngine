@@ -1,15 +1,15 @@
-import { makeStyles } from "@material-ui/core/styles";
-import { IApiError } from "@openworkshop/lib/api/ApiCall";
-import React from "react";
+import { makeStyles } from '@material-ui/core/styles';
+import { IApiError } from '@openworkshop/lib/api/ApiCall';
+import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
   errorsList: {
-    listStyleType: "none",
+    listStyleType: 'none',
     color: theme.palette.error.main,
     margin: 0,
     padding: 0,
     marginTop: 2,
-    fontStyle: "italic",
+    fontStyle: 'italic',
   },
 }));
 

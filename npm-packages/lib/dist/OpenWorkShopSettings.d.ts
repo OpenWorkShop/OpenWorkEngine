@@ -1,8 +1,8 @@
-import { Store } from "@reduxjs/toolkit";
-import { UserManagerSettings } from "oidc-client";
-import { IOwsState } from "./store";
-import { LogOptions } from "./utils/logging/LogOptions";
-export declare type OwsEnvironment = "Development" | "Staging" | "Production";
+import { Store, AnyAction } from '@reduxjs/toolkit';
+import { UserManagerSettings } from 'oidc-client';
+import { IOwsState } from './store';
+import { LogOptions } from './utils/logging/LogOptions';
+export declare type OwsEnvironment = 'Development' | 'Staging' | 'Production';
 export interface IOwsSettings {
     environment: OwsEnvironment;
     url: URL;
@@ -15,7 +15,7 @@ export interface IOwsOptions {
     client: UserManagerSettings;
     environment?: OwsEnvironment;
     hostnameMap?: HostnameMap;
-    i18nMiddleware?: any;
+    i18nMiddleware?: AnyAction[];
     logOptions?: LogOptions;
 }
 declare const settings: IOwsSettings;

@@ -1,21 +1,21 @@
-import { createMuiTheme } from "@material-ui/core/styles";
-import * as Colors from "./Colors";
-const headerFont = "Cabin";
-const bodyFont = "Roboto";
+import { createMuiTheme } from '@material-ui/core/styles';
+import * as Colors from './Colors';
+const headerFont = 'Cabin';
+const bodyFont = 'Roboto';
 export default createMuiTheme({
     palette: {
         primary: Colors.purple,
         secondary: Colors.brown,
         background: {
-            paper: "#fff",
-            default: "#efefef",
+            paper: '#fff',
+            default: '#efefef',
         },
     },
     shape: {
         borderRadius: 3,
     },
     typography: {
-        fontFamily: [bodyFont, headerFont, "sans-serif"].join(","),
+        fontFamily: [bodyFont, headerFont, 'sans-serif'].join(','),
         h1: {
             fontFamily: headerFont,
         },

@@ -1,6 +1,6 @@
-import authApi, { IState as IAuthState } from "./Auth";
-import usersApi, { IState as IUsersState } from "./Users";
-import ApiCall from "./ApiCall";
+import authApi, { IState as IAuthState } from './Identity/Auth';
+import usersApi, { IState as IUsersState } from './Identity/Users';
+import ApiCall from './ApiCall';
 
 // Interface that combines ALL the API states into one state
 export interface IApiState extends IAuthState, IUsersState {}

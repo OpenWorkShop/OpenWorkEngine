@@ -1,11 +1,11 @@
 export const cardHeader = (theme) => ({
     backgroundColor: theme.palette.secondary.main,
     color: theme.palette.secondary.contrastText,
-    fontWeight: "bold",
+    fontWeight: 'bold',
 });
 export const cardFooter = (theme) => ({
-    justifyContent: "center",
+    justifyContent: 'center',
     backgroundColor: theme.palette.background.default,
-    fontStyle: "italic",
+    fontStyle: 'italic',
 });
 //# sourceMappingURL=CardStyles.js.map

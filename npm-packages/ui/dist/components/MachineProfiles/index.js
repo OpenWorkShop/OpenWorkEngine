@@ -1,2 +1,2 @@
-export { default as MachineProfileSearchBar } from "./MachineProfileSearchBar";
+export { default as MachineProfileSearchBar } from './MachineProfileSearchBar';
 //# sourceMappingURL=index.js.map

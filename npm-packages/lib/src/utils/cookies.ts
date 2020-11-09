@@ -1,4 +1,4 @@
-export const authRedirectUrl = "authRedirectUrl";
+export const authRedirectUrl = 'authRedirectUrl';
 
 export function setCookie(name: string, val: string) {
   const date = new Date();
@@ -9,17 +9,17 @@ export function setCookie(name: string, val: string) {
 
   // Set it
   document.cookie =
-    name + "=" + value + "; expires=" + date.toUTCString() + "; path=/";
+    name + '=' + value + '; expires=' + date.toUTCString() + '; path=/';
 }
 
 export function getCookie(name: string) {
-  const value = "; " + document.cookie;
-  const parts = value.split("; " + name + "=");
+  const value = '; ' + document.cookie;
+  const parts = value.split('; ' + name + '=');
 
   if (parts.length === 2) {
     const ppop = parts.pop();
     if (ppop) {
-      return ppop.split(";").shift();
+      return ppop.split(';').shift();
     }
   }
 }
@@ -31,5 +31,5 @@ export function deleteCookie(name: string) {
   date.setTime(date.getTime() + -1 * 24 * 60 * 60 * 1000);
 
   // Set it
-  document.cookie = name + "=; expires=" + date.toUTCString() + "; path=/";
+  document.cookie = name + '=; expires=' + date.toUTCString() + '; path=/';
 }

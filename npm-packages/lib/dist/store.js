@@ -1,7 +1,8 @@
-import api from "./api";
-import * as Oidc from "redux-oidc";
-import thunk from "redux-thunk";
-import { applyMiddleware, combineReducers, compose, createStore, } from "@reduxjs/toolkit";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import api from './api';
+import * as Oidc from 'redux-oidc';
+import thunk from 'redux-thunk';
+import { applyMiddleware, combineReducers, compose, createStore, } from '@reduxjs/toolkit';
 export function configureMiddleware(...args) {
     // const logger = createLogger({ logger: logManager.getLogger("redux") });
     const middleware = [thunk];

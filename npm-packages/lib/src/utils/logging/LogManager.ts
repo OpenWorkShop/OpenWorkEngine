@@ -1,8 +1,8 @@
-import { EventEmitter } from "events";
-import { LogEntry } from "./index";
-import { Logger } from "./Logger";
-import JsLogger from "js-logger";
-import { LogOptions, defaultLogOptions } from "./LogOptions";
+import { EventEmitter } from 'events';
+import { LogEntry } from './index';
+import { Logger } from './Logger';
+import JsLogger from 'js-logger';
+import { LogOptions, defaultLogOptions } from './LogOptions';
 
 export class LogManager extends EventEmitter {
   private options: LogOptions = { ...defaultLogOptions };
@@ -17,8 +17,8 @@ export class LogManager extends EventEmitter {
   }
 
   public getLogger(context: string): Logger {
-    let minLevel = "none";
-    let match = "";
+    let minLevel = 'none';
+    let match = '';
 
     for (const key in this.options.minLevels) {
       if (context.startsWith(key) && key.length >= match.length) {
@@ -31,11 +31,11 @@ export class LogManager extends EventEmitter {
   }
 
   public getLoggerForFile(filename: string): Logger {
-    return this.getLogger(filename.split("/").pop()!.split(".").shift()!);
+    return this.getLogger(filename.split('/').pop()!.split('.').shift()!);
   }
 
   public onLogEntry(listener: (logEntry: LogEntry) => void): LogManager {
-    this.on("log", listener);
+    this.on('log', listener);
     return this;
   }
 
@@ -43,7 +43,7 @@ export class LogManager extends EventEmitter {
     if (this.consoleLoggerRegistered) return this;
 
     this.onLogEntry((logEntry: LogEntry) => {
-      const parts = [];
+      const parts: unknown[] = [];
       // if (logEntry.location) {
       //   parts.push(logEntry.location);
       // }
@@ -51,15 +51,15 @@ export class LogManager extends EventEmitter {
         parts.push(`[${logEntry.context}]`);
       }
       const msg = parts.concat(logEntry.message);
-      if (logEntry.level === "trace") {
+      if (logEntry.level === 'trace') {
         JsLogger.trace(...msg);
-      } else if (logEntry.level === "debug") {
+      } else if (logEntry.level === 'debug') {
         JsLogger.debug(...msg);
-      } else if (logEntry.level === "info") {
+      } else if (logEntry.level === 'info') {
         JsLogger.info(...msg);
-      } else if (logEntry.level === "warn") {
+      } else if (logEntry.level === 'warn') {
         JsLogger.warn(...msg);
-      } else if (logEntry.level === "error") {
+      } else if (logEntry.level === 'error') {
         JsLogger.error(...msg);
       } else {
         JsLogger.log(...msg);

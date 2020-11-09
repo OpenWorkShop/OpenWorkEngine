@@ -1,13 +1,13 @@
 function getServerUrl(env) {
-    if (env === "Development") {
-        return new URL("http://dev.openwork.shop:5000");
+    if (env === 'Development') {
+        return new URL('http://dev.openwork.shop:5000');
     }
-    else if (env === "Staging") {
-        return new URL("https://staging.openwork.shop");
+    else if (env === 'Staging') {
+        return new URL('https://staging.openwork.shop');
     }
-    return new URL("https://openwork.shop");
+    return new URL('https://openwork.shop');
 }
-const defaultEnv = "Production";
+const defaultEnv = 'Production';
 const settings = {
     environment: defaultEnv,
     url: getServerUrl(defaultEnv),

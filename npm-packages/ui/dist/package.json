@@ -6,27 +6,17 @@
   "module": "./index.es.js",
   "jsnext:main": "./index.es.js",
   "types": "./index.d.ts",
-  "scripts": {
-    "clean": "find . -regex \"./dist/.*\\.[jt]s$\" -type f -delete && find . -regex \"./dist/.*\\.map$\" -type f -delete",
-    "uninstall": "rm -rf ./node_modules && rm -rf yarn.lock",
-    "reinstall": "yarn run uninstall && yarn",
-    "rebuild": "yarn run reinstall && yarn run build",
-    "repackage": "mkdir -p dist && cp package.json dist/",
-    "link": "yarn link @material-ui/core && yarn link react && yarn link prop-types && cd dist && yarn link",
-    "dev": "yarn run repackage && tsc -b -w",
-    "build": "tsc -b --verbose --force && rollup -c",
-    "lint": "tslint --fix -p ./tsconfig.json"
-  },
+  "scripts": {  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OpenWorkShop/OpenWorkShop.git"
+    "url": "git+https://github.com/OpenWorkShop/OpenWorkEngine.git"
   },
   "author": "OpenWorkShop, Inc.",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/OpenWorkShop/OpenWorkShop/issues"
+    "url": "https://github.com/OpenWorkShop/OpenWorkEngine/issues"
   },
-  "homepage": "https://github.com/OpenWorkShop/OpenWorkShop#readme",
+  "homepage": "https://github.com/OpenWorkShop/OpenWorkEngine#readme",
   "dependencies": {},
   "peerDependiences": {
     "@apollo/client": "^3.2.5",
@@ -48,6 +38,12 @@
     "@types/node": "^14.14.6",
     "@types/react": "^16.9.55",
     "@types/redux-logger": "^3.0.8",
+    "@typescript-eslint/eslint-plugin": "^4.6.1",
+    "@typescript-eslint/parser": "^4.6.1",
+    "eslint": "^7.13.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "fast-json-stable-stringify": "^2.1.0",
     "graphql": "^15.4.0",
     "i18next": "^19.8.2",

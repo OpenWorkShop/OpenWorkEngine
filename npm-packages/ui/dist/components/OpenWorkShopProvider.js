@@ -1,8 +1,8 @@
-import * as React from "react";
-import OpenWorkShopCore from "./OpenWorkShopCore";
-import Preloader from "./Preloader/Preloader";
-import theme from "../themes/Wizard";
-import { ThemeProvider } from "@material-ui/core";
+import * as React from 'react';
+import OpenWorkShopCore from './OpenWorkShopCore';
+import Preloader from './Preloader/Preloader';
+import theme from '../themes/Wizard';
+import { ThemeProvider } from '@material-ui/core';
 // Loader for the core application; Suspense will remain until this is done.
 const OpenWorkShopProvider = (props) => {
     var _a;

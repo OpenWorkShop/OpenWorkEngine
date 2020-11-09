@@ -1,5 +1,5 @@
-import ApiCall, { IApiResponseRecord, IRecord, IApiCallState } from "./ApiCall";
-import { UserManager, UserManagerSettings } from "oidc-client";
+import ApiCall, { IApiResponseRecord, IRecord, IApiCallState } from '../ApiCall';
+import { UserManager, UserManagerSettings } from 'oidc-client';
 export declare const DefaultClientId = "OpenWorkShopAPI";
 export interface IClientConfig extends IRecord, UserManagerSettings {
 }

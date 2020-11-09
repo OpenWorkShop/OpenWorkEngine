@@ -1,13 +1,14 @@
-import { LogManager } from "./LogManager";
-export { LogManager } from "./LogManager";
+import { LogManager } from './LogManager';
+export { useLogger } from './UseLogger';
+export { LogManager } from './LogManager';
 
-export type LogLevel = "trace" | "debug" | "info" | "error" | "warn";
+export type LogLevel = 'trace' | 'debug' | 'info' | 'error' | 'warn';
 
 export interface LogEntry {
   level: LogLevel;
   context: string;
   location?: string;
-  message: any[];
+  message: unknown[];
 }
 
 const logManager = new LogManager();

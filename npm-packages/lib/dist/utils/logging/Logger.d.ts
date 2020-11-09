@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { LogLevel } from "./index";
+import { LogLevel } from './index';
 export declare class Logger {
     private logManager;
     private readonly minLevel;
@@ -15,12 +15,12 @@ export declare class Logger {
     /**
      * Central logging method.
      * @param logLevel
-     * @param message
+     * @param args
      */
-    log(logLevel: LogLevel, ...args: any[]): void;
-    trace(...args: any[]): void;
-    debug(...args: any[]): void;
-    info(...args: any[]): void;
-    warn(...args: any[]): void;
-    error(...args: any[]): void;
+    log(logLevel: LogLevel, ...args: unknown[]): void;
+    trace(...args: unknown[]): void;
+    debug(...args: unknown[]): void;
+    info(...args: unknown[]): void;
+    warn(...args: unknown[]): void;
+    error(...args: unknown[]): void;
 }

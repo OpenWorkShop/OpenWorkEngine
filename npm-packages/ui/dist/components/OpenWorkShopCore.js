@@ -7,13 +7,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import owsCore from "@openworkshop/lib/OpenWorkShopCore";
-import * as React from "react";
-import { OidcProvider } from "redux-oidc";
-import usePromise from "react-promise-suspense";
-import { ApolloProvider } from "@apollo/client";
+import owsCore from '@openworkshop/lib/OpenWorkShopCore';
+import * as React from 'react';
+import { OidcProvider } from 'redux-oidc';
+import usePromise from 'react-promise-suspense';
+import { ApolloProvider } from '@apollo/client';
+import { initReactI18next } from 'react-i18next';
 function fetchOws(opts) {
     return __awaiter(this, void 0, void 0, function* () {
+        if (!opts.i18nMiddleware) {
+            opts.i18nMiddleware = [];
+        }
+        const arr = [initReactI18next];
+        opts.i18nMiddleware.push(initReactI18next);
         yield owsCore.load(opts);
         return owsCore;
     });

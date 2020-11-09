@@ -1,10 +1,11 @@
-import OidcClient from "oidc-client";
-import { Store } from "redux";
-import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
-import { Logger } from "./utils/logging/Logger";
-import { LogManager } from "./utils/logging";
-import { IOwsOptions, IOwsSettings } from "./OpenWorkShopSettings";
-import { IOwsState } from "./store";
+import OidcClient from 'oidc-client';
+import { Store } from 'redux';
+import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
+import { Logger } from './utils/logging/Logger';
+import { LogManager } from './utils/logging';
+import { IOwsOptions, IOwsSettings } from './OpenWorkShopSettings';
+import { IOwsState } from './store';
+import { AnyAction } from '@reduxjs/toolkit';
 export declare class OpenWorkShopCore {
     private _settings?;
     private _authManager?;
@@ -14,6 +15,7 @@ export declare class OpenWorkShopCore {
     private _log?;
     i18n: any;
     load(opts: IOwsOptions): Promise<boolean>;
+    useAllI18nMiddleware(middleware: AnyAction[]): void;
     get isLoaded(): boolean;
     get log(): Logger;
     get logManager(): LogManager;

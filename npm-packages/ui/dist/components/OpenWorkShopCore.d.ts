@@ -1,5 +1,5 @@
-import * as React from "react";
-import { IOwsOptions } from "@openworkshop/lib/OpenWorkShopSettings";
+import * as React from 'react';
+import { IOwsOptions } from '@openworkshop/lib/OpenWorkShopSettings';
 export interface IOwsProps extends IOwsOptions {
     preloader?: any;
     children: any;

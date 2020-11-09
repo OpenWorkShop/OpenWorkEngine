@@ -1,14 +1,14 @@
 import { __awaiter } from "tslib";
-import OidcClient from "oidc-client";
+import OidcClient from 'oidc-client';
 import JsLogger from 'js-logger';
-import { HttpLink, InMemoryCache, ApolloClient, } from "@apollo/client";
-import logManager from "./utils/logging";
-import { developmentLogOptions, defaultLogOptions, } from "./utils/logging/LogOptions";
-import { loadSettings, } from "./OpenWorkShopSettings";
-import { createUserManager, loadUser } from "redux-oidc";
-import i18n from "i18next";
-import Backend from "i18next-http-backend";
-import LanguageDetector from "i18next-browser-languagedetector";
+import { HttpLink, InMemoryCache, ApolloClient, } from '@apollo/client';
+import logManager from './utils/logging';
+import { developmentLogOptions, defaultLogOptions, } from './utils/logging/LogOptions';
+import { loadSettings, } from './OpenWorkShopSettings';
+import { createUserManager, loadUser } from 'redux-oidc';
+import i18n from 'i18next';
+import Backend from 'i18next-http-backend';
+import LanguageDetector from 'i18next-browser-languagedetector';
 export class OpenWorkShopCore {
     constructor() {
         this._settings = undefined;
@@ -32,7 +32,7 @@ export class OpenWorkShopCore {
                 link: httpLink,
             });
             // Configure the logger
-            const isDev = this._settings.environment === "Development";
+            const isDev = this._settings.environment === 'Development';
             const logOpts = isDev ? developmentLogOptions : defaultLogOptions;
             logManager.configure(logOpts).registerConsoleLogger();
             this._log = undefined;
@@ -40,24 +40,28 @@ export class OpenWorkShopCore {
             oidcLogger.setLevel(isDev ? JsLogger.INFO : JsLogger.WARN);
             OidcClient.Log.logger = oidcLogger;
             OidcClient.Log.level = OidcClient.Log.DEBUG;
-            this.i18n = yield i18n
+            let i = i18n;
+            if (opts.i18nMiddleware) {
+                opts.i18nMiddleware.forEach((mw) => {
+                    i = i.use(mw);
+                });
+            }
+            this.i18n = yield i
                 // load translation using http -> see /public/locales (i.e. https://github.com/i18next/react-i18next/tree/master/example/react/public/locales)
                 // learn more: https://github.com/i18next/i18next-http-backend
                 .use(Backend)
                 // detect user language
                 // learn more: https://github.com/i18next/i18next-browser-languageDetector
                 .use(LanguageDetector)
-                // pass the i18n instance to react-i18next.
-                .use(opts.i18nMiddleware)
                 // init i18next
                 // for all options read: https://www.i18next.com/overview/configuration-options
                 .init({
-                fallbackLng: "en",
+                fallbackLng: 'en',
                 // debug: true,
                 backend: {
                     loadPath: `${root}{{lng}}/{{ns}}.json`,
                     requestOptions: {
-                        mode: "no-cors",
+                        mode: 'no-cors',
                     },
                 },
                 react: {
@@ -68,16 +72,18 @@ export class OpenWorkShopCore {
                 },
             });
             this._user = yield loadUser(this._store, this._authManager);
-            this.log.debug("OWS Startup", this.isLoaded, this.settings, this._user);
+            this.log.debug('OWS Startup', this.isLoaded, this.settings, this._user, this);
             return this.isLoaded;
         });
+    }
+    useAllI18nMiddleware(middleware) {
     }
     get isLoaded() {
         return !!this._settings;
     }
     get log() {
         if (!this._log)
-            this._log = this.logManager.getLogger("ows-core");
+            this._log = this.logManager.getLogger('ows-core');
         return this._log;
     }
     get logManager() {
@@ -104,7 +110,7 @@ export class OpenWorkShopCore {
     }
     check() {
         if (!this.isLoaded) {
-            throw new Error("OWS Core not loaded.");
+            throw new Error('OWS Core not loaded.');
         }
         return true;
     }

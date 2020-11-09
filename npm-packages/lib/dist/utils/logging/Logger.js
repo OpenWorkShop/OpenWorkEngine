@@ -25,7 +25,7 @@ export class Logger {
     /**
      * Central logging method.
      * @param logLevel
-     * @param message
+     * @param args
      */
     log(logLevel, ...args) {
         const level = this.levelToInt(logLevel);
@@ -48,22 +48,22 @@ export class Logger {
         //     logEntry.location = cla[idx].slice(cla[idx].indexOf('at ') + 3, cla[idx].length);
         //   }
         // }
-        this.logManager.emit("log", logEntry);
+        this.logManager.emit('log', logEntry);
     }
     trace(...args) {
-        this.log("trace", ...args);
+        this.log('trace', ...args);
     }
     debug(...args) {
-        this.log("debug", ...args);
+        this.log('debug', ...args);
     }
     info(...args) {
-        this.log("info", ...args);
+        this.log('info', ...args);
     }
     warn(...args) {
-        this.log("warn", ...args);
+        this.log('warn', ...args);
     }
     error(...args) {
-        this.log("error", ...args);
+        this.log('error', ...args);
     }
 }
 //# sourceMappingURL=Logger.js.map

@@ -4,12 +4,12 @@ export interface LogOptions {
 
 export const defaultLogOptions: LogOptions = {
   minLevels: {
-    "": "info",
+    '': 'info',
   },
 };
 
 export const developmentLogOptions: LogOptions = {
   minLevels: {
-    "": "debug",
+    '': 'debug',
   },
 };

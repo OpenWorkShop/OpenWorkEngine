@@ -1,4 +1,4 @@
-import ApiCall, { IApiCallState, IApiResponseRecord, IRecord } from "./ApiCall";
+import ApiCall, { IApiCallState, IApiResponseRecord, IRecord } from '../ApiCall';
 export interface IUserProfile extends IRecord {
     username: string;
 }

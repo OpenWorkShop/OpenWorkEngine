@@ -1,1 +1,1 @@
-export { default as MachineProfileSearchBar } from "./MachineProfileSearchBar";
+export { default as MachineProfileSearchBar } from './MachineProfileSearchBar';

@@ -166,24 +166,24 @@
         "signature": "4576b4e61049f5ffd7c9e935cf88832e089265bdb15ffc35077310042cbbbeea",
         "affectsGlobalScope": false
       },
-      "./node_modules/@types/react/global.d.ts": {
+      "../../../openworkshop/app/node_modules/@types/react/global.d.ts": {
         "version": "ecf78e637f710f340ec08d5d92b3f31b134a46a4fcf2e758690d8c46ce62cba6",
         "signature": "ecf78e637f710f340ec08d5d92b3f31b134a46a4fcf2e758690d8c46ce62cba6",
         "affectsGlobalScope": true
       },
-      "./node_modules/csstype/index.d.ts": {
+      "../../../openworkshop/app/node_modules/csstype/index.d.ts": {
         "version": "c89da57b29cf0a695fe46e6ab8cd7d64edb15a6708ae2352e30d79a3936ccc5c",
         "signature": "c89da57b29cf0a695fe46e6ab8cd7d64edb15a6708ae2352e30d79a3936ccc5c",
         "affectsGlobalScope": false
       },
-      "./node_modules/@types/prop-types/index.d.ts": {
+      "../../../openworkshop/app/node_modules/@types/prop-types/index.d.ts": {
         "version": "a7e32dcb90bf0c1b7a1e4ac89b0f7747cbcba25e7beddc1ebf17be1e161842ad",
         "signature": "a7e32dcb90bf0c1b7a1e4ac89b0f7747cbcba25e7beddc1ebf17be1e161842ad",
         "affectsGlobalScope": false
       },
-      "./node_modules/@types/react/index.d.ts": {
-        "version": "416e5d547a57e2fc9bac063ff167eee2c34aad14296acf9688eaa24fee981e05",
-        "signature": "416e5d547a57e2fc9bac063ff167eee2c34aad14296acf9688eaa24fee981e05",
+      "../../../openworkshop/app/node_modules/@types/react/index.d.ts": {
+        "version": "bc0442bf081aef1f744186372dc384f891ebdf7f3985a13788b7a7f65d353465",
+        "signature": "bc0442bf081aef1f744186372dc384f891ebdf7f3985a13788b7a7f65d353465",
         "affectsGlobalScope": true
       },
       "./node_modules/oidc-client/index.d.ts": {
@@ -1417,23 +1417,28 @@
         "affectsGlobalScope": false
       },
       "./src/utils/logging/logoptions.ts": {
-        "version": "283c25094b092f08c1c6e1c37a04b4864b6533769e234ba1cf12bd878db4b7c0",
+        "version": "c3c572896701a0185bc1505dc9c35d10117fb23e2874361a1c47f4742d1b1c18",
         "signature": "4d5e2e7267e97590ef8792f666565aa925bfd3c3682d8266f239fd8c35c13b58",
         "affectsGlobalScope": false
       },
       "./src/utils/logging/logmanager.ts": {
-        "version": "67af5cc11de7da4b50525c4c6881e0007179ad7c1aa30d05210fcae92bf26fea",
-        "signature": "45098e876770ae2a9ea14aeac3f268a291ef8c7d0ea16b5ad60657c019ef4df0",
+        "version": "a6f0722ecbd851e9fbbe9a4c7c787abc495eb165d9bff70a7ddf6b9ceb3c8960",
+        "signature": "8f6b77bc8fc522feccc36ac77ea868a35362bff0f7e9fc68cb0d718096c14384",
+        "affectsGlobalScope": false
+      },
+      "./src/utils/logging/uselogger.ts": {
+        "version": "be62f20d12b3e8f3d82bdb1b59d40882b390e9f75813a37521e87203a064fe1d",
+        "signature": "56db5520440e0536de68ba8d382f0d9cfe11259a3a8b823e6f3021d43ddd5cee",
         "affectsGlobalScope": false
       },
       "./src/utils/logging/index.ts": {
-        "version": "74b17bae2b93be2e26b246202f1353508fb7ad15e4630bed233db1a9f019858c",
-        "signature": "27e19be61db9a1b49fd57484dd1568dde8d96067a013f32999c3792e7672ddc8",
+        "version": "bc765b409c0edc337ab200a1890be8cc6fd4ea117e96f156a59aa5942d4aac03",
+        "signature": "e2dc1aa46c3df022376a00e9e5a7bb77b7d409408c830c3d7bc860cdd722d001",
         "affectsGlobalScope": false
       },
       "./src/utils/logging/logger.ts": {
-        "version": "a910e1d200d66593d39bbf98af5bc6c11cd690a2ae4df3d70eb02589d6da476d",
-        "signature": "8253dfacf877138e0997fdf259f8bd9bad496a341e1658c015b46c71599ba751",
+        "version": "9c606058c5d33ec0d7af3ca485fa76951d26b79b91d6fc7a0892486118687c5d",
+        "signature": "413da922a54063cfdf7457a79f360280b809f69345c7cba84c4d6fdff95869a0",
         "affectsGlobalScope": false
       },
       "./node_modules/immer/dist/utils/env.d.ts": {
@@ -1537,23 +1542,23 @@
         "affectsGlobalScope": false
       },
       "./src/api/apicall.ts": {
-        "version": "11903c6effdf90b7b39cba8b517c77d5da5eba4f49cc831eec83e50b1a2d63b1",
-        "signature": "d926312a6c3f6a4bb67409a8015e55f8d5dafbdacf9e7f2c37af2e0e0b6b8a0c",
+        "version": "1b93db25c04cc92f6c6da7bc921920bf0aef671c16cb10be994eae125040ada5",
+        "signature": "69aeeda91df88aef11dbab6c15a348abb5d8a65b9ffa106f3176e77c9cd5a750",
         "affectsGlobalScope": false
       },
-      "./src/api/auth.ts": {
-        "version": "a0edb1a0ab1ec75ea9cd9f1454f9ac552dd8916dc372de38421db18e4144a105",
-        "signature": "abb5c5f2e0c041aa7e2ba9ac863885741acec14b30ba8f0b97c4b5f770ac01be",
+      "./src/api/identity/auth.ts": {
+        "version": "c123b2a2d59d0015193798946f8c4e9ba3b7c4aee704c964886225a6b2bcd5a6",
+        "signature": "15e2d24a7c3d93171c31010399eea3ee7fc9b3539c6a5358d444a33f1ba9e0e3",
         "affectsGlobalScope": false
       },
-      "./src/api/users.ts": {
-        "version": "bf254e5fffaba772a35af2e3efd17c40ee00276920530a48efc92bc24cae9e35",
-        "signature": "18dbdb532260180faef754bd3b06ed10167961b35e3240e0d307c997c717f818",
+      "./src/api/identity/users.ts": {
+        "version": "e2bc617245db6ab81cec996566a0aa001b747417934d7cbd2d43a5914a3becb7",
+        "signature": "761b1130bcdc676ed539252091ec2dae38731317e6289c57f7763c10463bc324",
         "affectsGlobalScope": false
       },
       "./src/api/index.ts": {
-        "version": "9029089b93291c8ef2a8266e0958d22f2bd9b1591cb1e7d9852ccb90b46b9536",
-        "signature": "e41639b2fd2cbaf44ec73823432b86cc1c91485099fcdf5f618278c456257c5d",
+        "version": "ecc5d23a5cd58d41fe87a99999998af4338e84bd593b6fe635b8435b61b18b50",
+        "signature": "549e6c6ed09778470ff50d8134018ddafe42afb67e4c4649027e8e722c5a897e",
         "affectsGlobalScope": false
       },
       "./node_modules/immutable/dist/immutable-nonambient.d.ts": {
@@ -1567,13 +1572,13 @@
         "affectsGlobalScope": false
       },
       "./src/store.ts": {
-        "version": "fad2256a2d0d603f0e8210746f98ffd7496f224799ff69c6b061e3e9b2fc7250",
-        "signature": "eca65e4c3df306c0c9b53d5870a4929416d4a3b77ce54a6d105e7cd576249077",
+        "version": "5b7c3ad1e5b59e13ccb1ea9a8a5852275ad243f533d011bcec3df169b60c38ba",
+        "signature": "fb928a26163bba9c21215035bf03b81b8cd68cdb7ff8b8ddb2564c0794562baa",
         "affectsGlobalScope": false
       },
       "./src/openworkshopsettings.ts": {
-        "version": "41af864da0cc53899cc67f0f3ce83b1edbe6e9ccfbfd316e342d22ed7b6dac79",
-        "signature": "2ef24396fbb261eeba37b4309c54b4328a76763705b47273dd9f0c97ac6cd7f7",
+        "version": "2209f8fa0b803a50b7efb4993c0e4c6c3a857fa20936ac3c874ef7b8ac0386bb",
+        "signature": "1d6b0a7eb6fc98251c3ba57b40d885afa294d36f839643f5bbc59f3c0ef9b18d",
         "affectsGlobalScope": false
       },
       "./node_modules/i18next/index.d.ts": {
@@ -1592,8 +1597,8 @@
         "affectsGlobalScope": false
       },
       "./src/openworkshopcore.ts": {
-        "version": "e9116f8914e7280f1a29fbbe4fae1ec5d2da857a9f8023ae2b0ad61880593fc1",
-        "signature": "2206c1261a2b7ebb9db73b8d0503bee16e8f05108a2071c81726fcd8371e8b99",
+        "version": "162f9ef359a150ee42b43eadf596b281fdd40d7798a581bc85ddbfccc7a756b8",
+        "signature": "24d3fa215f669cfca0a491797c4901bfaee1a17b5883c4595f68c6b4f8cb284b",
         "affectsGlobalScope": false
       },
       "./src/openworkshopcontext.ts": {
@@ -1602,23 +1607,28 @@
         "affectsGlobalScope": false
       },
       "./src/utils/cookies.ts": {
-        "version": "611dad4fa3be48abe7fb86268864239c6c6f66c871de97fb030c8293c10d074b",
+        "version": "23ab55457d265cfa8c623245fc5190e6ef820bdabbe1178de7b9e7b7e4caefd1",
         "signature": "11078b7817f4a1362794422ac603075783ff6233da1d62bbee5db4c4600564ba",
         "affectsGlobalScope": false
       },
       "./src/utils/urls.ts": {
-        "version": "3ee019dcd8ad153fab49c24b5eb6dea9de189fb31e877089688a11c024ea5654",
+        "version": "a04baafec32b1b2203ab15a420ca4a33cf9d167be3a6104678e6bc542d8fbd3d",
         "signature": "7992faacf4c4d44bbb7b0c1233a5f77a5ab962a644b85aba3036f7a87cec1851",
         "affectsGlobalScope": false
       },
       "./src/utils/index.ts": {
-        "version": "69d132c70c9a3ed7b09dae0268e1a21957545dc22a3de4b4eb1ba93c786966df",
-        "signature": "69d132c70c9a3ed7b09dae0268e1a21957545dc22a3de4b4eb1ba93c786966df",
+        "version": "71a06b53052287cb8eaef4cbacba33c1ec2c18633c97ad3aabbabb0a13a7504c",
+        "signature": "71a06b53052287cb8eaef4cbacba33c1ec2c18633c97ad3aabbabb0a13a7504c",
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
-        "version": "7cb0e6f8bd2baee53304313d4d3d960f32f7f2c5d6748b51ee034834cd3c9826",
-        "signature": "ba6dbd84da29bcecb00408ec41efe3de1123fb59ed9925646cef7a577b57f35f",
+        "version": "894d6191e749748c03e3f6df9fcb404fe54f3cce614a6f3494ddfa8e701ae509",
+        "signature": "97c8fe73b0e68a02bfe93d6cef8e601f1afe944e5ee57da87de719b2000162cf",
+        "affectsGlobalScope": false
+      },
+      "./src/api/machines/machineprofiles.ts": {
+        "version": "309cd560f55a6f34930244919db21f5a930576268251eb490deda7c7751f5338",
+        "signature": "bd2b4e6d91b0372d07bdf965779b23d1eb33cb280a26bfaa5066bf5d5caa99e7",
         "affectsGlobalScope": false
       },
       "./node_modules/react-i18next/src/index.d.ts": {
@@ -1627,13 +1637,23 @@
         "affectsGlobalScope": false
       },
       "./src/utils/i18n.ts": {
-        "version": "a71e6f085af6f1de7f7c17b71a0ef33cf6b1ce79e05a019e8f39e482c5cd1eac",
+        "version": "4304590b064a96f1955eb31dcc8f42cddf9792414210a00f3fedde4cb37e8ff4",
         "signature": "2c81f811995fbf6bd138b35f841c54378b6cbcaae2879100056be739c9b25e89",
         "affectsGlobalScope": false
       },
       "./node_modules/@types/estree/index.d.ts": {
         "version": "6a38e250306ceccbab257d11b846d5bd12491157d20901fa01afe4050c93c1b5",
         "signature": "6a38e250306ceccbab257d11b846d5bd12491157d20901fa01afe4050c93c1b5",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/json-schema/index.d.ts": {
+        "version": "b2be568d8ce95fcb26eebd04c035d94825655fdf689bf67d799f5ff8cbbb1024",
+        "signature": "b2be568d8ce95fcb26eebd04c035d94825655fdf689bf67d799f5ff8cbbb1024",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/prop-types/index.d.ts": {
+        "version": "a7e32dcb90bf0c1b7a1e4ac89b0f7747cbcba25e7beddc1ebf17be1e161842ad",
+        "signature": "a7e32dcb90bf0c1b7a1e4ac89b0f7747cbcba25e7beddc1ebf17be1e161842ad",
         "affectsGlobalScope": false
       },
       "./node_modules/@types/redux-logger/index.d.ts": {
@@ -1661,6 +1681,7 @@
       "allowSyntheticDefaultImports": true,
       "importHelpers": true,
       "jsx": 2,
+      "watch": true,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {
@@ -1934,16 +1955,16 @@
         "./node_modules/@apollo/client/link/core/index.d.ts"
       ],
       "./node_modules/@apollo/client/react/context/apolloconsumer.d.ts": [
-        "./node_modules/@apollo/client/core/index.d.ts",
-        "./node_modules/@types/react/index.d.ts"
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
+        "./node_modules/@apollo/client/core/index.d.ts"
       ],
       "./node_modules/@apollo/client/react/context/apollocontext.d.ts": [
-        "./node_modules/@apollo/client/core/index.d.ts",
-        "./node_modules/@types/react/index.d.ts"
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
+        "./node_modules/@apollo/client/core/index.d.ts"
       ],
       "./node_modules/@apollo/client/react/context/apolloprovider.d.ts": [
-        "./node_modules/@apollo/client/core/index.d.ts",
-        "./node_modules/@types/react/index.d.ts"
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
+        "./node_modules/@apollo/client/core/index.d.ts"
       ],
       "./node_modules/@apollo/client/react/context/index.d.ts": [
         "./node_modules/@apollo/client/react/context/apolloconsumer.d.ts",
@@ -1999,12 +2020,12 @@
         "./node_modules/graphql/index.d.ts"
       ],
       "./node_modules/@apollo/client/react/types/types.d.ts": [
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
         "./node_modules/@apollo/client/core/index.d.ts",
         "./node_modules/@apollo/client/errors/index.d.ts",
         "./node_modules/@apollo/client/link/core/index.d.ts",
         "./node_modules/@apollo/client/utilities/index.d.ts",
         "./node_modules/@graphql-typed-document-node/core/index.d.ts",
-        "./node_modules/@types/react/index.d.ts",
         "./node_modules/@types/zen-observable/index.d.ts",
         "./node_modules/graphql/index.d.ts"
       ],
@@ -2242,11 +2263,6 @@
       ],
       "./node_modules/@types/node/zlib.d.ts": [
         "./node_modules/@types/node/stream.d.ts"
-      ],
-      "./node_modules/@types/react/index.d.ts": [
-        "./node_modules/@types/prop-types/index.d.ts",
-        "./node_modules/@types/react/global.d.ts",
-        "./node_modules/csstype/index.d.ts"
       ],
       "./node_modules/@types/redux-logger/index.d.ts": [
         "./node_modules/redux/index.d.ts"
@@ -2815,11 +2831,11 @@
         "./node_modules/optimism/lib/key-trie.d.ts"
       ],
       "./node_modules/react-i18next/src/index.d.ts": [
-        "./node_modules/@types/react/index.d.ts",
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
         "./node_modules/i18next/index.d.ts"
       ],
       "./node_modules/redux-oidc/index.d.ts": [
-        "./node_modules/@types/react/index.d.ts",
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
         "./node_modules/immutable/dist/immutable-nonambient.d.ts",
         "./node_modules/oidc-client/index.d.ts",
         "./node_modules/redux/index.d.ts"
@@ -2837,32 +2853,37 @@
         "./node_modules/@reduxjs/toolkit/dist/typings.d.ts",
         "./src/openworkshopcore.ts"
       ],
-      "./src/api/auth.ts": [
+      "./src/api/identity/auth.ts": [
         "./node_modules/oidc-client/index.d.ts",
         "./src/api/apicall.ts",
         "./src/openworkshopcore.ts"
       ],
-      "./src/api/index.ts": [
-        "./src/api/apicall.ts",
-        "./src/api/auth.ts",
-        "./src/api/users.ts"
-      ],
-      "./src/api/users.ts": [
+      "./src/api/identity/users.ts": [
         "./src/api/apicall.ts"
       ],
+      "./src/api/index.ts": [
+        "./src/api/apicall.ts",
+        "./src/api/identity/auth.ts",
+        "./src/api/identity/users.ts"
+      ],
+      "./src/api/machines/machineprofiles.ts": [
+        "./node_modules/@apollo/client/index.d.ts"
+      ],
       "./src/index.ts": [
-        "./node_modules/@types/react/index.d.ts",
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
         "./src/api/index.ts",
+        "./src/openworkshopcontext.ts",
+        "./src/openworkshopcore.ts",
         "./src/utils/index.ts",
-        "./src/utils/logging/index.ts",
-        "./src/utils/logging/logger.ts"
+        "./src/utils/logging/index.ts"
       ],
       "./src/openworkshopcontext.ts": [
-        "./node_modules/@types/react/index.d.ts",
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
         "./src/openworkshopcore.ts"
       ],
       "./src/openworkshopcore.ts": [
         "./node_modules/@apollo/client/index.d.ts",
+        "./node_modules/@reduxjs/toolkit/dist/typings.d.ts",
         "./node_modules/i18next-browser-languagedetector/index.d.ts",
         "./node_modules/i18next-http-backend/index.d.ts",
         "./node_modules/i18next/index.d.ts",
@@ -2899,7 +2920,8 @@
         "./src/utils/urls.ts"
       ],
       "./src/utils/logging/index.ts": [
-        "./src/utils/logging/logmanager.ts"
+        "./src/utils/logging/logmanager.ts",
+        "./src/utils/logging/uselogger.ts"
       ],
       "./src/utils/logging/logger.ts": [
         "./node_modules/@types/node/events.d.ts",
@@ -2911,6 +2933,16 @@
         "./src/utils/logging/index.ts",
         "./src/utils/logging/logger.ts",
         "./src/utils/logging/logoptions.ts"
+      ],
+      "./src/utils/logging/uselogger.ts": [
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
+        "./src/openworkshopcontext.ts",
+        "./src/utils/logging/logger.ts"
+      ],
+      "../../../openworkshop/app/node_modules/@types/react/index.d.ts": [
+        "../../../openworkshop/app/node_modules/@types/prop-types/index.d.ts",
+        "../../../openworkshop/app/node_modules/@types/react/global.d.ts",
+        "../../../openworkshop/app/node_modules/csstype/index.d.ts"
       ]
     },
     "exportedModulesMap": {
@@ -3184,16 +3216,16 @@
         "./node_modules/@apollo/client/link/core/index.d.ts"
       ],
       "./node_modules/@apollo/client/react/context/apolloconsumer.d.ts": [
-        "./node_modules/@apollo/client/core/index.d.ts",
-        "./node_modules/@types/react/index.d.ts"
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
+        "./node_modules/@apollo/client/core/index.d.ts"
       ],
       "./node_modules/@apollo/client/react/context/apollocontext.d.ts": [
-        "./node_modules/@apollo/client/core/index.d.ts",
-        "./node_modules/@types/react/index.d.ts"
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
+        "./node_modules/@apollo/client/core/index.d.ts"
       ],
       "./node_modules/@apollo/client/react/context/apolloprovider.d.ts": [
-        "./node_modules/@apollo/client/core/index.d.ts",
-        "./node_modules/@types/react/index.d.ts"
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
+        "./node_modules/@apollo/client/core/index.d.ts"
       ],
       "./node_modules/@apollo/client/react/context/index.d.ts": [
         "./node_modules/@apollo/client/react/context/apolloconsumer.d.ts",
@@ -3249,12 +3281,12 @@
         "./node_modules/graphql/index.d.ts"
       ],
       "./node_modules/@apollo/client/react/types/types.d.ts": [
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
         "./node_modules/@apollo/client/core/index.d.ts",
         "./node_modules/@apollo/client/errors/index.d.ts",
         "./node_modules/@apollo/client/link/core/index.d.ts",
         "./node_modules/@apollo/client/utilities/index.d.ts",
         "./node_modules/@graphql-typed-document-node/core/index.d.ts",
-        "./node_modules/@types/react/index.d.ts",
         "./node_modules/@types/zen-observable/index.d.ts",
         "./node_modules/graphql/index.d.ts"
       ],
@@ -3492,11 +3524,6 @@
       ],
       "./node_modules/@types/node/zlib.d.ts": [
         "./node_modules/@types/node/stream.d.ts"
-      ],
-      "./node_modules/@types/react/index.d.ts": [
-        "./node_modules/@types/prop-types/index.d.ts",
-        "./node_modules/@types/react/global.d.ts",
-        "./node_modules/csstype/index.d.ts"
       ],
       "./node_modules/@types/redux-logger/index.d.ts": [
         "./node_modules/redux/index.d.ts"
@@ -4065,11 +4092,11 @@
         "./node_modules/optimism/lib/key-trie.d.ts"
       ],
       "./node_modules/react-i18next/src/index.d.ts": [
-        "./node_modules/@types/react/index.d.ts",
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
         "./node_modules/i18next/index.d.ts"
       ],
       "./node_modules/redux-oidc/index.d.ts": [
-        "./node_modules/@types/react/index.d.ts",
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
         "./node_modules/immutable/dist/immutable-nonambient.d.ts",
         "./node_modules/oidc-client/index.d.ts",
         "./node_modules/redux/index.d.ts"
@@ -4086,31 +4113,34 @@
       "./src/api/apicall.ts": [
         "./node_modules/@reduxjs/toolkit/dist/typings.d.ts"
       ],
-      "./src/api/auth.ts": [
+      "./src/api/identity/auth.ts": [
         "./node_modules/oidc-client/index.d.ts",
+        "./src/api/apicall.ts"
+      ],
+      "./src/api/identity/users.ts": [
         "./src/api/apicall.ts"
       ],
       "./src/api/index.ts": [
         "./src/api/apicall.ts",
-        "./src/api/auth.ts",
-        "./src/api/users.ts"
+        "./src/api/identity/auth.ts",
+        "./src/api/identity/users.ts"
       ],
-      "./src/api/users.ts": [
-        "./src/api/apicall.ts"
+      "./src/api/machines/machineprofiles.ts": [
+        "./node_modules/@apollo/client/index.d.ts"
       ],
       "./src/index.ts": [
-        "./node_modules/@types/react/index.d.ts",
         "./src/api/index.ts",
+        "./src/openworkshopcore.ts",
         "./src/utils/index.ts",
-        "./src/utils/logging/index.ts",
-        "./src/utils/logging/logger.ts"
+        "./src/utils/logging/index.ts"
       ],
       "./src/openworkshopcontext.ts": [
-        "./node_modules/@types/react/index.d.ts",
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
         "./src/openworkshopcore.ts"
       ],
       "./src/openworkshopcore.ts": [
         "./node_modules/@apollo/client/index.d.ts",
+        "./node_modules/@reduxjs/toolkit/dist/typings.d.ts",
         "./node_modules/oidc-client/index.d.ts",
         "./node_modules/redux/index.d.ts",
         "./src/openworkshopsettings.ts",
@@ -4137,7 +4167,8 @@
         "./src/utils/urls.ts"
       ],
       "./src/utils/logging/index.ts": [
-        "./src/utils/logging/logmanager.ts"
+        "./src/utils/logging/logmanager.ts",
+        "./src/utils/logging/uselogger.ts"
       ],
       "./src/utils/logging/logger.ts": [
         "./src/utils/logging/index.ts"
@@ -4147,6 +4178,15 @@
         "./src/utils/logging/index.ts",
         "./src/utils/logging/logger.ts",
         "./src/utils/logging/logoptions.ts"
+      ],
+      "./src/utils/logging/uselogger.ts": [
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
+        "./src/utils/logging/logger.ts"
+      ],
+      "../../../openworkshop/app/node_modules/@types/react/index.d.ts": [
+        "../../../openworkshop/app/node_modules/@types/prop-types/index.d.ts",
+        "../../../openworkshop/app/node_modules/@types/react/global.d.ts",
+        "../../../openworkshop/app/node_modules/csstype/index.d.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -4235,6 +4275,7 @@
       "./node_modules/@graphql-typed-document-node/core/index.d.ts",
       "./node_modules/@reduxjs/toolkit/dist/typings.d.ts",
       "./node_modules/@types/estree/index.d.ts",
+      "./node_modules/@types/json-schema/index.d.ts",
       "./node_modules/@types/node/assert.d.ts",
       "./node_modules/@types/node/async_hooks.d.ts",
       "./node_modules/@types/node/base.d.ts",
@@ -4283,14 +4324,11 @@
       "./node_modules/@types/node/worker_threads.d.ts",
       "./node_modules/@types/node/zlib.d.ts",
       "./node_modules/@types/prop-types/index.d.ts",
-      "./node_modules/@types/react/global.d.ts",
-      "./node_modules/@types/react/index.d.ts",
       "./node_modules/@types/redux-logger/index.d.ts",
       "./node_modules/@types/resolve/index.d.ts",
       "./node_modules/@types/zen-observable/index.d.ts",
       "./node_modules/@wry/context/lib/context.d.ts",
       "./node_modules/@wry/context/lib/slot.d.ts",
-      "./node_modules/csstype/index.d.ts",
       "./node_modules/graphql-tag/index.d.ts",
       "./node_modules/graphql/error/formaterror.d.ts",
       "./node_modules/graphql/error/graphqlerror.d.ts",
@@ -4431,9 +4469,10 @@
       "./node_modules/ts-invariant/lib/invariant.d.ts",
       "./node_modules/tslib/tslib.d.ts",
       "./src/api/apicall.ts",
-      "./src/api/auth.ts",
+      "./src/api/identity/auth.ts",
+      "./src/api/identity/users.ts",
       "./src/api/index.ts",
-      "./src/api/users.ts",
+      "./src/api/machines/machineprofiles.ts",
       "./src/index.ts",
       "./src/openworkshopcontext.ts",
       "./src/openworkshopcore.ts",
@@ -4446,6 +4485,7 @@
       "./src/utils/logging/logger.ts",
       "./src/utils/logging/logmanager.ts",
       "./src/utils/logging/logoptions.ts",
+      "./src/utils/logging/uselogger.ts",
       "./src/utils/urls.ts",
       "../ui/node_modules/typescript/lib/lib.dom.d.ts",
       "../ui/node_modules/typescript/lib/lib.dom.iterable.d.ts",
@@ -4478,7 +4518,11 @@
       "../ui/node_modules/typescript/lib/lib.es6.d.ts",
       "../ui/node_modules/typescript/lib/lib.esnext.intl.d.ts",
       "../ui/node_modules/typescript/lib/lib.scripthost.d.ts",
-      "../ui/node_modules/typescript/lib/lib.webworker.importscripts.d.ts"
+      "../ui/node_modules/typescript/lib/lib.webworker.importscripts.d.ts",
+      "../../../openworkshop/app/node_modules/@types/prop-types/index.d.ts",
+      "../../../openworkshop/app/node_modules/@types/react/global.d.ts",
+      "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
+      "../../../openworkshop/app/node_modules/csstype/index.d.ts"
     ]
   },
   "version": "4.0.5"

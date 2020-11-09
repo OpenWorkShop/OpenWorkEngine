@@ -1,11 +1,11 @@
 export const defaultLogOptions = {
     minLevels: {
-        "": "info",
+        '': 'info',
     },
 };
 export const developmentLogOptions = {
     minLevels: {
-        "": "debug",
+        '': 'debug',
     },
 };
 //# sourceMappingURL=LogOptions.js.map
