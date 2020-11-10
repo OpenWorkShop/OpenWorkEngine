@@ -1,0 +1,13 @@
+# import
+query searchMachines {
+  machineProfiles: machineProfiles {
+    id
+    name
+    brand
+    model
+    icon
+    description
+    machineCategory
+    discontinued
+  }
+}

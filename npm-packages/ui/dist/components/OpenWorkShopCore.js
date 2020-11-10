@@ -18,7 +18,6 @@ function fetchOws(opts) {
         if (!opts.i18nMiddleware) {
             opts.i18nMiddleware = [];
         }
-        const arr = [initReactI18next];
         opts.i18nMiddleware.push(initReactI18next);
         yield owsCore.load(opts);
         return owsCore;

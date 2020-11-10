@@ -1,0 +1,17 @@
+overwrite: true
+schema: './src/ows-schema.graphql'
+documents: 'src/**/*.graphql'
+generates:
+  src/api/graphql.tsx:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      #      - "typescript-resolvers"
+      - 'typescript-react-apollo'
+  ./graphql.schema.json:
+    plugins:
+      - 'introspection'
+hooks:
+  afterOneFileWrite:
+    - prettier --write
+    - eslint --fix

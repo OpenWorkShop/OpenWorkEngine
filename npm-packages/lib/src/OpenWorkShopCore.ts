@@ -1,23 +1,11 @@
 import OidcClient from 'oidc-client';
 import JsLogger from 'js-logger';
 import { Store } from 'redux';
-import {
-  HttpLink,
-  InMemoryCache,
-  ApolloClient,
-  NormalizedCacheObject,
-} from '@apollo/client';
+import { HttpLink, InMemoryCache, ApolloClient, NormalizedCacheObject } from '@apollo/client';
 import { Logger } from './utils/logging/Logger';
 import logManager, { LogManager } from './utils/logging';
-import {
-  developmentLogOptions,
-  defaultLogOptions,
-} from './utils/logging/LogOptions';
-import {
-  IOwsOptions,
-  IOwsSettings,
-  loadSettings,
-} from './OpenWorkShopSettings';
+import { developmentLogOptions, defaultLogOptions } from './utils/logging/LogOptions';
+import { IOwsOptions, IOwsSettings, loadSettings } from './OpenWorkShopSettings';
 import { createUserManager, loadUser } from 'redux-oidc';
 import { IOwsState } from './store';
 import i18n from 'i18next';
@@ -108,9 +96,6 @@ export class OpenWorkShopCore {
     this.log.debug('OWS Startup', this.isLoaded, this.settings, this._user, this);
 
     return this.isLoaded;
-  }
-
-  useAllI18nMiddleware(middleware: AnyAction[]) {
   }
 
   get isLoaded(): boolean {

@@ -38,7 +38,7 @@
     <TypeScriptCompile Include="npm-packages\lib\src\api\Identity\Auth.ts" />
     <TypeScriptCompile Include="npm-packages\lib\src\api\Identity\Users.ts" />
     <TypeScriptCompile Include="npm-packages\lib\src\api\index.ts" />
-    <TypeScriptCompile Include="npm-packages\lib\src\api\Machines\MachineProfiles.ts" />
+    <TypeScriptCompile Include="npm-packages\lib\src\graphql-types.d.ts" />
     <TypeScriptCompile Include="npm-packages\lib\src\index.ts" />
     <TypeScriptCompile Include="npm-packages\lib\src\OpenWorkShopContext.ts" />
     <TypeScriptCompile Include="npm-packages\lib\src\OpenWorkShopCore.ts" />

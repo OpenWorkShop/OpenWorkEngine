@@ -1,16 +1,16 @@
 export interface IMachineProfileProps {
-    name: string;
-    brand: string;
-    model: string;
-    icon: string;
-    description: string;
-    machineCategory: string;
-    discontinued: boolean;
+  name: string;
+  brand: string;
+  model: string;
+  icon: string;
+  description: string;
+  machineCategory: string;
+  discontinued: boolean;
 }
 export interface IMachineProfile extends IMachineProfileProps {
-    id: string;
+  id: string;
 }
 export interface IMachineProfileSearchData {
-    machineProfiles: IMachineProfile[];
+  machineProfiles: IMachineProfile[];
 }
-export declare const search: import("@apollo/client").DocumentNode;
+export declare const search: import('@apollo/client').DocumentNode;

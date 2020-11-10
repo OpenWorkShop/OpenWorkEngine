@@ -1,23 +1,23 @@
-import typescript from "rollup-plugin-typescript2";
-import commonjs from "@rollup/plugin-commonjs";
-import external from "rollup-plugin-peer-deps-external";
-import resolve from "@rollup/plugin-node-resolve";
+import typescript from 'rollup-plugin-typescript2';
+import commonjs from '@rollup/plugin-commonjs';
+import external from 'rollup-plugin-peer-deps-external';
+import resolve from '@rollup/plugin-node-resolve';
 
-import pkg from "./package.json";
+import pkg from './package.json';
 
 export default {
-  input: "src/index.ts",
+  input: 'src/index.ts',
   output: [
     {
-      file: pkg.main.toString().replace("./", "./dist/"),
-      format: "cjs",
-      exports: "named",
+      file: './dist/index.ts',
+      format: 'cjs',
+      exports: 'named',
       sourcemap: true,
     },
     {
-      file: pkg.module.toString().replace("./", "./dist/"),
-      format: "es",
-      exports: "named",
+      file: './dist/index.es.js',
+      format: 'es',
+      exports: 'named',
       sourcemap: true,
     },
   ],
@@ -28,19 +28,31 @@ export default {
     }),
     typescript({
       rollupCommonJSResolveHack: true,
-      exclude: "**/__tests__/**",
+      exclude: '**/__tests__/**',
       clean: true,
     }),
     commonjs({
-      include: ["./node_modules/**"],
+      include: ['./node_modules/**'],
     }),
   ],
   external: [
-    'react', 'react-is', 'react-dom', 'prop-types',
-    '@material-ui', 'redux-oidc', 'js-logger',
+    'react',
+    'react-is',
+    'react-dom',
+    'prop-types',
+    '@material-ui',
+    'redux-oidc',
+    'js-logger',
     '@apollo',
-    'hoist-non-react-statics', 'fast-json-stable-stringify', 'zen-observable',
+    'hoist-non-react-statics',
+    'fast-json-stable-stringify',
+    'zen-observable',
     'graphql-tag',
-    'events', 'url', 'http', 'https', 'stream', 'zlib'
+    'events',
+    'url',
+    'http',
+    'https',
+    'stream',
+    'zlib',
   ],
 };

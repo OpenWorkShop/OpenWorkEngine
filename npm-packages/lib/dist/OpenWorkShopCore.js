@@ -1,10 +1,10 @@
 import { __awaiter } from "tslib";
 import OidcClient from 'oidc-client';
 import JsLogger from 'js-logger';
-import { HttpLink, InMemoryCache, ApolloClient, } from '@apollo/client';
+import { HttpLink, InMemoryCache, ApolloClient } from '@apollo/client';
 import logManager from './utils/logging';
-import { developmentLogOptions, defaultLogOptions, } from './utils/logging/LogOptions';
-import { loadSettings, } from './OpenWorkShopSettings';
+import { developmentLogOptions, defaultLogOptions } from './utils/logging/LogOptions';
+import { loadSettings } from './OpenWorkShopSettings';
 import { createUserManager, loadUser } from 'redux-oidc';
 import i18n from 'i18next';
 import Backend from 'i18next-http-backend';
@@ -75,8 +75,6 @@ export class OpenWorkShopCore {
             this.log.debug('OWS Startup', this.isLoaded, this.settings, this._user, this);
             return this.isLoaded;
         });
-    }
-    useAllI18nMiddleware(middleware) {
     }
     get isLoaded() {
         return !!this._settings;

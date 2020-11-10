@@ -1,0 +1,10 @@
+fragment MachineProfileProps on MachineProfile {
+  id
+  name
+  brand
+  model
+  icon
+  description
+  machineCategory
+  discontinued
+}
