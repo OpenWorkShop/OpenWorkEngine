@@ -8,10 +8,8 @@ generates:
       - 'typescript-operations'
       #      - "typescript-resolvers"
       - 'typescript-react-apollo'
+    config:
+      avoidOptionals: true
   ./graphql.schema.json:
     plugins:
       - 'introspection'
-hooks:
-  afterOneFileWrite:
-    - prettier --write
-    - eslint --fix

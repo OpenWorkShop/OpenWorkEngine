@@ -1,0 +1,17 @@
+# Only what is necessary to actually connect to the machine
+fragment MachineFirmwareMinimal on MachineFirmware {
+  controllerType
+  baudRate
+  rtscts
+}
+
+fragment MachineFirmwareProps on MachineFirmware {
+  id
+  ...MachineFirmwareMinimal
+  requiredVersion
+  suggestedVersion
+  name
+  edition
+  downloadUrl
+  helpUrl
+}

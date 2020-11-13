@@ -5,8 +5,7 @@ export function setCookie(name, val) {
     // Set it expire in 30 days
     date.setTime(date.getTime() + 30 * 24 * 60 * 60 * 1000);
     // Set it
-    document.cookie =
-        name + '=' + value + '; expires=' + date.toUTCString() + '; path=/';
+    document.cookie = name + '=' + value + '; expires=' + date.toUTCString() + '; path=/';
 }
 export function getCookie(name) {
     const value = '; ' + document.cookie;

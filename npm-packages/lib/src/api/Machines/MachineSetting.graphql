@@ -1,0 +1,7 @@
+fragment MachineSettingProps on MachineSetting {
+  id
+  title
+  settingType
+  key
+  value
+}

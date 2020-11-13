@@ -1,6 +1,6 @@
 export const authRedirectUrl = 'authRedirectUrl';
 
-export function setCookie(name: string, val: string) {
+export function setCookie(name: string, val: string): void {
   const date = new Date();
   const value = val;
 
@@ -8,11 +8,10 @@ export function setCookie(name: string, val: string) {
   date.setTime(date.getTime() + 30 * 24 * 60 * 60 * 1000);
 
   // Set it
-  document.cookie =
-    name + '=' + value + '; expires=' + date.toUTCString() + '; path=/';
+  document.cookie = name + '=' + value + '; expires=' + date.toUTCString() + '; path=/';
 }
 
-export function getCookie(name: string) {
+export function getCookie(name: string): string | undefined {
   const value = '; ' + document.cookie;
   const parts = value.split('; ' + name + '=');
 
@@ -24,7 +23,7 @@ export function getCookie(name: string) {
   }
 }
 
-export function deleteCookie(name: string) {
+export function deleteCookie(name: string): void {
   const date = new Date();
 
   // Set it expire in -1 days

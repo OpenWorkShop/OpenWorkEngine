@@ -31,7 +31,8 @@ export class LogManager extends EventEmitter {
   }
 
   public getLoggerForFile(filename: string): Logger {
-    return this.getLogger(filename.split('/').pop()!.split('.').shift()!);
+    const firstPart = filename.split('/').pop() as string;
+    return this.getLogger(firstPart.split('.').shift() as string);
   }
 
   public onLogEntry(listener: (logEntry: LogEntry) => void): LogManager {

@@ -5,6 +5,7 @@ import { Logger } from './utils/logging/Logger';
 import { LogManager } from './utils/logging';
 import { IOwsOptions, IOwsSettings } from './OpenWorkShopSettings';
 import { IOwsState } from './store';
+import { TFunction } from 'i18next';
 export declare class OpenWorkShopCore {
     private _settings?;
     private _authManager?;
@@ -12,7 +13,7 @@ export declare class OpenWorkShopCore {
     private _store?;
     private _user?;
     private _log?;
-    i18n: any;
+    i18n?: TFunction;
     load(opts: IOwsOptions): Promise<boolean>;
     get isLoaded(): boolean;
     get log(): Logger;

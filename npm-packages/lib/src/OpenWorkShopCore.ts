@@ -8,10 +8,9 @@ import { developmentLogOptions, defaultLogOptions } from './utils/logging/LogOpt
 import { IOwsOptions, IOwsSettings, loadSettings } from './OpenWorkShopSettings';
 import { createUserManager, loadUser } from 'redux-oidc';
 import { IOwsState } from './store';
-import i18n from 'i18next';
+import i18n, { TFunction } from 'i18next';
 import Backend from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import { AnyAction } from '@reduxjs/toolkit';
 
 export class OpenWorkShopCore {
   private _settings?: IOwsSettings = undefined;
@@ -26,7 +25,7 @@ export class OpenWorkShopCore {
 
   private _log?: Logger = undefined;
 
-  i18n: any;
+  i18n?: TFunction;
 
   public async load(opts: IOwsOptions): Promise<boolean> {
     this._store = opts.store;
@@ -117,22 +116,22 @@ export class OpenWorkShopCore {
 
   get store(): Store<IOwsState> {
     this.check();
-    return this._store!;
+    return this._store as Store<IOwsState>;
   }
 
   get settings(): IOwsSettings {
     this.check();
-    return this._settings!;
+    return this._settings as IOwsSettings;
   }
 
   get authManager(): OidcClient.UserManager {
     this.check();
-    return this._authManager!;
+    return this._authManager as OidcClient.UserManager;
   }
 
   get apolloClient(): ApolloClient<NormalizedCacheObject> {
     this.check();
-    return this._apolloClient!;
+    return this._apolloClient as ApolloClient<NormalizedCacheObject>;
   }
 
   private check() {

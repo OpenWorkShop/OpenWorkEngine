@@ -1,0 +1,8 @@
+fragment MachineAxisProps on MachineAxis {
+  id
+  name
+  min
+  max
+  accuracy
+  precision
+}

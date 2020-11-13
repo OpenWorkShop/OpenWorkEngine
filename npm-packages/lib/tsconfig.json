@@ -9,15 +9,13 @@
     "moduleResolution": "node",
     "outDir": "dist",
     "rootDir": "src",
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "strict": true,
     "composite": true,
     "allowSyntheticDefaultImports": true,
     "importHelpers": true,
     "jsx": "react"
   },
-  "include": [
-    "src"
-  ],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }

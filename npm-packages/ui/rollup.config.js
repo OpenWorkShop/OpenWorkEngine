@@ -42,6 +42,7 @@ export default {
     'prop-types',
     '@material-ui',
     'redux-oidc',
+    'oidc-client',
     'js-logger',
     '@apollo',
     'hoist-non-react-statics',

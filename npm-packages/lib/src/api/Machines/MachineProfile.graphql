@@ -1,0 +1,46 @@
+fragment MachineProfileProps on MachineProfile {
+  id
+  name
+  brand
+  model
+  icon
+  description
+  machineCategory
+  discontinued
+  featured
+}
+
+fragment MachineProfileComplete on MachineProfile {
+  ...MachineProfileProps
+  firmware {
+    ...MachineFirmwareProps
+  }
+  axes {
+    ...MachineAxisProps
+  }
+  parts {
+    ...MachinePartComplete
+  }
+  commands {
+    ...MachineCommandProps
+  }
+  features {
+    ...MachineFeatureProps
+  }
+}
+
+fragment MachineSearchResult on MachineProfile {
+  ...MachineProfileProps
+}
+
+query searchMachineProfiles($q: String) {
+  machineProfiles: machineProfiles(query: $q) {
+    ...MachineSearchResult
+  }
+}
+
+query getCompleteMachineProfile($id: String!) {
+  machineProfile(id: $id) {
+    ...MachineProfileComplete
+  }
+}

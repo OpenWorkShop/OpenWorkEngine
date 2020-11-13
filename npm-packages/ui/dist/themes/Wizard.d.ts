@@ -1,2 +1,4 @@
+import 'typeface-roboto';
+import 'typeface-cabin';
 declare const _default: import("@material-ui/core/styles").Theme;
 export default _default;

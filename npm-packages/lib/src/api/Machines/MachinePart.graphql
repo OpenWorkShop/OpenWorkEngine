@@ -1,0 +1,20 @@
+fragment MachinePartProps on MachinePart {
+  id
+  partType
+  optional
+  isDefault
+  sortOrder
+  title
+  description
+  dataBlob
+}
+
+fragment MachinePartComplete on MachinePart {
+  ...MachinePartProps
+  settings {
+    ...MachineSettingProps
+  }
+  specs {
+    ...MachineSpecProps
+  }
+}

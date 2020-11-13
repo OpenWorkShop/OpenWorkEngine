@@ -1,5 +1,7 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 import * as Colors from './Colors';
+import 'typeface-roboto';
+import 'typeface-cabin';
 
 const headerFont = 'Cabin';
 const bodyFont = 'Roboto';

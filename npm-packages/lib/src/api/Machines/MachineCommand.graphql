@@ -1,0 +1,5 @@
+fragment MachineCommandProps on MachineCommand {
+  id
+  name
+  value
+}

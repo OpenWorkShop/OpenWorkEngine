@@ -1,0 +1,8 @@
+fragment MachineFeatureProps on MachineFeature {
+  id
+  key
+  disabled
+  title
+  description
+  icon
+}
