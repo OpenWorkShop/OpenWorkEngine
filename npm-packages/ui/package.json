@@ -1,6 +1,6 @@
 {
   "name": "@openworkshop/ui",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "UI and API for OWS apps",
   "main": "./src/index.ts",
   "files": [
