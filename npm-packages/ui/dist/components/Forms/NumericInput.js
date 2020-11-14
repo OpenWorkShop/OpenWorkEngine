@@ -14,7 +14,7 @@ import React from 'react';
 const NumericInput = (props) => {
     const { numericValue, onChangeNumericValue, integersOnly, min, max } = props, tfProps = __rest(props, ["numericValue", "onChangeNumericValue", "integersOnly", "min", "max"]);
     const allowDecimal = !integersOnly;
-    const dec = allowDecimal ? '\.' : '';
+    const dec = allowDecimal ? '.' : '';
     const [value, setValue] = React.useState(numericValue.toString() || '');
     function getNumericValue(val) {
         if (val === undefined)
@@ -38,7 +38,7 @@ const NumericInput = (props) => {
     function makeNumber() {
         setValue(getNumericValue().toString());
     }
-    return (React.createElement(TextField, Object.assign({}, tfProps, { value: value, type: "number", onChange: handleChange, onBlur: () => makeNumber(), inputProps: { inputMode: 'numeric', pattern: `[0-9${dec}\-]*` } })));
+    return (React.createElement(TextField, Object.assign({}, tfProps, { value: value, type: 'number', onChange: handleChange, onBlur: () => makeNumber(), inputProps: { inputMode: 'numeric', pattern: `[0-9${dec}\-]*` } })));
 };
 export default NumericInput;
 //# sourceMappingURL=NumericInput.js.map

@@ -12,11 +12,32 @@ import {
   FormHelperText,
   FormControl,
   InputLabel,
+  FormControlLabel,
+  Checkbox,
+  TextField,
 } from '@material-ui/core';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { ToggleButtonGroup, ToggleButton } from '@material-ui/lab';
 import { normalizeMachineControllerType } from '@openworkshop/lib/api/Machines/MachineControllerType';
 import { BaudRate } from '@openworkshop/lib/api/Machines/BaudRate';
+import { createStyles, makeStyles, Theme } from '@material-ui/core';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    paper: {
+      marginTop: theme.spacing(4),
+      marginBottom: theme.spacing(4),
+      padding: theme.spacing(4),
+    },
+    formControl: {
+      width: '100%',
+      marginTop: theme.spacing(2),
+    },
+    headings: {
+      marginBottom: theme.spacing(1),
+    },
+  }),
+);
 
 interface ICreateMachineProfileProps {
   onChanged: (firmware: MachineFirmwareMinimalFragment, profile: ICustomizedMachineProfile) => void;
@@ -27,9 +48,11 @@ type ProfileKey = 'brand' | 'model' | 'submit';
 
 const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> = (props) => {
   const log = useLogger(CreateMachineProfile);
+  const { t } = useTranslation();
   const theme = useTheme();
   const controllerTypes = Object.keys(MachineControllerType);
   const baudRates = Object.values(BaudRate).filter((br) => typeof br === 'number');
+  const classes = useStyles();
 
   const [firmware, setFirmware] = React.useState<MachineFirmwareMinimalFragment>({
     controllerType: MachineControllerType.Grbl,
@@ -57,11 +80,11 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
     }
   }
 
-  function updateFirmware<T extends string | number>(key: FirmwareKey, value: T) {
+  function updateFirmware<T extends string | number | boolean>(key: FirmwareKey, value: T) {
     onChange({ ...firmware, [key]: value }, profile);
   }
 
-  function updateProfile<T extends string | number>(key: ProfileKey, value: T) {
+  function updateProfile<T extends string | boolean>(key: ProfileKey, value: T) {
     onChange(firmware, { ...profile, [key]: value });
   }
 
@@ -73,10 +96,10 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
         <Trans>Connect to your Machine</Trans>
       </Typography>
 
-      <Paper style={{ marginTop: theme.spacing(4), marginBottom: theme.spacing(4), padding: theme.spacing(4) }}>
+      <Paper className={classes.paper}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={9} md={6}>
-            <Typography variant='h6'>
+            <Typography variant='h5' className={classes.headings}>
               <Trans>Connection Protocol</Trans>
             </Typography>
             <ToggleButtonGroup
@@ -100,7 +123,7 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
                 </em>
               </div>
             )}
-            <FormControl style={{ width: '100%', marginTop: theme.spacing(2) }}>
+            <FormControl className={classes.formControl} error={!baudRate}>
               <InputLabel shrink id='baud-rate-label'>
                 <Trans>Baud Rate</Trans>
               </InputLabel>
@@ -126,10 +149,40 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
                 <Trans>Required</Trans>
               </FormHelperText>
             </FormControl>
+            <FormControlLabel
+              control={
+                <Checkbox checked={firmware.rtscts} onChange={(e) => updateFirmware('rtscts', !firmware.rtscts)} />
+              }
+              label={t('Hardware flow control (rtscts)?')}
+            />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <Typography variant='h6'>
+            <Typography variant='h5' className={classes.headings}>
               <Trans>Machine Information</Trans>
+              <Grid container>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    label={t('Brand')}
+                    value={profile.brand}
+                    onChange={(e) => updateProfile('brand', e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    label={t('Model')}
+                    value={profile.model}
+                    onChange={(e) => updateProfile('model', e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox checked={profile.submit} onChange={(e) => updateProfile('submit', !profile.submit)} />
+                    }
+                    label={t('Submit to community catalog?')}
+                  />
+                </Grid>
+              </Grid>
             </Typography>
           </Grid>
         </Grid>

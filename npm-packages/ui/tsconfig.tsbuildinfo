@@ -1296,7 +1296,7 @@
         "signature": "b7e919fed7f9f694f9f4101d08eb2d370509c7d89dddf75c11eafea16d156f0c",
         "affectsGlobalScope": false
       },
-      "../../../openworkshop/app/node_modules/@material-ui/core/node_modules/popper.js/index.d.ts": {
+      "../../../openworkshop/app/node_modules/popper.js/index.d.ts": {
         "version": "1873db8f2261ba4f248bde3e5bb4c79b1fdc990315054e9604fce8f41ddd1587",
         "signature": "1873db8f2261ba4f248bde3e5bb4c79b1fdc990315054e9604fce8f41ddd1587",
         "affectsGlobalScope": false
@@ -1927,8 +1927,8 @@
         "affectsGlobalScope": false
       },
       "./src/themes/wizard.ts": {
-        "version": "beca3994a1b5dd6befda7539ecf1b258c66533846b9638e1e7434e7acc2babe4",
-        "signature": "c2f7f33c4d9343b0281d3321023e938539af17a92dfa71bc623cae9ce10597af",
+        "version": "6332a47b9bf0b3d373350255376671ca75f0e06baf8119fab2fc9ccf9528780e",
+        "signature": "1119a6f4cced4e558a95e293432489924569fa562fa5dc2f1d8f5e339fca6fab",
         "affectsGlobalScope": false
       },
       "./src/themes/index.ts": {
@@ -3577,8 +3577,8 @@
         "affectsGlobalScope": false
       },
       "../lib/dist/utils/logging/uselogger.d.ts": {
-        "version": "546ed0ef9f9624712016542bb8cf676c20861164506766365db86eac4d197a4b",
-        "signature": "546ed0ef9f9624712016542bb8cf676c20861164506766365db86eac4d197a4b",
+        "version": "08c35c830a9c5365c36bfa810396e9dbd96a21720bef323fe8d656b3a5901900",
+        "signature": "08c35c830a9c5365c36bfa810396e9dbd96a21720bef323fe8d656b3a5901900",
         "affectsGlobalScope": false
       },
       "./node_modules/i18next/index.d.ts": {
@@ -3592,13 +3592,13 @@
         "affectsGlobalScope": false
       },
       "./src/components/alerts/alertlist.tsx": {
-        "version": "706c7f136ac739bfb0cf7d777a90f7df3c60a788e684f2e54b29dc0ebee14186",
+        "version": "ceec95bb7386df1717302f59627db2b257a61a9e2f9705335c365d235f0c345c",
         "signature": "46826b40cec41521add0907b640f0e76c6842cde243a663c4fc4c868af247b20",
         "affectsGlobalScope": false
       },
       "../lib/dist/utils/device/devicemotion.d.ts": {
-        "version": "eae512f970e0d5edf05ce5b22bd86d1f92112e473c5f04167e28994e161cee45",
-        "signature": "eae512f970e0d5edf05ce5b22bd86d1f92112e473c5f04167e28994e161cee45",
+        "version": "d5822f6b637f14e6c7465437e7099411cea4e34afa738922d35d1cd1c953d76a",
+        "signature": "d5822f6b637f14e6c7465437e7099411cea4e34afa738922d35d1cd1c953d76a",
         "affectsGlobalScope": false
       },
       "../lib/dist/utils/device/deviceorientation.d.ts": {
@@ -3617,42 +3617,42 @@
         "affectsGlobalScope": false
       },
       "./src/components/alerts/offlinealert.tsx": {
-        "version": "eae471fb9842ae38bf379f929dbbc0995d85bd9ecd3c25414bd1bf2c4cc85d68",
+        "version": "eed4e0aa38e2328401a14e7af1fc3d0cd612af6b7fdb8c36e0d0ebc0c32a6dd1",
         "signature": "df9c4373789c86773ce1f66e2addf49d861d7e750392fe7164ec4c5cd34a8e21",
         "affectsGlobalScope": false
       },
       "./src/components/icons/cncicon.tsx": {
-        "version": "1611e8e551739482a6f64a5ac3c71dc04a152c7aa0261411ef25884b682cc351",
+        "version": "5e428c20e4e25e2458f95c39fd38c05beb2df9259b513a3d40092c8ac1666cb7",
         "signature": "226c165124097c9423a99b9e799a336170a78e7b537cf6f84799d71491a4f276",
         "affectsGlobalScope": false
       },
       "./src/components/icons/makermadeicon.tsx": {
-        "version": "f9cbc5e9fbc46a36d1254339953e65cb31f8b89fd1f1eb317d70cceec4ba9795",
+        "version": "74a3e62c8a4eb3100bbf922a6f7e3fcadf3c48ace9202edf3200efbba1a2f77d",
         "signature": "c7bfddbe6dc44958f94890eb66033cef1a17fb432361b3884971b42dcc5ba420",
         "affectsGlobalScope": false
       },
       "./src/components/icons/maslowicon.tsx": {
-        "version": "bdb6b8c577059d205932f0850704a49b66c25cf3705c8efe810a14eedc4892f0",
+        "version": "97edf0553d52c9f59fbefd2e155fa4f02711e30a1a649145c52a70489aa0e729",
         "signature": "f33eb5b583a88051a23ec658959274907a2adace8b8d749c262ed1549a63657c",
         "affectsGlobalScope": false
       },
       "./src/components/icons/tdpicon.tsx": {
-        "version": "61d91c3b0ccff26b73056e2c2a810f5c85edd8b06649699716971e701e20feb5",
+        "version": "5a1cd1fd47e6c594ffedc2e4674f6e750b04b21b15ef8c10952b53dc2bf8183a",
         "signature": "ba9631fa3393bb4f384f79b103647b3c1f427533db585f19d92b96f5648604a3",
         "affectsGlobalScope": false
       },
       "./src/components/icons/xyzicon.tsx": {
-        "version": "97620ddf6525e5634cd0d3af2b9c1d95cc4e6ddf20838918f2f0e718c1d3545c",
+        "version": "aef6896d79dfe4f6daf0f597a4ff22eb7cea126b545a0ef66cc3ad43e99315ba",
         "signature": "0ea973db082bd4d0a5cdc62d96f42423a1ea77cb2c02ddb4c3a2797609db9907",
         "affectsGlobalScope": false
       },
       "./src/components/icons/index.tsx": {
-        "version": "6ea09f3d8305ebb538a5d46e3a218bbda58c264277c148f2b182c5170748ae87",
+        "version": "98188073d22b28869bbbf832eda687cb9f2e201de28775d1e249544199d6d64e",
         "signature": "9b24a9fc9edc5f89a7a19d203aa477b7b55f7e173144f0cbf554b7dcf2569aff",
         "affectsGlobalScope": false
       },
       "./src/components/machineprofiles/machineprofilesearchbar.tsx": {
-        "version": "3f9483f090cfd484296d5e49b0ce3937c31cf0e3735ca1fedd78c0b63c2b3ec5",
+        "version": "7031a1b658701a97a7ae64b27b61050c6b89a6dfc5fc1f0a9f6224639e452ae3",
         "signature": "c7b5462e16cbf5e930b456829884c65b974e989c260f0cdaa78badc470ddeb99",
         "affectsGlobalScope": false
       },
@@ -3746,13 +3746,38 @@
         "signature": "5a5d0242ca22799d7d81c3a676b5dd9d7dd646177141f4714006e1df63516904",
         "affectsGlobalScope": false
       },
+      "./src/components/images/backgroundimage.ts": {
+        "version": "2f6b4b3c3a41dd33a86b5cd2b083ccdc4bda92caad2d4f0e76beda383eae6244",
+        "signature": "15f33113bd685b47cfcffe8f894f184f0fad7b649b75881c707c4c78331ddff1",
+        "affectsGlobalScope": false
+      },
+      "./src/components/images/favicon32.ts": {
+        "version": "65609583b920541e9935594cb48dcd12e7f70feb77ee39cb42970d1288b1ac91",
+        "signature": "c0ac9c68b2abff3bfb78e08b5938686d08efa65c77d8088046fb540c6f203308",
+        "affectsGlobalScope": false
+      },
+      "./src/components/images/logo.ts": {
+        "version": "4892a45811a7145aefb9e15a3057563b69cb257cae2bf1f2f579ed4441a28f77",
+        "signature": "71136d1aa3344c8b4600c378a4a409939b5a057ab32e112c34acfe38e0b98a70",
+        "affectsGlobalScope": false
+      },
+      "./src/components/images/index.ts": {
+        "version": "6862dc2a0d75273bf8d8bddbeba1220b53e409a6c2c336f95ba231e61df2e67b",
+        "signature": "7a5021c9f948cbb21622c1ebcc7a209205f1208525bb542f7f48e9a58d6d1943",
+        "affectsGlobalScope": false
+      },
+      "./src/components/brand/poweredby.tsx": {
+        "version": "c9a7dafb0cd1b40dc0ecea15bb469a212861a8ddbf76471945399c173c02f0c3",
+        "signature": "98065778119a2a59a0d4c658fa9e82faccb7f840d18bb964d6eda48050dafae2",
+        "affectsGlobalScope": false
+      },
       "./src/components/cards/cardstyles.ts": {
         "version": "f26bfae637ddc20b035f236823ffee06917563ab5d7efda9b328f63e64321d40",
         "signature": "a4e14bd87f7812e5ca5c0ebea45ece046a85627a3e2e8c69ae07a057df44c608",
         "affectsGlobalScope": false
       },
       "./src/components/forms/numericinput.tsx": {
-        "version": "5b6078a94a647b656243cdb832b0b52f83e9495b00c9412ea248df6da01fe907",
+        "version": "5684c9bc9ad27e76f4fed877a31a3a71b8899349a5c438f0ac61240b73dbcd3f",
         "signature": "93dd8cde009627c96e513601ca3b5149e50f0839e75ec1ccb0e5908b5a43c247",
         "affectsGlobalScope": false
       },
@@ -3827,7 +3852,7 @@
         "affectsGlobalScope": true
       },
       "./src/components/machineprofiles/choosemachinepart.tsx": {
-        "version": "218385663452410e4a243cecdf21b68a240e6b4faed3932d0633581e9ffea56b",
+        "version": "dd3e02ae0c358ef23a08680c50c6e5131cd1e0c9d6c8ec2b95002ec1c4bd9429",
         "signature": "b622b4754c8b4b99a76fba43788033b9003ea3eec5a400e1675f24a668388642",
         "affectsGlobalScope": false
       },
@@ -3837,7 +3862,7 @@
         "affectsGlobalScope": false
       },
       "./src/components/machineprofiles/machinespeclist.tsx": {
-        "version": "7a1f4c7b87deb64ce8d49145c9619f576d105f847a16b58735be70783dff2bad",
+        "version": "48fe31f63ce6f304ff914152c03f18b3b4ff4e723a92183b7220d4f8df31314b",
         "signature": "0c353898198193b56dcd552bf790b6315058add5a63c07aec93d9884e77266ad",
         "affectsGlobalScope": false
       },
@@ -3862,7 +3887,7 @@
         "affectsGlobalScope": false
       },
       "./src/components/machineprofiles/choosemachineparts.tsx": {
-        "version": "df0cf371e342659779ef89d25b2eb393573e6c85790a1dc30253c4de1817174d",
+        "version": "defd3d323dafd2645e4e8545de06e2c50adebfa23d38a25ee85b2fd6b4d6cf15",
         "signature": "4b525f27a3739ba8bc5ec15cbfaddeb853095a6c557bedee91739461c2168f50",
         "affectsGlobalScope": false
       },
@@ -3882,28 +3907,28 @@
         "affectsGlobalScope": false
       },
       "./src/components/machineprofiles/createmachineprofile.tsx": {
-        "version": "7c4c32667c809d5f2407f76ede60254c064b1b8f3fd1d8905f525585d8dc4e38",
+        "version": "5d92e40fdc9afd6252312eabda719703434cb80acecd6805ac4f7e22621cf197",
         "signature": "2560f5e1a37fff493e29eb57f85d6c3df07823826f3cbd698016fcb84157c79e",
         "affectsGlobalScope": false
       },
       "./src/components/machineprofiles/machineaxiseditor.tsx": {
-        "version": "f04fb83d22be73952384948dddbf01b72aaf41fc29f7c0408d89b66d38ef3c60",
+        "version": "89a57870f0f61a74f678cc18a5bddced3e9b13283deaefd876b73c67f7af4ce8",
         "signature": "b65485d48fa5ab0d2ab5001449f6a20f35ca257a897fd82fbdf6f6b402987760",
         "affectsGlobalScope": false
       },
       "./src/components/machineprofiles/machineaxeseditor.tsx": {
-        "version": "a24e0b7a775ce8535e8144377948e50452e446f7d63ea0c7b5a958949b030bc8",
+        "version": "472d2bfa59ca82bc814905e244cd9d77c3e43c5113c3f2776a60007725ae7b41",
         "signature": "4ec742dec753f1850eb136ca67331929773d6d496ce888e5c41d886b99b0dc9a",
         "affectsGlobalScope": false
       },
       "./src/components/machineprofiles/customizemachine.tsx": {
-        "version": "dedd67984410b7b081e990d8c9fcf5e3ff0f388eadbef791822b3759c53b5f4e",
-        "signature": "0dd168da7a01d2573b2b9bf92fee797dea3a87d805ab47fa4d7fe4adecb4e432",
+        "version": "fd638674b88e1158585f8faca1cd3126ea5d56d0a3b1e45741cca75a266d2014",
+        "signature": "e8e3a37bb6b1b53d7ce8a23e0d97755a0e850bfb6d6e5ea7fa24a3590f87e63e",
         "affectsGlobalScope": false
       },
       "./src/themes/cabin.ts": {
-        "version": "357fc11ab7d7ecdf1a359425e44f30dbbb1d019eb06e1ec9c48ec52a1540de4f",
-        "signature": "0af91223f99adf76a5626b95789116fe533a08264d1e9a1eeed74efef1a74956",
+        "version": "c3ef2cf92a20df3778230f5d3c8a824ce47a2309da502a7169680e8217fd21d3",
+        "signature": "cbcedd0a086f7d7bf5d518137f9106da70a9b07c520235f1c40c484d6afa685d",
         "affectsGlobalScope": false
       },
       "./src/themes/palette.ts": {
@@ -3917,7 +3942,7 @@
         "affectsGlobalScope": false
       },
       "./src/themes/styles.ts": {
-        "version": "13e2ffca2d7823373f0ab733f712a71ec591028ae6824c9b1f5ec97102599734",
+        "version": "6ce79f6afe71b7773986c34911e243e51aedd8c568f8967d85b5593d8fdc31a9",
         "signature": "01253fad6ce91b30f2dad5affdaf02ca1d0d6bf2b54f6cc4c5c692daf03dd266",
         "affectsGlobalScope": false
       },
@@ -5479,6 +5504,12 @@
         "../lib/dist/utils/device/index.d.ts",
         "./node_modules/react-i18next/src/index.d.ts"
       ],
+      "./src/components/brand/poweredby.tsx": [
+        "../../../openworkshop/app/node_modules/@material-ui/core/index.d.ts",
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
+        "./node_modules/react-i18next/src/index.d.ts",
+        "./src/components/images/index.ts"
+      ],
       "./src/components/cards/cardstyles.ts": [
         "../../../openworkshop/app/node_modules/@material-ui/core/index.d.ts",
         "../../../openworkshop/app/node_modules/@material-ui/core/styles/withstyles.d.ts"
@@ -5519,6 +5550,11 @@
       ],
       "./src/components/icons/xyzicon.tsx": [
         "../../../openworkshop/app/node_modules/@types/react/index.d.ts"
+      ],
+      "./src/components/images/index.ts": [
+        "./src/components/images/backgroundimage.ts",
+        "./src/components/images/favicon32.ts",
+        "./src/components/images/logo.ts"
       ],
       "./src/components/index.ts": [
         "./src/components/errorlist/errorlist.tsx",
@@ -5648,7 +5684,8 @@
       ],
       "./src/themes/styles.ts": [
         "../../../openworkshop/app/node_modules/@material-ui/core/index.d.ts",
-        "../../../openworkshop/app/node_modules/@material-ui/core/styles/withstyles.d.ts"
+        "../../../openworkshop/app/node_modules/@material-ui/core/styles/withstyles.d.ts",
+        "./src/components/images/index.ts"
       ],
       "./src/themes/wizard.ts": [
         "../../../openworkshop/app/node_modules/@material-ui/core/styles/index.d.ts",
@@ -6434,9 +6471,9 @@
       ],
       "../../../openworkshop/app/node_modules/@material-ui/core/popper/popper.d.ts": [
         "../../../openworkshop/app/node_modules/@material-ui/core/index.d.ts",
-        "../../../openworkshop/app/node_modules/@material-ui/core/node_modules/popper.js/index.d.ts",
         "../../../openworkshop/app/node_modules/@material-ui/core/portal/index.d.ts",
-        "../../../openworkshop/app/node_modules/@types/react/index.d.ts"
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
+        "../../../openworkshop/app/node_modules/popper.js/index.d.ts"
       ],
       "../../../openworkshop/app/node_modules/@material-ui/core/portal/index.d.ts": [
         "../../../openworkshop/app/node_modules/@material-ui/core/portal/portal.d.ts"
@@ -8908,6 +8945,9 @@
       "./src/components/alerts/offlinealert.tsx": [
         "../../../openworkshop/app/node_modules/@types/react/index.d.ts"
       ],
+      "./src/components/brand/poweredby.tsx": [
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts"
+      ],
       "./src/components/cards/cardstyles.ts": [
         "../../../openworkshop/app/node_modules/@material-ui/core/index.d.ts",
         "../../../openworkshop/app/node_modules/@material-ui/core/styles/withstyles.d.ts"
@@ -8945,6 +8985,11 @@
       ],
       "./src/components/icons/xyzicon.tsx": [
         "../../../openworkshop/app/node_modules/@types/react/index.d.ts"
+      ],
+      "./src/components/images/index.ts": [
+        "./src/components/images/backgroundimage.ts",
+        "./src/components/images/favicon32.ts",
+        "./src/components/images/logo.ts"
       ],
       "./src/components/index.ts": [
         "./src/components/errorlist/errorlist.tsx",
@@ -11174,6 +11219,7 @@
       "./node_modules/typescript/lib/lib.webworker.importscripts.d.ts",
       "./src/components/alerts/alertlist.tsx",
       "./src/components/alerts/offlinealert.tsx",
+      "./src/components/brand/poweredby.tsx",
       "./src/components/cards/cardstyles.ts",
       "./src/components/errorlist/errorlist.tsx",
       "./src/components/forms/numericinput.tsx",
@@ -11184,6 +11230,10 @@
       "./src/components/icons/maslowicon.tsx",
       "./src/components/icons/tdpicon.tsx",
       "./src/components/icons/xyzicon.tsx",
+      "./src/components/images/backgroundimage.ts",
+      "./src/components/images/favicon32.ts",
+      "./src/components/images/index.ts",
+      "./src/components/images/logo.ts",
       "./src/components/index.ts",
       "./src/components/machineprofiles/choosemachinepart.tsx",
       "./src/components/machineprofiles/choosemachineparts.tsx",
@@ -11380,7 +11430,6 @@
       "../../../openworkshop/app/node_modules/@material-ui/core/nativeselect/index.d.ts",
       "../../../openworkshop/app/node_modules/@material-ui/core/nativeselect/nativeselect.d.ts",
       "../../../openworkshop/app/node_modules/@material-ui/core/nativeselect/nativeselectinput.d.ts",
-      "../../../openworkshop/app/node_modules/@material-ui/core/node_modules/popper.js/index.d.ts",
       "../../../openworkshop/app/node_modules/@material-ui/core/nossr/index.d.ts",
       "../../../openworkshop/app/node_modules/@material-ui/core/nossr/nossr.d.ts",
       "../../../openworkshop/app/node_modules/@material-ui/core/outlinedinput/index.d.ts",
@@ -11611,7 +11660,8 @@
       "../../../openworkshop/app/node_modules/@types/react/global.d.ts",
       "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
       "../../../openworkshop/app/node_modules/csstype/index.d.ts",
-      "../../../openworkshop/app/node_modules/jss/src/index.d.ts"
+      "../../../openworkshop/app/node_modules/jss/src/index.d.ts",
+      "../../../openworkshop/app/node_modules/popper.js/index.d.ts"
     ]
   },
   "version": "4.0.5"

@@ -4,7 +4,7 @@ import ChooseMachinePart from './ChooseMachinePart';
 import MachineSpecList from './MachineSpecList';
 import { getMachinePartTypeTranslationKey } from '@openworkshop/lib/api/Machines/MachinePartType';
 import React from 'react';
-import { Typography, Accordion, AccordionSummary, AccordionDetails, makeStyles, createStyles } from '@material-ui/core';
+import { Typography, Accordion, AccordionSummary, AccordionDetails, makeStyles, createStyles, } from '@material-ui/core';
 import { useTranslation, Trans } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretSquareDown } from '@fortawesome/free-solid-svg-icons';
@@ -29,7 +29,7 @@ const ChooseMachineParts = (props) => {
     const includedParts = {};
     const selectableParts = {};
     const defaultSelectedParts = {};
-    allPartTypes.forEach(partType => {
+    allPartTypes.forEach((partType) => {
         const parts = groupedParts[partType];
         if (parts.length === 1 && !parts[0].optional) {
             includedParts[partType.toString()] = parts[0];
@@ -49,11 +49,9 @@ const ChooseMachineParts = (props) => {
         }
         setSelectedPartIds(Object.assign({}, selectedPartIds));
         log.debug('part selection', partType, partId, selectedPartIds);
-        const isCompletePartList = _.every(allPartTypes, pt => _.has(selectedPartIds, pt) ||
-            _.every(groupedParts[pt], p => p.optional));
+        const isCompletePartList = _.every(allPartTypes, (pt) => _.has(selectedPartIds, pt) || _.every(groupedParts[pt], (p) => p.optional));
         if (isCompletePartList) {
-            const parts = Object.keys(selectedPartIds)
-                .map(pt => _.find(mp.parts, p => p.id === selectedPartIds[pt]));
+            const parts = Object.keys(selectedPartIds).map((pt) => _.find(mp.parts, (p) => p.id === selectedPartIds[pt]));
             props.onComplete(parts);
         }
     }
@@ -71,23 +69,23 @@ const ChooseMachineParts = (props) => {
                 !part && React.createElement(Trans, null, "(None selected)"))));
     }
     function renderIncludedParts() {
-        return Object.keys(includedParts).map(partType => {
+        return Object.keys(includedParts).map((partType) => {
             const part = includedParts[partType];
             const hasDescription = part.description && part.description.length > 0;
             return (React.createElement(Accordion, { key: partType },
                 renderPartSummary(partType, part),
                 React.createElement(AccordionDetails, null,
-                    hasDescription && React.createElement(Typography, { display: "block" },
-                        React.createElement("span", null, part.description)),
-                    React.createElement(Typography, { color: "secondary", variant: "caption" },
+                    hasDescription && (React.createElement(Typography, { display: 'block' },
+                        React.createElement("span", null, part.description))),
+                    React.createElement(Typography, { color: 'secondary', variant: 'caption' },
                         React.createElement("em", null,
                             React.createElement(Trans, null, "This part is always included with your machine."))))));
         });
     }
     function renderSelectableParts() {
-        return Object.keys(selectableParts).map(partType => {
+        return Object.keys(selectableParts).map((partType) => {
             const selectedPartId = _.has(selectedPartIds, partType) ? selectedPartIds[partType] : null;
-            const part = selectedPartId && _.find(mp.parts, p => p.id === selectedPartId);
+            const part = selectedPartId && _.find(mp.parts, (p) => p.id === selectedPartId);
             return (React.createElement(Accordion, { key: partType },
                 renderPartSummary(partType, part ? part : undefined),
                 React.createElement(AccordionDetails, null,

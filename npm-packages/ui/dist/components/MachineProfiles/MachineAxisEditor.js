@@ -17,9 +17,9 @@ const MachineAxisEditor = (props) => {
     const isZ = axisName === 'z';
     const isXYZ = isXY || isZ;
     const warnings = [];
-    if (axis.precision < 1 || axis.precision >= 20)
+    if (axis.precision < 0 || axis.precision >= 20)
         warnings.push(t('Precision value is unusual.'));
-    if (axis.accuracy < 0.0000001 || axis.accuracy >= 1)
+    if (axis.accuracy < 0.0000001 || axis.accuracy > 1)
         warnings.push(t('Accuracy value is unusual.'));
     function getTooltip(key) {
         if (!isXYZ)
@@ -51,26 +51,26 @@ const MachineAxisEditor = (props) => {
         const units = key === 'precision' ? t('digits') : 'mm';
         const tip = getTooltip(key);
         return (React.createElement(Grid, { item: true, xs: 6 },
-            React.createElement(NumericInput, { id: "min", label: name, variant: "outlined", integersOnly: key === 'precision', numericValue: axis[key], onChangeNumericValue: (v) => props.onChanged(Object.assign(Object.assign({}, axis), { [key]: v })), InputProps: {
-                    startAdornment: tip && (React.createElement(InputAdornment, { position: "start" },
+            React.createElement(NumericInput, { id: 'min', label: name, variant: 'outlined', integersOnly: key === 'precision', numericValue: axis[key], onChangeNumericValue: (v) => props.onChanged(Object.assign(Object.assign({}, axis), { [key]: v })), InputProps: {
+                    startAdornment: tip && (React.createElement(InputAdornment, { position: 'start' },
                         React.createElement(Tooltip, { title: tip },
-                            React.createElement(IconButton, { "aria-label": name, size: "small", disableFocusRipple: true },
+                            React.createElement(IconButton, { "aria-label": name, size: 'small', disableFocusRipple: true },
                                 React.createElement(FontAwesomeIcon, { color: theme.palette.info.light, icon: faQuestionCircle }))))),
-                    endAdornment: React.createElement(InputAdornment, { position: "end" }, units),
+                    endAdornment: React.createElement(InputAdornment, { position: 'end' }, units),
                 } })));
     }
     return (React.createElement(Grid, { container: true, spacing: 2 },
         React.createElement(Grid, { item: true, xs: 12 },
-            React.createElement(Typography, { variant: "h5" },
+            React.createElement(Typography, { variant: 'h5' },
                 props.axis.name,
                 React.createElement(Trans, null, "-Axis"))),
         renderCell('min'),
         renderCell('max'),
         renderCell('accuracy'),
         renderCell('precision'),
-        warnings.length > 0 && React.createElement(AlertList, null, warnings.map(w => {
-            return React.createElement(Alert, { key: "w", severity: "warning" }, w);
-        }))));
+        warnings.length > 0 && (React.createElement(AlertList, null, warnings.map((w) => {
+            return (React.createElement(Alert, { key: 'w', severity: 'warning' }, w));
+        })))));
 };
 export default MachineAxisEditor;
 //# sourceMappingURL=MachineAxisEditor.js.map

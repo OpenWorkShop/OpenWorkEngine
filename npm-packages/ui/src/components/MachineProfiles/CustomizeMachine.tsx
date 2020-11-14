@@ -22,7 +22,8 @@ import { Grid, CircularProgress, Typography, Button, useTheme } from '@material-
 import { Trans } from 'react-i18next';
 
 interface ICustomizeMachineProps {
-  onCustomized: (machine: ICustomizedMachine) => void;
+  onCustomized: (machine?: ICustomizedMachine) => void;
+  tip?: React.ReactNode;
 }
 
 const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props) => {
@@ -59,10 +60,16 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
 
   if (error) log.error('load profile error', error.networkError);
 
+  function onCustomized(machine?: ICustomizedMachine) {
+    log.debug('customized machine', machine);
+    setCustomizedMachine(machine);
+    props.onCustomized(machine);
+  }
+
   function onSelectedMachineProfile(mp: MachineSearchResultFragment | undefined) {
     log.debug('machine profile selection', mp);
     setMachineProfile(mp);
-    setCustomizedMachine(undefined);
+    onCustomized(undefined);
 
     if (mp && (!loadedMachineProfile || loadedMachineProfile.id !== mp.id)) {
       getCompleteMachineProfile({ variables: { id: mp.id } });
@@ -70,7 +77,6 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
   }
 
   function onCreatingMachineProfile(firmware: MachineFirmwareMinimalFragment, profile: ICustomizedMachineProfile) {
-    log.debug('custom machine selection', firmware, profile);
     const defaultAxis: MachineAxisPropsFragment = {
       id: '',
       name: AxisName.X,
@@ -79,7 +85,7 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
       accuracy: 0.01,
       precision: 2,
     };
-    setCustomizedMachine({
+    onCustomized({
       firmware: firmware,
       profile: profile,
       name: profile.model,
@@ -97,9 +103,7 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
       log.error('missing machine');
       return;
     }
-    const cm = { ...customizedMachine, parts: _.cloneDeep(parts) };
-    setCustomizedMachine(cm);
-    props.onCustomized(cm);
+    onCustomized({ ...customizedMachine, parts: _.cloneDeep(parts) });
   }
 
   function onChangedAxes(axes: MachineAxes) {
@@ -108,14 +112,12 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
       log.error('missing machine');
       return;
     }
-    const cm = { ...customizedMachine, axes: _.cloneDeep(axes) };
-    setCustomizedMachine(cm);
-    props.onCustomized(cm);
+    onCustomized({ ...customizedMachine, axes: _.cloneDeep(axes) });
   }
 
   function startOver() {
     setMachineProfile(undefined);
-    setCustomizedMachine(undefined);
+    onCustomized(undefined);
   }
 
   return (
@@ -131,13 +133,9 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
             {!customizedMachine && searchMachines && <Trans>Can't find your machine?</Trans>}
             {!customizedMachine && !searchMachines && <Trans>Search the Community Catalog</Trans>}
           </Button>
-          {!customizedMachine && searchMachines && (
+          {!customizedMachine && searchMachines && props.tip && (
             <div>
-              <em>
-                <Trans>
-                  Most CNC and 3D printing machines are supported, even if they are not in the community catalog...
-                </Trans>
-              </em>
+              <Typography variant='subtitle2'>{props.tip}</Typography>
             </div>
           )}
         </div>
@@ -154,7 +152,7 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
           <Typography variant='h5'>
             <Trans>Customize your Machine</Trans>
           </Typography>
-          <Typography variant='subtitle1'>
+          <Typography variant='subtitle2'>
             <Trans>
               Default parts are pre-selected below... but please change them if you have upgraded, modified, or used a
               non-standard kit.

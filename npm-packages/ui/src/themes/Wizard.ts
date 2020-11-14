@@ -6,7 +6,7 @@ import 'typeface-cabin';
 const headerFont = 'Cabin';
 const bodyFont = 'Roboto';
 
-export default createMuiTheme({
+const theme = createMuiTheme({
   palette: {
     primary: Colors.purple,
     secondary: Colors.brown,
@@ -22,20 +22,27 @@ export default createMuiTheme({
     fontFamily: [bodyFont, headerFont, 'sans-serif'].join(','),
     h1: {
       fontFamily: headerFont,
+      // menu bar...
+      fontSize: '1.5rem',
     },
     h2: {
       fontFamily: headerFont,
+      fontSize: '2.2rem',
     },
     h3: {
       fontFamily: headerFont,
+      fontSize: '2.5rem',
     },
     h4: {
+      fontSize: '2rem',
       fontFamily: headerFont,
     },
     h5: {
+      fontSize: '1.5rem',
       fontFamily: headerFont,
     },
     h6: {
+      fontSize: '1rem',
       fontFamily: headerFont,
     },
     button: {
@@ -47,5 +54,15 @@ export default createMuiTheme({
     body2: {
       fontFamily: bodyFont,
     },
+    subtitle1: {
+      fontFamily: bodyFont,
+      fontWeight: 'bold',
+    },
+    subtitle2: {
+      fontFamily: bodyFont,
+      fontStyle: 'italic',
+    },
   },
 });
+
+export default theme;

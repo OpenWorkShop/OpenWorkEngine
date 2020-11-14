@@ -27,8 +27,8 @@ const MachineAxisEditor: React.FunctionComponent<IMachineAxisEditorProps> = (pro
   const isXYZ = isXY || isZ;
   const warnings = [];
 
-  if (axis.precision < 1 || axis.precision >= 20) warnings.push(t('Precision value is unusual.'));
-  if (axis.accuracy < 0.0000001 || axis.accuracy >= 1) warnings.push(t('Accuracy value is unusual.'));
+  if (axis.precision < 0 || axis.precision >= 20) warnings.push(t('Precision value is unusual.'));
+  if (axis.accuracy < 0.0000001 || axis.accuracy > 1) warnings.push(t('Accuracy value is unusual.'));
 
   function getTooltip(key: AxisKey) {
     if (!isXYZ) return undefined;

@@ -1,7 +1,7 @@
 import { getMachinePartTypeTranslationKey } from '@openworkshop/lib/api/Machines/MachinePartType';
 import * as React from 'react';
 import _ from 'lodash';
-import { FormControl, InputLabel, MenuItem, Select, makeStyles, createStyles, FormHelperText, Checkbox, FormControlLabel } from '@material-ui/core';
+import { FormControl, InputLabel, MenuItem, Select, makeStyles, createStyles, FormHelperText, Checkbox, FormControlLabel, } from '@material-ui/core';
 import { useTranslation, Trans } from 'react-i18next';
 import useLogger from '@openworkshop/lib/utils/logging/UseLogger';
 const useStyles = makeStyles((theme) => createStyles({
@@ -22,9 +22,9 @@ const ChooseMachinePart = (props) => {
     const partType = firstPart.partType;
     const partTypeName = t(getMachinePartTypeTranslationKey(partType));
     const isSingle = props.partGroup.length === 1;
-    const isOptional = _.every(props.partGroup, p => p.optional);
+    const isOptional = _.every(props.partGroup, (p) => p.optional);
     const fallbackDefaultPart = isOptional ? undefined : firstPart;
-    const defaultPart = (_a = _.find(props.partGroup, p => p.isDefault)) !== null && _a !== void 0 ? _a : fallbackDefaultPart;
+    const defaultPart = (_a = _.find(props.partGroup, (p) => p.isDefault)) !== null && _a !== void 0 ? _a : fallbackDefaultPart;
     const defaultPartId = defaultPart ? defaultPart.id : null;
     const selectedPartId = (_b = props.selectedPartId) !== null && _b !== void 0 ? _b : defaultPartId;
     log.trace('selecting part type', partType, defaultPartId, selectedPartId);
@@ -42,14 +42,14 @@ const ChooseMachinePart = (props) => {
     return (React.createElement(FormControl, { required: !isOptional, className: classes.formControl },
         React.createElement(InputLabel, { shrink: true, id: `${partType}-label` }, partTypeName),
         React.createElement(Select, { labelId: `${partType}-label`, id: partType, displayEmpty: true, value: selectedPartId !== null && selectedPartId !== void 0 ? selectedPartId : '', onChange: (e) => onSelected(e.target.value), className: classes.selectEmpty },
-            isOptional && React.createElement(MenuItem, { value: "" },
+            isOptional && (React.createElement(MenuItem, { value: '' },
                 React.createElement("em", null,
-                    React.createElement(Trans, null, "None"))),
-            props.partGroup.map(part => {
-                return React.createElement(MenuItem, { key: part.id, value: part.id }, part.title);
+                    React.createElement(Trans, null, "None")))),
+            props.partGroup.map((part) => {
+                return (React.createElement(MenuItem, { key: part.id, value: part.id }, part.title));
             })),
-        !isOptional && React.createElement(FormHelperText, null,
-            React.createElement(Trans, null, "Required"))));
+        !isOptional && (React.createElement(FormHelperText, null,
+            React.createElement(Trans, null, "Required")))));
 };
 export default ChooseMachinePart;
 //# sourceMappingURL=ChooseMachinePart.js.map
