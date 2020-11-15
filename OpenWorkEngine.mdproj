@@ -17,6 +17,7 @@
     <Content Include=".npmrc" />
     <Content Include=".travis.yml" />
     <Content Include="ci\build-npm-package.sh" />
+    <Content Include="ci\release.sh" />
     <Content Include="README.md" />
     <None Remove="$(PackageRoot)**" />
     <None Include="$(PackageRoot)**" Exclude="$(PackageRoot)*\node_modules\**;$(PackageRoot)ui\dist\**;$(PackageRoot)lib\dist\**;" />

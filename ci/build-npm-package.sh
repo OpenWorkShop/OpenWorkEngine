@@ -8,3 +8,4 @@ yarn run clean
 yarn run link-internal
 yarn install
 yarn run build
+cd ../../
