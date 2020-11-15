@@ -11,6 +11,6 @@ fi
 
 git checkout $TRAVIS_BRANCH
 
-git tag $GIT_TAG_VERSION -a -m "Tagging version v$GIT_TAG_VERSION"
+git tag $GIT_TAG_VERSION -a -m "Tagging version v$GIT_TAG_VERSION" --force
 git push origin $TRAVIS_BRANCH 2>&1
 git push origin $TRAVIS_BRANCH --tags 2>&1
