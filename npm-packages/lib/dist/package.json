@@ -1,12 +1,12 @@
 {
   "name": "@openworkshop/lib",
-  "version": "1.0.2",
+  "version": "1.0.6",
   "description": "API & utilities for OWS apps",
   "main": "./index.js",
   "module": "./index.es.js",
   "jsnext:main": "./index.es.js",
   "types": "./index.d.ts",
-  "scripts": {  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/OpenWorkShop/OpenWorkEngine.git"
