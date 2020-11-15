@@ -12,7 +12,8 @@
     "reinstall": "yarn run uninstall && yarn",
     "rebuild": "yarn run reinstall && yarn run build",
     "generate": "node ./generate-icons.js",
-    "link": "yarn link @openworkshop/lib && yarn link @material-ui/core && yarn link @material-ui/lab && yarn link react && yarn link @types/react && yarn link prop-types && cd dist && yarn link",
+    "link-internal": "yarn link @openworkshop/lib && cd dist && yarn link",
+    "link-dev": "yarn link @material-ui/core && yarn link @material-ui/lab && yarn link react && yarn link @types/react && yarn link prop-types && yarn run link-internal",
     "dev": "tsc -b -w",
     "lint": "eslint src --ext .ts,.tsx --fix",
     "build": "yarn lint && tsc -b --verbose --force && rollup -c"
@@ -38,7 +39,7 @@
     "@fortawesome/react-fontawesome": "^0.1.11",
     "@material-ui/core": "^4.11.0",
     "@material-ui/lab": "^4.0.0-alpha.56",
-    "@openworkshop/lib": "file:../lib/dist",
+    "@openworkshop/lib": "^1.0.5",
     "@reduxjs/toolkit": "^1.4.0",
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-node-resolve": "^10.0.0",

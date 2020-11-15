@@ -1,22 +1,44 @@
 branches:
-  # PRs are always built. So we exclude branch builds other than master to prevent double-builds.
-  # https://stackoverflow.com/questions/31882306/how-to-configure-travis-ci-to-build-pull-requests-merges-to-master-w-o-redunda
   only:
     - master
 
-# Job queue; see below for default job settings.
 jobs:
   include:
-    - name: "lib"
+    - stage: "build NPM packages"
       language: node_js
+      node_js: "14"
       script:
-        - ./ci/build-npm-package.sh lib
+        - "./ci/build-npm-package.sh lib"
+        - "./ci/build-npm-package.sh ui"
+    - stage: "Deploy"
+      name: "lib"
+      before_deploy:
+        - cd ./npm-packages/lib/dist
+      deploy:
+        provider: npm
+        email: zane@claes.biz
+        api_key:
+          secure: yy7SJ0fAaxRnsdtnPHu3jM50jE180xkWjHcWxT52om6EKSH/rrAsndG6tm+3HjeA3m0dbcqkrDrRyk6Y7Uxr9gvNMXWSsVhVi7YCdHAG9lV+PwOq6mTlorw9QhaEhqSOCEKs/yaiUqkeNsp/duvgj8+mUrGCtqHdMFi8HhcrYIkD31zIPb1OsAc+ewKhxjovpLXaw9A7n8lH5Ebk6/iWuhCikkzPRENpDZo1XFDsPGa/l7zWYyhCyg0yyqXEdofwFFz/Y/XWwiOB/N2MmCWLTiaumDttAzFpBjQRl0ZAcBC3qFxQcBSBpH8dbxSQwwCQXtJr5JgiaPbpja/A2VTWZRrdAY+jZWSNhBkf2i6g2atUdrmIfeiwn1qDO4F6TAd3eQTnw+EVA0akQfjkeQqudQaSVVcm9JLr7FUPVxSi7VKS1bxQWyVK3JuwrL9FTTKuyMG4j1VGM27+nAPujPtF6zE2dWoAEQNGyvNxM/54hZRNfsgoZfBPTZw7nFJIucA16bjXYQqN+RytmKpmmQy1VSQBURrArDM86TaZRAearuKchvx+a5dpqiJRwXOsVng5Be+i+zZgqbUpeqK4HTDHf/YFENFreW0kVejpLSauINxF7fOyVL8AjihGxuh136QTOse8YOCQDvBenmXfGgeAn666IaD/JNmvAs6NSqGYg5c=
+        on:
+          branch: master
+          tags: true
+          repo: OpenWorkShop/OpenWorkEngine
+        skip_cleanup: "true"
     - name: "ui"
-      language: node_js
-      script:
-        - ./ci/build-npm-package.sh ui
+      before_deploy:
+        - cd ./npm-packages/ui/dist
+      deploy:
+        provider: npm
+        email: zane@claes.biz
+        api_key:
+          secure: yy7SJ0fAaxRnsdtnPHu3jM50jE180xkWjHcWxT52om6EKSH/rrAsndG6tm+3HjeA3m0dbcqkrDrRyk6Y7Uxr9gvNMXWSsVhVi7YCdHAG9lV+PwOq6mTlorw9QhaEhqSOCEKs/yaiUqkeNsp/duvgj8+mUrGCtqHdMFi8HhcrYIkD31zIPb1OsAc+ewKhxjovpLXaw9A7n8lH5Ebk6/iWuhCikkzPRENpDZo1XFDsPGa/l7zWYyhCyg0yyqXEdofwFFz/Y/XWwiOB/N2MmCWLTiaumDttAzFpBjQRl0ZAcBC3qFxQcBSBpH8dbxSQwwCQXtJr5JgiaPbpja/A2VTWZRrdAY+jZWSNhBkf2i6g2atUdrmIfeiwn1qDO4F6TAd3eQTnw+EVA0akQfjkeQqudQaSVVcm9JLr7FUPVxSi7VKS1bxQWyVK3JuwrL9FTTKuyMG4j1VGM27+nAPujPtF6zE2dWoAEQNGyvNxM/54hZRNfsgoZfBPTZw7nFJIucA16bjXYQqN+RytmKpmmQy1VSQBURrArDM86TaZRAearuKchvx+a5dpqiJRwXOsVng5Be+i+zZgqbUpeqK4HTDHf/YFENFreW0kVejpLSauINxF7fOyVL8AjihGxuh136QTOse8YOCQDvBenmXfGgeAn666IaD/JNmvAs6NSqGYg5c=
+        on:
+          branch: master
+          tags: true
+          repo: OpenWorkShop/OpenWorkEngine
+        skip_cleanup: "true"
 
 dist: bionic
+language: shell
 group: travis_latest
 os: linux
-node_js: ["14"]

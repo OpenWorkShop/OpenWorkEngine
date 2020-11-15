@@ -12,7 +12,8 @@
     "reinstall": "yarn run uninstall && yarn",
     "rebuild": "yarn run reinstall && yarn run build",
     "graphql": "graphql-codegen --config codegen.yml",
-    "link": "yarn link react && yarn link @types/react && yarn link prop-types && cd dist && yarn link",
+    "link-internal": "cd dist && yarn link",
+    "link-dev": "yarn link react && yarn link @types/react && yarn link prop-types && yarn run link-internal",
     "dev": "concurrently \"yarn graphql-codegen --watch\" \"tsc -b -w\"",
     "lint": "eslint src --ext .ts,.tsx --fix",
     "build": "yarn lint && tsc -b --verbose --force && rollup -c"
