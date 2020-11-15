@@ -1,7 +1,3 @@
-branches:
-  only:
-    - master
-
 jobs:
   include:
     - stage: "build NPM packages"
@@ -10,8 +6,20 @@ jobs:
       script:
         - "./ci/build-npm-package.sh lib"
         - "./ci/build-npm-package.sh ui"
+      workspaces:
+        create:
+          name: npm-packages
+          paths:
+            - "./npm-packages/lib/dist"
+            - "./npm-packages/ui/dist"
     - stage: "Deploy"
       name: "lib"
+      workspaces:
+        use:
+          - npm-packages
+      script:
+        - echo "Deploying Lib v${TRAVIS_TAG}"
+        - ls -la ./npm-packages/lib/dist
       before_deploy:
         - cd ./npm-packages/lib/dist
       deploy:
@@ -22,9 +30,16 @@ jobs:
         on:
           branch: master
           tags: true
+          condition: "$TRAVIS_TAG =~ ^[0-9]+.[0-9]+.[0-9]+"
           repo: OpenWorkShop/OpenWorkEngine
         skip_cleanup: "true"
     - name: "ui"
+      workspaces:
+        use:
+          - npm-packages
+      script:
+        - echo "Deploying UI v${TRAVIS_TAG}"
+        - ls -la ./npm-packages/ui/dist
       before_deploy:
         - cd ./npm-packages/ui/dist
       deploy:
@@ -35,6 +50,7 @@ jobs:
         on:
           branch: master
           tags: true
+          condition: "$TRAVIS_TAG =~ ^[0-9]+.[0-9]+.[0-9]+"
           repo: OpenWorkShop/OpenWorkEngine
         skip_cleanup: "true"
 
