@@ -7,7 +7,7 @@
     "src"
   ],
   "scripts": {
-    "clean": "pkg=$(cat ./dist/package.json) && rm -rf ./dist && mkdir ./dist && echo $pkg > ./dist/package.json",
+    "clean": "rm -rf ./dist && mkdir ./dist && cp ./package.prod.json ./dist/package.json",
     "uninstall": "rm -rf ./node_modules && rm -rf yarn.lock",
     "reinstall": "yarn run uninstall && yarn",
     "rebuild": "yarn run reinstall && yarn run build",
@@ -19,31 +19,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OpenWorkShop/OpenWorkShop.git"
+    "url": "git+https://github.com/OpenWorkShop/OpenWorkEngine.git"
   },
   "author": "OpenWorkShop, Inc.",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/OpenWorkShop/OpenWorkShop/issues"
+    "url": "https://github.com/OpenWorkShop/OpenWorkEngine/issues"
   },
-  "homepage": "https://github.com/OpenWorkShop/OpenWorkShop#readme",
+  "homepage": "https://openwork.shop",
   "dependencies": {},
-  "peerDependiences": {
-    "@apollo/client": "^3.2.5",
-    "graphql": "^15.4.0",
-    "graphql-tag": "^2.11.0",
-    "lodash": "^4.17.20",
-    "i18next": "^19.8.2",
-    "i18next-browser-languagedetector": "^6.0.1",
-    "i18next-http-backend": "^1.0.21",
-    "oidc-client": "^1.10.1",
-    "react": "16.11.0",
-    "js-logger": "^1.6.0",
-    "react-i18next": "^11.7.3",
-    "redux-logger": "^3.0.6",
-    "redux-oidc": "^4.0.0-beta1",
-    "redux-thunk": "^2.3.0"
-  },
+  "peerDependiences": {},
   "devDependencies": {
     "@apollo/client": "^3.2.5",
     "@graphql-codegen/cli": "1.19.1",

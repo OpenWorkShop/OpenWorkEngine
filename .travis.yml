@@ -7,13 +7,16 @@ branches:
 # Job queue; see below for default job settings.
 jobs:
   include:
-    - language: node_js
-      name: "lib"
-      node_js:
-        - "14"
+    - name: "lib"
+      language: node_js
       script:
         - ./ci/build-npm-package.sh lib
+    - name: "ui"
+      language: node_js
+      script:
+        - ./ci/build-npm-package.sh ui
 
 dist: bionic
 group: travis_latest
 os: linux
+node_js: ["14"]
