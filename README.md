@@ -1,5 +1,7 @@
 # OpenWorkEngine
 
+[![Build Status](https://travis-ci.com/OpenWorkShop/OpenWorkEngine.svg?branch=master)](https://travis-ci.com/OpenWorkShop/OpenWorkEngine)
+
 Monorepo containing NPM packages and core libraries for OpenWorkShop
 
 ## ./npm-packages

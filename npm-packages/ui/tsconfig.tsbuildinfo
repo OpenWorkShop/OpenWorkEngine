@@ -1927,7 +1927,7 @@
         "affectsGlobalScope": false
       },
       "./src/themes/wizard.ts": {
-        "version": "6332a47b9bf0b3d373350255376671ca75f0e06baf8119fab2fc9ccf9528780e",
+        "version": "8e5741087805ce0cce923bd3aceac0fc449e10f9c0d20e19fa2550680ad485fe",
         "signature": "1119a6f4cced4e558a95e293432489924569fa562fa5dc2f1d8f5e339fca6fab",
         "affectsGlobalScope": false
       },
@@ -3277,8 +3277,8 @@
         "affectsGlobalScope": false
       },
       "../lib/dist/api/graphql.d.ts": {
-        "version": "392129e2dd220bf8f38a19faacedb57601d7987c8bdce99478cd0e3e84b2548a",
-        "signature": "392129e2dd220bf8f38a19faacedb57601d7987c8bdce99478cd0e3e84b2548a",
+        "version": "87b9b992822aeb7872b980d2900e25fb539aa22d3d3e2d682aedd414a59e509e",
+        "signature": "87b9b992822aeb7872b980d2900e25fb539aa22d3d3e2d682aedd414a59e509e",
         "affectsGlobalScope": false
       },
       "../../../openworkshop/app/node_modules/@material-ui/lab/alert/alert.d.ts": {
@@ -3577,8 +3577,8 @@
         "affectsGlobalScope": false
       },
       "../lib/dist/utils/logging/uselogger.d.ts": {
-        "version": "08c35c830a9c5365c36bfa810396e9dbd96a21720bef323fe8d656b3a5901900",
-        "signature": "08c35c830a9c5365c36bfa810396e9dbd96a21720bef323fe8d656b3a5901900",
+        "version": "546ed0ef9f9624712016542bb8cf676c20861164506766365db86eac4d197a4b",
+        "signature": "546ed0ef9f9624712016542bb8cf676c20861164506766365db86eac4d197a4b",
         "affectsGlobalScope": false
       },
       "./node_modules/i18next/index.d.ts": {
@@ -3597,8 +3597,8 @@
         "affectsGlobalScope": false
       },
       "../lib/dist/utils/device/devicemotion.d.ts": {
-        "version": "d5822f6b637f14e6c7465437e7099411cea4e34afa738922d35d1cd1c953d76a",
-        "signature": "d5822f6b637f14e6c7465437e7099411cea4e34afa738922d35d1cd1c953d76a",
+        "version": "eae512f970e0d5edf05ce5b22bd86d1f92112e473c5f04167e28994e161cee45",
+        "signature": "eae512f970e0d5edf05ce5b22bd86d1f92112e473c5f04167e28994e161cee45",
         "affectsGlobalScope": false
       },
       "../lib/dist/utils/device/deviceorientation.d.ts": {
@@ -3747,17 +3747,17 @@
         "affectsGlobalScope": false
       },
       "./src/components/images/backgroundimage.ts": {
-        "version": "2f6b4b3c3a41dd33a86b5cd2b083ccdc4bda92caad2d4f0e76beda383eae6244",
+        "version": "70770ae7c41ba91d1eaba3a44641d02d3550220ce45ca95dfd3080e2e51099ee",
         "signature": "15f33113bd685b47cfcffe8f894f184f0fad7b649b75881c707c4c78331ddff1",
         "affectsGlobalScope": false
       },
       "./src/components/images/favicon32.ts": {
-        "version": "65609583b920541e9935594cb48dcd12e7f70feb77ee39cb42970d1288b1ac91",
+        "version": "ddc3e92eaa49cf965cf0d56d8a1b4c277d01a8bef0f137683beca977c38e5414",
         "signature": "c0ac9c68b2abff3bfb78e08b5938686d08efa65c77d8088046fb540c6f203308",
         "affectsGlobalScope": false
       },
       "./src/components/images/logo.ts": {
-        "version": "4892a45811a7145aefb9e15a3057563b69cb257cae2bf1f2f579ed4441a28f77",
+        "version": "2d241e5ff465a808d2bd824068a073f5eaa05cc4bae39e3089a96e3c198ee644",
         "signature": "71136d1aa3344c8b4600c378a4a409939b5a057ab32e112c34acfe38e0b98a70",
         "affectsGlobalScope": false
       },
@@ -3767,7 +3767,7 @@
         "affectsGlobalScope": false
       },
       "./src/components/brand/poweredby.tsx": {
-        "version": "c9a7dafb0cd1b40dc0ecea15bb469a212861a8ddbf76471945399c173c02f0c3",
+        "version": "ea39135a94bf7eda89ba11319f102925929662063e185655589b4b1b145c4cc9",
         "signature": "98065778119a2a59a0d4c658fa9e82faccb7f840d18bb964d6eda48050dafae2",
         "affectsGlobalScope": false
       },
@@ -3782,8 +3782,8 @@
         "affectsGlobalScope": false
       },
       "../lib/dist/api/machines/machineparttype.d.ts": {
-        "version": "3b968a5975bbd832c4ef5be7afee53d3375884fd73f160c753cd7ba4ba0bba25",
-        "signature": "3b968a5975bbd832c4ef5be7afee53d3375884fd73f160c753cd7ba4ba0bba25",
+        "version": "291360f13e1321bc38f40049182b8eee71e6e70ec7ed244b3a9462b687c4f2f1",
+        "signature": "291360f13e1321bc38f40049182b8eee71e6e70ec7ed244b3a9462b687c4f2f1",
         "affectsGlobalScope": false
       },
       "./node_modules/@types/lodash/common/common.d.ts": {
@@ -3857,8 +3857,8 @@
         "affectsGlobalScope": false
       },
       "../lib/dist/api/machines/machinespectype.d.ts": {
-        "version": "513d8efbca72a14ec9ab4044f5c3b29c05fa26e18eb972c34dabd7c81c9f7863",
-        "signature": "513d8efbca72a14ec9ab4044f5c3b29c05fa26e18eb972c34dabd7c81c9f7863",
+        "version": "936f857c111f13fe9ec4a85fc73fe8acc191ac161b12554095aac489f7e13317",
+        "signature": "936f857c111f13fe9ec4a85fc73fe8acc191ac161b12554095aac489f7e13317",
         "affectsGlobalScope": false
       },
       "./src/components/machineprofiles/machinespeclist.tsx": {
@@ -3892,13 +3892,13 @@
         "affectsGlobalScope": false
       },
       "../lib/dist/api/machines/customizedmachine.d.ts": {
-        "version": "6c8fd45e028cc1cdb7b3aef766cf379349f62cc384a9eae1e6087f9184adf50f",
-        "signature": "6c8fd45e028cc1cdb7b3aef766cf379349f62cc384a9eae1e6087f9184adf50f",
+        "version": "21754b56747e76281f2eb834a740907ebb34cbf596187b7c4021f7943e25ebf7",
+        "signature": "21754b56747e76281f2eb834a740907ebb34cbf596187b7c4021f7943e25ebf7",
         "affectsGlobalScope": false
       },
       "../lib/dist/api/machines/machinecontrollertype.d.ts": {
-        "version": "88eb17ff380a275c47942cf4f885e7545ccd5f7cc780554a52747d920a53703a",
-        "signature": "88eb17ff380a275c47942cf4f885e7545ccd5f7cc780554a52747d920a53703a",
+        "version": "12052bdb6a71da06bb385d3205e1dc4683bc17734c99afa7f2903a423235be0c",
+        "signature": "12052bdb6a71da06bb385d3205e1dc4683bc17734c99afa7f2903a423235be0c",
         "affectsGlobalScope": false
       },
       "../lib/dist/api/machines/baudrate.d.ts": {
@@ -3907,7 +3907,7 @@
         "affectsGlobalScope": false
       },
       "./src/components/machineprofiles/createmachineprofile.tsx": {
-        "version": "5d92e40fdc9afd6252312eabda719703434cb80acecd6805ac4f7e22621cf197",
+        "version": "d67e68f8d859d821905bbe28369ac3879fb7c433d583e28b25c2ec92422bd209",
         "signature": "2560f5e1a37fff493e29eb57f85d6c3df07823826f3cbd698016fcb84157c79e",
         "affectsGlobalScope": false
       },
@@ -3922,12 +3922,12 @@
         "affectsGlobalScope": false
       },
       "./src/components/machineprofiles/customizemachine.tsx": {
-        "version": "fd638674b88e1158585f8faca1cd3126ea5d56d0a3b1e45741cca75a266d2014",
+        "version": "913338f714edb29f459e5e6f3bd9260bf3b80aec26aff01ddfc9f51e031deca0",
         "signature": "e8e3a37bb6b1b53d7ce8a23e0d97755a0e850bfb6d6e5ea7fa24a3590f87e63e",
         "affectsGlobalScope": false
       },
       "./src/themes/cabin.ts": {
-        "version": "c3ef2cf92a20df3778230f5d3c8a824ce47a2309da502a7169680e8217fd21d3",
+        "version": "1e242bda49c7edf1e09bd6e91b1ce4ae5c24e8923832efd1cbc4990f991565e2",
         "signature": "cbcedd0a086f7d7bf5d518137f9106da70a9b07c520235f1c40c484d6afa685d",
         "affectsGlobalScope": false
       },
@@ -4035,7 +4035,6 @@
       "composite": true,
       "allowSyntheticDefaultImports": true,
       "jsx": 2,
-      "watch": true,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {
@@ -9845,9 +9844,9 @@
       ],
       "../../../openworkshop/app/node_modules/@material-ui/core/popper/popper.d.ts": [
         "../../../openworkshop/app/node_modules/@material-ui/core/index.d.ts",
-        "../../../openworkshop/app/node_modules/@material-ui/core/node_modules/popper.js/index.d.ts",
         "../../../openworkshop/app/node_modules/@material-ui/core/portal/index.d.ts",
-        "../../../openworkshop/app/node_modules/@types/react/index.d.ts"
+        "../../../openworkshop/app/node_modules/@types/react/index.d.ts",
+        "../../../openworkshop/app/node_modules/popper.js/index.d.ts"
       ],
       "../../../openworkshop/app/node_modules/@material-ui/core/portal/index.d.ts": [
         "../../../openworkshop/app/node_modules/@material-ui/core/portal/portal.d.ts"

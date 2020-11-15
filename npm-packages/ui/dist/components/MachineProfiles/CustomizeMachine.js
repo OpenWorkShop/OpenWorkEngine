@@ -101,7 +101,7 @@ const CustomizeMachine = (props) => {
                     !customizedMachine && searchMachines && React.createElement(Trans, null, "Can't find your machine?"),
                     !customizedMachine && !searchMachines && React.createElement(Trans, null, "Search the Community Catalog")),
                 !customizedMachine && searchMachines && props.tip && (React.createElement("div", null,
-                    React.createElement(Typography, { variant: "subtitle2" }, props.tip)))),
+                    React.createElement(Typography, { variant: 'subtitle2' }, props.tip)))),
             !searchMachines && React.createElement(CreateMachineProfile, { onChanged: onCreatingMachineProfile })),
         loading && (React.createElement(Grid, { item: true, xs: 12 },
             React.createElement(CircularProgress, { size: 32 }),

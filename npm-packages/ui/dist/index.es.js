@@ -3,7 +3,7 @@ import { Memo, ForwardRef, isFragment } from 'react-is';
 import React, { forwardRef, createElement, isValidElement, useRef, useState, useEffect, useCallback, useLayoutEffect, useMemo, useDebugValue, Children, cloneElement, memo, useImperativeHandle, createContext, useContext, Component, Fragment, useReducer, Suspense } from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import ReactDOM, { findDOMNode, createPortal } from 'react-dom';
-import stringify from 'fast-json-stable-stringify';
+import stringify$1 from 'fast-json-stable-stringify';
 import Observable from 'zen-observable';
 import gql from 'graphql-tag';
 import OidcClient from 'oidc-client';
@@ -2144,6 +2144,10 @@ function createGenerateClassName() {
 
     return "".concat(seedPrefix).concat(suffix);
   };
+}
+
+function createStyles(styles) {
+  return styles;
 }
 
 /* eslint-disable no-restricted-syntax */
@@ -6576,6 +6580,20 @@ var withStyles = function withStyles(stylesOrCreator) {
   };
 };
 
+// To remove in v5
+
+function createStyles$1(styles) {
+  // warning(
+  //   warnOnce,
+  //   [
+  //     'Material-UI: createStyles from @material-ui/core/styles is deprecated.',
+  //     'Please use @material-ui/styles/createStyles',
+  //   ].join('\n'),
+  // );
+  // warnOnce = true;
+  return createStyles(styles);
+}
+
 var defaultTheme = createMuiTheme();
 
 function makeStyles$1(stylesOrCreator) {
@@ -6632,7 +6650,7 @@ const purple = {
 
 const headerFont = 'Cabin';
 const bodyFont = 'Roboto';
-var theme = createMuiTheme({
+const theme = createMuiTheme({
     palette: {
         primary: purple,
         secondary: brown,
@@ -6648,20 +6666,27 @@ var theme = createMuiTheme({
         fontFamily: [bodyFont, headerFont, 'sans-serif'].join(','),
         h1: {
             fontFamily: headerFont,
+            // menu bar...
+            fontSize: '1.5rem',
         },
         h2: {
             fontFamily: headerFont,
+            fontSize: '2.2rem',
         },
         h3: {
             fontFamily: headerFont,
+            fontSize: '2.5rem',
         },
         h4: {
+            fontSize: '2rem',
             fontFamily: headerFont,
         },
         h5: {
+            fontSize: '1.5rem',
             fontFamily: headerFont,
         },
         h6: {
+            fontSize: '1rem',
             fontFamily: headerFont,
         },
         button: {
@@ -6672,6 +6697,14 @@ var theme = createMuiTheme({
         },
         body2: {
             fontFamily: bodyFont,
+        },
+        subtitle1: {
+            fontFamily: bodyFont,
+            fontWeight: 'bold',
+        },
+        subtitle2: {
+            fontFamily: bodyFont,
+            fontStyle: 'italic',
         },
     },
 });
@@ -21848,7 +21881,7 @@ function getStoreKeyName(fieldName, args, directives) {
     }
     var completeFieldName = fieldName;
     if (args) {
-        var stringifiedArgs = stringify(args);
+        var stringifiedArgs = stringify$1(args);
         completeFieldName += "(" + stringifiedArgs + ")";
     }
     if (directives) {
@@ -28063,7 +28096,6 @@ function useLazyQuery(query, options) {
     return useBaseQuery(query, options, true);
 }
 
-// @eslint-ignore
 var ApplyPolicy;
 (function (ApplyPolicy) {
     ApplyPolicy["AfterResolver"] = "AFTER_RESOLVER";
@@ -28276,9 +28308,323 @@ const GetCompleteMachineProfileDocument = gql `
  * @ignore - internal component.
  */
 
+var SuccessOutlinedIcon = createSvgIcon( /*#__PURE__*/createElement("path", {
+  d: "M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
+}), 'SuccessOutlined');
+
+/**
+ * @ignore - internal component.
+ */
+
+var ReportProblemOutlinedIcon = createSvgIcon( /*#__PURE__*/createElement("path", {
+  d: "M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"
+}), 'ReportProblemOutlined');
+
+/**
+ * @ignore - internal component.
+ */
+
+var ErrorOutlineIcon = createSvgIcon( /*#__PURE__*/createElement("path", {
+  d: "M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+}), 'ErrorOutline');
+
+/**
+ * @ignore - internal component.
+ */
+
+var InfoOutlinedIcon = createSvgIcon( /*#__PURE__*/createElement("path", {
+  d: "M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20, 12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10, 10 0 0,0 12,2M11,17H13V11H11V17Z"
+}), 'InfoOutlined');
+
+/**
+ * @ignore - internal component.
+ */
+
 var CloseIcon = createSvgIcon( /*#__PURE__*/createElement("path", {
   d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
 }), 'Close');
+
+var styles$t = function styles(theme) {
+  var getColor = theme.palette.type === 'light' ? darken : lighten;
+  var getBackgroundColor = theme.palette.type === 'light' ? lighten : darken;
+  return {
+    /* Styles applied to the root element. */
+    root: _extends({}, theme.typography.body2, {
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: 'transparent',
+      display: 'flex',
+      padding: '6px 16px'
+    }),
+
+    /* Styles applied to the root element if `variant="standard"` and `color="success"`. */
+    standardSuccess: {
+      color: getColor(theme.palette.success.main, 0.6),
+      backgroundColor: getBackgroundColor(theme.palette.success.main, 0.9),
+      '& $icon': {
+        color: theme.palette.success.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="standard"` and `color="info"`. */
+    standardInfo: {
+      color: getColor(theme.palette.info.main, 0.6),
+      backgroundColor: getBackgroundColor(theme.palette.info.main, 0.9),
+      '& $icon': {
+        color: theme.palette.info.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="standard"` and `color="warning"`. */
+    standardWarning: {
+      color: getColor(theme.palette.warning.main, 0.6),
+      backgroundColor: getBackgroundColor(theme.palette.warning.main, 0.9),
+      '& $icon': {
+        color: theme.palette.warning.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="standard"` and `color="error"`. */
+    standardError: {
+      color: getColor(theme.palette.error.main, 0.6),
+      backgroundColor: getBackgroundColor(theme.palette.error.main, 0.9),
+      '& $icon': {
+        color: theme.palette.error.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="outlined"` and `color="success"`. */
+    outlinedSuccess: {
+      color: getColor(theme.palette.success.main, 0.6),
+      border: "1px solid ".concat(theme.palette.success.main),
+      '& $icon': {
+        color: theme.palette.success.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="outlined"` and `color="info"`. */
+    outlinedInfo: {
+      color: getColor(theme.palette.info.main, 0.6),
+      border: "1px solid ".concat(theme.palette.info.main),
+      '& $icon': {
+        color: theme.palette.info.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="outlined"` and `color="warning"`. */
+    outlinedWarning: {
+      color: getColor(theme.palette.warning.main, 0.6),
+      border: "1px solid ".concat(theme.palette.warning.main),
+      '& $icon': {
+        color: theme.palette.warning.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="outlined"` and `color="error"`. */
+    outlinedError: {
+      color: getColor(theme.palette.error.main, 0.6),
+      border: "1px solid ".concat(theme.palette.error.main),
+      '& $icon': {
+        color: theme.palette.error.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="filled"` and `color="success"`. */
+    filledSuccess: {
+      color: '#fff',
+      fontWeight: theme.typography.fontWeightMedium,
+      backgroundColor: theme.palette.success.main
+    },
+
+    /* Styles applied to the root element if `variant="filled"` and `color="info"`. */
+    filledInfo: {
+      color: '#fff',
+      fontWeight: theme.typography.fontWeightMedium,
+      backgroundColor: theme.palette.info.main
+    },
+
+    /* Styles applied to the root element if `variant="filled"` and `color="warning"`. */
+    filledWarning: {
+      color: '#fff',
+      fontWeight: theme.typography.fontWeightMedium,
+      backgroundColor: theme.palette.warning.main
+    },
+
+    /* Styles applied to the root element if `variant="filled"` and `color="error"`. */
+    filledError: {
+      color: '#fff',
+      fontWeight: theme.typography.fontWeightMedium,
+      backgroundColor: theme.palette.error.main
+    },
+
+    /* Styles applied to the icon wrapper element. */
+    icon: {
+      marginRight: 12,
+      padding: '7px 0',
+      display: 'flex',
+      fontSize: 22,
+      opacity: 0.9
+    },
+
+    /* Styles applied to the message wrapper element. */
+    message: {
+      padding: '8px 0'
+    },
+
+    /* Styles applied to the action wrapper element if `action` is provided. */
+    action: {
+      display: 'flex',
+      alignItems: 'center',
+      marginLeft: 'auto',
+      paddingLeft: 16,
+      marginRight: -8
+    }
+  };
+};
+var defaultIconMapping = {
+  success: /*#__PURE__*/createElement(SuccessOutlinedIcon, {
+    fontSize: "inherit"
+  }),
+  warning: /*#__PURE__*/createElement(ReportProblemOutlinedIcon, {
+    fontSize: "inherit"
+  }),
+  error: /*#__PURE__*/createElement(ErrorOutlineIcon, {
+    fontSize: "inherit"
+  }),
+  info: /*#__PURE__*/createElement(InfoOutlinedIcon, {
+    fontSize: "inherit"
+  })
+};
+
+var _ref$1 = /*#__PURE__*/createElement(CloseIcon, {
+  fontSize: "small"
+});
+
+var Alert = /*#__PURE__*/forwardRef(function Alert(props, ref) {
+  var action = props.action,
+      children = props.children,
+      classes = props.classes,
+      className = props.className,
+      _props$closeText = props.closeText,
+      closeText = _props$closeText === void 0 ? 'Close' : _props$closeText,
+      color = props.color,
+      icon = props.icon,
+      _props$iconMapping = props.iconMapping,
+      iconMapping = _props$iconMapping === void 0 ? defaultIconMapping : _props$iconMapping,
+      onClose = props.onClose,
+      _props$role = props.role,
+      role = _props$role === void 0 ? 'alert' : _props$role,
+      _props$severity = props.severity,
+      severity = _props$severity === void 0 ? 'success' : _props$severity,
+      _props$variant = props.variant,
+      variant = _props$variant === void 0 ? 'standard' : _props$variant,
+      other = _objectWithoutProperties(props, ["action", "children", "classes", "className", "closeText", "color", "icon", "iconMapping", "onClose", "role", "severity", "variant"]);
+
+  return /*#__PURE__*/createElement(Paper$1, _extends({
+    role: role,
+    square: true,
+    elevation: 0,
+    className: clsx(classes.root, classes["".concat(variant).concat(capitalize(color || severity))], className),
+    ref: ref
+  }, other), icon !== false ? /*#__PURE__*/createElement("div", {
+    className: classes.icon
+  }, icon || iconMapping[severity] || defaultIconMapping[severity]) : null, /*#__PURE__*/createElement("div", {
+    className: classes.message
+  }, children), action != null ? /*#__PURE__*/createElement("div", {
+    className: classes.action
+  }, action) : null, action == null && onClose ? /*#__PURE__*/createElement("div", {
+    className: classes.action
+  }, /*#__PURE__*/createElement(IconButton$1, {
+    size: "small",
+    "aria-label": closeText,
+    title: closeText,
+    color: "inherit",
+    onClick: onClose
+  }, _ref$1)) : null);
+});
+process.env.NODE_ENV !== "production" ? Alert.propTypes = {
+  // ----------------------------- Warning --------------------------------
+  // | These PropTypes are generated from the TypeScript type definitions |
+  // |     To update them edit the d.ts file and run "yarn proptypes"     |
+  // ----------------------------------------------------------------------
+
+  /**
+   * The action to display. It renders after the message, at the end of the alert.
+   */
+  action: PropTypes.node,
+
+  /**
+   * The content of the component.
+   */
+  children: PropTypes.node,
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css) below for more details.
+   */
+  classes: PropTypes.object,
+
+  /**
+   * @ignore
+   */
+  className: PropTypes.string,
+
+  /**
+   * Override the default label for the *close popup* icon button.
+   *
+   * For localization purposes, you can use the provided [translations](/guides/localization/).
+   */
+  closeText: PropTypes.string,
+
+  /**
+   * The main color for the alert. Unless provided, the value is taken from the `severity` prop.
+   */
+  color: PropTypes.oneOf(['error', 'info', 'success', 'warning']),
+
+  /**
+   * Override the icon displayed before the children.
+   * Unless provided, the icon is mapped to the value of the `severity` prop.
+   */
+  icon: PropTypes.node,
+
+  /**
+   * The component maps the `severity` prop to a range of different icons,
+   * for instance success to `<SuccessOutlined>`.
+   * If you wish to change this mapping, you can provide your own.
+   * Alternatively, you can use the `icon` prop to override the icon displayed.
+   */
+  iconMapping: PropTypes.shape({
+    error: PropTypes.node,
+    info: PropTypes.node,
+    success: PropTypes.node,
+    warning: PropTypes.node
+  }),
+
+  /**
+   * Callback fired when the component requests to be closed.
+   * When provided and no `action` prop is set, a close icon button is displayed that triggers the callback when clicked.
+   *
+   * @param {object} event The event source of the callback.
+   */
+  onClose: PropTypes.func,
+
+  /**
+   * The ARIA role attribute of the element.
+   */
+  role: PropTypes.string,
+
+  /**
+   * The severity of the alert. This defines the color and icon used.
+   */
+  severity: PropTypes.oneOf(['error', 'info', 'success', 'warning']),
+
+  /**
+   * The variant to use.
+   */
+  variant: PropTypes.oneOf(['filled', 'outlined', 'standard'])
+} : void 0;
+var Alert$1 = withStyles$1(styles$t, {
+  name: 'MuiAlert'
+})(Alert);
 
 /**
  * @ignore - internal component.
@@ -29353,7 +29699,7 @@ function useAutocomplete(props) {
   };
 }
 
-var styles$t = function styles(theme) {
+var styles$u = function styles(theme) {
   var _option;
 
   return {
@@ -29606,7 +29952,7 @@ function DisablePortal(props) {
   return /*#__PURE__*/createElement("div", other);
 }
 
-var _ref$1 = /*#__PURE__*/createElement(CloseIcon, {
+var _ref$2 = /*#__PURE__*/createElement(CloseIcon, {
   fontSize: "small"
 });
 
@@ -29627,7 +29973,7 @@ var Autocomplete = /*#__PURE__*/forwardRef(function Autocomplete(props, ref) {
       _props$clearText = props.clearText,
       clearText = _props$clearText === void 0 ? 'Clear' : _props$clearText,
       _props$closeIcon = props.closeIcon,
-      closeIcon = _props$closeIcon === void 0 ? _ref$1 : _props$closeIcon,
+      closeIcon = _props$closeIcon === void 0 ? _ref$2 : _props$closeIcon,
       _props$closeText = props.closeText,
       closeText = _props$closeText === void 0 ? 'Close' : _props$closeText,
       _props$debug = props.debug,
@@ -30258,7 +30604,7 @@ process.env.NODE_ENV !== "production" ? Autocomplete.propTypes = {
    */
   value: PropTypes.any
 } : void 0;
-var Autocomplete$1 = withStyles$1(styles$t, {
+var Autocomplete$1 = withStyles$1(styles$u, {
   name: 'MuiAutocomplete'
 })(Autocomplete);
 
@@ -35410,6 +35756,64 @@ function useLogger(component) {
     return owsCore.logManager.getLogger(component.displayName || component.name);
 }
 
+function _objectWithoutPropertiesLoose$1(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+var objectWithoutPropertiesLoose = _objectWithoutPropertiesLoose$1;
+
+function _objectWithoutProperties$1(source, excluded) {
+  if (source == null) return {};
+  var target = objectWithoutPropertiesLoose(source, excluded);
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+var objectWithoutProperties = _objectWithoutProperties$1;
+
+var _typeof_1 = createCommonjsModule(function (module) {
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    module.exports = _typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+  } else {
+    module.exports = _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+module.exports = _typeof;
+});
+
 function _defineProperty$3(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -35426,6 +35830,214 @@ function _defineProperty$3(obj, key, value) {
 }
 
 var defineProperty$1 = _defineProperty$3;
+
+/**
+ * This file automatically generated from `pre-publish.js`.
+ * Do not manually edit.
+ */
+
+var voidElements = {
+  "area": true,
+  "base": true,
+  "br": true,
+  "col": true,
+  "embed": true,
+  "hr": true,
+  "img": true,
+  "input": true,
+  "keygen": true,
+  "link": true,
+  "menuitem": true,
+  "meta": true,
+  "param": true,
+  "source": true,
+  "track": true,
+  "wbr": true
+};
+
+var attrRE = /([\w-]+)|=|(['"])([.\s\S]*?)\2/g;
+
+
+var parseTag = function (tag) {
+    var i = 0;
+    var key;
+    var expectingValueAfterEquals = true;
+    var res = {
+        type: 'tag',
+        name: '',
+        voidElement: false,
+        attrs: {},
+        children: []
+    };
+
+    tag.replace(attrRE, function (match) {
+        if (match === '=') {
+            expectingValueAfterEquals = true;
+            i++;
+            return;
+        }
+
+        if (!expectingValueAfterEquals) {
+            if (key) {
+                res.attrs[key] = key; // boolean attribute
+            }
+            key=match;
+        } else {
+            if (i === 0) {
+                if (voidElements[match] || tag.charAt(tag.length - 2) === '/') {
+                    res.voidElement = true;
+                }
+                res.name = match;
+            } else {
+                res.attrs[key] = match.replace(/^['"]|['"]$/g, '');
+                key=undefined;
+            }
+        }
+        i++;
+        expectingValueAfterEquals = false;
+    });
+
+    return res;
+};
+
+/*jshint -W030 */
+var tagRE = /(?:<!--[\S\s]*?-->|<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>)/g;
+
+// re-used obj for quick lookups of components
+var empty = Object.create ? Object.create(null) : {};
+// common logic for pushing a child node onto a list
+function pushTextNode(list, html, level, start, ignoreWhitespace) {
+    // calculate correct end of the content slice in case there's
+    // no tag after the text node.
+    var end = html.indexOf('<', start);
+    var content = html.slice(start, end === -1 ? undefined : end);
+    // if a node is nothing but whitespace, collapse it as the spec states:
+    // https://www.w3.org/TR/html4/struct/text.html#h-9.1
+    if (/^\s*$/.test(content)) {
+        content = ' ';
+    }
+    // don't add whitespace-only text nodes if they would be trailing text nodes
+    // or if they would be leading whitespace-only text nodes:
+    //  * end > -1 indicates this is not a trailing text node
+    //  * leading node is when level is -1 and list has length 0
+    if ((!ignoreWhitespace && end > -1 && level + list.length >= 0) || content !== ' ') {
+        list.push({
+            type: 'text',
+            content: content
+        });
+    }
+}
+
+var parse = function parse(html, options) {
+    options || (options = {});
+    options.components || (options.components = empty);
+    var result = [];
+    var current;
+    var level = -1;
+    var arr = [];
+    var byTag = {};
+    var inComponent = false;
+
+    html.replace(tagRE, function (tag, index) {
+        if (inComponent) {
+            if (tag !== ('</' + current.name + '>')) {
+                return;
+            } else {
+                inComponent = false;
+            }
+        }
+
+        var isOpen = tag.charAt(1) !== '/';
+        var isComment = tag.indexOf('<!--') === 0;
+        var start = index + tag.length;
+        var nextChar = html.charAt(start);
+        var parent;
+
+        if (isOpen && !isComment) {
+            level++;
+
+            current = parseTag(tag);
+            if (current.type === 'tag' && options.components[current.name]) {
+                current.type = 'component';
+                inComponent = true;
+            }
+
+            if (!current.voidElement && !inComponent && nextChar && nextChar !== '<') {
+                pushTextNode(current.children, html, level, start, options.ignoreWhitespace);
+            }
+
+            byTag[current.tagName] = current;
+
+            // if we're at root, push new base node
+            if (level === 0) {
+                result.push(current);
+            }
+
+            parent = arr[level - 1];
+
+            if (parent) {
+                parent.children.push(current);
+            }
+
+            arr[level] = current;
+        }
+
+        if (isComment || !isOpen || current.voidElement) {
+            if (!isComment) {
+                level--;
+            }
+            if (!inComponent && nextChar !== '<' && nextChar) {
+                // trailing text node
+                // if we're at the root, push a base text node. otherwise add as
+                // a child to the current node.
+                parent = level === -1 ? result : arr[level].children;
+                pushTextNode(parent, html, level, start, options.ignoreWhitespace);
+            }
+        }
+    });
+
+    // If the "html" passed isn't actually html, add it as a text node.
+    if (!result.length && html.length) {
+        pushTextNode(result, html, 0, 0, options.ignoreWhitespace);
+    }
+
+    return result;
+};
+
+function attrString(attrs) {
+    var buff = [];
+    for (var key in attrs) {
+        buff.push(key + '="' + attrs[key] + '"');
+    }
+    if (!buff.length) {
+        return '';
+    }
+    return ' ' + buff.join(' ');
+}
+
+function stringify(buff, doc) {
+    switch (doc.type) {
+    case 'text':
+        return buff + doc.content;
+    case 'tag':
+        buff += '<' + doc.name + (doc.attrs ? attrString(doc.attrs) : '') + (doc.voidElement ? '/>' : '>');
+        if (doc.voidElement) {
+            return buff;
+        }
+        return buff + doc.children.reduce(stringify, '') + '</' + doc.name + '>';
+    }
+}
+
+var stringify_1 = function (doc) {
+    return doc.reduce(function (token, rootEl) {
+        return token + stringify('', rootEl);
+    }, '');
+};
+
+var htmlParseStringify2 = {
+    parse: parse,
+    stringify: stringify_1
+};
 
 function _classCallCheck$3(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -35576,6 +36188,252 @@ function hasLoadedNamespace(ns, i18n) {
   return false;
 }
 
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty$1(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function hasChildren(node, checkLength) {
+  if (!node) return false;
+  var base = node.props ? node.props.children : node.children;
+  if (checkLength) return base.length > 0;
+  return !!base;
+}
+
+function getChildren(node) {
+  if (!node) return [];
+  return node && node.children ? node.children : node.props && node.props.children;
+}
+
+function hasValidReactChildren(children) {
+  if (Object.prototype.toString.call(children) !== '[object Array]') return false;
+  return children.every(function (child) {
+    return React.isValidElement(child);
+  });
+}
+
+function getAsArray(data) {
+  return Array.isArray(data) ? data : [data];
+}
+
+function mergeProps(source, target) {
+  var newTarget = _objectSpread$2({}, target);
+
+  newTarget.props = Object.assign(source.props, target.props);
+  return newTarget;
+}
+
+function nodesToString(children, i18nOptions) {
+  if (!children) return '';
+  var stringNode = '';
+  var childrenArray = getAsArray(children);
+  var keepArray = i18nOptions.transKeepBasicHtmlNodesFor || [];
+  childrenArray.forEach(function (child, childIndex) {
+    if (typeof child === 'string') {
+      stringNode += "".concat(child);
+    } else if (React.isValidElement(child)) {
+      var childPropsCount = Object.keys(child.props).length;
+      var shouldKeepChild = keepArray.indexOf(child.type) > -1;
+      var childChildren = child.props.children;
+
+      if (!childChildren && shouldKeepChild && childPropsCount === 0) {
+        stringNode += "<".concat(child.type, "/>");
+      } else if (!childChildren && (!shouldKeepChild || childPropsCount !== 0)) {
+        stringNode += "<".concat(childIndex, "></").concat(childIndex, ">");
+      } else if (child.props.i18nIsDynamicList) {
+        stringNode += "<".concat(childIndex, "></").concat(childIndex, ">");
+      } else if (shouldKeepChild && childPropsCount === 1 && typeof childChildren === 'string') {
+        stringNode += "<".concat(child.type, ">").concat(childChildren, "</").concat(child.type, ">");
+      } else {
+        var content = nodesToString(childChildren, i18nOptions);
+        stringNode += "<".concat(childIndex, ">").concat(content, "</").concat(childIndex, ">");
+      }
+    } else if (_typeof_1(child) === 'object') {
+      var format = child.format,
+          clone = objectWithoutProperties(child, ["format"]);
+
+      var keys = Object.keys(clone);
+
+      if (keys.length === 1) {
+        var value = format ? "".concat(keys[0], ", ").concat(format) : keys[0];
+        stringNode += "{{".concat(value, "}}");
+      } else {
+        warn("react-i18next: the passed in object contained more than one variable - the object should look like {{ value, format }} where format is optional.", child);
+      }
+    } else {
+      warn("Trans: the passed in value is invalid - seems you passed in a variable like {number} - please pass in variables for interpolation as full objects like {{number}}.", child);
+    }
+  });
+  return stringNode;
+}
+
+function renderNodes(children, targetString, i18n, i18nOptions, combinedTOpts) {
+  if (targetString === '') return [];
+  var keepArray = i18nOptions.transKeepBasicHtmlNodesFor || [];
+  var emptyChildrenButNeedsHandling = targetString && new RegExp(keepArray.join('|')).test(targetString);
+  if (!children && !emptyChildrenButNeedsHandling) return [targetString];
+  var data = {};
+
+  function getData(childs) {
+    var childrenArray = getAsArray(childs);
+    childrenArray.forEach(function (child) {
+      if (typeof child === 'string') return;
+      if (hasChildren(child)) getData(getChildren(child));else if (_typeof_1(child) === 'object' && !React.isValidElement(child)) Object.assign(data, child);
+    });
+  }
+
+  getData(children);
+  var interpolatedString = i18n.services.interpolator.interpolate(targetString, _objectSpread$2(_objectSpread$2({}, data), combinedTOpts), i18n.language);
+  var ast = htmlParseStringify2.parse("<0>".concat(interpolatedString, "</0>"));
+
+  function renderInner(child, node, rootReactNode) {
+    var childs = getChildren(child);
+    var mappedChildren = mapAST(childs, node.children, rootReactNode);
+    return hasValidReactChildren(childs) && mappedChildren.length === 0 ? childs : mappedChildren;
+  }
+
+  function pushTranslatedJSX(child, inner, mem, i) {
+    if (child.dummy) child.children = inner;
+    mem.push(React.cloneElement(child, _objectSpread$2(_objectSpread$2({}, child.props), {}, {
+      key: i
+    }), inner));
+  }
+
+  function mapAST(reactNode, astNode, rootReactNode) {
+    var reactNodes = getAsArray(reactNode);
+    var astNodes = getAsArray(astNode);
+    return astNodes.reduce(function (mem, node, i) {
+      var translationContent = node.children && node.children[0] && node.children[0].content;
+
+      if (node.type === 'tag') {
+        var tmp = reactNodes[parseInt(node.name, 10)];
+        if (!tmp && rootReactNode.length === 1 && rootReactNode[0][node.name]) tmp = rootReactNode[0][node.name];
+        if (!tmp) tmp = {};
+        var child = Object.keys(node.attrs).length !== 0 ? mergeProps({
+          props: node.attrs
+        }, tmp) : tmp;
+        var isElement = React.isValidElement(child);
+        var isValidTranslationWithChildren = isElement && hasChildren(node, true) && !node.voidElement;
+        var isEmptyTransWithHTML = emptyChildrenButNeedsHandling && _typeof_1(child) === 'object' && child.dummy && !isElement;
+        var isKnownComponent = _typeof_1(children) === 'object' && children !== null && Object.hasOwnProperty.call(children, node.name);
+
+        if (typeof child === 'string') {
+          mem.push(child);
+        } else if (hasChildren(child) || isValidTranslationWithChildren) {
+            var inner = renderInner(child, node, rootReactNode);
+            pushTranslatedJSX(child, inner, mem, i);
+          } else if (isEmptyTransWithHTML) {
+          var _inner = mapAST(reactNodes, node.children, rootReactNode);
+
+          mem.push(React.cloneElement(child, _objectSpread$2(_objectSpread$2({}, child.props), {}, {
+            key: i
+          }), _inner));
+        } else if (Number.isNaN(parseFloat(node.name))) {
+          if (isKnownComponent) {
+            var _inner2 = renderInner(child, node, rootReactNode);
+
+            pushTranslatedJSX(child, _inner2, mem, i);
+          } else if (i18nOptions.transSupportBasicHtmlNodes && keepArray.indexOf(node.name) > -1) {
+            if (node.voidElement) {
+              mem.push(React.createElement(node.name, {
+                key: "".concat(node.name, "-").concat(i)
+              }));
+            } else {
+              var _inner3 = mapAST(reactNodes, node.children, rootReactNode);
+
+              mem.push(React.createElement(node.name, {
+                key: "".concat(node.name, "-").concat(i)
+              }, _inner3));
+            }
+          } else if (node.voidElement) {
+            mem.push("<".concat(node.name, " />"));
+          } else {
+            var _inner4 = mapAST(reactNodes, node.children, rootReactNode);
+
+            mem.push("<".concat(node.name, ">").concat(_inner4, "</").concat(node.name, ">"));
+          }
+        } else if (_typeof_1(child) === 'object' && !isElement) {
+          var content = node.children[0] ? translationContent : null;
+          if (content) mem.push(content);
+        } else if (node.children.length === 1 && translationContent) {
+          mem.push(React.cloneElement(child, _objectSpread$2(_objectSpread$2({}, child.props), {}, {
+            key: i
+          }), translationContent));
+        } else {
+          mem.push(React.cloneElement(child, _objectSpread$2(_objectSpread$2({}, child.props), {}, {
+            key: i
+          })));
+        }
+      } else if (node.type === 'text') {
+        mem.push(node.content);
+      }
+
+      return mem;
+    }, []);
+  }
+
+  var result = mapAST([{
+    dummy: true,
+    children: children
+  }], ast, getAsArray(children || []));
+  return getChildren(result[0]);
+}
+
+function Trans(_ref) {
+  var children = _ref.children,
+      count = _ref.count,
+      parent = _ref.parent,
+      i18nKey = _ref.i18nKey,
+      tOptions = _ref.tOptions,
+      values = _ref.values,
+      defaults = _ref.defaults,
+      components = _ref.components,
+      ns = _ref.ns,
+      i18nFromProps = _ref.i18n,
+      tFromProps = _ref.t,
+      additionalProps = objectWithoutProperties(_ref, ["children", "count", "parent", "i18nKey", "tOptions", "values", "defaults", "components", "ns", "i18n", "t"]);
+
+  var _ref2 = useContext(I18nContext) || {},
+      i18nFromContext = _ref2.i18n,
+      defaultNSFromContext = _ref2.defaultNS;
+
+  var i18n = i18nFromProps || i18nFromContext || getI18n();
+
+  if (!i18n) {
+    warnOnce$1('You will need to pass in an i18next instance by using i18nextReactModule');
+    return children;
+  }
+
+  var t = tFromProps || i18n.t.bind(i18n) || function (k) {
+    return k;
+  };
+
+  var reactI18nextOptions = _objectSpread$2(_objectSpread$2({}, getDefaults$2()), i18n.options && i18n.options.react);
+
+  var namespaces = ns || t.ns || defaultNSFromContext || i18n.options && i18n.options.defaultNS;
+  namespaces = typeof namespaces === 'string' ? [namespaces] : namespaces || ['translation'];
+  var defaultValue = defaults || nodesToString(children, reactI18nextOptions) || reactI18nextOptions.transEmptyNodeValue || i18nKey;
+  var hashTransKey = reactI18nextOptions.hashTransKey;
+  var key = i18nKey || (hashTransKey ? hashTransKey(defaultValue) : defaultValue);
+  var interpolationOverride = values ? {} : {
+    interpolation: {
+      prefix: '#$?',
+      suffix: '?$#'
+    }
+  };
+
+  var combinedTOpts = _objectSpread$2(_objectSpread$2(_objectSpread$2(_objectSpread$2({}, tOptions), {}, {
+    count: count
+  }, values), interpolationOverride), {}, {
+    defaultValue: defaultValue,
+    ns: namespaces
+  });
+
+  var translation = key ? t(key, combinedTOpts) : defaultValue;
+  var content = renderNodes(components || children, translation, i18n, reactI18nextOptions, combinedTOpts);
+  var useAsParent = parent !== undefined ? parent : reactI18nextOptions.defaultTransParent;
+  return useAsParent ? React.createElement(useAsParent, additionalProps, content) : content;
+}
+
 function _arrayWithHoles$1(arr) {
   if (Array.isArray(arr)) return arr;
 }
@@ -35646,9 +36504,9 @@ function _slicedToArray$1(arr, i) {
 
 var slicedToArray = _slicedToArray$1;
 
-function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty$1(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty$1(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 function useTranslation(ns) {
   var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var i18nFromProps = props.i18n;
@@ -35674,7 +36532,7 @@ function useTranslation(ns) {
     return retNotReady;
   }
 
-  var i18nOptions = _objectSpread$2(_objectSpread$2(_objectSpread$2({}, getDefaults$2()), i18n.options.react), props);
+  var i18nOptions = _objectSpread$3(_objectSpread$3(_objectSpread$3({}, getDefaults$2()), i18n.options.react), props);
 
   var useSuspense = i18nOptions.useSuspense;
   var namespaces = ns || defaultNSFromContext || i18n.options && i18n.options.defaultNS;
@@ -35736,6 +36594,64 @@ function useTranslation(ns) {
   });
 }
 
+const useStyles$2 = makeStyles$1((theme) => createStyles$1({
+    root: {
+        'paddingTop': theme.spacing(1),
+        'width': '100%',
+        '& > * + *': {
+            marginTop: theme.spacing(1),
+        },
+    },
+}));
+const AlertList = (props) => {
+    const classes = useStyles$2();
+    return React.createElement("div", { className: classes.root }, props.children);
+};
+
+// Ported due to many issues with the repository:
+// https://github.com/jaredpalmer/the-platform/
+const useNetworkStatus = () => {
+    const [status, setStatus] = React.useState(navigator.onLine);
+    const [offlineAt, setOfflineAt] = React.useState(undefined);
+    React.useEffect(() => {
+        const handleOnline = () => {
+            setStatus(true);
+            setOfflineAt(undefined);
+        };
+        const handleOffline = () => {
+            setStatus(false);
+            setOfflineAt(new Date());
+        };
+        if (typeof window === 'undefined') {
+            return;
+        }
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+        return () => {
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
+    }, []);
+    return {
+        isOnline: status,
+        offlineAt,
+    };
+};
+
+const OfflineAlert = (props) => {
+    var _a, _b;
+    const { isOnline } = useNetworkStatus();
+    const { t } = useTranslation();
+    if (isOnline)
+        return null;
+    const severity = (_a = props.severity) !== null && _a !== void 0 ? _a : 'warning';
+    const feature = (_b = props.feature) !== null && _b !== void 0 ? _b : t('This feature');
+    return (React.createElement(Alert$1, { severity: severity },
+        React.createElement(Trans, null,
+            feature,
+            " is not available whilst offline.")));
+};
+
 const CncIcon = (props) => (createElement("svg", Object.assign({ fill: 'currentColor', viewBox: '0 0 1000 1000', height: 32, width: 32 }, props),
     createElement("path", { d: 'M347.792 538.347h36.65v155.335h-36.65zM267.951 369.56H460.2v139.5H267.95zM221.803 250.89h288.51v89.398h-288.51zM693.63 84.751H207.164c-37.734 0-68.435 30.696-68.435 68.43 0 37.734 30.7 68.436 68.435 68.436H693.63zM71.049 866.273h877.256v80.573H71.049zM722.906 50.46h225.413V837H722.906z' })));
 
@@ -35756,17 +36672,17 @@ const Icons = (props) => {
     const name = props.name.toLowerCase();
     // Types
     if (name === 'cnc')
-        return (React.createElement(CncIcon, Object.assign({}, props)));
+        return React.createElement(CncIcon, Object.assign({}, props));
     if (name === 'tdp' || name === '3dp')
-        return (React.createElement(TdpIcon, Object.assign({}, props)));
+        return React.createElement(TdpIcon, Object.assign({}, props));
     // Misc.
     if (name === 'maslow')
-        return (React.createElement(MaslowIcon, Object.assign({}, props)));
+        return React.createElement(MaslowIcon, Object.assign({}, props));
     if (name === 'xyz')
-        return (React.createElement(XyzIcon, Object.assign({}, props)));
+        return React.createElement(XyzIcon, Object.assign({}, props));
     // Brands
     if (name === 'makermade')
-        return (React.createElement(MakerMadeIcon, Object.assign({}, props)));
+        return React.createElement(MakerMadeIcon, Object.assign({}, props));
     return React.createElement("span", null, "name");
 };
 
@@ -35804,23 +36720,27 @@ const MachineProfileSearchBar = (props) => {
         setOpen(true);
         searchMachines({ variables: { q: q } });
     }
-    return (createElement(Autocomplete$1, { id: 'search-machine-profiles', open: open, onOpen: () => updateQuery(''), onClose: () => setOpen(false), onChange: (e, mp) => props.onSelectedMachineProfile(mp !== null && mp !== void 0 ? mp : undefined), options: machineProfiles, getOptionSelected: (opt, val) => opt.id === val.id, groupBy: (mp) => getCategoryName(mp.machineCategory), getOptionLabel: (mp) => [mp.brand, mp.name, mp.model].filter((a) => a && a.length > 0).join(' '), onInputChange: (e, val) => updateQuery(val), renderOption: (mp) => {
-            return (createElement(StyledGrid, { container: true, alignItems: "center" },
-                createElement(StyledGrid, { item: true },
-                    createElement(Icons, { name: mp.icon, fill: "#444", style: { marginRight: 10, marginTop: 4 } })),
-                createElement(StyledGrid, { item: true, xs: true },
-                    mp.name && createElement("span", null,
-                        mp.name,
-                        ' '),
-                    mp.model && createElement("span", { style: { fontWeight: 700 } }, mp.model),
-                    createElement(Typography$1, { variant: "body2", color: "textSecondary" },
-                        mp.brand,
-                        mp.brand && ' ',
-                        getCategoryName(mp.machineCategory),
-                        mp.discontinued && t(' (Discontinued)')))));
-        }, renderInput: (params) => createElement(TextField$1, Object.assign({}, params, { label: t('Search the community catalog...'), variant: 'outlined', InputProps: Object.assign(Object.assign({}, params.InputProps), { endAdornment: (createElement(Fragment, null,
-                    loading ? createElement(CircularProgress$1, { size: 20 }) : null,
-                    params.InputProps.endAdornment)) }) })) }));
+    return (createElement("div", null,
+        createElement(Autocomplete$1, { id: 'search-machine-profiles', open: open, onOpen: () => updateQuery(''), onClose: () => setOpen(false), onChange: (e, mp) => props.onSelectedMachineProfile(mp !== null && mp !== void 0 ? mp : undefined), options: machineProfiles, getOptionSelected: (opt, val) => opt.id === val.id, groupBy: (mp) => getCategoryName(mp.machineCategory), getOptionLabel: (mp) => [mp.brand, mp.name, mp.model].filter((a) => a && a.length > 0).join(' '), onInputChange: (e, val) => updateQuery(val), renderOption: (mp) => {
+                return (createElement(StyledGrid, { container: true, alignItems: 'center' },
+                    createElement(StyledGrid, { item: true },
+                        createElement(Icons, { name: mp.icon, fill: '#444', style: { marginRight: 10, marginTop: 4 } })),
+                    createElement(StyledGrid, { item: true, xs: true },
+                        mp.name && createElement("span", null,
+                            mp.name,
+                            " "),
+                        mp.model && createElement("span", { style: { fontWeight: 700 } }, mp.model),
+                        createElement(Typography$1, { variant: 'body2', color: 'textSecondary' },
+                            mp.brand,
+                            mp.brand && ' ',
+                            getCategoryName(mp.machineCategory),
+                            mp.discontinued && t(' (Discontinued)')))));
+            }, renderInput: (params) => (createElement(TextField$1, Object.assign({}, params, { label: t('Search the community catalog...'), variant: 'outlined', InputProps: Object.assign(Object.assign({}, params.InputProps), { endAdornment: (createElement(Fragment, null,
+                        loading ? createElement(CircularProgress$1, { size: 20 }) : null,
+                        params.InputProps.endAdornment)) }) }))) }),
+        createElement(AlertList, null,
+            error && createElement(Alert$1, { severity: 'error' }, error),
+            createElement(OfflineAlert, { feature: t('The community catalog') }))));
 };
 
 /*! *****************************************************************************

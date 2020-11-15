@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => createStyles({
         height: 16,
         marginLeft: theme.spacing(0.5),
         marginRight: theme.spacing(0.5),
-    }
+    },
 }));
 const PoweredBy = (props) => {
     var _a;
@@ -20,12 +20,12 @@ const PoweredBy = (props) => {
         return React.createElement("img", { className: classes.logo, alt: t('OpenWorkShop icon'), src: favicon32.base64 });
     }
     return (React.createElement("div", null,
-        React.createElement(Typography, { variant: "subtitle2" },
+        React.createElement(Typography, { variant: 'subtitle2' },
             React.createElement(Trans, null,
                 props.productName,
                 " is powered by"),
             renderIcon(),
-            React.createElement("a", { href: link, title: t('About OpenWorkShop'), target: "_blank" }, "OpenWorkShop"))));
+            React.createElement("a", { href: link, title: t('About OpenWorkShop'), target: '_blank' }, "OpenWorkShop"))));
 };
 export default PoweredBy;
 //# sourceMappingURL=PoweredBy.js.map

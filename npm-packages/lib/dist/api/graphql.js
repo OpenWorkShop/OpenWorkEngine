@@ -61,142 +61,147 @@ export var MachineSpecType;
     MachineSpecType["WaveLength"] = "WAVE_LENGTH";
 })(MachineSpecType || (MachineSpecType = {}));
 export const MachineProfilePropsFragmentDoc = gql `
-    fragment MachineProfileProps on MachineProfile {
-  id
-  name
-  brand
-  model
-  icon
-  description
-  machineCategory
-  discontinued
-  featured
-}
-    `;
+  fragment MachineProfileProps on MachineProfile {
+    id
+    name
+    brand
+    model
+    icon
+    description
+    machineCategory
+    discontinued
+    featured
+  }
+`;
 export const MachineFirmwareMinimalFragmentDoc = gql `
-    fragment MachineFirmwareMinimal on MachineFirmware {
-  controllerType
-  baudRate
-  rtscts
-}
-    `;
+  fragment MachineFirmwareMinimal on MachineFirmware {
+    controllerType
+    baudRate
+    rtscts
+  }
+`;
 export const MachineFirmwarePropsFragmentDoc = gql `
-    fragment MachineFirmwareProps on MachineFirmware {
-  id
-  ...MachineFirmwareMinimal
-  requiredVersion
-  suggestedVersion
-  name
-  edition
-  downloadUrl
-  helpUrl
-}
-    ${MachineFirmwareMinimalFragmentDoc}`;
+  fragment MachineFirmwareProps on MachineFirmware {
+    id
+    ...MachineFirmwareMinimal
+    requiredVersion
+    suggestedVersion
+    name
+    edition
+    downloadUrl
+    helpUrl
+  }
+  ${MachineFirmwareMinimalFragmentDoc}
+`;
 export const MachineAxisPropsFragmentDoc = gql `
-    fragment MachineAxisProps on MachineAxis {
-  id
-  name
-  min
-  max
-  accuracy
-  precision
-}
-    `;
+  fragment MachineAxisProps on MachineAxis {
+    id
+    name
+    min
+    max
+    accuracy
+    precision
+  }
+`;
 export const MachinePartPropsFragmentDoc = gql `
-    fragment MachinePartProps on MachinePart {
-  id
-  partType
-  optional
-  isDefault
-  sortOrder
-  title
-  description
-  dataBlob
-}
-    `;
+  fragment MachinePartProps on MachinePart {
+    id
+    partType
+    optional
+    isDefault
+    sortOrder
+    title
+    description
+    dataBlob
+  }
+`;
 export const MachineSettingPropsFragmentDoc = gql `
-    fragment MachineSettingProps on MachineSetting {
-  id
-  title
-  settingType
-  key
-  value
-}
-    `;
+  fragment MachineSettingProps on MachineSetting {
+    id
+    title
+    settingType
+    key
+    value
+  }
+`;
 export const MachineSpecPropsFragmentDoc = gql `
-    fragment MachineSpecProps on MachineSpec {
-  id
-  specType
-  value
-}
-    `;
+  fragment MachineSpecProps on MachineSpec {
+    id
+    specType
+    value
+  }
+`;
 export const MachinePartCompleteFragmentDoc = gql `
-    fragment MachinePartComplete on MachinePart {
-  ...MachinePartProps
-  settings {
-    ...MachineSettingProps
+  fragment MachinePartComplete on MachinePart {
+    ...MachinePartProps
+    settings {
+      ...MachineSettingProps
+    }
+    specs {
+      ...MachineSpecProps
+    }
   }
-  specs {
-    ...MachineSpecProps
-  }
-}
-    ${MachinePartPropsFragmentDoc}
-${MachineSettingPropsFragmentDoc}
-${MachineSpecPropsFragmentDoc}`;
+  ${MachinePartPropsFragmentDoc}
+  ${MachineSettingPropsFragmentDoc}
+  ${MachineSpecPropsFragmentDoc}
+`;
 export const MachineCommandPropsFragmentDoc = gql `
-    fragment MachineCommandProps on MachineCommand {
-  id
-  name
-  value
-}
-    `;
+  fragment MachineCommandProps on MachineCommand {
+    id
+    name
+    value
+  }
+`;
 export const MachineFeaturePropsFragmentDoc = gql `
-    fragment MachineFeatureProps on MachineFeature {
-  id
-  key
-  disabled
-  title
-  description
-  icon
-}
-    `;
+  fragment MachineFeatureProps on MachineFeature {
+    id
+    key
+    disabled
+    title
+    description
+    icon
+  }
+`;
 export const MachineProfileCompleteFragmentDoc = gql `
-    fragment MachineProfileComplete on MachineProfile {
-  ...MachineProfileProps
-  firmware {
-    ...MachineFirmwareProps
+  fragment MachineProfileComplete on MachineProfile {
+    ...MachineProfileProps
+    firmware {
+      ...MachineFirmwareProps
+    }
+    axes {
+      ...MachineAxisProps
+    }
+    parts {
+      ...MachinePartComplete
+    }
+    commands {
+      ...MachineCommandProps
+    }
+    features {
+      ...MachineFeatureProps
+    }
   }
-  axes {
-    ...MachineAxisProps
-  }
-  parts {
-    ...MachinePartComplete
-  }
-  commands {
-    ...MachineCommandProps
-  }
-  features {
-    ...MachineFeatureProps
-  }
-}
-    ${MachineProfilePropsFragmentDoc}
-${MachineFirmwarePropsFragmentDoc}
-${MachineAxisPropsFragmentDoc}
-${MachinePartCompleteFragmentDoc}
-${MachineCommandPropsFragmentDoc}
-${MachineFeaturePropsFragmentDoc}`;
+  ${MachineProfilePropsFragmentDoc}
+  ${MachineFirmwarePropsFragmentDoc}
+  ${MachineAxisPropsFragmentDoc}
+  ${MachinePartCompleteFragmentDoc}
+  ${MachineCommandPropsFragmentDoc}
+  ${MachineFeaturePropsFragmentDoc}
+`;
 export const MachineSearchResultFragmentDoc = gql `
-    fragment MachineSearchResult on MachineProfile {
-  ...MachineProfileProps
-}
-    ${MachineProfilePropsFragmentDoc}`;
-export const SearchMachineProfilesDocument = gql `
-    query searchMachineProfiles($q: String) {
-  machineProfiles: machineProfiles(query: $q) {
-    ...MachineSearchResult
+  fragment MachineSearchResult on MachineProfile {
+    ...MachineProfileProps
   }
-}
-    ${MachineSearchResultFragmentDoc}`;
+  ${MachineProfilePropsFragmentDoc}
+`;
+export const SearchMachineProfilesDocument = gql `
+  query searchMachineProfiles($q: String) {
+    machineProfiles: machineProfiles(query: $q) {
+      ...MachineSearchResult
+    }
+  }
+  ${MachineSearchResultFragmentDoc}
+`;
 /**
  * __useSearchMachineProfilesQuery__
  *
@@ -220,12 +225,13 @@ export function useSearchMachineProfilesLazyQuery(baseOptions) {
     return Apollo.useLazyQuery(SearchMachineProfilesDocument, baseOptions);
 }
 export const GetCompleteMachineProfileDocument = gql `
-    query getCompleteMachineProfile($id: String!) {
-  machineProfile(id: $id) {
-    ...MachineProfileComplete
+  query getCompleteMachineProfile($id: String!) {
+    machineProfile(id: $id) {
+      ...MachineProfileComplete
+    }
   }
-}
-    ${MachineProfileCompleteFragmentDoc}`;
+  ${MachineProfileCompleteFragmentDoc}
+`;
 /**
  * __useGetCompleteMachineProfileQuery__
  *

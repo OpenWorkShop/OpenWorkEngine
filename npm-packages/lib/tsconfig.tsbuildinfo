@@ -1647,8 +1647,8 @@
         "affectsGlobalScope": false
       },
       "./src/api/graphql.tsx": {
-        "version": "7ecd8489fd9003a6cb020aea621d3fdaf117c7a0d212393a416200c09897dfeb",
-        "signature": "392129e2dd220bf8f38a19faacedb57601d7987c8bdce99478cd0e3e84b2548a",
+        "version": "67feae8ccfaf5e962573c65870341ffc0db92e8b8f04e0c6ea2413688087cb7e",
+        "signature": "0d894345ff968a2bdcd81e829c93545c026deeb3daf6432eb8c1a644b0f89bf0",
         "affectsGlobalScope": false
       },
       "./src/api/machines/baudrate.ts": {
@@ -1831,7 +1831,6 @@
       "allowSyntheticDefaultImports": true,
       "importHelpers": true,
       "jsx": 2,
-      "watch": true,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {

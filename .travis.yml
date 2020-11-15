@@ -1,0 +1,19 @@
+branches:
+  # PRs are always built. So we exclude branch builds other than master to prevent double-builds.
+  # https://stackoverflow.com/questions/31882306/how-to-configure-travis-ci-to-build-pull-requests-merges-to-master-w-o-redunda
+  only:
+    - master
+
+# Job queue; see below for default job settings.
+jobs:
+  include:
+    - language: node_js
+      name: "lib"
+      node_js:
+        - "14"
+      script:
+        - ./ci/build-npm-package.sh lib
+
+dist: bionic
+group: travis_latest
+os: linux

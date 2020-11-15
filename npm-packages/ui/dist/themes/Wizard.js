@@ -59,7 +59,7 @@ const theme = createMuiTheme({
         subtitle2: {
             fontFamily: bodyFont,
             fontStyle: 'italic',
-        }
+        },
     },
 });
 export default theme;

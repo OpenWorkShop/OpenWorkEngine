@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => createStyles({
     },
     headings: {
         marginBottom: theme.spacing(1),
-    }
+    },
 }));
 const CreateMachineProfile = (props) => {
     const log = useLogger(CreateMachineProfile);

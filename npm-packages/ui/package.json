@@ -1,13 +1,13 @@
 {
   "name": "@openworkshop/ui",
-  "version": "1.0.5",
+  "version": "0.0.0",
   "description": "UI and API for OWS apps",
   "main": "./src/index.ts",
   "files": [
     "src"
   ],
   "scripts": {
-    "clean": "find . -regex \"./dist/.*\\.[jt]s$\" -type f -delete && find . -regex \"./dist/.*\\.map$\" -type f -delete && find . -regex \"./dist/*\" -type d -delete",
+    "clean": "pkg=$(cat ./dist/package.json) && rm -rf ./dist && mkdir ./dist && echo $pkg > ./dist/package.json",
     "uninstall": "rm -rf ./node_modules && rm -rf yarn.lock",
     "reinstall": "yarn run uninstall && yarn",
     "rebuild": "yarn run reinstall && yarn run build",
@@ -106,6 +106,7 @@
     "redux-oidc": "^4.0.0-beta1",
     "redux-thunk": "^2.3.0",
     "rollup": "^2.33.1",
+    "rollup-plugin-css-only": "^2.1.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-typescript2": "^0.29.0",
     "typeface-cabin": "^1.1.13",

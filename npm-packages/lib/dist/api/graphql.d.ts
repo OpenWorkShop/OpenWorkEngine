@@ -180,85 +180,85 @@ export declare enum MachineSpecType {
     Watts = "WATTS",
     WaveLength = "WAVE_LENGTH"
 }
-export declare type MachineAxisPropsFragment = ({
+export declare type MachineAxisPropsFragment = {
     __typename?: 'MachineAxis';
-} & Pick<MachineAxis, 'id' | 'name' | 'min' | 'max' | 'accuracy' | 'precision'>);
-export declare type MachineCommandPropsFragment = ({
+} & Pick<MachineAxis, 'id' | 'name' | 'min' | 'max' | 'accuracy' | 'precision'>;
+export declare type MachineCommandPropsFragment = {
     __typename?: 'MachineCommand';
-} & Pick<MachineCommand, 'id' | 'name' | 'value'>);
-export declare type MachineFeaturePropsFragment = ({
+} & Pick<MachineCommand, 'id' | 'name' | 'value'>;
+export declare type MachineFeaturePropsFragment = {
     __typename?: 'MachineFeature';
-} & Pick<MachineFeature, 'id' | 'key' | 'disabled' | 'title' | 'description' | 'icon'>);
-export declare type MachineFirmwareMinimalFragment = ({
+} & Pick<MachineFeature, 'id' | 'key' | 'disabled' | 'title' | 'description' | 'icon'>;
+export declare type MachineFirmwareMinimalFragment = {
     __typename?: 'MachineFirmware';
-} & Pick<MachineFirmware, 'controllerType' | 'baudRate' | 'rtscts'>);
-export declare type MachineFirmwarePropsFragment = ({
+} & Pick<MachineFirmware, 'controllerType' | 'baudRate' | 'rtscts'>;
+export declare type MachineFirmwarePropsFragment = {
     __typename?: 'MachineFirmware';
-} & Pick<MachineFirmware, 'id' | 'requiredVersion' | 'suggestedVersion' | 'name' | 'edition' | 'downloadUrl' | 'helpUrl'> & MachineFirmwareMinimalFragment);
-export declare type MachinePartPropsFragment = ({
+} & Pick<MachineFirmware, 'id' | 'requiredVersion' | 'suggestedVersion' | 'name' | 'edition' | 'downloadUrl' | 'helpUrl'> & MachineFirmwareMinimalFragment;
+export declare type MachinePartPropsFragment = {
     __typename?: 'MachinePart';
-} & Pick<MachinePart, 'id' | 'partType' | 'optional' | 'isDefault' | 'sortOrder' | 'title' | 'description' | 'dataBlob'>);
-export declare type MachinePartCompleteFragment = ({
+} & Pick<MachinePart, 'id' | 'partType' | 'optional' | 'isDefault' | 'sortOrder' | 'title' | 'description' | 'dataBlob'>;
+export declare type MachinePartCompleteFragment = {
     __typename?: 'MachinePart';
 } & {
-    settings: Array<({
+    settings: Array<{
         __typename?: 'MachineSetting';
-    } & MachineSettingPropsFragment)>;
-    specs: Array<({
+    } & MachineSettingPropsFragment>;
+    specs: Array<{
         __typename?: 'MachineSpec';
-    } & MachineSpecPropsFragment)>;
-} & MachinePartPropsFragment);
-export declare type MachineProfilePropsFragment = ({
+    } & MachineSpecPropsFragment>;
+} & MachinePartPropsFragment;
+export declare type MachineProfilePropsFragment = {
     __typename?: 'MachineProfile';
-} & Pick<MachineProfile, 'id' | 'name' | 'brand' | 'model' | 'icon' | 'description' | 'machineCategory' | 'discontinued' | 'featured'>);
-export declare type MachineProfileCompleteFragment = ({
+} & Pick<MachineProfile, 'id' | 'name' | 'brand' | 'model' | 'icon' | 'description' | 'machineCategory' | 'discontinued' | 'featured'>;
+export declare type MachineProfileCompleteFragment = {
     __typename?: 'MachineProfile';
 } & {
-    firmware: Array<({
+    firmware: Array<{
         __typename?: 'MachineFirmware';
-    } & MachineFirmwarePropsFragment)>;
-    axes: Array<({
+    } & MachineFirmwarePropsFragment>;
+    axes: Array<{
         __typename?: 'MachineAxis';
-    } & MachineAxisPropsFragment)>;
-    parts: Array<({
+    } & MachineAxisPropsFragment>;
+    parts: Array<{
         __typename?: 'MachinePart';
-    } & MachinePartCompleteFragment)>;
-    commands: Array<({
+    } & MachinePartCompleteFragment>;
+    commands: Array<{
         __typename?: 'MachineCommand';
-    } & MachineCommandPropsFragment)>;
-    features: Array<({
+    } & MachineCommandPropsFragment>;
+    features: Array<{
         __typename?: 'MachineFeature';
-    } & MachineFeaturePropsFragment)>;
-} & MachineProfilePropsFragment);
-export declare type MachineSearchResultFragment = ({
+    } & MachineFeaturePropsFragment>;
+} & MachineProfilePropsFragment;
+export declare type MachineSearchResultFragment = {
     __typename?: 'MachineProfile';
-} & MachineProfilePropsFragment);
+} & MachineProfilePropsFragment;
 export declare type SearchMachineProfilesQueryVariables = Exact<{
     q: Maybe<Scalars['String']>;
 }>;
-export declare type SearchMachineProfilesQuery = ({
+export declare type SearchMachineProfilesQuery = {
     __typename?: 'Query';
 } & {
-    machineProfiles: Array<({
+    machineProfiles: Array<{
         __typename?: 'MachineProfile';
-    } & MachineSearchResultFragment)>;
-});
+    } & MachineSearchResultFragment>;
+};
 export declare type GetCompleteMachineProfileQueryVariables = Exact<{
     id: Scalars['String'];
 }>;
-export declare type GetCompleteMachineProfileQuery = ({
+export declare type GetCompleteMachineProfileQuery = {
     __typename?: 'Query';
 } & {
-    machineProfile: ({
+    machineProfile: {
         __typename?: 'MachineProfile';
-    } & MachineProfileCompleteFragment);
-});
-export declare type MachineSettingPropsFragment = ({
+    } & MachineProfileCompleteFragment;
+};
+export declare type MachineSettingPropsFragment = {
     __typename?: 'MachineSetting';
-} & Pick<MachineSetting, 'id' | 'title' | 'settingType' | 'key' | 'value'>);
-export declare type MachineSpecPropsFragment = ({
+} & Pick<MachineSetting, 'id' | 'title' | 'settingType' | 'key' | 'value'>;
+export declare type MachineSpecPropsFragment = {
     __typename?: 'MachineSpec';
-} & Pick<MachineSpec, 'id' | 'specType' | 'value'>);
+} & Pick<MachineSpec, 'id' | 'specType' | 'value'>;
 export declare const MachineProfilePropsFragmentDoc: Apollo.DocumentNode;
 export declare const MachineFirmwareMinimalFragmentDoc: Apollo.DocumentNode;
 export declare const MachineFirmwarePropsFragmentDoc: Apollo.DocumentNode;

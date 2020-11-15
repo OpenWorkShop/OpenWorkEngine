@@ -1,13 +1,13 @@
 {
   "name": "@openworkshop/lib",
-  "version": "1.0.5",
+  "version": "0.0.0",
   "description": "API & utilities for OWS apps",
   "main": "./src/index.ts",
   "files": [
     "src"
   ],
   "scripts": {
-    "clean": "find . -regex \"./dist/.*\\.[jt]s$\" -type f -delete && find . -regex \"./dist/.*\\.map$\" -type f -delete && find . -regex \"./dist/.*\\.graphql$\" -type f -delete && find . -regex \"./dist/*\" -type d -delete",
+    "clean": "pkg=$(cat ./dist/package.json) && rm -rf ./dist && mkdir ./dist && echo $pkg > ./dist/package.json",
     "uninstall": "rm -rf ./node_modules && rm -rf yarn.lock",
     "reinstall": "yarn run uninstall && yarn",
     "rebuild": "yarn run reinstall && yarn run build",
