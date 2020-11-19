@@ -1,0 +1,48 @@
+Arguments: 
+  /Users/zaneclaes/nvm/versions/node/v14.8.0/bin/node /usr/local/Cellar/yarn/1.22.5/libexec/bin/yarn.js add -D lint-staged husky --ignore-workspace-root-check
+
+PATH: 
+  /Users/zaneclaes/nvm/versions/node/v14.8.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/usr/local/sbin:/usr/local/opt/qt/bin:/Users/zaneclaes/Library/Android/sdk/platform-tools:/Users/zaneclaes/Library/Python/3.7/bin/:/Users/zaneclaes/moongate:/Users/zaneclaes/bin:/Users/zaneclaes/.dotnet/tools:/usr/local/opt/fzf/bin
+
+Yarn version: 
+  1.22.5
+
+Node version: 
+  14.8.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/zaneclaes/OWS/OpenWorkEngine/package.json: Unexpected token ] in JSON at position 576
+      at JSON.parse (<anonymous>)
+      at /usr/local/Cellar/yarn/1.22.5/libexec/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.22.5/libexec/lib/cli.js:310:30)
+      at /usr/local/Cellar/yarn/1.22.5/libexec/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "private": true,
+    "scripts": {
+      "graphql": "yarn graphql-codegen --watch",
+      "lib": "cd OpenWorkEngine/npm-packages/lib && tsc -b -w",
+      "ui": "cd OpenWorkEngine/npm-packages/ui && tsc -b -w",
+      "oc": "cd OpenWorkEngine/npm-packages/open-controller && tsc -b -w",
+      "dev": "concurrently --kill-others-on-fail \"yarn run graphql\" \"yarn run lib\" \"yarn run ui\" \"yarn run oc\""
+    },
+    "resolutions": {
+      "nib/stylus": "0.54.8"
+    },
+    "workspaces": [
+      "./npm-packages/lib/dist",
+      "./npm-packages/ui/dist",
+      "./npm-packages/open-controller/dist",
+    ]
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

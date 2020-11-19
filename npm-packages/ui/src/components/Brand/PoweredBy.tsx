@@ -34,7 +34,7 @@ const PoweredBy: FunctionComponent<Props> = (props) => {
   return (
     <div>
       <Typography variant='subtitle2'>
-        <Trans>{props.productName} is powered by</Trans>
+        {t('{{ productName }} is powered by', props)}
         {renderIcon()}
         <a href={link} title={t('About OpenWorkShop')} target='_blank'>
           OpenWorkShop

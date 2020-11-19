@@ -6,7 +6,7 @@ import useLogger from '@openworkshop/lib/utils/logging/UseLogger';
 import { useTranslation, Trans } from 'react-i18next';
 import AlertList from '../Alerts/AlertList';
 import OfflineAlert from '../Alerts/OfflineAlert';
-import Icons from '../Icons/';
+import OpenWorkShopIcon from '../OpenWorkShopIcon/';
 
 type MP = MachineSearchResultFragment;
 
@@ -70,7 +70,7 @@ const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProp
           return (
             <Grid container alignItems='center'>
               <Grid item>
-                <Icons name={mp.icon} fill='#444' style={{ marginRight: 10, marginTop: 4 }} />
+                <OpenWorkShopIcon name={mp.icon} fill='#444' style={{ marginRight: 10, marginTop: 4 }} />
               </Grid>
               <Grid item xs>
                 {mp.name && <span>{mp.name} </span>}

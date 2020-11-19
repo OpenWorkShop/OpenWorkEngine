@@ -1,3 +1,24 @@
+import controllerHub from './controllerHub';
+
+export interface IControllerOpts {
+  errorHandler: (e: Error) => void;
+}
+
+function openController(opts: IControllerOpts) {
+  controllerHub.start().catch(opts.errorHandler);
+}
+
+export { openController };
+
+// connection.on("messageReceived", (username, message) => {
+//   log.debug('message received', username, message);
+// });
+
+//
+// setTimeout(() => {
+//   connection.send("newMessage", "foo", "Hello")
+//     .then(() => log.debug('done'));
+// }, 2000);
 //
 // const ensureArray = (...args) => {
 //   if (args.length === 0 || args[0] === undefined || args[0] === null) {

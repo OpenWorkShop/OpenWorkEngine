@@ -9,8 +9,9 @@ import { IOwsOptions, IOwsSettings, loadSettings } from './OpenWorkShopSettings'
 import { createUserManager, loadUser } from 'redux-oidc';
 import { IOwsState } from './store';
 import i18n, { TFunction } from 'i18next';
-import Backend from 'i18next-http-backend';
+import Backend from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
+
 
 export class OpenWorkShopCore {
   private _settings?: IOwsSettings = undefined;
@@ -61,6 +62,7 @@ export class OpenWorkShopCore {
       });
     }
 
+    this.log.debug('loading localizations...');
     this.i18n = await i
       // load translation using http -> see /public/locales (i.e. https://github.com/i18next/react-i18next/tree/master/example/react/public/locales)
       // learn more: https://github.com/i18next/i18next-http-backend
@@ -72,10 +74,10 @@ export class OpenWorkShopCore {
       // for all options read: https://www.i18next.com/overview/configuration-options
       .init({
         fallbackLng: 'en',
-        // debug: true,
+        debug: isDev,
 
         backend: {
-          loadPath: `${root}{{lng}}/{{ns}}.json`,
+          loadPath: `${root}locales/{{lng}}/{{ns}}.json`,
           requestOptions: {
             mode: 'no-cors',
           },
@@ -88,6 +90,10 @@ export class OpenWorkShopCore {
         interpolation: {
           escapeValue: false, // not needed for react as it escapes by default
         },
+      })
+      .then((f) => {
+        this.log.debug('Loaded localizations', f);
+        return f;
       });
 
     this._user = await loadUser(this._store, this._authManager);

@@ -12,12 +12,13 @@ export interface IOwsProps extends IOwsOptions {
 }
 
 async function fetchOws(opts: IOwsProps) {
-  if (!opts.i18nMiddleware) {
-    opts.i18nMiddleware = [];
+  const o = { ...opts };
+  if (!o.i18nMiddleware) {
+    o.i18nMiddleware = [];
   }
-  opts.i18nMiddleware.push(initReactI18next);
+  o.i18nMiddleware.push(initReactI18next);
 
-  await owsCore.load(opts);
+  await owsCore.load(o);
   return owsCore;
 }
 

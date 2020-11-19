@@ -1,6 +1,6 @@
 import * as React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import FullCentered from '../FullCentered/FullCentered';
+import FullCentered from '../Layout/FullCentered';
 
 const Preloader: React.FunctionComponent = () => {
   const size = 100;

@@ -12,6 +12,7 @@
     "baseUrl": "src",
     "strict": true,
     "composite": true,
+    "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "jsx": "react"
   },

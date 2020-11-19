@@ -18,6 +18,13 @@ const theme = createMuiTheme({
   shape: {
     borderRadius: 3,
   },
+  // mixins: {
+  //   toolbar: {
+  //     backgroundColor: Colors.brown.dark,
+  //     color: Colors.brown.contrastText,
+  //     fontWeight: 'bold',
+  //   }
+  // },
   typography: {
     fontFamily: [bodyFont, headerFont, 'sans-serif'].join(','),
     h1: {
@@ -42,7 +49,7 @@ const theme = createMuiTheme({
       fontFamily: headerFont,
     },
     h6: {
-      fontSize: '1rem',
+      fontSize: '1.1rem',
       fontFamily: headerFont,
     },
     button: {
