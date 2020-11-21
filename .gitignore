@@ -1,6 +1,7 @@
 **/node_modules/
 yarn-error.log
 npm-packages/*/dist/**
+.tsbuildinfo
 
 .data
 .DS_Store
