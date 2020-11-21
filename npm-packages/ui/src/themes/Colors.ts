@@ -26,3 +26,13 @@ export const purple: SimplePaletteColorOptions = {
   dark: '#12005e',
   contrastText: '#fff',
 };
+
+// https://material.io/resources/color/#!/?view.left=0&view.right=1&primary.color=0188d1
+export const blue: SimplePaletteColorOptions = {
+  light: "#76a7f3",
+  main: "#4078c0",
+  dark: "#004d8f",
+  contrastText: '#fff',
+};
+
+export default { blue, brown, gold, purple };

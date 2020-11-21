@@ -1,4 +1,4 @@
-import ApiCall, { IApiCallState, IApiResponseRecord, IRecord } from '../ApiCall';
+import ApiCall, {IApiArgs, IApiCallState, IApiResponseRecord, IRecord} from '../ApiCall';
 
 // Public user profile
 export interface IUserProfile extends IRecord {
@@ -19,5 +19,5 @@ export interface IState {
 }
 
 export default {
-  getUsersMe: new ApiCall<undefined, ICurrentUserResponse>('GET', 'users/me'),
+  getUsersMe: new ApiCall<IApiArgs, ICurrentUserResponse>('GET', 'users/me'),
 };

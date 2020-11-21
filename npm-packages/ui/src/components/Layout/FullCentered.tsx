@@ -33,10 +33,9 @@ const FullCentered: React.FunctionComponent<IProps> = (props) => {
       spacing={0}
       direction="column"
       alignItems="center"
-      justify="center"
       className={classes.fullCentered}
     >
-      <Box width={props.width ?? 400}>{props.children}</Box>
+      {props.children}
     </Grid>
   );
 };

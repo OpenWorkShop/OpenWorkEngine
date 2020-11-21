@@ -1,7 +1,7 @@
 import { MachineSearchResultFragment, useSearchMachineProfilesLazyQuery } from '@openworkshop/lib/api/graphql';
 import * as React from 'react';
-import { CircularProgress, TextField, Grid, Typography } from '@material-ui/core';
-import { Autocomplete, Alert } from '@material-ui/lab';
+import { Autocomplete, CircularProgress, TextField, Grid, Typography } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import useLogger from '@openworkshop/lib/utils/logging/UseLogger';
 import { useTranslation, Trans } from 'react-i18next';
 import AlertList from '../Alerts/AlertList';
@@ -66,9 +66,9 @@ const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProp
         groupBy={(mp: MP) => getCategoryName(mp.machineCategory)}
         getOptionLabel={(mp: MP) => [mp.brand, mp.name, mp.model].filter((a) => a && a.length > 0).join(' ')}
         onInputChange={(e, val) => updateQuery(val)}
-        renderOption={(mp: MP) => {
+        renderOption={(props: unknown, mp: MP) => {
           return (
-            <Grid container alignItems='center'>
+            <Grid {...props} container alignItems='center'>
               <Grid item>
                 <OpenWorkShopIcon name={mp.icon} fill='#444' style={{ marginRight: 10, marginTop: 4 }} />
               </Grid>

@@ -1,5 +1,5 @@
 import React from 'react';
-import OpenWorkShopContext from '../../OpenWorkShopContext';
+import OpenWorkShop from '../../OpenWorkShop';
 import { Logger } from './Logger';
 
 // type Components = React.ComponentType<unknown> | React.FunctionComponent<unknown>;
@@ -10,8 +10,7 @@ import { Logger } from './Logger';
 // };
 
 export function useLogger<TProps>(component: React.ComponentType<unknown> | React.FunctionComponent<TProps>): Logger {
-  const owsCore = React.useContext(OpenWorkShopContext);
-  return owsCore.logManager.getLogger(component.displayName || component.name);
+  return React.useContext(OpenWorkShop).logManager.getLogger(component.displayName || component.name);
 }
 
 export default useLogger;

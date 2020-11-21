@@ -1,0 +1,1 @@
+{"version":3,"file":"MachineControllerType.js","sourceRoot":"","sources":["../../../src/api/Machines/MachineControllerType.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,oBAAoB,EAAE,iBAAiB,EAAE,MAAM,mBAAmB,CAAC;AAC5E,OAAO,EAAE,qBAAqB,EAAE,MAAM,YAAY,CAAC;AAEnD,MAAM,CAAC,MAAM,uBAAuB,GAAG,iBAAiB,CAAC,qBAAqB,CAAC,CAAC;AAChF,MAAM,CAAC,MAAM,8BAA8B,GAAG,oBAAoB,CAAC,qBAAqB,CAAC,CAAC"}

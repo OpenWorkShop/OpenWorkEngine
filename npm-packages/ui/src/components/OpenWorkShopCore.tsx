@@ -1,4 +1,4 @@
-import owsCore from '@openworkshop/lib/OpenWorkShopCore';
+import { singleton as ows } from '@openworkshop/lib/OpenWorkShop';
 import * as React from 'react';
 import { OidcProvider } from 'redux-oidc';
 import usePromise from 'react-promise-suspense';
@@ -18,19 +18,19 @@ async function fetchOws(opts: IOwsProps) {
   }
   o.i18nMiddleware.push(initReactI18next);
 
-  await owsCore.load(o);
-  return owsCore;
+  await ows.load(o);
+  return ows;
 }
 
-const OpenWorkShopContext = React.createContext(owsCore);
+const OpenWorkShopContext = React.createContext(ows);
 
 const OpenWorkShopCore: React.FunctionComponent<IOwsProps> = (props: IOwsProps) => {
   usePromise(fetchOws, [props]);
 
   return (
-    <OpenWorkShopContext.Provider value={owsCore}>
-      <ApolloProvider client={owsCore.apolloClient}>
-        <OidcProvider store={owsCore.store} userManager={owsCore.authManager}>
+    <OpenWorkShopContext.Provider value={ows}>
+      <ApolloProvider client={ows.apolloClient}>
+        <OidcProvider store={ows.store} userManager={ows.authManager}>
           {props.children}
         </OidcProvider>
       </ApolloProvider>

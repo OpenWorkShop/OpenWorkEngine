@@ -1,35 +1,39 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import * as Colors from './Colors';
+import Colors from './Colors';
 import 'typeface-roboto';
 import 'typeface-cabin';
+import { backgroundImage, getImageUrl } from '../components/Images';
 
 const headerFont = 'Cabin';
 const bodyFont = 'Roboto';
 
+const defaultTheme = createMuiTheme();
+
 const theme = createMuiTheme({
   palette: {
     primary: Colors.purple,
-    secondary: Colors.brown,
+    secondary: Colors.gold,
     background: {
       paper: '#fff',
-      default: '#efefef',
+      default: '#f8f8f8',
     },
   },
   shape: {
     borderRadius: 3,
   },
-  // mixins: {
-  //   toolbar: {
-  //     backgroundColor: Colors.brown.dark,
-  //     color: Colors.brown.contrastText,
-  //     fontWeight: 'bold',
-  //   }
-  // },
+  mixins: {
+    toolbar: {
+      ...defaultTheme.mixins.toolbar,
+      color: Colors.brown.contrastText,
+      backgroundColor: Colors.brown.main,
+      fontWeight: 'bold',
+      backgroundImage: getImageUrl(backgroundImage.base64),
+    }
+  },
   typography: {
     fontFamily: [bodyFont, headerFont, 'sans-serif'].join(','),
     h1: {
       fontFamily: headerFont,
-      // menu bar...
       fontSize: '1.5rem',
     },
     h2: {

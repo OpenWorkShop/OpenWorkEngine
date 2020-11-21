@@ -1,5 +1,4 @@
-import ApiCall, { IApiResponseRecord, IRecord, IApiCallState } from '../ApiCall';
-import owsCore from '../../OpenWorkShopCore';
+import ApiCall, {IApiResponseRecord, IRecord, IApiCallState, IApiArgs} from '../ApiCall';
 import { UserManager, UserManagerSettings } from 'oidc-client';
 
 // This data could be loaded via /api/auth/config/OpenWorkShop
@@ -20,7 +19,7 @@ export type ILoginResponse = IApiResponseRecord<IAuth>;
 export type IClientConfigResponse = IApiResponseRecord<IClientConfig>;
 
 // Args Interfaces
-interface ILoginArgs {
+interface ILoginArgs extends IApiArgs {
   ClientManager?: UserManager;
   returnUrl?: string;
 }
@@ -43,7 +42,7 @@ interface IRegisterArgs extends ILoginInternalArgs {
   allowMarketing: boolean;
 }
 
-interface IVerifyEmailArgs {
+interface IVerifyEmailArgs extends IApiArgs {
   userId: string;
   code: string;
   returnUrl: string;
@@ -53,7 +52,7 @@ interface IResetPasswordArgs extends IVerifyEmailArgs {
   password: string;
 }
 
-interface IClientConfigArgs {
+interface IClientConfigArgs extends IApiArgs {
   ClientId?: string;
 }
 
@@ -66,7 +65,7 @@ class LoginApiCall<TArgs extends ILoginArgs> extends ApiCall<
     if (args.returnUrl) {
       return args;
     }
-    const manager = args.ClientManager ?? owsCore.authManager;
+    const manager = args.ClientManager ?? args.ows.authManager;
     delete args.ClientManager;
     const requestedUrl = new URLSearchParams(window.location.search).get(
       'ReturnUrl'

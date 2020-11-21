@@ -1,0 +1,1 @@
+{"version":3,"file":"controllerHub.js","sourceRoot":"","sources":["../src/controllerHub.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,OAAO,MAAM,oBAAoB,CAAC;AAE9C,MAAM,UAAU,GAAG,IAAI,OAAO,CAAC,oBAAoB,EAAE;KAClD,OAAO,CAAC,cAAc,CAAC;KACvB,KAAK,EAAE,CAAC;AAEX,eAAe,UAAU,CAAC"}

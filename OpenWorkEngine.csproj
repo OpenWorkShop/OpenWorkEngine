@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <PackageRoot>npm-packages\</PackageRoot>
     <Nullable>enable</Nullable>
+    <Company>OpenWorkShop</Company>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,9 +17,13 @@
   <ItemGroup>
     <Content Remove="$(PackageRoot)**" />
     <None Remove="$(PackageRoot)**" />
-    <None Include="$(PackageRoot)**" Exclude="$(PackageRoot)*\node_modules\**;$(PackageRoot)\*\dist\**;" />
+    <None Include="$(PackageRoot)**" Exclude="$(PackageRoot)*\node_modules\**;$(PackageRoot)\*\dist\**;OpenController\bin\**;OpenController\obj\**" />
     <None Remove="$(PackageRoot)\*\dist\**" />
+    <Content Remove="OpenController\bin\**" />
+    <Content Remove="OpenController\obj\**" />
     <Content Remove="$(PackageRoot)\*\dist\**" />
+    <None Remove="OpenController\obj\**" />
+    <None Remove="OpenController\bin\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +42,16 @@
     <Reference Include="Microsoft.AspNetCore.SignalR.Core, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
       <HintPath>..\..\..\..\..\usr\local\share\dotnet\packs\Microsoft.AspNetCore.App.Ref\5.0.0\ref\net5.0\Microsoft.AspNetCore.SignalR.Core.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="OpenController\obj\**" />
+    <Compile Remove="OpenController\bin\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="OpenController\obj\**" />
+    <EmbeddedResource Remove="OpenController\bin\**" />
   </ItemGroup>
 
 </Project>

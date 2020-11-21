@@ -1,3 +1,3 @@
-export { default as Wizard } from './Wizard';
+import Wizard from './Wizard';
 
-export default {};
+export default Wizard;

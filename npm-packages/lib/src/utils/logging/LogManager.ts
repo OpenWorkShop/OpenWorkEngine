@@ -44,7 +44,7 @@ export class LogManager extends EventEmitter {
     if (this.consoleLoggerRegistered) return this;
 
     this.onLogEntry((logEntry: LogEntry) => {
-      const parts: unknown[] = [];
+      const parts: unknown[] = [`[${new Date().getTime()}]`];
       // if (logEntry.location) {
       //   parts.push(logEntry.location);
       // }

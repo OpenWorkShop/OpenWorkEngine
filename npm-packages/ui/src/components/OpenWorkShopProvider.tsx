@@ -1,7 +1,7 @@
 import * as React from 'react';
 import OpenWorkShopCore, { IOwsProps } from './OpenWorkShopCore';
 import Preloader from './Preloader/Preloader';
-import theme from '../themes/Wizard';
+import theme from '../themes';
 import { ThemeProvider } from '@material-ui/core';
 
 // Loader for the core application; Suspense will remain until this is done.

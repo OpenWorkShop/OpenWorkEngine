@@ -9,7 +9,7 @@ import {
   Slice,
   SliceCaseReducers,
 } from '@reduxjs/toolkit';
-import owsCore from '../OpenWorkShopCore';
+import {IOpenWorkShop} from '../OpenWorkShop';
 
 export enum ApiCallStatus {
   LOADING = -1,
@@ -77,7 +77,11 @@ function getEndpointName(endpoint: string) {
 
 type SuccessCallback<TResponse> = (state: IApiCallState<TResponse>) => void;
 
-export default class ApiCall<TArgs, TResponse extends IApiResponse> {
+export interface IApiArgs {
+  ows: IOpenWorkShop;
+}
+
+export default class ApiCall<TArgs extends IApiArgs, TResponse extends IApiResponse> {
   static reducers: { [key: string]: Reducer } = {};
 
   static Auth?: string;
@@ -119,7 +123,7 @@ export default class ApiCall<TArgs, TResponse extends IApiResponse> {
 
   // eslint-disable-next-line @typescript-eslint/require-await,@typescript-eslint/no-unused-vars
   async getEndpoint(args: TArgs): Promise<string> {
-    return `${owsCore.settings.url.toString()}api/${this.endpoint}`;
+    return `${args.ows.settings.url.toString()}api/${this.endpoint}`;
   }
 
   // eslint-disable-next-line @typescript-eslint/require-await
