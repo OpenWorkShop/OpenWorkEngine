@@ -55,12 +55,5 @@ namespace OpenWorkEngine.OpenController.Lib.Api {
       }
       return res;
     }
-
-    public static Task Write(object res, HttpContext context, int statusCode = StatusCodes.Status200OK) {
-      context.Response.StatusCode = statusCode;
-      context.Response.ContentType = "application/json";
-      JObject jobj = JObject.FromObject(res);
-      return context.Response.WriteAsync(jobj.ToString(Formatting.Indented));
-    }
   }
 }

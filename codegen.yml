@@ -1,0 +1,15 @@
+overwrite: true
+schema: './npm-packages/lib/src/ows-schema.graphql'
+documents: './npm-packages/lib/src/**/*.graphql'
+generates:
+  ./npm-packages/lib/src/api/graphql.tsx:
+    plugins:
+      - 'typescript'
+      - 'typescript-resolvers'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      avoidOptionals: true
+  ./npm-packages/lib/graphql.schema.json:
+    plugins:
+      - 'introspection'

@@ -1,5 +1,7 @@
 import React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { Alert } from '@material-ui/core';
+import useLogger from '@openworkshop/lib/utils/logging/UseLogger';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -13,10 +15,33 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const AlertList: React.FunctionComponent = (props) => {
-  const classes = useStyles();
+interface IProps {
+  error?: Error;
+  errors?: Error[];
+}
 
-  return <div className={classes.root}>{props.children}</div>;
+type OwnProps = IProps;
+
+const AlertList: React.FunctionComponent<OwnProps> = (props) => {
+  const log = useLogger(AlertList);
+  const classes = useStyles();
+  const errors = [...(props.errors || [])];
+  if (props.error) errors.push(props.error);
+
+  if (errors.length > 0) log.error('errors', errors);
+
+  return (
+    <div className={classes.root}>
+      {errors.map((e) => (
+        <Alert key={e.name} severity="error">
+          <strong>{e.name}</strong>
+          {e.name && e.message && <br />}
+          {e.message}
+        </Alert>
+      ))}
+      {props.children}
+    </div>
+  );
 };
 
 export default AlertList;

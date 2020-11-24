@@ -1,17 +1,18 @@
-import React from 'react';
-import OidcClient from 'oidc-client';
-import JsLogger from 'js-logger';
-import { Store } from 'redux';
-import { HttpLink, InMemoryCache, ApolloClient, NormalizedCacheObject } from '@apollo/client';
-import { Logger } from './utils/logging/Logger';
-import logManager, { LogManager } from './utils/logging';
-import { developmentLogOptions, defaultLogOptions } from './utils/logging/LogOptions';
-import { IOwsOptions, IOwsSettings, loadSettings } from './OpenWorkShopSettings';
-import { createUserManager, loadUser } from 'redux-oidc';
-import { IOwsState } from './store';
+import { ApolloClient, ApolloLink, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
 import i18n, { TFunction } from 'i18next';
-import Backend from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import Backend from 'i18next-xhr-backend';
+import JsLogger from 'js-logger';
+import OidcClient from 'oidc-client';
+import React from 'react';
+import { Store } from 'redux';
+import { createUserManager, loadUser } from 'redux-oidc';
+import { abbreviation } from './consts';
+import { IOwsOptions, IOwsSettings, loadSettings } from './OpenWorkShopSettings';
+import { IOwsState } from './store';
+import logManager, { LogManager } from './utils/logging';
+import { Logger } from './utils/logging/Logger';
+import { defaultLogOptions, developmentLogOptions } from './utils/logging/LogOptions';
 
 let _i = 0;
 
@@ -71,9 +72,16 @@ class OpenWorkShop implements IOpenWorkShop {
     this._authManager = createUserManager(um);
 
     const httpLink = new HttpLink({ uri: `${root}api/graphql` });
+    const link = opts.clientApolloLink
+      ? ApolloLink.split(
+        (operation) => operation.getContext().clientName === abbreviation,
+        httpLink,
+        opts.clientApolloLink,
+      )
+      : httpLink;
     this._apolloClient = new ApolloClient({
       cache: new InMemoryCache(),
-      link: httpLink,
+      link: link,
     });
 
     // Configure the logger

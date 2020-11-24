@@ -1,0 +1,220 @@
+Searching 204 files for ""@material-ui/"
+
+/Users/zaneclaes/OWS/package.json:
+   15    "resolutions": {
+   16      "nib/stylus": "0.54.8",
+   17:     "@material-ui/core": "5.0.0-alpha.17",
+   18:     "@material-ui/styles": "5.0.0-alpha.15",
+   19:     "@material-ui/lab": "5.0.0-alpha.17",
+   20      "react": "17.0.0",
+   21      "react-dom": "17.0.0",
+
+/Users/zaneclaes/OWS/Makerverse/App/package.json:
+   15      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   16      "@fortawesome/react-fontawesome": "^0.1.11",
+   17:     "@material-ui/core": "^5.0.0-alpha.16",
+   18:     "@material-ui/lab": "^5.0.0-alpha.16",
+   19:     "@material-ui/styles": "^5.0.0-alpha.15",
+   20      "@microsoft/signalr": "^5.0.0",
+   21      "@openworkshop/lib": "^1.0.7",
+
+/Users/zaneclaes/OWS/OpenWorkEngine/npm-packages/ui/package.json:
+   31      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   32      "@fortawesome/react-fontawesome": "^0.1.11",
+   33:     "@material-ui/core": "^5.0.0-alpha.16",
+   34:     "@material-ui/styles": "^5.0.0-alpha.15",
+   35:     "@material-ui/lab": "^5.0.0-alpha.16",
+   36      "@openworkshop/lib": "^1.0.2",
+   37      "graphql": "^15.4.0",
+   ..
+   64      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   65      "@fortawesome/react-fontawesome": "^0.1.11",
+   66:     "@material-ui/core": "^5.0.0-alpha.16",
+   67:     "@material-ui/styles": "^5.0.0-alpha.15",
+   68:     "@material-ui/lab": "^5.0.0-alpha.16",
+   69      "@openworkshop/lib": "^1.0.5",
+   70      "@reduxjs/toolkit": "^1.4.0",
+
+/Users/zaneclaes/OWS/OpenWorkEngine/npm-packages/ui/package.prod.json:
+   26      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   27      "@fortawesome/react-fontawesome": "^0.1.11",
+   28:     "@material-ui/core": "^5.0.0-alpha.16",
+   29:     "@material-ui/styles": "^5.0.0-alpha.15",
+   30:     "@material-ui/lab": "^5.0.0-alpha.16",
+   31      "@openworkshop/lib": "^1.0.2",
+   32      "graphql": "^15.4.0",
+   ..
+   57      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   58      "@fortawesome/react-fontawesome": "^0.1.11",
+   59:     "@material-ui/core": "^5.0.0-alpha.16",
+   60:     "@material-ui/styles": "^5.0.0-alpha.15",
+   61:     "@material-ui/lab": "^5.0.0-alpha.16",
+   62      "@openworkshop/lib": "^1.0.5",
+   63      "@reduxjs/toolkit": "^1.4.0",
+
+/Users/zaneclaes/OWS/OpenWorkEngine/npm-packages/ui/dist/package.json:
+   26      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   27      "@fortawesome/react-fontawesome": "^0.1.11",
+   28:     "@material-ui/core": "^5.0.0-alpha.16",
+   29:     "@material-ui/styles": "^5.0.0-alpha.15",
+   30:     "@material-ui/lab": "^5.0.0-alpha.16",
+   31      "@openworkshop/lib": "^1.0.2",
+   32      "graphql": "^15.4.0",
+   ..
+   57      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   58      "@fortawesome/react-fontawesome": "^0.1.11",
+   59:     "@material-ui/core": "^5.0.0-alpha.16",
+   60:     "@material-ui/styles": "^5.0.0-alpha.15",
+   61:     "@material-ui/lab": "^5.0.0-alpha.16",
+   62      "@openworkshop/lib": "^1.0.5",
+   63      "@reduxjs/toolkit": "^1.4.0",
+
+/Users/zaneclaes/OWS/OpenWorkShop/App/package.json:
+   13      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   14      "@fortawesome/react-fontawesome": "^0.1.11",
+   15:     "@material-ui/core": "^5.0.0-alpha.16",
+   16:     "@material-ui/lab": "^5.0.0-alpha.16",
+   17:     "@material-ui/styles": "^5.0.0-alpha.15",
+   18      "@openworkshop/lib": "^1.0.7",
+   19      "@openworkshop/ui": "^1.0.7",
+
+27 matches across 6 files
+
+
+Searching 204 files for ""@material-ui/"
+
+/Users/zaneclaes/OWS/package.json:
+   15    "resolutions": {
+   16      "nib/stylus": "0.54.8",
+   17:     "@material-ui/core": "5.0.0-alpha.17",
+   18:     "@material-ui/styles": "5.0.0-alpha.15",
+   19:     "@material-ui/lab": "5.0.0-alpha.17",
+   20      "react": "17.0.0",
+   21      "react-dom": "17.0.0",
+
+/Users/zaneclaes/OWS/Makerverse/App/package.json:
+   15      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   16      "@fortawesome/react-fontawesome": "^0.1.11",
+   17:     "@material-ui/core": "^5.0.0-alpha.17",
+   18:     "@material-ui/lab": "^5.0.0-alpha.17",
+   19:     "@material-ui/styles": "^5.0.0-alpha.15",
+   20      "@microsoft/signalr": "^5.0.0",
+   21      "@openworkshop/lib": "^1.0.7",
+
+/Users/zaneclaes/OWS/OpenWorkEngine/npm-packages/ui/package.json:
+   31      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   32      "@fortawesome/react-fontawesome": "^0.1.11",
+   33:     "@material-ui/core": "^5.0.0-alpha.16",
+   34:     "@material-ui/styles": "^5.0.0-alpha.15",
+   35:     "@material-ui/lab": "^5.0.0-alpha.16",
+   36      "@openworkshop/lib": "^1.0.2",
+   37      "graphql": "^15.4.0",
+   ..
+   64      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   65      "@fortawesome/react-fontawesome": "^0.1.11",
+   66:     "@material-ui/core": "^5.0.0-alpha.16",
+   67:     "@material-ui/styles": "^5.0.0-alpha.15",
+   68:     "@material-ui/lab": "^5.0.0-alpha.16",
+   69      "@openworkshop/lib": "^1.0.5",
+   70      "@reduxjs/toolkit": "^1.4.0",
+
+/Users/zaneclaes/OWS/OpenWorkEngine/npm-packages/ui/package.prod.json:
+   26      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   27      "@fortawesome/react-fontawesome": "^0.1.11",
+   28:     "@material-ui/core": "^5.0.0-alpha.16",
+   29:     "@material-ui/styles": "^5.0.0-alpha.15",
+   30:     "@material-ui/lab": "^5.0.0-alpha.16",
+   31      "@openworkshop/lib": "^1.0.2",
+   32      "graphql": "^15.4.0",
+   ..
+   57      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   58      "@fortawesome/react-fontawesome": "^0.1.11",
+   59:     "@material-ui/core": "^5.0.0-alpha.16",
+   60:     "@material-ui/styles": "^5.0.0-alpha.15",
+   61:     "@material-ui/lab": "^5.0.0-alpha.16",
+   62      "@openworkshop/lib": "^1.0.5",
+   63      "@reduxjs/toolkit": "^1.4.0",
+
+/Users/zaneclaes/OWS/OpenWorkEngine/npm-packages/ui/dist/package.json:
+   26      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   27      "@fortawesome/react-fontawesome": "^0.1.11",
+   28:     "@material-ui/core": "^5.0.0-alpha.16",
+   29:     "@material-ui/styles": "^5.0.0-alpha.15",
+   30:     "@material-ui/lab": "^5.0.0-alpha.16",
+   31      "@openworkshop/lib": "^1.0.2",
+   32      "graphql": "^15.4.0",
+   ..
+   57      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   58      "@fortawesome/react-fontawesome": "^0.1.11",
+   59:     "@material-ui/core": "^5.0.0-alpha.16",
+   60:     "@material-ui/styles": "^5.0.0-alpha.15",
+   61:     "@material-ui/lab": "^5.0.0-alpha.16",
+   62      "@openworkshop/lib": "^1.0.5",
+   63      "@reduxjs/toolkit": "^1.4.0",
+
+/Users/zaneclaes/OWS/OpenWorkShop/App/package.json:
+   13      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   14      "@fortawesome/react-fontawesome": "^0.1.11",
+   15:     "@material-ui/core": "^5.0.0-alpha.16",
+   16:     "@material-ui/lab": "^5.0.0-alpha.16",
+   17:     "@material-ui/styles": "^5.0.0-alpha.15",
+   18      "@openworkshop/lib": "^1.0.7",
+   19      "@openworkshop/ui": "^1.0.7",
+
+27 matches across 6 files
+
+
+Searching 204 files for "5.0.0-alpha.16"
+
+/Users/zaneclaes/OWS/OpenWorkEngine/npm-packages/ui/package.json:
+   64      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   65      "@fortawesome/react-fontawesome": "^0.1.11",
+   66:     "@material-ui/core": "^5.0.0-alpha.16",
+   67      "@material-ui/styles": "^5.0.0-alpha.15",
+   68:     "@material-ui/lab": "^5.0.0-alpha.16",
+   69      "@openworkshop/lib": "^1.0.5",
+   70      "@reduxjs/toolkit": "^1.4.0",
+
+/Users/zaneclaes/OWS/OpenWorkEngine/npm-packages/ui/package.prod.json:
+   26      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   27      "@fortawesome/react-fontawesome": "^0.1.11",
+   28:     "@material-ui/core": "^5.0.0-alpha.16",
+   29      "@material-ui/styles": "^5.0.0-alpha.15",
+   30:     "@material-ui/lab": "^5.0.0-alpha.16",
+   31      "@openworkshop/lib": "^1.0.2",
+   32      "graphql": "^15.4.0",
+   ..
+   57      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   58      "@fortawesome/react-fontawesome": "^0.1.11",
+   59:     "@material-ui/core": "^5.0.0-alpha.16",
+   60      "@material-ui/styles": "^5.0.0-alpha.15",
+   61:     "@material-ui/lab": "^5.0.0-alpha.16",
+   62      "@openworkshop/lib": "^1.0.5",
+   63      "@reduxjs/toolkit": "^1.4.0",
+
+/Users/zaneclaes/OWS/OpenWorkEngine/npm-packages/ui/dist/package.json:
+   26      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   27      "@fortawesome/react-fontawesome": "^0.1.11",
+   28:     "@material-ui/core": "^5.0.0-alpha.16",
+   29      "@material-ui/styles": "^5.0.0-alpha.15",
+   30:     "@material-ui/lab": "^5.0.0-alpha.16",
+   31      "@openworkshop/lib": "^1.0.2",
+   32      "graphql": "^15.4.0",
+   ..
+   57      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   58      "@fortawesome/react-fontawesome": "^0.1.11",
+   59:     "@material-ui/core": "^5.0.0-alpha.16",
+   60      "@material-ui/styles": "^5.0.0-alpha.15",
+   61:     "@material-ui/lab": "^5.0.0-alpha.16",
+   62      "@openworkshop/lib": "^1.0.5",
+   63      "@reduxjs/toolkit": "^1.4.0",
+
+/Users/zaneclaes/OWS/OpenWorkShop/App/package.json:
+   13      "@fortawesome/free-solid-svg-icons": "^5.15.1",
+   14      "@fortawesome/react-fontawesome": "^0.1.11",
+   15:     "@material-ui/core": "^5.0.0-alpha.16",
+   16:     "@material-ui/lab": "^5.0.0-alpha.16",
+   17      "@material-ui/styles": "^5.0.0-alpha.15",
+   18      "@openworkshop/lib": "^1.0.7",
+
+12 matches across 4 files

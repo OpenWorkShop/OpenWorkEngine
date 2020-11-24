@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 
 namespace OpenWorkEngine.OpenController.MachineProfiles.Interfaces {
-  public interface IMachinePart : IHasStringId {
+  public interface IMachinePart {
     MachinePartType PartType { get; }
 
     string Title { get; }

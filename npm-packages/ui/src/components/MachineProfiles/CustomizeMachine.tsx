@@ -14,6 +14,7 @@ import {
   ICustomizedMachineProfile,
   MachineAxes,
 } from '@openworkshop/lib/api/Machines/CustomizedMachine';
+import {owsClientOpts} from '@openworkshop/lib/consts';
 import ChooseMachineParts from './ChooseMachineParts';
 import CreateMachineProfile from './CreateMachineProfile';
 import MachineAxesEditor from './MachineAxesEditor';
@@ -30,7 +31,7 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
   const log = useLogger(CustomizeMachine);
   const theme = useTheme();
   const [machineProfile, setMachineProfile] = React.useState<MachineSearchResultFragment | undefined>(undefined);
-  const [getCompleteMachineProfile, { loading, error, data }] = useGetCompleteMachineProfileLazyQuery();
+  const [getCompleteMachineProfile, { loading, error, data }] = useGetCompleteMachineProfileLazyQuery(owsClientOpts);
   const mp = data ? data.machineProfile : undefined;
   const loadedMachineProfile = !loading && machineProfile && mp && machineProfile.id === mp.id ? mp : undefined;
   const [customizedMachine, setCustomizedMachine] = React.useState<ICustomizedMachine | undefined>(undefined);

@@ -9,6 +9,7 @@ import {
   Slice,
   SliceCaseReducers,
 } from '@reduxjs/toolkit';
+import _ from 'lodash';
 import {IOpenWorkShop} from '../OpenWorkShop';
 
 export enum ApiCallStatus {
@@ -128,7 +129,7 @@ export default class ApiCall<TArgs extends IApiArgs, TResponse extends IApiRespo
 
   // eslint-disable-next-line @typescript-eslint/require-await
   async prepare(args: TArgs): Promise<RequestInit> {
-    const body = this.method === 'POST' ? JSON.stringify(args) : null;
+    const body = this.method === 'POST' ? JSON.stringify(_.omit(args, 'ows')) : null;
     return {
       method: this.method,
       headers: {

@@ -1,7 +1,7 @@
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 
 namespace OpenWorkEngine.OpenController.MachineProfiles.Interfaces {
-  public interface IMachineAxis : IHasStringId {
+  public interface IMachineAxis {
     AxisName Name { get; }
 
     decimal Min { get; }

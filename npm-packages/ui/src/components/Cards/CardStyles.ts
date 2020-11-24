@@ -1,14 +1,33 @@
-import { Theme } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import { CreateCSSProperties } from '@material-ui/core/styles/withStyles';
 
-export const cardHeader = (theme: Theme): CreateCSSProperties => ({
-  backgroundColor: theme.palette.secondary.main,
-  color: theme.palette.secondary.contrastText,
-  fontWeight: 'bold',
-});
+const padding = 2;
 
-export const cardFooter = (theme: Theme): CreateCSSProperties => ({
-  justifyContent: 'center',
-  backgroundColor: theme.palette.background.default,
-  fontStyle: 'italic',
-});
+const useStyles = makeStyles((theme: Theme) => ({
+  cardHeader: {
+    padding: 0,
+  },
+  subHeader: {
+    justifyContent: 'center',
+    margin: 0,
+    backgroundColor: theme.palette.background.default,
+  },
+  cardFooter: {
+    justifyContent: 'center',
+    margin: 0,
+    backgroundColor: theme.palette.background.default,
+  },
+  root: {
+    margin: theme.spacing(4),
+    minWidth: 300,
+  },
+  content: {
+    padding: theme.spacing(padding),
+  },
+  centered: {
+    textAlign: 'center',
+    verticalAlign: 'center',
+  },
+}));
+
+export default useStyles;

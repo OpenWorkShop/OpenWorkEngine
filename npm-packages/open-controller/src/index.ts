@@ -1,14 +1,6 @@
-import controllerHub from './controllerHub';
-
 export interface IControllerOpts {
   errorHandler: (e: Error) => void;
 }
-
-function openController(opts: IControllerOpts) {
-  controllerHub.start().catch(opts.errorHandler);
-}
-
-export { openController };
 
 // connection.on("messageReceived", (username, message) => {
 //   log.debug('message received', username, message);

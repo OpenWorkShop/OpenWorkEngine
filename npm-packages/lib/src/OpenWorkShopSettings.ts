@@ -1,3 +1,4 @@
+import { ApolloLink } from '@apollo/client';
 import { Store, AnyAction } from '@reduxjs/toolkit';
 import { UserManagerSettings } from 'oidc-client';
 import { IOwsState } from './store';
@@ -19,6 +20,7 @@ export interface IOwsOptions {
   hostnameMap?: HostnameMap;
   i18nMiddleware?: AnyAction[];
   logOptions?: LogOptions;
+  clientApolloLink?: ApolloLink;
 }
 
 function getServerUrl(env: OwsEnvironment): URL {

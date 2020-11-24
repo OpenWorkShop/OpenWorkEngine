@@ -1,7 +1,8 @@
+using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 
 namespace OpenWorkEngine.OpenController.MachineProfiles.Interfaces {
-  public interface IMachineFirmware : IHasStringId {
+  public interface IMachineFirmware {
     public string Name { get; }
 
     public MachineControllerType ControllerType { get; }

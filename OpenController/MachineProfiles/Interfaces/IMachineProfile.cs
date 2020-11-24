@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 
 namespace OpenWorkEngine.OpenController.MachineProfiles.Interfaces {
-  public interface IMachineProfile : IHasStringId {
+  public interface IMachineProfile {
     public string Name { get; }
 
     public string? Brand { get; }

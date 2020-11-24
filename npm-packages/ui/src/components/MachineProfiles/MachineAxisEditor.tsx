@@ -60,7 +60,7 @@ const MachineAxisEditor: React.FunctionComponent<IMachineAxisEditorProps> = (pro
     const units = key === 'precision' ? t('digits') : 'mm';
     const tip = getTooltip(key);
     return (
-      <Grid item xs={6}>
+      <Grid item xs={12} lg={6}>
         <NumericInput
           id='min'
           label={name}

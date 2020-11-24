@@ -4,6 +4,7 @@ import { Autocomplete, CircularProgress, TextField, Grid, Typography } from '@ma
 import { Alert } from '@material-ui/lab';
 import useLogger from '@openworkshop/lib/utils/logging/UseLogger';
 import { useTranslation, Trans } from 'react-i18next';
+import {owsClientOpts} from '@openworkshop/lib/consts';
 import AlertList from '../Alerts/AlertList';
 import OfflineAlert from '../Alerts/OfflineAlert';
 import OpenWorkShopIcon from '../OpenWorkShopIcon/';
@@ -20,7 +21,7 @@ const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProp
   const log = useLogger(MachineProfileSearchBar);
   const [query, setQuery] = React.useState('');
   const [machineProfiles, setMachineProfiles] = React.useState<MP[]>([]);
-  const [searchMachines, { loading, error, data }] = useSearchMachineProfilesLazyQuery();
+  const [searchMachines, { loading, error, data }] = useSearchMachineProfilesLazyQuery(owsClientOpts);
 
   React.useEffect(() => {
     // Store the sorted search results in state, which also prevents clearing of results while querying.

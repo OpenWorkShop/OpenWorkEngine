@@ -1,7 +1,8 @@
+using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 
 namespace OpenWorkEngine.OpenController.MachineProfiles.Interfaces {
-  public interface IMachineSpec : IHasStringId {
+  public interface IMachineSpec {
     public MachineSpecType SpecType { get; }
 
     // Specs always have numeric values.

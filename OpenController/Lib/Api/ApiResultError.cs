@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using HotChocolate;
 
 namespace OpenWorkEngine.OpenController.Lib.Api {
   public enum ApiErrorTypes {
@@ -12,12 +13,15 @@ namespace OpenWorkEngine.OpenController.Lib.Api {
   };
 
   public class ApiResultError {
+
     public string Message { get; }
     public ApiErrorTypes Type { get; }
     public string? Code { get; }
     public IDictionary? Data { get; }
 
     public IReadOnlyDictionary<string, object?>? Extensions { get; private set; }
+    public IReadOnlyList<Location>? Locations { get; private set; }
+    public Path? Path { get; private set; }
     public Exception? Exception { get; private set; }
     public string? StackTrace { get; private set; }
 
@@ -29,7 +33,7 @@ namespace OpenWorkEngine.OpenController.Lib.Api {
     }
 
     public Dictionary<string, object> ToApiResponseData() {
-      Dictionary<string, object> ret = new() {
+      Dictionary<string, object> ret = new Dictionary<string, object>() {
         ["message"] = Message,
         ["type"] = Type.ToString(),
         ["code"] = Code ?? "?",
@@ -37,8 +41,14 @@ namespace OpenWorkEngine.OpenController.Lib.Api {
       if (Data != null) {
         ret.Add("data", Data);
       }
+      if (Locations != null) {
+        ret.Add("locations", Locations);
+      }
       if (Extensions != null) {
         ret.Add("extensions", Extensions);
+      }
+      if (Path != null) {
+        ret.Add("path", Path);
       }
       if (Exception != null) {
         ret.Add("exception", BuildExceptionError(Exception).ToApiResponseData());
@@ -55,22 +65,14 @@ namespace OpenWorkEngine.OpenController.Lib.Api {
         StackTrace = e.StackTrace,
       };
 
-
     public static ApiResultError BuildUnauthorizedError(string message, string code) =>
       new (message, ApiErrorTypes.Unauthorized, code);
 
-
-    // // Canonical response types for common error scenarios
-    // public static ApiResponse BuildIdentityUnauthorizedObjectErrorResult
-    //   (this IExecutor http, params IdentityError[] errors) =>
-    //   http.BuildErrorResponseFactory(ApiExceptionMiddleware.BuildIdentityError, errors);
-    //
-    // public static ApiResponse BuildUnauthorizedObjectResult
-    //   (this IExecutor http, object value) =>
-    //   http.BuildErrorResponse(ApiExceptionMiddleware.BuildError(value?.ToString(), ApiErrorTypes.Unauthorized));
-    //
-    // public static ApiResponse BuildBadRequestResult
-    //   (this IExecutor http, object value) =>
-    //   http.BuildErrorResponse(ApiExceptionMiddleware.BuildError(value?.ToString(), ApiErrorTypes.BadRequest));
+    public static ApiResultError BuildGraphQLError(IError e) =>
+      new ApiResultError(e.Message, ApiErrorTypes.Exception, e.Code) {
+        Locations = e.Locations,
+        Path = e.Path,
+        Exception = e.Exception,
+      };
   }
 }

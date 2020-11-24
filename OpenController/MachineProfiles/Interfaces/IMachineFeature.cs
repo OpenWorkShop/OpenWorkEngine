@@ -1,6 +1,7 @@
-namespace OpenWorkEngine.OpenController.MachineProfiles.Interfaces {
-  public interface IMachineFeature : IHasStringId {
+using OpenWorkEngine.OpenController.Lib;
 
+namespace OpenWorkEngine.OpenController.MachineProfiles.Interfaces {
+  public interface IMachineFeature {
     public bool Disabled { get; }
 
     // Identifier for UI, etc.

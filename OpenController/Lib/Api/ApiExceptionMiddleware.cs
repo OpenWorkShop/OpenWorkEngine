@@ -22,7 +22,7 @@ namespace OpenWorkEngine.OpenController.Lib.Api {
       ApiResultErrors errors = new (ApiResultError.BuildExceptionError(ex));
       ApiResponse res = new (null, errors, http.BuildResultMeta<ApiResultMeta>());
       Dictionary<string, object> value = res.ToDictionaryValue();
-      return ApiResponse.Write(value, http, res.GetHttpStatusCode());
+      return ApiResultExecutor.Write(value, http, res.GetHttpStatusCode());
     }
   }
 }

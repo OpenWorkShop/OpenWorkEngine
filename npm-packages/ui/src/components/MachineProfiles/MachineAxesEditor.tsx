@@ -42,7 +42,7 @@ const MachineAxesEditor: React.FunctionComponent<IMachineAxesEditorProps> = (pro
         const axis = axes[axisName];
         return (
           <Grid key={axis.name} item xs={12} sm={6} md={size}>
-            <Paper style={{ padding: 20, minWidth: 300 }}>
+            <Paper style={{ padding: 20 }}>
               <MachineAxisEditor axis={axis} onChanged={onChangedAxis} />
             </Paper>
           </Grid>

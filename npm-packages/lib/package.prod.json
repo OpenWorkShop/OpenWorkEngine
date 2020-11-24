@@ -19,7 +19,7 @@
   "homepage": "https://github.com/OpenWorkShop/OpenWorkEngine#readme",
   "dependencies": {},
   "peerDependiences": {
-    "@apollo/client": "^3.2.5",
+    "@apollo/client": "^3.2.7",
     "graphql": "^15.4.0",
     "history": "4.10.1",
     "redux-oidc": "^4.0.0-beta1",
@@ -32,8 +32,8 @@
     "react-i18next": "^11.7.3"
   },
   "devDependencies": {
-    "@apollo/client": "^3.2.5",
-    "@graphql-codegen/cli": "1.19.1",
+    "@apollo/client": "^3.2.7",
+    "@graphql-codegen/cli": "1.19.2",
     "@graphql-codegen/introspection": "1.18.0",
     "@graphql-codegen/typescript": "1.17.11",
     "@graphql-codegen/typescript-resolvers": "^1.17.11",

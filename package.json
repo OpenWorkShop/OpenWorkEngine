@@ -1,13 +1,20 @@
 {
+  "name": "openworkengine",
   "private": true,
   "scripts": {
     "graphql": "yarn graphql-codegen --watch",
-    "lib": "cd OpenWorkEngine/npm-packages/lib && tsc -b -w",
-    "ui": "cd OpenWorkEngine/npm-packages/ui && tsc -b -w",
-    "oc": "cd OpenWorkEngine/npm-packages/open-controller && tsc -b -w",
+    "lib": "cd ./npm-packages/lib && tsc -b -w",
+    "ui": "cd ./npm-packages/ui && tsc -b -w",
+    "oc": "cd ./npm-packages/open-controller && tsc -b -w",
     "dev": "concurrently --kill-others-on-fail \"yarn run graphql\" \"yarn run lib\" \"yarn run ui\" \"yarn run oc\""
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "1.19.2",
+    "@graphql-codegen/introspection": "1.18.0",
+    "@graphql-codegen/typescript": "1.17.11",
+    "@graphql-codegen/typescript-operations": "^1.17.10",
+    "@graphql-codegen/typescript-react-apollo": "^2.1.1",
+    "@graphql-codegen/typescript-resolvers": "^1.17.11",
     "husky": "^4.3.0",
     "lint-staged": "^10.5.1",
     "imagemin-lint-staged": "^0.4.0"

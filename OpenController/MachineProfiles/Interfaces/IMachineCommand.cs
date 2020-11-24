@@ -1,5 +1,5 @@
 namespace OpenWorkEngine.OpenController.MachineProfiles.Interfaces {
-  public interface IMachineCommand : IHasStringId {
+  public interface IMachineCommand {
     public string Name { get; }
 
     public string Value { get; }
