@@ -31,8 +31,7 @@ namespace OpenWorkEngine.OpenController.Lib {
 
     // Convert the string codes into HttpStatusCodes and find the highest.
     public HttpStatusCode GetHighestErrorCode(IEnumerable<string?> codes) =>
-        codes.Where(e => e != null)
-             .Select(e => Enum.TryParse(e!, true, out HttpStatusCode code) ? code : Default)
+        codes.Select(e => e != null && Enum.TryParse(e!, true, out HttpStatusCode code) ? code : Default)
              .Distinct()
              .Max();
   }

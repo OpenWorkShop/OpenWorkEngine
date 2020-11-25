@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Alert } from '@material-ui/core';
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
   error?: Error;
-  errors?: Error[];
+  errors?: (Error | undefined)[];
 }
 
 type OwnProps = IProps;
@@ -25,20 +26,32 @@ type OwnProps = IProps;
 const AlertList: React.FunctionComponent<OwnProps> = (props) => {
   const log = useLogger(AlertList);
   const classes = useStyles();
-  const errors = [...(props.errors || [])];
+  const errors: Error[] = [];
+  (props.errors ?? []).forEach((e) => {
+    if (e != null) errors.push(e);
+  });
   if (props.error) errors.push(props.error);
 
   if (errors.length > 0) log.error('errors', errors);
 
+  function splitMessage(msg: string): string {
+    const lines = _.uniq(msg.split('\n'));
+    return lines.join('<br />');
+  }
+
   return (
     <div className={classes.root}>
-      {errors.map((e) => (
-        <Alert key={e.name} severity="error">
-          <strong>{e.name}</strong>
-          {e.name && e.message && <br />}
-          {e.message}
-        </Alert>
-      ))}
+      {errors.map((e) => {
+        const message = e.message || '';
+        const name = e.name || '';
+        return (
+          <Alert key={name} severity="error">
+            <strong>{name}</strong>
+            {name.length > 0 && message.length > 0 && <br/>}
+            {splitMessage(e.message)}
+          </Alert>
+        );
+      })}
       {props.children}
     </div>
   );

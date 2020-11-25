@@ -70,7 +70,7 @@ const MachineAxisEditor: React.FunctionComponent<IMachineAxisEditorProps> = (pro
           onChangeNumericValue={(v) => props.onChanged({ ...axis, [key]: v })}
           InputProps={{
             startAdornment: tip && (
-              <InputAdornment position='start'>
+              <InputAdornment style={{ marginRight: 0 }} position='start'>
                 <Tooltip title={tip}>
                   <IconButton aria-label={name} size='small' disableFocusRipple>
                     <FontAwesomeIcon color={theme.palette.info.light} icon={faQuestionCircle} />
@@ -78,7 +78,12 @@ const MachineAxisEditor: React.FunctionComponent<IMachineAxisEditorProps> = (pro
                 </Tooltip>
               </InputAdornment>
             ),
-            endAdornment: <InputAdornment position='end'>{units}</InputAdornment>,
+            endAdornment: <InputAdornment
+              style={{ marginRight: 0, marginLeft: 0 }}
+              position='end'
+            >
+              {units}
+            </InputAdornment>,
           }}
         />
       </Grid>

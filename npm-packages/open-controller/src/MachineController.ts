@@ -1,14 +1,18 @@
-import {MachineControllerType} from '@openworkshop/lib/api/graphql';
+import { MachineControllerType } from '@openworkshop/lib/api/graphql';
 
 export interface IConnectionOpts {
   host: string;
 }
 
-export interface IPortOpts {
-  port: string;
+export interface IFirmwareOpts {
   controllerType: MachineControllerType;
   baudRate: number;
   rtscts: boolean;
+}
+
+export interface IPortOpts {
+  port: string;
+  firmware: IFirmwareOpts;
 }
 
 export type ConnectFn = (host: IConnectionOpts) => Promise<boolean>;
@@ -43,6 +47,7 @@ class MachineController implements IMachineController {
   workflow: IWorkflow = { state: 'idle' };
 
   public addListener(type: MachineEventType, listener: MachineEventListenerFn): void {
+    console.log('add');
   }
 
   public closePort(port: string): Promise<void> {
@@ -76,6 +81,7 @@ class MachineController implements IMachineController {
   }
 
   public removeListener(type: MachineEventType, listener: MachineEventListenerFn): void {
+    console.log('remove');
   }
 
   public write(str: string): Promise<void> {

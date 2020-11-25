@@ -12,10 +12,10 @@ namespace OpenWorkEngine.OpenController.Lib.Graphql {
     private GraphqlErrorFilter ErrorFilter { get; }
 
     public override HttpStatusCode GetStatusCode(IExecutionResult result) {
-      // if (result.Errors?.Any() ?? false) {
-      //   // return ErrorFilter.GetHighestErrorCode(result.Errors.Select(e => e.Code));
-      //   return HttpStatusCode.OK;
-      // }
+      Log.ForContext("Context", "GraphQL").Error("{@errors}", result.Errors);
+      if (result.Errors?.Any() ?? false) {
+        return ErrorFilter.GetHighestErrorCode(result.Errors.Select(e => e.Code));
+      }
 
       return base.GetStatusCode(result);
     }

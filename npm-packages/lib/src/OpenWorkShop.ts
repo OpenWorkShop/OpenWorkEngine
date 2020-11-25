@@ -1,4 +1,5 @@
 import { ApolloClient, ApolloLink, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import i18n, { TFunction } from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-xhr-backend';
@@ -71,14 +72,24 @@ class OpenWorkShop implements IOpenWorkShop {
     um.authority = root;
     this._authManager = createUserManager(um);
 
-    const httpLink = new HttpLink({ uri: `${root}api/graphql` });
-    const link = opts.clientApolloLink
+    const owsLink = setContext(async (_, { headers }) => {
+      const user = await this.authManager.getUser();
+      this.log.debug('setting auth token?', !!user);
+      return {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        headers: {
+          ...headers,
+          authorization: user ? `Bearer ${user.access_token}` : '',
+        },
+      };
+    }).concat(new HttpLink({ uri: `${root}api/graphql` }));
+    const link = opts.clientApolloLinkCreator
       ? ApolloLink.split(
         (operation) => operation.getContext().clientName === abbreviation,
-        httpLink,
-        opts.clientApolloLink,
+        owsLink,
+        opts.clientApolloLinkCreator(this),
       )
-      : httpLink;
+      : owsLink;
     this._apolloClient = new ApolloClient({
       cache: new InMemoryCache(),
       link: link,

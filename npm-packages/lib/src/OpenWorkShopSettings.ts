@@ -1,6 +1,7 @@
 import { ApolloLink } from '@apollo/client';
 import { Store, AnyAction } from '@reduxjs/toolkit';
 import { UserManagerSettings } from 'oidc-client';
+import { IOpenWorkShop } from './OpenWorkShop';
 import { IOwsState } from './store';
 import { LogOptions } from './utils/logging/LogOptions';
 
@@ -20,7 +21,7 @@ export interface IOwsOptions {
   hostnameMap?: HostnameMap;
   i18nMiddleware?: AnyAction[];
   logOptions?: LogOptions;
-  clientApolloLink?: ApolloLink;
+  clientApolloLinkCreator?: (ows: IOpenWorkShop) => ApolloLink;
 }
 
 function getServerUrl(env: OwsEnvironment): URL {
