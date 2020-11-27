@@ -1,7 +1,7 @@
 import { MachineSearchResultFragment, useSearchMachineProfilesLazyQuery } from '@openworkshop/lib/api/graphql';
 import * as React from 'react';
 import { Autocomplete, CircularProgress, TextField, Grid, Typography } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@material-ui/core';
 import useLogger from '@openworkshop/lib/utils/logging/UseLogger';
 import { useTranslation, Trans } from 'react-i18next';
 import {owsClientOpts} from '@openworkshop/lib/consts';
@@ -59,6 +59,9 @@ const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProp
       <Autocomplete
         id='search-machine-profiles'
         open={open}
+        noOptionsText={error ? error.name : t('Nothing found')}
+        loadingText={t('Loading...')}
+        loading={loading}
         onOpen={() => updateQuery('')}
         onClose={() => setOpen(false)}
         onChange={(e, mp) => props.onSelectedMachineProfile(mp ?? undefined)}

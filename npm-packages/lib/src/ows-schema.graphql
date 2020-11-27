@@ -34,9 +34,9 @@ type MachineFeature {
 type MachineFirmware {
     baudRate: Decimal!
     controllerType: MachineControllerType!
-    downloadUrl: String!
-    edition: String!
-    helpUrl: String!
+    downloadUrl: String
+    edition: String
+    helpUrl: String
     id: String!
     machineProfiles: [MachineProfile!]!
     name: String!
@@ -53,10 +53,19 @@ type MachinePart {
     machineProfiles: [MachineProfile!]!
     optional: Boolean!
     partType: MachinePartType!
-    settings: [MachineSetting!]!
+    settings: [MachinePresetSetting!]!
     sortOrder: Int!
     specs: [MachineSpec!]!
     title: String
+}
+
+type MachinePresetSetting {
+    id: String!
+    key: String!
+    machineParts: [MachinePart!]!
+    settingType: MachineSettingType!
+    title: String
+    value: String!
 }
 
 type MachineProfile {
@@ -74,15 +83,6 @@ type MachineProfile {
     model: String!
     name: String!
     parts: [MachinePart!]!
-}
-
-type MachineSetting {
-    id: String!
-    key: String!
-    machineParts: [MachinePart!]!
-    settingType: MachineSettingType!
-    title: String
-    value: String!
 }
 
 type MachineSpec {
@@ -129,6 +129,7 @@ enum MachineControllerType {
     MASLOW
     SMOOTHIE
     TINY_G
+    UNKNOWN
 }
 
 enum MachinePartType {

@@ -1,16 +1,17 @@
 using System.IO.Ports;
+using OpenWorkEngine.OpenController.Ports.Interfaces;
 
-namespace OpenWorkEngine.OpenController.Controller.Models {
+namespace OpenWorkEngine.OpenController.Ports.Models {
   public class PortOptions : ISerialPortOptions {
     public int BaudRate => _serialPort.BaudRate;
 
-    public string? Parity => _serialPort.Parity.ToString();
+    public Parity? Parity => _serialPort.Parity;
 
     public int? DataBits => _serialPort.DataBits;
 
-    public int? StopBits => (int) _serialPort.StopBits;
+    public StopBits? StopBits => _serialPort.StopBits;
 
-    public string? Handshake => _serialPort.Handshake.ToString();
+    public Handshake? Handshake => _serialPort.Handshake;
 
     public int? ReadBufferSize => _serialPort.ReadBufferSize;
 

@@ -2,11 +2,10 @@ import { MachineAxisPropsFragment } from '@openworkshop/lib/api/graphql';
 import React from 'react';
 import { Grid, Typography, InputAdornment, useTheme, Tooltip, IconButton } from '@material-ui/core';
 import { Trans, useTranslation } from 'react-i18next';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import AlertList from '../Alerts/AlertList';
+import HoverHelpStep from '../Alerts/HoverHelpStep';
 import NumericInput from '../Forms/NumericInput';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@material-ui/core';
 
 interface IMachineAxisEditorProps {
   axis: MachineAxisPropsFragment;
@@ -71,11 +70,7 @@ const MachineAxisEditor: React.FunctionComponent<IMachineAxisEditorProps> = (pro
           InputProps={{
             startAdornment: tip && (
               <InputAdornment style={{ marginRight: 0 }} position='start'>
-                <Tooltip title={tip}>
-                  <IconButton aria-label={name} size='small' disableFocusRipple>
-                    <FontAwesomeIcon color={theme.palette.info.light} icon={faQuestionCircle} />
-                  </IconButton>
-                </Tooltip>
+                <HoverHelpStep tip={tip} />
               </InputAdornment>
             ),
             endAdornment: <InputAdornment

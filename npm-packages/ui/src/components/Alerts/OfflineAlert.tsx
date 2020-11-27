@@ -1,6 +1,6 @@
 import { useNetworkStatus } from '@openworkshop/lib/utils/device';
 import React from 'react';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@material-ui/core';
 import { useTranslation, Trans } from 'react-i18next';
 
 interface IOfflineAlertProps {

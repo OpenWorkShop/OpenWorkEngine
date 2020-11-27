@@ -49,9 +49,9 @@ export type MachineFirmware = {
   __typename?: 'MachineFirmware';
   baudRate: Scalars['Decimal'];
   controllerType: MachineControllerType;
-  downloadUrl: Scalars['String'];
-  edition: Scalars['String'];
-  helpUrl: Scalars['String'];
+  downloadUrl: Maybe<Scalars['String']>;
+  edition: Maybe<Scalars['String']>;
+  helpUrl: Maybe<Scalars['String']>;
   id: Scalars['String'];
   machineProfiles: Array<MachineProfile>;
   name: Scalars['String'];
@@ -69,10 +69,20 @@ export type MachinePart = {
   machineProfiles: Array<MachineProfile>;
   optional: Scalars['Boolean'];
   partType: MachinePartType;
-  settings: Array<MachineSetting>;
+  settings: Array<MachinePresetSetting>;
   sortOrder: Scalars['Int'];
   specs: Array<MachineSpec>;
   title: Maybe<Scalars['String']>;
+};
+
+export type MachinePresetSetting = {
+  __typename?: 'MachinePresetSetting';
+  id: Scalars['String'];
+  key: Scalars['String'];
+  machineParts: Array<MachinePart>;
+  settingType: MachineSettingType;
+  title: Maybe<Scalars['String']>;
+  value: Scalars['String'];
 };
 
 export type MachineProfile = {
@@ -91,16 +101,6 @@ export type MachineProfile = {
   model: Scalars['String'];
   name: Scalars['String'];
   parts: Array<MachinePart>;
-};
-
-export type MachineSetting = {
-  __typename?: 'MachineSetting';
-  id: Scalars['String'];
-  key: Scalars['String'];
-  machineParts: Array<MachinePart>;
-  settingType: MachineSettingType;
-  title: Maybe<Scalars['String']>;
-  value: Scalars['String'];
 };
 
 export type MachineSpec = {
@@ -164,7 +164,8 @@ export enum MachineControllerType {
   Marlin = 'MARLIN',
   Maslow = 'MASLOW',
   Smoothie = 'SMOOTHIE',
-  TinyG = 'TINY_G'
+  TinyG = 'TINY_G',
+  Unknown = 'UNKNOWN'
 }
 
 export enum MachinePartType {
@@ -290,8 +291,8 @@ export type ResolversTypes = {
   MachineFirmware: ResolverTypeWrapper<MachineFirmware>;
   MachinePart: ResolverTypeWrapper<MachinePart>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
+  MachinePresetSetting: ResolverTypeWrapper<MachinePresetSetting>;
   MachineProfile: ResolverTypeWrapper<MachineProfile>;
-  MachineSetting: ResolverTypeWrapper<MachineSetting>;
   MachineSpec: ResolverTypeWrapper<MachineSpec>;
   Query: ResolverTypeWrapper<{}>;
   UserProfile: ResolverTypeWrapper<UserProfile>;
@@ -315,8 +316,8 @@ export type ResolversParentTypes = {
   MachineFirmware: MachineFirmware;
   MachinePart: MachinePart;
   Int: Scalars['Int'];
+  MachinePresetSetting: MachinePresetSetting;
   MachineProfile: MachineProfile;
-  MachineSetting: MachineSetting;
   MachineSpec: MachineSpec;
   Query: {};
   UserProfile: UserProfile;
@@ -356,9 +357,9 @@ export type MachineFeatureResolvers<ContextType = any, ParentType extends Resolv
 export type MachineFirmwareResolvers<ContextType = any, ParentType extends ResolversParentTypes['MachineFirmware'] = ResolversParentTypes['MachineFirmware']> = {
   baudRate: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
   controllerType: Resolver<ResolversTypes['MachineControllerType'], ParentType, ContextType>;
-  downloadUrl: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  edition: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  helpUrl: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  downloadUrl: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  edition: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  helpUrl: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   machineProfiles: Resolver<Array<ResolversTypes['MachineProfile']>, ParentType, ContextType>;
   name: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -376,10 +377,20 @@ export type MachinePartResolvers<ContextType = any, ParentType extends Resolvers
   machineProfiles: Resolver<Array<ResolversTypes['MachineProfile']>, ParentType, ContextType>;
   optional: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   partType: Resolver<ResolversTypes['MachinePartType'], ParentType, ContextType>;
-  settings: Resolver<Array<ResolversTypes['MachineSetting']>, ParentType, ContextType>;
+  settings: Resolver<Array<ResolversTypes['MachinePresetSetting']>, ParentType, ContextType>;
   sortOrder: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   specs: Resolver<Array<ResolversTypes['MachineSpec']>, ParentType, ContextType>;
   title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MachinePresetSettingResolvers<ContextType = any, ParentType extends ResolversParentTypes['MachinePresetSetting'] = ResolversParentTypes['MachinePresetSetting']> = {
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  machineParts: Resolver<Array<ResolversTypes['MachinePart']>, ParentType, ContextType>;
+  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
+  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -398,16 +409,6 @@ export type MachineProfileResolvers<ContextType = any, ParentType extends Resolv
   model: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   parts: Resolver<Array<ResolversTypes['MachinePart']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type MachineSettingResolvers<ContextType = any, ParentType extends ResolversParentTypes['MachineSetting'] = ResolversParentTypes['MachineSetting']> = {
-  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  machineParts: Resolver<Array<ResolversTypes['MachinePart']>, ParentType, ContextType>;
-  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
-  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -445,8 +446,8 @@ export type Resolvers<ContextType = any> = {
   MachineFeature: MachineFeatureResolvers<ContextType>;
   MachineFirmware: MachineFirmwareResolvers<ContextType>;
   MachinePart: MachinePartResolvers<ContextType>;
+  MachinePresetSetting: MachinePresetSettingResolvers<ContextType>;
   MachineProfile: MachineProfileResolvers<ContextType>;
-  MachineSetting: MachineSettingResolvers<ContextType>;
   MachineSpec: MachineSpecResolvers<ContextType>;
   Query: QueryResolvers<ContextType>;
   UserProfile: UserProfileResolvers<ContextType>;
@@ -494,8 +495,8 @@ export type MachinePartPropsFragment = (
 export type MachinePartCompleteFragment = (
   { __typename?: 'MachinePart' }
   & { settings: Array<(
-    { __typename?: 'MachineSetting' }
-    & MachineSettingPropsFragment
+    { __typename?: 'MachinePresetSetting' }
+    & MachinePresetSettingPropsFragment
   )>, specs: Array<(
     { __typename?: 'MachineSpec' }
     & MachineSpecPropsFragment
@@ -560,9 +561,9 @@ export type GetCompleteMachineProfileQuery = (
   ) }
 );
 
-export type MachineSettingPropsFragment = (
-  { __typename?: 'MachineSetting' }
-  & Pick<MachineSetting, 'id' | 'title' | 'settingType' | 'key' | 'value'>
+export type MachinePresetSettingPropsFragment = (
+  { __typename?: 'MachinePresetSetting' }
+  & Pick<MachinePresetSetting, 'id' | 'title' | 'settingType' | 'key' | 'value'>
 );
 
 export type MachineSpecPropsFragment = (
@@ -624,8 +625,8 @@ export const MachinePartPropsFragmentDoc = gql`
   dataBlob
 }
     `;
-export const MachineSettingPropsFragmentDoc = gql`
-    fragment MachineSettingProps on MachineSetting {
+export const MachinePresetSettingPropsFragmentDoc = gql`
+    fragment MachinePresetSettingProps on MachinePresetSetting {
   id
   title
   settingType
@@ -644,14 +645,14 @@ export const MachinePartCompleteFragmentDoc = gql`
     fragment MachinePartComplete on MachinePart {
   ...MachinePartProps
   settings {
-    ...MachineSettingProps
+    ...MachinePresetSettingProps
   }
   specs {
     ...MachineSpecProps
   }
 }
     ${MachinePartPropsFragmentDoc}
-${MachineSettingPropsFragmentDoc}
+${MachinePresetSettingPropsFragmentDoc}
 ${MachineSpecPropsFragmentDoc}`;
 export const MachineCommandPropsFragmentDoc = gql`
     fragment MachineCommandProps on MachineCommand {

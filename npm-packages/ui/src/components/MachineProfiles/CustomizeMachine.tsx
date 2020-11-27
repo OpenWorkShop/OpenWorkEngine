@@ -15,12 +15,13 @@ import {
   MachineAxes,
 } from '@openworkshop/lib/api/Machines/CustomizedMachine';
 import {owsClientOpts} from '@openworkshop/lib/consts';
+import HoverHelpStep from '../Alerts/HoverHelpStep';
 import ChooseMachineParts from './ChooseMachineParts';
 import CreateMachineProfile from './CreateMachineProfile';
 import MachineAxesEditor from './MachineAxesEditor';
 import MachineProfileSearchBar from './MachineProfileSearchBar';
 import { Grid, CircularProgress, Typography, Button, useTheme } from '@material-ui/core';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 interface ICustomizeMachineProps {
   onCustomized: (machine?: ICustomizedMachine) => void;
@@ -29,6 +30,7 @@ interface ICustomizeMachineProps {
 
 const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props) => {
   const log = useLogger(CustomizeMachine);
+  const { t } = useTranslation();
   const theme = useTheme();
   const [machineProfile, setMachineProfile] = React.useState<MachineSearchResultFragment | undefined>(undefined);
   const [getCompleteMachineProfile, { loading, error, data }] = useGetCompleteMachineProfileLazyQuery(owsClientOpts);
@@ -152,6 +154,10 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
         <Grid item xs={12}>
           <Typography variant='h5'>
             <Trans>Customize your Machine</Trans>
+            <HoverHelpStep
+              tip={t('Makerverse knows how to handle everything from hotends to laser cutters.')}
+              isComplete={!!customizedMachine}
+            />
           </Typography>
           <Typography variant='subtitle2'>
             <Trans>

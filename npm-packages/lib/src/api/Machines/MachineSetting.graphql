@@ -1,4 +1,4 @@
-fragment MachineSettingProps on MachineSetting {
+fragment MachinePresetSettingProps on MachinePresetSetting {
   id
   title
   settingType

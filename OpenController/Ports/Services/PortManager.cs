@@ -3,15 +3,15 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
-using OpenWorkEngine.OpenController.Controller.Models;
+using OpenWorkEngine.OpenController.Ports.Models;
 using Serilog;
 
-namespace OpenWorkEngine.OpenController.Controller.Services {
+namespace OpenWorkEngine.OpenController.Ports.Services {
   public class PortManager {
-    private ILogger Log { get; }
+    internal ILogger Log { get; }
 
     public SystemPort this[string portName] =>
-      Map.TryGetValue(portName, out SystemPort? val) ? val : throw new ArgumentException(portName);
+      Map.TryGetValue(portName, out SystemPort? val) ? val : throw new ArgumentException($"Port missing: {portName}");
 
     private readonly ConcurrentDictionary<string, SystemPort> _ports = new ();
     public ConcurrentDictionary<string, SystemPort> Map => UpdatePorts();
@@ -33,6 +33,10 @@ namespace OpenWorkEngine.OpenController.Controller.Services {
       }
 
       return _ports;
+    }
+
+    public ConnectedPort GetConnection(string portName) {
+      return this[portName].Connection ?? throw new ArgumentException($"Port not open: {portName}");
     }
 
     public PortManager(ILogger logger) {

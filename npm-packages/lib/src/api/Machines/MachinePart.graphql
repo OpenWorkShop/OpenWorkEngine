@@ -12,7 +12,7 @@ fragment MachinePartProps on MachinePart {
 fragment MachinePartComplete on MachinePart {
   ...MachinePartProps
   settings {
-    ...MachineSettingProps
+    ...MachinePresetSettingProps
   }
   specs {
     ...MachineSpecProps

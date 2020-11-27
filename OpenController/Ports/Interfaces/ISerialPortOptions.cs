@@ -1,14 +1,16 @@
-namespace OpenWorkEngine.OpenController.Controller {
+using System.IO.Ports;
+
+namespace OpenWorkEngine.OpenController.Ports.Interfaces {
   public interface ISerialPortOptions {
     int BaudRate { get; }
 
-    string? Parity { get; }
+    Parity? Parity { get; }
 
     int? DataBits { get; }
 
-    int? StopBits { get; }
+    StopBits? StopBits { get; }
 
-    string? Handshake { get; }
+    Handshake? Handshake { get; }
 
     int? ReadBufferSize { get; }
 

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
+import Alert from '@material-ui/core/Alert';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { Alert } from '@material-ui/core';
 import useLogger from '@openworkshop/lib/utils/logging/UseLogger';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -46,13 +46,14 @@ const AlertList: React.FunctionComponent<OwnProps> = (props) => {
         const name = e.name || '';
         return (
           <Alert key={name} severity="error">
-            <strong>{name}</strong>
-            {name.length > 0 && message.length > 0 && <br/>}
-            {splitMessage(e.message)}
+            <div>
+              <strong>{name}</strong>
+              {name.length > 0 && message.length > 0 && <br/>}
+              {splitMessage(e.message)}
+            </div>
           </Alert>
         );
       })}
-      {props.children}
     </div>
   );
 };
