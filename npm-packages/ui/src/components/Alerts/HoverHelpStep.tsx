@@ -14,7 +14,7 @@ const HoverHelpStep: FunctionComponent<Props> = (props) => {
   const theme = useTheme();
   const { tip, isComplete } = props;
   const icon = isComplete ? faCheck : faQuestionCircle;
-  const color = isComplete ? theme.palette.secondary.light : theme.palette.info.light;
+  const color = isComplete ? theme.palette.secondary.dark : theme.palette.info.light;
 
   return (
     <Tooltip title={tip}>

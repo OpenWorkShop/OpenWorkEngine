@@ -3,6 +3,9 @@ yarn-error.log
 npm-packages/*/dist/**
 .tsbuildinfo
 
+Makerverse/
+OpenWorkShop/
+
 .data
 .DS_Store
 ## Ignore Visual Studio temporary files, build results, and

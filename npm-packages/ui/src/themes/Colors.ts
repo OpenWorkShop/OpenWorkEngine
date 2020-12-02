@@ -14,10 +14,10 @@ export const brown: SimplePaletteColorOptions = {
 };
 
 export const gold: SimplePaletteColorOptions = {
-  light: '#ffe389',
-  main: '#dab15a',
-  dark: '#a6822c',
-  contrastText: '#12005e',
+  light: '#ffe97d',
+  main: '#ffb74d',
+  dark: '#c88719',
+  contrastText: '#000',
 };
 
 export const purple: SimplePaletteColorOptions = {

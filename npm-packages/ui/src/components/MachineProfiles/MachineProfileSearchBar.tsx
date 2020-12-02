@@ -6,7 +6,7 @@ import useLogger from '@openworkshop/lib/utils/logging/UseLogger';
 import { useTranslation, Trans } from 'react-i18next';
 import {owsClientOpts} from '@openworkshop/lib/consts';
 import AlertList from '../Alerts/AlertList';
-import OfflineAlert from '../Alerts/OfflineAlert';
+import OfflineAlertList from '../Alerts/OfflineAlertList';
 import OpenWorkShopIcon from '../OpenWorkShopIcon/';
 
 type MP = MachineSearchResultFragment;
@@ -59,7 +59,7 @@ const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProp
       <Autocomplete
         id='search-machine-profiles'
         open={open}
-        noOptionsText={error ? error.name : t('Nothing found')}
+        noOptionsText={error ? error.message.split('\n')[0] : t('Nothing found')}
         loadingText={t('Loading...')}
         loading={loading}
         onOpen={() => updateQuery('')}
@@ -106,10 +106,7 @@ const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProp
           />
         )}
       />
-      <AlertList>
-        {error && <Alert severity='error'>{error}</Alert>}
-        <OfflineAlert feature={t('The community catalog')} />
-      </AlertList>
+      <OfflineAlertList feature={t('The community catalog')} error={error} />
     </div>
   );
 };

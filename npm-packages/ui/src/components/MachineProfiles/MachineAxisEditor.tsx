@@ -6,6 +6,7 @@ import AlertList from '../Alerts/AlertList';
 import HoverHelpStep from '../Alerts/HoverHelpStep';
 import NumericInput from '../Forms/NumericInput';
 import { Alert } from '@material-ui/core';
+import {IAlertMessage} from '../Alerts/AlertMessage';
 
 interface IMachineAxisEditorProps {
   axis: MachineAxisPropsFragment;
@@ -24,10 +25,10 @@ const MachineAxisEditor: React.FunctionComponent<IMachineAxisEditorProps> = (pro
   const isXY = isX || isY;
   const isZ = axisName === 'z';
   const isXYZ = isXY || isZ;
-  const warnings = [];
+  const warnings: IAlertMessage[] = [];
 
-  if (axis.precision < 0 || axis.precision >= 20) warnings.push(t('Precision value is unusual.'));
-  if (axis.accuracy < 0.0000001 || axis.accuracy > 1) warnings.push(t('Accuracy value is unusual.'));
+  if (axis.precision < 0 || axis.precision >= 20) warnings.push({ message: t('Precision value is unusual.') });
+  if (axis.accuracy < 0.0000001 || axis.accuracy > 1) warnings.push({ message: t('Accuracy value is unusual.') });
 
   function getTooltip(key: AxisKey) {
     if (!isXYZ) return undefined;
@@ -97,17 +98,7 @@ const MachineAxisEditor: React.FunctionComponent<IMachineAxisEditorProps> = (pro
       {renderCell('max')}
       {renderCell('accuracy')}
       {renderCell('precision')}
-      {warnings.length > 0 && (
-        <AlertList>
-          {warnings.map((w) => {
-            return (
-              <Alert key='w' severity='warning'>
-                {w}
-              </Alert>
-            );
-          })}
-        </AlertList>
-      )}
+      <AlertList warnings={warnings} />
     </Grid>
   );
 };

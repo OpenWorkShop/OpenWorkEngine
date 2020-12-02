@@ -33,6 +33,7 @@ type MachineFeature {
 
 type MachineFirmware {
     baudRate: Decimal!
+    baudRateValue: Int!
     controllerType: MachineControllerType!
     downloadUrl: String
     edition: String

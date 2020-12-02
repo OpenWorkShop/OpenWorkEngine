@@ -14,25 +14,13 @@ namespace OpenWorkEngine.OpenController.Ports.Graph {
   [ExtendObjectType(Name = "Mutation")]
   public class PortsMutation {
     [AuthorizeWriteControllers]
-    public async Task<SystemPort> OpenPort(
-      [Service] PortManager ports, [Service] ITopicEventSender sender,
-      string portName, MachineControllerType controllerType, SerialPortOptions options
-    ) {
-      SystemPort port = ports[portName];
-      port.Open(controllerType, options);
-      await sender.OnPortStatus(portName);
-      return port;
-    }
+    public Task<SystemPort> OpenPort(
+      [Service] PortManager ports,
+      string friendlyName, string portName, FirmwareRequirement firmware, SerialPortOptions options
+    )  => ports.Controllers.Open(friendlyName, firmware, ports[portName], options);
 
     [AuthorizeWriteControllers]
-    public async Task<SystemPort> ClosePort(
-      [Service] PortManager ports, [Service] ITopicEventSender sender,
-      string portName, MachineControllerType controllerType, SerialPortOptions options
-    ) {
-      SystemPort port = ports[portName];
-      port.Close();
-      await sender.OnPortStatus(portName);
-      return port;
-    }
+    public Task<SystemPort> ClosePort([Service] PortManager ports, string portName) =>
+      ports.Controllers.Close(ports[portName]);
   }
 }

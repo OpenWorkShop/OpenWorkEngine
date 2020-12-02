@@ -112,14 +112,12 @@ const ChooseMachineParts: React.FunctionComponent<IMachineOptionsProps> = (props
           {renderPartSummary(partType, part)}
           <AccordionDetails>
             {hasDescription && (
-              <Typography display='block'>
+              <Typography display='block' variant='subtitle1'>
                 <span>{part.description}</span>
               </Typography>
             )}
-            <Typography color='secondary' variant='caption'>
-              <em>
-                <Trans>This part is always included with your machine.</Trans>
-              </em>
+            <Typography color='primary' variant='subtitle2'>
+              <Trans>This part is always included with your machine.</Trans>
             </Typography>
           </AccordionDetails>
         </Accordion>

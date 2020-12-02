@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a8cf0586-a966-4cb6-8d9f-53d11bacc6f8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Controllers/Grbl/GrblController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Controllers/Utils/Parsers/RegexParser.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Machines/Models/MachineDetectedFirmware.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../npm-packages/ui/src/components/Alerts/OfflineAlertList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/Controller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Controller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/Implementations/Grbl/GrblController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/Patchers/RegexFirmwarePatcher.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lib/Graphql/GraphqlHttpResultSerializer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lib/Graphql/GraphqlHttpResultSerializer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MachineProfiles/Interfaces/IMachineFirmware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MachineProfiles/Interfaces/IMachineFirmware.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MachineProfiles/Interfaces/IMachineSetting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MachineProfiles/Interfaces/IMachineSetting.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Machines/Graph/MachinesSubscription.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Machines/Graph/MachinesSubscription.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Machines/Interfaces/IParseMachinePatches.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Machines/Models/Machine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Machines/Models/Machine.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Machines/Models/MachineConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Machines/Models/MachineConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Machines/Models/MachineSetting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Machines/Models/MachineSetting.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Machines/Models/MachineVersion.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Machines/Observables/MachineSubscriptionTopic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Machines/Observables/MachineSubscriptionTopic.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Machines/Observables/MachineTopicSet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Machines/Observables/MachineTopicSet.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ports/Extensions/TopicEventSenderExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Ports/Extensions/TopicEventSenderExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ports/Graph/PortsMutation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Ports/Graph/PortsMutation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ports/Graph/PortsSubscription.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Ports/Graph/PortsSubscription.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ports/Models/ConnectedPort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Ports/Models/ConnectedPort.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ports/Models/PortOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Ports/Models/PortOptions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ports/Models/PortStatus.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Ports/Models/PortStatus.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ports/Models/SystemPort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Ports/Models/SystemPort.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ports/Services/PortManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Ports/Services/PortManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OpenWorkEngine.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../OpenWorkEngine.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OpenWorkEngine.mdproj.bak" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/lib/dist/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/lib/dist/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/lib/graphql.schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/lib/graphql.schema.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/lib/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/lib/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/lib/package.prod.json" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/lib/package.prod.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/lib/src/api/Machines/BaudRate.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/lib/src/api/Machines/BaudRate.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/lib/src/api/Machines/CustomizedMachine.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/lib/src/api/Machines/CustomizedMachine.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/lib/src/api/Machines/MachineFirmware.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/lib/src/api/Machines/MachineFirmware.graphql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/lib/src/api/graphql.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/lib/src/api/graphql.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/lib/src/ows-schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/lib/src/ows-schema.graphql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/lib/src/utils/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/lib/src/utils/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/lib/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/lib/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/open-controller/dist/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/open-controller/dist/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/open-controller/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/open-controller/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/ui/Find Results" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/ui/src/components/Alerts/AlertList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/ui/src/components/Alerts/AlertList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/ui/src/components/Alerts/HoverHelpStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/ui/src/components/Alerts/HoverHelpStep.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/ui/src/components/Alerts/OfflineAlert.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/ui/src/components/Cards/ToolbarCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/ui/src/components/Cards/ToolbarCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/ui/src/components/MachineProfiles/ChooseMachineParts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/ui/src/components/MachineProfiles/ChooseMachineParts.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/ui/src/components/MachineProfiles/CreateMachineProfile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/ui/src/components/MachineProfiles/CreateMachineProfile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/ui/src/components/MachineProfiles/CustomizeMachine.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/ui/src/components/MachineProfiles/CustomizeMachine.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/ui/src/components/MachineProfiles/MachineAxisEditor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/ui/src/components/MachineProfiles/MachineAxisEditor.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/ui/src/components/MachineProfiles/MachineProfileSearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/ui/src/components/MachineProfiles/MachineProfileSearchBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/ui/src/themes/Colors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/ui/src/themes/Colors.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../npm-packages/ui/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/../npm-packages/ui/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../yarn.lock" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1l53Az6DU3YQnBNA9ThcT3aiSZa" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a8cf0586-a966-4cb6-8d9f-53d11bacc6f8" name="Default Changelist" comment="" />
+      <created>1606872985526</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1606872985526</updated>
+      <workItem from="1606873012330" duration="4000" />
+    </task>
+    <servers />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>

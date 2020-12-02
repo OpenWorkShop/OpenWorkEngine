@@ -1,3 +1,4 @@
+using System;
 using OpenWorkEngine.OpenController.Machines.Models;
 
 namespace OpenWorkEngine.OpenController.Machines.Observables {

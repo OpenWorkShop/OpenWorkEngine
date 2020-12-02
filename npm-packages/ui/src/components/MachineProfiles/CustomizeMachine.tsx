@@ -20,7 +20,7 @@ import ChooseMachineParts from './ChooseMachineParts';
 import CreateMachineProfile from './CreateMachineProfile';
 import MachineAxesEditor from './MachineAxesEditor';
 import MachineProfileSearchBar from './MachineProfileSearchBar';
-import { Grid, CircularProgress, Typography, Button, useTheme } from '@material-ui/core';
+import { Grid, CircularProgress, Typography, Button, useTheme, Paper } from '@material-ui/core';
 import { Trans, useTranslation } from 'react-i18next';
 
 interface ICustomizeMachineProps {
@@ -55,8 +55,9 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
         icon: loadedMachineProfile.icon,
         firmware: loadedMachineProfile.firmware[0],
         parts: [],
-        axes: _.keyBy(loadedMachineProfile.axes, (a) => a.name),
+        axes: loadedMachineProfile.axes,
         features: loadedMachineProfile.features,
+        commands: loadedMachineProfile.commands,
       });
     }
   }, [customizedMachine, loadedMachineProfile]);
@@ -89,13 +90,23 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
       precision: 2,
     };
     onCustomized({
-      firmware: firmware,
+      firmware: {
+        id: '',
+        name: '',
+        edition: '',
+        requiredVersion: null,
+        suggestedVersion: null,
+        downloadUrl: null,
+        helpUrl: null,
+        ...firmware,
+      },
       profile: profile,
       name: profile.model,
       icon: '',
       parts: [],
-      axes: { X: { ...defaultAxis }, Y: { ...defaultAxis, name: AxisName.Y }, Z: { ...defaultAxis, name: AxisName.Z } },
+      axes: [ { ...defaultAxis }, { ...defaultAxis, name: AxisName.Y }, { ...defaultAxis, name: AxisName.Z } ],
       features: [],
+      commands: [],
     });
   }
 
@@ -115,7 +126,7 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
       log.error('missing machine');
       return;
     }
-    onCustomized({ ...customizedMachine, axes: _.cloneDeep(axes) });
+    onCustomized({ ...customizedMachine, axes: _.cloneDeep(Object.values(axes)) });
   }
 
   function startOver() {
@@ -123,48 +134,58 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
     onCustomized(undefined);
   }
 
+  const completedMsg = loadedMachineProfile ? t('Please review the defaults provided by the community catalog:')
+    : t('This step has already been completed.');
+
   return (
     <Grid container spacing={2} style={{ marginBottom: theme.spacing(2) }}>
       <Grid item xs={12}>
-        {searchMachines && <MachineProfileSearchBar onSelectedMachineProfile={onSelectedMachineProfile} />}
-        <div style={{ marginTop: theme.spacing(1) }}>
-          <Button
-            variant='outlined'
-            onClick={() => (customizedMachine ? startOver() : setSearchMachines(!searchMachines))}
-            style={{ marginLeft: theme.spacing(2), float: 'right' }}>
-            {customizedMachine && <Trans>Start Over</Trans>}
-            {!customizedMachine && searchMachines && <Trans>Can't find your machine?</Trans>}
-            {!customizedMachine && !searchMachines && <Trans>Search the Community Catalog</Trans>}
-          </Button>
-          {!customizedMachine && searchMachines && props.tip && (
-            <div>
-              <Typography variant='subtitle2'>{props.tip}</Typography>
-            </div>
-          )}
-        </div>
-        {!searchMachines && <CreateMachineProfile onChanged={onCreatingMachineProfile} />}
+        <Paper style={{ padding: theme.spacing(2), marginBottom: theme.spacing(2) }} >
+          {searchMachines && <MachineProfileSearchBar onSelectedMachineProfile={onSelectedMachineProfile} />}
+          <Grid container style={{ marginTop: theme.spacing(2) }} >
+            <Grid item xs={12} md={9} style={{ marginTop: theme.spacing(1) }}>
+              {!customizedMachine && searchMachines && props.tip && (
+                <div>
+                  <Typography variant='subtitle2'>{props.tip}</Typography>
+                </div>
+              )}
+            </Grid>
+            <Grid item xs={12} md={3} style={{ textAlign: 'right' }}>
+              <Button
+                variant='outlined'
+                onClick={() => (customizedMachine ? startOver() : setSearchMachines(!searchMachines))}
+                style={{ marginLeft: theme.spacing(2) }}>
+                {customizedMachine && <Trans>Start Over</Trans>}
+                {!customizedMachine && searchMachines && <Trans>Can't find your machine?</Trans>}
+                {!customizedMachine && !searchMachines && <Trans>Search the Community Catalog</Trans>}
+              </Button>
+            </Grid>
+          </Grid>
+          {!searchMachines && <CreateMachineProfile onChanged={onCreatingMachineProfile} />}
+        </Paper>
       </Grid>
       {loading && (
         <Grid item xs={12}>
           <CircularProgress size={32} />
-          <Trans>Loading machine options...</Trans>
+          <Typography variant='h5'>
+            <Trans>Loading machine options...</Trans>
+          </Typography>
         </Grid>
       )}
-      {loadedMachineProfile && (
+      {loadedMachineProfile && customizedMachine && (
         <Grid item xs={12}>
           <Typography variant='h5'>
-            <Trans>Customize your Machine</Trans>
+            <Trans>Parts & Options</Trans>
             <HoverHelpStep
-              tip={t('Makerverse knows how to handle everything from hotends to laser cutters.')}
+              tip={t('Default parts are pre-selected below... but please change them if you have upgraded, modified, ' +
+                'or used a non-standard kit.')}
               isComplete={!!customizedMachine}
             />
           </Typography>
-          <Typography variant='subtitle2'>
-            <Trans>
-              Default parts are pre-selected below... but please change them if you have upgraded, modified, or used a
-              non-standard kit.
-            </Trans>
-          </Typography>
+          {customizedMachine && <Typography variant='subtitle2'>{completedMsg}</Typography>}
+          {!customizedMachine && <Typography variant='subtitle2'>
+            <Trans>Please check the options below.</Trans>
+          </Typography>}
         </Grid>
       )}
       {loadedMachineProfile && customizedMachine && (
@@ -172,9 +193,24 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
           <ChooseMachineParts machineProfile={loadedMachineProfile} onComplete={onCompletedParts} />
         </Grid>
       )}
+      {loadedMachineProfile && customizedMachine && (
+        <Grid item xs={12}>
+          <Typography variant='h5'>
+            <Trans>Axes (Size)</Trans>
+            <HoverHelpStep
+              tip={t('Each axis should have a minimum and maximum value, so Makerverse knows how far it can move.')}
+              isComplete={!!customizedMachine}
+            />
+          </Typography>
+          {customizedMachine && <Typography variant='subtitle2'>{completedMsg}</Typography>}
+          {!customizedMachine && <Typography variant='subtitle2'>
+            <Trans>Please confirm the dimensions of your machine.</Trans>
+          </Typography>}
+        </Grid>
+      )}
       {customizedMachine && (
         <Grid item xs={12}>
-          <MachineAxesEditor axes={customizedMachine.axes} onChanged={onChangedAxes} />
+          <MachineAxesEditor axes={_.keyBy(customizedMachine.axes, (a) => a.name)} onChanged={onChangedAxes} />
         </Grid>
       )}
     </Grid>

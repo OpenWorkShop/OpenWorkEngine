@@ -1,8 +1,7 @@
-import _ from 'lodash';
 import React from 'react';
-import Alert from '@material-ui/core/Alert';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import useLogger from '@openworkshop/lib/utils/logging/UseLogger';
+import AlertMessage, {IAlertMessage, sanitizeAlertMessages} from './AlertMessage';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -16,42 +15,38 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-interface IProps {
-  error?: Error;
-  errors?: (Error | undefined)[];
+export interface IAlertList {
+  error?: IAlertMessage;
+  errors?: (IAlertMessage | undefined)[];
+  warning?: IAlertMessage;
+  warnings?: (IAlertMessage | undefined)[];
 }
 
-type OwnProps = IProps;
+type OwnProps = IAlertList;
 
 const AlertList: React.FunctionComponent<OwnProps> = (props) => {
   const log = useLogger(AlertList);
   const classes = useStyles();
-  const errors: Error[] = [];
-  (props.errors ?? []).forEach((e) => {
-    if (e != null) errors.push(e);
-  });
-  if (props.error) errors.push(props.error);
+  const { error, errors, warning, warnings } = props;
+  const allErrors: IAlertMessage[] = sanitizeAlertMessages(errors, error);
+  const allWarnings: IAlertMessage[] = sanitizeAlertMessages(warnings, warning);
 
-  if (errors.length > 0) log.error('errors', errors);
+  const count = allErrors.length + allWarnings.length;
 
-  function splitMessage(msg: string): string {
-    const lines = _.uniq(msg.split('\n'));
-    return lines.join('<br />');
-  }
+  if (count <= 0) return <div />;
+  if (allErrors.length > 0) log.error('errors', allErrors, 'warnings', allWarnings);
+  else if (allWarnings.length > 0) log.warn(allWarnings);
 
   return (
     <div className={classes.root}>
-      {errors.map((e) => {
-        const message = e.message || '';
-        const name = e.name || '';
+      {allErrors.map((e) => {
         return (
-          <Alert key={name} severity="error">
-            <div>
-              <strong>{name}</strong>
-              {name.length > 0 && message.length > 0 && <br/>}
-              {splitMessage(e.message)}
-            </div>
-          </Alert>
+          <AlertMessage {...e} severity="error" />
+        );
+      })}
+      {allWarnings.map((a) => {
+        return (
+          <AlertMessage {...a} severity="warning" />
         );
       })}
     </div>

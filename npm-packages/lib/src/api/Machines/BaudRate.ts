@@ -7,3 +7,4 @@ export enum BaudRate {
   BR115200 = 115200,
   BR250000 = 250000,
 }
+

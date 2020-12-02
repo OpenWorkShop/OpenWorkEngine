@@ -2,14 +2,14 @@ import useStyles from './CardStyles';
 import React, { FunctionComponent } from 'react';
 import { Card, CardActions, CardHeader, Toolbar, CardContent } from '@material-ui/core';
 
-interface OwnProps {
+export interface IToolbarCardProps {
   title: string;
   subHeader?: React.ReactNode;
   footer?: React.ReactNode;
   children: React.ReactNode;
 }
 
-type Props = OwnProps;
+type Props = IToolbarCardProps;
 
 const ToolbarCard: FunctionComponent<Props> = (props) => {
   const classes = useStyles();

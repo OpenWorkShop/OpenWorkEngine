@@ -3,6 +3,8 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -48,6 +50,7 @@ export type MachineFeature = {
 export type MachineFirmware = {
   __typename?: 'MachineFirmware';
   baudRate: Scalars['Decimal'];
+  baudRateValue: Scalars['Int'];
   controllerType: MachineControllerType;
   downloadUrl: Maybe<Scalars['String']>;
   edition: Maybe<Scalars['String']>;
@@ -289,8 +292,8 @@ export type ResolversTypes = {
   MachineFeature: ResolverTypeWrapper<MachineFeature>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   MachineFirmware: ResolverTypeWrapper<MachineFirmware>;
-  MachinePart: ResolverTypeWrapper<MachinePart>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
+  MachinePart: ResolverTypeWrapper<MachinePart>;
   MachinePresetSetting: ResolverTypeWrapper<MachinePresetSetting>;
   MachineProfile: ResolverTypeWrapper<MachineProfile>;
   MachineSpec: ResolverTypeWrapper<MachineSpec>;
@@ -314,8 +317,8 @@ export type ResolversParentTypes = {
   MachineFeature: MachineFeature;
   Boolean: Scalars['Boolean'];
   MachineFirmware: MachineFirmware;
-  MachinePart: MachinePart;
   Int: Scalars['Int'];
+  MachinePart: MachinePart;
   MachinePresetSetting: MachinePresetSetting;
   MachineProfile: MachineProfile;
   MachineSpec: MachineSpec;
@@ -356,6 +359,7 @@ export type MachineFeatureResolvers<ContextType = any, ParentType extends Resolv
 
 export type MachineFirmwareResolvers<ContextType = any, ParentType extends ResolversParentTypes['MachineFirmware'] = ResolversParentTypes['MachineFirmware']> = {
   baudRate: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
+  baudRateValue: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   controllerType: Resolver<ResolversTypes['MachineControllerType'], ParentType, ContextType>;
   downloadUrl: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   edition: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -478,7 +482,7 @@ export type MachineFeaturePropsFragment = (
 
 export type MachineFirmwareMinimalFragment = (
   { __typename?: 'MachineFirmware' }
-  & Pick<MachineFirmware, 'controllerType' | 'baudRate' | 'rtscts'>
+  & Pick<MachineFirmware, 'controllerType' | 'baudRate' | 'baudRateValue' | 'rtscts'>
 );
 
 export type MachineFirmwarePropsFragment = (
@@ -588,6 +592,7 @@ export const MachineFirmwareMinimalFragmentDoc = gql`
     fragment MachineFirmwareMinimal on MachineFirmware {
   controllerType
   baudRate
+  baudRateValue
   rtscts
 }
     `;

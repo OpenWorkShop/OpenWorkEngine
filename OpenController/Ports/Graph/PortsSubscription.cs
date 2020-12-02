@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HotChocolate;
 using HotChocolate.Types;
@@ -12,9 +14,17 @@ namespace OpenWorkEngine.OpenController.Ports.Graph {
     [Subscribe]
     [Topic]
     [AuthorizeReadControllers]
-    public Task<SystemPort> OnPortStatus([EventMessage] string portName, [Service] PortManager ports) {
-      ports.Log.Information("Subscription port: {name}", portName);
-      return Task.FromResult(ports[portName]);
+    public Task<SystemPort> OnPortStatus([EventMessage] SystemPort port, [Service] PortManager ports) {
+      ports.Log.Verbose("[PORT] [STATE] {portName}", port.State, port.PortName);
+      return Task.FromResult(port);
+    }
+
+    [Subscribe]
+    [Topic]
+    [AuthorizeReadControllers]
+    public Task<List<SystemPort>> OnPortList([EventMessage] List<SystemPort> portList, [Service] PortManager ports) {
+      ports.Log.Information("[PORT] [LIST] {count}", ports.Map.Count);
+      return Task.FromResult(portList);
     }
   }
 }

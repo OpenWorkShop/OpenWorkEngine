@@ -2,6 +2,7 @@
 fragment MachineFirmwareMinimal on MachineFirmware {
   controllerType
   baudRate
+  baudRateValue
   rtscts
 }
 

@@ -2342,7 +2342,7 @@
         "affectsGlobalScope": false
       },
       "./src/themes/colors.ts": {
-        "version": "e2a05efe2fcc258e60f7c5164f314be7b650c65e02a935a66f3d11837d578b3b",
+        "version": "f6096755e957b9462ca458db9be07f7e6d5d5fefb78b82ef09e8cbaf1e85a7eb",
         "signature": "09f1c55e6f115fbd1963d3e9e78a9ee135abb7197a91c99af93bee181f92498f",
         "affectsGlobalScope": false
       },
@@ -3701,6 +3701,16 @@
         "signature": "4731faf3595fbd0327587723d1722eede12c194cc6db45c6f2e195c6864168b2",
         "affectsGlobalScope": false
       },
+      "../lib/dist/node_modules/@types/react/global.d.ts": {
+        "version": "ecf78e637f710f340ec08d5d92b3f31b134a46a4fcf2e758690d8c46ce62cba6",
+        "signature": "ecf78e637f710f340ec08d5d92b3f31b134a46a4fcf2e758690d8c46ce62cba6",
+        "affectsGlobalScope": true
+      },
+      "../lib/dist/node_modules/@types/react/index.d.ts": {
+        "version": "277e380acf34d4f66398100a66ac29213ea43674f114906f007204f29cc9a8b7",
+        "signature": "277e380acf34d4f66398100a66ac29213ea43674f114906f007204f29cc9a8b7",
+        "affectsGlobalScope": true
+      },
       "../lib/dist/api/identity/auth.d.ts": {
         "version": "6bae06c27a0feec14aad4e02bf468a58a0ed2f1e0e24147e3a9f68bef8cc0ced",
         "signature": "6bae06c27a0feec14aad4e02bf468a58a0ed2f1e0e24147e3a9f68bef8cc0ced",
@@ -3782,8 +3792,8 @@
         "affectsGlobalScope": false
       },
       "../lib/dist/api/graphql.d.ts": {
-        "version": "6c570784a3bee5094c6a89d1a9f5c3bf81818ebcaf8e29c1d2021dda6e8591cb",
-        "signature": "6c570784a3bee5094c6a89d1a9f5c3bf81818ebcaf8e29c1d2021dda6e8591cb",
+        "version": "20f89b616f50f44873e4d8bf9cf85fe8052f68ba4e3b5189e136e9f1c80ba51b",
+        "signature": "20f89b616f50f44873e4d8bf9cf85fe8052f68ba4e3b5189e136e9f1c80ba51b",
         "affectsGlobalScope": false
       },
       "../lib/dist/utils/logging/uselogger.d.ts": {
@@ -3866,9 +3876,14 @@
         "signature": "0714e2046df66c0e93c3330d30dbc0565b3e8cd3ee302cf99e4ede6220e5fec8",
         "affectsGlobalScope": true
       },
+      "./src/components/alerts/alertmessage.tsx": {
+        "version": "edd34f504bd9e84673a9f8088aef292dca26576280f7d3785d25df4c937d207d",
+        "signature": "13745051ed8b8234a8bb1499141788e63de1550a822c0ac0ddd13345a53650e4",
+        "affectsGlobalScope": false
+      },
       "./src/components/alerts/alertlist.tsx": {
-        "version": "643bf4f5fd6a1d5e2d5bfa5ae500595ce0574ce281d63882640cd8edf1e7b5fc",
-        "signature": "017ed93c3600625947926de0fc256bb096199c4395341c0dd278a0bc5d48b2cd",
+        "version": "58058911c462b9f48c40a9d33830c77aed4dfa1396826fbf3b7fd5ffb885a5ac",
+        "signature": "a8c774cbdaaba9ba48f0323a0c70b8bfda2f88519ce8b3a6b673e930f83da21c",
         "affectsGlobalScope": false
       },
       "../lib/dist/utils/device/devicemotion.d.ts": {
@@ -3891,9 +3906,9 @@
         "signature": "7bfea0835c316daafab607a6d90ea7afa06be84d9b792ee3eda99d2ab9219b08",
         "affectsGlobalScope": false
       },
-      "./src/components/alerts/offlinealert.tsx": {
-        "version": "fac6a1e8122a031f77d0c3b4f2fe0cb5d6603b8b1649e14a061b37f171c7f255",
-        "signature": "df9c4373789c86773ce1f66e2addf49d861d7e750392fe7164ec4c5cd34a8e21",
+      "./src/components/alerts/offlinealertlist.tsx": {
+        "version": "a20c137dcbf56382d9f3dded811b4b0940f95178e51cc950e2247c78da2a9744",
+        "signature": "c45d0392969d444bb5332d67d9ae7337d56d3b169322c475067157304038d30f",
         "affectsGlobalScope": false
       },
       "./src/components/openworkshopicon/cncicon.tsx": {
@@ -3937,7 +3952,7 @@
         "affectsGlobalScope": false
       },
       "./src/components/machineprofiles/machineprofilesearchbar.tsx": {
-        "version": "f97227ce154ee25f1776f2e39b5e1151383520488c3eeb2ded1299fe82976c47",
+        "version": "eccc749e8c9a438241d1252f71fb2869bacd2077ec81e2a41b3f9b5cc1306999",
         "signature": "c7b5462e16cbf5e930b456829884c65b974e989c260f0cdaa78badc470ddeb99",
         "affectsGlobalScope": false
       },
@@ -3992,7 +4007,7 @@
         "affectsGlobalScope": false
       },
       "./src/components/alerts/hoverhelpstep.tsx": {
-        "version": "2303113926cd2f9f69923dd95040e8b008f1d8bd4da1d930b5f19dbe2c63a617",
+        "version": "accc6b21fa1e82f8e91affa53d0a3df510403eae3bc2abde2c617e8f5415145b",
         "signature": "45c7c551f8a52dccbd7fe99c82844a40b3f91acdc78ff679db1dab85b801e31b",
         "affectsGlobalScope": false
       },
@@ -4001,24 +4016,29 @@
         "signature": "98065778119a2a59a0d4c658fa9e82faccb7f840d18bb964d6eda48050dafae2",
         "affectsGlobalScope": false
       },
+      "./src/components/layout/threecolumns.tsx": {
+        "version": "0bdf4d12f1deb94272f4090480219e130a8e6c3c689a943fb28be50bf9355835",
+        "signature": "7d81adf9d1fd6698b854645f9faddb03209b515c7d485ecf272a6e68c960c967",
+        "affectsGlobalScope": false
+      },
       "./src/components/cards/cardstyles.ts": {
         "version": "c1f05be51bd83d5ef0c4efce9a930ffee6cdd218b4a0d04efdefbe75f8e05ce2",
         "signature": "3f3ce855ccaa39d80aa2bc2d61ae0f6e1453a93af58084ba3580e3739cfc1284",
         "affectsGlobalScope": false
       },
       "./src/components/cards/toolbarcard.tsx": {
-        "version": "e10c3d967f01bbe4d13f33e89446d6aa0e86a4fee0ca1f0484f7d14257c6ae65",
-        "signature": "e536545d2db504efe1c1fd87e6ae06f254219f522abd536c028812f0480c7bc6",
+        "version": "36b1ed8e6be55482882c3c1f603192034e664dafb7e5042841424545fabecae7",
+        "signature": "d5bf1f37626a52bac94ffb0229a8a1074878ccd3043a91495aeb7d67afb10ef0",
+        "affectsGlobalScope": false
+      },
+      "./src/components/cards/cardmodal.tsx": {
+        "version": "40b7a016027646f7fe01a69100f35e8a6260310e8a5cd3c27592bbf0abed53a0",
+        "signature": "9a446bead062b56a84aa97fa9eaa72c97e987c43078b3e329a526a4f6c40a581",
         "affectsGlobalScope": false
       },
       "./src/components/forms/numericinput.tsx": {
         "version": "5684c9bc9ad27e76f4fed877a31a3a71b8899349a5c438f0ac61240b73dbcd3f",
         "signature": "93dd8cde009627c96e513601ca3b5149e50f0839e75ec1ccb0e5908b5a43c247",
-        "affectsGlobalScope": false
-      },
-      "./src/components/layout/threecolumns.tsx": {
-        "version": "0bdf4d12f1deb94272f4090480219e130a8e6c3c689a943fb28be50bf9355835",
-        "signature": "7d81adf9d1fd6698b854645f9faddb03209b515c7d485ecf272a6e68c960c967",
         "affectsGlobalScope": false
       },
       "../lib/dist/api/machines/machineparttype.d.ts": {
@@ -4042,13 +4062,13 @@
         "affectsGlobalScope": false
       },
       "./src/components/machineprofiles/choosemachineparts.tsx": {
-        "version": "defd3d323dafd2645e4e8545de06e2c50adebfa23d38a25ee85b2fd6b4d6cf15",
+        "version": "ba88f2a10d7de8e8a3f36ef30936396514cc4a50a9f2bdea72f9c1c85e2de7bf",
         "signature": "4b525f27a3739ba8bc5ec15cbfaddeb853095a6c557bedee91739461c2168f50",
         "affectsGlobalScope": false
       },
       "../lib/dist/api/machines/customizedmachine.d.ts": {
-        "version": "6c8fd45e028cc1cdb7b3aef766cf379349f62cc384a9eae1e6087f9184adf50f",
-        "signature": "6c8fd45e028cc1cdb7b3aef766cf379349f62cc384a9eae1e6087f9184adf50f",
+        "version": "0261b521284630a0629071f5099d0fbdd9830c3e819d23d9c71b7a18cc6cb4d8",
+        "signature": "0261b521284630a0629071f5099d0fbdd9830c3e819d23d9c71b7a18cc6cb4d8",
         "affectsGlobalScope": false
       },
       "../../../node_modules/@material-ui/lab/alert/alert.d.ts": {
@@ -4792,12 +4812,12 @@
         "affectsGlobalScope": false
       },
       "./src/components/machineprofiles/createmachineprofile.tsx": {
-        "version": "d67e68f8d859d821905bbe28369ac3879fb7c433d583e28b25c2ec92422bd209",
+        "version": "3a8f450bfbeb75f77604ee92c66ce64a04cf1bb2f820e01e9766340a9f3bda01",
         "signature": "2560f5e1a37fff493e29eb57f85d6c3df07823826f3cbd698016fcb84157c79e",
         "affectsGlobalScope": false
       },
       "./src/components/machineprofiles/machineaxiseditor.tsx": {
-        "version": "ccba7e3eaeca47986329362a0d85e5117ba34fe94440a719e6773e4b38f93fa9",
+        "version": "3bca2ff5f22315ea32bcfd343060bd79d03b3adb374cef8823573f3c0001ef94",
         "signature": "b65485d48fa5ab0d2ab5001449f6a20f35ca257a897fd82fbdf6f6b402987760",
         "affectsGlobalScope": false
       },
@@ -4807,7 +4827,7 @@
         "affectsGlobalScope": false
       },
       "./src/components/machineprofiles/customizemachine.tsx": {
-        "version": "e486ae0fc28a5eb452a7295f5bc9c6d1f98a48e2684bf3ee6e37dd3d7d1bb0ff",
+        "version": "0a6473c6a6929491a201d139349c12fc1778b30f3832e3c90104ea50ef2f969c",
         "signature": "e8e3a37bb6b1b53d7ce8a23e0d97755a0e850bfb6d6e5ea7fa24a3590f87e63e",
         "affectsGlobalScope": false
       },
@@ -9997,12 +10017,17 @@
       "../lib/dist/api/machines/machinespectype.d.ts": [
         "../lib/dist/api/graphql.d.ts"
       ],
+      "../lib/dist/node_modules/@types/react/index.d.ts": [
+        "../../../node_modules/@types/prop-types/index.d.ts",
+        "../../../node_modules/csstype/index.d.ts",
+        "../lib/dist/node_modules/@types/react/global.d.ts"
+      ],
       "../lib/dist/openworkshop.d.ts": [
         "../../../node_modules/@apollo/client/index.d.ts",
-        "../../../node_modules/@types/react/index.d.ts",
         "../../../node_modules/i18next/index.d.ts",
         "../../../node_modules/oidc-client/index.d.ts",
         "../../../node_modules/redux/index.d.ts",
+        "../lib/dist/node_modules/@types/react/index.d.ts",
         "../lib/dist/openworkshopsettings.d.ts",
         "../lib/dist/store.d.ts",
         "../lib/dist/utils/logging/index.d.ts",
@@ -10041,15 +10066,19 @@
         "../lib/dist/utils/logging/logoptions.d.ts"
       ],
       "../lib/dist/utils/logging/uselogger.d.ts": [
-        "../../../node_modules/@types/react/index.d.ts",
+        "../lib/dist/node_modules/@types/react/index.d.ts",
         "../lib/dist/utils/logging/logger.d.ts"
       ],
       "./src/components/alerts/alertlist.tsx": [
-        "../../../node_modules/@material-ui/core/alert/index.d.ts",
         "../../../node_modules/@material-ui/core/styles/index.d.ts",
-        "../../../node_modules/@types/lodash/index.d.ts",
         "../../../node_modules/@types/react/index.d.ts",
-        "../lib/dist/utils/logging/uselogger.d.ts"
+        "../lib/dist/utils/logging/uselogger.d.ts",
+        "./src/components/alerts/alertmessage.tsx"
+      ],
+      "./src/components/alerts/alertmessage.tsx": [
+        "../../../node_modules/@material-ui/core/index.d.ts",
+        "../../../node_modules/@types/lodash/index.d.ts",
+        "../../../node_modules/@types/react/index.d.ts"
       ],
       "./src/components/alerts/hoverhelpstep.tsx": [
         "../../../node_modules/@fortawesome/free-solid-svg-icons/index.d.ts",
@@ -10057,17 +10086,25 @@
         "../../../node_modules/@material-ui/core/index.d.ts",
         "../../../node_modules/@types/react/index.d.ts"
       ],
-      "./src/components/alerts/offlinealert.tsx": [
-        "../../../node_modules/@material-ui/core/index.d.ts",
+      "./src/components/alerts/offlinealertlist.tsx": [
         "../../../node_modules/@types/react/index.d.ts",
         "../../../node_modules/react-i18next/src/index.d.ts",
-        "../lib/dist/utils/device/index.d.ts"
+        "../lib/dist/utils/device/index.d.ts",
+        "./src/components/alerts/alertlist.tsx",
+        "./src/components/alerts/alertmessage.tsx"
       ],
       "./src/components/brand/poweredby.tsx": [
         "../../../node_modules/@material-ui/core/index.d.ts",
         "../../../node_modules/@types/react/index.d.ts",
         "../../../node_modules/react-i18next/src/index.d.ts",
         "./src/components/images/index.ts"
+      ],
+      "./src/components/cards/cardmodal.tsx": [
+        "../../../node_modules/@material-ui/core/index.d.ts",
+        "../../../node_modules/@types/react/index.d.ts",
+        "../../../node_modules/react-i18next/src/index.d.ts",
+        "./src/components/cards/toolbarcard.tsx",
+        "./src/components/layout/threecolumns.tsx"
       ],
       "./src/components/cards/cardstyles.ts": [
         "../../../node_modules/@material-ui/core/styles/index.d.ts",
@@ -10173,6 +10210,7 @@
         "../../../node_modules/react-i18next/src/index.d.ts",
         "../lib/dist/api/graphql.d.ts",
         "./src/components/alerts/alertlist.tsx",
+        "./src/components/alerts/alertmessage.tsx",
         "./src/components/alerts/hoverhelpstep.tsx",
         "./src/components/forms/numericinput.tsx"
       ],
@@ -10184,7 +10222,7 @@
         "../lib/dist/consts.d.ts",
         "../lib/dist/utils/logging/uselogger.d.ts",
         "./src/components/alerts/alertlist.tsx",
-        "./src/components/alerts/offlinealert.tsx",
+        "./src/components/alerts/offlinealertlist.tsx",
         "./src/components/openworkshopicon/index.tsx"
       ],
       "./src/components/machineprofiles/machinespeclist.tsx": [
@@ -13337,12 +13375,12 @@
       ],
       "../../../node_modules/@types/glob/index.d.ts": [
         "../../../node_modules/@types/minimatch/index.d.ts",
-        "../../node_modules/@types/node/events.d.ts",
-        "../../node_modules/@types/node/index.d.ts"
+        "../../../node_modules/@types/node/events.d.ts",
+        "../../../node_modules/@types/node/index.d.ts"
       ],
       "../../../node_modules/@types/graceful-fs/index.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/index.d.ts"
+        "../../../node_modules/@types/node/fs.d.ts",
+        "../../../node_modules/@types/node/index.d.ts"
       ],
       "../../../node_modules/@types/history/createbrowserhistory.d.ts": [
         "../../../node_modules/@types/history/domutils.d.ts",
@@ -13624,7 +13662,7 @@
         "../../../node_modules/redux/index.d.ts"
       ],
       "../../../node_modules/@types/resolve/index.d.ts": [
-        "../../node_modules/@types/node/index.d.ts"
+        "../../../node_modules/@types/node/index.d.ts"
       ],
       "../../../node_modules/@types/semver/classes/comparator.d.ts": [
         "../../../node_modules/@types/semver/classes/semver.d.ts",
@@ -13825,10 +13863,10 @@
       ],
       "../../../node_modules/@types/superagent/index.d.ts": [
         "../../../node_modules/@types/cookiejar/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/http.d.ts",
-        "../../node_modules/@types/node/index.d.ts",
-        "../../node_modules/@types/node/stream.d.ts"
+        "../../../node_modules/@types/node/fs.d.ts",
+        "../../../node_modules/@types/node/http.d.ts",
+        "../../../node_modules/@types/node/index.d.ts",
+        "../../../node_modules/@types/node/stream.d.ts"
       ],
       "../../../node_modules/@types/testing-library__jest-dom/index.d.ts": [
         "../../../node_modules/@types/jest/index.d.ts"
@@ -13837,6 +13875,7 @@
         "../../../node_modules/source-map/source-map.d.ts"
       ],
       "../../../node_modules/@types/webpack-sources/index.d.ts": [
+        "../../../node_modules/@types/node/index.d.ts",
         "../../../node_modules/@types/webpack-sources/lib/cachedsource.d.ts",
         "../../../node_modules/@types/webpack-sources/lib/compatsource.d.ts",
         "../../../node_modules/@types/webpack-sources/lib/concatsource.d.ts",
@@ -13847,8 +13886,7 @@
         "../../../node_modules/@types/webpack-sources/lib/replacesource.d.ts",
         "../../../node_modules/@types/webpack-sources/lib/sizeonlysource.d.ts",
         "../../../node_modules/@types/webpack-sources/lib/source.d.ts",
-        "../../../node_modules/@types/webpack-sources/lib/sourcemapsource.d.ts",
-        "../../node_modules/@types/node/index.d.ts"
+        "../../../node_modules/@types/webpack-sources/lib/sourcemapsource.d.ts"
       ],
       "../../../node_modules/@types/webpack-sources/lib/cachedsource.d.ts": [
         "../../../node_modules/@types/webpack-sources/lib/index.d.ts",
@@ -13900,9 +13938,9 @@
         "../../../node_modules/@types/webpack-sources/lib/source.d.ts"
       ],
       "../../../node_modules/@types/webpack-sources/lib/source.d.ts": [
+        "../../../node_modules/@types/node/crypto.d.ts",
         "../../../node_modules/@types/webpack-sources/lib/index.d.ts",
-        "../../../node_modules/@types/webpack-sources/node_modules/source-map/source-map.d.ts",
-        "../../node_modules/@types/node/crypto.d.ts"
+        "../../../node_modules/@types/webpack-sources/node_modules/source-map/source-map.d.ts"
       ],
       "../../../node_modules/@types/webpack-sources/lib/sourcemapsource.d.ts": [
         "../../../node_modules/@types/webpack-sources/lib/index.d.ts",
@@ -13911,12 +13949,12 @@
       ],
       "../../../node_modules/@types/webpack/index.d.ts": [
         "../../../node_modules/@types/anymatch/index.d.ts",
+        "../../../node_modules/@types/node/crypto.d.ts",
+        "../../../node_modules/@types/node/index.d.ts",
         "../../../node_modules/@types/tapable/index.d.ts",
         "../../../node_modules/@types/uglify-js/index.d.ts",
         "../../../node_modules/@types/webpack-sources/index.d.ts",
-        "../../../node_modules/source-map/source-map.d.ts",
-        "../../node_modules/@types/node/crypto.d.ts",
-        "../../node_modules/@types/node/index.d.ts"
+        "../../../node_modules/source-map/source-map.d.ts"
       ],
       "../../../node_modules/@types/yargs/index.d.ts": [
         "../../../node_modules/@types/yargs-parser/index.d.ts"
@@ -14521,7 +14559,7 @@
         "../../../node_modules/symbol-observable/index.d.ts"
       ],
       "../../../node_modules/ts-invariant/lib/invariant.d.ts": [
-        "../../node_modules/@types/node/index.d.ts"
+        "../../../node_modules/@types/node/index.d.ts"
       ],
       "../../node_modules/@types/http-proxy-agent/index.d.ts": [
         "../../node_modules/@types/node/http.d.ts",
@@ -14738,12 +14776,17 @@
       "../lib/dist/api/machines/machinespectype.d.ts": [
         "../lib/dist/api/graphql.d.ts"
       ],
+      "../lib/dist/node_modules/@types/react/index.d.ts": [
+        "../../../node_modules/@types/prop-types/index.d.ts",
+        "../../../node_modules/csstype/index.d.ts",
+        "../lib/dist/node_modules/@types/react/global.d.ts"
+      ],
       "../lib/dist/openworkshop.d.ts": [
         "../../../node_modules/@apollo/client/index.d.ts",
-        "../../../node_modules/@types/react/index.d.ts",
         "../../../node_modules/i18next/index.d.ts",
         "../../../node_modules/oidc-client/index.d.ts",
         "../../../node_modules/redux/index.d.ts",
+        "../lib/dist/node_modules/@types/react/index.d.ts",
         "../lib/dist/openworkshopsettings.d.ts",
         "../lib/dist/store.d.ts",
         "../lib/dist/utils/logging/index.d.ts",
@@ -14771,31 +14814,40 @@
         "../lib/dist/utils/logging/logmanager.d.ts"
       ],
       "../lib/dist/utils/logging/logger.d.ts": [
-        "../../node_modules/@types/node/index.d.ts",
+        "../../../node_modules/@types/node/index.d.ts",
         "../lib/dist/utils/logging/index.d.ts"
       ],
       "../lib/dist/utils/logging/logmanager.d.ts": [
-        "../../node_modules/@types/node/events.d.ts",
-        "../../node_modules/@types/node/index.d.ts",
+        "../../../node_modules/@types/node/events.d.ts",
+        "../../../node_modules/@types/node/index.d.ts",
         "../lib/dist/utils/logging/index.d.ts",
         "../lib/dist/utils/logging/logger.d.ts",
         "../lib/dist/utils/logging/logoptions.d.ts"
       ],
       "../lib/dist/utils/logging/uselogger.d.ts": [
-        "../../../node_modules/@types/react/index.d.ts",
+        "../lib/dist/node_modules/@types/react/index.d.ts",
         "../lib/dist/utils/logging/logger.d.ts"
       ],
       "./src/components/alerts/alertlist.tsx": [
+        "../../../node_modules/@types/react/index.d.ts",
+        "./src/components/alerts/alertmessage.tsx"
+      ],
+      "./src/components/alerts/alertmessage.tsx": [
         "../../../node_modules/@types/react/index.d.ts"
       ],
       "./src/components/alerts/hoverhelpstep.tsx": [
         "../../../node_modules/@types/react/index.d.ts"
       ],
-      "./src/components/alerts/offlinealert.tsx": [
-        "../../../node_modules/@types/react/index.d.ts"
+      "./src/components/alerts/offlinealertlist.tsx": [
+        "../../../node_modules/@types/react/index.d.ts",
+        "./src/components/alerts/alertlist.tsx"
       ],
       "./src/components/brand/poweredby.tsx": [
         "../../../node_modules/@types/react/index.d.ts"
+      ],
+      "./src/components/cards/cardmodal.tsx": [
+        "../../../node_modules/@types/react/index.d.ts",
+        "./src/components/cards/toolbarcard.tsx"
       ],
       "./src/components/cards/toolbarcard.tsx": [
         "../../../node_modules/@types/react/index.d.ts"
@@ -15972,6 +16024,8 @@
       "../lib/dist/api/machines/machineparttype.d.ts",
       "../lib/dist/api/machines/machinespectype.d.ts",
       "../lib/dist/consts.d.ts",
+      "../lib/dist/node_modules/@types/react/global.d.ts",
+      "../lib/dist/node_modules/@types/react/index.d.ts",
       "../lib/dist/openworkshop.d.ts",
       "../lib/dist/openworkshopsettings.d.ts",
       "../lib/dist/store.d.ts",
@@ -15985,9 +16039,11 @@
       "../lib/dist/utils/logging/logoptions.d.ts",
       "../lib/dist/utils/logging/uselogger.d.ts",
       "./src/components/alerts/alertlist.tsx",
+      "./src/components/alerts/alertmessage.tsx",
       "./src/components/alerts/hoverhelpstep.tsx",
-      "./src/components/alerts/offlinealert.tsx",
+      "./src/components/alerts/offlinealertlist.tsx",
       "./src/components/brand/poweredby.tsx",
+      "./src/components/cards/cardmodal.tsx",
       "./src/components/cards/cardstyles.ts",
       "./src/components/cards/toolbarcard.tsx",
       "./src/components/errorlist/errorlist.tsx",

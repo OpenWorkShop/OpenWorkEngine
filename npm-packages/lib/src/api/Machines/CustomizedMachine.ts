@@ -1,5 +1,5 @@
 import {
-  MachineAxisPropsFragment,
+  MachineAxisPropsFragment, MachineCommandPropsFragment, MachineControllerType,
   MachineFeaturePropsFragment,
   MachineFirmwareMinimalFragment,
   MachineFirmwarePropsFragment,
@@ -16,12 +16,28 @@ export interface ICustomizedMachineProfile {
   submit: boolean;
 }
 
+export interface IFirmwareRequirement {
+  controllerType: MachineControllerType;
+  id?: string | null;
+  downloadUrl?: string | null;
+  helpUrl?: string | null;
+  requiredVersion?: string | null;
+  suggestedVersion?: string | null;
+  name?: string | null;
+  edition?: string | null;
+  value?: number | null;
+}
+
+
+export type FirmwareRequirement = IFirmwareRequirement & MachineFirmwarePropsFragment;
+
 export interface ICustomizedMachine {
   profile: ICustomizedMachineProfile;
   name: string;
   icon: string;
-  firmware: MachineFirmwarePropsFragment | MachineFirmwareMinimalFragment;
+  firmware: FirmwareRequirement;
   parts: MachinePartCompleteFragment[];
-  axes: MachineAxes;
+  axes: MachineAxisPropsFragment[];
   features: MachineFeaturePropsFragment[];
+  commands: MachineCommandPropsFragment[];
 }

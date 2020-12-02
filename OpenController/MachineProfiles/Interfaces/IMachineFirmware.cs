@@ -12,7 +12,7 @@ namespace OpenWorkEngine.OpenController.MachineProfiles.Interfaces {
 
     public bool Rtscts { get; }
 
-    public BaudRate BaudRate { get; }
+    public int BaudRateValue { get; }
 
     public decimal RequiredVersion { get; }
 

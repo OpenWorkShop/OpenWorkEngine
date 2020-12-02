@@ -1,5 +1,6 @@
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 using OpenWorkEngine.OpenController.Machines.Interfaces;
+using SemVersion;
 
 namespace OpenWorkEngine.OpenController.Machines.Models {
   /// <summary>
@@ -8,12 +9,12 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
   public class MachineConfiguration : IPatchMachines {
     public MachinePosition WorkOffset { get; internal set; } = new();
 
-    public MachineVersion FirmwareVersion { get; } = new();
-
-    public MachineVersion BoardVersion { get; } = new();
+    public MachineDetectedFirmware Firmware { get; } = new();
 
     // Firmware, Version...
 
     // Buffer, Feedback, Modal, Tool, Feedrate, Spindle, ovF, ovS, Extruder, HeatedBed, rapidFeedrate
+
+    public override string ToString() => $"{Firmware}";
   }
 }

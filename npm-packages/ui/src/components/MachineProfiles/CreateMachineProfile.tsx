@@ -57,6 +57,7 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
   const [firmware, setFirmware] = React.useState<MachineFirmwareMinimalFragment>({
     controllerType: MachineControllerType.Grbl,
     baudRate: 0,
+    baudRateValue: 0,
     rtscts: false,
   });
 
@@ -69,13 +70,13 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
   const isUntested =
     firmware.controllerType === MachineControllerType.Smoothie ||
     firmware.controllerType === MachineControllerType.TinyG;
-  const baudRate: number = (firmware.baudRate as number) || 0;
+  const baudRate: number = (firmware.baudRateValue as number) || 0;
 
   function onChange(fw: MachineFirmwareMinimalFragment, pr: ICustomizedMachineProfile) {
     setFirmware(fw);
     setProfile(pr);
     log.debug('update', fw, pr);
-    if (fw.baudRate > 0) {
+    if (fw.baudRateValue > 0) {
       props.onChanged(fw, pr);
     }
   }
@@ -92,13 +93,9 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
 
   return (
     <div>
-      <Typography variant='h5'>
-        <Trans>Connect to your Machine</Trans>
-      </Typography>
-
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={9} md={6}>
+          <Grid item xs={12} md={9}>
             <Typography variant='h5' className={classes.headings}>
               <Trans>Connection Protocol</Trans>
             </Typography>
@@ -156,7 +153,7 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
               label={t('Hardware flow control (rtscts)?')}
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={12} md={3}>
             <Typography variant='h5' className={classes.headings}>
               <Trans>Machine Information</Trans>
               <Grid container>

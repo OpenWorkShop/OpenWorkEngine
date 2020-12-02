@@ -3,6 +3,8 @@ using OpenWorkEngine.OpenController.Ports.Interfaces;
 
 namespace OpenWorkEngine.OpenController.Ports.Models {
   public class PortOptions : ISerialPortOptions {
+    public static int DefaultReadTimeoutMs = 100;
+
     public int BaudRate => _serialPort.BaudRate;
 
     public Parity? Parity => _serialPort.Parity;
@@ -19,9 +21,19 @@ namespace OpenWorkEngine.OpenController.Ports.Models {
 
     public bool? RtsEnable => _serialPort.RtsEnable;
 
-    public int? ReadTimeout => _serialPort.ReadTimeout;
+    public int? ReadTimeout {
+      get => _serialPort.ReadTimeout <= 0 ? DefaultReadTimeoutMs : _serialPort.ReadTimeout;
+      internal set {
+        if (value != null) _serialPort.ReadTimeout = value.Value;
+      }
+    }
 
-    public int? WriteTimeout => _serialPort.WriteTimeout;
+    public int? WriteTimeout {
+      get => _serialPort.WriteTimeout;
+      internal set {
+        if (value != null) _serialPort.WriteTimeout = value.Value;
+      }
+    }
 
     private readonly SerialPort _serialPort;
 
