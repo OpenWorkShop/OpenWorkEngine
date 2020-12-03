@@ -1,13 +1,16 @@
-import { MachineSearchResultFragment, useSearchMachineProfilesLazyQuery } from '@openworkshop/lib/api/graphql';
+import {
+  MachineCategory,
+  MachineSearchResultFragment,
+  useSearchMachineProfilesLazyQuery
+} from '@openworkshop/lib/api/graphql';
 import * as React from 'react';
-import { Autocomplete, CircularProgress, TextField, Grid, Typography } from '@material-ui/core';
-import { Alert } from '@material-ui/core';
+import {Autocomplete, CircularProgress, FormControl, FormHelperText, Grid, TextField, Typography} from '@material-ui/core';
 import useLogger from '@openworkshop/lib/utils/logging/UseLogger';
-import { useTranslation, Trans } from 'react-i18next';
+import {Trans, useTranslation} from 'react-i18next';
 import {owsClientOpts} from '@openworkshop/lib/consts';
-import AlertList from '../Alerts/AlertList';
 import OfflineAlertList from '../Alerts/OfflineAlertList';
 import OpenWorkShopIcon from '../OpenWorkShopIcon/';
+import useStyles from "./Styles";
 
 type MP = MachineSearchResultFragment;
 
@@ -19,6 +22,7 @@ const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProp
   const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
   const log = useLogger(MachineProfileSearchBar);
+  const classes = useStyles();
   const [query, setQuery] = React.useState('');
   const [machineProfiles, setMachineProfiles] = React.useState<MP[]>([]);
   const [searchMachines, { loading, error, data }] = useSearchMachineProfilesLazyQuery(owsClientOpts);
@@ -26,7 +30,7 @@ const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProp
   React.useEffect(() => {
     // Store the sorted search results in state, which also prevents clearing of results while querying.
     if (data && data.machineProfiles) {
-      log.trace(query, data);
+      log.verbose(query, data);
       setMachineProfiles([...data.machineProfiles].sort(sortMachines));
     }
     if (error) {
@@ -41,11 +45,14 @@ const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProp
     return -b.name.charAt(0).localeCompare(a.name.charAt(0));
   }
 
-  function getCategoryName(cat: string): string {
-    if (cat === 'TDP') {
-      return t('3D Printer');
-    }
-    return cat;
+  function getCategoryName(mp: MP): string {
+    if (mp.machineCategory === MachineCategory.Tdp) return t('3D Printer');
+    return mp.machineCategory;
+  }
+
+  function getGroupName(mp: MP): string {
+    if (mp.featured) return t('Featured');
+    return getCategoryName(mp);
   }
 
   function updateQuery(q: string) {
@@ -55,10 +62,11 @@ const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProp
   }
 
   return (
-    <div>
+    <FormControl className={classes.formControl}>
       <Autocomplete
         id='search-machine-profiles'
         open={open}
+        className={classes.input}
         noOptionsText={error ? error.message.split('\n')[0] : t('Nothing found')}
         loadingText={t('Loading...')}
         loading={loading}
@@ -67,7 +75,7 @@ const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProp
         onChange={(e, mp) => props.onSelectedMachineProfile(mp ?? undefined)}
         options={machineProfiles}
         getOptionSelected={(opt: MP, val: MP) => opt.id === val.id}
-        groupBy={(mp: MP) => getCategoryName(mp.machineCategory)}
+        groupBy={(mp: MP) => getGroupName(mp)}
         getOptionLabel={(mp: MP) => [mp.brand, mp.name, mp.model].filter((a) => a && a.length > 0).join(' ')}
         onInputChange={(e, val) => updateQuery(val)}
         renderOption={(props: unknown, mp: MP) => {
@@ -82,7 +90,7 @@ const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProp
                 <Typography variant='body2' color='textSecondary'>
                   {mp.brand}
                   {mp.brand && ' '}
-                  {getCategoryName(mp.machineCategory)}
+                  {getCategoryName(mp)}
                   {mp.discontinued && t(' (Discontinued)')}
                 </Typography>
               </Grid>
@@ -106,8 +114,9 @@ const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProp
           />
         )}
       />
+      <FormHelperText ><Trans>Try searching for brand names.</Trans></FormHelperText>
       <OfflineAlertList feature={t('The community catalog')} error={error} />
-    </div>
+    </FormControl>
   );
 };
 

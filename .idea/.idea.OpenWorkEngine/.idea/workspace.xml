@@ -6,58 +6,69 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="627b5cbe-4e90-410d-9ab6-326b1616b6e2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/OpenController/Controllers/Grbl/GrblController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OpenController/Controllers/Utils/Parsers/RegexParser.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OpenController/Machines/Models/MachineDetectedFirmware.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/components/Alerts/OfflineAlertList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Makerverse/app/src/api/Workspaces/Workspaces.graphql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/components/Cards/CardDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/riderModule.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/Api/MakerverseContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Api/MakerverseContext.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Graph/WorkspaceSettingsSchema.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Graph/WorkspaceSchema.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Models/MachineFirmwareSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Models/MachineFirmwareSettings.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Models/MachinePartSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Models/MachinePartSettings.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Models/MachineSettingSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Models/MachineSettingSettings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Models/WorkspaceSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Models/WorkspaceSettings.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/Makerverse.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Makerverse.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/MakerverseServerTests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/MakerverseServerTests.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/Settings/MakerverseSettingsFileTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/Settings/MakerverseSettingsFileTests.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/app/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/app/graphql.schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/graphql.schema.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Ports/PortConnectionStatus.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/api/Ports/PortConnectionStatus.graphql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Settings/Workspaces.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/api/Settings/Workspaces.graphql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Settings/Workspaces.graphql" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/graphql.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/api/graphql.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Login/CallbackPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/components/Login/CallbackPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Login/Styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/components/Login/Styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/ListMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/ListMenu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/SideDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/SideDrawer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/UserMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/UserMenu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Ports/OpenMachinePort.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/components/Ports/OpenMachinePort.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Ports/PortConnectionSteps.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/components/Ports/PortConnectionSteps.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Ports/PortSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/components/Ports/PortSelect.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Ports/PortStatus.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/components/Ports/PortStatus.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Ports/Styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/components/Ports/Styles.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/app/src/constants/docs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/constants/docs.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/app/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/Makerverse/Hooks.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/Makerverse/MakerverseContext.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/lib/Makerverse/MakerverseContext.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/Makerverse/Workspaces.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/lib/Makerverse/Workspaces.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/Makerverse/apollo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/lib/Makerverse/apollo.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/Makerverse/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/lib/Makerverse/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/analytics.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/lib/analytics.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/workspaces/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/lib/workspaces/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/workspaces/workspace.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/lib/workspaces/workspace.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/app/src/makerverse-schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/makerverse-schema.graphql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/providers/MakerverseHooks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/providers/MakerverseHooks.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/providers/MakerverseProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/providers/MakerverseProvider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/providers/SystemPortProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/providers/SystemPortProvider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/views/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/ProtectedApp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/views/ProtectedApp.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/WorkspaceCreator/Styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/views/WorkspaceCreator/Styles.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/WorkspaceCreator/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/views/WorkspaceCreator/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Controller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Controllers/Controller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Implementations/Grbl/GrblController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Patchers/RegexFirmwarePatcher.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Lib/Graphql/GraphqlHttpResultSerializer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Lib/Graphql/GraphqlHttpResultSerializer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/MachineProfiles/Interfaces/IMachineFirmware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/MachineProfiles/Interfaces/IMachineFirmware.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/MachineProfiles/Interfaces/IMachineSetting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/MachineProfiles/Interfaces/IMachineSetting.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/appsettings.Development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/appsettings.Production.json" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/appsettings.Production.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Services/ControllerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Controllers/Services/ControllerManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/Machines/Graph/MachinesSubscription.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Graph/MachinesSubscription.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Interfaces/IParseMachinePatches.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Models/Machine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/Machine.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Interfaces/IPatchMachines.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Lib/ITopic.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/Machines/Models/MachineConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/MachineConfiguration.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/Machines/Models/MachineSetting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/MachineSetting.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Models/MachineVersion.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Observables/MachineSubscriptionTopic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Observables/MachineSubscriptionTopic.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Models/MachineState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/MachineState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Observables/MachineSubscriber.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Observables/MachineSubscriber.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Observables/MachineSubscriptionTopic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Lib/SubscriptionTopic.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/Machines/Observables/MachineTopicSet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Observables/MachineTopicSet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Ports/Extensions/TopicEventSenderExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Ports/Extensions/TopicEventSenderExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Ports/Graph/PortsMutation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Ports/Graph/PortsMutation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Ports/Graph/PortsSubscription.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Ports/Graph/PortsSubscription.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Ports/Models/ConnectedPort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Ports/Models/ConnectedPort.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Ports/Models/PortOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Ports/Models/PortOptions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Ports/Models/PortStatus.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Ports/Models/PortStatus.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Ports/Models/SystemPort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Ports/Models/SystemPort.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/OpenController.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/OpenController.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/Ports/Services/PortManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Ports/Services/PortManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkEngine.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkEngine.mdproj.bak" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/.idea/.idea.OpenWorkShop/.idea/contentModel.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/.idea/.idea.OpenWorkShop/.idea/indexLayout.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/.idea/.idea.OpenWorkShop/.idea/modules.xml" beforeDir="false" />
@@ -70,59 +81,115 @@
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachineFirmware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachineFirmware.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachinePart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachinePart.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachineSetting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachinePresetSetting.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Schema/MachineQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Schema/MachineQuery.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/gql/Machines/machineProfiles.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/gql/Machines/machineProfiles.graphql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Catalog/Machines.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Catalog/Machines.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Catalog/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Catalog/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/Graphql/GraphqlErrorHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/Graphql/GraphqlErrorHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/Migrations/OWSDataModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Migrations/OWSDataModelSnapshot.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/OpenWorkShop.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/OpenWorkShop.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/lib/dist/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/dist/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/lib/graphql.schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/graphql.schema.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/lib/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/lib/package.prod.json" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/package.prod.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/lib/src/api/Machines/BaudRate.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/src/api/Machines/BaudRate.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/lib/src/api/Machines/CustomizedMachine.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/src/api/Machines/CustomizedMachine.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/lib/src/api/Machines/MachineFirmware.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/src/api/Machines/MachineFirmware.graphql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/lib/src/api/graphql.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/src/api/graphql.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/lib/src/ows-schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/src/ows-schema.graphql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/lib/src/utils/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/src/utils/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codegen.yml" beforeDir="false" afterPath="$PROJECT_DIR$/codegen.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/lib/src/OpenWorkShop.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/src/OpenWorkShop.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/lib/src/api/graphql.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/lib/src/utils/logging/LogManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/src/utils/logging/LogManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/lib/src/utils/logging/Logger.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/src/utils/logging/Logger.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/lib/src/utils/logging/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/src/utils/logging/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/npm-packages/lib/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/tsconfig.tsbuildinfo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/open-controller/dist/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/open-controller/dist/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/open-controller/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/open-controller/tsconfig.tsbuildinfo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/ui/Find Results" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/components/Alerts/AlertList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/components/Alerts/AlertList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/components/Alerts/HoverHelpStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/components/Alerts/HoverHelpStep.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/components/Alerts/OfflineAlert.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/components/Cards/ToolbarCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/components/Cards/ToolbarCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/components/MachineProfiles/ChooseMachineParts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/components/MachineProfiles/ChooseMachineParts.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/components/Alerts/AlertMessage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/components/Alerts/AlertMessage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/components/Cards/CardModal.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/components/Layout/ThreeColumns.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/components/Layout/ThreeColumns.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/components/MachineProfiles/ChooseMachinePart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/components/MachineProfiles/ChooseMachinePart.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/components/MachineProfiles/CreateMachineProfile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/components/MachineProfiles/CreateMachineProfile.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/components/MachineProfiles/CustomizeMachine.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/components/MachineProfiles/CustomizeMachine.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/components/MachineProfiles/MachineAxisEditor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/components/MachineProfiles/MachineAxisEditor.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/components/MachineProfiles/MachineProfileSearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/components/MachineProfiles/MachineProfileSearchBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/themes/Colors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/themes/Colors.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/npm-packages/ui/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/tsconfig.tsbuildinfo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="GraphQL File" />
+        <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/Makerverse" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/C9C5A075-95E7-427D-88D6-0E688438E069/1b/03ad71f8/ConcurrentDictionary`2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/.nuget/packages/microsoft.net.test.sdk/16.7.1/build/netcoreapp2.1/Microsoft.NET.Test.Sdk.Program.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/OpenWorkShop/OpenWorkShop.csproj" />
-      <option value="$PROJECT_DIR$/Makerverse/Makerverse.csproj" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/providers/MakerverseHooks.ts" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/lib/workspaces/workspace.ts" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/views/App.tsx" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/views/Workspace/index.tsx" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Navigation/UserMenu.tsx" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Ports/types.ts" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Ports/PortConnectButton.tsx" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Machines/PortConnectButton.tsx" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Machines/MachineConnectButton.tsx" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Ports/PortConnectionSteps.tsx" />
+      <option value="$PROJECT_DIR$/Makerverse/Api/Workspaces/Graph/WorkspaceMutation.cs" />
+      <option value="$PROJECT_DIR$/Makerverse/Api/Workspaces/Models/WorkspaceConnection.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Machines/Observables/SubscriptionTopic.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Lib/SubscriptionTopic.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Machines/Interfaces/ISubscribedTopic.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Lib/ITopic.cs" />
+      <option value="$PROJECT_DIR$/Makerverse/Api/Workspaces/Messages/WorkspaceState.cs" />
+      <option value="$PROJECT_DIR$/Makerverse/Api/Workspaces/Messages/WorkspaceChange.cs" />
+      <option value="$PROJECT_DIR$/Makerverse/Api/Workspaces/Services/WorkspaceManager.cs" />
+      <option value="$PROJECT_DIR$/Makerverse/Api/Workspaces/Graph/WorkspaceSubscription.cs" />
+      <option value="$PROJECT_DIR$/Makerverse/Api/Workspaces/Observables/WorkspaceState.cs" />
+      <option value="$PROJECT_DIR$/Makerverse/Api/Workspaces/Enums/WorkspaceState.cs" />
+      <option value="$PROJECT_DIR$/Makerverse/Api/Workspaces/Observables/Workspace.cs" />
+      <option value="$PROJECT_DIR$/Makerverse/Api/Workspaces/Observables/WorkspaceTopicSet.cs" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Ports/Styles.ts" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Ports/OpenMachinePort.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/components/Alerts/AlertMessage.tsx" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/makerverse-schema.graphql" />
+      <option value="$PROJECT_DIR$/npm-packages/lib/src/ows-schema.graphql" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/api/Workspaces/Workspace.graphql" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/api/Workspaces/Workspaces.graphql" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/lib/workspaces/types.ts" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Workspaces/Styles.ts" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Workspaces/index.ts" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Workspaces/types.ts" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/providers/MakerverseProvider.tsx" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Workspaces/OpenWorkspaceButton.tsx" />
+      <option value="$PROJECT_DIR$/OpenController/Controllers/Services/ControllerManager.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Ports/Extensions/TopicEventSenderExtensions.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Ports/Services/PortManager.cs" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Navigation/index.tsx" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Navigation/SideDrawer.tsx" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Navigation/ListMenu.tsx" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/providers/SystemPortProvider.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/components/Cards/CardStyles.ts" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/components/Cards/CardModal.tsx" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/views/WorkspaceCreator/CreateWorkspaceModal.tsx" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Modals/BackendDiconnectedModal.tsx" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Ports/PortStatus.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/components/Layout/ThreeColumns.tsx" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/views/Workspace/WorkspaceConnector.tsx" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1l4my4TnlSIUe2KMx2jkxdZSpZ6" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -131,7 +198,11 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="editing.templates" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Makerverse">
@@ -208,6 +279,8 @@
       <workItem from="1606865737631" duration="143000" />
       <workItem from="1606872663260" duration="482000" />
       <workItem from="1606873521194" duration="260000" />
+      <workItem from="1606873887331" duration="33473000" />
+      <workItem from="1607015347101" duration="11179000" />
     </task>
     <servers />
   </component>
@@ -216,6 +289,18 @@
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using HotChocolate;
 using HotChocolate.Subscriptions;
 using HotChocolate.Types;
+using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.Lib.Graphql;
 using OpenWorkEngine.OpenController.Machines.Models;
 using OpenWorkEngine.OpenController.Machines.Observables;
@@ -34,7 +35,7 @@ namespace OpenWorkEngine.OpenController.Machines.Graph {
       [Service] ITopicEventReceiver eventReceiver,
       CancellationToken cancellationToken
     ) {
-      MachineSubscriptionTopic<MachineConfiguration> machineConfig =
+      SubscriptionTopic<MachineConfiguration> machineConfig =
         ports.GetConnection(portName).Machine.Topics.MachineConfiguration;
       ports.Log.Information("[SUBSCRIBE] [CONFIG] {portName}: {@machineConfig}", portName, machineConfig);
       return ValueTask.FromResult<IObservable<MachineConfiguration>>(machineConfig);

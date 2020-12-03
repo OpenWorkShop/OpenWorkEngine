@@ -118,7 +118,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       if (_controllers.TryRemove(systemPort.PortName, out Controller? controller)) {
         controller.Dispose();
       } else {
-        Log.Error("There was no controller for {portName}", systemPort.PortName);
+        Log.Information("There was no controller for {portName}", systemPort.PortName);
       }
       systemPort.State = PortState.Ready;
       await Sender.OnPortStatus(systemPort);

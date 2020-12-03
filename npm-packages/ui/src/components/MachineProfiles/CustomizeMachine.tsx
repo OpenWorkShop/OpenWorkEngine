@@ -65,7 +65,7 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
   if (error) log.error('load profile error', error.networkError);
 
   function onCustomized(machine?: ICustomizedMachine) {
-    log.debug('customized machine', machine);
+    log.verbose('customized machine', machine);
     setCustomizedMachine(machine);
     props.onCustomized(machine);
   }
@@ -142,26 +142,29 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
       <Grid item xs={12}>
         <Paper style={{ padding: theme.spacing(2), marginBottom: theme.spacing(2) }} >
           {searchMachines && <MachineProfileSearchBar onSelectedMachineProfile={onSelectedMachineProfile} />}
-          <Grid container style={{ marginTop: theme.spacing(2) }} >
-            <Grid item xs={12} md={9} style={{ marginTop: theme.spacing(1) }}>
+          <Grid container spacing={2} style={{ marginTop: theme.spacing(2) }} >
+            <Grid item xs={12} sm={7} style={{ marginTop: theme.spacing(1) }}>
               {!customizedMachine && searchMachines && props.tip && (
                 <div>
                   <Typography variant='subtitle2'>{props.tip}</Typography>
                 </div>
               )}
             </Grid>
-            <Grid item xs={12} md={3} style={{ textAlign: 'right' }}>
+            <Grid item xs={12} sm={5} style={{ textAlign: 'right' }}>
               <Button
                 variant='outlined'
                 onClick={() => (customizedMachine ? startOver() : setSearchMachines(!searchMachines))}
-                style={{ marginLeft: theme.spacing(2) }}>
+                style={{ marginLeft: theme.spacing(2) }}
+              >
                 {customizedMachine && <Trans>Start Over</Trans>}
                 {!customizedMachine && searchMachines && <Trans>Can't find your machine?</Trans>}
                 {!customizedMachine && !searchMachines && <Trans>Search the Community Catalog</Trans>}
               </Button>
             </Grid>
+            <Grid item xs={12}>
+              {!searchMachines && <CreateMachineProfile onChanged={onCreatingMachineProfile} />}
+            </Grid>
           </Grid>
-          {!searchMachines && <CreateMachineProfile onChanged={onCreatingMachineProfile} />}
         </Paper>
       </Grid>
       {loading && (
@@ -182,8 +185,8 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
               isComplete={!!customizedMachine}
             />
           </Typography>
-          {customizedMachine && <Typography variant='subtitle2'>{completedMsg}</Typography>}
-          {!customizedMachine && <Typography variant='subtitle2'>
+          {loadedMachineProfile && <Typography variant='subtitle2'>{completedMsg}</Typography>}
+          {!loadedMachineProfile && <Typography variant='subtitle2'>
             <Trans>Please check the options below.</Trans>
           </Typography>}
         </Grid>
@@ -193,7 +196,7 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
           <ChooseMachineParts machineProfile={loadedMachineProfile} onComplete={onCompletedParts} />
         </Grid>
       )}
-      {loadedMachineProfile && customizedMachine && (
+      {customizedMachine && (
         <Grid item xs={12}>
           <Typography variant='h5'>
             <Trans>Axes (Size)</Trans>

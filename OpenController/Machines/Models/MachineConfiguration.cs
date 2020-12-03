@@ -6,7 +6,7 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
   /// <summary>
   /// Semi-persistent values, which change infrequently, such as modal groups. This class can grow as-needed.
   /// </summary>
-  public class MachineConfiguration : IPatchMachines {
+  public class MachineConfiguration : ITopic {
     public MachinePosition WorkOffset { get; internal set; } = new();
 
     public MachineDetectedFirmware Firmware { get; } = new();

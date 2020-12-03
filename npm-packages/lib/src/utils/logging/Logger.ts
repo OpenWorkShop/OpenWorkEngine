@@ -6,7 +6,7 @@ export class Logger {
   private readonly minLevel: number;
   private readonly module: string;
   private readonly levels: { [key: string]: number } = {
-    trace: 1,
+    verbose: 1,
     debug: 2,
     info: 3,
     warn: 4,
@@ -65,8 +65,8 @@ export class Logger {
     this.logManager.emit('log', logEntry);
   }
 
-  public trace(...args: unknown[]): void {
-    this.log('trace', ...args);
+  public verbose(...args: unknown[]): void {
+    this.log('verbose', ...args);
   }
   public debug(...args: unknown[]): void {
     this.log('debug', ...args);

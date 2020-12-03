@@ -49,7 +49,7 @@ const ChooseMachinePart: React.FunctionComponent<IChooseMachinePartsProps> = (pr
   const defaultPartId = defaultPart ? defaultPart.id : null;
   const selectedPartId = props.selectedPartId ?? defaultPartId;
 
-  log.trace('selecting part type', partType, defaultPartId, selectedPartId);
+  log.verbose('selecting part type', partType, defaultPartId, selectedPartId);
 
   function onSelected(partId: string | null) {
     props.onSelected(partType, partId);

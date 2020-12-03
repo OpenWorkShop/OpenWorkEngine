@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="$USER_HOME$/.nuget/packages/xunit.runner.visualstudio/2.4.3/build/net452/xunit.abstractions.dll" t="Include" />
-    <e p="$USER_HOME$/.nuget/packages/xunit.runner.visualstudio/2.4.3/build/net452/xunit.runner.reporters.net452.dll" t="Include" />
-    <e p="$USER_HOME$/.nuget/packages/xunit.runner.visualstudio/2.4.3/build/net452/xunit.runner.utility.net452.dll" t="Include" />
-    <e p="$USER_HOME$/.nuget/packages/xunit.runner.visualstudio/2.4.3/build/net452/xunit.runner.visualstudio.testadapter.dll" t="Include" />
+    <e p="$USER_HOME$/.nuget/packages/microsoft.net.test.sdk/16.7.1/build/netcoreapp2.1" t="Include">
+      <e p="Microsoft.NET.Test.Sdk.Program.cs" t="Include" />
+    </e>
+    <e p="$USER_HOME$/.nuget/packages/xunit.runner.visualstudio/2.4.3/build/netcoreapp2.1/xunit.runner.reporters.netcoreapp10.dll" t="Include" />
+    <e p="$USER_HOME$/.nuget/packages/xunit.runner.visualstudio/2.4.3/build/netcoreapp2.1/xunit.runner.utility.netcoreapp10.dll" t="Include" />
+    <e p="$USER_HOME$/.nuget/packages/xunit.runner.visualstudio/2.4.3/build/netcoreapp2.1/xunit.runner.visualstudio.dotnetcore.testadapter.dll" t="Include" />
     <e p="$USER_HOME$/Library/Caches/JetBrains/Rider2020.3/extResources" t="IncludeRecursive" />
     <e p="$USER_HOME$/Library/Caches/JetBrains/Rider2020.3/javascript/typings/express/4.16.1/node_modules/@types/body-parser" t="IncludeRecursive" />
     <e p="$USER_HOME$/Library/Caches/JetBrains/Rider2020.3/javascript/typings/express/4.16.1/node_modules/@types/connect" t="IncludeRecursive" />
@@ -75,13 +77,18 @@
             </e>
           </e>
           <e p="Workspaces" t="Include">
+            <e p="Enums" t="Include">
+              <e p="WorkspaceState.cs" t="Include" />
+            </e>
             <e p="Graph" t="Include">
               <e p="WorkspaceMutation.cs" t="Include" />
               <e p="WorkspaceQuery.cs" t="Include" />
               <e p="WorkspaceSchema.cs" t="Include" />
+              <e p="WorkspaceSubscription.cs" t="Include" />
             </e>
             <e p="Messages" t="Include">
               <e p="NewWorkspace.cs" t="Include" />
+              <e p="WorkspaceChange.cs" t="Include" />
             </e>
             <e p="Models" t="Include">
               <e p="MachineAxisSettings.cs" t="Include" />
@@ -91,7 +98,12 @@
               <e p="MachinePartSettings.cs" t="Include" />
               <e p="MachineSettingSettings.cs" t="Include" />
               <e p="MachineSpecSettings.cs" t="Include" />
+              <e p="WorkspaceConnection.cs" t="Include" />
               <e p="WorkspaceSettings.cs" t="Include" />
+            </e>
+            <e p="Observables" t="Include">
+              <e p="Workspace.cs" t="Include" />
+              <e p="WorkspaceTopicSet.cs" t="Include" />
             </e>
             <e p="Services" t="Include">
               <e p="WorkspaceManager.cs" t="Include" />
@@ -1350,10 +1362,19 @@
                 <e p="FileSystem.graphql" t="Include" />
                 <e p="MakerverseSettings.graphql" t="Include" />
                 <e p="Startup.graphql" t="Include" />
-                <e p="Workspaces.graphql" t="Include" />
               </e>
               <e p="Workspaces" t="Include">
+                <e p=".graphqlconfig" t="Include" />
+                <e p="MachineAxis.graphql" t="Include" />
+                <e p="MachineCommand.graphql" t="Include" />
+                <e p="MachineConnection.graphql" t="Include" />
+                <e p="MachineFeature.graphql" t="Include" />
+                <e p="MachineFirmware.graphql" t="Include" />
+                <e p="MachinePart.graphql" t="Include" />
+                <e p="MachineSettings.graphql" t="Include" />
+                <e p="MachineSpec.graphql" t="Include" />
                 <e p="Workspace.graphql" t="Include" />
+                <e p="Workspaces.graphql" t="Include" />
               </e>
             </e>
             <e p="components" t="Include">
@@ -1362,6 +1383,9 @@
                 <e p="index.ts" t="Include" />
                 <e p="LoginPage.tsx" t="Include" />
                 <e p="Styles.ts" t="Include" />
+              </e>
+              <e p="modals" t="Include">
+                <e p="BackendDiconnectedModal.tsx" t="Include" />
               </e>
               <e p="Navigation" t="Include">
                 <e p="HeaderBar.tsx" t="Include" />
@@ -1381,6 +1405,13 @@
                 <e p="PortSelect.tsx" t="Include" />
                 <e p="PortStatus.tsx" t="Include" />
                 <e p="Styles.ts" t="Include" />
+                <e p="types.ts" t="Include" />
+              </e>
+              <e p="Workspaces" t="Include">
+                <e p="index.ts" t="Include" />
+                <e p="OpenWorkspaceButton.tsx" t="Include" />
+                <e p="Styles.ts" t="Include" />
+                <e p="types.ts" t="Include" />
               </e>
             </e>
             <e p="components-old" t="Include">
@@ -1675,7 +1706,6 @@
               <e p="Makerverse" t="Include">
                 <e p="actions.ts" t="Include" />
                 <e p="apollo.ts" t="Include" />
-                <e p="Hooks.ts" t="Include" />
                 <e p="index.ts" t="Include" />
                 <e p="MakerverseContext.ts" t="Include" />
                 <e p="reducers.ts" t="Include" />
@@ -1775,6 +1805,7 @@
               </e>
               <e p="Workspace" t="Include">
                 <e p="index.tsx" t="Include" />
+                <e p="WorkspaceConnector.tsx" t="Include" />
               </e>
               <e p="WorkspaceCreator" t="Include">
                 <e p="CreateWorkspaceModal.tsx" t="Include" />
@@ -2255,13 +2286,25 @@
           </e>
           <e p="JsonFileDataAttribute.cs" t="Include" />
           <e p="MakerverseServerTests.csproj" t="IncludeRecursive" />
-          <e p="obj" t="ExcludeRecursive" />
+          <e p="obj" t="ExcludeRecursive">
+            <e p="Debug" t="Include">
+              <e p="net5.0" t="Include">
+                <e p="MakerverseServerTests.AssemblyInfo.cs" t="Include" />
+              </e>
+            </e>
+          </e>
           <e p="Settings" t="Include">
             <e p="MakerverseSettingsFileTests.cs" t="Include" />
           </e>
           <e p="TestBase.cs" t="Include" />
         </e>
-        <e p="obj" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="net5.0" t="Include">
+              <e p="Makerverse.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
         <e p="package.json.bak" t="Include" />
         <e p="Program.cs" t="Include" />
         <e p="Properties" t="Include">
@@ -2444,19 +2487,72 @@
       <e p="node_modules/tslib" t="IncludeRecursive" />
       <e p="node_modules/tsutils" t="IncludeRecursive" />
       <e p="node_modules/type-fest" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.dom.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.dom.iterable.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2015.collection.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2015.core.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2015.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2015.generator.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2015.iterable.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2015.promise.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2015.proxy.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2015.reflect.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2015.symbol.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2015.symbol.wellknown.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2016.array.include.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2016.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2016.full.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2017.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2017.full.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2017.intl.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2017.object.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2017.sharedmemory.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2017.string.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2017.typedarrays.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2018.asyncgenerator.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2018.asynciterable.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2018.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2018.full.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2018.intl.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2018.promise.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2018.regexp.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2019.array.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2019.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2019.full.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2019.object.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2019.string.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2019.symbol.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2020.bigint.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2020.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2020.full.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2020.intl.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2020.promise.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2020.sharedmemory.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2020.string.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es2020.symbol.wellknown.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es5.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.es6.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.esnext.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.esnext.full.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.esnext.intl.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.esnext.promise.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.esnext.string.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.esnext.weakref.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.scripthost.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.webworker.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.webworker.importscripts.d.ts" t="IncludeRecursive" />
+      <e p="node_modules/typescript/Lib/lib.webworker.iterable.d.ts" t="IncludeRecursive" />
       <e p="node_modules/v8-to-istanbul" t="IncludeRecursive" />
       <e p="node_modules/yn" t="IncludeRecursive" />
       <e p="npm-packages" t="IncludeRecursive">
         <e p="Lib" t="Include">
+          <e p=".eslintignore" t="Include" />
           <e p=".eslintrc.js" t="Include" />
           <e p=".graphqlconfig" t="Include" />
           <e p=".prettierignore" t="Include" />
           <e p=".prettierrc.json" t="Include" />
           <e p="codegen.yml" t="Include" />
-          <e p="dist/node_modules/@types" t="IncludeRecursive">
-            <e p="node" t="IncludeRecursive" />
-            <e p="react" t="IncludeRecursive" />
-          </e>
           <e p="graphql.schema.json" t="Include" />
           <e p="package.json" t="Include" />
           <e p="package.prod.json" t="Include" />
@@ -2464,7 +2560,7 @@
           <e p="src" t="Include">
             <e p="Api" t="Include">
               <e p="ApiCall.ts" t="Include" />
-              <e p="graphql.tsx" t="Include" />
+              <e p="graphql.ts" t="Include" />
               <e p="Identity" t="Include">
                 <e p="Auth.ts" t="Include" />
                 <e p="Users.ts" t="Include" />
@@ -2520,6 +2616,7 @@
           <e p="yarn-error.log" t="Include" />
         </e>
         <e p="open-controller" t="Include">
+          <e p=".eslintignore" t="Include" />
           <e p=".eslintrc.js" t="Include" />
           <e p=".prettierignore" t="Include" />
           <e p=".prettierrc.json" t="Include" />
@@ -2536,6 +2633,7 @@
         </e>
         <e p="OpenWorkEngine.mdproj" t="IncludeRecursive" />
         <e p="ui" t="Include">
+          <e p=".eslintignore" t="Include" />
           <e p=".eslintrc.js" t="Include" />
           <e p=".prettierignore" t="Include" />
           <e p=".prettierrc.json" t="Include" />
@@ -2576,7 +2674,7 @@
                 <e p="PoweredBy.tsx" t="Include" />
               </e>
               <e p="Cards" t="Include">
-                <e p="CardModal.tsx" t="Include" />
+                <e p="CardDialog.tsx" t="Include" />
                 <e p="CardStyles.ts" t="Include" />
                 <e p="ToolbarCard.tsx" t="Include" />
               </e>
@@ -2607,6 +2705,7 @@
                 <e p="MachineAxisEditor.tsx" t="Include" />
                 <e p="MachineProfileSearchBar.tsx" t="Include" />
                 <e p="MachineSpecList.tsx" t="Include" />
+                <e p="Styles.ts" t="Include" />
               </e>
               <e p="OpenWorkShopCore.tsx" t="Include" />
               <e p="OpenWorkShopIcon" t="Include">
@@ -2692,9 +2791,11 @@
             <e p="GraphqlHttpResultSerializer.cs" t="Include" />
           </e>
           <e p="IHasStringId.cs" t="Include" />
+          <e p="ITopic.cs" t="Include" />
           <e p="Linq" t="Include">
             <e p="NonNullEnumerables.cs" t="Include" />
           </e>
+          <e p="SubscriptionTopic.cs" t="Include" />
         </e>
         <e p="MachineProfiles" t="Include">
           <e p="Enums" t="Include">
@@ -2730,7 +2831,6 @@
           </e>
           <e p="Interfaces" t="Include">
             <e p="ICommandMachines.cs" t="Include" />
-            <e p="IPatchMachines.cs" t="Include" />
           </e>
           <e p="Messages" t="Include">
             <e p="MachinePatch.cs" t="Include" />
@@ -2746,11 +2846,16 @@
           </e>
           <e p="Observables" t="Include">
             <e p="MachineSubscriber.cs" t="Include" />
-            <e p="MachineSubscriptionTopic.cs" t="Include" />
             <e p="MachineTopicSet.cs" t="Include" />
           </e>
         </e>
-        <e p="obj" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="net5.0" t="Include">
+              <e p="OpenController.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
         <e p="OpenController.csproj" t="IncludeRecursive" />
         <e p="Ports" t="Include">
           <e p="Enums" t="Include">
@@ -3073,7 +3178,13 @@
           <e p="OWSDataModelSnapshot.cs" t="Include" />
         </e>
         <e p="NuGet.config" t="Include" />
-        <e p="obj" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="net5.0" t="Include">
+              <e p="OpenWorkShop.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
         <e p="OpenWorkShop.csproj" t="IncludeRecursive" />
         <e p="OpenWorkShop.csproj.DotSettings" t="Include" />
         <e p="OWSApp.cs" t="Include" />

@@ -1,26 +1,27 @@
-import { ICustomizedMachineProfile } from '@openworkshop/lib/api/Machines/CustomizedMachine';
-import { useLogger } from '@openworkshop/lib/utils/logging/UseLogger';
+import {ICustomizedMachineProfile} from '@openworkshop/lib/api/Machines/CustomizedMachine';
+import {useLogger} from '@openworkshop/lib/utils/logging/UseLogger';
 import React from 'react';
-import { MachineControllerType, MachineFirmwareMinimalFragment } from '@openworkshop/lib/api/graphql';
+import {MachineControllerType, MachineFirmwareMinimalFragment} from '@openworkshop/lib/api/graphql';
 import {
-  Typography,
-  Paper,
-  useTheme,
-  Grid,
-  Select,
-  MenuItem,
-  FormHelperText,
-  FormControl,
-  InputLabel,
-  FormControlLabel,
   Checkbox,
+  createStyles,
+  FormControl,
+  FormControlLabel,
+  FormHelperText,
+  Grid,
+  InputLabel,
+  makeStyles,
+  MenuItem,
+  Select,
   TextField,
+  Theme,
+  Typography,
+  useTheme,
 } from '@material-ui/core';
-import { Trans, useTranslation } from 'react-i18next';
-import { ToggleButtonGroup, ToggleButton } from '@material-ui/lab';
-import { normalizeMachineControllerType } from '@openworkshop/lib/api/Machines/MachineControllerType';
-import { BaudRate } from '@openworkshop/lib/api/Machines/BaudRate';
-import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import {Trans, useTranslation} from 'react-i18next';
+import {ToggleButton, ToggleButtonGroup} from '@material-ui/lab';
+import {normalizeMachineControllerType} from '@openworkshop/lib/api/Machines/MachineControllerType';
+import {BaudRate} from '@openworkshop/lib/api/Machines/BaudRate';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,14 +44,15 @@ interface ICreateMachineProfileProps {
   onChanged: (firmware: MachineFirmwareMinimalFragment, profile: ICustomizedMachineProfile) => void;
 }
 
-type FirmwareKey = 'controllerType' | 'baudRate' | 'rtscts';
+type FirmwareKey = 'controllerType' | 'baudRate' | 'baudRateValue' | 'rtscts';
 type ProfileKey = 'brand' | 'model' | 'submit';
 
 const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> = (props) => {
   const log = useLogger(CreateMachineProfile);
   const { t } = useTranslation();
   const theme = useTheme();
-  const controllerTypes = Object.keys(MachineControllerType);
+  const controllerTypes = [MachineControllerType.Grbl, MachineControllerType.Marlin];
+  //Object.keys(MachineControllerType);
   const baudRates = Object.values(BaudRate).filter((br) => typeof br === 'number');
   const classes = useStyles();
 
@@ -67,15 +69,12 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
     submit: true,
   });
 
-  const isUntested =
-    firmware.controllerType === MachineControllerType.Smoothie ||
-    firmware.controllerType === MachineControllerType.TinyG;
   const baudRate: number = (firmware.baudRateValue as number) || 0;
 
   function onChange(fw: MachineFirmwareMinimalFragment, pr: ICustomizedMachineProfile) {
     setFirmware(fw);
     setProfile(pr);
-    log.debug('update', fw, pr);
+    log.verbose('update', fw, pr);
     if (fw.baudRateValue > 0) {
       props.onChanged(fw, pr);
     }
@@ -89,102 +88,97 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
     onChange(firmware, { ...profile, [key]: value });
   }
 
-  log.trace(firmware, profile);
+  log.verbose(firmware, profile);
 
   return (
-    <div>
-      <Paper className={classes.paper}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={9}>
-            <Typography variant='h5' className={classes.headings}>
-              <Trans>Connection Protocol</Trans>
-            </Typography>
-            <ToggleButtonGroup
-              exclusive
-              value={firmware.controllerType}
-              onChange={(e, v) => v && updateFirmware('controllerType', v)}>
-              {controllerTypes.map((ct) => {
-                return (
-                  <ToggleButton key={ct} value={normalizeMachineControllerType(ct)}>
-                    {ct}
-                  </ToggleButton>
-                );
-              })}
-            </ToggleButtonGroup>
-            {isUntested && (
-              <div style={{ margin: theme.spacing(4) }}>
-                <em>
-                  <Trans>
-                    <strong>Warning</strong>: this protocol is not fully-tested.
-                  </Trans>
-                </em>
-              </div>
-            )}
-            <FormControl className={classes.formControl} error={!baudRate}>
-              <InputLabel shrink id='baud-rate-label'>
-                <Trans>Baud Rate</Trans>
-              </InputLabel>
-              <Select
-                id='baud-rate'
-                displayEmpty
-                value={baudRate}
-                onChange={(e) => updateFirmware('baudRate', Number(e.target.value))}>
-                <MenuItem value={0}>
-                  <em>
-                    <Trans>None</Trans>
-                  </em>
+    <Grid container spacing={4}>
+      <Grid item xs={12} md={6}>
+        <Typography variant='h5' className={classes.headings}>
+          <Trans>Connection Protocol</Trans>
+        </Typography>
+        <ToggleButtonGroup
+          exclusive
+          value={firmware.controllerType}
+          onChange={(e, v) => v && updateFirmware('controllerType', v)}>
+          {controllerTypes.map((ct) => {
+            if (ct === MachineControllerType.Unknown) return null;
+            return (
+              <ToggleButton key={ct} value={normalizeMachineControllerType(ct)}>
+                {ct}
+              </ToggleButton>
+            );
+          })}
+        </ToggleButtonGroup>
+        <FormControl className={classes.formControl} error={!baudRate}>
+          <InputLabel shrink id='baud-rate-label'>
+            <Trans>Baud Rate</Trans>
+          </InputLabel>
+          <Select
+            id='baud-rate'
+            displayEmpty
+            value={baudRate}
+            onChange={(e) => {
+              updateFirmware('baudRate', Number(e.target.value));
+              updateFirmware('baudRateValue', Number(e.target.value));
+            }}>
+            <MenuItem value={0}>
+              <em>
+                <Trans>None</Trans>
+              </em>
+            </MenuItem>
+            {baudRates.map((br) => {
+              return (
+                <MenuItem key={`${br}`} value={br}>
+                  {br}
                 </MenuItem>
-                {baudRates.map((br) => {
-                  return (
-                    <MenuItem key={`${br}`} value={br}>
-                      {br}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-              <FormHelperText>
-                <Trans>Required</Trans>
-              </FormHelperText>
-            </FormControl>
-            <FormControlLabel
-              control={
-                <Checkbox checked={firmware.rtscts} onChange={(e) => updateFirmware('rtscts', !firmware.rtscts)} />
-              }
-              label={t('Hardware flow control (rtscts)?')}
-            />
+              );
+            })}
+          </Select>
+          <FormHelperText>
+            <Trans>Required</Trans>
+          </FormHelperText>
+        </FormControl>
+        <FormControlLabel
+          control={
+            <Checkbox checked={firmware.rtscts} onChange={(e) => updateFirmware('rtscts', !firmware.rtscts)} />
+          }
+          label={t('Hardware flow control (rtscts)?')}
+        />
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <Typography variant='h5' className={classes.headings}>
+          <Trans>Machine Information</Trans>
+          <Grid container spacing={1} >
+            <Grid item xs={12} sm={6}>
+              <FormControl className={classes.formControl}>
+                <TextField
+                  label={t('Brand')}
+                  value={profile.brand}
+                  onChange={(e) => updateProfile('brand', e.target.value)}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl className={classes.formControl}>
+                <TextField
+                  label={t('Model')}
+                  value={profile.model}
+                  onChange={(e) => updateProfile('model', e.target.value)}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={
+                  <Checkbox checked={profile.submit} onChange={(e) => updateProfile('submit', !profile.submit)} />
+                }
+                label={t('Submit to community catalog?')}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={3}>
-            <Typography variant='h5' className={classes.headings}>
-              <Trans>Machine Information</Trans>
-              <Grid container>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    label={t('Brand')}
-                    value={profile.brand}
-                    onChange={(e) => updateProfile('brand', e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    label={t('Model')}
-                    value={profile.model}
-                    onChange={(e) => updateProfile('model', e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox checked={profile.submit} onChange={(e) => updateProfile('submit', !profile.submit)} />
-                    }
-                    label={t('Submit to community catalog?')}
-                  />
-                </Grid>
-              </Grid>
-            </Typography>
-          </Grid>
-        </Grid>
-      </Paper>
-    </div>
+        </Typography>
+      </Grid>
+    </Grid>
   );
 };
 

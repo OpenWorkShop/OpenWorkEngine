@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using OpenWorkEngine.OpenController.Machines.Interfaces;
+using OpenWorkEngine.OpenController.Machines.Observables;
 using Serilog;
 
-namespace OpenWorkEngine.OpenController.Machines.Observables {
-  public class MachineSubscriptionTopic<T> : IObservable<T> where T : IPatchMachines {
+namespace OpenWorkEngine.OpenController.Lib {
+  public class SubscriptionTopic<T> : IObservable<T> where T : ITopic {
     private readonly List<IObserver<T>> _observers = new();
 
     public void Emit(T obj) {

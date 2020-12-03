@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <Company>OpenWorkShop</Company>
     <LangVersion>9</LangVersion>
+    <RootNamespace>OpenWorkEngine.OpenController</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

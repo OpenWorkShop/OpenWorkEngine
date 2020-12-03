@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using OpenWorkEngine.OpenController.Machines.Interfaces;
 
 namespace OpenWorkEngine.OpenController.Machines.Observables {
-  public class MachineSubscriber<T> : IDisposable where T : IPatchMachines {
+  public class MachineSubscriber<T> : IDisposable where T : ITopic {
     private readonly List<IObserver<T>> _observers;
     private readonly IObserver<T> _observer;
 

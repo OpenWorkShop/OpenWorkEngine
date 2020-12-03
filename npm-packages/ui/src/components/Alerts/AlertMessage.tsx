@@ -24,16 +24,17 @@ export function sanitizeAlertMessages(alerts?: (IAlertMessage | undefined)[], al
 const AlertMessage: React.FunctionComponent<Props> = (props) => {
   const { severity, name, message } = props;
 
-  function splitMessage(msg?: string): string {
+  function cleanMessage(msg?: string): string {
     if (!msg) return '';
     const lines = _.uniq(msg.split('\n'));
     return lines.join('<br />');
   }
+  const clean = cleanMessage(message);
 
   return (
     <Alert severity={severity} >
       {name && <Typography variant="h6">{name}</Typography>}
-      {splitMessage(message)}
+      {clean}
     </Alert>
   );
 };

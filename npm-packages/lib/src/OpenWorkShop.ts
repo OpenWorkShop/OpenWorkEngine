@@ -74,7 +74,7 @@ class OpenWorkShop implements IOpenWorkShop {
 
     const owsLink = setContext(async (_, { headers }) => {
       const user = await this.authManager.getUser();
-      this.log.debug('setting auth token?', !!user);
+      // this.log.debug('setting auth token?', !!user);
       return {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         headers: {

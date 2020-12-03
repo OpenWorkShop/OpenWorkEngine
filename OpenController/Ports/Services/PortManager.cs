@@ -27,8 +27,6 @@ namespace OpenWorkEngine.OpenController.Ports.Services {
 
     private bool _hasChanges = false;
 
-    private DateTime _lastDispatch = DateTime.Now;
-
     internal ControllerManager Controllers { get; }
 
     // Work thread (background scanner)
@@ -81,13 +79,10 @@ namespace OpenWorkEngine.OpenController.Ports.Services {
       if (!_hasChanges) {
         return;
       }
-      DateTime now = DateTime.Now;
-      TimeSpan elapsed = now - _lastDispatch;
-      if (elapsed.Milliseconds < 1000) {
-        return;
-      }
-      await Sender.OnPortList(_ports.Values.ToList());
-      _lastDispatch = DateTime.Now;
+      List<SystemPort> ports = _ports.Values.ToList();
+      Log.Debug("[PORT] [DISPATCH]", ports.Count);
+      _hasChanges = false;
+      await Sender.OnPortList(ports);
     }
 
     public ConnectedPort GetConnection(string portName) {

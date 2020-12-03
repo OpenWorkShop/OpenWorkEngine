@@ -3,7 +3,7 @@ using OpenWorkEngine.OpenController.MachineProfiles.Interfaces;
 using OpenWorkEngine.OpenController.Machines.Interfaces;
 
 namespace OpenWorkEngine.OpenController.Machines.Models {
-  public class MachineSetting : IMachineSetting, IPatchMachines {
+  public class MachineSetting : IMachineSetting, ITopic {
     public string Id { get; } = "";
 
     public string? Title { get; set; } = default!;

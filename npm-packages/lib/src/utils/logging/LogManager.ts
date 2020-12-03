@@ -52,7 +52,7 @@ export class LogManager extends EventEmitter {
         parts.push(`[${logEntry.context}]`);
       }
       const msg = parts.concat(logEntry.message);
-      if (logEntry.level === 'trace') {
+      if (logEntry.level === 'verbose') {
         JsLogger.trace(...msg);
       } else if (logEntry.level === 'debug') {
         JsLogger.debug(...msg);

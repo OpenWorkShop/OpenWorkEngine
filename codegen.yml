@@ -2,7 +2,7 @@ overwrite: true
 schema: './npm-packages/lib/src/ows-schema.graphql'
 documents: './npm-packages/lib/src/**/*.graphql'
 generates:
-  ./npm-packages/lib/src/api/graphql.tsx:
+  ./npm-packages/lib/src/api/graphql.ts:
     plugins:
       - 'typescript'
       - 'typescript-resolvers'
