@@ -8,6 +8,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Grbl.Maslow {
   /// MaslowController overrides necessary components of Grbl to achieve the latter.
   /// </summary>
   public class MaslowController : GrblController {
-    public MaslowController(ControllerManager manager, ConnectedPort connection) : base(manager, connection) { }
+    public MaslowController(ControllerManager controllerManager, ConnectedPort connection) : base(controllerManager, connection) { }
   }
 }
+

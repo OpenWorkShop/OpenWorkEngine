@@ -1,13 +1,58 @@
 import React from 'react';
+import AdjustmentsAltIcon from './AdjustmentsAltIcon';
+import AdjustmentsIcon from './AdjustmentsIcon';
+import BellIcon from './BellIcon';
+import BlueprintIcon from './BlueprintIcon';
+import CertificateIcon from './CertificateIcon';
+import ChecklistIcon from './ChecklistIcon';
+import CircularSawBladeIcon from './CircularSawBladeIcon';
 import CncIcon from './CncIcon';
-import MakerMadeIcon from './MakerMadeIcon';
-import MaslowIcon from './MaslowIcon';
-import TdpIcon from './TdpIcon';
-import XyzIcon from './XyzIcon';
+import ControlPadIcon from './ControlPadIcon';
+import CubeInGlassIcon from './CubeInGlassIcon';
+import CuttersIcon from './CuttersIcon';
+import DrillIcon from './DrillIcon';
+import EndMillIcon from './EndMillIcon';
 import ExtruderIcon from './ExtruderIcon';
+import FlashlightIcon from './FlashlightIcon';
+import GamePadAltIcon from './GamePadAltIcon';
+import GamePadIcon from './GamePadIcon';
+import GearAltIcon from './GearAltIcon';
+import GearIcon from './GearIcon';
+import HammerAndScrewdriverIcon from './HammerAndScrewdriverIcon';
+import HammerXSawIcon from './HammerXSawIcon';
 import HeatedBedIcon from './HeatedBedIcon';
+import JoystickIcon from './JoystickIcon';
+import LadderIcon from './LadderIcon';
+import LaserIcon from './LaserIcon';
+import MachineIcon from './MachineIcon';
+import MagnetIcon from './MagnetIcon';
+import MakermadeIcon from './MakermadeIcon';
+import MaslowIcon from './MaslowIcon';
+import MicrochipIcon from './MicrochipIcon';
+import MicrophoneIcon from './MicrophoneIcon';
+import MicroscopeIcon from './MicroscopeIcon';
+import PaintBrushIcon from './PaintBrushIcon';
+import PaintRollerIcon from './PaintRollerIcon';
+import PencilXRulerIcon from './PencilXRulerIcon';
+import RoadblockIcon from './RoadblockIcon';
+import RobotIcon from './RobotIcon';
+import RulersIcon from './RulersIcon';
+import SawIcon from './SawIcon';
+import ScrewdriverAndWrenchIcon from './ScrewdriverAndWrenchIcon';
+import ScrewdriverXWrenchIcon from './ScrewdriverXWrenchIcon';
+import ShovelIcon from './ShovelIcon';
+import TapeMeasureIcon from './TapeMeasureIcon';
+import TdpIcon from './TdpIcon';
+import TelescopeIcon from './TelescopeIcon';
+import TerminalIcon from './TerminalIcon';
+import ToolboxIcon from './ToolboxIcon';
+import TreeIcon from './TreeIcon';
+import TreesIcon from './TreesIcon';
+import VideoCameraIcon from './VideoCameraIcon';
+import WoodCutterIcon from './WoodCutterIcon';
+import XyzIcon from './XyzIcon';
 
-export { CncIcon, MaslowIcon, MakerMadeIcon, TdpIcon, XyzIcon, HeatedBedIcon, ExtruderIcon };
+export { AdjustmentsAltIcon, AdjustmentsIcon, BellIcon, BlueprintIcon, CertificateIcon, ChecklistIcon, CircularSawBladeIcon, CncIcon, ControlPadIcon, CubeInGlassIcon, CuttersIcon, DrillIcon, EndMillIcon, ExtruderIcon, FlashlightIcon, GamePadAltIcon, GamePadIcon, GearAltIcon, GearIcon, HammerAndScrewdriverIcon, HammerXSawIcon, HeatedBedIcon, JoystickIcon, LadderIcon, LaserIcon, MachineIcon, MagnetIcon, MakermadeIcon, MaslowIcon, MicrochipIcon, MicrophoneIcon, MicroscopeIcon, PaintBrushIcon, PaintRollerIcon, PencilXRulerIcon, RoadblockIcon, RobotIcon, RulersIcon, SawIcon, ScrewdriverAndWrenchIcon, ScrewdriverXWrenchIcon, ShovelIcon, TapeMeasureIcon, TdpIcon, TelescopeIcon, TerminalIcon, ToolboxIcon, TreeIcon, TreesIcon, VideoCameraIcon, WoodCutterIcon, XyzIcon }; 
 
 export interface IOwsIconProps extends React.SVGProps<SVGSVGElement> {
   name: string;
@@ -16,20 +61,60 @@ export interface IOwsIconProps extends React.SVGProps<SVGSVGElement> {
 export const Icons: React.FunctionComponent<IOwsIconProps> = (props) => {
   const name = props.name.toLowerCase();
 
-  // Types
-  if (name === 'cnc') return <CncIcon {...props} />;
-  if (name === 'tdp' || name === '3dp') return <TdpIcon {...props} />;
+  if (name === 'adjustments-alt' || name === 'AdjustmentsAltIcon') return <AdjustmentsAltIcon {...props} />;
+  if (name === 'adjustments' || name === 'AdjustmentsIcon') return <AdjustmentsIcon {...props} />;
+  if (name === 'bell' || name === 'BellIcon') return <BellIcon {...props} />;
+  if (name === 'blueprint' || name === 'BlueprintIcon') return <BlueprintIcon {...props} />;
+  if (name === 'certificate' || name === 'CertificateIcon') return <CertificateIcon {...props} />;
+  if (name === 'checklist' || name === 'ChecklistIcon') return <ChecklistIcon {...props} />;
+  if (name === 'circular-saw-blade' || name === 'CircularSawBladeIcon') return <CircularSawBladeIcon {...props} />;
+  if (name === 'cnc' || name === 'CncIcon') return <CncIcon {...props} />;
+  if (name === 'control-pad' || name === 'ControlPadIcon') return <ControlPadIcon {...props} />;
+  if (name === 'cube-in-glass' || name === 'CubeInGlassIcon') return <CubeInGlassIcon {...props} />;
+  if (name === 'cutters' || name === 'CuttersIcon') return <CuttersIcon {...props} />;
+  if (name === 'drill' || name === 'DrillIcon') return <DrillIcon {...props} />;
+  if (name === 'end-mill' || name === 'EndMillIcon') return <EndMillIcon {...props} />;
+  if (name === 'extruder' || name === 'ExtruderIcon') return <ExtruderIcon {...props} />;
+  if (name === 'flashlight' || name === 'FlashlightIcon') return <FlashlightIcon {...props} />;
+  if (name === 'game-pad-alt' || name === 'GamePadAltIcon') return <GamePadAltIcon {...props} />;
+  if (name === 'game-pad' || name === 'GamePadIcon') return <GamePadIcon {...props} />;
+  if (name === 'gear-alt' || name === 'GearAltIcon') return <GearAltIcon {...props} />;
+  if (name === 'gear' || name === 'GearIcon') return <GearIcon {...props} />;
+  if (name === 'hammer-and-screwdriver' || name === 'HammerAndScrewdriverIcon') return <HammerAndScrewdriverIcon {...props} />;
+  if (name === 'hammer-x-saw' || name === 'HammerXSawIcon') return <HammerXSawIcon {...props} />;
+  if (name === 'heated-bed' || name === 'HeatedBedIcon') return <HeatedBedIcon {...props} />;
+  if (name === 'joystick' || name === 'JoystickIcon') return <JoystickIcon {...props} />;
+  if (name === 'ladder' || name === 'LadderIcon') return <LadderIcon {...props} />;
+  if (name === 'laser' || name === 'LaserIcon') return <LaserIcon {...props} />;
+  if (name === 'machine' || name === 'MachineIcon') return <MachineIcon {...props} />;
+  if (name === 'magnet' || name === 'MagnetIcon') return <MagnetIcon {...props} />;
+  if (name === 'makermade' || name === 'MakermadeIcon') return <MakermadeIcon {...props} />;
+  if (name === 'maslow' || name === 'MaslowIcon') return <MaslowIcon {...props} />;
+  if (name === 'microchip' || name === 'MicrochipIcon') return <MicrochipIcon {...props} />;
+  if (name === 'microphone' || name === 'MicrophoneIcon') return <MicrophoneIcon {...props} />;
+  if (name === 'microscope' || name === 'MicroscopeIcon') return <MicroscopeIcon {...props} />;
+  if (name === 'paint-brush' || name === 'PaintBrushIcon') return <PaintBrushIcon {...props} />;
+  if (name === 'paint-roller' || name === 'PaintRollerIcon') return <PaintRollerIcon {...props} />;
+  if (name === 'pencil-x-ruler' || name === 'PencilXRulerIcon') return <PencilXRulerIcon {...props} />;
+  if (name === 'roadblock' || name === 'RoadblockIcon') return <RoadblockIcon {...props} />;
+  if (name === 'robot' || name === 'RobotIcon') return <RobotIcon {...props} />;
+  if (name === 'rulers' || name === 'RulersIcon') return <RulersIcon {...props} />;
+  if (name === 'saw' || name === 'SawIcon') return <SawIcon {...props} />;
+  if (name === 'screwdriver-and-wrench' || name === 'ScrewdriverAndWrenchIcon') return <ScrewdriverAndWrenchIcon {...props} />;
+  if (name === 'screwdriver-x-wrench' || name === 'ScrewdriverXWrenchIcon') return <ScrewdriverXWrenchIcon {...props} />;
+  if (name === 'shovel' || name === 'ShovelIcon') return <ShovelIcon {...props} />;
+  if (name === 'tape-measure' || name === 'TapeMeasureIcon') return <TapeMeasureIcon {...props} />;
+  if (name === 'tdp' || name === 'TdpIcon' || name === '3dp') return <TdpIcon {...props} />;
+  if (name === 'telescope' || name === 'TelescopeIcon') return <TelescopeIcon {...props} />;
+  if (name === 'terminal' || name === 'TerminalIcon') return <TerminalIcon {...props} />;
+  if (name === 'toolbox' || name === 'ToolboxIcon') return <ToolboxIcon {...props} />;
+  if (name === 'tree' || name === 'TreeIcon') return <TreeIcon {...props} />;
+  if (name === 'trees' || name === 'TreesIcon') return <TreesIcon {...props} />;
+  if (name === 'video-camera' || name === 'VideoCameraIcon') return <VideoCameraIcon {...props} />;
+  if (name === 'wood-cutter' || name === 'WoodCutterIcon') return <WoodCutterIcon {...props} />;
+  if (name === 'xyz' || name === 'XyzIcon') return <XyzIcon {...props} />;
 
-  // Misc.
-  if (name === 'maslow') return <MaslowIcon {...props} />;
-  if (name === 'xyz') return <XyzIcon {...props} />;
-  if (name === 'extruder') return <ExtruderIcon {...props} />;
-  if (name === 'heated-bed') return <HeatedBedIcon {...props} />;
-
-  // Brands
-  if (name === 'makermade') return <MakerMadeIcon {...props} />;
-
-  return <span>name</span>;
+  return <span>{name}</span>;
 };
 
 export default Icons;

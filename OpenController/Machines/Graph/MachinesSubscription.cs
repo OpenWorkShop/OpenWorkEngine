@@ -4,77 +4,54 @@ using System.Threading.Tasks;
 using HotChocolate;
 using HotChocolate.Subscriptions;
 using HotChocolate.Types;
+using OpenWorkEngine.OpenController.Controllers.Services;
 using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.Lib.Graphql;
+using OpenWorkEngine.OpenController.Lib.Observables;
+using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Models;
-using OpenWorkEngine.OpenController.Machines.Observables;
-using OpenWorkEngine.OpenController.Ports.Models;
 using OpenWorkEngine.OpenController.Ports.Services;
 
 namespace OpenWorkEngine.OpenController.Machines.Graph {
   [ExtendObjectType(Name = "Subscription")]
   public class MachinesSubscription {
-    private Exception GetPortException(string portName) {
-      return new SystemException($"Port not found: {portName}");
-    }
-
     [Subscribe(With = nameof(SubscribeToMachineConfiguration))]
-    public MachineConfiguration OnMachineConfiguration(
-      [Service] PortManager ports,
+    public ControlledMachine OnMachineConfiguration(
+      [Service] ControllerManager controllers,
       string portName,
-      [EventMessage] MachineConfiguration config,
-      CancellationToken cancellationToken)
-    {
-      ports.Log.Information("[MACHINE-CONFIG] {config}", config.ToString());
-      return config;
-    }
+      [EventMessage] ControlledMachine config
+    ) => config;
 
-    public ValueTask<IObservable<MachineConfiguration>> SubscribeToMachineConfiguration(
+    public ValueTask<IObservable<ControlledMachine>> SubscribeToMachineConfiguration(
       string portName,
-      [Service] PortManager ports,
-      [Service] ITopicEventReceiver eventReceiver,
+      [Service] ControllerManager controllers,
       CancellationToken cancellationToken
-    ) {
-      SubscriptionTopic<MachineConfiguration> machineConfig =
-        ports.GetConnection(portName).Machine.Topics.MachineConfiguration;
-      ports.Log.Information("[SUBSCRIBE] [CONFIG] {portName}: {@machineConfig}", portName, machineConfig);
-      return ValueTask.FromResult<IObservable<MachineConfiguration>>(machineConfig);
-    }
+    ) => controllers.SubscribeToTopicId(MachineTopic.Configuration, portName, cancellationToken);
 
     [Subscribe(With = nameof(SubscribeToMachineState))]
-    public MachineState OnMachineState(
-      [Service] PortManager ports,
+    public ControlledMachine OnMachineState(
+      [Service] ControllerManager controllers,
       string portName,
-      [EventMessage] MachineState state,
-      CancellationToken cancellationToken)
-    {
-      ports.Log.Information("[MACHINE-STATE] {state}", state.ToString());
-      return state;
-    }
+      [EventMessage] ControlledMachine state
+    ) => state;
 
-    public ValueTask<IObservable<MachineState>> SubscribeToMachineState(
+    public ValueTask<IObservable<ControlledMachine>> SubscribeToMachineState(
       string portName,
-      [Service] PortManager ports,
-      [Service] ITopicEventReceiver eventReceiver,
+      [Service] ControllerManager controllers,
       CancellationToken cancellationToken
-    ) => ValueTask.FromResult<IObservable<MachineState>>(ports.GetConnection(portName).Machine.Topics.MachineState);
+    ) => controllers.SubscribeToTopicId(MachineTopic.State, portName, cancellationToken);
 
     [Subscribe(With = nameof(SubscribeToMachineSetting))]
-    public MachineSetting OnMachineSetting(
-      [Service] PortManager ports,
+    public ControlledMachine OnMachineSetting(
+      [Service] ControllerManager controllers,
       string portName,
-      [EventMessage] MachineSetting setting,
-      CancellationToken cancellationToken)
-    {
-      ports.Log.Information("[MACHINE-SETTING] {setting}", setting.ToString());
-      return setting;
-    }
+      [EventMessage] ControlledMachine setting
+    ) => setting;
 
-    public ValueTask<IObservable<MachineSetting>> SubscribeToMachineSetting(
+    public ValueTask<IObservable<ControlledMachine>> SubscribeToMachineSetting(
       string portName,
-      [Service] PortManager ports,
-      [Service] ITopicEventReceiver eventReceiver,
+      [Service] ControllerManager controllers,
       CancellationToken cancellationToken
-    ) => ValueTask.FromResult<IObservable<MachineSetting>>(ports.GetConnection(portName).Machine.Topics.MachineSetting);
+    ) => controllers.SubscribeToTopicId(MachineTopic.Setting, portName, cancellationToken);
   }
 }

@@ -69,7 +69,7 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
     submit: true,
   });
 
-  const baudRate: number = (firmware.baudRateValue as number) || 0;
+  const baudRate: number = (firmware.baudRateValue ) || 0;
 
   function onChange(fw: MachineFirmwareMinimalFragment, pr: ICustomizedMachineProfile) {
     setFirmware(fw);
@@ -99,7 +99,7 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
         <ToggleButtonGroup
           exclusive
           value={firmware.controllerType}
-          onChange={(e, v) => v && updateFirmware('controllerType', v)}>
+          onChange={(e, v) => !!v && updateFirmware('controllerType', v)}>
           {controllerTypes.map((ct) => {
             if (ct === MachineControllerType.Unknown) return null;
             return (

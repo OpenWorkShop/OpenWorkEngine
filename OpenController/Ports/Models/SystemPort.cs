@@ -1,29 +1,34 @@
 using System;
 using System.IO.Ports;
+using OpenWorkEngine.OpenController.Lib;
+using OpenWorkEngine.OpenController.Lib.Observables;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
+using OpenWorkEngine.OpenController.Machines.Interfaces;
 using OpenWorkEngine.OpenController.Ports.Enums;
 using OpenWorkEngine.OpenController.Ports.Interfaces;
 using Serilog;
 
 namespace OpenWorkEngine.OpenController.Ports.Models {
   /// High-order wrapper around a SerialPort, so that it may be represented in the closed state.
-  public class SystemPort {
+  public class SystemPort : ITopicStateMessage<PortState> {
     internal ILogger Log { get; }
 
-    public string PortName { get; set; } = default!;
+    public string TopicId => PortName;
 
-    public PortState State { get; set; } = PortState.Ready;
+    public string PortName { get; }
 
-    public PortError? Error { get; set; }
+    public PortState State { get; set; } = PortState.Unplugged; // Will be set by PortManager.
+
+    public AlertError? Error { get; set; }
 
     public PortOptions Options { get; }
 
     // The presence of a connection object implies that it is connected (open).
-    public ConnectedPort? Connection { get; internal set; }
+    public ConnectedPort? Connection { get; set; }
 
     internal SerialPort SerialPort { get; }
 
-    public SystemPort(string portName) {
+    internal SystemPort(string portName) {
       PortName = portName;
       Log = Serilog.Log.Logger.ForContext("Port", PortName);
 
@@ -73,6 +78,6 @@ namespace OpenWorkEngine.OpenController.Ports.Models {
       return changed;
     }
 
-    public override string ToString() => $"[{PortName}] [{State}] [{Connection?.ToString() ?? "disconnected"}";
+    public override string ToString() => $"[{PortName}] [{State}] [{Connection?.ToString() ?? "disconnected"}]";
   }
 }

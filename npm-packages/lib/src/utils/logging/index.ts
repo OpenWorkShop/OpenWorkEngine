@@ -1,14 +1,7 @@
-import { LogManager } from './LogManager';
-export { LogManager } from './LogManager';
-
-export type LogLevel = 'verbose' | 'debug' | 'info' | 'error' | 'warn';
-
-export interface LogEntry {
-  level: LogLevel;
-  context: string;
-  location?: string;
-  message: unknown[];
-}
+import LogManager from './LogManager';
+export { default as Logger } from './Logger';
+export { LogManager };
+export * from './types';
 
 const logManager = new LogManager();
 export default logManager;

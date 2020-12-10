@@ -1,6 +1,6 @@
 import { ApolloClient, ApolloLink, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import i18n, { TFunction } from 'i18next';
+import i18n, { StringMap, TFunction } from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-xhr-backend';
 import JsLogger from 'js-logger';
@@ -12,10 +12,12 @@ import { abbreviation } from './consts';
 import { IOwsOptions, IOwsSettings, loadSettings } from './OpenWorkShopSettings';
 import { IOwsState } from './store';
 import logManager, { LogManager } from './utils/logging';
-import { Logger } from './utils/logging/Logger';
+import { Logger } from './utils/logging';
 import { defaultLogOptions, developmentLogOptions } from './utils/logging/LogOptions';
 
 let _i = 0;
+
+export type TTranslateFunc = (key: string, opts?: StringMap) => string;
 
 export interface IOpenWorkShop {
   settings: IOwsSettings;
@@ -35,6 +37,8 @@ export interface IOpenWorkShop {
   logManager: LogManager;
 
   i18n: TFunction;
+
+  t: TTranslateFunc;
 }
 
 class OpenWorkShop implements IOpenWorkShop {
@@ -163,6 +167,10 @@ class OpenWorkShop implements IOpenWorkShop {
     return this._i18n as TFunction;
   }
 
+  public t(key: string, opts?: StringMap): string {
+    return this.i18n(key, opts);
+  }
+
   get log(): Logger {
     if (!this._log) this._log = this.logManager.getLogger('ows-core');
     return this._log;
@@ -208,8 +216,8 @@ class OpenWorkShop implements IOpenWorkShop {
   }
 }
 
-export const singleton = new OpenWorkShop();
+export const singleton: OpenWorkShop = new OpenWorkShop();
 
-const OpenWorkShopContext: React.Context<OpenWorkShop> = React.createContext<OpenWorkShop>(singleton);
+const OpenWorkShopContext: React.Context<IOpenWorkShop> = React.createContext<IOpenWorkShop>(singleton);
 
 export default OpenWorkShopContext;

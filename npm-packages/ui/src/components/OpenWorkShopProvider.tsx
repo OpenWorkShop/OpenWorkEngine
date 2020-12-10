@@ -9,7 +9,9 @@ const OpenWorkShopProvider: React.FunctionComponent<IOwsProps> = (props: IOwsPro
   return (
     <ThemeProvider theme={theme}>
       <React.Suspense fallback={props.preloader ?? <Preloader />}>
-        <OpenWorkShopCore {...props} />
+        <OpenWorkShopCore {...props}>
+          {props.children}
+        </OpenWorkShopCore>
       </React.Suspense>
     </ThemeProvider>
   );

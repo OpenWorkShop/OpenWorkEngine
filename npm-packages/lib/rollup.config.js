@@ -35,5 +35,8 @@ export default {
       include: ['node_modules/**'],
     }),
   ],
-  external: ['react', 'react-dom', 'prop-types', 'events', 'url', 'http', 'https', 'stream', 'zlib'],
+  external: [
+    'fast-json-stable-stringify', 'react', 'js-logger', 'react-dom', 'prop-types', 'redux-oidc', 'oidc-client',
+    'events', 'url', 'http', 'https', 'stream', 'zlib', 'zen-observable', 'graphql-tag', 'lodash'
+  ],
 };

@@ -6,7 +6,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Grbl {
       parsers.FirmwareParser = new GrblVersionParser();
       parsers.WelcomeParser = new RegexParser(
         @"^(?<protocol>[a-zA-Z0-9]+)\s+(?<edition>(?:\d+\.){1,2}\d+[a-zA-Z0-9\-\.]*)(<?prompt>[^\[]*\[[^\]]+\].*)?",
-        (machine, vars) => {
+        (controller, machine, vars) => {
           if (vars.ContainsKey("protocol")) machine.Configuration.Firmware.Protocol = vars["protocol"];
           if (vars.ContainsKey("edition") && string.IsNullOrWhiteSpace(machine.Configuration.Firmware.Edition))
             machine.Configuration.Firmware.Edition = vars["edition"];

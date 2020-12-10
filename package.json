@@ -29,8 +29,8 @@
     "./makerverse/app"
   ],
   "devDependencies": {
-    "husky": "^4.3.0",
-    "lint-staged": "^10.5.1"
+    "husky": "^4.3.5",
+    "lint-staged": "^10.5.3"
   },
   "husky": {
     "hooks": {
@@ -38,8 +38,8 @@
     }
   },
   "lint-staged": {
-    "*.{png,jpeg,jpg,gif,svg}": "imagemin-lint-staged",
-    "*.{js,jsx,ts,tsx,md,html,css}": "prettier --write",
-    "*.{js,jsx,ts,tsx}": "eslint --fix"
+    "./npm-packages/*/src/*.{png,jpeg,jpg,gif,svg}": "imagemin-lint-staged",
+    "./npm-packages/*/src/*.{js,jsx,ts,tsx,md,html,css}": "prettier --write",
+    "./npm-packages/*/src/*.{js,jsx,ts,tsx}": "eslint --fix"
   }
 }

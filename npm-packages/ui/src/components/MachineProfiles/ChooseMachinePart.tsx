@@ -85,7 +85,7 @@ const ChooseMachinePart: React.FunctionComponent<IChooseMachinePartsProps> = (pr
         id={partType}
         displayEmpty
         value={selectedPartId ?? ''}
-        onChange={(e) => onSelected(e.target.value as string)}
+        onChange={(e) => onSelected(e.target.value )}
         className={classes.selectEmpty}>
         {isOptional && (
           <MenuItem value=''>

@@ -18,9 +18,10 @@ namespace OpenWorkEngine.OpenController.Controllers.Grbl {
       return Task.CompletedTask;
     }
 
-    public GrblController(ControllerManager manager, ConnectedPort connection) : base(manager, connection) {
+    public GrblController(ControllerManager controllerManager, ConnectedPort connection) : base(controllerManager, connection) {
       Parsers.AddGrblParsers();
       Commander.AddGrblCommands();
     }
   }
 }
+

@@ -1,10 +1,10 @@
 import { EventEmitter } from 'events';
-import { LogEntry } from './index';
-import { Logger } from './Logger';
+import { LogEntry } from './types';
+import Logger from './Logger';
 import JsLogger from 'js-logger';
 import { LogOptions, defaultLogOptions } from './LogOptions';
 
-export class LogManager extends EventEmitter {
+class LogManager extends EventEmitter {
   private options: LogOptions = { ...defaultLogOptions };
 
   // Prevent the console logger from being added twice
@@ -71,3 +71,5 @@ export class LogManager extends EventEmitter {
     return this;
   }
 }
+
+export default LogManager;

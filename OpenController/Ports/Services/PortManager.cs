@@ -9,91 +9,83 @@ using HotChocolate.Subscriptions;
 using OpenWorkEngine.OpenController.Ports.Extensions;
 using OpenWorkEngine.OpenController.Ports.Models;
 using OpenWorkEngine.OpenController.Controllers.Services;
+using OpenWorkEngine.OpenController.Lib;
+using OpenWorkEngine.OpenController.Lib.Observables;
+using OpenWorkEngine.OpenController.Machines.Interfaces;
+using OpenWorkEngine.OpenController.Ports.Enums;
 using Serilog;
 
 namespace OpenWorkEngine.OpenController.Ports.Services {
-  public class PortManager : IDisposable {
-    internal ILogger Log { get; }
-
-    internal ITopicEventSender Sender { get; }
+  public class PortManager : SubscriptionStateManager<PortTopic, SystemPort, PortState>, IDisposable {
+    public override ILogger Log { get; }
 
     public SystemPort this[string portName] =>
       Map.TryGetValue(portName, out SystemPort? val) ? val : throw new ArgumentException($"Port missing: {portName}");
 
+    // Once a port it detected via the scanner, it lives forever in memory.
     private readonly ConcurrentDictionary<string, SystemPort> _ports = new ();
     public ConcurrentDictionary<string, SystemPort> Map => _ports;
 
     private bool _isAlive = true;
 
-    private bool _hasChanges = false;
-
-    internal ControllerManager Controllers { get; }
+    public ControllerManager Controllers { get; }
 
     // Work thread (background scanner)
     private async Task DoWorkAsync() {
       while (_isAlive) {
-        bool changed = await ScanPorts();
-        _hasChanges = changed || _hasChanges;
-        await Dispatch();
+        await ScanPorts();
+        // we can afford to delay a little on port scans.
+        await Task.Delay(100);
       }
     }
 
-    // Scan
-    private async Task<bool> ScanPorts() {
+    // Scan for port changes.
+    private async Task ScanPorts() {
       List<string> ports = SerialPort.GetPortNames().Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
-      bool changed = false;
 
       foreach (string name in _ports.Keys) {
-        if (!ports.Contains(name)) {
-          _ports.Remove(name, out SystemPort? port);
-          if (port != null) {
-            OnPortDisappeared(port);
-            await Controllers.Close(port);
-            changed = true;
-          }
+        if (!ports.Contains(name) && _ports.TryGetValue(name, out SystemPort? port)) {
+          // Port is not in the list any more, so it has been unplugged.
+          await OnPortDisappeared(port);
         }
       }
 
       foreach (string name in ports) {
-        _ports.GetOrAdd(name, (p) => {
-          changed = true;
+        _ports.AddOrUpdate(name, (p) => {
+          // New port just appeared for the first time in this run of the app.
           SystemPort port = new SystemPort(p);
+          OnPortAppeared(port);
+          return port;
+        }, (pn, port) => {
+          // Port already existed, but it had been unplugged and is now available again.
           OnPortAppeared(port);
           return port;
         });
       }
-
-      return changed;
     }
 
-    private void OnPortDisappeared(SystemPort port) {
-      Log.Debug("[PORTS--] {name}", port.PortName);
+    private async Task OnPortDisappeared(SystemPort port) {
+      if (port.State == PortState.Unplugged) return;
+      await Controllers.Close(port);
+      port.State = PortState.Unplugged;
+      Log.Information("[PORTS--] {name}", port.PortName);
+      GetSubscriptionTopic(PortTopic.State).Emit(port);
     }
 
     private void OnPortAppeared(SystemPort port) {
-      Log.Debug("[PORTS++] {name}", port.PortName);
-    }
-
-    // Dispatch changes to the port list in a batched manner to avoid message overload
-    private async Task Dispatch() {
-      if (!_hasChanges) {
-        return;
-      }
-      List<SystemPort> ports = _ports.Values.ToList();
-      Log.Debug("[PORT] [DISPATCH]", ports.Count);
-      _hasChanges = false;
-      await Sender.OnPortList(ports);
+      if (port.State != PortState.Unplugged) return;
+      port.State = PortState.Ready;
+      Log.Information("[PORTS++] {name}", port.PortName);
+      GetSubscriptionTopic(PortTopic.State).Emit(port);
     }
 
     public ConnectedPort GetConnection(string portName) {
       return this[portName].Connection ?? throw new ArgumentException($"Port not open: {portName}");
     }
 
-    public PortManager(ITopicEventSender sender, ControllerManager controllerManager) {
-      Log = controllerManager.Log.ForContext(typeof(PortManager));
-      Controllers = controllerManager;
-
-      Sender = sender;
+    internal PortManager(ControllerManager controllers) {
+      Log = controllers.Log.ForContext(typeof(PortManager));
+      Controllers = controllers;
       Task.Run(DoWorkAsync);
     }
 
@@ -101,5 +93,8 @@ namespace OpenWorkEngine.OpenController.Ports.Services {
       Log.Information("[DISPOSE] PortManager");
       _isAlive = false;
     }
+
+    public override PortTopic StateTopic => PortTopic.State;
+    protected override PortState ErrorState => PortState.Error;
   }
 }

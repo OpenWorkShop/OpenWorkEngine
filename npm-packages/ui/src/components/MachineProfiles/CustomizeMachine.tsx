@@ -21,7 +21,8 @@ import CreateMachineProfile from './CreateMachineProfile';
 import MachineAxesEditor from './MachineAxesEditor';
 import MachineProfileSearchBar from './MachineProfileSearchBar';
 import { Grid, CircularProgress, Typography, Button, useTheme, Paper } from '@material-ui/core';
-import { Trans, useTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
+import { OpenWorkShop } from '@openworkshop/lib';
 
 interface ICustomizeMachineProps {
   onCustomized: (machine?: ICustomizedMachine) => void;
@@ -30,7 +31,7 @@ interface ICustomizeMachineProps {
 
 const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props) => {
   const log = useLogger(CustomizeMachine);
-  const { t } = useTranslation();
+  const ows = React.useContext(OpenWorkShop);
   const theme = useTheme();
   const [machineProfile, setMachineProfile] = React.useState<MachineSearchResultFragment | undefined>(undefined);
   const [getCompleteMachineProfile, { loading, error, data }] = useGetCompleteMachineProfileLazyQuery(owsClientOpts);
@@ -134,8 +135,8 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
     onCustomized(undefined);
   }
 
-  const completedMsg = loadedMachineProfile ? t('Please review the defaults provided by the community catalog:')
-    : t('This step has already been completed.');
+  const completedMsg = loadedMachineProfile ? ows.t('Please review the defaults provided by the community catalog:')
+    : ows.t('This step has already been completed.');
 
   return (
     <Grid container spacing={2} style={{ marginBottom: theme.spacing(2) }}>
@@ -180,7 +181,7 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
           <Typography variant='h5'>
             <Trans>Parts & Options</Trans>
             <HoverHelpStep
-              tip={t('Default parts are pre-selected below... but please change them if you have upgraded, modified, ' +
+              tip={ows.t('Default parts are pre-selected below... but please change them if you have upgraded, modified, ' +
                 'or used a non-standard kit.')}
               isComplete={!!customizedMachine}
             />
@@ -201,7 +202,7 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
           <Typography variant='h5'>
             <Trans>Axes (Size)</Trans>
             <HoverHelpStep
-              tip={t('Each axis should have a minimum and maximum value, so Makerverse knows how far it can move.')}
+              tip={ows.t('Each axis should have a minimum and maximum value, so Makerverse knows how far it can move.')}
               isComplete={!!customizedMachine}
             />
           </Typography>

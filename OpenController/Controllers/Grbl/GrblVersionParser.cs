@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using HotChocolate.Language;
+using OpenWorkEngine.OpenController.Controllers.Services;
 using OpenWorkEngine.OpenController.Controllers.Utils.Parsers;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
+using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Models;
 
 namespace OpenWorkEngine.OpenController.Controllers.Grbl {
   public class GrblVersionParser : RegexParser {
     public GrblVersionParser() : base(@"^\[(?:VER:)(?<data>.+)\]$", OnData) { }
 
-    private static void OnData(Machine machine, Dictionary<string, string> values) {
-
+    private static void OnData(Controller? controller, ControlledMachine machine, Dictionary<string, string> values) {
       if (!values.ContainsKey("data")) return;
       string data = values["data"];
 
@@ -43,7 +44,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Grbl {
       if (halves.Length > 1) machine.Configuration.Firmware.FriendlyName = halves.Last();
 
       machine.Log.Debug("[FIRMWARE] {@firmware}", machine.Configuration.Firmware);
-      machine.Topics.MachineConfiguration.Emit(machine.Configuration);
+      controller?.Manager.GetSubscriptionTopic(MachineTopic.Configuration).Emit(machine);
     }
   }
 }

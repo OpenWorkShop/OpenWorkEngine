@@ -1,7 +1,8 @@
 import React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import useLogger from '@openworkshop/lib/utils/logging/UseLogger';
-import AlertMessage, {IAlertMessage, sanitizeAlertMessages} from './AlertMessage';
+import AlertMessage from './AlertMessage';
+import {IAlertMessage, AlertMessageList, sanitizeAlertMessages} from './types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -17,9 +18,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export interface IAlertList {
   error?: IAlertMessage;
-  errors?: (IAlertMessage | undefined)[];
+  errors?: AlertMessageList;
   warning?: IAlertMessage;
-  warnings?: (IAlertMessage | undefined)[];
+  warnings?: AlertMessageList;
 }
 
 type OwnProps = IAlertList;
@@ -37,16 +38,19 @@ const AlertList: React.FunctionComponent<OwnProps> = (props) => {
   if (allErrors.length > 0) log.error('errors', allErrors, 'warnings', allWarnings);
   else if (allWarnings.length > 0) log.warn(allWarnings);
 
+  let i = 0;
+
   return (
     <div className={classes.root}>
       {allErrors.map((e) => {
         return (
-          <AlertMessage key={e.message} {...e} severity="error" />
+          <AlertMessage key={i} {...e} severity="error" />
         );
       })}
       {allWarnings.map((a) => {
+        i++;
         return (
-          <AlertMessage key={a.message} {...a} severity="warning" />
+          <AlertMessage key={i} {...a} severity="warning" />
         );
       })}
     </div>

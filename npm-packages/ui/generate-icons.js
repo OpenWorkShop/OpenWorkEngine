@@ -5,7 +5,7 @@ const glob = require('glob');
 const svgr = require('@svgr/core').default;
 
 const ICONS_SOURCE_DIR = './assets/icons';
-const COMPONENTS_DIR = './src/components/Icons';
+const COMPONENTS_DIR = './src/components/OpenWorkShopIcon';
 
 function toTitleCase(str) {
     return str
@@ -25,10 +25,21 @@ const iconComponentTemplate = ({ template }, opts, { imports, componentName, jsx
     `;
 
 const icons = glob.sync(`${ICONS_SOURCE_DIR}/**.svg`);
+const components = {};
+const imports = ['import React from \'react\';'];
+const checks = [];
 
 for (const icon of icons) {
     const svg = fs.readFileSync(icon, 'utf8');
+    const iconName = path.parse(icon).name;
     const componentName = toTitleCase(path.parse(icon).name) + 'Icon';
+    const opts = [`name === '${iconName}'`, `name === '${componentName}'`];
+    if (iconName === 'tdp') {
+      opts.push('name === \'3dp\'');
+    }
+    imports.push(`import ${componentName} from './${componentName}';`);
+    checks.push(`  if (${opts.join(' || ')}) return <${componentName} {...props} />;`);
+    components[iconName] = componentName;
     console.log(icon, componentName);
     const componentCode = svgr.sync(
         svg,
@@ -53,3 +64,24 @@ for (const icon of icons) {
         componentCode.toString().replace('= (props', `: React.FunctionComponent< React.SVGProps<SVGSVGElement>> = (props`),
     );
 }
+
+const index = `${imports.join('\n')}
+
+export { ${Object.values(components).join(', ')} }; 
+
+export interface IOwsIconProps extends React.SVGProps<SVGSVGElement> {
+  name: string;
+}
+
+export const Icons: React.FunctionComponent<IOwsIconProps> = (props) => {
+  const name = props.name.toLowerCase();
+
+${checks.join('\n')}
+
+  return <span>{name}</span>;
+};
+
+export default Icons;
+`;
+
+fs.writeFileSync(`${COMPONENTS_DIR}/index.tsx`, index);

@@ -2,44 +2,46 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using HotChocolate.Execution;
 using HotChocolate.Subscriptions;
 using OpenWorkEngine.OpenController.Controllers.Grbl;
 using OpenWorkEngine.OpenController.Controllers.Grbl.Maslow;
+using OpenWorkEngine.OpenController.Lib;
+using OpenWorkEngine.OpenController.Lib.Graphql;
+using OpenWorkEngine.OpenController.Lib.Observables;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
+using OpenWorkEngine.OpenController.Machines.Enums;
+using OpenWorkEngine.OpenController.Machines.Interfaces;
+using OpenWorkEngine.OpenController.Machines.Messages;
+using OpenWorkEngine.OpenController.Machines.Models;
 using OpenWorkEngine.OpenController.Ports.Enums;
 using OpenWorkEngine.OpenController.Ports.Extensions;
 using OpenWorkEngine.OpenController.Ports.Interfaces;
 using OpenWorkEngine.OpenController.Ports.Messages;
 using OpenWorkEngine.OpenController.Ports.Models;
+using OpenWorkEngine.OpenController.Ports.Services;
 using Serilog;
 
 namespace OpenWorkEngine.OpenController.Controllers.Services {
-  public class ControllerManager {
-    internal ILogger Log { get; }
+  /// <summary>
+  /// Singleton DI service for creating/managing Controllers + Orchestrators.
+  /// </summary>
+  public class ControllerManager : SubscriptionManager<MachineTopic, ControlledMachine>, IDisposable {
+    public override ILogger Log { get; }
 
-    internal ITopicEventSender Sender { get; }
+    public PortManager Ports { get; }
 
+    // internal ITopicEventSender Sender { get; }
+    //
+    // public Controller this[string portName] =>
+    //   _controllers.TryGetValue(portName, out Controller? val) ? val :
+    //     throw new ArgumentException($"Controller missing: {portName}");
+
+    // PortName -> Controller (one controller per port).
     private readonly ConcurrentDictionary<string, Controller> _controllers = new();
-
-    public ValueTask BroadcastPortState(SystemPort port, PortState? state = null) {
-      if (state.HasValue) {
-        if (state.Value < port.State) {
-          if (state.Value != PortState.Error && state.Value != PortState.Ready) {
-            throw new ArgumentException($"Cannot go back from {port.State} to {state.Value}");
-          }
-        }
-        if (state.Value != port.State) {
-          Log.Debug("[STATE] {state}: {port}", state.Value, port.ToString());
-        }
-        port.State = state.Value;
-        if (port.State != PortState.Error) {
-          port.Error = null;
-        }
-      }
-      return Sender.OnPortStatus(port);
-    }
 
     private Controller Create(MachineControllerType type, ConnectedPort connection) {
       if (type == MachineControllerType.Grbl) return new GrblController(this, connection);
@@ -48,31 +50,36 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       throw new ArgumentException($"Unsupported controller type: {type}");
     }
 
-    public async Task<SystemPort> Open(
-      string friendlyName, FirmwareRequirement firmware, SystemPort systemPort,
-      ISerialPortOptions opts, bool reconnect = false
+    public async Task<Controller> Open(
+      IMachineConnectionSettings machine, bool reconnect = false
     ) {
+      SystemPort systemPort = Ports[machine.PortName];
+      ISerialPortOptions opts = machine.ToSerialPortOptions();
       bool optionsChanged = systemPort.ApplyPortOptions(opts);
       if (systemPort.SerialPort.IsOpen) {
-        if (!optionsChanged && !reconnect) {
+        if (!optionsChanged && !reconnect && _controllers.TryGetValue(systemPort.PortName, out Controller? c)) {
           Log.Information("[OPEN] port was already open with the same options: {portName}", systemPort.PortName);
-          return systemPort;
+          return c;
         }
         await Close(systemPort);
       }
       try {
         // Send an "Opening" state and begin the actual attempt to open the port.
-        await BroadcastPortState(systemPort, PortState.Opening);
+        Ports.EmitState(systemPort, PortState.Opening);
 
         // This synchronous core system function may throw exceptions.
         systemPort.SerialPort.Open();
 
-        // If no exception thrown, now create a ConnectedPort and SerialBuffer
-        systemPort.Connection = new ConnectedPort(friendlyName, systemPort, firmware);
-        _controllers.AddOrUpdate(systemPort.PortName,
-          (v) => Create(firmware.ControllerType, systemPort.Connection),
+        // Now wrap the systemPort with a ConnectedPort
+        systemPort.Connection = new ConnectedPort(systemPort, machine);
+
+        // And wrap the ConnectedPort with a
+        IMachineFirmwareRequirement req = machine.GetFirmwareRequirement();
+        MachineControllerType controllerType = req.ControllerType;
+        return _controllers.AddOrUpdate(systemPort.PortName,
+          (v) => Create(controllerType, systemPort.Connection),
           (k, v) => {
-            if (v.ControllerType != firmware.ControllerType || v.Connection != systemPort.Connection) {
+            if (v.ControllerType != controllerType || v.Connection != systemPort.Connection) {
               // Updating an existng controller implies the connection was not closed correctly.
               throw new ArgumentException($"{systemPort.PortName} could not open because the last buffer was not closed.");
             }
@@ -87,48 +94,47 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
           systemPort.Connection = null;
           systemPort.SerialPort.Close();
           _controllers.TryRemove(systemPort.SerialPort.PortName, out Controller? controller);
-          systemPort.Error = new PortError() {Name = GetConnectionErrorName(e), Message = e.Message};
-          await BroadcastPortState(systemPort, PortState.Error);
+          systemPort.Error = new AlertError(e);
+          Ports.EmitState(systemPort, PortState.Error);
         } catch (Exception e2) {
           Log.Error(e2, "Fallback error handler failed!");
         }
+        throw;
       }
-      return systemPort;
     }
 
-    private string GetConnectionErrorName(Exception e) {
-      if (e.GetType() != typeof(UnauthorizedAccessException)) return e.GetType().Name;
-      Exception? inner = e.InnerException;
-      if (inner == null || inner.GetType() != typeof(IOException)) return "Unable to access port";
-
-      if (inner.Message.Equals("Resource busy")) return "This port is already in-use.";
-      return inner.Message;
-
-      // System.UnauthorizedAccessException: Access to the port '/dev/tty.AirPods-WirelessiAP' is denied.
-      //   ---> System.IO.IOException: Resource busy
-
-    }
-
-    public async Task<SystemPort> Close(SystemPort systemPort) {
+    private void ClosePort(SystemPort systemPort) {
       systemPort.Connection = null;
       if (systemPort.SerialPort.IsOpen) {
         systemPort.SerialPort.Close();
         Log.Information("[CLOSED] port: {portName}", systemPort.PortName);
       }
+      systemPort.State = PortState.Ready;
+    }
+
+    public Task<SystemPort> Close(SystemPort systemPort) {
       if (_controllers.TryRemove(systemPort.PortName, out Controller? controller)) {
         controller.Dispose();
       } else {
-        Log.Information("There was no controller for {portName}", systemPort.PortName);
+        Log.Debug("[DISPOSE] no controller to close {portName}", systemPort.PortName);
       }
-      systemPort.State = PortState.Ready;
-      await Sender.OnPortStatus(systemPort);
-      return systemPort;
+      ClosePort(systemPort);
+      Ports.EmitState(systemPort);
+      return Task.FromResult(systemPort);
     }
 
-
-    public ControllerManager(ITopicEventSender sender, ILogger logger) {
+    public ControllerManager(ILogger logger) {
       Log = logger.ForContext("App", "OC").ForContext(typeof(ControllerManager));
-      Sender = sender;
+      Ports = new PortManager(this);
+    }
+
+    public void Dispose() {
+      List<Controller> controllers = _controllers.Values.ToList();
+      _controllers.Clear();
+      foreach (Controller controller in controllers) {
+        ClosePort(controller.Connection.Port);
+        controller.Dispose();
+      }
     }
   }
 }

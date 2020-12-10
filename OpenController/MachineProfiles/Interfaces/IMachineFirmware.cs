@@ -1,20 +1,12 @@
 using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
+using OpenWorkEngine.OpenController.Machines.Interfaces;
 
 namespace OpenWorkEngine.OpenController.MachineProfiles.Interfaces {
-  public interface IMachineFirmware {
-    public string? Name { get; }
-
-    public MachineControllerType ControllerType { get; }
-
-    // e.g., 1.1g for Grbl, PCB version on Maslow, etc.
-    public string? Edition { get; }
-
+  public interface IMachineFirmware : IMachineFirmwareRequirement {
     public bool Rtscts { get; }
 
     public int BaudRateValue { get; }
-
-    public decimal RequiredVersion { get; }
 
     public decimal SuggestedVersion { get; }
 

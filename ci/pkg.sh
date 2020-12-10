@@ -13,7 +13,9 @@ cd $dir
 if [ "${CMD}" = "clean" ] || [ "${CMD}" = "rebuild" ]; then
   echo "[CLEAN] $PKG"
   yarn run clean
-  exit 0
+  if [ "${CMD}" != "rebuild" ]; then
+    exit 0
+  fi
 fi
 
 if [ "${CMD}" = "build" ] || [ "${CMD}" = "rebuild" ];  then

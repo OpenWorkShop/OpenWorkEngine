@@ -2,9 +2,11 @@ using System.Threading.Tasks;
 using HotChocolate;
 using HotChocolate.Subscriptions;
 using HotChocolate.Types;
+using OpenWorkEngine.OpenController.Controllers.Services;
 using OpenWorkEngine.OpenController.Lib.Graphql;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 using OpenWorkEngine.OpenController.Machines.Graph;
+using OpenWorkEngine.OpenController.Machines.Messages;
 using OpenWorkEngine.OpenController.Ports.Extensions;
 using OpenWorkEngine.OpenController.Ports.Messages;
 using OpenWorkEngine.OpenController.Ports.Models;
@@ -14,13 +16,14 @@ namespace OpenWorkEngine.OpenController.Ports.Graph {
   [ExtendObjectType(Name = "Mutation")]
   public class PortsMutation {
     [AuthorizeWriteControllers]
-    public Task<SystemPort> OpenPort(
-      [Service] PortManager ports,
-      string friendlyName, string portName, FirmwareRequirement firmware, SerialPortOptions options
-    )  => ports.Controllers.Open(friendlyName, firmware, ports[portName], options);
+    public async Task<SystemPort> OpenPort(
+      [Service] ControllerManager controllers, string portName, FirmwareRequirement firmware, SerialPortOptions options
+    ) => (await controllers.Open(
+      new MachineConnectionOptions(portName, options, firmware)
+    )).Connection.Port;
 
     [AuthorizeWriteControllers]
-    public Task<SystemPort> ClosePort([Service] PortManager ports, string portName) =>
-      ports.Controllers.Close(ports[portName]);
+    public Task<SystemPort> ClosePort([Service] ControllerManager controllers, string portName) =>
+      controllers.Close(controllers.Ports[portName]);
   }
 }

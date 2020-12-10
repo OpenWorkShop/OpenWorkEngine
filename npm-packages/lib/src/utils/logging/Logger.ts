@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
-import { LogEntry, LogLevel } from './index';
+import { LogEntry, LogLevel } from './types';
 
-export class Logger {
+class Logger {
   private logManager: EventEmitter;
   private readonly minLevel: number;
   private readonly module: string;
@@ -68,6 +68,7 @@ export class Logger {
   public verbose(...args: unknown[]): void {
     this.log('verbose', ...args);
   }
+
   public debug(...args: unknown[]): void {
     this.log('debug', ...args);
   }
@@ -81,3 +82,5 @@ export class Logger {
     this.log('error', ...args);
   }
 }
+
+export default Logger;

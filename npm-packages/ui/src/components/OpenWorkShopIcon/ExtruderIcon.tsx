@@ -24,7 +24,7 @@ export const ExtruderIcon : React.FunctionComponent< React.SVGProps<SVGSVGElemen
       d='M41.8 59.6c-2.1-2-3.8-5.9-3.8-8.8V10.2C38 7.3 35.7 5 32.8 5h-2.6C27.3 5 25 7.3 25 10.2v40.6c0 2.9-1.6 6.9-3.5 9 0 0-3.5 3.8-3.5 9.2 0 7.7 6.3 14 14 14s14-6.3 14-14c0-5.4-4.2-9.4-4.2-9.4z'
     />
     <circle cx={32} cy={69} r={8} fill='currentColor' stroke='currentColor' strokeWidth={2} strokeMiterlimit={10} />
-    <path className='prefix__st1' d='M38 45h-6M38 37h-6M38 29h-6M38 21h-6M71 68H60' />
+    <path className='prefix__st1' d='M38 45h-6m6-8h-6m6-8h-6m6-8h-6m39 47H60' />
     <path fill='currentColor' d='M34 56h-4l-1 6h6z' />
   </svg>
 );

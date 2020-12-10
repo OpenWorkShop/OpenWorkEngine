@@ -12,9 +12,7 @@ type Props = IToolbarCardProps & {
 };
 
 const CardDialog: React.FunctionComponent<Props> = (props) => {
-  const { t } = useTranslation();
   const { open, onClose } = props;
-  const theme = useTheme();
   const classes = useStyles();
   const scroll = 'body';
 

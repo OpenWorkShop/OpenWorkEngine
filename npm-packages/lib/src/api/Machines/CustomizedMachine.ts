@@ -1,7 +1,6 @@
 import {
   MachineAxisPropsFragment, MachineCommandPropsFragment, MachineControllerType,
   MachineFeaturePropsFragment,
-  MachineFirmwareMinimalFragment,
   MachineFirmwarePropsFragment,
   MachinePartCompleteFragment,
 } from '../graphql';

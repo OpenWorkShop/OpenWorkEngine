@@ -1,9 +1,10 @@
+using OpenWorkEngine.OpenController.Lib.Observables;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 using OpenWorkEngine.OpenController.MachineProfiles.Interfaces;
 using OpenWorkEngine.OpenController.Machines.Interfaces;
 
 namespace OpenWorkEngine.OpenController.Machines.Models {
-  public class MachineSetting : IMachineSetting, ITopic {
+  public class MachineSetting : IMachineSetting {
     public string Id { get; } = "";
 
     public string? Title { get; set; } = default!;

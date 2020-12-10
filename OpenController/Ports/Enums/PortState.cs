@@ -1,7 +1,7 @@
 namespace OpenWorkEngine.OpenController.Ports.Enums {
   public enum PortState {
-    Unknown = 0,
-    Error,
+    Unplugged = -2,
+    Error = -1,
     Ready,
     Opening,
     Startup,

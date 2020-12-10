@@ -79,16 +79,13 @@
           <e p="Workspaces" t="Include">
             <e p="Enums" t="Include">
               <e p="WorkspaceState.cs" t="Include" />
+              <e p="WorkspaceTopic.cs" t="Include" />
             </e>
             <e p="Graph" t="Include">
               <e p="WorkspaceMutation.cs" t="Include" />
               <e p="WorkspaceQuery.cs" t="Include" />
               <e p="WorkspaceSchema.cs" t="Include" />
               <e p="WorkspaceSubscription.cs" t="Include" />
-            </e>
-            <e p="Messages" t="Include">
-              <e p="NewWorkspace.cs" t="Include" />
-              <e p="WorkspaceChange.cs" t="Include" />
             </e>
             <e p="Models" t="Include">
               <e p="MachineAxisSettings.cs" t="Include" />
@@ -98,12 +95,8 @@
               <e p="MachinePartSettings.cs" t="Include" />
               <e p="MachineSettingSettings.cs" t="Include" />
               <e p="MachineSpecSettings.cs" t="Include" />
-              <e p="WorkspaceConnection.cs" t="Include" />
-              <e p="WorkspaceSettings.cs" t="Include" />
-            </e>
-            <e p="Observables" t="Include">
               <e p="Workspace.cs" t="Include" />
-              <e p="WorkspaceTopicSet.cs" t="Include" />
+              <e p="WorkspaceSettings.cs" t="Include" />
             </e>
             <e p="Services" t="Include">
               <e p="WorkspaceManager.cs" t="Include" />
@@ -124,9 +117,6 @@
           <e p="codegen.yml" t="Include" />
           <e p="craco.config.js" t="Include" />
           <e p="graphql.schema.json" t="Include" />
-          <e p="node_modules/@types" t="IncludeRecursive">
-            <e p="node" t="IncludeRecursive" />
-          </e>
           <e p="node_modules/uuid" t="IncludeRecursive" />
           <e p="package.json" t="Include" />
           <e p="public" t="Include">
@@ -1363,8 +1353,8 @@
                 <e p="MakerverseSettings.graphql" t="Include" />
                 <e p="Startup.graphql" t="Include" />
               </e>
+              <e p="shared.graphql" t="Include" />
               <e p="Workspaces" t="Include">
-                <e p=".graphqlconfig" t="Include" />
                 <e p="MachineAxis.graphql" t="Include" />
                 <e p="MachineCommand.graphql" t="Include" />
                 <e p="MachineConnection.graphql" t="Include" />
@@ -1374,7 +1364,7 @@
                 <e p="MachineSettings.graphql" t="Include" />
                 <e p="MachineSpec.graphql" t="Include" />
                 <e p="Workspace.graphql" t="Include" />
-                <e p="Workspaces.graphql" t="Include" />
+                <e p="WorkspaceSettings.graphql" t="Include" />
               </e>
             </e>
             <e p="components" t="Include">
@@ -1407,11 +1397,37 @@
                 <e p="Styles.ts" t="Include" />
                 <e p="types.ts" t="Include" />
               </e>
+              <e p="Tools" t="Include">
+                <e p="Console" t="Include">
+                  <e p="Console.tsx" t="Include" />
+                  <e p="index.tsx" t="Include" />
+                  <e p="Styles.ts" t="Include" />
+                </e>
+                <e p="Controls" t="Include">
+                  <e p="Controls.tsx" t="Include" />
+                  <e p="index.tsx" t="Include" />
+                  <e p="JogControls.tsx" t="Include" />
+                </e>
+                <e p="index.ts" t="Include" />
+                <e p="Machine" t="Include">
+                  <e p="index.tsx" t="Include" />
+                  <e p="Machine.tsx" t="Include" />
+                </e>
+                <e p="Plans" t="Include">
+                  <e p="index.tsx" t="Include" />
+                  <e p="Plans.tsx" t="Include" />
+                </e>
+                <e p="types.ts" t="Include" />
+                <e p="WorkspaceSettings" t="Include">
+                  <e p="index.tsx" t="Include" />
+                  <e p="WorkspaceSettings.tsx" t="Include" />
+                </e>
+              </e>
               <e p="Workspaces" t="Include">
                 <e p="index.ts" t="Include" />
-                <e p="OpenWorkspaceButton.tsx" t="Include" />
                 <e p="Styles.ts" t="Include" />
                 <e p="types.ts" t="Include" />
+                <e p="WorkspaceStatus.tsx" t="Include" />
               </e>
             </e>
             <e p="components-old" t="Include">
@@ -1805,6 +1821,9 @@
               </e>
               <e p="Workspace" t="Include">
                 <e p="index.tsx" t="Include" />
+                <e p="OpenWorkspaceButton.tsx" t="Include" />
+                <e p="Styles.ts" t="Include" />
+                <e p="ToolBar.tsx" t="Include" />
                 <e p="WorkspaceConnector.tsx" t="Include" />
               </e>
               <e p="WorkspaceCreator" t="Include">
@@ -2400,6 +2419,7 @@
       <e p="node_modules/collect-v8-coverage" t="IncludeRecursive" />
       <e p="node_modules/colorette" t="IncludeRecursive" />
       <e p="node_modules/commander" t="IncludeRecursive" />
+      <e p="node_modules/create-require" t="IncludeRecursive" />
       <e p="node_modules/csstype" t="IncludeRecursive" />
       <e p="node_modules/del" t="IncludeRecursive" />
       <e p="node_modules/detect-newline" t="IncludeRecursive" />
@@ -2553,6 +2573,9 @@
           <e p=".prettierignore" t="Include" />
           <e p=".prettierrc.json" t="Include" />
           <e p="codegen.yml" t="Include" />
+          <e p="dist/node_modules/@types" t="IncludeRecursive">
+            <e p="react" t="IncludeRecursive" />
+          </e>
           <e p="graphql.schema.json" t="Include" />
           <e p="package.json" t="Include" />
           <e p="package.prod.json" t="Include" />
@@ -2605,6 +2628,7 @@
                 <e p="Logger.ts" t="Include" />
                 <e p="LogManager.ts" t="Include" />
                 <e p="LogOptions.ts" t="Include" />
+                <e p="types.ts" t="Include" />
                 <e p="UseLogger.ts" t="Include" />
               </e>
               <e p="slugify.ts" t="Include" />
@@ -2613,7 +2637,6 @@
           </e>
           <e p="tsconfig.json" t="Include" />
           <e p="tsconfig.tsbuildinfo" t="Include" />
-          <e p="yarn-error.log" t="Include" />
         </e>
         <e p="open-controller" t="Include">
           <e p=".eslintignore" t="Include" />
@@ -2639,12 +2662,57 @@
           <e p=".prettierrc.json" t="Include" />
           <e p="assets" t="Include">
             <e p="icons" t="Include">
+              <e p="adjustments-alt.svg" t="Include" />
+              <e p="adjustments.svg" t="Include" />
+              <e p="bell.svg" t="Include" />
+              <e p="blueprint.svg" t="Include" />
+              <e p="certificate.svg" t="Include" />
+              <e p="checklist.svg" t="Include" />
+              <e p="circular-saw-blade.svg" t="Include" />
               <e p="cnc.svg" t="Include" />
+              <e p="control-pad.svg" t="Include" />
+              <e p="cube-in-glass.svg" t="Include" />
+              <e p="cutters.svg" t="Include" />
+              <e p="drill.svg" t="Include" />
+              <e p="end-mill.svg" t="Include" />
               <e p="extruder.svg" t="Include" />
+              <e p="flashlight.svg" t="Include" />
+              <e p="game-pad-alt.svg" t="Include" />
+              <e p="game-pad.svg" t="Include" />
+              <e p="gear-alt.svg" t="Include" />
+              <e p="gear.svg" t="Include" />
+              <e p="hammer-and-screwdriver.svg" t="Include" />
+              <e p="hammer-x-saw.svg" t="Include" />
               <e p="heated-bed.svg" t="Include" />
-              <e p="maker-made.svg" t="Include" />
+              <e p="joystick.svg" t="Include" />
+              <e p="ladder.svg" t="Include" />
+              <e p="laser.svg" t="Include" />
+              <e p="machine.svg" t="Include" />
+              <e p="magnet.svg" t="Include" />
+              <e p="makermade.svg" t="Include" />
               <e p="maslow.svg" t="Include" />
+              <e p="microchip.svg" t="Include" />
+              <e p="microphone.svg" t="Include" />
+              <e p="microscope.svg" t="Include" />
+              <e p="paint-brush.svg" t="Include" />
+              <e p="paint-roller.svg" t="Include" />
+              <e p="pencil-x-ruler.svg" t="Include" />
+              <e p="roadblock.svg" t="Include" />
+              <e p="robot.svg" t="Include" />
+              <e p="rulers.svg" t="Include" />
+              <e p="saw.svg" t="Include" />
+              <e p="screwdriver-and-wrench.svg" t="Include" />
+              <e p="screwdriver-x-wrench.svg" t="Include" />
+              <e p="shovel.svg" t="Include" />
+              <e p="tape-measure.svg" t="Include" />
               <e p="tdp.svg" t="Include" />
+              <e p="telescope.svg" t="Include" />
+              <e p="terminal.svg" t="Include" />
+              <e p="toolbox.svg" t="Include" />
+              <e p="tree.svg" t="Include" />
+              <e p="trees.svg" t="Include" />
+              <e p="video-camera.svg" t="Include" />
+              <e p="wood-cutter.svg" t="Include" />
               <e p="xyz.svg" t="Include" />
             </e>
           </e>
@@ -2655,7 +2723,6 @@
           <e p="dist/node_modules/@material-ui/types" t="IncludeRecursive" />
           <e p="dist/node_modules/@material-ui/unstyled" t="IncludeRecursive" />
           <e p="dist/node_modules/@types" t="IncludeRecursive">
-            <e p="node" t="IncludeRecursive" />
             <e p="react" t="IncludeRecursive" />
           </e>
           <e p="generate-icons.js" t="Include" />
@@ -2665,10 +2732,13 @@
           <e p="src" t="Include">
             <e p="components" t="Include">
               <e p="Alerts" t="Include">
+                <e p="AlertDialog.tsx" t="Include" />
                 <e p="AlertList.tsx" t="Include" />
                 <e p="AlertMessage.tsx" t="Include" />
                 <e p="HoverHelpStep.tsx" t="Include" />
+                <e p="index.ts" t="Include" />
                 <e p="OfflineAlertList.tsx" t="Include" />
+                <e p="types.ts" t="Include" />
               </e>
               <e p="Brand" t="Include">
                 <e p="PoweredBy.tsx" t="Include" />
@@ -2709,13 +2779,60 @@
               </e>
               <e p="OpenWorkShopCore.tsx" t="Include" />
               <e p="OpenWorkShopIcon" t="Include">
+                <e p="AdjustmentsAltIcon.tsx" t="Include" />
+                <e p="AdjustmentsIcon.tsx" t="Include" />
+                <e p="BellIcon.tsx" t="Include" />
+                <e p="BlueprintIcon.tsx" t="Include" />
+                <e p="CertificateIcon.tsx" t="Include" />
+                <e p="ChecklistIcon.tsx" t="Include" />
+                <e p="CircularSawBladeIcon.tsx" t="Include" />
                 <e p="CncIcon.tsx" t="Include" />
+                <e p="ControlpadIcon.tsx" t="Include" />
+                <e p="CubeInGlassIcon.tsx" t="Include" />
+                <e p="CuttersIcon.tsx" t="Include" />
+                <e p="DrillIcon.tsx" t="Include" />
+                <e p="EndMillIcon.tsx" t="Include" />
                 <e p="ExtruderIcon.tsx" t="Include" />
+                <e p="FlashlightIcon.tsx" t="Include" />
+                <e p="GamePadAltIcon.tsx" t="Include" />
+                <e p="GamepadIcon.tsx" t="Include" />
+                <e p="GearAltIcon.tsx" t="Include" />
+                <e p="GearIcon.tsx" t="Include" />
+                <e p="HammerAndScrewdriverIcon.tsx" t="Include" />
+                <e p="HammerXSawIcon.tsx" t="Include" />
                 <e p="HeatedBedIcon.tsx" t="Include" />
                 <e p="index.tsx" t="Include" />
+                <e p="JoystickIcon.tsx" t="Include" />
+                <e p="LadderIcon.tsx" t="Include" />
+                <e p="LaserIcon.tsx" t="Include" />
+                <e p="MachineIcon.tsx" t="Include" />
+                <e p="MagnetIcon.tsx" t="Include" />
                 <e p="MakerMadeIcon.tsx" t="Include" />
                 <e p="MaslowIcon.tsx" t="Include" />
+                <e p="MicrochipIcon.tsx" t="Include" />
+                <e p="MicrophoneIcon.tsx" t="Include" />
+                <e p="MicroscopeIcon.tsx" t="Include" />
+                <e p="PaintBrushIcon.tsx" t="Include" />
+                <e p="PaintRollerIcon.tsx" t="Include" />
+                <e p="PencilXRulerIcon.tsx" t="Include" />
+                <e p="RoadblockIcon.tsx" t="Include" />
+                <e p="RobotIcon.tsx" t="Include" />
+                <e p="RulersIcon.tsx" t="Include" />
+                <e p="SawIcon.tsx" t="Include" />
+                <e p="ScrewdriverAndWrenchIcon.tsx" t="Include" />
+                <e p="ScrewdriverXWrenchIcon.tsx" t="Include" />
+                <e p="SettingsAltIcon.tsx" t="Include" />
+                <e p="SettingsIcon.tsx" t="Include" />
+                <e p="ShovelIcon.tsx" t="Include" />
+                <e p="TapeMeasureIcon.tsx" t="Include" />
                 <e p="TdpIcon.tsx" t="Include" />
+                <e p="TelescopeIcon.tsx" t="Include" />
+                <e p="TerminalIcon.tsx" t="Include" />
+                <e p="ToolboxIcon.tsx" t="Include" />
+                <e p="TreeIcon.tsx" t="Include" />
+                <e p="TreesIcon.tsx" t="Include" />
+                <e p="VideoCameraIcon.tsx" t="Include" />
+                <e p="WoodCutterIcon.tsx" t="Include" />
                 <e p="XyzIcon.tsx" t="Include" />
               </e>
               <e p="OpenWorkShopProvider.tsx" t="Include" />
@@ -2742,10 +2859,10 @@
       <e p="OpenController" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
-          <e p="Controller.cs" t="Include" />
           <e p="Exceptions" t="Include">
             <e p="ControllerException.cs" t="Include" />
             <e p="FirmwareException.cs" t="Include" />
+            <e p="PortException.cs" t="Include" />
           </e>
           <e p="grbl" t="Include">
             <e p="GrblCommander.cs" t="Include" />
@@ -2757,6 +2874,7 @@
             </e>
           </e>
           <e p="Services" t="Include">
+            <e p="Controller.cs" t="Include" />
             <e p="ControllerManager.cs" t="Include" />
           </e>
           <e p="Utils" t="Include">
@@ -2771,6 +2889,7 @@
           </e>
         </e>
         <e p="Lib" t="Include">
+          <e p="AlertError.cs" t="Include" />
           <e p="Api" t="Include">
             <e p="ApiExceptionMiddleware.cs" t="Include" />
             <e p="ApiExtensions.cs" t="Include" />
@@ -2789,13 +2908,21 @@
             <e p="GraphqlDiagnosticEventListener.cs" t="Include" />
             <e p="GraphqlErrorFilter.cs" t="Include" />
             <e p="GraphqlHttpResultSerializer.cs" t="Include" />
+            <e p="TopicEventExtensions.cs" t="Include" />
           </e>
           <e p="IHasStringId.cs" t="Include" />
-          <e p="ITopic.cs" t="Include" />
           <e p="Linq" t="Include">
             <e p="NonNullEnumerables.cs" t="Include" />
           </e>
-          <e p="SubscriptionTopic.cs" t="Include" />
+          <e p="Observables" t="Include">
+            <e p="ITopicMessage.cs" t="Include" />
+            <e p="ITopicStateMessage.cs" t="Include" />
+            <e p="SubscribableTopic.cs" t="Include" />
+            <e p="SubscriptionManager.cs" t="Include" />
+            <e p="SubscriptionStateManager.cs" t="Include" />
+            <e p="SubscriptionTopic.cs" t="Include" />
+            <e p="TopicSubscription.cs" t="Include" />
+          </e>
         </e>
         <e p="MachineProfiles" t="Include">
           <e p="Enums" t="Include">
@@ -2823,7 +2950,11 @@
           <e p="Enums" t="Include">
             <e p="ActiveState.cs" t="Include" />
             <e p="MachineCommandType.cs" t="Include" />
+            <e p="MachineTopic.cs" t="Include" />
             <e p="ModalGroup.cs" t="Include" />
+          </e>
+          <e p="Extensions" t="Include">
+            <e p="FirmwareRequirementExtensions.cs" t="Include" />
           </e>
           <e p="Graph" t="Include">
             <e p="MachinesSchema.cs" t="Include" />
@@ -2831,22 +2962,21 @@
           </e>
           <e p="Interfaces" t="Include">
             <e p="ICommandMachines.cs" t="Include" />
+            <e p="IMachineConnectionSettings.cs" t="Include" />
+            <e p="IMachineFirmwareRequirement.cs" t="Include" />
           </e>
           <e p="Messages" t="Include">
+            <e p="MachineConnectionOptions.cs" t="Include" />
             <e p="MachinePatch.cs" t="Include" />
           </e>
           <e p="Models" t="Include">
-            <e p="Machine.cs" t="Include" />
+            <e p="ControlledMachine.cs" t="Include" />
             <e p="MachineAlert.cs" t="Include" />
             <e p="MachineConfiguration.cs" t="Include" />
             <e p="MachineDetectedFirmware.cs" t="Include" />
             <e p="MachinePosition.cs" t="Include" />
             <e p="MachineSetting.cs" t="Include" />
             <e p="MachineState.cs" t="Include" />
-          </e>
-          <e p="Observables" t="Include">
-            <e p="MachineSubscriber.cs" t="Include" />
-            <e p="MachineTopicSet.cs" t="Include" />
           </e>
         </e>
         <e p="obj" t="ExcludeRecursive">
@@ -2860,6 +2990,7 @@
         <e p="Ports" t="Include">
           <e p="Enums" t="Include">
             <e p="PortState.cs" t="Include" />
+            <e p="PortTopic.cs" t="Include" />
           </e>
           <e p="Extensions" t="Include">
             <e p="TopicEventSenderExtensions.cs" t="Include" />
@@ -2879,7 +3010,6 @@
           </e>
           <e p="Models" t="Include">
             <e p="ConnectedPort.cs" t="Include" />
-            <e p="PortError.cs" t="Include" />
             <e p="PortOptions.cs" t="Include" />
             <e p="PortStatus.cs" t="Include" />
             <e p="SystemPort.cs" t="Include" />
@@ -2997,6 +3127,7 @@
           <e p=".prettierrc.json" t="Include" />
           <e p="node_modules/@types" t="IncludeRecursive">
             <e p="jest" t="IncludeRecursive" />
+            <e p="node" t="IncludeRecursive" />
           </e>
           <e p="node_modules/history" t="IncludeRecursive" />
           <e p="package.json" t="Include" />

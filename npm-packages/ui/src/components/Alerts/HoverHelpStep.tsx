@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Grid, Typography, InputAdornment, useTheme, Tooltip, IconButton } from '@material-ui/core';
+import { useTheme, Tooltip, IconButton } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle, faCheck } from '@fortawesome/free-solid-svg-icons';
 
