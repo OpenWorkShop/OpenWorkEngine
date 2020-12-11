@@ -14,9 +14,9 @@ import {
   createStyles,
   Theme,
 } from '@material-ui/core';
-import { useTranslation, Trans } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretSquareDown } from '@fortawesome/free-solid-svg-icons';
+import {useOwsTrans} from '@openworkshop/lib';
 
 interface IMachineOptionsProps {
   machineProfile: MachineProfileCompleteFragment;
@@ -41,7 +41,7 @@ type SelectedPartIdMap = { [key: string]: string };
 
 const ChooseMachineParts: React.FunctionComponent<IMachineOptionsProps> = (props) => {
   const mp = props.machineProfile;
-  const { t } = useTranslation();
+  const t = useOwsTrans();
   const log = useLogger(ChooseMachineParts);
   const classes = useStyles();
   const groupedParts = _.groupBy(mp.parts, 'partType');
@@ -96,7 +96,7 @@ const ChooseMachineParts: React.FunctionComponent<IMachineOptionsProps> = (props
         </Typography>
         <Typography className={classes.secondaryHeading}>
           {specs.length > 0 && <MachineSpecList specs={specs} />}
-          {!part && <Trans>(None selected)</Trans>}
+          {!part && t('(None selected)')}
         </Typography>
       </AccordionSummary>
     );
@@ -117,7 +117,7 @@ const ChooseMachineParts: React.FunctionComponent<IMachineOptionsProps> = (props
               </Typography>
             )}
             <Typography color='primary' variant='subtitle2'>
-              <Trans>This part is always included with your machine.</Trans>
+              {t('This part is always included with your machine.')}
             </Typography>
           </AccordionDetails>
         </Accordion>

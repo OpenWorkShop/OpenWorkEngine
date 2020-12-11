@@ -21,8 +21,7 @@ import CreateMachineProfile from './CreateMachineProfile';
 import MachineAxesEditor from './MachineAxesEditor';
 import MachineProfileSearchBar from './MachineProfileSearchBar';
 import { Grid, CircularProgress, Typography, Button, useTheme, Paper } from '@material-ui/core';
-import { Trans } from 'react-i18next';
-import { OpenWorkShop } from '@openworkshop/lib';
+import {useOwsTrans} from '@openworkshop/lib';
 
 interface ICustomizeMachineProps {
   onCustomized: (machine?: ICustomizedMachine) => void;
@@ -31,7 +30,7 @@ interface ICustomizeMachineProps {
 
 const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props) => {
   const log = useLogger(CustomizeMachine);
-  const ows = React.useContext(OpenWorkShop);
+  const t = useOwsTrans();
   const theme = useTheme();
   const [machineProfile, setMachineProfile] = React.useState<MachineSearchResultFragment | undefined>(undefined);
   const [getCompleteMachineProfile, { loading, error, data }] = useGetCompleteMachineProfileLazyQuery(owsClientOpts);
@@ -135,8 +134,8 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
     onCustomized(undefined);
   }
 
-  const completedMsg = loadedMachineProfile ? ows.t('Please review the defaults provided by the community catalog:')
-    : ows.t('This step has already been completed.');
+  const completedMsg = loadedMachineProfile ? t('Please review the defaults provided by the community catalog:')
+    : t('This step has already been completed.');
 
   return (
     <Grid container spacing={2} style={{ marginBottom: theme.spacing(2) }}>
@@ -157,9 +156,9 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
                 onClick={() => (customizedMachine ? startOver() : setSearchMachines(!searchMachines))}
                 style={{ marginLeft: theme.spacing(2) }}
               >
-                {customizedMachine && <Trans>Start Over</Trans>}
-                {!customizedMachine && searchMachines && <Trans>Can't find your machine?</Trans>}
-                {!customizedMachine && !searchMachines && <Trans>Search the Community Catalog</Trans>}
+                {customizedMachine && t('Start Over')}
+                {!customizedMachine && searchMachines && t('Can\'t find your machine?')}
+                {!customizedMachine && !searchMachines && t('Search the Community Catalog')}
               </Button>
             </Grid>
             <Grid item xs={12}>
@@ -172,23 +171,23 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
         <Grid item xs={12}>
           <CircularProgress size={32} />
           <Typography variant='h5'>
-            <Trans>Loading machine options...</Trans>
+            {t('Loading machine options...')}
           </Typography>
         </Grid>
       )}
       {loadedMachineProfile && customizedMachine && (
         <Grid item xs={12}>
           <Typography variant='h5'>
-            <Trans>Parts & Options</Trans>
+            {t('Parts & Options')}
             <HoverHelpStep
-              tip={ows.t('Default parts are pre-selected below... but please change them if you have upgraded, modified, ' +
+              tip={t('Default parts are pre-selected below... but please change them if you have upgraded, modified, ' +
                 'or used a non-standard kit.')}
               isComplete={!!customizedMachine}
             />
           </Typography>
           {loadedMachineProfile && <Typography variant='subtitle2'>{completedMsg}</Typography>}
           {!loadedMachineProfile && <Typography variant='subtitle2'>
-            <Trans>Please check the options below.</Trans>
+            {t('Please check the options below.')}
           </Typography>}
         </Grid>
       )}
@@ -200,15 +199,15 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
       {customizedMachine && (
         <Grid item xs={12}>
           <Typography variant='h5'>
-            <Trans>Axes (Size)</Trans>
+            {t('Axes (Size)')}
             <HoverHelpStep
-              tip={ows.t('Each axis should have a minimum and maximum value, so Makerverse knows how far it can move.')}
+              tip={t('Each axis should have a minimum and maximum value, so Makerverse knows how far it can move.')}
               isComplete={!!customizedMachine}
             />
           </Typography>
           {customizedMachine && <Typography variant='subtitle2'>{completedMsg}</Typography>}
           {!customizedMachine && <Typography variant='subtitle2'>
-            <Trans>Please confirm the dimensions of your machine.</Trans>
+            {t('Please confirm the dimensions of your machine.')}
           </Typography>}
         </Grid>
       )}

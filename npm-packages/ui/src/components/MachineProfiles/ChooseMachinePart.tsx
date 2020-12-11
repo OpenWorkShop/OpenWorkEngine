@@ -14,8 +14,8 @@ import {
   Checkbox,
   FormControlLabel,
 } from '@material-ui/core';
-import { useTranslation, Trans } from 'react-i18next';
 import useLogger from '@openworkshop/lib/utils/logging/UseLogger';
+import {useOwsTrans} from '@openworkshop/lib';
 
 interface IChooseMachinePartsProps {
   partGroup: MachinePartCompleteFragment[];
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const ChooseMachinePart: React.FunctionComponent<IChooseMachinePartsProps> = (props) => {
-  const { t } = useTranslation();
+  const t = useOwsTrans();
   const log = useLogger(ChooseMachinePart);
   const classes = useStyles();
   const firstPart = props.partGroup[0];
@@ -90,7 +90,7 @@ const ChooseMachinePart: React.FunctionComponent<IChooseMachinePartsProps> = (pr
         {isOptional && (
           <MenuItem value=''>
             <em>
-              <Trans>None</Trans>
+              {t('None')}
             </em>
           </MenuItem>
         )}
@@ -104,7 +104,7 @@ const ChooseMachinePart: React.FunctionComponent<IChooseMachinePartsProps> = (pr
       </Select>
       {!isOptional && (
         <FormHelperText>
-          <Trans>Required</Trans>
+          {t('Required')}
         </FormHelperText>
       )}
     </FormControl>

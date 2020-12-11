@@ -1,28 +1,6 @@
-import { ApolloLink } from '@apollo/client';
-import { Store, AnyAction } from '@reduxjs/toolkit';
-import { UserManagerSettings } from 'oidc-client';
-import { IOpenWorkShop } from './OpenWorkShop';
-import { IOwsState } from './store';
-import { LogOptions } from './utils/logging/LogOptions';
+import { IOwsSettings, OwsEnvironment, HostnameMap, IOwsOptions } from './types';
 
-export type OwsEnvironment = 'Development' | 'Staging' | 'Production';
-
-export interface IOwsSettings {
-  environment: OwsEnvironment;
-  url: URL;
-}
-
-export type HostnameMap = { [key: string]: OwsEnvironment };
-
-export interface IOwsOptions {
-  store: Store<IOwsState>;
-  client: UserManagerSettings;
-  environment?: OwsEnvironment;
-  hostnameMap?: HostnameMap;
-  i18nMiddleware?: AnyAction[];
-  logOptions?: LogOptions;
-  clientApolloLinkCreator?: (ows: IOpenWorkShop) => ApolloLink;
-}
+const defaultEnv: OwsEnvironment = 'Production';
 
 function getServerUrl(env: OwsEnvironment): URL {
   if (env === 'Development') {
@@ -32,8 +10,6 @@ function getServerUrl(env: OwsEnvironment): URL {
   }
   return new URL('https://openwork.shop');
 }
-
-const defaultEnv: OwsEnvironment = 'Production';
 
 const settings: IOwsSettings = {
   environment: defaultEnv,

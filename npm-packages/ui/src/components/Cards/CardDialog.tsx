@@ -1,8 +1,5 @@
-import { Dialog, Card, CardContent, CardHeader, Toolbar, Typography, ThemeProvider, useTheme, DialogContent, DialogTitle, CardActions, DialogActions } from '@material-ui/core';
+import { Dialog, Toolbar, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 import * as React from 'react';
-import { Trans, useTranslation } from 'react-i18next';
-import ThreeColumns from '../Layout/ThreeColumns';
-import ToolbarCard from '../Cards/ToolbarCard';
 import {IToolbarCardProps} from './ToolbarCard';
 import useStyles from './CardStyles';
 

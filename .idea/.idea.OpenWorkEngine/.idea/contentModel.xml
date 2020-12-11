@@ -2605,13 +2605,16 @@
                 <e p="MachineSpec.graphql" t="Include" />
                 <e p="MachineSpecType.ts" t="Include" />
               </e>
+              <e p="types.ts" t="Include" />
             </e>
             <e p="consts.ts" t="Include" />
+            <e p="Hooks.ts" t="Include" />
             <e p="index.ts" t="Include" />
             <e p="OpenWorkShop.ts" t="Include" />
             <e p="OpenWorkShopSettings.ts" t="Include" />
             <e p="ows-schema.graphql" t="Include" />
             <e p="store.ts" t="Include" />
+            <e p="types.ts" t="Include" />
             <e p="Utils" t="Include">
               <e p="cookies.ts" t="Include" />
               <e p="device" t="Include">
@@ -2652,9 +2655,9 @@
             <e p="MachineController.ts" t="Include" />
           </e>
           <e p="tsconfig.json" t="Include" />
-          <e p="tsconfig.tsbuildinfo" t="Include" />
         </e>
         <e p="OpenWorkEngine.mdproj" t="IncludeRecursive" />
+        <e p="tsconfig-base.json" t="Include" />
         <e p="ui" t="Include">
           <e p=".eslintignore" t="Include" />
           <e p=".eslintrc.js" t="Include" />
@@ -3226,7 +3229,6 @@
             </e>
           </e>
           <e p="tsconfig.json" t="Include" />
-          <e p="tspaths.json" t="Include" />
         </e>
         <e p="appsettings.Development.json" t="Include" />
         <e p="appsettings.json" t="Include" />

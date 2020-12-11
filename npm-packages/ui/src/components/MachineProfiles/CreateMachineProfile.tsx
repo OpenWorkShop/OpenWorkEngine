@@ -16,12 +16,11 @@ import {
   TextField,
   Theme,
   Typography,
-  useTheme,
 } from '@material-ui/core';
-import {Trans, useTranslation} from 'react-i18next';
 import {ToggleButton, ToggleButtonGroup} from '@material-ui/lab';
 import {normalizeMachineControllerType} from '@openworkshop/lib/api/Machines/MachineControllerType';
 import {BaudRate} from '@openworkshop/lib/api/Machines/BaudRate';
+import {useOwsTrans} from '@openworkshop/lib';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,8 +48,7 @@ type ProfileKey = 'brand' | 'model' | 'submit';
 
 const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> = (props) => {
   const log = useLogger(CreateMachineProfile);
-  const { t } = useTranslation();
-  const theme = useTheme();
+  const t = useOwsTrans();
   const controllerTypes = [MachineControllerType.Grbl, MachineControllerType.Marlin];
   //Object.keys(MachineControllerType);
   const baudRates = Object.values(BaudRate).filter((br) => typeof br === 'number');
@@ -94,7 +92,7 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
     <Grid container spacing={4}>
       <Grid item xs={12} md={6}>
         <Typography variant='h5' className={classes.headings}>
-          <Trans>Connection Protocol</Trans>
+          {t('Connection Protocol')}
         </Typography>
         <ToggleButtonGroup
           exclusive
@@ -111,7 +109,7 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
         </ToggleButtonGroup>
         <FormControl className={classes.formControl} error={!baudRate}>
           <InputLabel shrink id='baud-rate-label'>
-            <Trans>Baud Rate</Trans>
+            {t('Baud Rate')}
           </InputLabel>
           <Select
             id='baud-rate'
@@ -123,7 +121,7 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
             }}>
             <MenuItem value={0}>
               <em>
-                <Trans>None</Trans>
+                {t('None')}
               </em>
             </MenuItem>
             {baudRates.map((br) => {
@@ -135,7 +133,7 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
             })}
           </Select>
           <FormHelperText>
-            <Trans>Required</Trans>
+            {t('Required')}
           </FormHelperText>
         </FormControl>
         <FormControlLabel
@@ -147,7 +145,7 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
       </Grid>
       <Grid item xs={12} md={6}>
         <Typography variant='h5' className={classes.headings}>
-          <Trans>Machine Information</Trans>
+          {t('Machine Information')}
           <Grid container spacing={1} >
             <Grid item xs={12} sm={6}>
               <FormControl className={classes.formControl}>

@@ -4,14 +4,14 @@ import {
 } from '@openworkshop/lib/api/Machines/MachineSpecType';
 import React from 'react';
 import { MachineSpecPropsFragment } from '@openworkshop/lib/api/graphql';
-import { useTranslation } from 'react-i18next';
+import {useOwsTrans} from '@openworkshop/lib';
 
 interface IMachineSpecProps {
   specs: MachineSpecPropsFragment[];
 }
 
 const MachineSpecList: React.FunctionComponent<IMachineSpecProps> = (props) => {
-  const { t } = useTranslation();
+  const t = useOwsTrans();
 
   return (
     <span>

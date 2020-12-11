@@ -6,12 +6,11 @@ import {
 import * as React from 'react';
 import {Autocomplete, CircularProgress, FormControl, FormHelperText, Grid, TextField, Typography} from '@material-ui/core';
 import useLogger from '@openworkshop/lib/utils/logging/UseLogger';
-import {Trans, useTranslation} from 'react-i18next';
 import {owsClientOpts} from '@openworkshop/lib/consts';
 import OfflineAlertList from '../Alerts/OfflineAlertList';
 import OpenWorkShopIcon from '../OpenWorkShopIcon';
 import useStyles from './Styles';
-import { OpenWorkShop } from '@openworkshop/lib';
+import {useOwsTrans} from '@openworkshop/lib';
 
 type MP = MachineSearchResultFragment;
 
@@ -20,7 +19,7 @@ interface IMachineProfileSearchProps {
 }
 
 const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProps> = (props) => {
-  const ows = React.useContext(OpenWorkShop);
+  const t = useOwsTrans();
   const [open, setOpen] = React.useState(false);
   const log = useLogger(MachineProfileSearchBar);
   const classes = useStyles();
@@ -47,12 +46,12 @@ const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProp
   }
 
   function getCategoryName(mp: MP): string {
-    if (mp.machineCategory === MachineCategory.Tdp) return ows.t('3D Printer');
+    if (mp.machineCategory === MachineCategory.Tdp) return t('3D Printer');
     return mp.machineCategory;
   }
 
   function getGroupName(mp: MP): string {
-    if (mp.featured) return ows.t('Featured');
+    if (mp.featured) return t('Featured');
     return getCategoryName(mp);
   }
 
@@ -68,8 +67,8 @@ const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProp
         id='search-machine-profiles'
         open={open}
         className={classes.input}
-        noOptionsText={error ? error.message.split('\n')[0] : ows.t('Nothing found')}
-        loadingText={ows.t('Loading...')}
+        noOptionsText={error ? error.message.split('\n')[0] : t('Nothing found')}
+        loadingText={t('Loading...')}
         loading={loading}
         onOpen={() => updateQuery('')}
         onClose={() => setOpen(false)}
@@ -92,7 +91,7 @@ const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProp
                   {mp.brand}
                   {mp.brand && ' '}
                   {getCategoryName(mp)}
-                  {mp.discontinued && ows.t(' (Discontinued)')}
+                  {mp.discontinued && t(' (Discontinued)')}
                 </Typography>
               </Grid>
             </Grid>
@@ -101,7 +100,7 @@ const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProp
         renderInput={(params) => (
           <TextField
             {...params}
-            label={ows.t('Search the community catalog...')}
+            label={t('Search the community catalog...')}
             variant='outlined'
             InputProps={{
               ...params.InputProps,
@@ -115,8 +114,8 @@ const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProp
           />
         )}
       />
-      <FormHelperText ><Trans>Try searching for brand names.</Trans></FormHelperText>
-      <OfflineAlertList feature={ows.t('The community catalog')} error={error} />
+      <FormHelperText >{t('Try searching for brand names.')}</FormHelperText>
+      <OfflineAlertList feature={t('The community catalog')} error={error} />
     </FormControl>
   );
 };

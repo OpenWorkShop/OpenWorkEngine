@@ -1,9 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { Typography } from '@material-ui/core';
-import { Trans, useTranslation } from 'react-i18next';
 import { favicon32 } from '../Images';
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
-import { OpenWorkShop } from '@openworkshop/lib';
+import {OpenWorkShop, useOwsTrans} from '@openworkshop/lib';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,20 +23,20 @@ interface OwnProps {
 type Props = OwnProps;
 
 const PoweredBy: FunctionComponent<Props> = (props) => {
-  const ows = React.useContext(OpenWorkShop);
+  const t = useOwsTrans();
   const classes = useStyles();
   const link = props.link ?? 'https://openwork.shop/about/powered-by';
 
   function renderIcon() {
-    return <img className={classes.logo} alt={ows.t('OpenWorkShop icon')} src={favicon32.base64} />;
+    return <img className={classes.logo} alt={t('OpenWorkShop icon')} src={favicon32.base64} />;
   }
 
   return (
     <div>
       <Typography variant='subtitle2'>
-        {ows.t('{{ productName }} is powered by', props)}
+        {t('{{ productName }} is powered by', props)}
         {renderIcon()}
-        <a href={link} title={ows.t('About OpenWorkShop')} target='_blank'>
+        <a href={link} title={t('About OpenWorkShop')} target='_blank'>
           OpenWorkShop
         </a>
       </Typography>

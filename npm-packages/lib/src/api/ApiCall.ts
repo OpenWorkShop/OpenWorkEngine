@@ -10,30 +10,7 @@ import {
   SliceCaseReducers,
 } from '@reduxjs/toolkit';
 import _ from 'lodash';
-import {IOpenWorkShop} from '../OpenWorkShop';
-
-export enum ApiCallStatus {
-  LOADING = -1,
-  IDLE, // <= IDLE means "not done"
-  ERROR, // <= ERROR means "not (yet?) successful"
-  SUCCESS,
-}
-
-// Generic record type
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IRecord {}
-
-export interface IApiMeta {
-  redirectUrl?: string;
-}
-
-// The "error" object can be returned in any API response.
-export interface IApiError {
-  message: string;
-  type?: string;
-  class?: string;
-  code?: string;
-}
+import {ApiCallStatus, IApiArgs, IApiCallState, IApiResponse} from './types';
 
 // Copied from createAsyncThunk.ts (private)
 type AsyncThunkConfig = {
@@ -42,31 +19,6 @@ type AsyncThunkConfig = {
   extra?: unknown;
   rejectValue?: unknown;
 };
-
-// All API responses derive from this
-export interface IApiResponse {
-  errors?: Array<IApiError>;
-  meta?: IApiMeta;
-}
-
-// API response for a single record
-export interface IApiResponseRecord<TRecord extends IRecord>
-  extends IApiResponse {
-  data: TRecord;
-}
-
-// API response for a list of records
-export interface IApiResponseRecords<TRecord extends IRecord>
-  extends IApiResponse {
-  data: Array<TRecord>;
-}
-
-// Used by reducers to track call status
-export interface IApiCallState<TResponse extends IApiResponse> {
-  status: ApiCallStatus;
-  errors: Array<IApiError>;
-  response?: TResponse;
-}
 
 function getEndpointName(endpoint: string) {
   return endpoint
@@ -77,10 +29,6 @@ function getEndpointName(endpoint: string) {
 }
 
 type SuccessCallback<TResponse> = (state: IApiCallState<TResponse>) => void;
-
-export interface IApiArgs {
-  ows: IOpenWorkShop;
-}
 
 export default class ApiCall<TArgs extends IApiArgs, TResponse extends IApiResponse> {
   static reducers: { [key: string]: Reducer } = {};

@@ -11,6 +11,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="*\dist\**" />
+    <Content Include="tsconfig-base.json" />
     <None Include="*\**" Exclude="*\dist\**" />
   </ItemGroup>
 </Project>

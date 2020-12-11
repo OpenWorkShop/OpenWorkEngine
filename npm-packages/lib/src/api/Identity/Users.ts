@@ -1,4 +1,5 @@
-import ApiCall, {IApiArgs, IApiCallState, IApiResponseRecord, IRecord} from '../ApiCall';
+import ApiCall from '../ApiCall';
+import {IApiArgs, IApiCallState, IApiResponseRecord, IRecord} from '../types';
 
 // Public user profile
 export interface IUserProfile extends IRecord {

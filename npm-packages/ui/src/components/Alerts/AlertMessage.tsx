@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { Alert, Typography } from '@material-ui/core';
 import * as React from 'react';
 import {IAlertMessage} from './types';
-import { useTranslation } from 'react-i18next';
+import {useOwsTrans} from '@openworkshop/lib';
 
 
 type Props = IAlertMessage & {
@@ -10,7 +10,7 @@ type Props = IAlertMessage & {
 };
 
 const AlertMessage: React.FunctionComponent<Props> = (props) => {
-  const { t } = useTranslation();
+  const t = useOwsTrans();
   const { severity, name, message } = props;
   const lines = message ? _.uniq(message.split('\n')) : [];
 

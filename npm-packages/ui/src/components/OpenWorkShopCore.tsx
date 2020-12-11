@@ -3,7 +3,7 @@ import * as React from 'react';
 import { OidcProvider } from 'redux-oidc';
 import usePromise from 'react-promise-suspense';
 import { ApolloProvider } from '@apollo/client';
-import { IOwsOptions } from '@openworkshop/lib/OpenWorkShopSettings';
+import { IOwsOptions } from '@openworkshop/lib/';
 import { initReactI18next } from 'react-i18next';
 import useLogger from '@openworkshop/lib/utils/logging/UseLogger';
 

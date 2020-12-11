@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { IApiError } from '@openworkshop/lib/api/ApiCall';
+import { IApiError } from '@openworkshop/lib/api';
 import React from 'react';
 
 const useStyles = makeStyles((theme) => ({

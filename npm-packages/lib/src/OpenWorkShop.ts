@@ -9,37 +9,14 @@ import React from 'react';
 import { Store } from 'redux';
 import { createUserManager, loadUser } from 'redux-oidc';
 import { abbreviation } from './consts';
-import { IOwsOptions, IOwsSettings, loadSettings } from './OpenWorkShopSettings';
+import { loadSettings } from './OpenWorkShopSettings';
 import { IOwsState } from './store';
 import logManager, { LogManager } from './utils/logging';
 import { Logger } from './utils/logging';
 import { defaultLogOptions, developmentLogOptions } from './utils/logging/LogOptions';
+import { IOpenWorkShop, IOwsOptions, IOwsSettings } from './types';
 
 let _i = 0;
-
-export type TTranslateFunc = (key: string, opts?: StringMap) => string;
-
-export interface IOpenWorkShop {
-  settings: IOwsSettings;
-
-  authManager: OidcClient.UserManager;
-
-  apolloClient: ApolloClient<NormalizedCacheObject>;
-
-  store: Store<IOwsState>;
-
-  user: OidcClient.User | undefined;
-
-  isAuthenticated: boolean;
-
-  log: Logger;
-
-  logManager: LogManager;
-
-  i18n: TFunction;
-
-  t: TTranslateFunc;
-}
 
 class OpenWorkShop implements IOpenWorkShop {
   private _settings?: IOwsSettings = undefined;
@@ -168,6 +145,7 @@ class OpenWorkShop implements IOpenWorkShop {
   }
 
   public t(key: string, opts?: StringMap): string {
+    this.check();
     return this.i18n(key, opts);
   }
 
