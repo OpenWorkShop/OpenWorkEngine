@@ -11,16 +11,17 @@ type Props = IToolbarCardProps & {
 const CardDialog: React.FunctionComponent<Props> = (props) => {
   const { open, onClose } = props;
   const classes = useStyles();
-  const scroll = 'body';
+  const scroll = 'paper';
+
 
   return (
     <Dialog
       open={open}
       onClose={onClose}
       scroll={scroll}
-      aria-labelledby="create workspace"
+      aria-labelledby={props.title}
     >
-      <DialogTitle id="scroll-dialog-title" className={classes.cardHeader}>
+      <DialogTitle className={classes.cardHeader}>
         <Toolbar>
           {props.title}
         </Toolbar>

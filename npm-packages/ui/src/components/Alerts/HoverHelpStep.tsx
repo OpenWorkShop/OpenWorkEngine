@@ -3,12 +3,12 @@ import { useTheme, Tooltip, IconButton } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle, faCheck } from '@fortawesome/free-solid-svg-icons';
 
-interface OwnProps {
+export interface IHelpStep {
   tip: string;
   isComplete?: boolean;
 }
 
-type Props = OwnProps;
+type Props = IHelpStep;
 
 const HoverHelpStep: FunctionComponent<Props> = (props) => {
   const theme = useTheme();

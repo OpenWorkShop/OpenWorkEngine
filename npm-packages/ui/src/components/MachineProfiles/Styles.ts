@@ -8,6 +8,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   input: {
     width: '100%',
   },
+  axisInput: {
+
+  },
 }));
 
 export default useStyles;

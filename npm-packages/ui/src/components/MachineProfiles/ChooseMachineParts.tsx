@@ -1,6 +1,5 @@
 import { useLogger } from '@openworkshop/lib/utils/logging/UseLogger';
 import _ from 'lodash';
-import { MachinePartCompleteFragment, MachineProfileCompleteFragment } from '@openworkshop/lib/api/graphql';
 import ChooseMachinePart from './ChooseMachinePart';
 import MachineSpecList from './MachineSpecList';
 import { getMachinePartTypeTranslationKey } from '@openworkshop/lib/api/Machines/MachinePartType';
@@ -17,17 +16,19 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretSquareDown } from '@fortawesome/free-solid-svg-icons';
 import {useOwsTrans} from '@openworkshop/lib';
+import { IMachinePartChoice } from '@openworkshop/lib/api/Machines/CustomizedMachine';
 
 interface IMachineOptionsProps {
-  machineProfile: MachineProfileCompleteFragment;
-  onComplete: (parts: MachinePartCompleteFragment[]) => void;
+  parts: IMachinePartChoice[];
+  onComplete: (parts: IMachinePartChoice[]) => void;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     heading: {
       fontSize: theme.typography.pxToRem(15),
-      flexBasis: '25%',
+
+      flexBasis: '50%',
       flexShrink: 0,
     },
     secondaryHeading: {
@@ -40,14 +41,14 @@ const useStyles = makeStyles((theme: Theme) =>
 type SelectedPartIdMap = { [key: string]: string };
 
 const ChooseMachineParts: React.FunctionComponent<IMachineOptionsProps> = (props) => {
-  const mp = props.machineProfile;
+  const parts = props.parts;
   const t = useOwsTrans();
   const log = useLogger(ChooseMachineParts);
   const classes = useStyles();
-  const groupedParts = _.groupBy(mp.parts, 'partType');
+  const groupedParts = _.groupBy(parts, 'partType');
   const allPartTypes = Object.keys(groupedParts);
-  const includedParts: { [key: string]: MachinePartCompleteFragment } = {};
-  const selectableParts: { [key: string]: MachinePartCompleteFragment[] } = {};
+  const includedParts: { [key: string]: IMachinePartChoice } = {};
+  const selectableParts: { [key: string]: IMachinePartChoice[] } = {};
   const defaultSelectedParts: SelectedPartIdMap = {};
 
   allPartTypes.forEach((partType) => {
@@ -77,14 +78,14 @@ const ChooseMachineParts: React.FunctionComponent<IMachineOptionsProps> = (props
     );
 
     if (isCompletePartList) {
-      const parts: MachinePartCompleteFragment[] = Object.keys(selectedPartIds).map(
-        (pt) => _.find(mp.parts, (p) => p.id === selectedPartIds[pt]) as MachinePartCompleteFragment,
+      const parts: IMachinePartChoice[] = Object.keys(selectedPartIds).map(
+        (pt) => _.find(parts, (p) => p.id === selectedPartIds[pt]) as IMachinePartChoice,
       );
       props.onComplete(parts);
     }
   }
 
-  function renderPartSummary(partType: string, part?: MachinePartCompleteFragment) {
+  function renderPartSummary(partType: string, part?: IMachinePartChoice) {
     const partTypeName = t(getMachinePartTypeTranslationKey(partType));
     const specs = part ? part.specs : [];
 
@@ -128,7 +129,7 @@ const ChooseMachineParts: React.FunctionComponent<IMachineOptionsProps> = (props
   function renderSelectableParts() {
     return Object.keys(selectableParts).map((partType) => {
       const selectedPartId = _.has(selectedPartIds, partType) ? selectedPartIds[partType] : null;
-      const part = selectedPartId && _.find(mp.parts, (p) => p.id === selectedPartId);
+      const part = selectedPartId && _.find(parts, (p) => p.id === selectedPartId);
 
       return (
         <Accordion key={partType}>

@@ -6,9 +6,13 @@ namespace OpenWorkEngine.OpenController.Ports.Models {
 
     public int CharactersRead { get; set; } = 0;
 
+    public int LinesRead { get; set; } = 0;
+
     public int BytesToWrite => IsOpen ? _serialPort.BytesToWrite : -1;
 
     public int CharactersWritten { get; set; } = 0;
+
+    public int LinesWritten { get; set; } = 0;
 
     public bool IsOpen => _serialPort.IsOpen;
 
@@ -20,6 +24,6 @@ namespace OpenWorkEngine.OpenController.Ports.Models {
 
     public override string ToString() =>
       (IsOpen ? "[OPEN] " : "[CLOSED] ") +
-      $"[I] {BytesToRead}/{CharactersRead} [O] {BytesToWrite}/{CharactersWritten}";
+      $"[I] {BytesToRead}/{CharactersRead}/{LinesRead} [O] {BytesToWrite}/{CharactersWritten}/{LinesWritten}";
   }
 }

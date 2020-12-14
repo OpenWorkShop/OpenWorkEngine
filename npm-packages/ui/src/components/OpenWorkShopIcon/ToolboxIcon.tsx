@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 export const ToolboxIcon : React.FunctionComponent< React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg height={32} width={32} fill='currentColor' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60' {...props}>
+  <svg fill='currentColor' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60' height={32} width={32} {...props}>
     <g fillRule='nonzero' fill='currentColor'>
       <path d='M57 60H3a3.003 3.003 0 01-3-3V32a3.003 3.003 0 013-3h54a3.003 3.003 0 013 3v25a3.003 3.003 0 01-3 3zM3 31c-.552 0-1 .448-1 1v25c0 .552.448 1 1 1h54c.552 0 1-.448 1-1V32c0-.552-.448-1-1-1H3z' />
       <path d='M57 31H3a1 1 0 01-1-1V7a3.003 3.003 0 013-3h50a3.003 3.003 0 013 3v23a1 1 0 01-1 1zM4 29h52V7c0-.552-.448-1-1-1H5c-.552 0-1 .448-1 1v22z' />

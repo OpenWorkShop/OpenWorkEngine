@@ -6,16 +6,19 @@ import HoverHelpStep from '../Alerts/HoverHelpStep';
 import NumericInput from '../Forms/NumericInput';
 import {IAlertMessage} from '../Alerts';
 import {useOwsTrans} from '@openworkshop/lib';
+import {IAxisProps} from '@openworkshop/lib/api/Machines/CustomizedMachine';
+import useStyles from './Styles';
 
 interface IMachineAxisEditorProps {
-  axis: MachineAxisPropsFragment;
-  onChanged: (axis: MachineAxisPropsFragment) => void;
+  axis: IAxisProps;
+  onChanged: (axis: IAxisProps) => void;
 }
 
 type AxisKey = 'min' | 'max' | 'precision' | 'accuracy';
 
 const MachineAxisEditor: React.FunctionComponent<IMachineAxisEditorProps> = (props) => {
   const t = useOwsTrans();
+  const classes = useStyles();
   const axis = props.axis;
   const axisName = axis.name.toLowerCase();
   const isX = axisName === 'x';
@@ -58,11 +61,12 @@ const MachineAxisEditor: React.FunctionComponent<IMachineAxisEditorProps> = (pro
     const units = key === 'precision' ? t('digits') : 'mm';
     const tip = getTooltip(key);
     return (
-      <Grid item xs={12} lg={6}>
+      <Grid item xs={12} >
         <NumericInput
           id='min'
           label={name}
-          variant='outlined'
+          className={classes.axisInput}
+          variant="standard"
           integersOnly={key === 'precision'}
           numericValue={axis[key] as number}
           onChangeNumericValue={(v) => props.onChanged({ ...axis, [key]: v })}
@@ -85,7 +89,7 @@ const MachineAxisEditor: React.FunctionComponent<IMachineAxisEditorProps> = (pro
   }
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={1}>
       <Grid item xs={12}>
         <Typography variant='h5'>
           {props.axis.name}

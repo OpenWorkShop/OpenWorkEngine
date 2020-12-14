@@ -3,6 +3,7 @@
   "scripts": {
     "pkg": "./ci/pkg.sh",
     "graphql-lib": "yarn graphql-codegen --watch",
+    "icons": "cd npm-packages/ui && yarn run generate",
     "ows": "cd OpenWorkShop/App && yarn run start",
     "graphql-makerverse": "cd Makerverse/App && yarn graphql-codegen --watch",
     "mv": "cd Makerverse/App && yarn run dev",

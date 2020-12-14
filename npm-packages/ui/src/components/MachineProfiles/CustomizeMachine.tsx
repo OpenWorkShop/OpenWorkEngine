@@ -2,7 +2,6 @@ import {
   AxisName,
   MachineAxisPropsFragment,
   MachineFirmwareMinimalFragment,
-  MachinePartCompleteFragment,
   MachineSearchResultFragment,
   useGetCompleteMachineProfileLazyQuery,
 } from '@openworkshop/lib/api/graphql';
@@ -22,6 +21,9 @@ import MachineAxesEditor from './MachineAxesEditor';
 import MachineProfileSearchBar from './MachineProfileSearchBar';
 import { Grid, CircularProgress, Typography, Button, useTheme, Paper } from '@material-ui/core';
 import {useOwsTrans} from '@openworkshop/lib';
+import HelpfulHeader from '../Text/HelpfulHeader';
+
+import {IMachinePartChoice} from '@openworkshop/lib/api/Machines/CustomizedMachine';
 
 interface ICustomizeMachineProps {
   onCustomized: (machine?: ICustomizedMachine) => void;
@@ -110,7 +112,7 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
     });
   }
 
-  function onCompletedParts(parts: MachinePartCompleteFragment[]) {
+  function onCompletedParts(parts: IMachinePartChoice[]) {
     log.debug('set parts', parts);
     // const cm: ICustomizedMachine = _.deepClone(customizedMachine);
     if (!customizedMachine) {
@@ -177,14 +179,12 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
       )}
       {loadedMachineProfile && customizedMachine && (
         <Grid item xs={12}>
-          <Typography variant='h5'>
-            {t('Parts & Options')}
-            <HoverHelpStep
-              tip={t('Default parts are pre-selected below... but please change them if you have upgraded, modified, ' +
-                'or used a non-standard kit.')}
-              isComplete={!!customizedMachine}
-            />
-          </Typography>
+          <HelpfulHeader
+            tip={t('Default parts are pre-selected below... but please change them if you have upgraded, modified, ' +
+            'or used a non-standard kit.')}
+            title={t('Parts & Options')}
+            isComplete={!!customizedMachine}
+          />
           {loadedMachineProfile && <Typography variant='subtitle2'>{completedMsg}</Typography>}
           {!loadedMachineProfile && <Typography variant='subtitle2'>
             {t('Please check the options below.')}
@@ -193,18 +193,16 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
       )}
       {loadedMachineProfile && customizedMachine && (
         <Grid item xs={12}>
-          <ChooseMachineParts machineProfile={loadedMachineProfile} onComplete={onCompletedParts} />
+          <ChooseMachineParts parts={loadedMachineProfile.parts} onComplete={onCompletedParts} />
         </Grid>
       )}
       {customizedMachine && (
         <Grid item xs={12}>
-          <Typography variant='h5'>
-            {t('Axes (Size)')}
-            <HoverHelpStep
-              tip={t('Each axis should have a minimum and maximum value, so Makerverse knows how far it can move.')}
-              isComplete={!!customizedMachine}
-            />
-          </Typography>
+          <HelpfulHeader
+            title={t('Axes (Size)')}
+            tip={t('Each axis should have a minimum and maximum value, so Makerverse knows how far it can move.')}
+            isComplete={!!customizedMachine}
+          />
           {customizedMachine && <Typography variant='subtitle2'>{completedMsg}</Typography>}
           {!customizedMachine && <Typography variant='subtitle2'>
             {t('Please confirm the dimensions of your machine.')}

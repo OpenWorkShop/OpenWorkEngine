@@ -2,7 +2,7 @@ using System.Linq;
 
 namespace OpenWorkEngine.OpenController.Machines.Models {
   public class MachineDetectedFirmware {
-    public string Name { get; set; } = default!;
+    public string? Name { get; set; }
 
     // GRBL, etc.
     public string? Protocol { get; set; }

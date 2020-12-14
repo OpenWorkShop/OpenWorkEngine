@@ -4,6 +4,7 @@ import { Card, CardActions, CardHeader, Toolbar, CardContent } from '@material-u
 
 export interface IToolbarCardProps {
   title: string;
+  action?: React.ReactNode;
   subHeader?: React.ReactNode;
   footer?: React.ReactNode;
   children: React.ReactNode;
@@ -16,7 +17,7 @@ const ToolbarCard: FunctionComponent<Props> = (props) => {
 
   return (
     <Card className={classes.root}>
-      <CardHeader className={classes.cardHeader} title={
+      <CardHeader className={classes.cardHeader} action={props.action} title={
         <Toolbar>
           {props.title}
         </Toolbar>}

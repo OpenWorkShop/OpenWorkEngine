@@ -1,13 +1,11 @@
+using System;
+using OpenWorkEngine.OpenController.Lib;
+
 namespace OpenWorkEngine.OpenController.Machines.Models {
-  /// <summary>
-  /// Conveniently matches the Name/Message interface of a client side error.
-  /// But represents an alarm/error from a controller.
-  /// </summary>
-  public class MachineAlert {
+  public class MachineAlert : AlertError {
     public string Code { get; set; } = default!;
 
-    public string Name { get; set; } = default!;
-
-    public string Message { get; set; } = default!;
+    public MachineAlert(string name, string message) : base(name, message) { }
+    public MachineAlert(Exception e) : base(e) { }
   }
 }

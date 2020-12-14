@@ -42,6 +42,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Utils {
           if (readCharacters > 0) {
             if (Connection.Port.State < PortState.HasData) Connection.Port.State = PortState.HasData;
             Connection.Status.CharactersRead += readCharacters;
+            Connection.Status.LinesRead ++;
             Log.Verbose("[BUFFER] {count} characters on {portName}", readCharacters, Connection.Port.PortName);
             await Controller.HandleSerialRead(line);
           } else {

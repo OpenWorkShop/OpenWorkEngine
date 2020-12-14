@@ -1,12 +1,13 @@
 import { MachineAxisPropsFragment } from '@openworkshop/lib/api/graphql';
 import React from 'react';
 import { Grid, Paper } from '@material-ui/core';
-import { MachineAxes } from '@openworkshop/lib/api/Machines/CustomizedMachine';
+import {IAxisProps, MachineAxes} from '@openworkshop/lib/api/Machines/CustomizedMachine';
 import MachineAxisEditor from './MachineAxisEditor';
 
 interface IMachineAxesEditorProps {
   axes: MachineAxes;
   onChanged: (axes: MachineAxes) => void;
+  narrow?: boolean
 }
 
 type GridCellSize = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
@@ -28,20 +29,20 @@ function GetGridCellSize(val: number): GridCellSize {
 
 const MachineAxesEditor: React.FunctionComponent<IMachineAxesEditorProps> = (props) => {
   const axisNames = Object.keys(props.axes);
+  const { narrow, axes } = props;
   const size = GetGridCellSize(Math.floor(12 / axisNames.length));
-  const axes = props.axes;
 
-  function onChangedAxis(axis: MachineAxisPropsFragment) {
+  function onChangedAxis(axis: IAxisProps) {
     axes[axis.name] = { ...axis };
     props.onChanged(axes);
   }
 
   return (
-    <Grid container spacing={4} style={{ flexGrow: 1 }}>
+    <Grid container spacing={2} style={{ flexGrow: 1 }}>
       {axisNames.map((axisName) => {
         const axis = axes[axisName];
         return (
-          <Grid key={axis.name} item xs={12} sm={6} md={size}>
+          <Grid key={axis.name} item xs={12} sm={narrow ? 12 : 6} md={narrow ? 12 : size}>
             <Paper style={{ padding: 20 }}>
               <MachineAxisEditor axis={axis} onChanged={onChangedAxis} />
             </Paper>

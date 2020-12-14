@@ -7,7 +7,7 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
   /// Momentary values, which are apt to change frequently. This class should be kept small.
   /// </summary>
   public class MachineState {
-    public ActiveState State { get; internal set; } = ActiveState.Initializing;
+    public ActiveState ActivityState { get; internal set; } = ActiveState.Initializing;
 
     public MachineAlert? Alarm { get; internal set; } = null;
 

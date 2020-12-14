@@ -9,9 +9,15 @@ namespace OpenWorkEngine.OpenController.Ports.Messages {
 
     public string? Name { get; set; }
 
-    public string? Edition { get; set; }
+    public string? Edition { get; set; } = null;
 
-    public decimal RequiredVersion { get; set; }
+    public decimal RequiredVersion { get; set; } = 0;
+
+    public decimal SuggestedVersion { get; set; } = 0;
+
+    public string? DownloadUrl { get; set; }
+
+    public string? HelpUrl { get; set; }
   }
 }
 

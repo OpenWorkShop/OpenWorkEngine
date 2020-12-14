@@ -3,11 +3,11 @@ import {
   getMachineSpecTypeUnits,
 } from '@openworkshop/lib/api/Machines/MachineSpecType';
 import React from 'react';
-import { MachineSpecPropsFragment } from '@openworkshop/lib/api/graphql';
 import {useOwsTrans} from '@openworkshop/lib';
+import {IMachinePartSpec} from '@openworkshop/lib/api/Machines/CustomizedMachine';
 
 interface IMachineSpecProps {
-  specs: MachineSpecPropsFragment[];
+  specs: IMachinePartSpec[];
 }
 
 const MachineSpecList: React.FunctionComponent<IMachineSpecProps> = (props) => {

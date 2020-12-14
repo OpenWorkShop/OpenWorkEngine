@@ -23,6 +23,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   content: {
     padding: theme.spacing(padding),
+    paddingRight: theme.spacing(4),
+    paddingLeft: theme.spacing(4),
   },
   centered: {
     textAlign: 'center',
