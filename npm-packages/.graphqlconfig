@@ -1,0 +1,19 @@
+{
+  "name": "OpenController GraphQL Schema",
+  "schemaPath": "./lib/src/schema.graphql",
+  "includes": [
+    "./lib/src/**",
+    "./ui/src/**"
+  ],
+  "extensions": {
+    "endpoints": {
+      "Makerverse": {
+        "url": "http://dev.openwork.shop:5000/api/graphql",
+        "headers": {
+          "user-agent": "OpenController"
+        },
+        "introspect": true
+      }
+    }
+  }
+}

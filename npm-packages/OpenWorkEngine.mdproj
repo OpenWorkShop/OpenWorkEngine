@@ -11,7 +11,31 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="*\dist\**" />
+    <Content Include="..\codegen.yml">
+      <Link>codegen.yml</Link>
+    </Content>
+    <Content Include=".graphqlconfig" />
     <Content Include="tsconfig-base.json" />
     <None Include="*\**" Exclude="*\dist\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="ui\src\open-controller\analytics.ts" />
+    <TypeScriptCompile Include="ui\src\open-controller\Context\index.ts" />
+    <TypeScriptCompile Include="ui\src\open-controller\Context\types.ts" />
+    <TypeScriptCompile Include="ui\src\open-controller\Controllers\ControllerContext.ts" />
+    <TypeScriptCompile Include="ui\src\open-controller\Controllers\ControllerHooks.ts" />
+    <TypeScriptCompile Include="ui\src\open-controller\Controllers\ControllerProvider.tsx" />
+    <TypeScriptCompile Include="ui\src\open-controller\Controllers\index.ts" />
+    <TypeScriptCompile Include="ui\src\open-controller\Controllers\types.ts" />
+    <TypeScriptCompile Include="ui\src\open-controller\Context\apollo.ts" />
+    <TypeScriptCompile Include="ui\src\open-controller\Context\MakerverseContext.ts" />
+    <TypeScriptCompile Include="ui\src\open-controller\Context\OpenControllerHooks.ts" />
+    <TypeScriptCompile Include="ui\src\open-controller\Ports\index.ts" />
+    <TypeScriptCompile Include="ui\src\open-controller\Ports\SystemPortContext.ts" />
+    <TypeScriptCompile Include="ui\src\open-controller\Ports\SystemPortHooks.ts" />
+    <TypeScriptCompile Include="ui\src\open-controller\Ports\SystemPortProvider.tsx" />
+    <TypeScriptCompile Include="ui\src\open-controller\semvers.ts" />
+    <TypeScriptCompile Include="ui\src\open-controller\Workspaces\workspace-axis.ts" />
+    <TypeScriptCompile Include="ui\src\open-controller\Workspaces\Workspace.ts" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,6 @@
+fragment OpenControllerSession on OpenControllerSession {
+    token
+    user {
+        ...OpenControllerUserFull
+    }
+}

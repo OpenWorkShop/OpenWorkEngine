@@ -1,0 +1,10 @@
+fragment OpenControllerUserMin on OpenControllerUser {
+    username
+}
+
+fragment OpenControllerUserFull on OpenControllerUser {
+    ...OpenControllerUserMin
+    id
+    authenticationType
+    enabled
+}

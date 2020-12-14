@@ -13,7 +13,7 @@ using OpenWorkEngine.OpenController.Ports.Models;
 using OpenWorkEngine.OpenController.Ports.Services;
 
 namespace OpenWorkEngine.OpenController.Ports.Graph {
-  [ExtendObjectType(Name = "Mutation")]
+  [ExtendObjectType(Name = OpenControllerSchema.Mutation)]
   public class PortsMutation {
     [AuthorizeWriteControllers]
     public async Task<SystemPort> OpenPort(

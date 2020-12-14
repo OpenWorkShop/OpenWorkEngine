@@ -7,7 +7,6 @@
     "ows": "cd OpenWorkShop/App && yarn run start",
     "graphql-makerverse": "cd Makerverse/App && yarn graphql-codegen --watch",
     "mv": "cd Makerverse/App && yarn run dev",
-    "makerverse": "concurrently \"yarn run graphql-makerverse\" \"yarn run mv\"",
     "dev": "concurrently \"yarn run graphql-lib\" \"yarn run pkg watch lib\" \"yarn run pkg watch ui\"",
     "all": "concurrently \"yarn run graphql-lib\" \"yarn run graphql-makerverse\" \"yarn run pkg watch lib\" \"yarn run pkg watch ui\" \"yarn run ows\" \"yarn run mv\""
   },

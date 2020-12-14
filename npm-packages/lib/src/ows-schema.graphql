@@ -2,12 +2,120 @@
 
 schema {
     query: Query
+    mutation: Mutation
+    subscription: Subscription
+}
+
+interface IMachineFirmwareRequirement {
+    controllerType: MachineControllerType!
+    downloadUrl: String
+    edition: String
+    helpUrl: String
+    name: String
+    requiredVersion: Decimal!
+    suggestedVersion: Decimal!
+}
+
+interface ISerialPortOptions {
+    baudRate: Int!
+    dataBits: Int
+    handshake: Handshake
+    parity: Parity
+    readBufferSize: Int
+    readTimeout: Int
+    rtsEnable: Boolean
+    stopBits: StopBits
+    writeBufferSize: Int
+    writeTimeout: Int
+}
+
+type AlertError {
+    message: String!
+    name: String!
+}
+
+type AppUpdates {
+    checkForUpdates: Boolean!
+    prereleases: Boolean!
+}
+
+type CommandSettings {
+    commands: String!
+    enabled: Boolean!
+    id: String!
+    mtime: Long!
+    title: String!
+}
+
+type ConnectedPort {
+    createdAt: DateTime!
+    machine: ControlledMachine!
+    port: SystemPort!
+    status: PortStatus!
+}
+
+type ConnectionSettings {
+    firmware: MachineFirmwareSettings!
+    firmwareRequirement: IMachineFirmwareRequirement!
+    machineProfileId: String
+    manufacturer: String
+    portName: String!
+    toSerialPortOptions: ISerialPortOptions!
+}
+
+type ControlledMachine {
+    configuration: MachineConfiguration!
+    firmwareRequirement: FirmwareRequirement!
+    lastTopic: MachineTopic!
+    machineProfileId: String
+    settings: [MachineSetting!]!
+    state: MachineState!
+    topicId: String!
+}
+
+type EventSettings {
+    commands: String!
+    enabled: Boolean!
+    event: String!
+    id: String!
+    mtime: Long!
+    trigger: String!
+}
+
+type FileSystemSettings {
+    mountPoints: [MountPointSettings!]!
+    programDirectory: String!
+}
+
+type FirmwareRequirement implements IMachineFirmwareRequirement {
+    controllerType: MachineControllerType!
+    downloadUrl: String
+    edition: String
+    helpUrl: String
+    name: String
+    requiredVersion: Decimal!
+    suggestedVersion: Decimal!
+}
+
+type MachineAlert {
+    code: String!
+    message: String!
+    name: String!
 }
 
 type MachineAxis {
     accuracy: Decimal!
     id: String!
     machineProfiles: [MachineProfile!]!
+    max: Decimal!
+    min: Decimal!
+    name: AxisName!
+    precision: Decimal!
+}
+
+type MachineAxisSettings {
+    accuracy: Decimal!
+    id: String
     max: Decimal!
     min: Decimal!
     name: AxisName!
@@ -21,6 +129,27 @@ type MachineCommand {
     value: String!
 }
 
+type MachineCommandSettings {
+    id: String!
+    name: String!
+    value: String!
+}
+
+type MachineConfiguration {
+    firmware: MachineDetectedFirmware!
+    workOffset: MachinePosition!
+}
+
+type MachineDetectedFirmware {
+    edition: String
+    friendlyName: String
+    isValid: Boolean!
+    name: String
+    protocol: String
+    value: Decimal
+    welcomeMessage: String
+}
+
 type MachineFeature {
     description: String
     disabled: Boolean!
@@ -31,7 +160,16 @@ type MachineFeature {
     title: String
 }
 
-type MachineFirmware {
+type MachineFeatureSettings {
+    description: String
+    disabled: Boolean!
+    icon: String
+    id: String
+    key: String!
+    title: String
+}
+
+type MachineFirmware implements IMachineFirmwareRequirement {
     baudRate: Decimal!
     baudRateValue: Int!
     controllerType: MachineControllerType!
@@ -41,6 +179,20 @@ type MachineFirmware {
     id: String!
     machineProfiles: [MachineProfile!]!
     name: String!
+    requiredVersion: Decimal!
+    rtscts: Boolean!
+    suggestedVersion: Decimal!
+}
+
+type MachineFirmwareSettings implements IMachineFirmwareRequirement {
+    baudRate: BaudRate
+    baudRateValue: Int!
+    controllerType: MachineControllerType!
+    downloadUrl: String
+    edition: String
+    helpUrl: String
+    id: String
+    name: String
     requiredVersion: Decimal!
     rtscts: Boolean!
     suggestedVersion: Decimal!
@@ -58,6 +210,26 @@ type MachinePart {
     sortOrder: Int!
     specs: [MachineSpec!]!
     title: String
+}
+
+type MachinePartSettings {
+    dataBlob: String!
+    description: String
+    id: String
+    isDefault: Boolean!
+    optional: Boolean!
+    partType: MachinePartType!
+    settings: [MachineSettingSettings!]!
+    specs: [MachineSpecSettings!]!
+    title: String!
+}
+
+type MachinePosition {
+    e: Decimal
+    isValid: Boolean!
+    x: Decimal
+    y: Decimal
+    z: Decimal
 }
 
 type MachinePresetSetting {
@@ -86,6 +258,22 @@ type MachineProfile {
     parts: [MachinePart!]!
 }
 
+type MachineSetting {
+    id: String!
+    key: String!
+    settingType: MachineSettingType!
+    title: String
+    value: String!
+}
+
+type MachineSettingSettings {
+    id: String!
+    key: String!
+    settingType: MachineSettingType!
+    title: String
+    value: String!
+}
+
 type MachineSpec {
     id: String!
     machineParts: [MachinePart!]!
@@ -93,7 +281,100 @@ type MachineSpec {
     value: Decimal!
 }
 
+type MachineSpecSettings {
+    id: String!
+    specType: MachineSpecType!
+    value: Decimal!
+}
+
+type MachineState {
+    activityState: ActiveState!
+    alarm: MachineAlert
+    error: MachineAlert
+    machinePosition: MachinePosition!
+    workPosition: MachinePosition
+}
+
+type MacroSettings {
+    content: String!
+    id: String!
+    mtime: Long!
+    name: String!
+}
+
+type MakerHubSettings {
+    enabled: Boolean!
+}
+
+type MountPointSettings {
+    route: String!
+    target: String!
+}
+
+type Mutation {
+    closePort(portName: String!): SystemPort!
+    createWorkspace(workspaceSettings: WorkspaceSettingsInput!): Workspace!
+    deleteWorkspace(workspaceId: String!): Workspace!
+    openPort(firmware: FirmwareRequirementInput!, options: SerialPortOptionsInput!, portName: String!): SystemPort!
+    openWorkspace(workspaceId: String!): Workspace!
+    updateWorkspace(workspaceSettings: WorkspaceSettingsInput!): Workspace!
+}
+
+type OpenControllerSession {
+    roles: [String!]!
+    token: String!
+    user: OpenControllerUser!
+}
+
+type OpenControllerSettings {
+    appUpdates: AppUpdates!
+    commands: [CommandSettings!]!
+    events: [EventSettings!]!
+    fileSystem: FileSystemSettings!
+    hub: MakerHubSettings!
+    macros: [MacroSettings!]!
+    users: [OpenControllerUser!]!
+    workspaces: [WorkspaceSettings!]!
+}
+
+type OpenControllerUser {
+    authenticationType: String!
+    enabled: Boolean!
+    id: String
+    tokens: [String!]!
+    username: String!
+}
+
+type PortOptions implements ISerialPortOptions {
+    baudRate: Int!
+    dataBits: Int
+    handshake: Handshake
+    parity: Parity
+    readBufferSize: Int
+    readTimeout: Int
+    rtsEnable: Boolean
+    stopBits: StopBits
+    writeBufferSize: Int
+    writeTimeout: Int
+}
+
+type PortStatus {
+    bytesToRead: Int!
+    bytesToWrite: Int!
+    charactersRead: Int!
+    charactersWritten: Int!
+    isOpen: Boolean!
+    linesRead: Int!
+    linesWritten: Int!
+}
+
 type Query {
+    authenticate(token: String!): OpenControllerSession!
+    getPort(portName: String!): SystemPort!
+    getSettings: OpenControllerSettings!
+    getWorkspace(workspaceId: String!): Workspace!
+    listPorts: [SystemPort!]!
+    listWorkspaces: [Workspace!]!
     machineProfile(id: String!): MachineProfile!
     machineProfileCount: Int!
     machineProfiles(query: String): [MachineProfile!]!
@@ -101,11 +382,68 @@ type Query {
     userProfile(id: String!): UserProfile!
 }
 
+type Subscription {
+    onMachineConfiguration(portName: String!): ControlledMachine!
+    onMachineSetting(portName: String!): ControlledMachine!
+    onMachineState(portName: String!): ControlledMachine!
+    onPortChange: SystemPort!
+    onWorkspaceChange: Workspace!
+}
+
+type SystemPort {
+    connection: ConnectedPort
+    error: AlertError
+    options: PortOptions!
+    portName: String!
+    state: PortState!
+    topicId: String!
+}
+
 type UserProfile {
     authenticationType: String
     email: String
     id: String
     username: String
+}
+
+type Workspace {
+    error: AlertError
+    id: String!
+    port: SystemPort
+    portName: String!
+    settings: WorkspaceSettings!
+    state: WorkspaceState!
+    topicId: String!
+}
+
+type WorkspaceSettings {
+    autoReconnect: Boolean!
+    axes: [MachineAxisSettings!]!
+    bkColor: String
+    color: String
+    commands: [MachineCommandSettings!]!
+    connection: ConnectionSettings!
+    features: [MachineFeatureSettings!]!
+    icon: String
+    id: String!
+    machineProfileId: String
+    name: String!
+    onboarded: Boolean!
+    parts: [MachinePartSettings!]!
+    path: String!
+    preferImperial: Boolean!
+}
+
+enum ActiveState {
+    ALARM
+    CHECK
+    DOOR
+    HOLD
+    HOME
+    IDLE_READY
+    INITIALIZING
+    RUN
+    SLEEP
 }
 
 enum ApplyPolicy {
@@ -117,6 +455,23 @@ enum AxisName {
     X
     Y
     Z
+}
+
+enum BaudRate {
+    BR115200
+    BR19200
+    BR2400
+    BR250000
+    BR38400
+    BR57600
+    BR9600
+}
+
+enum Handshake {
+    NONE
+    REQUEST_TO_SEND
+    REQUEST_TO_SEND_X_ON_X_OFF
+    X_ON_X_OFF
 }
 
 enum MachineCategory {
@@ -169,6 +524,165 @@ enum MachineSpecType {
     WAVE_LENGTH
 }
 
+enum MachineTopic {
+    CONFIGURATION
+    SETTING
+    STATE
+}
+
+enum Parity {
+    EVEN
+    MARK
+    NONE
+    ODD
+    SPACE
+}
+
+enum PortState {
+    ACTIVE
+    ERROR
+    HAS_DATA
+    HAS_FIRMWARE
+    OPENING
+    READY
+    STARTUP
+    UNPLUGGED
+}
+
+enum StopBits {
+    NONE
+    ONE
+    ONE_POINT_FIVE
+    TWO
+}
+
+enum WorkspaceState {
+    ACTIVE
+    CLOSED
+    DELETED
+    DISCONNECTED
+    ERROR
+    OPENING
+}
+
+input ConnectionSettingsInput {
+    firmware: MachineFirmwareSettingsInput!
+    machineProfileId: String
+    manufacturer: String
+    portName: String!
+}
+
+input FirmwareRequirementInput {
+    controllerType: MachineControllerType!
+    downloadUrl: String
+    edition: String
+    helpUrl: String
+    name: String
+    requiredVersion: Decimal!
+    suggestedVersion: Decimal!
+}
+
+input MachineAxisSettingsInput {
+    accuracy: Decimal!
+    id: String
+    max: Decimal!
+    min: Decimal!
+    name: AxisName!
+    precision: Decimal!
+}
+
+input MachineCommandSettingsInput {
+    id: String!
+    name: String!
+    value: String!
+}
+
+input MachineFeatureSettingsInput {
+    description: String
+    disabled: Boolean!
+    icon: String
+    id: String
+    key: String!
+    title: String
+}
+
+input MachineFirmwareSettingsInput {
+    baudRate: BaudRate
+    baudRateValue: Int!
+    controllerType: MachineControllerType!
+    downloadUrl: String
+    edition: String
+    helpUrl: String
+    id: String
+    name: String
+    requiredVersion: Decimal!
+    rtscts: Boolean!
+    suggestedVersion: Decimal!
+}
+
+input MachinePartSettingsInput {
+    dataBlob: String!
+    description: String
+    id: String
+    isDefault: Boolean!
+    optional: Boolean!
+    partType: MachinePartType!
+    settings: [MachineSettingSettingsInput!]!
+    specs: [MachineSpecSettingsInput!]!
+    title: String!
+}
+
+input MachineSettingSettingsInput {
+    id: String!
+    key: String!
+    settingType: MachineSettingType!
+    title: String
+    value: String!
+}
+
+input MachineSpecSettingsInput {
+    id: String!
+    specType: MachineSpecType!
+    value: Decimal!
+}
+
+input SerialPortOptionsInput {
+    baudRate: Int!
+    dataBits: Int
+    handshake: Handshake
+    parity: Parity
+    readBufferSize: Int
+    readTimeout: Int
+    rtsEnable: Boolean
+    stopBits: StopBits
+    writeBufferSize: Int
+    writeTimeout: Int
+}
+
+input WorkspaceSettingsInput {
+    autoReconnect: Boolean!
+    axes: [MachineAxisSettingsInput!]!
+    bkColor: String
+    color: String
+    commands: [MachineCommandSettingsInput!]!
+    connection: ConnectionSettingsInput!
+    features: [MachineFeatureSettingsInput!]!
+    icon: String
+    id: String!
+    machineProfileId: String
+    name: String!
+    onboarded: Boolean!
+    parts: [MachinePartSettingsInput!]!
+    path: String!
+    preferImperial: Boolean!
+}
+
 
 "The built-in `Decimal` scalar type."
 scalar Decimal
+
+"The `DateTime` scalar represents an ISO-8601 compliant date time type."
+scalar DateTime
+
+"The `Long` scalar type represents non-fractional signed whole 64-bit numeric values. Long can represent values between -(2^63) and 2^63 - 1."
+scalar Long

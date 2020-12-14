@@ -13,7 +13,7 @@ using OpenWorkEngine.OpenController.Machines.Models;
 using OpenWorkEngine.OpenController.Ports.Services;
 
 namespace OpenWorkEngine.OpenController.Machines.Graph {
-  [ExtendObjectType(Name = "Subscription")]
+  [ExtendObjectType(Name = OpenControllerSchema.Subscription)]
   public class MachinesSubscription {
     [Subscribe(With = nameof(SubscribeToMachineConfiguration))]
     public ControlledMachine OnMachineConfiguration(

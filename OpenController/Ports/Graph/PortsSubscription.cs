@@ -14,7 +14,7 @@ using OpenWorkEngine.OpenController.Ports.Models;
 using OpenWorkEngine.OpenController.Ports.Services;
 
 namespace OpenWorkEngine.OpenController.Ports.Graph {
-  [ExtendObjectType(Name = "Subscription")]
+  [ExtendObjectType(Name = OpenControllerSchema.Subscription)]
   public class PortsSubscription {
     [Subscribe(With = nameof(SubscribeToAllPortState))]
     [AuthorizeReadControllers]
