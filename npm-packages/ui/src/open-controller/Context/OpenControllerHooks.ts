@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import React from 'react';
-import {IOpenController} from './types';
+import {IOpenController, IOpenControllerPackage} from './types';
 import OpenControllerContext from './OpenControllerContext';
-import {BackendConnection, BackendConnectionEvent, ConnectionState} from './apollo';
+import { BackendConnection, BackendConnectionEvent, ConnectionState } from '@openworkshop/lib/api';
 import {Workspace, IWorkspaceEvent, WorkspaceEventType} from '../Workspaces';
 import {TTranslateFunc} from '@openworkshop/lib';
 
@@ -14,17 +14,27 @@ export function useTrans(): TTranslateFunc {
   return useOpenController().t;
 }
 
+export function useOpenControllerSettings(): IOpenControllerPackage {
+  return useOpenController().deployment;
+}
+
+export function useDocumentationUrl(path: string): string {
+  const home = useOpenControllerSettings().homepage;
+  if (!path.startsWith('/') && !home.endsWith('/')) path = `/${path}`;
+  return `${home}${path}`;
+}
+
 export function useWorkspace(workspaceId: string): Workspace {
-  const makerverse = React.useContext(OpenControllerContext); // must happen despite early return in order to obey hooks
-  const workspace: Workspace | undefined = _.find(makerverse.workspaces, ws => ws.id === workspaceId);
+  const openController = React.useContext(OpenControllerContext); // must happen despite early return in order to obey hooks
+  const workspace: Workspace | undefined = _.find(openController.workspaces, ws => ws.id === workspaceId);
   if (!workspace) throw new Error(`No workspace for: ${workspaceId}`);
   return workspace;
 }
 
 export function tryUseWorkspace(workspaceId?: string): Workspace | undefined {
-  const makerverse = React.useContext(OpenControllerContext); // must happen despite early return in order to obey hooks
+  const openController = React.useContext(OpenControllerContext); // must happen despite early return in order to obey hooks
   if (!workspaceId) return undefined;
-  return _.find(makerverse.workspaces, ws => ws.id === workspaceId);
+  return _.find(openController.workspaces, ws => ws.id === workspaceId);
 }
 
 export function useWorkspaceEvent(workspace: Workspace, type: WorkspaceEventType): IWorkspaceEvent | undefined {
@@ -43,8 +53,8 @@ export function useWorkspaceEvent(workspace: Workspace, type: WorkspaceEventType
 
 // Get notified when the backend connection (to Makerverse) state changes.
 export function useBackendConnectionState(): ConnectionState {
-  const makerverse: IOpenController = React.useContext(OpenControllerContext);
-  const conn: BackendConnection = makerverse.connection;
+  const openController: IOpenController = React.useContext(OpenControllerContext);
+  const conn: BackendConnection = openController.connection;
   const [state, setState] = React.useState<ConnectionState>(conn.state);
   const eventName = BackendConnectionEvent.ConnectionStateChanged.toString();
   React.useEffect(() => {

@@ -78,10 +78,9 @@ const ChooseMachineParts: React.FunctionComponent<IMachineOptionsProps> = (props
     );
 
     if (isCompletePartList) {
-      const parts: IMachinePartChoice[] = Object.keys(selectedPartIds).map(
+      props.onComplete(Object.keys(selectedPartIds).map(
         (pt) => _.find(parts, (p) => p.id === selectedPartIds[pt]) as IMachinePartChoice,
-      );
-      props.onComplete(parts);
+      ));
     }
   }
 

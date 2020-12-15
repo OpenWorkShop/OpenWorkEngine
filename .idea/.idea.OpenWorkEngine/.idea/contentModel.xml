@@ -36,7 +36,6 @@
           <e p=".prettierrc.json" t="Include" />
           <e p=".stylintrc" t="Include" />
           <e p="babel.config.js.bak" t="Include" />
-          <e p="graphql.schema.json" t="Include" />
           <e p="package.json" t="Include" />
           <e p="public" t="Include">
             <e p="assets" t="Include">
@@ -51,1054 +50,6 @@
             </e>
             <e p="bootstrap.min.css" t="Include" />
             <e p="favicon.ico" t="Include" />
-            <e p="font-awesome" t="Include">
-              <e p="black" t="Include">
-                <e p="svg" t="Include">
-                  <e p="adjust.svg" t="Include" />
-                  <e p="adn.svg" t="Include" />
-                  <e p="align-center.svg" t="Include" />
-                  <e p="align-justify.svg" t="Include" />
-                  <e p="align-left.svg" t="Include" />
-                  <e p="align-right.svg" t="Include" />
-                  <e p="ambulance.svg" t="Include" />
-                  <e p="anchor.svg" t="Include" />
-                  <e p="android.svg" t="Include" />
-                  <e p="angellist.svg" t="Include" />
-                  <e p="angle-double-down.svg" t="Include" />
-                  <e p="angle-double-left.svg" t="Include" />
-                  <e p="angle-double-right.svg" t="Include" />
-                  <e p="angle-double-up.svg" t="Include" />
-                  <e p="angle-down.svg" t="Include" />
-                  <e p="angle-left.svg" t="Include" />
-                  <e p="angle-right.svg" t="Include" />
-                  <e p="angle-up.svg" t="Include" />
-                  <e p="apple.svg" t="Include" />
-                  <e p="archive.svg" t="Include" />
-                  <e p="area-chart.svg" t="Include" />
-                  <e p="arrow-circle-down.svg" t="Include" />
-                  <e p="arrow-circle-left.svg" t="Include" />
-                  <e p="arrow-circle-o-down.svg" t="Include" />
-                  <e p="arrow-circle-o-left.svg" t="Include" />
-                  <e p="arrow-circle-o-right.svg" t="Include" />
-                  <e p="arrow-circle-o-up.svg" t="Include" />
-                  <e p="arrow-circle-right.svg" t="Include" />
-                  <e p="arrow-circle-up.svg" t="Include" />
-                  <e p="arrow-down.svg" t="Include" />
-                  <e p="arrow-left.svg" t="Include" />
-                  <e p="arrow-right.svg" t="Include" />
-                  <e p="arrow-up.svg" t="Include" />
-                  <e p="arrows-alt.svg" t="Include" />
-                  <e p="arrows-h.svg" t="Include" />
-                  <e p="arrows-v.svg" t="Include" />
-                  <e p="arrows.svg" t="Include" />
-                  <e p="asterisk.svg" t="Include" />
-                  <e p="at.svg" t="Include" />
-                  <e p="backward.svg" t="Include" />
-                  <e p="ban.svg" t="Include" />
-                  <e p="bar-chart.svg" t="Include" />
-                  <e p="barcode.svg" t="Include" />
-                  <e p="bars.svg" t="Include" />
-                  <e p="bed.svg" t="Include" />
-                  <e p="beer.svg" t="Include" />
-                  <e p="behance-square.svg" t="Include" />
-                  <e p="behance.svg" t="Include" />
-                  <e p="bell-o.svg" t="Include" />
-                  <e p="bell-slash-o.svg" t="Include" />
-                  <e p="bell-slash.svg" t="Include" />
-                  <e p="bell.svg" t="Include" />
-                  <e p="bicycle.svg" t="Include" />
-                  <e p="binoculars.svg" t="Include" />
-                  <e p="birthday-cake.svg" t="Include" />
-                  <e p="bitbucket-square.svg" t="Include" />
-                  <e p="bitbucket.svg" t="Include" />
-                  <e p="bold.svg" t="Include" />
-                  <e p="bolt.svg" t="Include" />
-                  <e p="bomb.svg" t="Include" />
-                  <e p="book.svg" t="Include" />
-                  <e p="bookmark-o.svg" t="Include" />
-                  <e p="bookmark.svg" t="Include" />
-                  <e p="briefcase.svg" t="Include" />
-                  <e p="btc.svg" t="Include" />
-                  <e p="bug.svg" t="Include" />
-                  <e p="building-o.svg" t="Include" />
-                  <e p="building.svg" t="Include" />
-                  <e p="bullhorn.svg" t="Include" />
-                  <e p="bullseye.svg" t="Include" />
-                  <e p="bus.svg" t="Include" />
-                  <e p="buysellads.svg" t="Include" />
-                  <e p="calculator.svg" t="Include" />
-                  <e p="calendar-o.svg" t="Include" />
-                  <e p="calendar.svg" t="Include" />
-                  <e p="camera-retro.svg" t="Include" />
-                  <e p="camera.svg" t="Include" />
-                  <e p="car.svg" t="Include" />
-                  <e p="caret-down.svg" t="Include" />
-                  <e p="caret-left.svg" t="Include" />
-                  <e p="caret-right.svg" t="Include" />
-                  <e p="caret-square-o-down.svg" t="Include" />
-                  <e p="caret-square-o-left.svg" t="Include" />
-                  <e p="caret-square-o-right.svg" t="Include" />
-                  <e p="caret-square-o-up.svg" t="Include" />
-                  <e p="caret-up.svg" t="Include" />
-                  <e p="cart-arrow-down.svg" t="Include" />
-                  <e p="cart-plus.svg" t="Include" />
-                  <e p="cc-amex.svg" t="Include" />
-                  <e p="cc-discover.svg" t="Include" />
-                  <e p="cc-mastercard.svg" t="Include" />
-                  <e p="cc-paypal.svg" t="Include" />
-                  <e p="cc-stripe.svg" t="Include" />
-                  <e p="cc-visa.svg" t="Include" />
-                  <e p="cc.svg" t="Include" />
-                  <e p="certificate.svg" t="Include" />
-                  <e p="chain-broken.svg" t="Include" />
-                  <e p="check-circle-o.svg" t="Include" />
-                  <e p="check-circle.svg" t="Include" />
-                  <e p="check-square-o.svg" t="Include" />
-                  <e p="check-square.svg" t="Include" />
-                  <e p="check.svg" t="Include" />
-                  <e p="chevron-circle-down.svg" t="Include" />
-                  <e p="chevron-circle-left.svg" t="Include" />
-                  <e p="chevron-circle-right.svg" t="Include" />
-                  <e p="chevron-circle-up.svg" t="Include" />
-                  <e p="chevron-down.svg" t="Include" />
-                  <e p="chevron-left.svg" t="Include" />
-                  <e p="chevron-right.svg" t="Include" />
-                  <e p="chevron-up.svg" t="Include" />
-                  <e p="child.svg" t="Include" />
-                  <e p="circle-o-notch.svg" t="Include" />
-                  <e p="circle-o.svg" t="Include" />
-                  <e p="circle-thin.svg" t="Include" />
-                  <e p="circle.svg" t="Include" />
-                  <e p="clipboard.svg" t="Include" />
-                  <e p="clock-o.svg" t="Include" />
-                  <e p="cloud-download.svg" t="Include" />
-                  <e p="cloud-upload.svg" t="Include" />
-                  <e p="cloud.svg" t="Include" />
-                  <e p="code-fork.svg" t="Include" />
-                  <e p="code.svg" t="Include" />
-                  <e p="codepen.svg" t="Include" />
-                  <e p="coffee.svg" t="Include" />
-                  <e p="cog.svg" t="Include" />
-                  <e p="cogs.svg" t="Include" />
-                  <e p="columns.svg" t="Include" />
-                  <e p="comment-o.svg" t="Include" />
-                  <e p="comment.svg" t="Include" />
-                  <e p="comments-o.svg" t="Include" />
-                  <e p="comments.svg" t="Include" />
-                  <e p="compass.svg" t="Include" />
-                  <e p="compress.svg" t="Include" />
-                  <e p="connectdevelop.svg" t="Include" />
-                  <e p="copyright.svg" t="Include" />
-                  <e p="credit-card.svg" t="Include" />
-                  <e p="crop.svg" t="Include" />
-                  <e p="crosshairs.svg" t="Include" />
-                  <e p="css3.svg" t="Include" />
-                  <e p="cube.svg" t="Include" />
-                  <e p="cubes.svg" t="Include" />
-                  <e p="cutlery.svg" t="Include" />
-                  <e p="dashcube.svg" t="Include" />
-                  <e p="database.svg" t="Include" />
-                  <e p="delicious.svg" t="Include" />
-                  <e p="desktop.svg" t="Include" />
-                  <e p="deviantart.svg" t="Include" />
-                  <e p="diamond.svg" t="Include" />
-                  <e p="digg.svg" t="Include" />
-                  <e p="dot-circle-o.svg" t="Include" />
-                  <e p="download.svg" t="Include" />
-                  <e p="dribbble.svg" t="Include" />
-                  <e p="dropbox.svg" t="Include" />
-                  <e p="drupal.svg" t="Include" />
-                  <e p="eject.svg" t="Include" />
-                  <e p="ellipsis-h.svg" t="Include" />
-                  <e p="ellipsis-v.svg" t="Include" />
-                  <e p="empire.svg" t="Include" />
-                  <e p="envelope-o.svg" t="Include" />
-                  <e p="envelope-square.svg" t="Include" />
-                  <e p="envelope.svg" t="Include" />
-                  <e p="eraser.svg" t="Include" />
-                  <e p="eur.svg" t="Include" />
-                  <e p="exchange.svg" t="Include" />
-                  <e p="exclamation-circle.svg" t="Include" />
-                  <e p="exclamation-triangle.svg" t="Include" />
-                  <e p="exclamation.svg" t="Include" />
-                  <e p="expand.svg" t="Include" />
-                  <e p="external-link-square.svg" t="Include" />
-                  <e p="external-link.svg" t="Include" />
-                  <e p="eye-slash.svg" t="Include" />
-                  <e p="eye.svg" t="Include" />
-                  <e p="eyedropper.svg" t="Include" />
-                  <e p="facebook-official.svg" t="Include" />
-                  <e p="facebook-square.svg" t="Include" />
-                  <e p="facebook.svg" t="Include" />
-                  <e p="fast-backward.svg" t="Include" />
-                  <e p="fast-forward.svg" t="Include" />
-                  <e p="fax.svg" t="Include" />
-                  <e p="female.svg" t="Include" />
-                  <e p="fighter-jet.svg" t="Include" />
-                  <e p="file-archive-o.svg" t="Include" />
-                  <e p="file-audio-o.svg" t="Include" />
-                  <e p="file-code-o.svg" t="Include" />
-                  <e p="file-excel-o.svg" t="Include" />
-                  <e p="file-image-o.svg" t="Include" />
-                  <e p="file-o.svg" t="Include" />
-                  <e p="file-pdf-o.svg" t="Include" />
-                  <e p="file-powerpoint-o.svg" t="Include" />
-                  <e p="file-text-o.svg" t="Include" />
-                  <e p="file-text.svg" t="Include" />
-                  <e p="file-video-o.svg" t="Include" />
-                  <e p="file-word-o.svg" t="Include" />
-                  <e p="file.svg" t="Include" />
-                  <e p="files-o.svg" t="Include" />
-                  <e p="film.svg" t="Include" />
-                  <e p="filter.svg" t="Include" />
-                  <e p="fire-extinguisher.svg" t="Include" />
-                  <e p="fire.svg" t="Include" />
-                  <e p="flag-checkered.svg" t="Include" />
-                  <e p="flag-o.svg" t="Include" />
-                  <e p="flag.svg" t="Include" />
-                  <e p="flask.svg" t="Include" />
-                  <e p="flickr.svg" t="Include" />
-                  <e p="floppy-o.svg" t="Include" />
-                  <e p="folder-o.svg" t="Include" />
-                  <e p="folder-open-o.svg" t="Include" />
-                  <e p="folder-open.svg" t="Include" />
-                  <e p="folder.svg" t="Include" />
-                  <e p="font.svg" t="Include" />
-                  <e p="forumbee.svg" t="Include" />
-                  <e p="forward.svg" t="Include" />
-                  <e p="foursquare.svg" t="Include" />
-                  <e p="frown-o.svg" t="Include" />
-                  <e p="futbol-o.svg" t="Include" />
-                  <e p="gamepad.svg" t="Include" />
-                  <e p="gavel.svg" t="Include" />
-                  <e p="gbp.svg" t="Include" />
-                  <e p="gift.svg" t="Include" />
-                  <e p="git-square.svg" t="Include" />
-                  <e p="git.svg" t="Include" />
-                  <e p="github-alt.svg" t="Include" />
-                  <e p="github-square.svg" t="Include" />
-                  <e p="github.svg" t="Include" />
-                  <e p="glass.svg" t="Include" />
-                  <e p="globe.svg" t="Include" />
-                  <e p="google-plus-square.svg" t="Include" />
-                  <e p="google-plus.svg" t="Include" />
-                  <e p="google-wallet.svg" t="Include" />
-                  <e p="google.svg" t="Include" />
-                  <e p="graduation-cap.svg" t="Include" />
-                  <e p="gratipay.svg" t="Include" />
-                  <e p="h-square.svg" t="Include" />
-                  <e p="hacker-news.svg" t="Include" />
-                  <e p="hand-o-down.svg" t="Include" />
-                  <e p="hand-o-left.svg" t="Include" />
-                  <e p="hand-o-right.svg" t="Include" />
-                  <e p="hand-o-up.svg" t="Include" />
-                  <e p="hdd-o.svg" t="Include" />
-                  <e p="header.svg" t="Include" />
-                  <e p="headphones.svg" t="Include" />
-                  <e p="heart-o.svg" t="Include" />
-                  <e p="heart.svg" t="Include" />
-                  <e p="heartbeat.svg" t="Include" />
-                  <e p="history.svg" t="Include" />
-                  <e p="home.svg" t="Include" />
-                  <e p="hospital-o.svg" t="Include" />
-                  <e p="html5.svg" t="Include" />
-                  <e p="ils.svg" t="Include" />
-                  <e p="inbox.svg" t="Include" />
-                  <e p="indent.svg" t="Include" />
-                  <e p="info-circle.svg" t="Include" />
-                  <e p="info.svg" t="Include" />
-                  <e p="inr.svg" t="Include" />
-                  <e p="instagram.svg" t="Include" />
-                  <e p="ioxhost.svg" t="Include" />
-                  <e p="italic.svg" t="Include" />
-                  <e p="joomla.svg" t="Include" />
-                  <e p="jpy.svg" t="Include" />
-                  <e p="jsfiddle.svg" t="Include" />
-                  <e p="key.svg" t="Include" />
-                  <e p="keyboard-o.svg" t="Include" />
-                  <e p="krw.svg" t="Include" />
-                  <e p="language.svg" t="Include" />
-                  <e p="laptop.svg" t="Include" />
-                  <e p="lastfm-square.svg" t="Include" />
-                  <e p="lastfm.svg" t="Include" />
-                  <e p="leaf.svg" t="Include" />
-                  <e p="leanpub.svg" t="Include" />
-                  <e p="lemon-o.svg" t="Include" />
-                  <e p="level-down.svg" t="Include" />
-                  <e p="level-up.svg" t="Include" />
-                  <e p="life-ring.svg" t="Include" />
-                  <e p="lightbulb-o.svg" t="Include" />
-                  <e p="line-chart.svg" t="Include" />
-                  <e p="link.svg" t="Include" />
-                  <e p="linkedin-square.svg" t="Include" />
-                  <e p="linkedin.svg" t="Include" />
-                  <e p="linux.svg" t="Include" />
-                  <e p="list-alt.svg" t="Include" />
-                  <e p="list-ol.svg" t="Include" />
-                  <e p="list-ul.svg" t="Include" />
-                  <e p="list.svg" t="Include" />
-                  <e p="location-arrow.svg" t="Include" />
-                  <e p="lock.svg" t="Include" />
-                  <e p="long-arrow-down.svg" t="Include" />
-                  <e p="long-arrow-left.svg" t="Include" />
-                  <e p="long-arrow-right.svg" t="Include" />
-                  <e p="long-arrow-up.svg" t="Include" />
-                  <e p="magic.svg" t="Include" />
-                  <e p="magnet.svg" t="Include" />
-                  <e p="male.svg" t="Include" />
-                  <e p="map-marker.svg" t="Include" />
-                  <e p="mars-double.svg" t="Include" />
-                  <e p="mars-stroke-h.svg" t="Include" />
-                  <e p="mars-stroke-v.svg" t="Include" />
-                  <e p="mars-stroke.svg" t="Include" />
-                  <e p="mars.svg" t="Include" />
-                  <e p="maxcdn.svg" t="Include" />
-                  <e p="meanpath.svg" t="Include" />
-                  <e p="medium.svg" t="Include" />
-                  <e p="medkit.svg" t="Include" />
-                  <e p="meh-o.svg" t="Include" />
-                  <e p="mercury.svg" t="Include" />
-                  <e p="microphone-slash.svg" t="Include" />
-                  <e p="microphone.svg" t="Include" />
-                  <e p="minus-circle.svg" t="Include" />
-                  <e p="minus-square-o.svg" t="Include" />
-                  <e p="minus-square.svg" t="Include" />
-                  <e p="minus.svg" t="Include" />
-                  <e p="mobile.svg" t="Include" />
-                  <e p="money.svg" t="Include" />
-                  <e p="moon-o.svg" t="Include" />
-                  <e p="motorcycle.svg" t="Include" />
-                  <e p="music.svg" t="Include" />
-                  <e p="neuter.svg" t="Include" />
-                  <e p="newspaper-o.svg" t="Include" />
-                  <e p="openid.svg" t="Include" />
-                  <e p="outdent.svg" t="Include" />
-                  <e p="pagelines.svg" t="Include" />
-                  <e p="paint-brush.svg" t="Include" />
-                  <e p="paper-plane-o.svg" t="Include" />
-                  <e p="paper-plane.svg" t="Include" />
-                  <e p="paperclip.svg" t="Include" />
-                  <e p="paragraph.svg" t="Include" />
-                  <e p="pause.svg" t="Include" />
-                  <e p="paw.svg" t="Include" />
-                  <e p="paypal.svg" t="Include" />
-                  <e p="pencil-square-o.svg" t="Include" />
-                  <e p="pencil-square.svg" t="Include" />
-                  <e p="pencil.svg" t="Include" />
-                  <e p="phone-square.svg" t="Include" />
-                  <e p="phone.svg" t="Include" />
-                  <e p="picture-o.svg" t="Include" />
-                  <e p="pie-chart.svg" t="Include" />
-                  <e p="pied-piper-alt.svg" t="Include" />
-                  <e p="pied-piper.svg" t="Include" />
-                  <e p="pinterest-p.svg" t="Include" />
-                  <e p="pinterest-square.svg" t="Include" />
-                  <e p="pinterest.svg" t="Include" />
-                  <e p="plane.svg" t="Include" />
-                  <e p="play-circle-o.svg" t="Include" />
-                  <e p="play-circle.svg" t="Include" />
-                  <e p="play.svg" t="Include" />
-                  <e p="plug.svg" t="Include" />
-                  <e p="plus-circle.svg" t="Include" />
-                  <e p="plus-square-o.svg" t="Include" />
-                  <e p="plus-square.svg" t="Include" />
-                  <e p="plus.svg" t="Include" />
-                  <e p="power-off.svg" t="Include" />
-                  <e p="print.svg" t="Include" />
-                  <e p="puzzle-piece.svg" t="Include" />
-                  <e p="qq.svg" t="Include" />
-                  <e p="qrcode.svg" t="Include" />
-                  <e p="question-circle.svg" t="Include" />
-                  <e p="question.svg" t="Include" />
-                  <e p="quote-left.svg" t="Include" />
-                  <e p="quote-right.svg" t="Include" />
-                  <e p="random.svg" t="Include" />
-                  <e p="rebel.svg" t="Include" />
-                  <e p="recycle.svg" t="Include" />
-                  <e p="reddit-square.svg" t="Include" />
-                  <e p="reddit.svg" t="Include" />
-                  <e p="refresh.svg" t="Include" />
-                  <e p="renren.svg" t="Include" />
-                  <e p="repeat.svg" t="Include" />
-                  <e p="reply-all.svg" t="Include" />
-                  <e p="reply.svg" t="Include" />
-                  <e p="retweet.svg" t="Include" />
-                  <e p="road.svg" t="Include" />
-                  <e p="rocket.svg" t="Include" />
-                  <e p="rss-square.svg" t="Include" />
-                  <e p="rss.svg" t="Include" />
-                  <e p="rub.svg" t="Include" />
-                  <e p="scissors.svg" t="Include" />
-                  <e p="search-minus.svg" t="Include" />
-                  <e p="search-plus.svg" t="Include" />
-                  <e p="search.svg" t="Include" />
-                  <e p="sellsy.svg" t="Include" />
-                  <e p="server.svg" t="Include" />
-                  <e p="share-alt-square.svg" t="Include" />
-                  <e p="share-alt.svg" t="Include" />
-                  <e p="share-square-o.svg" t="Include" />
-                  <e p="share-square.svg" t="Include" />
-                  <e p="share.svg" t="Include" />
-                  <e p="shield.svg" t="Include" />
-                  <e p="ship.svg" t="Include" />
-                  <e p="shirtsinbulk.svg" t="Include" />
-                  <e p="shopping-cart.svg" t="Include" />
-                  <e p="sign-in.svg" t="Include" />
-                  <e p="sign-out.svg" t="Include" />
-                  <e p="signal.svg" t="Include" />
-                  <e p="simplybuilt.svg" t="Include" />
-                  <e p="sitemap.svg" t="Include" />
-                  <e p="skyatlas.svg" t="Include" />
-                  <e p="skype.svg" t="Include" />
-                  <e p="slack.svg" t="Include" />
-                  <e p="sliders.svg" t="Include" />
-                  <e p="slideshare.svg" t="Include" />
-                  <e p="smile-o.svg" t="Include" />
-                  <e p="sort-alpha-asc.svg" t="Include" />
-                  <e p="sort-alpha-desc.svg" t="Include" />
-                  <e p="sort-amount-asc.svg" t="Include" />
-                  <e p="sort-amount-desc.svg" t="Include" />
-                  <e p="sort-asc.svg" t="Include" />
-                  <e p="sort-desc.svg" t="Include" />
-                  <e p="sort-numeric-asc.svg" t="Include" />
-                  <e p="sort-numeric-desc.svg" t="Include" />
-                  <e p="sort.svg" t="Include" />
-                  <e p="soundcloud.svg" t="Include" />
-                  <e p="space-shuttle.svg" t="Include" />
-                  <e p="spinner.svg" t="Include" />
-                  <e p="spoon.svg" t="Include" />
-                  <e p="spotify.svg" t="Include" />
-                  <e p="square-o.svg" t="Include" />
-                  <e p="square.svg" t="Include" />
-                  <e p="stack-exchange.svg" t="Include" />
-                  <e p="stack-overflow.svg" t="Include" />
-                  <e p="star-half-o.svg" t="Include" />
-                  <e p="star-half.svg" t="Include" />
-                  <e p="star-o.svg" t="Include" />
-                  <e p="star.svg" t="Include" />
-                  <e p="steam-square.svg" t="Include" />
-                  <e p="steam.svg" t="Include" />
-                  <e p="step-backward.svg" t="Include" />
-                  <e p="step-forward.svg" t="Include" />
-                  <e p="stethoscope.svg" t="Include" />
-                  <e p="stop.svg" t="Include" />
-                  <e p="street-view.svg" t="Include" />
-                  <e p="strikethrough.svg" t="Include" />
-                  <e p="stumbleupon-circle.svg" t="Include" />
-                  <e p="stumbleupon.svg" t="Include" />
-                  <e p="subscript.svg" t="Include" />
-                  <e p="subway.svg" t="Include" />
-                  <e p="suitcase.svg" t="Include" />
-                  <e p="sun-o.svg" t="Include" />
-                  <e p="superscript.svg" t="Include" />
-                  <e p="table.svg" t="Include" />
-                  <e p="tablet.svg" t="Include" />
-                  <e p="tachometer.svg" t="Include" />
-                  <e p="tag.svg" t="Include" />
-                  <e p="tags.svg" t="Include" />
-                  <e p="tasks.svg" t="Include" />
-                  <e p="taxi.svg" t="Include" />
-                  <e p="tencent-weibo.svg" t="Include" />
-                  <e p="terminal.svg" t="Include" />
-                  <e p="text-height.svg" t="Include" />
-                  <e p="text-width.svg" t="Include" />
-                  <e p="th-large.svg" t="Include" />
-                  <e p="th-list.svg" t="Include" />
-                  <e p="th.svg" t="Include" />
-                  <e p="thumb-tack.svg" t="Include" />
-                  <e p="thumbs-down.svg" t="Include" />
-                  <e p="thumbs-o-down.svg" t="Include" />
-                  <e p="thumbs-o-up.svg" t="Include" />
-                  <e p="thumbs-up.svg" t="Include" />
-                  <e p="ticket.svg" t="Include" />
-                  <e p="times-circle-o.svg" t="Include" />
-                  <e p="times-circle.svg" t="Include" />
-                  <e p="times.svg" t="Include" />
-                  <e p="tint.svg" t="Include" />
-                  <e p="toggle-off.svg" t="Include" />
-                  <e p="toggle-on.svg" t="Include" />
-                  <e p="train.svg" t="Include" />
-                  <e p="transgender-alt.svg" t="Include" />
-                  <e p="transgender.svg" t="Include" />
-                  <e p="trash-o.svg" t="Include" />
-                  <e p="trash.svg" t="Include" />
-                  <e p="tree.svg" t="Include" />
-                  <e p="trello.svg" t="Include" />
-                  <e p="trophy.svg" t="Include" />
-                  <e p="truck.svg" t="Include" />
-                  <e p="try.svg" t="Include" />
-                  <e p="tty.svg" t="Include" />
-                  <e p="tumblr-square.svg" t="Include" />
-                  <e p="tumblr.svg" t="Include" />
-                  <e p="twitch.svg" t="Include" />
-                  <e p="twitter-square.svg" t="Include" />
-                  <e p="twitter.svg" t="Include" />
-                  <e p="umbrella.svg" t="Include" />
-                  <e p="underline.svg" t="Include" />
-                  <e p="undo.svg" t="Include" />
-                  <e p="university.svg" t="Include" />
-                  <e p="unlock-alt.svg" t="Include" />
-                  <e p="unlock.svg" t="Include" />
-                  <e p="upload.svg" t="Include" />
-                  <e p="usd.svg" t="Include" />
-                  <e p="user-md.svg" t="Include" />
-                  <e p="user-plus.svg" t="Include" />
-                  <e p="user-secret.svg" t="Include" />
-                  <e p="user-times.svg" t="Include" />
-                  <e p="user.svg" t="Include" />
-                  <e p="users.svg" t="Include" />
-                  <e p="venus-double.svg" t="Include" />
-                  <e p="venus-mars.svg" t="Include" />
-                  <e p="venus.svg" t="Include" />
-                  <e p="viacoin.svg" t="Include" />
-                  <e p="video-camera.svg" t="Include" />
-                  <e p="vimeo-square.svg" t="Include" />
-                  <e p="vine.svg" t="Include" />
-                  <e p="vk.svg" t="Include" />
-                  <e p="volume-down.svg" t="Include" />
-                  <e p="volume-off.svg" t="Include" />
-                  <e p="volume-up.svg" t="Include" />
-                  <e p="weibo.svg" t="Include" />
-                  <e p="weixin.svg" t="Include" />
-                  <e p="whatsapp.svg" t="Include" />
-                  <e p="wheelchair.svg" t="Include" />
-                  <e p="wifi.svg" t="Include" />
-                  <e p="windows.svg" t="Include" />
-                  <e p="wordpress.svg" t="Include" />
-                  <e p="wrench.svg" t="Include" />
-                  <e p="xing-square.svg" t="Include" />
-                  <e p="xing.svg" t="Include" />
-                  <e p="yahoo.svg" t="Include" />
-                  <e p="yelp.svg" t="Include" />
-                  <e p="youtube-play.svg" t="Include" />
-                  <e p="youtube-square.svg" t="Include" />
-                  <e p="youtube.svg" t="Include" />
-                </e>
-              </e>
-              <e p="white" t="Include">
-                <e p="svg" t="Include">
-                  <e p="adjust.svg" t="Include" />
-                  <e p="adn.svg" t="Include" />
-                  <e p="align-center.svg" t="Include" />
-                  <e p="align-justify.svg" t="Include" />
-                  <e p="align-left.svg" t="Include" />
-                  <e p="align-right.svg" t="Include" />
-                  <e p="ambulance.svg" t="Include" />
-                  <e p="anchor.svg" t="Include" />
-                  <e p="android.svg" t="Include" />
-                  <e p="angellist.svg" t="Include" />
-                  <e p="angle-double-down.svg" t="Include" />
-                  <e p="angle-double-left.svg" t="Include" />
-                  <e p="angle-double-right.svg" t="Include" />
-                  <e p="angle-double-up.svg" t="Include" />
-                  <e p="angle-down.svg" t="Include" />
-                  <e p="angle-left.svg" t="Include" />
-                  <e p="angle-right.svg" t="Include" />
-                  <e p="angle-up.svg" t="Include" />
-                  <e p="apple.svg" t="Include" />
-                  <e p="archive.svg" t="Include" />
-                  <e p="area-chart.svg" t="Include" />
-                  <e p="arrow-circle-down.svg" t="Include" />
-                  <e p="arrow-circle-left.svg" t="Include" />
-                  <e p="arrow-circle-o-down.svg" t="Include" />
-                  <e p="arrow-circle-o-left.svg" t="Include" />
-                  <e p="arrow-circle-o-right.svg" t="Include" />
-                  <e p="arrow-circle-o-up.svg" t="Include" />
-                  <e p="arrow-circle-right.svg" t="Include" />
-                  <e p="arrow-circle-up.svg" t="Include" />
-                  <e p="arrow-down.svg" t="Include" />
-                  <e p="arrow-left.svg" t="Include" />
-                  <e p="arrow-right.svg" t="Include" />
-                  <e p="arrow-up.svg" t="Include" />
-                  <e p="arrows-alt.svg" t="Include" />
-                  <e p="arrows-h.svg" t="Include" />
-                  <e p="arrows-v.svg" t="Include" />
-                  <e p="arrows.svg" t="Include" />
-                  <e p="asterisk.svg" t="Include" />
-                  <e p="at.svg" t="Include" />
-                  <e p="backward.svg" t="Include" />
-                  <e p="ban.svg" t="Include" />
-                  <e p="bar-chart.svg" t="Include" />
-                  <e p="barcode.svg" t="Include" />
-                  <e p="bars.svg" t="Include" />
-                  <e p="bed.svg" t="Include" />
-                  <e p="beer.svg" t="Include" />
-                  <e p="behance-square.svg" t="Include" />
-                  <e p="behance.svg" t="Include" />
-                  <e p="bell-o.svg" t="Include" />
-                  <e p="bell-slash-o.svg" t="Include" />
-                  <e p="bell-slash.svg" t="Include" />
-                  <e p="bell.svg" t="Include" />
-                  <e p="bicycle.svg" t="Include" />
-                  <e p="binoculars.svg" t="Include" />
-                  <e p="birthday-cake.svg" t="Include" />
-                  <e p="bitbucket-square.svg" t="Include" />
-                  <e p="bitbucket.svg" t="Include" />
-                  <e p="bold.svg" t="Include" />
-                  <e p="bolt.svg" t="Include" />
-                  <e p="bomb.svg" t="Include" />
-                  <e p="book.svg" t="Include" />
-                  <e p="bookmark-o.svg" t="Include" />
-                  <e p="bookmark.svg" t="Include" />
-                  <e p="briefcase.svg" t="Include" />
-                  <e p="btc.svg" t="Include" />
-                  <e p="bug.svg" t="Include" />
-                  <e p="building-o.svg" t="Include" />
-                  <e p="building.svg" t="Include" />
-                  <e p="bullhorn.svg" t="Include" />
-                  <e p="bullseye.svg" t="Include" />
-                  <e p="bus.svg" t="Include" />
-                  <e p="buysellads.svg" t="Include" />
-                  <e p="calculator.svg" t="Include" />
-                  <e p="calendar-o.svg" t="Include" />
-                  <e p="calendar.svg" t="Include" />
-                  <e p="camera-retro.svg" t="Include" />
-                  <e p="camera.svg" t="Include" />
-                  <e p="car.svg" t="Include" />
-                  <e p="caret-down.svg" t="Include" />
-                  <e p="caret-left.svg" t="Include" />
-                  <e p="caret-right.svg" t="Include" />
-                  <e p="caret-square-o-down.svg" t="Include" />
-                  <e p="caret-square-o-left.svg" t="Include" />
-                  <e p="caret-square-o-right.svg" t="Include" />
-                  <e p="caret-square-o-up.svg" t="Include" />
-                  <e p="caret-up.svg" t="Include" />
-                  <e p="cart-arrow-down.svg" t="Include" />
-                  <e p="cart-plus.svg" t="Include" />
-                  <e p="cc-amex.svg" t="Include" />
-                  <e p="cc-discover.svg" t="Include" />
-                  <e p="cc-mastercard.svg" t="Include" />
-                  <e p="cc-paypal.svg" t="Include" />
-                  <e p="cc-stripe.svg" t="Include" />
-                  <e p="cc-visa.svg" t="Include" />
-                  <e p="cc.svg" t="Include" />
-                  <e p="certificate.svg" t="Include" />
-                  <e p="chain-broken.svg" t="Include" />
-                  <e p="check-circle-o.svg" t="Include" />
-                  <e p="check-circle.svg" t="Include" />
-                  <e p="check-square-o.svg" t="Include" />
-                  <e p="check-square.svg" t="Include" />
-                  <e p="check.svg" t="Include" />
-                  <e p="chevron-circle-down.svg" t="Include" />
-                  <e p="chevron-circle-left.svg" t="Include" />
-                  <e p="chevron-circle-right.svg" t="Include" />
-                  <e p="chevron-circle-up.svg" t="Include" />
-                  <e p="chevron-down.svg" t="Include" />
-                  <e p="chevron-left.svg" t="Include" />
-                  <e p="chevron-right.svg" t="Include" />
-                  <e p="chevron-up.svg" t="Include" />
-                  <e p="child.svg" t="Include" />
-                  <e p="circle-o-notch.svg" t="Include" />
-                  <e p="circle-o.svg" t="Include" />
-                  <e p="circle-thin.svg" t="Include" />
-                  <e p="circle.svg" t="Include" />
-                  <e p="clipboard.svg" t="Include" />
-                  <e p="clock-o.svg" t="Include" />
-                  <e p="cloud-download.svg" t="Include" />
-                  <e p="cloud-upload.svg" t="Include" />
-                  <e p="cloud.svg" t="Include" />
-                  <e p="code-fork.svg" t="Include" />
-                  <e p="code.svg" t="Include" />
-                  <e p="codepen.svg" t="Include" />
-                  <e p="coffee.svg" t="Include" />
-                  <e p="cog.svg" t="Include" />
-                  <e p="cogs.svg" t="Include" />
-                  <e p="columns.svg" t="Include" />
-                  <e p="comment-o.svg" t="Include" />
-                  <e p="comment.svg" t="Include" />
-                  <e p="comments-o.svg" t="Include" />
-                  <e p="comments.svg" t="Include" />
-                  <e p="compass.svg" t="Include" />
-                  <e p="compress.svg" t="Include" />
-                  <e p="connectdevelop.svg" t="Include" />
-                  <e p="copyright.svg" t="Include" />
-                  <e p="credit-card.svg" t="Include" />
-                  <e p="crop.svg" t="Include" />
-                  <e p="crosshairs.svg" t="Include" />
-                  <e p="css3.svg" t="Include" />
-                  <e p="cube.svg" t="Include" />
-                  <e p="cubes.svg" t="Include" />
-                  <e p="cutlery.svg" t="Include" />
-                  <e p="dashcube.svg" t="Include" />
-                  <e p="database.svg" t="Include" />
-                  <e p="delicious.svg" t="Include" />
-                  <e p="desktop.svg" t="Include" />
-                  <e p="deviantart.svg" t="Include" />
-                  <e p="diamond.svg" t="Include" />
-                  <e p="digg.svg" t="Include" />
-                  <e p="dot-circle-o.svg" t="Include" />
-                  <e p="download.svg" t="Include" />
-                  <e p="dribbble.svg" t="Include" />
-                  <e p="dropbox.svg" t="Include" />
-                  <e p="drupal.svg" t="Include" />
-                  <e p="eject.svg" t="Include" />
-                  <e p="ellipsis-h.svg" t="Include" />
-                  <e p="ellipsis-v.svg" t="Include" />
-                  <e p="empire.svg" t="Include" />
-                  <e p="envelope-o.svg" t="Include" />
-                  <e p="envelope-square.svg" t="Include" />
-                  <e p="envelope.svg" t="Include" />
-                  <e p="eraser.svg" t="Include" />
-                  <e p="eur.svg" t="Include" />
-                  <e p="exchange.svg" t="Include" />
-                  <e p="exclamation-circle.svg" t="Include" />
-                  <e p="exclamation-triangle.svg" t="Include" />
-                  <e p="exclamation.svg" t="Include" />
-                  <e p="expand.svg" t="Include" />
-                  <e p="external-link-square.svg" t="Include" />
-                  <e p="external-link.svg" t="Include" />
-                  <e p="eye-slash.svg" t="Include" />
-                  <e p="eye.svg" t="Include" />
-                  <e p="eyedropper.svg" t="Include" />
-                  <e p="facebook-official.svg" t="Include" />
-                  <e p="facebook-square.svg" t="Include" />
-                  <e p="facebook.svg" t="Include" />
-                  <e p="fast-backward.svg" t="Include" />
-                  <e p="fast-forward.svg" t="Include" />
-                  <e p="fax.svg" t="Include" />
-                  <e p="female.svg" t="Include" />
-                  <e p="fighter-jet.svg" t="Include" />
-                  <e p="file-archive-o.svg" t="Include" />
-                  <e p="file-audio-o.svg" t="Include" />
-                  <e p="file-code-o.svg" t="Include" />
-                  <e p="file-excel-o.svg" t="Include" />
-                  <e p="file-image-o.svg" t="Include" />
-                  <e p="file-o.svg" t="Include" />
-                  <e p="file-pdf-o.svg" t="Include" />
-                  <e p="file-powerpoint-o.svg" t="Include" />
-                  <e p="file-text-o.svg" t="Include" />
-                  <e p="file-text.svg" t="Include" />
-                  <e p="file-video-o.svg" t="Include" />
-                  <e p="file-word-o.svg" t="Include" />
-                  <e p="file.svg" t="Include" />
-                  <e p="files-o.svg" t="Include" />
-                  <e p="film.svg" t="Include" />
-                  <e p="filter.svg" t="Include" />
-                  <e p="fire-extinguisher.svg" t="Include" />
-                  <e p="fire.svg" t="Include" />
-                  <e p="flag-checkered.svg" t="Include" />
-                  <e p="flag-o.svg" t="Include" />
-                  <e p="flag.svg" t="Include" />
-                  <e p="flask.svg" t="Include" />
-                  <e p="flickr.svg" t="Include" />
-                  <e p="floppy-o.svg" t="Include" />
-                  <e p="folder-o.svg" t="Include" />
-                  <e p="folder-open-o.svg" t="Include" />
-                  <e p="folder-open.svg" t="Include" />
-                  <e p="folder.svg" t="Include" />
-                  <e p="font.svg" t="Include" />
-                  <e p="forumbee.svg" t="Include" />
-                  <e p="forward.svg" t="Include" />
-                  <e p="foursquare.svg" t="Include" />
-                  <e p="frown-o.svg" t="Include" />
-                  <e p="futbol-o.svg" t="Include" />
-                  <e p="gamepad.svg" t="Include" />
-                  <e p="gavel.svg" t="Include" />
-                  <e p="gbp.svg" t="Include" />
-                  <e p="gift.svg" t="Include" />
-                  <e p="git-square.svg" t="Include" />
-                  <e p="git.svg" t="Include" />
-                  <e p="github-alt.svg" t="Include" />
-                  <e p="github-square.svg" t="Include" />
-                  <e p="github.svg" t="Include" />
-                  <e p="glass.svg" t="Include" />
-                  <e p="globe.svg" t="Include" />
-                  <e p="google-plus-square.svg" t="Include" />
-                  <e p="google-plus.svg" t="Include" />
-                  <e p="google-wallet.svg" t="Include" />
-                  <e p="google.svg" t="Include" />
-                  <e p="graduation-cap.svg" t="Include" />
-                  <e p="gratipay.svg" t="Include" />
-                  <e p="h-square.svg" t="Include" />
-                  <e p="hacker-news.svg" t="Include" />
-                  <e p="hand-o-down.svg" t="Include" />
-                  <e p="hand-o-left.svg" t="Include" />
-                  <e p="hand-o-right.svg" t="Include" />
-                  <e p="hand-o-up.svg" t="Include" />
-                  <e p="hdd-o.svg" t="Include" />
-                  <e p="header.svg" t="Include" />
-                  <e p="headphones.svg" t="Include" />
-                  <e p="heart-o.svg" t="Include" />
-                  <e p="heart.svg" t="Include" />
-                  <e p="heartbeat.svg" t="Include" />
-                  <e p="history.svg" t="Include" />
-                  <e p="home.svg" t="Include" />
-                  <e p="hospital-o.svg" t="Include" />
-                  <e p="html5.svg" t="Include" />
-                  <e p="ils.svg" t="Include" />
-                  <e p="inbox.svg" t="Include" />
-                  <e p="indent.svg" t="Include" />
-                  <e p="info-circle.svg" t="Include" />
-                  <e p="info.svg" t="Include" />
-                  <e p="inr.svg" t="Include" />
-                  <e p="instagram.svg" t="Include" />
-                  <e p="ioxhost.svg" t="Include" />
-                  <e p="italic.svg" t="Include" />
-                  <e p="joomla.svg" t="Include" />
-                  <e p="jpy.svg" t="Include" />
-                  <e p="jsfiddle.svg" t="Include" />
-                  <e p="key.svg" t="Include" />
-                  <e p="keyboard-o.svg" t="Include" />
-                  <e p="krw.svg" t="Include" />
-                  <e p="language.svg" t="Include" />
-                  <e p="laptop.svg" t="Include" />
-                  <e p="lastfm-square.svg" t="Include" />
-                  <e p="lastfm.svg" t="Include" />
-                  <e p="leaf.svg" t="Include" />
-                  <e p="leanpub.svg" t="Include" />
-                  <e p="lemon-o.svg" t="Include" />
-                  <e p="level-down.svg" t="Include" />
-                  <e p="level-up.svg" t="Include" />
-                  <e p="life-ring.svg" t="Include" />
-                  <e p="lightbulb-o.svg" t="Include" />
-                  <e p="line-chart.svg" t="Include" />
-                  <e p="link.svg" t="Include" />
-                  <e p="linkedin-square.svg" t="Include" />
-                  <e p="linkedin.svg" t="Include" />
-                  <e p="linux.svg" t="Include" />
-                  <e p="list-alt.svg" t="Include" />
-                  <e p="list-ol.svg" t="Include" />
-                  <e p="list-ul.svg" t="Include" />
-                  <e p="list.svg" t="Include" />
-                  <e p="location-arrow.svg" t="Include" />
-                  <e p="lock.svg" t="Include" />
-                  <e p="long-arrow-down.svg" t="Include" />
-                  <e p="long-arrow-left.svg" t="Include" />
-                  <e p="long-arrow-right.svg" t="Include" />
-                  <e p="long-arrow-up.svg" t="Include" />
-                  <e p="magic.svg" t="Include" />
-                  <e p="magnet.svg" t="Include" />
-                  <e p="male.svg" t="Include" />
-                  <e p="map-marker.svg" t="Include" />
-                  <e p="mars-double.svg" t="Include" />
-                  <e p="mars-stroke-h.svg" t="Include" />
-                  <e p="mars-stroke-v.svg" t="Include" />
-                  <e p="mars-stroke.svg" t="Include" />
-                  <e p="mars.svg" t="Include" />
-                  <e p="maxcdn.svg" t="Include" />
-                  <e p="meanpath.svg" t="Include" />
-                  <e p="medium.svg" t="Include" />
-                  <e p="medkit.svg" t="Include" />
-                  <e p="meh-o.svg" t="Include" />
-                  <e p="mercury.svg" t="Include" />
-                  <e p="microphone-slash.svg" t="Include" />
-                  <e p="microphone.svg" t="Include" />
-                  <e p="minus-circle.svg" t="Include" />
-                  <e p="minus-square-o.svg" t="Include" />
-                  <e p="minus-square.svg" t="Include" />
-                  <e p="minus.svg" t="Include" />
-                  <e p="mobile.svg" t="Include" />
-                  <e p="money.svg" t="Include" />
-                  <e p="moon-o.svg" t="Include" />
-                  <e p="motorcycle.svg" t="Include" />
-                  <e p="music.svg" t="Include" />
-                  <e p="neuter.svg" t="Include" />
-                  <e p="newspaper-o.svg" t="Include" />
-                  <e p="openid.svg" t="Include" />
-                  <e p="outdent.svg" t="Include" />
-                  <e p="pagelines.svg" t="Include" />
-                  <e p="paint-brush.svg" t="Include" />
-                  <e p="paper-plane-o.svg" t="Include" />
-                  <e p="paper-plane.svg" t="Include" />
-                  <e p="paperclip.svg" t="Include" />
-                  <e p="paragraph.svg" t="Include" />
-                  <e p="pause.svg" t="Include" />
-                  <e p="paw.svg" t="Include" />
-                  <e p="paypal.svg" t="Include" />
-                  <e p="pencil-square-o.svg" t="Include" />
-                  <e p="pencil-square.svg" t="Include" />
-                  <e p="pencil.svg" t="Include" />
-                  <e p="phone-square.svg" t="Include" />
-                  <e p="phone.svg" t="Include" />
-                  <e p="picture-o.svg" t="Include" />
-                  <e p="pie-chart.svg" t="Include" />
-                  <e p="pied-piper-alt.svg" t="Include" />
-                  <e p="pied-piper.svg" t="Include" />
-                  <e p="pinterest-p.svg" t="Include" />
-                  <e p="pinterest-square.svg" t="Include" />
-                  <e p="pinterest.svg" t="Include" />
-                  <e p="plane.svg" t="Include" />
-                  <e p="play-circle-o.svg" t="Include" />
-                  <e p="play-circle.svg" t="Include" />
-                  <e p="play.svg" t="Include" />
-                  <e p="plug.svg" t="Include" />
-                  <e p="plus-circle.svg" t="Include" />
-                  <e p="plus-square-o.svg" t="Include" />
-                  <e p="plus-square.svg" t="Include" />
-                  <e p="plus.svg" t="Include" />
-                  <e p="power-off.svg" t="Include" />
-                  <e p="print.svg" t="Include" />
-                  <e p="puzzle-piece.svg" t="Include" />
-                  <e p="qq.svg" t="Include" />
-                  <e p="qrcode.svg" t="Include" />
-                  <e p="question-circle.svg" t="Include" />
-                  <e p="question.svg" t="Include" />
-                  <e p="quote-left.svg" t="Include" />
-                  <e p="quote-right.svg" t="Include" />
-                  <e p="random.svg" t="Include" />
-                  <e p="rebel.svg" t="Include" />
-                  <e p="recycle.svg" t="Include" />
-                  <e p="reddit-square.svg" t="Include" />
-                  <e p="reddit.svg" t="Include" />
-                  <e p="refresh.svg" t="Include" />
-                  <e p="renren.svg" t="Include" />
-                  <e p="repeat.svg" t="Include" />
-                  <e p="reply-all.svg" t="Include" />
-                  <e p="reply.svg" t="Include" />
-                  <e p="retweet.svg" t="Include" />
-                  <e p="road.svg" t="Include" />
-                  <e p="rocket.svg" t="Include" />
-                  <e p="rss-square.svg" t="Include" />
-                  <e p="rss.svg" t="Include" />
-                  <e p="rub.svg" t="Include" />
-                  <e p="scissors.svg" t="Include" />
-                  <e p="search-minus.svg" t="Include" />
-                  <e p="search-plus.svg" t="Include" />
-                  <e p="search.svg" t="Include" />
-                  <e p="sellsy.svg" t="Include" />
-                  <e p="server.svg" t="Include" />
-                  <e p="share-alt-square.svg" t="Include" />
-                  <e p="share-alt.svg" t="Include" />
-                  <e p="share-square-o.svg" t="Include" />
-                  <e p="share-square.svg" t="Include" />
-                  <e p="share.svg" t="Include" />
-                  <e p="shield.svg" t="Include" />
-                  <e p="ship.svg" t="Include" />
-                  <e p="shirtsinbulk.svg" t="Include" />
-                  <e p="shopping-cart.svg" t="Include" />
-                  <e p="sign-in.svg" t="Include" />
-                  <e p="sign-out.svg" t="Include" />
-                  <e p="signal.svg" t="Include" />
-                  <e p="simplybuilt.svg" t="Include" />
-                  <e p="sitemap.svg" t="Include" />
-                  <e p="skyatlas.svg" t="Include" />
-                  <e p="skype.svg" t="Include" />
-                  <e p="slack.svg" t="Include" />
-                  <e p="sliders.svg" t="Include" />
-                  <e p="slideshare.svg" t="Include" />
-                  <e p="smile-o.svg" t="Include" />
-                  <e p="sort-alpha-asc.svg" t="Include" />
-                  <e p="sort-alpha-desc.svg" t="Include" />
-                  <e p="sort-amount-asc.svg" t="Include" />
-                  <e p="sort-amount-desc.svg" t="Include" />
-                  <e p="sort-asc.svg" t="Include" />
-                  <e p="sort-desc.svg" t="Include" />
-                  <e p="sort-numeric-asc.svg" t="Include" />
-                  <e p="sort-numeric-desc.svg" t="Include" />
-                  <e p="sort.svg" t="Include" />
-                  <e p="soundcloud.svg" t="Include" />
-                  <e p="space-shuttle.svg" t="Include" />
-                  <e p="spinner.svg" t="Include" />
-                  <e p="spoon.svg" t="Include" />
-                  <e p="spotify.svg" t="Include" />
-                  <e p="square-o.svg" t="Include" />
-                  <e p="square.svg" t="Include" />
-                  <e p="stack-exchange.svg" t="Include" />
-                  <e p="stack-overflow.svg" t="Include" />
-                  <e p="star-half-o.svg" t="Include" />
-                  <e p="star-half.svg" t="Include" />
-                  <e p="star-o.svg" t="Include" />
-                  <e p="star.svg" t="Include" />
-                  <e p="steam-square.svg" t="Include" />
-                  <e p="steam.svg" t="Include" />
-                  <e p="step-backward.svg" t="Include" />
-                  <e p="step-forward.svg" t="Include" />
-                  <e p="stethoscope.svg" t="Include" />
-                  <e p="stop.svg" t="Include" />
-                  <e p="street-view.svg" t="Include" />
-                  <e p="strikethrough.svg" t="Include" />
-                  <e p="stumbleupon-circle.svg" t="Include" />
-                  <e p="stumbleupon.svg" t="Include" />
-                  <e p="subscript.svg" t="Include" />
-                  <e p="subway.svg" t="Include" />
-                  <e p="suitcase.svg" t="Include" />
-                  <e p="sun-o.svg" t="Include" />
-                  <e p="superscript.svg" t="Include" />
-                  <e p="table.svg" t="Include" />
-                  <e p="tablet.svg" t="Include" />
-                  <e p="tachometer.svg" t="Include" />
-                  <e p="tag.svg" t="Include" />
-                  <e p="tags.svg" t="Include" />
-                  <e p="tasks.svg" t="Include" />
-                  <e p="taxi.svg" t="Include" />
-                  <e p="tencent-weibo.svg" t="Include" />
-                  <e p="terminal.svg" t="Include" />
-                  <e p="text-height.svg" t="Include" />
-                  <e p="text-width.svg" t="Include" />
-                  <e p="th-large.svg" t="Include" />
-                  <e p="th-list.svg" t="Include" />
-                  <e p="th.svg" t="Include" />
-                  <e p="thumb-tack.svg" t="Include" />
-                  <e p="thumbs-down.svg" t="Include" />
-                  <e p="thumbs-o-down.svg" t="Include" />
-                  <e p="thumbs-o-up.svg" t="Include" />
-                  <e p="thumbs-up.svg" t="Include" />
-                  <e p="ticket.svg" t="Include" />
-                  <e p="times-circle-o.svg" t="Include" />
-                  <e p="times-circle.svg" t="Include" />
-                  <e p="times.svg" t="Include" />
-                  <e p="tint.svg" t="Include" />
-                  <e p="toggle-off.svg" t="Include" />
-                  <e p="toggle-on.svg" t="Include" />
-                  <e p="train.svg" t="Include" />
-                  <e p="transgender-alt.svg" t="Include" />
-                  <e p="transgender.svg" t="Include" />
-                  <e p="trash-o.svg" t="Include" />
-                  <e p="trash.svg" t="Include" />
-                  <e p="tree.svg" t="Include" />
-                  <e p="trello.svg" t="Include" />
-                  <e p="trophy.svg" t="Include" />
-                  <e p="truck.svg" t="Include" />
-                  <e p="try.svg" t="Include" />
-                  <e p="tty.svg" t="Include" />
-                  <e p="tumblr-square.svg" t="Include" />
-                  <e p="tumblr.svg" t="Include" />
-                  <e p="twitch.svg" t="Include" />
-                  <e p="twitter-square.svg" t="Include" />
-                  <e p="twitter.svg" t="Include" />
-                  <e p="umbrella.svg" t="Include" />
-                  <e p="underline.svg" t="Include" />
-                  <e p="undo.svg" t="Include" />
-                  <e p="university.svg" t="Include" />
-                  <e p="unlock-alt.svg" t="Include" />
-                  <e p="unlock.svg" t="Include" />
-                  <e p="upload.svg" t="Include" />
-                  <e p="usd.svg" t="Include" />
-                  <e p="user-md.svg" t="Include" />
-                  <e p="user-plus.svg" t="Include" />
-                  <e p="user-secret.svg" t="Include" />
-                  <e p="user-times.svg" t="Include" />
-                  <e p="user.svg" t="Include" />
-                  <e p="users.svg" t="Include" />
-                  <e p="venus-double.svg" t="Include" />
-                  <e p="venus-mars.svg" t="Include" />
-                  <e p="venus.svg" t="Include" />
-                  <e p="viacoin.svg" t="Include" />
-                  <e p="video-camera.svg" t="Include" />
-                  <e p="vimeo-square.svg" t="Include" />
-                  <e p="vine.svg" t="Include" />
-                  <e p="vk.svg" t="Include" />
-                  <e p="volume-down.svg" t="Include" />
-                  <e p="volume-off.svg" t="Include" />
-                  <e p="volume-up.svg" t="Include" />
-                  <e p="weibo.svg" t="Include" />
-                  <e p="weixin.svg" t="Include" />
-                  <e p="whatsapp.svg" t="Include" />
-                  <e p="wheelchair.svg" t="Include" />
-                  <e p="wifi.svg" t="Include" />
-                  <e p="windows.svg" t="Include" />
-                  <e p="wordpress.svg" t="Include" />
-                  <e p="wrench.svg" t="Include" />
-                  <e p="xing-square.svg" t="Include" />
-                  <e p="xing.svg" t="Include" />
-                  <e p="yahoo.svg" t="Include" />
-                  <e p="yelp.svg" t="Include" />
-                  <e p="youtube-play.svg" t="Include" />
-                  <e p="youtube-square.svg" t="Include" />
-                  <e p="youtube.svg" t="Include" />
-                </e>
-              </e>
-            </e>
             <e p="gallery" t="Include">
               <e p="Cover.jpg" t="Include" />
               <e p="IMG_0001.jpg" t="Include" />
@@ -1248,83 +199,12 @@
           </e>
           <e p="src" t="Include">
             <e p=".gitignore" t="Include" />
-            <e p="components" t="Include">
-              <e p="Login" t="Include">
-                <e p="CallbackPage.tsx" t="Include" />
-                <e p="index.ts" t="Include" />
-                <e p="LoginPage.tsx" t="Include" />
-                <e p="Styles.ts" t="Include" />
-              </e>
-              <e p="MakerverseProvider.tsx" t="Include" />
-              <e p="Navigation" t="Include">
-                <e p="HeaderBar.tsx" t="Include" />
-                <e p="index.tsx" t="Include" />
-                <e p="ListMenu.tsx" t="Include" />
-                <e p="ListMenuItem.tsx" t="Include" />
-                <e p="NotFound.tsx" t="Include" />
-                <e p="ProtectedRoute.tsx" t="Include" />
-                <e p="ReconnectRedirect.tsx" t="Include" />
-                <e p="SideDrawer.tsx" t="Include" />
-                <e p="Styles.ts" t="Include" />
-                <e p="UserMenu.tsx" t="Include" />
-              </e>
-            </e>
-            <e p="config" t="Include">
-              <e p="i18n.js" t="Include" />
-              <e p="settings.js" t="Include" />
-            </e>
-            <e p="constants" t="Include">
-              <e p="docs.ts" t="Include" />
-              <e p="index.js" t="Include" />
-            </e>
             <e p="index.css" t="Include" />
             <e p="index.js" t="Include" />
-            <e p="languages.ts" t="Include" />
-            <e p="Lib" t="Include">
-              <e p="maslow" t="Include">
-                <e p="MaslowCalibration.jsx" t="Include" />
-                <e p="MaslowKinematics.jsx" t="Include" />
-              </e>
-              <e p="suspend.ts" t="Include" />
-            </e>
-            <e p="makerverse-schema.graphql" t="Include" />
+            <e p="makerverse-deployment.ts" t="Include" />
             <e p="react-app-env.d.ts" t="Include" />
             <e p="reportWebVitals.js" t="Include" />
             <e p="setupTests.js" t="Include" />
-            <e p="store" t="Include">
-              <e p="defaultState.js" t="Include" />
-              <e p="index.js" t="Include" />
-              <e p="redux.ts" t="Include" />
-            </e>
-            <e p="views" t="Include">
-              <e p="App.tsx" t="Include" />
-              <e p="Docs" t="Include">
-                <e p="index.tsx" t="Include" />
-              </e>
-              <e p="Home" t="Include">
-                <e p="index.tsx" t="Include" />
-              </e>
-              <e p="index.ts" t="Include" />
-              <e p="ProtectedApp.tsx" t="Include" />
-              <e p="Settings" t="Include">
-                <e p="index.tsx" t="Include" />
-              </e>
-              <e p="Workspace" t="Include">
-                <e p="index.tsx" t="Include" />
-                <e p="OpenWorkspaceButton.tsx" t="Include" />
-                <e p="Styles.ts" t="Include" />
-                <e p="ToolBar.tsx" t="Include" />
-                <e p="ToolPane.tsx" t="Include" />
-                <e p="Workspace.tsx" t="Include" />
-                <e p="WorkspaceBar.tsx" t="Include" />
-                <e p="WorkspaceConnector.tsx" t="Include" />
-              </e>
-              <e p="WorkspaceCreator" t="Include">
-                <e p="CreateWorkspaceModal.tsx" t="Include" />
-                <e p="index.tsx" t="Include" />
-                <e p="Styles.ts" t="Include" />
-              </e>
-            </e>
           </e>
           <e p="tsconfig.json" t="Include" />
         </e>
@@ -1817,6 +697,7 @@
           <e p="src" t="Include">
             <e p="Api" t="Include">
               <e p="ApiCall.ts" t="Include" />
+              <e p="BackendConnection.ts" t="Include" />
               <e p="graphql.ts" t="Include" />
               <e p="Identity" t="Include">
                 <e p="Auth.ts" t="Include" />
@@ -1842,7 +723,6 @@
                 <e p="MachineSetting.graphql" t="Include" />
                 <e p="MachineSpec.graphql" t="Include" />
                 <e p="MachineSpecType.ts" t="Include" />
-                <e p="schema.graphql" t="Include" />
               </e>
               <e p="Ports" t="Include">
                 <e p="ConnectedPort.graphql" t="Include" />
@@ -1878,6 +758,7 @@
             <e p="ows-schema.graphql" t="Include" />
             <e p="shared.graphql" t="Include" />
             <e p="store.ts" t="Include" />
+            <e p="suspend.ts" t="Include" />
             <e p="types.ts" t="Include" />
             <e p="Utils" t="Include">
               <e p="cookies.ts" t="Include" />
@@ -1908,6 +789,7 @@
         <e p="OpenWorkEngine.mdproj" t="IncludeRecursive" />
         <e p="tsconfig-base.json" t="Include" />
         <e p="ui" t="Include">
+          <e p=".eslintcache" t="Include" />
           <e p=".eslintignore" t="Include" />
           <e p=".eslintrc.js" t="Include" />
           <e p=".prettierignore" t="Include" />
@@ -1998,6 +880,9 @@
           <e p="generate-icons.js" t="Include" />
           <e p="package.json" t="Include" />
           <e p="package.prod.json" t="Include" />
+          <e p="public" t="Include">
+            <e p="index.html" t="Include" />
+          </e>
           <e p="rollup.config.js" t="Include" />
           <e p="src" t="Include">
             <e p="components" t="Include">
@@ -2016,6 +901,7 @@
               <e p="Cards" t="Include">
                 <e p="CardDialog.tsx" t="Include" />
                 <e p="CardStyles.ts" t="Include" />
+                <e p="index.ts" t="Include" />
                 <e p="ToolbarCard.tsx" t="Include" />
               </e>
               <e p="ErrorList" t="Include">
@@ -2033,6 +919,7 @@
               <e p="index.ts" t="Include" />
               <e p="Layout" t="Include">
                 <e p="FullCentered.tsx" t="Include" />
+                <e p="index.ts" t="Include" />
                 <e p="ThreeColumns.tsx" t="Include" />
               </e>
               <e p="MachineProfiles" t="Include">
@@ -2142,17 +1029,48 @@
                 <e p="Styles.ts" t="Include" />
               </e>
             </e>
-            <e p="index.ts" t="Include" />
+            <e p="deployment.ts" t="Include" />
+            <e p="index.tsx" t="Include" />
             <e p="open-controller" t="Include">
               <e p="analytics.ts" t="Include" />
+              <e p="App" t="Include">
+                <e p="App.tsx" t="Include" />
+                <e p="Docs" t="Include">
+                  <e p="index.tsx" t="Include" />
+                </e>
+                <e p="Home" t="Include">
+                  <e p="index.tsx" t="Include" />
+                </e>
+                <e p="index.ts" t="Include" />
+                <e p="ProtectedApp.tsx" t="Include" />
+                <e p="Settings" t="Include">
+                  <e p="index.tsx" t="Include" />
+                </e>
+                <e p="Workspace" t="Include">
+                  <e p="index.tsx" t="Include" />
+                  <e p="OpenWorkspaceButton.tsx" t="Include" />
+                  <e p="Styles.ts" t="Include" />
+                  <e p="ToolBar.tsx" t="Include" />
+                  <e p="ToolPane.tsx" t="Include" />
+                  <e p="Workspace.tsx" t="Include" />
+                  <e p="WorkspaceBar.tsx" t="Include" />
+                  <e p="WorkspaceConnector.tsx" t="Include" />
+                </e>
+                <e p="WorkspaceCreator" t="Include">
+                  <e p="CreateWorkspaceModal.tsx" t="Include" />
+                  <e p="index.tsx" t="Include" />
+                  <e p="Styles.ts" t="Include" />
+                </e>
+              </e>
               <e p="constants.js" t="Include" />
               <e p="Context" t="Include">
-                <e p="apollo.ts" t="Include" />
                 <e p="index.ts" t="Include" />
                 <e p="OpenControllerContext.ts" t="Include" />
                 <e p="OpenControllerHooks.ts" t="Include" />
+                <e p="OpenControllerProvider.tsx" t="Include" />
                 <e p="types.ts" t="Include" />
               </e>
+              <e p="ControllerMain.tsx" t="Include" />
               <e p="Controllers" t="Include">
                 <e p="ControllerContext.ts" t="Include" />
                 <e p="ControllerHooks.ts" t="Include" />
@@ -2162,21 +1080,48 @@
               </e>
               <e p="Gwiz" t="Include">
                 <e p="GcodeVisualizer.tsx" t="Include" />
-                <e p="GcodeVisualizerContext.ts" t="Include" />
-                <e p="GcodeVisualizerProvider.tsx" t="Include" />
+                <e p="GWiz.ts" t="Include" />
+                <e p="GWizContext.ts" t="Include" />
+                <e p="GWizProvider.tsx" t="Include" />
+                <e p="GWizScene.ts" t="Include" />
                 <e p="Hooks.ts" t="Include" />
                 <e p="index.tsx" t="Include" />
                 <e p="Styles.ts" t="Include" />
                 <e p="types.ts" t="Include" />
               </e>
-              <e p="Identity" t="Include" />
-              <e p="index.js" t="Include" />
+              <e p="index.ts" t="Include" />
+              <e p="Login" t="Include">
+                <e p="CallbackPage.tsx" t="Include" />
+                <e p="index.ts" t="Include" />
+                <e p="LoginPage.tsx" t="Include" />
+                <e p="Styles.ts" t="Include" />
+              </e>
               <e p="Machines" t="Include">
+                <e p="index.ts" t="Include" />
+                <e p="maslow" t="Include">
+                  <e p="MaslowCalibration.jsx" t="Include" />
+                  <e p="MaslowKinematics.jsx" t="Include" />
+                </e>
                 <e p="Styles.ts" t="Include" />
               </e>
               <e p="modals" t="Include">
-                <e p="BackendDiconnectedModal.tsx" t="Include" />
+                <e p="BackendDisconnectedModal.tsx" t="Include" />
+                <e p="index.ts" t="Include" />
               </e>
+              <e p="Navigation" t="Include">
+                <e p="HeaderBar.tsx" t="Include" />
+                <e p="index.tsx" t="Include" />
+                <e p="ListMenu.tsx" t="Include" />
+                <e p="ListMenuItem.tsx" t="Include" />
+                <e p="NotFound.tsx" t="Include" />
+                <e p="ProtectedRoute.tsx" t="Include" />
+                <e p="ReconnectRedirect.tsx" t="Include" />
+                <e p="SideDrawer.tsx" t="Include" />
+                <e p="Styles.ts" t="Include" />
+                <e p="UserMenu.tsx" t="Include" />
+              </e>
+              <e p="old.js" t="Include" />
+              <e p="OpenController.tsx" t="Include" />
               <e p="Ports" t="Include">
                 <e p="index.ts" t="Include" />
                 <e p="OpenMachinePort.tsx" t="Include" />
@@ -2190,10 +1135,12 @@
                 <e p="SystemPortProvider.tsx" t="Include" />
                 <e p="types.ts" t="Include" />
               </e>
+              <e p="redux.ts" t="Include" />
               <e p="semvers.ts" t="Include" />
               <e p="Settings" t="Include">
                 <e p="Event.graphql" t="Include" />
                 <e p="FileSystem.graphql" t="Include" />
+                <e p="index.ts" t="Include" />
                 <e p="MakerverseSettings.graphql" t="Include" />
                 <e p="Startup.graphql" t="Include" />
               </e>
@@ -2227,6 +1174,7 @@
                 <e p="ToolLoader.tsx" t="Include" />
                 <e p="types.ts" t="Include" />
               </e>
+              <e p="types.ts" t="Include" />
               <e p="WorkBar" t="Include">
                 <e p="FirmwareChip.tsx" t="Include" />
                 <e p="index.ts" t="Include" />
@@ -2253,12 +1201,12 @@
                 <e p="WorkspaceTab.tsx" t="Include" />
               </e>
             </e>
+            <e p="react-app-env.d.ts" t="Include" />
             <e p="Themes" t="Include">
               <e p="Cabin.ts" t="Include" />
               <e p="Colors.ts" t="Include" />
               <e p="index.ts" t="Include" />
               <e p="Makerverse.ts" t="Include" />
-              <e p="Palette.ts" t="Include" />
               <e p="Spacing.ts" t="Include" />
               <e p="Styles.ts" t="Include" />
               <e p="Wizard.ts" t="Include" />

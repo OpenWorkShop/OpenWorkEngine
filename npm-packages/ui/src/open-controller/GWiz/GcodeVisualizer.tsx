@@ -1,21 +1,35 @@
-import { Box } from '@material-ui/core';
 import * as React from 'react';
+import * as THREE from 'three';
 import useStyles from './Styles';
+import useLogger from '@openworkshop/lib/utils/logging/UseLogger';
+import {GWizProps} from './types';
+import GWizProvider from './GWizProvider';
 
-type Props = {
-  children: React.ReactNode;
-  // subtractHeight?: number;
-  className?: string;
-};
-
-const GcodeVisualizer: React.FunctionComponent<Props> = (props) => {
+const GcodeVisualizer: React.FunctionComponent<GWizProps> = (props) => {
+  const log = useLogger(GcodeVisualizer);
   const classes = useStyles();
-  const { children, className } = props;
+  const { header, children, footer, domId, className } = props;
+  const [renderer] = React.useState(new THREE.WebGLRenderer());
+
+  React.useEffect(() => {
+    const parent = document.querySelector(`#${domId}`);
+    log.debug('portalize', renderer, parent);
+    if (parent != null) {
+      parent?.appendChild(renderer.domElement);
+      renderer.setSize(parent.clientWidth, parent.clientHeight);
+    }
+  }, [renderer]);
+
+  log.debug('portal', children, renderer.domElement);
 
   return (
-    <Box className={className} >
-      {children}
-    </Box>
+    <GWizProvider >
+      {header ? header : null}
+      <div className={className} id={domId} >
+        {children}
+      </div>
+      {footer ? footer : null}
+    </GWizProvider>
   );
 };
 

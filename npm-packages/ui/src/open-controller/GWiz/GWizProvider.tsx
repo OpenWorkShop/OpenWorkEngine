@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {GcodeVisualizerContext} from './GcodeVisualizerContext';
+import {GWizContext} from './GWizContext';
 import {IVisualizeGCode, IVisualizerPreferences, ViewPlane} from './types';
 
 type Props = {
  children: React.ReactNode;
 };
 
-const GcodeVisualizerProvider: React.FunctionComponent<Props> = (props) => {
+const GWizProvider: React.FunctionComponent<Props> = (props) => {
   const [viewPlane, setViewPlane] = React.useState<ViewPlane>(ViewPlane.None);
 
   const preferences: IVisualizerPreferences = {
@@ -17,10 +17,10 @@ const GcodeVisualizerProvider: React.FunctionComponent<Props> = (props) => {
   const wiz: IVisualizeGCode = { preferences };
 
   return (
-    <GcodeVisualizerContext.Provider value={wiz}  >
+    <GWizContext.Provider value={wiz}  >
       {props.children}
-    </GcodeVisualizerContext.Provider>
+    </GWizContext.Provider>
   );
 };
 
-export default GcodeVisualizerProvider;
+export default GWizProvider;

@@ -1,14 +1,16 @@
 import { IOpenWorkShop } from '@openworkshop/lib';
 import React from 'react';
 import {OpenControllerSessionFragment} from '@openworkshop/lib/api/graphql';
-import {Workspace} from '../workspaces';
-import {BackendConnection} from './apollo';
+import {Workspace} from '../Workspaces';
 import { StringMap } from 'i18next';
-import {IOpenController} from './types';
+import {IOpenController, IOpenControllerPackage} from './types';
+import {BackendConnection} from '@openworkshop/lib/api';
 
 // Contexts require a default value...
-const msg = 'Invalid access of empty context (use MakerverseProvider).';
+const msg = 'Invalid access of empty context (use OpenControllerProvider).';
 export class EmptyOpenController implements IOpenController {
+  get deployment(): IOpenControllerPackage { throw new Error(msg); }
+
   get ows(): IOpenWorkShop { throw new Error(msg); }
 
   get connection(): BackendConnection { throw new Error(msg); }

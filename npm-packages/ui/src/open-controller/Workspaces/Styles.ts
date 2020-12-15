@@ -9,6 +9,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   formControl: {
     width: '100%',
   },
+  formSpacer: {
+    width: '100%',
+    height: theme.spacing(1),
+  },
+  paper: {
+    padding: theme.spacing(1),
+  },
   titleBar: {
     backgroundColor: theme.palette.background.paper,
     borderBottomWidth: 1,
@@ -53,7 +60,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: 0,
   },
   dialogContent: {
-    padding: theme.spacing(1),
+    padding: theme.spacing(0.5),
     backgroundColor: theme.palette.background.default,
     minHeight: 400,
   },

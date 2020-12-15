@@ -6,259 +6,1176 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="627b5cbe-4e90-410d-9ab6-326b1616b6e2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Makerverse/app/src/components/MakerverseProvider.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OpenController/Lib/Graphql/AuthorizeOpenControllerUserAttribute.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OpenController/Lib/Graphql/MakerverseHttpRequestInterceptor.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OpenController/Lib/Graphql/MakerverseSocketSessionInterceptor.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OpenController/Settings/Graph/UseOpenControllerSettings.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Context/OpenControllerHooks.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Controllers/ControllerContext.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Controllers/ControllerHooks.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Controllers/ControllerProvider.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Ports/SystemPortContext.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Ports/SystemPortHooks.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Ports/SystemPortProvider.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Workspaces/MachineSettings.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Workspaces/Workspace.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Workspaces/hardware.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Workspaces/workspace-axis.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/analytics.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/semvers.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/lib/src/suspend.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/App.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/Docs/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/Home/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/ProtectedApp.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/Settings/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/Workspace/OpenWorkspaceButton.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/Workspace/Styles.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/Workspace/ToolBar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/Workspace/ToolPane.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/Workspace/Workspace.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/Workspace/WorkspaceBar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/Workspace/WorkspaceConnector.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/Workspace/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/WorkspaceCreator/CreateWorkspaceModal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/WorkspaceCreator/Styles.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/WorkspaceCreator/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Context/OpenControllerProvider.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Login/CallbackPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Login/LoginPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Login/Styles.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Login/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Machines/Maslow/MaslowCalibration.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Machines/Maslow/MaslowKinematics.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Navigation/HeaderBar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Navigation/ListMenu.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Navigation/ListMenuItem.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Navigation/NotFound.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Navigation/ProtectedRoute.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Navigation/ReconnectRedirect.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Navigation/SideDrawer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Navigation/Styles.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Navigation/UserMenu.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Navigation/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/redux.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Identity/Controllers/UsersController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Identity/Graphql/IdentityQuery.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Identity/Graphql/IdentitySchema.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Identity/Models/MakerverseSession.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Identity/Models/MakerverseUser.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Identity/Services/IdentityExtensions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Identity/Services/IdentityService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Identity/Services/MakerversePolicies.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Identity/Services/MakerverseRoles.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Identity/Services/SessionManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/MakerverseContext.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/MakerverseSchema.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/SchemaSplitterInterceptor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Settings/Controllers/CommandsController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Settings/Controllers/EventsController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Settings/Controllers/GcodeController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Settings/Controllers/MacrosController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Settings/Controllers/MdiController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Settings/Controllers/StateController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Settings/Controllers/VersionController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Settings/Controllers/WatchController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Settings/Controllers/WorkspacesController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Settings/Graph/SettingsQuery.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Settings/Graph/SettingsSchema.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Settings/Models/AppUpdates.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Settings/Models/CommandSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Settings/Models/ConnectionSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Settings/Models/EventSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Settings/Models/FileSystemSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Settings/Models/MacroSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Settings/Models/MakerHubSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Settings/Models/MakerverseSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Settings/Models/MountPointSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Enums/WorkspaceState.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Enums/WorkspaceTopic.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Graph/WorkspaceMutation.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Graph/WorkspaceQuery.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Graph/WorkspaceSchema.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Graph/WorkspaceSubscription.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Models/MachineAxisSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Models/MachineCommandSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Models/MachineFeatureSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Models/MachineFirmwareSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Models/MachinePartSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Models/MachineSettingSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Models/MachineSpecSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Models/Workspace.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Models/WorkspaceSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Api/Workspaces/Services/WorkspaceManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Lib/Filesystem/ConfigFile.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Lib/Filesystem/ILoadSettingsObject.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Lib/Filesystem/LoadSettingsExtensions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Lib/Filesystem/WatchedJsonFile.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Lib/Graphql/AuthorizeMakerverseUserAttribute.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Lib/Graphql/MakerverseHttpRequestInterceptor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Lib/Graphql/MakerverseSocketSessionInterceptor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Makerverse.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Makerverse.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/Settings/MakerverseSettingsFileTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/Settings/MakerverseSettingsFileTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Startup.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/app/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/.eslintcache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/.graphqlconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/codegen.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Identity/Authentication.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Identity/MakerverseSession.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Identity/MakerverseUser.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Machines/Machine.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Ports/ConnectedPort.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Ports/PortConnectionStatus.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Ports/PortOptions.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Ports/SystemPorts.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Settings/Event.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Settings/FileSystem.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Settings/MakerverseSettings.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Settings/Startup.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Workspaces/MachineAxis.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Workspaces/MachineCommand.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Workspaces/MachineConnection.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Workspaces/MachineFeature.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Workspaces/MachineFirmware.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Workspaces/MachinePart.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Workspaces/MachineSettings.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Workspaces/MachineSpec.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Workspaces/Workspace.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/Workspaces/WorkspaceSettings.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/constants.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/graphql.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/api/shared.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/GWiz/GcodeVisualizer.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/GWiz/GcodeVisualizerContext.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/GWiz/GcodeVisualizerProvider.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/GWiz/Hooks.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/GWiz/Styles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/GWiz/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/GWiz/types.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Login/CallbackPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/components/Login/CallbackPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Login/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/components/Login/LoginPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Machines/.graphqlconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Machines/Styles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Machines/schema.graphql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Modals/BackendDiconnectedModal.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/ListMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/ListMenu.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/NotFound.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/NotFound.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/ReconnectRedirect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/ReconnectRedirect.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/UserMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/UserMenu.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Ports/OpenMachinePort.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Ports/PortConnectionSteps.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Ports/PortSelect.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Ports/PortStatus.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Ports/Ports.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Ports/Styles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Ports/types.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Tools/AxisJoggerPad/AxisJoggerPad.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Tools/AxisJoggerPad/JogButton.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Tools/AxisJoggerPad/JogStepSelect.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Tools/AxisJoggerPad/Styles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Tools/AxisJoggerPad/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Tools/AxisJoggerPad/types.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Tools/Console/Console.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Tools/Console/Styles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Tools/Console/Terminal.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Tools/Console/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Tools/Hooks.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Tools/Machine/Machine.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Tools/Machine/Styles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Tools/Machine/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Tools/Plans/Plans.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Tools/Plans/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Tools/ToolGroup.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Tools/ToolLoader.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Tools/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Tools/types.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/WorkBar/FirmwareChip.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/WorkBar/MachinePositionChip.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/WorkBar/PopoverWorkBarChip.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/WorkBar/PortStatusChip.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/WorkBar/Styles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/WorkBar/ViewModeSelect.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/WorkBar/WorkBar.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/WorkBar/WorkspaceUnitSelect.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/WorkBar/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Workspaces/AxesTab.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Workspaces/PartsTab.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Workspaces/Styles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Workspaces/WorkspaceSettingsDialog.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Workspaces/WorkspaceStatus.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Workspaces/WorkspaceTab.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Workspaces/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Workspaces/types.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/graphql.schema.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/adjust.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/adn.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/align-center.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/align-justify.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/align-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/align-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/ambulance.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/anchor.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/android.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/angellist.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/angle-double-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/angle-double-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/angle-double-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/angle-double-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/angle-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/angle-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/angle-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/angle-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/apple.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/archive.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/area-chart.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/arrow-circle-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/arrow-circle-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/arrow-circle-o-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/arrow-circle-o-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/arrow-circle-o-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/arrow-circle-o-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/arrow-circle-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/arrow-circle-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/arrow-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/arrow-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/arrow-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/arrow-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/arrows-alt.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/arrows-h.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/arrows-v.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/arrows.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/asterisk.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/at.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/backward.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/ban.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/bar-chart.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/barcode.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/bars.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/bed.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/beer.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/behance-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/behance.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/bell-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/bell-slash-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/bell-slash.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/bell.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/bicycle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/binoculars.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/birthday-cake.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/bitbucket-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/bitbucket.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/bold.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/bolt.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/bomb.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/book.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/bookmark-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/bookmark.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/briefcase.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/btc.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/bug.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/building-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/building.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/bullhorn.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/bullseye.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/bus.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/buysellads.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/calculator.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/calendar-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/calendar.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/camera-retro.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/camera.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/car.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/caret-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/caret-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/caret-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/caret-square-o-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/caret-square-o-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/caret-square-o-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/caret-square-o-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/caret-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/cart-arrow-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/cart-plus.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/cc-amex.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/cc-discover.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/cc-mastercard.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/cc-paypal.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/cc-stripe.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/cc-visa.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/cc.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/certificate.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/chain-broken.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/check-circle-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/check-circle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/check-square-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/check-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/check.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/chevron-circle-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/chevron-circle-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/chevron-circle-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/chevron-circle-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/chevron-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/chevron-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/chevron-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/chevron-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/child.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/circle-o-notch.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/circle-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/circle-thin.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/circle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/clipboard.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/clock-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/cloud-download.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/cloud-upload.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/cloud.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/code-fork.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/code.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/codepen.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/coffee.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/cog.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/cogs.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/columns.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/comment-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/comment.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/comments-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/comments.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/compass.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/compress.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/connectdevelop.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/copyright.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/credit-card.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/crop.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/crosshairs.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/css3.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/cube.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/cubes.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/cutlery.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/dashcube.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/database.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/delicious.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/desktop.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/deviantart.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/diamond.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/digg.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/dot-circle-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/download.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/dribbble.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/dropbox.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/drupal.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/eject.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/ellipsis-h.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/ellipsis-v.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/empire.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/envelope-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/envelope-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/envelope.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/eraser.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/eur.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/exchange.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/exclamation-circle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/exclamation-triangle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/exclamation.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/expand.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/external-link-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/external-link.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/eye-slash.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/eye.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/eyedropper.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/facebook-official.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/facebook-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/facebook.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/fast-backward.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/fast-forward.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/fax.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/female.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/fighter-jet.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/file-archive-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/file-audio-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/file-code-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/file-excel-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/file-image-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/file-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/file-pdf-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/file-powerpoint-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/file-text-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/file-text.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/file-video-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/file-word-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/file.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/files-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/film.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/filter.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/fire-extinguisher.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/fire.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/flag-checkered.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/flag-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/flag.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/flask.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/flickr.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/floppy-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/folder-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/folder-open-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/folder-open.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/folder.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/font.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/forumbee.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/forward.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/foursquare.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/frown-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/futbol-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/gamepad.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/gavel.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/gbp.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/gift.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/git-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/git.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/github-alt.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/github-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/github.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/glass.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/globe.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/google-plus-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/google-plus.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/google-wallet.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/google.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/graduation-cap.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/gratipay.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/h-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/hacker-news.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/hand-o-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/hand-o-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/hand-o-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/hand-o-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/hdd-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/header.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/headphones.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/heart-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/heart.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/heartbeat.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/history.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/home.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/hospital-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/html5.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/ils.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/inbox.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/indent.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/info-circle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/info.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/inr.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/instagram.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/ioxhost.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/italic.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/joomla.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/jpy.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/jsfiddle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/key.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/keyboard-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/krw.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/language.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/laptop.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/lastfm-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/lastfm.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/leaf.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/leanpub.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/lemon-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/level-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/level-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/life-ring.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/lightbulb-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/line-chart.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/link.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/linkedin-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/linkedin.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/linux.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/list-alt.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/list-ol.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/list-ul.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/list.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/location-arrow.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/lock.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/long-arrow-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/long-arrow-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/long-arrow-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/long-arrow-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/magic.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/magnet.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/male.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/map-marker.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/mars-double.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/mars-stroke-h.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/mars-stroke-v.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/mars-stroke.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/mars.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/maxcdn.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/meanpath.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/medium.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/medkit.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/meh-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/mercury.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/microphone-slash.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/microphone.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/minus-circle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/minus-square-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/minus-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/minus.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/mobile.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/money.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/moon-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/motorcycle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/music.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/neuter.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/newspaper-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/openid.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/outdent.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/pagelines.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/paint-brush.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/paper-plane-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/paper-plane.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/paperclip.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/paragraph.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/pause.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/paw.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/paypal.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/pencil-square-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/pencil-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/pencil.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/phone-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/phone.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/picture-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/pie-chart.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/pied-piper-alt.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/pied-piper.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/pinterest-p.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/pinterest-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/pinterest.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/plane.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/play-circle-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/play-circle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/play.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/plug.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/plus-circle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/plus-square-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/plus-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/plus.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/power-off.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/print.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/puzzle-piece.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/qq.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/qrcode.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/question-circle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/question.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/quote-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/quote-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/random.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/rebel.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/recycle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/reddit-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/reddit.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/refresh.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/renren.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/repeat.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/reply-all.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/reply.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/retweet.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/road.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/rocket.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/rss-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/rss.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/rub.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/scissors.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/search-minus.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/search-plus.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/search.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/sellsy.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/server.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/share-alt-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/share-alt.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/share-square-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/share-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/share.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/shield.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/ship.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/shirtsinbulk.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/shopping-cart.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/sign-in.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/sign-out.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/signal.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/simplybuilt.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/sitemap.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/skyatlas.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/skype.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/slack.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/sliders.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/slideshare.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/smile-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/sort-alpha-asc.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/sort-alpha-desc.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/sort-amount-asc.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/sort-amount-desc.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/sort-asc.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/sort-desc.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/sort-numeric-asc.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/sort-numeric-desc.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/sort.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/soundcloud.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/space-shuttle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/spinner.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/spoon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/spotify.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/square-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/stack-exchange.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/stack-overflow.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/star-half-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/star-half.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/star-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/star.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/steam-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/steam.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/step-backward.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/step-forward.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/stethoscope.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/stop.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/street-view.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/strikethrough.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/stumbleupon-circle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/stumbleupon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/subscript.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/subway.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/suitcase.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/sun-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/superscript.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/table.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/tablet.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/tachometer.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/tag.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/tags.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/tasks.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/taxi.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/tencent-weibo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/terminal.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/text-height.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/text-width.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/th-large.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/th-list.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/th.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/thumb-tack.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/thumbs-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/thumbs-o-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/thumbs-o-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/thumbs-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/ticket.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/times-circle-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/times-circle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/times.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/tint.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/toggle-off.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/toggle-on.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/train.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/transgender-alt.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/transgender.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/trash-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/trash.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/tree.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/trello.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/trophy.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/truck.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/try.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/tty.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/tumblr-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/tumblr.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/twitch.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/twitter-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/twitter.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/umbrella.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/underline.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/undo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/university.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/unlock-alt.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/unlock.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/upload.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/usd.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/user-md.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/user-plus.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/user-secret.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/user-times.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/user.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/users.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/venus-double.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/venus-mars.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/venus.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/viacoin.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/video-camera.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/vimeo-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/vine.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/vk.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/volume-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/volume-off.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/volume-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/weibo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/weixin.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/whatsapp.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/wheelchair.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/wifi.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/windows.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/wordpress.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/wrench.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/xing-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/xing.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/yahoo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/yelp.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/youtube-play.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/youtube-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/black/svg/youtube.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/adjust.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/adn.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/align-center.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/align-justify.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/align-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/align-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/ambulance.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/anchor.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/android.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/angellist.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/angle-double-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/angle-double-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/angle-double-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/angle-double-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/angle-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/angle-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/angle-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/angle-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/apple.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/archive.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/area-chart.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/arrow-circle-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/arrow-circle-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/arrow-circle-o-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/arrow-circle-o-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/arrow-circle-o-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/arrow-circle-o-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/arrow-circle-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/arrow-circle-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/arrow-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/arrow-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/arrow-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/arrow-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/arrows-alt.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/arrows-h.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/arrows-v.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/arrows.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/asterisk.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/at.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/backward.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/ban.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/bar-chart.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/barcode.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/bars.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/bed.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/beer.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/behance-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/behance.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/bell-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/bell-slash-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/bell-slash.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/bell.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/bicycle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/binoculars.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/birthday-cake.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/bitbucket-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/bitbucket.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/bold.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/bolt.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/bomb.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/book.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/bookmark-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/bookmark.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/briefcase.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/btc.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/bug.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/building-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/building.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/bullhorn.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/bullseye.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/bus.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/buysellads.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/calculator.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/calendar-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/calendar.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/camera-retro.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/camera.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/car.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/caret-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/caret-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/caret-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/caret-square-o-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/caret-square-o-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/caret-square-o-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/caret-square-o-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/caret-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/cart-arrow-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/cart-plus.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/cc-amex.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/cc-discover.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/cc-mastercard.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/cc-paypal.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/cc-stripe.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/cc-visa.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/cc.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/certificate.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/chain-broken.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/check-circle-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/check-circle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/check-square-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/check-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/check.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/chevron-circle-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/chevron-circle-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/chevron-circle-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/chevron-circle-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/chevron-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/chevron-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/chevron-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/chevron-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/child.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/circle-o-notch.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/circle-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/circle-thin.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/circle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/clipboard.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/clock-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/cloud-download.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/cloud-upload.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/cloud.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/code-fork.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/code.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/codepen.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/coffee.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/cog.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/cogs.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/columns.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/comment-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/comment.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/comments-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/comments.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/compass.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/compress.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/connectdevelop.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/copyright.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/credit-card.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/crop.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/crosshairs.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/css3.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/cube.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/cubes.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/cutlery.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/dashcube.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/database.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/delicious.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/desktop.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/deviantart.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/diamond.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/digg.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/dot-circle-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/download.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/dribbble.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/dropbox.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/drupal.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/eject.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/ellipsis-h.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/ellipsis-v.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/empire.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/envelope-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/envelope-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/envelope.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/eraser.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/eur.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/exchange.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/exclamation-circle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/exclamation-triangle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/exclamation.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/expand.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/external-link-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/external-link.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/eye-slash.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/eye.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/eyedropper.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/facebook-official.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/facebook-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/facebook.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/fast-backward.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/fast-forward.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/fax.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/female.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/fighter-jet.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/file-archive-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/file-audio-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/file-code-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/file-excel-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/file-image-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/file-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/file-pdf-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/file-powerpoint-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/file-text-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/file-text.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/file-video-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/file-word-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/file.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/files-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/film.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/filter.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/fire-extinguisher.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/fire.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/flag-checkered.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/flag-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/flag.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/flask.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/flickr.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/floppy-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/folder-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/folder-open-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/folder-open.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/folder.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/font.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/forumbee.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/forward.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/foursquare.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/frown-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/futbol-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/gamepad.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/gavel.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/gbp.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/gift.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/git-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/git.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/github-alt.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/github-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/github.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/glass.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/globe.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/google-plus-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/google-plus.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/google-wallet.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/google.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/graduation-cap.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/gratipay.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/h-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/hacker-news.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/hand-o-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/hand-o-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/hand-o-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/hand-o-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/hdd-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/header.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/headphones.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/heart-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/heart.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/heartbeat.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/history.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/home.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/hospital-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/html5.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/ils.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/inbox.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/indent.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/info-circle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/info.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/inr.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/instagram.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/ioxhost.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/italic.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/joomla.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/jpy.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/jsfiddle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/key.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/keyboard-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/krw.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/language.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/laptop.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/lastfm-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/lastfm.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/leaf.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/leanpub.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/lemon-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/level-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/level-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/life-ring.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/lightbulb-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/line-chart.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/link.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/linkedin-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/linkedin.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/linux.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/list-alt.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/list-ol.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/list-ul.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/list.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/location-arrow.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/lock.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/long-arrow-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/long-arrow-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/long-arrow-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/long-arrow-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/magic.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/magnet.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/male.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/map-marker.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/mars-double.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/mars-stroke-h.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/mars-stroke-v.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/mars-stroke.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/mars.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/maxcdn.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/meanpath.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/medium.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/medkit.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/meh-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/mercury.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/microphone-slash.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/microphone.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/minus-circle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/minus-square-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/minus-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/minus.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/mobile.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/money.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/moon-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/motorcycle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/music.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/neuter.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/newspaper-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/openid.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/outdent.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/pagelines.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/paint-brush.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/paper-plane-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/paper-plane.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/paperclip.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/paragraph.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/pause.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/paw.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/paypal.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/pencil-square-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/pencil-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/pencil.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/phone-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/phone.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/picture-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/pie-chart.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/pied-piper-alt.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/pied-piper.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/pinterest-p.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/pinterest-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/pinterest.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/plane.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/play-circle-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/play-circle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/play.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/plug.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/plus-circle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/plus-square-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/plus-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/plus.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/power-off.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/print.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/puzzle-piece.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/qq.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/qrcode.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/question-circle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/question.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/quote-left.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/quote-right.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/random.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/rebel.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/recycle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/reddit-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/reddit.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/refresh.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/renren.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/repeat.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/reply-all.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/reply.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/retweet.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/road.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/rocket.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/rss-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/rss.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/rub.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/scissors.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/search-minus.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/search-plus.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/search.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/sellsy.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/server.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/share-alt-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/share-alt.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/share-square-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/share-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/share.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/shield.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/ship.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/shirtsinbulk.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/shopping-cart.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/sign-in.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/sign-out.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/signal.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/simplybuilt.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/sitemap.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/skyatlas.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/skype.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/slack.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/sliders.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/slideshare.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/smile-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/sort-alpha-asc.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/sort-alpha-desc.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/sort-amount-asc.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/sort-amount-desc.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/sort-asc.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/sort-desc.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/sort-numeric-asc.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/sort-numeric-desc.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/sort.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/soundcloud.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/space-shuttle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/spinner.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/spoon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/spotify.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/square-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/stack-exchange.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/stack-overflow.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/star-half-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/star-half.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/star-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/star.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/steam-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/steam.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/step-backward.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/step-forward.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/stethoscope.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/stop.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/street-view.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/strikethrough.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/stumbleupon-circle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/stumbleupon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/subscript.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/subway.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/suitcase.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/sun-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/superscript.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/table.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/tablet.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/tachometer.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/tag.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/tags.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/tasks.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/taxi.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/tencent-weibo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/terminal.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/text-height.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/text-width.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/th-large.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/th-list.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/th.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/thumb-tack.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/thumbs-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/thumbs-o-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/thumbs-o-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/thumbs-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/ticket.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/times-circle-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/times-circle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/times.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/tint.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/toggle-off.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/toggle-on.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/train.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/transgender-alt.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/transgender.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/trash-o.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/trash.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/tree.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/trello.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/trophy.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/truck.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/try.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/tty.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/tumblr-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/tumblr.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/twitch.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/twitter-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/twitter.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/umbrella.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/underline.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/undo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/university.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/unlock-alt.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/unlock.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/upload.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/usd.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/user-md.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/user-plus.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/user-secret.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/user-times.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/user.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/users.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/venus-double.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/venus-mars.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/venus.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/viacoin.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/video-camera.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/vimeo-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/vine.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/vk.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/volume-down.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/volume-off.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/volume-up.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/weibo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/weixin.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/whatsapp.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/wheelchair.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/wifi.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/windows.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/wordpress.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/wrench.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/xing-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/xing.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/yahoo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/yelp.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/youtube-play.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/youtube-square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/public/font-awesome/white/svg/youtube.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Login/CallbackPage.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Login/LoginPage.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Login/Styles.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Login/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/MakerverseProvider.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/HeaderBar.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/ListMenu.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/ListMenuItem.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/NotFound.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/ProtectedRoute.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/ReconnectRedirect.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/SideDrawer.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/Styles.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/UserMenu.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/components/Navigation/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/config/i18n.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/config/settings.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/constants/docs.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/constants/index.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/app/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/MachineSettings.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/Makerverse/MakerverseContext.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/Makerverse/Workspaces.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/Makerverse/actions.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/Makerverse/apollo.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/Makerverse/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/Makerverse/reducers.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/Makerverse/types.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/ResizeObserver.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/analytics.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/combokeys.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/dom-events.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/ensure-positive-number.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/gcode-text.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/normalize-range.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/numeral.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/ows/api.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/ows/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/ows/machines.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/paths.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/portal.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/semvers.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/three/CombinedCamera.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/three/STLLoader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/three/TrackballControls.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/three/WebGL.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/units.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/validations.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/workspaces/active-state.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/workspaces/hardware.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/workspaces/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/workspaces/types.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/workspaces/workspace-axis.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/workspaces/workspace.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/providers/ControllerHooks.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/providers/ControllerProvider.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/providers/MakerverseHooks.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/providers/MakerverseProvider.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/providers/SystemPortContext.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/providers/SystemPortHooks.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/providers/SystemPortProvider.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/providers/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/store/redux.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/store/redux.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/views/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Docs/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/views/Docs/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Home/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/views/Home/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/ProtectedApp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/views/ProtectedApp.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/OpenWorkspaceButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/OpenWorkspaceButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/ToolBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/ToolBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/ToolPane.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/ToolPane.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/Workspace.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/Workspace.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/WorkspaceBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/WorkspaceBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/WorkspaceConnector.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/WorkspaceConnector.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/WorkspaceCreator/CreateWorkspaceModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/views/WorkspaceCreator/CreateWorkspaceModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/WorkspaceCreator/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/views/WorkspaceCreator/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Graph/MachinesSubscription.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Graph/MachinesSubscription.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Ports/Graph/PortsMutation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Ports/Graph/PortsMutation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Ports/Graph/PortsQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Ports/Graph/PortsQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Ports/Graph/PortsSubscription.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Ports/Graph/PortsSubscription.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Schema.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/OpenControllerSchema.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Schema/IdentityQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Schema/IdentityQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Schema/MachineQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Schema/MachineQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/OWSSchema.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/OWSSchema.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codegen.yml" beforeDir="false" afterPath="$PROJECT_DIR$/codegen.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/languages.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/Maslow/MaslowCalibration.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/Maslow/MaslowKinematics.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/cookies.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/immutable-store.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/ows/authrequest.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/ows/settings.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/promise-series.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/lib/suspend.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/makerverse-schema.graphql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/store/defaultState.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/store/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/store/redux.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/App.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Docs/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Home/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/ProtectedApp.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Settings/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/OpenWorkspaceButton.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/Styles.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/ToolBar.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/ToolPane.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/Workspace.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/WorkspaceBar.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/WorkspaceConnector.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/Workspace/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/WorkspaceCreator/CreateWorkspaceModal.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/WorkspaceCreator/Styles.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/WorkspaceCreator/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/views/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/.eslintcache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ci/pkg.sh" beforeDir="false" afterPath="$PROJECT_DIR$/ci/pkg.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/npm-packages/OpenWorkEngine.mdproj" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/OpenWorkEngine.mdproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/lib/.graphqlconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/lib/codegen.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/lib/src/api/graphql.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/src/api/graphql.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/lib/src/ows-schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/src/ows-schema.graphql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/open-controller/.eslintignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/open-controller/.eslintrc.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/open-controller/.prettierignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/open-controller/.prettierrc.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/open-controller/dist/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/open-controller/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/open-controller/package.prod.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/open-controller/rollup.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/open-controller/src/Controller.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/open-controller/src/MachineController.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/open-controller/src/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-packages/open-controller/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/lib/src/OpenWorkShop.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/src/OpenWorkShop.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/lib/src/api/Machines/schema.graphql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/lib/src/api/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/src/api/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/lib/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/lib/src/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/src/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/dist/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/components/Cards/CardStyles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/components/Cards/CardStyles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/components/MachineProfiles/ChooseMachineParts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/components/MachineProfiles/ChooseMachineParts.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/components/MachineProfiles/MachineAxisEditor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/components/MachineProfiles/MachineAxisEditor.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/components/MachineProfiles/MachineSpecList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/components/MachineProfiles/MachineSpecList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/components/OpenWorkShopCore.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/components/OpenWorkShopCore.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/components/OpenWorkShopProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/components/OpenWorkShopProvider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/components/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/components/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Context/OpenControllerContext.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Context/OpenControllerContext.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Context/OpenControllerHooks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Context/OpenControllerHooks.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Context/apollo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/lib/src/api/BackendConnection.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Context/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Context/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Context/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Context/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/GWiz/GcodeVisualizer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/GWiz/GcodeVisualizer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/GWiz/GcodeVisualizerContext.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/GWiz/GWizContext.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/GWiz/GcodeVisualizerProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/GWiz/GWizProvider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/GWiz/Hooks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/GWiz/Hooks.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/GWiz/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/GWiz/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/GWiz/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/GWiz/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Modals/BackendDiconnectedModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Modals/BackendDisconnectedModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Ports/OpenMachinePort.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Ports/OpenMachinePort.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/WorkBar/FirmwareChip.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/WorkBar/FirmwareChip.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/WorkBar/MachinePositionChip.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/WorkBar/MachinePositionChip.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Workspaces/Styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Workspaces/Styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Workspaces/WorkspaceTab.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Workspaces/WorkspaceTab.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Workspaces/workspace-axis.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Workspaces/workspace-axis.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/analytics.ts" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/analytics.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/src/open-controller/old.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/src/themes/Palette.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/npm-packages/ui/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/npm-packages/ui/tsconfig.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -270,14 +1187,15 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="tsconfig.json" />
-        <option value="TypeScript JSX File" />
         <option value="GraphQL File" />
         <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/Makerverse" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/62C3C544-B083-4761-BC8E-34B51B9A6C6D/15/SchemaRequestExecutorBuilderExtensions.TypeInterceptor.cs" root0="SKIP_HIGHLIGHTING" />
@@ -301,57 +1219,57 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Makerverse/App/src/views/WorkspaceCreator/index.tsx" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/views/Workspace/WorkspaceConnector.tsx" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/views/WorkspaceCreator/CreateWorkspaceModal.tsx" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/views/Workspace/ToolPane.tsx" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Navigation/UserMenu.tsx" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Login/CallbackPage.tsx" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Login/LoginPage.tsx" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Navigation/ReconnectRedirect.tsx" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Navigation/NotFound.tsx" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/views/Docs/index.tsx" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/views/Home/index.tsx" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/views/Workspace/ToolBar.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Context/index.ts" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Context/OpenControllerContext.ts" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/views/Workspace/index.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/WorkBar/WorkspaceUnitSelect.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Workspaces/Styles.ts" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/config/settings.js" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Modals/BackendDiconnectedModal.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Ports/OpenMachinePort.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Ports/PortConnectionSteps.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Ports/PortSelect.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Ports/PortStatus.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Ports/Ports.ts" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Ports/SystemPortProvider.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/Workspace/WorkspaceBar.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/ProtectedApp.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/App.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/Workspace/ToolBar.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/Workspace/Workspace.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/WorkspaceCreator/index.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/WorkspaceCreator/CreateWorkspaceModal.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/Workspace/OpenWorkspaceButton.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/App/Workspace/WorkspaceConnector.tsx" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/index.js" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/tsconfig.json" />
+      <option value="$PROJECT_DIR$/OpenWorkShop/App/src/index.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/dev/makerverse-deployment.ts" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/dev/dev-deployment.ts" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/dev/index.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/index.ts" />
+      <option value="$PROJECT_DIR$/Makerverse/App/src/makerverse-deployment.ts" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/public/index.html" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/components/MachineProfiles/MachineAxisEditor.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/components/MachineProfiles/MachineSpecList.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/analytics.ts" />
       <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/WorkBar/FirmwareChip.tsx" />
       <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/WorkBar/MachinePositionChip.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/WorkBar/PortStatusChip.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/WorkBar/ViewModeSelect.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/WorkBar/WorkBar.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Workspaces/WorkspaceSettingsDialog.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Workspaces/WorkspaceTab.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Workspaces/WorkspaceStatus.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Tools/AxisJoggerPad/AxisJoggerPad.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Tools/AxisJoggerPad/JogButton.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Tools/Machine/Machine.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Tools/Console/Console.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Workspaces/index.ts" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Workspaces/PartsTab.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Workspaces/AxesTab.tsx" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/components/MakerverseProvider.tsx" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Navigation/HeaderBar.tsx" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Navigation/index.tsx" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/views/App.tsx" />
-      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Workspaces/Workspace.ts" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/views/ProtectedApp.tsx" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/views/Workspace/OpenWorkspaceButton.tsx" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/lib/auth.js" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/components/OpenWorkShopProvider.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/components/OpenWorkShopCore.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/lib/src/index.ts" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Context/apollo.ts" />
+      <option value="$PROJECT_DIR$/npm-packages/lib/src/types.ts" />
+      <option value="$PROJECT_DIR$/npm-packages/lib/src/OpenWorkShop.ts" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Context/index.ts" />
+      <option value="$PROJECT_DIR$/npm-packages/lib/src/api/index.ts" />
       <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Context/OpenControllerHooks.ts" />
-      <option value="$PROJECT_DIR$/Makerverse/App/src/components/Navigation/ListMenu.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Context/OpenControllerContext.ts" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Context/OpenControllerProvider.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Modals/BackendDiconnectedModal.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Modals/BackendDisconnectedModal.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Navigation/UserMenu.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Workspaces/workspace-axis.ts" />
+      <option value="$PROJECT_DIR$/Makerverse/App/package.json" />
       <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/Context/types.ts" />
+      <option value="$PROJECT_DIR$/npm-packages/lib/src/api/BackendConnection.ts" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/deployment.ts" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/themes/Palette.ts" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/themes/Makerverse.ts" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/server.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/index.ts" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/package.json" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/index.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/types.ts" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/ControllerMain.tsx" />
+      <option value="$PROJECT_DIR$/npm-packages/ui/src/open-controller/OpenController.tsx" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1l4my4TnlSIUe2KMx2jkxdZSpZ6" />
@@ -365,6 +1283,7 @@
   <component name="PropertiesComponent">
     <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.34970912" />
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -375,7 +1294,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.standard" value="" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -459,7 +1378,7 @@
       <workItem from="1607629812003" duration="3943000" />
       <workItem from="1607688610240" duration="97751000" />
       <workItem from="1607951803070" duration="1687000" />
-      <workItem from="1607953634000" duration="27474000" />
+      <workItem from="1607953634000" duration="55102000" />
     </task>
     <servers />
   </component>

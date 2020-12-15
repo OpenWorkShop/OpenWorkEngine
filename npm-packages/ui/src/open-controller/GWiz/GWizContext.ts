@@ -5,7 +5,11 @@ export const preferences: IVisualizerPreferences = {
   viewPlane: 0,
   setViewPlane: (vp: ViewPlane) => {
     console.log('test', vp);
-  }
+  },
+  lineWidth: 1,
 };
 
-export const GcodeVisualizerContext = React.createContext<IVisualizeGCode>({ preferences });
+export const GWizContext = React.createContext<IVisualizeGCode>({
+  // targetId: '',
+  preferences
+});

@@ -28,7 +28,9 @@ const MachinePositionChip: React.FunctionComponent<Props> = (props) => {
     t('MPos (machine position), in absolute real-world coordinates.');
 
   const axes: Axis[] = ['x', 'y', 'z'];
-  const positionText = axes.map((a) => position[a]).filter(v => v !== null).join(', ');
+  const positionText = axes
+    .map((a) => position[a] as number)
+    .filter(v => v !== null).join(', ');
 
   return (<PopoverWorkBarChip faIcon={icon} label={positionText}>
     <Grid item xs={12} className={classes.popoverRowAlt} >

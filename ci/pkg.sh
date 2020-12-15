@@ -24,9 +24,9 @@ if [ "${CMD}" = "build" ] || [ "${CMD}" = "rebuild" ];  then
   exit 0
 fi
 
-if [ "${CMD}" = "watch" ]; then
+if [ "${CMD}" = "dev" ]; then
   echo "[WATCH] $PKG"
-  tsc -b -w
+  yarn run dev
   exit 0
 fi
 

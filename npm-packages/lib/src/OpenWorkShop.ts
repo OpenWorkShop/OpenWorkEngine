@@ -1,6 +1,6 @@
 import { ApolloClient, ApolloLink, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import i18n, { StringMap, TFunction } from 'i18next';
+import i18nModule, { StringMap, TFunction, i18n } from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-xhr-backend';
 import JsLogger from 'js-logger';
@@ -14,7 +14,7 @@ import { IOwsState } from './store';
 import logManager, { LogManager } from './utils/logging';
 import { Logger } from './utils/logging';
 import { defaultLogOptions, developmentLogOptions } from './utils/logging/LogOptions';
-import { IOpenWorkShop, IOwsOptions, IOwsSettings } from './types';
+import { ICustomizedOpenWorkShop, IOpenWorkShop, IOwsOptions, IOwsSettings } from './types';
 
 let _i = 0;
 
@@ -33,7 +33,9 @@ class OpenWorkShop implements IOpenWorkShop {
 
   private _i = -1;
 
-  private _i18n?: TFunction;
+  private _i18n?: i18n;
+
+  private _t?: TFunction;
 
   constructor() {
     if (_i != 0) {
@@ -43,8 +45,7 @@ class OpenWorkShop implements IOpenWorkShop {
     _i++;
   }
 
-  public async load(opts: IOwsOptions): Promise<boolean> {
-    this._store = opts.store;
+  public async load(opts: IOwsOptions): Promise<ICustomizedOpenWorkShop> {
     this._settings = loadSettings(opts);
 
     const root = this._settings.url.href;
@@ -64,13 +65,24 @@ class OpenWorkShop implements IOpenWorkShop {
         },
       };
     }).concat(new HttpLink({ uri: `${root}api/graphql` }));
-    const link = opts.clientApolloLinkCreator
-      ? ApolloLink.split(
+
+    let link = owsLink;
+    this._i18n = i18nModule;
+    const cust = opts.builder(this);
+
+    this._store = cust.store;
+
+    if (cust.connection) {
+      link = ApolloLink.split(
         (operation) => operation.getContext().clientName === abbreviation,
         owsLink,
-        opts.clientApolloLinkCreator(this),
-      )
-      : owsLink;
+        cust.connection.webSocketLink,
+      );
+    }
+    if (cust.i18n) {
+      this._i18n = cust.i18n;
+    }
+
     this._apolloClient = new ApolloClient({
       cache: new InMemoryCache(),
       link: link,
@@ -87,15 +99,8 @@ class OpenWorkShop implements IOpenWorkShop {
     OidcClient.Log.logger = oidcLogger;
     OidcClient.Log.level = OidcClient.Log.DEBUG;
 
-    let i = i18n;
-    if (opts.i18nMiddleware) {
-      opts.i18nMiddleware.forEach((mw) => {
-        i = i.use(mw);
-      });
-    }
-
     this.log.debug('loading localizations...');
-    this._i18n = await i
+    this._t = await this._i18n
       // load translation using http -> see /public/locales (i.e. https://github.com/i18next/react-i18next/tree/master/example/react/public/locales)
       // learn more: https://github.com/i18next/i18next-http-backend
       .use(Backend)
@@ -132,21 +137,24 @@ class OpenWorkShop implements IOpenWorkShop {
 
     this.log.debug('OWS Startup', this.isLoaded, this.settings, this._user, this);
 
-    return this.isLoaded;
+    return cust;
   }
 
   get isLoaded(): boolean {
     return !!this._settings;
   }
 
-  get i18n(): TFunction {
+  get i18n(): i18n {
     this.check();
-    return this._i18n as TFunction;
+    return this._i18n as i18n;
   }
 
   public t(key: string, opts?: StringMap): string {
     this.check();
-    return this.i18n(key, opts);
+    if (!this._t) {
+      throw new Error('Localization not ready.');
+    }
+    return this._t(key, opts);
   }
 
   get log(): Logger {

@@ -68,7 +68,7 @@ const MachineAxisEditor: React.FunctionComponent<IMachineAxisEditorProps> = (pro
           className={classes.axisInput}
           variant="standard"
           integersOnly={key === 'precision'}
-          numericValue={axis[key] as number}
+          numericValue={axis[key]}
           onChangeNumericValue={(v) => props.onChanged({ ...axis, [key]: v })}
           InputProps={{
             startAdornment: tip && (

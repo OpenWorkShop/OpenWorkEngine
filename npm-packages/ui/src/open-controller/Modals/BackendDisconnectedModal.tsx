@@ -1,11 +1,12 @@
 import * as React from 'react';
 import useLogger from '@openworkshop/lib/utils/logging/UseLogger';
-import {useBackendConnectionState, useTrans, ConnectionState} from '../Context';
+import {useBackendConnectionState, useTrans} from '../Context';
+import { ConnectionState } from '@openworkshop/lib/api';
 import CardDialog from '../../components/Cards/CardDialog';
 import { CircularProgress, Typography } from '@material-ui/core';
 
-const BackendDiconnectedModal: React.FunctionComponent = () => {
-  const log = useLogger(BackendDiconnectedModal);
+const BackendDisconnectedModal: React.FunctionComponent = () => {
+  const log = useLogger(BackendDisconnectedModal);
   const t = useTrans();
   const connectionState: ConnectionState = useBackendConnectionState();
   const [timedOut, setTimedOut] = React.useState(false);
@@ -39,4 +40,4 @@ const BackendDiconnectedModal: React.FunctionComponent = () => {
   );
 };
 
-export default BackendDiconnectedModal;
+export default BackendDisconnectedModal;

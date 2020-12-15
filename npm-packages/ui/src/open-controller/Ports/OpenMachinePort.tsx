@@ -33,7 +33,7 @@ type Props = OwnProps;
 
 const OpenMachinePort: FunctionComponent<Props> = (props) => {
   const log = useLogger(OpenMachinePort);
-  const makerverse = useOpenController();
+  const openController = useOpenController();
   const t = useTrans();
   const classes = useStyles();
   const portCollection = useSystemPorts();

@@ -1,7 +1,7 @@
-import {Logger} from '@openworkshop/lib/utils/logging';
+import {Logger} from '../utils/logging';
 import { EventEmitter } from 'events';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
-import {IOpenWorkShop} from '@openworkshop/lib';
+import {IOpenWorkShop} from '../types';
 import { WebSocketLink } from '@apollo/client/link/ws';
 
 export enum ConnectionState {
@@ -16,6 +16,7 @@ export enum BackendConnectionEvent {
 
 export class BackendConnection extends EventEmitter {
   private _subscriptionClient: SubscriptionClient;
+
   private _webSocketLink: WebSocketLink;
   private _ows: IOpenWorkShop;
   private _log: Logger;

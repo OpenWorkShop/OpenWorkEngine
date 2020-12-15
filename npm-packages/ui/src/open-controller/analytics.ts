@@ -59,8 +59,8 @@ const trackPage = (path: string): void => {
 };
 
 const analytics = {
-  initialize: (trackingId: string, version: ISemver, ows: IOpenWorkShop): void => {
-    version = version;
+  initialize: (trackingId: string, v: ISemver, ows: IOpenWorkShop): void => {
+    version = v;
     log = ows.logManager.getLogger('analytics');
     // https://github.com/ReactTraining/react-router/issues/4278#issuecomment-299692502
     ReactGA.initialize(trackingId, {

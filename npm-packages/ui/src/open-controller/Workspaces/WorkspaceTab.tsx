@@ -1,4 +1,4 @@
-import {FormControl, FormControlLabel, Grid, Checkbox, DialogTitle } from '@material-ui/core';
+import {FormControl, FormControlLabel, Grid, Checkbox, DialogTitle, Paper } from '@material-ui/core';
 import * as React from 'react';
 import useStyles from './Styles';
 import {IHaveWorkspace} from './types';
@@ -43,42 +43,47 @@ const WorkspaceTab: React.FunctionComponent<Props> = (props) => {
   }
 
   return (
-    <Grid container>
+    <Grid container spacing={2} >
       <Grid item xs={12}>
         <AlertList errors={[error, deletedWorkspace?.error]} />
       </Grid>
-      <Grid item xs={12} md={8}>
+      <Grid item xs={12} md={7}>
         <HelpfulHeader
           tip={t('Makerverse stores the settings file at $HOME/.makerverse.')}
           title={t('Preferences')}
           variant="subtitle1"
         />
-        <FormControl className={classes.formControl}>
-          <FormControlLabel
-            control={<Checkbox checked={preferImperial} onChange={() => setPreferImperial(!preferImperial)} />}
-            label={t('I prefer imperial (inches) to metric (mm)')}
-          />
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <FormControlLabel
-            control={<Checkbox checked={autoReconnect} onChange={() => setAutoReconnect(!autoReconnect)} />}
-            label={t('Automatically (re)connect to the machine when the workspace is opened.')}
-          />
-        </FormControl>
+        <Paper className={classes.paper}>
+          <FormControl className={classes.formControl}>
+            <FormControlLabel
+              control={<Checkbox checked={preferImperial} onChange={() => setPreferImperial(!preferImperial)} />}
+              label={t('I prefer imperial (inches) to metric (mm)')}
+            />
+          </FormControl>
+          <div className={classes.formSpacer} />
+          <FormControl className={classes.formControl}>
+            <FormControlLabel
+              control={<Checkbox checked={autoReconnect} onChange={() => setAutoReconnect(!autoReconnect)} />}
+              label={t('Automatically (re)connect to the machine when the workspace is opened.')}
+            />
+          </FormControl>
+        </Paper>
       </Grid>
-      <Grid item xs={12} md={4}>
+      <Grid item xs={12} md={5}>
         <HelpfulHeader
           tip={t('Workspaces grant access to your machine!')}
           title={t('Danger Zone')}
           variant="subtitle1"
         />
-        <FormControl className={classes.formControl}>
-          <Button className={classes.deleteButton} onClick={() => setDeleteDialogOpen(true)} >
-            <FontAwesomeIcon icon={faTrash} />
-            &nbsp;
-            {t('Delete Workspace')}
-          </Button>
-        </FormControl>
+        <Paper className={classes.paper}>
+          <FormControl className={classes.formControl}>
+            <Button className={classes.deleteButton} onClick={() => setDeleteDialogOpen(true)} >
+              <FontAwesomeIcon icon={faTrash} />
+              &nbsp;
+              {t('Delete Workspace')}
+            </Button>
+          </FormControl>
+        </Paper>
       </Grid>
 
       <Dialog

@@ -81,7 +81,7 @@ const FirmwareChip: React.FunctionComponent<Props> = (props) => {
       strCmp(detectedFirmware.edition, requiredFirmware?.edition))}
     {renderKeyValueRow(
       t('Version'),
-      requiredFirmware?.requiredVersion?.toString(),
+      requiredFirmware?.requiredVersion,
       detectedFirmware.value,
       detectedFirmware.value >= (requiredFirmware?.requiredVersion ?? 0))}
     {renderKeyValueRow(t('Friendly Name'), detectedFirmware.friendlyName)}

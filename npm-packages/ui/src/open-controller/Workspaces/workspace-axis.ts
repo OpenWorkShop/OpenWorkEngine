@@ -1,7 +1,7 @@
 import { AxisName } from '@openworkshop/lib/api/graphql';
 import _ from 'lodash';
 import {MachineAxisFragment} from '@openworkshop/lib/api/graphql';
-import Workspace from './workspace';
+import Workspace from './Workspace';
 
 const INCH = 25.4;
 

@@ -6,9 +6,20 @@ import OidcClient from 'oidc-client';
 import { UserManagerSettings } from 'oidc-client';
 import { AnyAction } from '@reduxjs/toolkit';
 import { ApolloClient, ApolloLink, NormalizedCacheObject } from '@apollo/client';
-import { StringMap, TFunction } from 'i18next';
+import { StringMap, TFunction, i18n } from 'i18next';
+import { BackendConnection } from './api/BackendConnection';
 
 export type OwsEnvironment = 'Development' | 'Staging' | 'Production';
+
+export interface ICustomizedOpenWorkShop {
+  connection?: BackendConnection;
+
+  i18n: i18n;
+
+  store: Store<IOwsState>;
+}
+
+export type OpenWorkShopBuilderCallback = (ows: IOpenWorkShop) => ICustomizedOpenWorkShop;
 
 // Main object exposed to clients via the Context.
 export interface IOpenWorkShop {
@@ -28,7 +39,7 @@ export interface IOpenWorkShop {
 
   logManager: LogManager;
 
-  i18n: TFunction;
+  i18n: i18n;
 
   t: TTranslateFunc;
 }
@@ -41,13 +52,11 @@ export interface IOwsSettings {
 export type HostnameMap = { [key: string]: OwsEnvironment };
 
 export interface IOwsOptions {
-  store: Store<IOwsState>;
   client: UserManagerSettings;
   environment?: OwsEnvironment;
   hostnameMap?: HostnameMap;
-  i18nMiddleware?: AnyAction[];
   logOptions?: LogOptions;
-  clientApolloLinkCreator?: (ows: IOpenWorkShop) => ApolloLink;
+  builder: OpenWorkShopBuilderCallback;
 }
 
 export type TTranslateFunc = (key: string, opts?: StringMap) => string;
