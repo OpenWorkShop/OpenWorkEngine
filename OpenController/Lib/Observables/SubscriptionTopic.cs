@@ -18,7 +18,7 @@ namespace OpenWorkEngine.OpenController.Lib.Observables {
 
     public IDisposable SubscribeAll(IObserver<T> observer) => AllMessages.Subscribe(observer);
 
-    public IDisposable SubscribeTopicId(string msgId, IObserver<T> observer) => EnsureTopic(msgId).Subscribe(observer);
+    public IDisposable SubscribeToTopicId(string msgId, IObserver<T> observer) => EnsureTopic(msgId).Subscribe(observer);
 
     public void Emit(T msg) {
       if (_topics.TryGetValue("", out SubscribableTopic<T>? allTopic)) {

@@ -1,0 +1,15 @@
+import {IVisualizeGCode, IVisualizerPreferences, ViewPlane} from './types';
+import * as React from 'react';
+
+export const preferences: IVisualizerPreferences = {
+  viewPlane: 0,
+  setViewPlane: (vp: ViewPlane) => {
+    console.log('test', vp);
+  },
+  lineWidth: 1,
+};
+
+export const GWizContext = React.createContext<IVisualizeGCode>({
+  // targetId: '',
+  visualizerPreferences: preferences
+});

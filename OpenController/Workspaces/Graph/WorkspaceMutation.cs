@@ -9,22 +9,33 @@ namespace OpenWorkEngine.OpenController.Workspaces.Graph {
   public class WorkspaceMutation {
     [AuthorizeOpenControllerUser]
     public Workspace CreateWorkspace(
-      [Service] OpenControllerContext controllerContext,
+      [Service] OpenControllerContext openControllerContext,
       WorkspaceSettings workspaceSettings
-    ) => controllerContext.Workspaces.Create(workspaceSettings);
+    ) => openControllerContext.Workspaces.Create(workspaceSettings);
 
     [AuthorizeOpenControllerUser]
     public Workspace UpdateWorkspace(
-      [Service] OpenControllerContext controllerContext,
+      [Service] OpenControllerContext openControllerContext,
       WorkspaceSettings workspaceSettings
-    ) => controllerContext.Workspaces.Update(workspaceSettings);
+    ) => openControllerContext.Workspaces.Update(workspaceSettings);
 
     [AuthorizeOpenControllerUser]
-    public Workspace DeleteWorkspace([Service] OpenControllerContext controllerContext, string workspaceId)
-      => controllerContext.Workspaces.Delete(workspaceId);
+    public Workspace DeleteWorkspace([Service] OpenControllerContext openControllerContext, string workspaceId)
+      => openControllerContext.Workspaces.Delete(workspaceId);
 
     [AuthorizeOpenControllerUser]
-    public Task<Workspace> OpenWorkspace([Service] OpenControllerContext controllerContext, string workspaceId)
-      => controllerContext.Workspaces[workspaceId].Open();
+    public Task<Workspace> OpenWorkspace([Service] OpenControllerContext openControllerContext, string workspaceId)
+      => openControllerContext.Workspaces[workspaceId].Open();
+
+    [AuthorizeOpenControllerUser]
+    public Task<Workspace> CloseWorkspace([Service] OpenControllerContext openControllerContext, string workspaceId)
+      => openControllerContext.Workspaces[workspaceId].Close();
+
+    [AuthorizeOpenControllerUser]
+    public Task<Workspace> ChangeWorkspacePort(
+      [Service] OpenControllerContext openControllerContext,
+      string workspaceId,
+      string portName
+    ) => openControllerContext.Workspaces.ChangePort(workspaceId, portName);
   }
 }

@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using OpenWorkEngine.OpenController.Identity.Graph;
 using OpenWorkEngine.OpenController.Machines.Graph;
 using OpenWorkEngine.OpenController.Ports.Graph;
+using OpenWorkEngine.OpenController.Programs.Graph;
 using OpenWorkEngine.OpenController.Settings.Graph;
 using OpenWorkEngine.OpenController.Workspaces.Graph;
 
@@ -20,6 +21,7 @@ namespace OpenWorkEngine.OpenController {
              .AddMachineSchema()
              .AddWorkspaceSchema()
              .AddSettingsSchema()
+             .AddProgramsSchema()
              .AddOpenControllerIdentitySchema();
   }
 }

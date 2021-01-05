@@ -4,15 +4,16 @@ hooks:
     - prettier --write
 overwrite: true
 generates:
-  ./npm-packages/lib/src/api/graphql.ts:
-    schema: './npm-packages/lib/src/ows-schema.graphql'
-    documents: './npm-packages/lib/src/**/*.graphql'
+  ./src/core/src/open-controller/graphql.ts:
+    schema: './src/core/src/schema.graphql'
+    documents: './src/core/src/**/*.graphql'
     plugins:
       - 'typescript'
       - 'typescript-resolvers'
       - 'typescript-operations'
       - 'typescript-react-apollo'
-    #      - 'typescript-graphql-request'
+      - add:
+          content: '/* eslint-disable */'
     config:
       avoidOptionals: true
 #  ./npm-packages/ui/src/api/graphql.ts:

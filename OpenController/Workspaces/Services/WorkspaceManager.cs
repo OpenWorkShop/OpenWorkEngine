@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using OpenWorkEngine.OpenController.Controllers.Services;
 using OpenWorkEngine.OpenController.Lib.Filesystem;
 using OpenWorkEngine.OpenController.Lib.Observables;
@@ -18,7 +19,7 @@ namespace OpenWorkEngine.OpenController.Workspaces.Services {
 
     public PortManager Ports { get; }
 
-    public ControllerManager Controllers { get; }
+    private ControllerManager Controllers { get; }
 
     public Workspace this[string workspaceId] =>
       _workspaces.TryGetValue(workspaceId, out Workspace? val) ? val :
@@ -40,6 +41,18 @@ namespace OpenWorkEngine.OpenController.Workspaces.Services {
       Workspace ws = new Workspace(this, wss);
       Log.Debug("[WORKSPACE] init {workspace}", ws.ToString());
       return ws;
+    }
+
+    public async Task<Workspace> ChangePort(string workspaceId, string portName) {
+      Workspace workspace = this[workspaceId];
+      await workspace.ChangePort(portName); // throw if missing.
+
+      // Successfully changed listeners. Update settings.
+      _configFile.Save();
+
+      Log.Debug("[WORKSPACE] changed port", workspace.ToString());
+
+      return workspace;
     }
 
     // Inform the in-memory Workspace object it has a settings change.

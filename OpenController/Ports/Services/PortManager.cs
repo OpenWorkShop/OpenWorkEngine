@@ -86,6 +86,7 @@ namespace OpenWorkEngine.OpenController.Ports.Services {
     internal PortManager(ControllerManager controllers) {
       Log = controllers.Log.ForContext(typeof(PortManager));
       Controllers = controllers;
+      ScanPorts().Wait(); // Run once on the main thread to ensure loaded before other classes try to use data.
       Task.Run(DoWorkAsync);
     }
 

@@ -11,6 +11,7 @@ using OpenWorkEngine.OpenController.Identity.Models;
 using OpenWorkEngine.OpenController.Identity.Services;
 using OpenWorkEngine.OpenController.Lib.Filesystem;
 using OpenWorkEngine.OpenController.Ports.Services;
+using OpenWorkEngine.OpenController.Programs.Services;
 using OpenWorkEngine.OpenController.Settings.Models;
 using OpenWorkEngine.OpenController.Workspaces.Services;
 using Serilog;
@@ -28,6 +29,8 @@ namespace OpenWorkEngine.OpenController {
     public ControllerManager Controllers { get; }
 
     public WorkspaceManager Workspaces { get; }
+
+    public ProgramFileManager Programs { get; }
 
     public string? Subdomain { get; }
 
@@ -48,13 +51,14 @@ namespace OpenWorkEngine.OpenController {
 
     public OpenControllerContext(
       IWebHostEnvironment env, ITopicEventSender sender, WorkspaceManager work,
-      ConfigFile cf, SessionManager sm, ControllerManager cm
+      ConfigFile cf, SessionManager sm, ControllerManager cm, ProgramFileManager pgrm
     ) {
       Sessions = sm;
       Ports = cm.Ports;
       Controllers = cm;
       Workspaces = work;
       WebHostEnvironment = env;
+      Programs = pgrm;
       Sender = sender;
       Log = cf.Log.ForContext("WebHost", env.WebRootPath);
       _configFile = cf;

@@ -24,8 +24,6 @@ namespace OpenWorkEngine.OpenController.Controllers.Utils {
 
     private readonly ConcurrentQueue<string> _writeBuffer = new();
 
-    private bool _isAlive = true;
-
     public SerialBuffer(Controller controller) {
       Log = controller.Log;
       Controller = controller;
@@ -54,7 +52,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Utils {
         }
       } catch (TimeoutException e) {
         Log.Warning(e, "[BUFFER] caught timeout");
-      } catch (ObjectDisposedException e) {
+      } catch (ObjectDisposedException) {
         // terminated via the dispose command.
         Log.Verbose("[BUFFER] terminated with disposal: {portName}", Connection.Port.PortName);
       } catch (Exception e) {

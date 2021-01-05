@@ -5,6 +5,7 @@ using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.Lib.Observables;
 using OpenWorkEngine.OpenController.Ports.Enums;
 using OpenWorkEngine.OpenController.Ports.Models;
+using OpenWorkEngine.OpenController.Ports.Services;
 using OpenWorkEngine.OpenController.Workspaces.Enums;
 using OpenWorkEngine.OpenController.Workspaces.Services;
 using Serilog;
@@ -12,6 +13,7 @@ using Serilog;
 namespace OpenWorkEngine.OpenController.Workspaces.Models {
   /// <summary>
   /// In-memory representation of a single workspace. Lives as long as the workspace itself exists.
+  /// Maintains subscriptions for
   /// </summary>
   public class Workspace : ITopicStateMessage<WorkspaceState>, IObserver<SystemPort>, IDisposable {
     public string Id => Settings.Id;
@@ -57,6 +59,20 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
       return this;
     }
 
+    internal async Task<Workspace> Close() {
+      Log.Debug("[WORKSPACE] Close: {workspace}", ToString());
+      try {
+        SystemPort port = Port ?? throw new ArgumentNullException(PortName);
+        Manager.EmitState(this, WorkspaceState.Closed);
+        await Manager.Ports.Controllers.Close(port);
+      } catch (Exception e) {
+        Log.Error(e, "[WORKSPACE] failed to close: {workspace}", ToString());
+        Error = new AlertError(e);
+        Manager.EmitState(this, WorkspaceState.Error);
+      }
+      return this;
+    }
+
     private void UpdatePortState(SystemPort port) {
       PortState st = port.State;
       if (st == PortState.Unplugged) Manager.EmitState(this, WorkspaceState.Disconnected);
@@ -73,7 +89,7 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
 
     // Respond to ports appearing and disappearing by keeping the SystemPort up to date.
     private void UpdatePort(SystemPort? port) {
-      Log.Debug("Update port {port} on {workspace}", port?.ToString(), ToString());
+      Log.Debug("[WORKSPACE] update port {port} on {workspace}", port?.ToString(), ToString());
       if (port != null && !port.PortName.Equals(PortName)) return;
       bool hadPort = Port != null;
       bool hasPort = port != null;
@@ -92,23 +108,54 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
       Manager = mgr;
       Settings = settings;
 
-      Manager.Ports.Map.TryGetValue(PortName, out SystemPort? port);
-      UpdatePort(port);
-      _portListSubscription = mgr.Ports
+      SetPortByName(Settings.Connection.PortName);
+    }
+
+    public async Task ChangePort(string portName) {
+      if (State > WorkspaceState.Closed) {
+        await Close();
+      }
+      Settings.Connection.PortName = portName;
+      SetPortByName(portName, true);
+      // Enforce state change propagation.
+      await Open();
+    }
+
+    // Use any arbitrary port name to set the current port,
+    private SystemPort? SetPortByName(string? portName, bool requirePort = false) {
+      PortManager ports = Manager.Ports;
+      SystemPort? port = null;
+      _portListSubscription?.Dispose();
+      _portListSubscription = null;
+
+      if (portName != null) {
+        if (ports.Map.TryGetValue(portName, out port)) {
+          _portListSubscription = ports
                                  .GetSubscriptionTopic(PortTopic.State)
-                                 .SubscribeTopicId(PortName, this);
+                                 .SubscribeToTopicId(portName, this);
+        }
+      } else if (requirePort) {
+        throw new ArgumentException($"Cannot change Workspace to use missing port: {portName}");
+      }
+
+      UpdatePort(port);
+      return port;
     }
 
     public override string ToString() => $"[{State}] /workspaces/{Id}:{Port?.PortName}";
 
-    private readonly IDisposable _portListSubscription;
+    //
+    // Interfaces
+    //
+
+    private IDisposable? _portListSubscription;
     public void OnCompleted() { }
     public void OnError(Exception error) { }
     public void OnNext(SystemPort value) => UpdatePort(value);
 
     public void Dispose() {
       State = WorkspaceState.Closed;
-      _portListSubscription.Dispose();
+      SetPortByName(null);
     }
   }
 }

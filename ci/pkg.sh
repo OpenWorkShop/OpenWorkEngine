@@ -2,7 +2,7 @@
 CMD="${1}"
 PKG="${2}"
 
-dir="./npm-packages/${PKG}"
+dir="./src/${PKG}"
 if [ ! -d "$dir" ]; then
   echo "Not a package: ${PKG}"
   exit 1
@@ -27,6 +27,12 @@ fi
 if [ "${CMD}" = "dev" ]; then
   echo "[WATCH] $PKG"
   yarn run dev
+  exit 0
+fi
+
+if [ "${CMD}" = "start" ]; then
+  echo "[START] $PKG"
+  yarn run start
   exit 0
 fi
 

@@ -7,11 +7,5 @@ namespace OpenWorkEngine.OpenController.MachineProfiles.Interfaces {
     public bool Rtscts { get; }
 
     public int BaudRateValue { get; }
-
-    public decimal SuggestedVersion { get; }
-
-    public string? DownloadUrl { get; }
-
-    public string? HelpUrl { get; }
   }
 }
