@@ -156,6 +156,7 @@ class Workspace extends events.EventEmitter {
 
   updateSettings(values: WorkspaceFullSettingsFragment): void {
     this._settings = { ...this._settings, ...values };
+    this._axes = this.keyAxes(this._settings.axes);
     this.log.debug('[WORKSPACE]', 'update', this.id, this._settings);
     // void api.workspaces.update(this.id, values);
   }
@@ -205,26 +206,11 @@ class Workspace extends events.EventEmitter {
   _axes: WorkspaceAxisMap = {};
 
   get axes(): WorkspaceAxisMap {
-    return this.mapAxes();
+    return this._axes;
   }
 
-  // Iterate all axes; callback receives axis object.
-  // Return values from the callback (or else, the settings objects themselves) are mapped into
-  // the response, keyed by the same axisKey.
-  mapAxes(builder?: (v: IMachineAxis) => IMachineAxis): WorkspaceAxisMap {
-    const ret: WorkspaceAxisMap = {};
-    this._settings.axes.forEach((axisRecord) => {
-      const axisKey = axisRecord.name;
-      if (!_.has(this._axes, axisRecord.name)) {
-        this._axes[axisKey] = { ...axisRecord };
-      }
-      if (builder) {
-        ret[axisKey] = builder(this._axes[axisKey]);
-      } else {
-        ret[axisKey] = this._axes[axisKey];
-      }
-    });
-    return ret;
+  keyAxes(axes: IMachineAxis[]): WorkspaceAxisMap {
+    return _.keyBy(axes, a => a.name);
   }
 
   // Find min & max units across all axes to create a single set of jog steps.

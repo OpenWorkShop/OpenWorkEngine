@@ -1,8 +1,6 @@
 import * as owsStore from '../store';
 import { Store } from 'redux';
-import {gWizReducer} from './GWiz/reducers';
-// import {makerverseReducer} from '../lib/Makerverse/reducers';
-// import {IMakerverseState} from '../lib/Makerverse/types';
+import gWizSlice from './GWiz/state';
 
 // The top-level state object
 export type AppState = owsStore.IOwsState; // & IMakerverseState;
@@ -20,7 +18,7 @@ export default function configureStore(): Store<AppState> {
 
   return owsStore.configureStore<AppState>(
     {
-      gWiz: gWizReducer,
+      gWiz: gWizSlice.reducer,
     },
     [ ],
     enhancers,

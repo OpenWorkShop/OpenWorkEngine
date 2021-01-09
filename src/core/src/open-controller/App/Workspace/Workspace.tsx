@@ -7,7 +7,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import useStyles from './Styles';
 import {IHaveWorkspace} from '../../Workspaces';
 import {IHavePortStatus} from '../../Ports';
-import GWiz, { IVisualizeGCode } from '../../GWiz';
+import GWiz  from '../../GWiz';
 import {useParams} from 'react-router-dom';
 import useLogger from '../../../utils/logging/UseLogger';
 import WorkspaceBar from '../../Workspaces/WorkspaceBar';
@@ -34,7 +34,7 @@ const Workspace: React.FunctionComponent<Props> = (props) => {
   return (
     <div className={classes.visualizer} >
       <WorkspaceBar workspace={workspace} port={port} />
-      <GWiz id={workspace.id} className={classes.visualizer} axes={workspace.axes} />
+      <GWiz id={workspace.id} className={classes.visualizer} axes={workspace._settings.axes} />
       <Tooltip title={t('Halt the machine immediately (emergency stop) and re-set the connection.')}>
         <Fab className={classes.actionButton} size="medium">
           <FontAwesomeIcon icon={faExclamationCircle} size={'lg'} color={theme.palette.error.dark}/>

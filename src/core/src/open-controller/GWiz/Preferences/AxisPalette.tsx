@@ -1,16 +1,16 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import {FormControlLabel, Grid, Typography, useTheme} from '@material-ui/core';
 import {useLogger} from '../../../Hooks';
-import {IMaterial, IVisualizerStyles} from '../types';
+import {IMaterial, IVisualizerStyles, RenderGroupType} from '../types';
 import {AppState} from '../../redux';
 import {useDispatch, useSelector} from 'react-redux';
-import {WorkspaceAxisMap} from '../../Workspaces';
-import {gWizSetAxisMaterial} from '../actions';
 import MaterialPicker from './MaterialPicker';
 import {defaultAxisMaterialParams} from '../GWizAxes';
 import {useTrans} from '../../Context';
 import HelpfulExponent from '../../../components/Text/HelpfulExponent';
-import {IMachineAxis} from '../../Machines';
+import gWizSlice from '../state';
+
+type MaterialMap = { [key: string]: IMaterial };
 
 const AxisPalette: FunctionComponent = () => {
   const t = useTrans();
@@ -18,28 +18,39 @@ const AxisPalette: FunctionComponent = () => {
   const theme = useTheme();
 
   const dispatch = useDispatch();
-  const axes = useSelector<AppState, WorkspaceAxisMap>(s => s.gWiz.visualizerPreferences.axes);
+  const axes = useSelector<AppState, MaterialMap>(s => s.gWiz.visualizerPreferences.styles.renderGroups);
   const styles = useSelector<AppState, IVisualizerStyles>(s => s.gWiz.visualizerPreferences.styles);
 
-  function setAxisMaterial(axisName: string, material: IMaterial) {
-    log.debug('[AXIS]', axisName, 'material', material);
-    dispatch(gWizSetAxisMaterial({ axisName, material }));
-    // setAxisMaterial(axis, { color: `#${color.hex}` });
+  function getRenderGroupTitle(rg: RenderGroupType): string {
+    if (rg === RenderGroupType.E) return t('Extruder / End-Mill');
+    if (rg === RenderGroupType.H) return t('History');
+    if (rg === RenderGroupType.P) return t('Plan');
+    if (rg === RenderGroupType.X) return t('X');
+    if (rg === RenderGroupType.Y) return t('Y');
+    if (rg === RenderGroupType.Z) return t('Z');
+    return rg.toString();
   }
 
-  function renderAxisItem(axisName: string, axisTitle: string, size: 4 | 6 | 12, tip?: string) {
-    const mat: IMaterial = styles.axes[axisName] ?? defaultAxisMaterialParams;
+  function renderGroup(rg: RenderGroupType, size: 4 | 6 | 12, tip?: string) {
+    const rgName = rg.toString();
+    const rgTitle = getRenderGroupTitle(rg);
+    const mat: IMaterial = styles.renderGroups[rgName] ?? defaultAxisMaterialParams;
     return (
-      <Grid key={`${axisTitle}`} item xs={size} >
+      <Grid key={`${rgTitle}`} item xs={size} >
         <FormControlLabel
           style={{ marginLeft: 0 }}
-          control={<MaterialPicker materialParameters={mat} onChange={m => setAxisMaterial(axisName, m)} />}
+          control={<MaterialPicker
+            materialParameters={mat}
+            onChange={ (material) => {
+              dispatch(gWizSlice.actions.setRenderGroupMaterial({key: rg, material}));
+            }}
+          />}
           label={
             <Typography
               variant="h6"
               style={{ marginLeft: theme.spacing(1), marginBottom: theme.spacing(0.5), }}
             >
-              {axisTitle}
+              {rgTitle}
               {tip && <HelpfulExponent tip={tip} />}
             </Typography>
           }
@@ -52,12 +63,13 @@ const AxisPalette: FunctionComponent = () => {
 
   return (
     <Grid container >
-      {renderAxisItem('E', 'Extruder / End-Mill', 12, t('Depicts where the machine is currently located.'))}
-      {renderAxisItem('H', 'History', 6, t('The paths in the program which have already been executed.'))}
-      {renderAxisItem('P', 'Plan', 6, t('Those paths not yet executed from the program.'))}
-      {Object.values(axes).map((a: IMachineAxis) => {
-        return renderAxisItem(a.name, a.name, 4);
-      })}
+      {renderGroup(RenderGroupType.E, 12, t('Depicts where the machine is currently located.'))}
+      {renderGroup(RenderGroupType.H, 6, t('The paths in the program which have already been executed.'))}
+      {renderGroup(RenderGroupType.P, 6, t('Those paths not yet executed from the program.'))}
+
+      {renderGroup(RenderGroupType.X, 4)}
+      {renderGroup(RenderGroupType.Y, 4)}
+      {renderGroup(RenderGroupType.Z, 4)}
     </Grid>
   );
 };

@@ -3,7 +3,7 @@ import api from './api';
 import { IApiState } from './api';
 import * as Oidc from 'redux-oidc';
 import thunk from 'redux-thunk';
-import { GWizActionTypes, GWizState } from './open-controller';
+import { GWizState } from './open-controller';
 import {
   AnyAction,
   applyMiddleware,
@@ -21,9 +21,7 @@ export interface IOwsState extends IApiState {
   gWiz: GWizState;
 }
 
-export type OwsActionTypes = GWizActionTypes;
-
-export type ReducersTypes = OwsActionTypes | AnyAction;
+export type ReducersTypes = AnyAction;
 
 export function configureMiddleware(...args: unknown[]): any[] {
   // const logger = createLogger({ logger: logManager.getLogger("redux") });

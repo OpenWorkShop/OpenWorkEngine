@@ -3,15 +3,14 @@ import {useTheme} from '@material-ui/core';
 import {useOpenController, useWindowSize} from '../Context';
 import GWizCanvas from './GWizCanvas';
 import {IVisualizerControlsPreferences, IVisualizerStyles, ViewPlane} from './types';
-import {WorkspaceAxisMap} from '../Workspaces';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {AppState} from '../redux';
-import {gWizSetAxes} from './actions';
+import {IMachineAxis} from '../Machines';
 
 type Props = {
   id: string,
   className?: string,
-  axes: WorkspaceAxisMap,
+  axes: IMachineAxis[],
 };
 
 const GWiz: FunctionComponent<Props> = (props) => {
@@ -22,15 +21,14 @@ const GWiz: FunctionComponent<Props> = (props) => {
   const log = oc.ows.logManager.getLogger(domId);
 
   // Redux state.
-  const dispatch = useDispatch();
   const controls =
     useSelector<AppState, IVisualizerControlsPreferences>(s => s.gWiz.visualizerPreferences.controls);
   const styles = useSelector<AppState, IVisualizerStyles>(s => s.gWiz.visualizerPreferences.styles);
 
-  // The canvas memo does not depend on preferences, so it does not get re-created.
-  const canvas = React.useMemo(
-    () => new GWizCanvas(theme, oc),
-    [theme, oc]
+  // Memo canvas must depend only upon immutable objects, so it does not get re-created.
+  const canvas: GWizCanvas = React.useMemo(
+    () => new GWizCanvas(axes, oc),
+    [axes, oc]
   );
   const { width, height } = useWindowSize();
   //
@@ -44,14 +42,9 @@ const GWiz: FunctionComponent<Props> = (props) => {
   // };
 
   // Respond to preferences changes.
-  React.useEffect(() => {
-    canvas.applyControls(controls);
-  }, [canvas, controls]);
-
-  React.useEffect(() => {
-    canvas.applyAxes(axes, styles);
-    dispatch(gWizSetAxes(axes));
-  }, [canvas, axes, styles]);
+  React.useEffect(() => { canvas.applyControls(controls); }, [canvas, controls]);
+  React.useEffect(() => { canvas.applyAxes(axes); }, [canvas, axes]);
+  React.useEffect(() => { canvas.applyStyles( styles ); }, [ canvas, styles ]);
 
   // Create and/or resize the canvas
   React.useEffect(() => {

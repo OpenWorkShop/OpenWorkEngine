@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import {WorkspaceAxisMap} from '../Workspaces';
-import {IMaterial, IVisualizerStyles} from './types';
+import _ from 'lodash';
+import {IMaterial, IVisualizerStyles, RenderGroupType} from './types';
 import {IMachineAxis} from '../Machines';
 import {iterateMachineAxisGridLines} from '../Machines/MachineAxis';
 
@@ -11,7 +11,7 @@ export const defaultAxisMaterialParams: IMaterial = {
 };
 
 class GWizAxes extends THREE.Group {
-  private axes: WorkspaceAxisMap = {};
+  private axes: IMachineAxis[] = [];
 
   private styles?: IVisualizerStyles;
   private _backgroundColor = new THREE.Color('white');
@@ -47,7 +47,7 @@ class GWizAxes extends THREE.Group {
     }
   }
 
-  public redraw(axes?: WorkspaceAxisMap, styles?: IVisualizerStyles): void {
+  public redraw(axes?: IMachineAxis[], styles?: IVisualizerStyles): void {
     if (axes) {
       this.axes = axes;
     }
@@ -65,8 +65,16 @@ class GWizAxes extends THREE.Group {
     return this._materials[key];
   }
 
+  private static getRenderGroup(axisName: string): RenderGroupType {
+    if (axisName === 'X') return RenderGroupType.X;
+    if (axisName === 'Y') return RenderGroupType.Y;
+    if (axisName === 'Z') return RenderGroupType.Z;
+    return RenderGroupType.None;
+  }
+
   private createAxisMaterial(axisName: string, isMajor: boolean, isEdge: boolean): LineMaterial {
-    const params = { ...(this.styles?.axes[axisName] ?? defaultAxisMaterialParams) };
+    const renderGroup = GWizAxes.getRenderGroup(axisName);
+    const params = { ...(this.styles?.renderGroups[renderGroup] ?? defaultAxisMaterialParams) };
 
     const dashed = !isMajor && !isEdge;
 
@@ -82,10 +90,11 @@ class GWizAxes extends THREE.Group {
 
   private drawAxis(axis: IMachineAxis) {
     const a = axis.name.toUpperCase();
+    const yAxis = _.find(this.axes, a => a.name === 'Y');
+    const xAxis = _.find(this.axes, a => a.name === 'X');
     iterateMachineAxisGridLines(axis, (dist: number, isMajor: boolean, isEdge: boolean) => {
       const material = this.getAxisMaterial(a, isMajor, isEdge);
       if (a === 'X') {
-        const yAxis = this.axes['Y'];
         this._lineGroups[a].add(GWizAxes.createLine(
           new THREE.Vector3(dist, yAxis?.min ?? 0, 0),
           new THREE.Vector3(dist, yAxis?.max ?? 0, 0),
@@ -93,7 +102,6 @@ class GWizAxes extends THREE.Group {
         ));
       }
       if (a === 'Y') {
-        const xAxis = this.axes['X'];
         this._lineGroups[a].add(GWizAxes.createLine(
           new THREE.Vector3(xAxis?.min ?? 0, dist, 0),
           new THREE.Vector3(xAxis?.max ?? 0, dist, 0),
@@ -101,7 +109,6 @@ class GWizAxes extends THREE.Group {
         ));
       }
       if (a === 'Z') {
-        const yAxis = this.axes['Y'];
         this._lineGroups[a].add(GWizAxes.createLine(
           new THREE.Vector3(0, yAxis?.min ?? 0, dist),
           new THREE.Vector3(0, yAxis?.max ?? 0, dist),

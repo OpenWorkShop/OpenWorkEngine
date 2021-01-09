@@ -6,7 +6,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="627b5cbe-4e90-410d-9ab6-326b1616b6e2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/state.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/Makerverse.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Makerverse.csproj" afterDir="false" />
@@ -165,7 +166,6 @@
       <change beforePath="$PROJECT_DIR$/Makerverse/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Startup.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/app/src/makerverse-deployment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/makerverse-deployment.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkEngine.mdproj" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkEngine.mdproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/App.tsx" afterDir="false" />
@@ -192,42 +192,19 @@
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/appsettings.Development.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/appsettings.Staging.json" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/appsettings.Staging.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/ci/link-dev.sh" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/ci/link-dev.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/assets/icons/makermade.svg-path10-674.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/assets/icons/makermade.svg.2021_01_01_10_47_59.0.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/generate-icons.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/generate-icons.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/package.prod.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/package.prod.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/components/OpenWorkShopIcon/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/components/OpenWorkShopIcon/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/components/Text/HelpfulHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/components/Text/HelpfulHeader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/App/Workspace/Styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/App/Workspace/Styles.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/App/Workspace/Workspace.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/App/Workspace/Workspace.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWiz.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWizContext.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWizProvider.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWizScene.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWizCanvas.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GcodeVisualizer.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Hooks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Hooks.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWiz.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWiz.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWizAxes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWizAxes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWizCanvas.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWizCanvas.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Preferences/AxisPalette.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Preferences/AxisPalette.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Preferences/ViewModeSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Preferences/ViewModeSelect.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/actions.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/reducers.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Machines/MachineControllerType.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Machines/MachineControllerType.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Machines/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Machines/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/WorkBar/Styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/WorkBar/Styles.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/WorkBar/ViewModeSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Preferences/ViewModeSelect.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/WorkBar/WorkBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/WorkBar/WorkBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/WorkBar/WorkspaceUnitSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/WorkspaceUnitSelect.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/Styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/Styles.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/Workspace.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/Workspace.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/WorkspaceBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/WorkspaceBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/WorkspaceStatus.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/WorkspaceStatus.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/workspace-axis.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/redux.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/redux.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/themes/Wizard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/themes/Wizard.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/themes/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/themes/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -281,14 +258,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/src/core/src/open-controller/Machines/MachineControllerType.ts" />
-      <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/ViewPlane.ts" />
-      <option value="$PROJECT_DIR$/src/core/src/components/Forms/FormControlTip.tsx" />
-      <option value="$PROJECT_DIR$/src/core/src/components/Text/HelpfulHeader.tsx" />
-      <option value="$PROJECT_DIR$/src/core/src/components/Text/HelpfulExponent.tsx" />
-      <option value="$PROJECT_DIR$/src/core/src/components/Forms/TipRow.tsx" />
-      <option value="$PROJECT_DIR$/src/core/src/components/AnyIcon.tsx" />
-      <option value="$PROJECT_DIR$/src/core/src/components/Forms/Styles.ts" />
       <option value="$PROJECT_DIR$/src/core/src/components/Forms/IconSelect.tsx" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Preferences/types.ts" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Preferences/VisualizerPreferences.ts" />
@@ -299,17 +268,10 @@
       <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GcodeVisualizer.tsx" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWizContext.ts" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Hooks.ts" />
-      <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/index.tsx" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/store.ts" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/visualizerPreferencesSlice.ts" />
-      <option value="$PROJECT_DIR$/src/core/src/open-controller/redux.ts" />
-      <option value="$PROJECT_DIR$/src/core/src/store.ts" />
-      <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Preferences/ViewModeSelect.tsx" />
-      <option value="$PROJECT_DIR$/src/core/src/open-controller/App/Workspace/Workspace.tsx" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/WorkBar/WorkBar.tsx" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/WorkspaceBar.tsx" />
-      <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/reducers.ts" />
-      <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/actions.ts" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/WorkBar/WorkspaceChip.tsx" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/WorkBar/GWizChip.tsx" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Preferences/GWizPreferences.tsx" />
@@ -318,20 +280,35 @@
       <option value="$PROJECT_DIR$/src/core/src/components/Colors/ColorBox.ts" />
       <option value="$PROJECT_DIR$/src/core/src/components/Colors/ColorSelector.ts" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Preferences/Styles.ts" />
-      <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/types.ts" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Preferences/MaterialPicker.tsx" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/utils.ts" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/workspace-axis.ts" />
-      <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWiz.tsx" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/Machines/types.ts" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/Machines/index.ts" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/types.ts" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/WorkspaceAxis.ts" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/Machines/MachineAxis.ts" />
+      <option value="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/reducers.ts" />
+      <option value="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/redux.ts" />
+      <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/actions.ts" />
+      <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/actions/setViewPlane.ts" />
+      <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/redux.ts" />
+      <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/reducers.ts" />
+      <option value="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/actions.ts" />
+      <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/index.tsx" />
+      <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Preferences/ViewModeSelect.tsx" />
+      <option value="$PROJECT_DIR$/src/core/src/open-controller/redux.ts" />
+      <option value="$PROJECT_DIR$/src/core/src/store.ts" />
+      <option value="$PROJECT_DIR$/src/core/src/themes/GWiz.ts" />
+      <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWizGroupType.ts" />
+      <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/types.ts" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/Workspace.ts" />
-      <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWizAxes.ts" />
+      <option value="$PROJECT_DIR$/src/core/src/open-controller/App/Workspace/Workspace.tsx" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Preferences/AxisPalette.tsx" />
+      <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWiz.tsx" />
       <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWizCanvas.ts" />
+      <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWizAxes.ts" />
+      <option value="$PROJECT_DIR$/src/core/src/open-controller/GWiz/state.ts" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1l4my4TnlSIUe2KMx2jkxdZSpZ6" />
@@ -448,7 +425,7 @@
       <workItem from="1609869055595" duration="24495000" />
       <workItem from="1609901186756" duration="3525000" />
       <workItem from="1610029767136" duration="30667000" />
-      <workItem from="1610113708849" duration="28720000" />
+      <workItem from="1610113708849" duration="38392000" />
     </task>
     <servers />
   </component>

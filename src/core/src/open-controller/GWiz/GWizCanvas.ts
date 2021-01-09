@@ -1,13 +1,14 @@
 import _ from 'lodash';
-import { Theme } from '@material-ui/core';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import {IVisualizerControlsPreferences, IVisualizerPreferences, IVisualizerStyles} from './types';
+import {IVisualizerControlsPreferences, IVisualizerStyles} from './types';
 import {IOpenController} from '../Context';
 import {Logger} from '../../utils/logging';
 import GWizAxes from './GWizAxes';
-import {WorkspaceAxisMap} from '../Workspaces';
 import {getMachineAxisRange} from '../Machines/MachineAxis';
+import theme from '../../themes/GWiz';
+import {IMachineAxis} from '../Machines';
+import {defaultVisualizerStyles} from './state';
 
 const defaultCameraNear = 0.1;
 const defaultCameraFar = 2000;
@@ -20,24 +21,25 @@ class GWizCanvas {
   public camera: THREE.PerspectiveCamera;
   public renderer: THREE.WebGLRenderer;
   public openController: IOpenController;
-  public theme: Theme;
+  public styles: IVisualizerStyles = defaultVisualizerStyles;
   public controls: OrbitControls;
   public axes: GWizAxes;
   public log: Logger;
 
+  private _axes: IMachineAxis[];
+
   public get domElement(): HTMLCanvasElement { return this.renderer.domElement; }
 
-  constructor(theme: Theme, oc: IOpenController) {
-    this.theme = theme;
+  constructor(axes: IMachineAxis[], oc: IOpenController) {
+    this._axes = axes;
     this.openController = oc;
     this.log = oc.ows.logManager.getLogger('GWizCanvas');
-    this.log.debug('create', theme.palette.background, theme.palette.background.default);
+    this.log.debug('create', axes);
 
     this.renderer = new THREE.WebGLRenderer();
 
     // Scene
     this.scene = new THREE.Scene();
-    this.scene.background = this.backgroundColor;
 
     this.axes = new GWizAxes();
     this.scene.add(this.axes);
@@ -51,22 +53,30 @@ class GWizCanvas {
     this.controls.enableDamping = true;
     this.controls.enableKeys = true;
 
+    // Compute
+    this.applyAxes(axes);
+
     this.animate();
   }
 
-  get backgroundColor(): THREE.Color { return new THREE.Color(this.theme.palette.background.default); }
-
-  applyAxes(axes: WorkspaceAxisMap, styles: IVisualizerStyles): void {
-    this.log.verbose('axes', axes);
+  applyAxes(axes: IMachineAxis[]): void {
+    this.log.debug('axes', axes, this.styles);
+    this._axes = axes;
     const maxAxisRange = _.max(Object.values(axes).map(getMachineAxisRange)) ?? defaultCameraFar;
     const minAccuracy = _.min(Object.values(axes).map(a => a.accuracy)) ?? defaultCameraNear;
     this.controls.maxZoom = maxAxisRange;
     this.camera.far = maxAxisRange;
     this.camera.near = minAccuracy;
 
-    this.scene.fog = new THREE.Fog( this.backgroundColor, maxAxisRange * 0.75, maxAxisRange);
+    this.scene.fog = new THREE.Fog(this.styles.backgroundColor, maxAxisRange * 0.75, maxAxisRange);
 
-    this.axes.redraw(axes, styles);
+    this.axes.redraw(axes, this.styles);
+  }
+
+  applyStyles(styles: IVisualizerStyles): void {
+    this.styles = styles;
+    this.scene.background = new THREE.Color(styles.backgroundColor);
+    this.applyAxes(this._axes);
   }
 
   applyControls(prefs: IVisualizerControlsPreferences): void {

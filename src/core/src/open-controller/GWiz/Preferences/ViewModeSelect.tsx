@@ -5,7 +5,7 @@ import {getViewPlaneIcon, getViewPlaneNameKey} from '../ViewPlane';
 import IconSelect from '../../../components/Forms/IconSelect';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppState} from '../../redux';
-import {gWizSetViewPlane} from '../actions';
+import gWizSlice from '../state';
 
 const ViewModeSelect: React.FunctionComponent = () => {
   const t = useTrans();
@@ -21,7 +21,7 @@ const ViewModeSelect: React.FunctionComponent = () => {
   });
 
   function setViewPlane(vp: ViewPlane) {
-    dispatch( gWizSetViewPlane( vp ) );
+    dispatch( gWizSlice.actions.setViewPlane( vp ) );
   }
 
   return (

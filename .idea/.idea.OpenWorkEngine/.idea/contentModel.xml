@@ -2905,7 +2905,6 @@
               </e>
               <e p="graphql.ts" t="Include" />
               <e p="Gwiz" t="Include">
-                <e p="actions.ts" t="Include" />
                 <e p="GWiz.tsx" t="Include" />
                 <e p="GWizAxes.ts" t="Include" />
                 <e p="GWizCanvas.ts" t="Include" />
@@ -2918,7 +2917,7 @@
                   <e p="Styles.ts" t="Include" />
                   <e p="ViewModeSelect.tsx" t="Include" />
                 </e>
-                <e p="reducers.ts" t="Include" />
+                <e p="state.ts" t="Include" />
                 <e p="Styles.ts" t="Include" />
                 <e p="types.ts" t="Include" />
                 <e p="utils.ts" t="Include" />
@@ -3082,6 +3081,7 @@
               <e p="Cabin.ts" t="Include" />
               <e p="Colors.ts" t="Include" />
               <e p="consts.ts" t="Include" />
+              <e p="GWiz.ts" t="Include" />
               <e p="index.ts" t="Include" />
               <e p="Makerverse.ts" t="Include" />
               <e p="Spacing.ts" t="Include" />
