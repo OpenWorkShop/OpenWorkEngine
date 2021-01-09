@@ -4,12 +4,11 @@ import useLogger from '../../utils/logging/UseLogger';
 import PortStatus from '../Ports/PortStatus';
 import {IMaybeHavePortStatus} from '../Ports';
 import {WorkspaceState} from '../graphql';
-import {faUsb} from '@fortawesome/free-brands-svg-icons';
-import {faDraftingCompass, faExclamationCircle} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useTheme} from '@material-ui/core';
 import {useTrans, useWorkspaceEvent} from '../Context';
 import {WorkspaceEventType} from './types';
+import {getWorkspaceStateColor, getWorkspaceStateIcon, getWorkspaceStateTextKey} from './WorkspaceState';
 
 type Props = IHaveWorkspace & IMaybeHavePortStatus & {
   hideText?: boolean,
@@ -27,36 +26,16 @@ const WorkspaceStatus: React.FunctionComponent<Props> = (props) => {
   if (st === WorkspaceState.Opening) return <PortStatus port={port} />;
   log.verbose('status');
 
-  function getStatusText() {
-    if (!workspace || st === WorkspaceState.Disconnected) return t('Disconnected');
-    if (st === WorkspaceState.Closed) return t('Closed');
-    if (st === WorkspaceState.Deleted) return t('Deleted');
-    if (st === WorkspaceState.Error) return t('Error');
-    if (st === WorkspaceState.Active) return t('Active');
-    return st.toString() + '?';
-  }
-
-  function getIcon() {
-    if (!workspace || st === WorkspaceState.Disconnected) return faUsb;
-    if (st === WorkspaceState.Error || st === WorkspaceState.Deleted) return faExclamationCircle;
-    if (st === WorkspaceState.Active) return faDraftingCompass;
-    return faUsb;
-  }
-
-  function getColor() {
-    if (!workspace || st === WorkspaceState.Disconnected) return theme.palette.grey.A400;
-    if (st === WorkspaceState.Closed) return theme.palette.grey.A700;
-    if (st === WorkspaceState.Error || st === WorkspaceState.Deleted) return theme.palette.error.main;
-    if (st === WorkspaceState.Active) return theme.palette.secondary.dark;
-    return theme.palette.secondary.dark;
-  }
-
-  const color = getColor();
-
   return (
     <React.Fragment >
-      <FontAwesomeIcon color={color} icon={getIcon()} style={{ marginRight: theme.spacing(0.5) }} />
-      {!hideText && <span>{' '}{getStatusText()}</span>}
+      <FontAwesomeIcon
+        color={getWorkspaceStateColor(theme, st)}
+        icon={getWorkspaceStateIcon(st)}
+        style={{ marginRight: theme.spacing(0.5) }}
+      />
+      {!hideText && <span>
+        {t(getWorkspaceStateTextKey())}
+      </span>}
     </React.Fragment>
   );
 };

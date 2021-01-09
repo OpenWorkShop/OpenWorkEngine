@@ -4,17 +4,18 @@ import * as React from 'react';
 import {tryUseController} from '../Controllers';
 import {IHaveWorkspace} from './types';
 import {IMaybeHavePortStatus} from '../Ports';
-import {tryUseGcodeVisualizer} from '../GWiz';
-import {WorkspaceState} from '../graphql';
+import {useLogger} from '../../Hooks';
 
 type Props = IHaveWorkspace & IMaybeHavePortStatus & {
  children?: React.ReactNode;
 };
 
 const WorkspaceBar: React.FunctionComponent<Props> = (props) => {
+  const log = useLogger(WorkspaceBar);
   const controller = tryUseController();
-  const wiz = tryUseGcodeVisualizer();
   const { workspace, port, children } = props;
+
+  log.debug('draw');
 
   return (
     <React.Fragment>
@@ -24,7 +25,6 @@ const WorkspaceBar: React.FunctionComponent<Props> = (props) => {
             workspace={workspace}
             port={port}
             controller={controller}
-            visualizerPreferences={workspace.state === WorkspaceState.Active ? wiz?.visualizerPreferences : undefined}
           />
         </Grid>
       </Grid>

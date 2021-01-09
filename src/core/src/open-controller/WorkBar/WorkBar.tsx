@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {IHaveWorkspace} from '../Workspaces';
-import {IMaybeHavePortStatus} from '../Ports/types';
+import {IMaybeHavePortStatus} from '../Ports';
 import useStyles from './Styles';
 import {Button, ButtonGroup, Tooltip} from '@material-ui/core';
 import {useTrans} from '../Context';
@@ -9,15 +9,14 @@ import {faCogs, faExclamationCircle} from '@fortawesome/free-solid-svg-icons';
 import {IMaybeHaveController} from '../Controllers';
 import MachinePositionChip from './MachinePositionChip';
 import useLogger from '../../utils/logging/UseLogger';
-import {IMaybeHaveVisualizerPreferences} from '../GWiz';
-import ViewModeSelect from './ViewModeSelect';
-import WorkspaceUnitSelect from './WorkspaceUnitSelect';
+import WorkspaceChip from './WorkspaceChip';
 import PortStatusChip from './PortStatusChip';
-import WorkspaceSettingsDialog from '../Workspaces/WorkspaceSettingsDialog';
 import {PortState, WorkspaceState} from '../graphql';
 import FirmwareChip from './FirmwareChip';
+import GWizChip from './GWizChip';
+import WorkspaceSettingsDialog from '../Workspaces/WorkspaceSettingsDialog';
 
-type Props = IHaveWorkspace & IMaybeHavePortStatus & IMaybeHaveController & IMaybeHaveVisualizerPreferences & {
+type Props = IHaveWorkspace & IMaybeHavePortStatus & IMaybeHaveController & {
   orientation?: 'horizontal' | 'vertical';
 }
 
@@ -26,7 +25,7 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
   const log = useLogger(WorkBar);
   const t = useTrans();
   const [ settingsOpen, setSettingsOpen ] = React.useState<boolean>(false);
-  const { workspace, controller, visualizerPreferences, port, orientation } = props;
+  const { workspace, controller, port, orientation } = props;
   const machineState = controller?.machine.state;
   const fwRequirement = controller?.machine.firmwareRequirement;
   const fwDetected = controller?.machine.configuration.firmware;
@@ -34,7 +33,7 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
   const workPosition = machineState ? machineState.workPosition : undefined;
   const portState = port?.state ?? PortState.Unplugged;
 
-  log.verbose(fwRequirement, fwDetected);
+  log.debug('draw');
 
   return (
     <div className={classes.root}>
@@ -61,8 +60,8 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
         {fwDetected && <FirmwareChip detectedFirmware={fwDetected} requiredFirmware={fwRequirement} />}
         {machinePosition && <MachinePositionChip positionType="machine" position={machinePosition} />}
         {workPosition && <MachinePositionChip positionType="work" position={workPosition} />}
-        {workspace.state === WorkspaceState.Active && <WorkspaceUnitSelect workspace={workspace} />}
-        {visualizerPreferences && <ViewModeSelect visualizerPreferences={visualizerPreferences} />}
+        {workspace.state === WorkspaceState.Active && <WorkspaceChip workspace={workspace} />}
+        {workspace.state === WorkspaceState.Active && <GWizChip />}
       </ButtonGroup>
       <WorkspaceSettingsDialog
         workspace={workspace}

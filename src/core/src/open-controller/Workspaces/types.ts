@@ -1,4 +1,5 @@
 import Workspace from './Workspace';
+import {IMachineAxis} from '../Machines';
 
 export interface IHaveWorkspaceId {
   workspaceId: string;
@@ -20,11 +21,9 @@ export interface IWorkspaceSettingsTab {
   component: React.ReactNode,
 }
 
-import WorkspaceAxis from './workspace-axis';
-
 export type ControllerEventMap = { [key: string]: () => void };
 
-export type WorkspaceAxisMap = { [key: string]: WorkspaceAxis };
+export type WorkspaceAxisMap = { [key: string]: IMachineAxis };
 
 export enum WorkspaceEventType {
   State,

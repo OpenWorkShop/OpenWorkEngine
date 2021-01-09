@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import api from './api';
-import { IApiState } from './api/types';
+import { IApiState } from './api';
 import * as Oidc from 'redux-oidc';
 import thunk from 'redux-thunk';
+import { GWizActionTypes, GWizState } from './open-controller';
 import {
   AnyAction,
   applyMiddleware,
@@ -17,7 +18,12 @@ import {
 
 export interface IOwsState extends IApiState {
   oidc: Oidc.UserState;
+  gWiz: GWizState;
 }
+
+export type OwsActionTypes = GWizActionTypes;
+
+export type ReducersTypes = OwsActionTypes | AnyAction;
 
 export function configureMiddleware(...args: unknown[]): any[] {
   // const logger = createLogger({ logger: logManager.getLogger("redux") });

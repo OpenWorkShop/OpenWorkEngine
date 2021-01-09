@@ -9,6 +9,8 @@ const bodyFont = 'Roboto';
 
 const defaultTheme = createMuiTheme();
 
+export const toolbarHeight = 50;
+
 const theme = createMuiTheme({
   palette: {
     primary: Colors.purple,
@@ -28,6 +30,12 @@ const theme = createMuiTheme({
       backgroundColor: Colors.brown.main,
       fontWeight: 'bold',
       backgroundImage: getImageUrl(backgroundImage.base64),
+      height: toolbarHeight,
+      minHeight: toolbarHeight,
+      [defaultTheme.breakpoints.up('sm')]: {
+        height: toolbarHeight,
+        minHeight: toolbarHeight,
+      }
     }
   },
   typography: {

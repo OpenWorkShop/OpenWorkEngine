@@ -1,16 +1,4 @@
-import React from 'react';
-import { GWizContext } from './GWizContext';
-import {IVisualizeGCode} from './types';
-
-export function useGcodeVisualizer(): IVisualizeGCode {
-  const context = React.useContext(GWizContext);
-  if (!context) throw new Error('No gcode visualizer');
-  return context;
-}
-
-export function tryUseGcodeVisualizer(): IVisualizeGCode | undefined {
-  return React.useContext(GWizContext);
-}
+import React from 'react';;
 
 export function usePortal(parentDomId: string): HTMLDivElement {
   const rootElemRef = React.useRef(document.createElement('div'));
@@ -25,3 +13,4 @@ export function usePortal(parentDomId: string): HTMLDivElement {
 
   return rootElemRef.current;
 }
+

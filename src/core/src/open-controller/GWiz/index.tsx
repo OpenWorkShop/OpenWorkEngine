@@ -1,6 +1,5 @@
 export * from './types';
 export * from './Hooks';
-export * from './GWizContext';
-export * from './GWizProvider';
+// export * from './GWiz';
 
-export { default as default } from './GcodeVisualizer';
+export { default as default } from './GWiz';

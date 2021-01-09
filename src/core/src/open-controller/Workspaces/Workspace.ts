@@ -2,9 +2,7 @@ import {Logger} from '../../utils/logging';
 import _ from 'lodash';
 import { IOpenWorkShop } from '../../types';
 import events from 'events';
-// import Hardware from './hardware';
 import {ControllerEventMap, IWorkspaceEvent, WorkspaceEventType} from './types';
-import WorkspaceAxis from './workspace-axis';
 import { WorkspaceAxisMap} from './types';
 import {
   MachineControllerType,
@@ -22,6 +20,9 @@ import {
 } from '../graphql';
 import {IToolGroup} from '../Tools';
 import ToolGroup from '../Tools/ToolGroup';
+import {getMachineControllerTypeIconName} from '../Machines/MachineControllerType';
+import {IMachineAxis} from '../Machines';
+import {getMachineAxisJogSteps, getMachineAxisRange} from '../Machines/MachineAxis';
 
 export type MachineCommandType = 'homing';
 
@@ -62,12 +63,6 @@ class Workspace extends events.EventEmitter {
     this._ows = ows;
     this._record = record;
     this._settings = record.settings;
-    // this.addControllerEvents(this._controllerEvents);
-
-    const controllerType = this.firmware.controllerType;
-    // this.hardware = new Hardware(this, controllerType);
-    // this.machineSettings = new MachineSettings(this, controllerType);
-    // this.activeState = new ActiveState(controllerType);
   }
 
   get log(): Logger {
@@ -105,7 +100,7 @@ class Workspace extends events.EventEmitter {
   }
 
   set isActive(active: boolean) {
-    const wasActive = this._isActive;
+    // const wasActive = this._isActive;
     this._isActive = active;
     // if (wasActive !== this._isActive) {
     //   if (this._isActive) {
@@ -117,7 +112,7 @@ class Workspace extends events.EventEmitter {
   }
 
   get isImperialUnits(): boolean {
-    return this.isConnected;
+    return false;
   }
 
   get autoReconnect(): boolean { return this._settings.autoReconnect; }
@@ -133,20 +128,7 @@ class Workspace extends events.EventEmitter {
   //   //
   // }
 
-  static getControllerTypeIconName(controllerType: MachineControllerType): string {
-    if (controllerType === MachineControllerType.Maslow) {
-      return 'maslow';
-    } else if (controllerType === MachineControllerType.Grbl) {
-      return 'cnc';
-    } else if (controllerType === MachineControllerType.Marlin) {
-      return '3dp';
-    }
-    return Workspace.defaultIcon;
-  }
-
   static defaultColor = '#4078c0';
-
-  static defaultIcon = 'xyz';
 
   static defaultBkColor = '#f6f7f8';
 
@@ -161,7 +143,7 @@ class Workspace extends events.EventEmitter {
 
   // Sidebar icon.
   get icon(): string {
-    return this._settings.icon || Workspace.getControllerTypeIconName(this.firmware.controllerType);
+    return this._settings.icon || getMachineControllerTypeIconName(this.firmware.controllerType);
   }
 
   get hexColor(): string {
@@ -229,12 +211,12 @@ class Workspace extends events.EventEmitter {
   // Iterate all axes; callback receives axis object.
   // Return values from the callback (or else, the settings objects themselves) are mapped into
   // the response, keyed by the same axisKey.
-  mapAxes(builder?: (v: WorkspaceAxis) => WorkspaceAxis): WorkspaceAxisMap {
+  mapAxes(builder?: (v: IMachineAxis) => IMachineAxis): WorkspaceAxisMap {
     const ret: WorkspaceAxisMap = {};
     this._settings.axes.forEach((axisRecord) => {
       const axisKey = axisRecord.name;
       if (!_.has(this._axes, axisRecord.name)) {
-        this._axes[axisKey] = new WorkspaceAxis(this, axisRecord);
+        this._axes[axisKey] = { ...axisRecord };
       }
       if (builder) {
         ret[axisKey] = builder(this._axes[axisKey]);
@@ -247,7 +229,7 @@ class Workspace extends events.EventEmitter {
 
   // Find min & max units across all axes to create a single set of jog steps.
   getJogSteps(imperialUnits?: boolean): number[] | undefined {
-    let axis: WorkspaceAxis | undefined = undefined;
+    let axis: IMachineAxis | undefined = undefined;
     const opts = { min: 9999, max: 0, imperialUnits: imperialUnits };
     const div = imperialUnits ? 25.4 : 1;
     const precision = imperialUnits ? 1 : 2;
@@ -255,23 +237,24 @@ class Workspace extends events.EventEmitter {
     const axes = this.axes;
     Object.keys(axes).forEach((ak) => {
       const a = axes[ak];
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      const range = getMachineAxisRange(a);
       axis = !axis || a.precision > axis.precision ? a : axis;
-      opts.max = Math.max(opts.max, Math.round((a.range / 2 / div) * pow) / pow);
+      opts.max = Math.max(opts.max, Math.round((range / 2 / div) * pow) / pow);
       opts.min = Math.min(opts.min, Math.round((a.accuracy / div) * pow) / pow);
     });
     if (!axis) {
       return undefined;
     }
-    const a: WorkspaceAxis = axis;
-    return a.getJogSteps(opts);
+    return getMachineAxisJogSteps(axis, opts);
   }
 
-  getAxisSteps(a: WorkspaceAxis, imperialUnits?: boolean): number[] {
+  getAxisSteps(a: IMachineAxis, imperialUnits?: boolean): number[] {
     const div = imperialUnits ? 25.4 : 1;
     const precision = imperialUnits ? 1 : 2;
     const pow = Math.pow(10, precision);
-    return a.getJogSteps({
-      max: Math.round((a.range / 2 / div) * pow) / pow,
+    return getMachineAxisJogSteps(a, {
+      max: Math.round((getMachineAxisRange(a) / 2 / div) * pow) / pow,
       min: Math.round((a.accuracy / div) * pow) / pow,
     });
   }

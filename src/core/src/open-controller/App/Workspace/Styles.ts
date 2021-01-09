@@ -1,6 +1,7 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-export const barSize = 44;
+export const toolBarSize = 44;
+export const workBarHeight = 40;
 const tabSize = 44;
 
 const maxWidth = 320;
@@ -60,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   tabSide: {
     padding: 0,
     width: '100%',
-    height: barSize,
+    height: toolBarSize,
   },
   tabBottom: {
     maxHeight: tabSize,
@@ -68,7 +69,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '100%',
   },
   visualizer: {
-    height: `calc(100vh - ${barSize + 60}px)`,
+    height: `calc(100vh - ${workBarHeight + Number(theme.mixins.toolbar.height)}px)`,
   }
 }));
 

@@ -59,12 +59,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginBottom: 0,
     marginRight: theme.spacing(1),
   },
-  selectMenuItem: {
-    height: 24,
-  },
-  selectMenu: {
-    height: 24,
-  },
   dialogHeader: {
     padding: 0,
   },
@@ -85,7 +79,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   closeButton: {
     backgroundColor: theme.palette.warning.dark,
     color: 'white',
-  }
+  },
+  selectMenuItem: {
+    height: 24,
+  },
+  selectMenu: {
+    height: 24,
+  },
 }));
 
 export default useStyles;

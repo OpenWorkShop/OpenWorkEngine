@@ -28,14 +28,19 @@ const icons = glob.sync(`${ICONS_SOURCE_DIR}/**.svg`);
 const components = {};
 const imports = ['import React from \'react\';'];
 const checks = [];
+const iconNames = [];
+const componentNames = [];
 
 for (const icon of icons) {
     const svg = fs.readFileSync(icon, 'utf8');
     const iconName = path.parse(icon).name;
+    iconNames.push(iconName);
     const componentName = toTitleCase(path.parse(icon).name) + 'Icon';
+    componentNames.push(componentName);
     const opts = [`name === '${iconName}'`, `name === '${componentName}'`];
     if (iconName === 'tdp') {
       opts.push('name === \'3dp\'');
+      iconNames.push('3dp');
     }
     imports.push(`import ${componentName} from './${componentName}';`);
     checks.push(`  if (${opts.join(' || ')}) return <${componentName} {...props} />;`);
@@ -72,6 +77,10 @@ export { ${Object.values(components).join(', ')} };
 export interface IOwsIconProps extends React.SVGProps<SVGSVGElement> {
   name: string;
 }
+
+export type IconName = '${iconNames.join('\' | \'')}';
+export type ComponentName = '${componentNames.join('\' | \'')}';
+export type OwsIconName = IconName | ComponentName;
 
 export const Icons: React.FunctionComponent<IOwsIconProps> = (props) => {
   const name = props.name.toLowerCase();

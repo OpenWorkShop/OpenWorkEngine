@@ -1,26 +1,24 @@
 import { MenuItem, Select, Grid, FormControl } from '@material-ui/core';
 import * as React from 'react';
-import {IHaveWorkspace} from '../Workspaces/types';
-import useLogger from '../../utils/logging/UseLogger';
 import useStyles from './Styles';
 import {OpenWorkShopIcon} from '../../components';
+import {getDistanceUnitAbbreviationKey, getDistanceUnitIconKey} from './InchesMillimeters';
+import {useOwsTrans} from '../../Hooks';
 
-type Props = IHaveWorkspace;
+type Props = {
+  isImperial: boolean;
+  setIsImperial: (imp: boolean) => void;
+};
 
-const WorkspaceUnitSelect: React.FunctionComponent<Props> = (props) => {
-  const log = useLogger(WorkspaceUnitSelect);
+const InchesMillimetersSelect: React.FunctionComponent<Props> = (props) => {
+  const t = useOwsTrans();
   const classes = useStyles();
-  const { workspace } = props;
-
-  function setImperialUnits(val: number) {
-    const isImperial = !!val;
-    log.debug('imp', isImperial);
-  }
+  const { isImperial, setIsImperial } = props;
 
   function renderMenuItem(imperial: boolean) {
-    const title = imperial ? 'in.' : 'mm.';
+    const title = t(getDistanceUnitAbbreviationKey(imperial));
     const val = imperial ? 1 : 0;
-    const icon = imperial ? 'ruler-imperial' : 'ruler-metric';
+    const icon = getDistanceUnitIconKey(imperial);
     return <MenuItem className={classes.selectMenuItem} value={val} >
       <Grid container>
         <Grid item>
@@ -34,9 +32,9 @@ const WorkspaceUnitSelect: React.FunctionComponent<Props> = (props) => {
   return (
     <FormControl className={classes.formControl} >
       <Select
-        value={workspace.isImperialUnits ? 1 : 0}
+        value={isImperial ? 1 : 0}
         className={classes.selectMenu}
-        onChange={(e) => setImperialUnits(e.target.value)}
+        onChange={(e) => setIsImperial(e.target.value !== 0)}
       >
         {renderMenuItem(true)}
         {renderMenuItem(false)}
@@ -45,4 +43,4 @@ const WorkspaceUnitSelect: React.FunctionComponent<Props> = (props) => {
   );
 };
 
-export default WorkspaceUnitSelect;
+export default InchesMillimetersSelect;
