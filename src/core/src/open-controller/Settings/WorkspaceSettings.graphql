@@ -15,7 +15,7 @@ fragment WorkspaceProps on WorkspaceSettings {
 fragment WorkspaceFullSettings on WorkspaceSettings {
     ...WorkspaceProps
     connection {
-        ...MachineConnection
+        ...MachineConnectionSettings
     }
     axes {
         ...MachineAxis

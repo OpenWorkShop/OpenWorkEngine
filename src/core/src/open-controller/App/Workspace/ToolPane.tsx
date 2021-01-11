@@ -11,7 +11,7 @@ type Props = IHaveToolGroup & IHaveWorkspace;
 const ToolPane: React.FunctionComponent<Props> = (props) => {
   const classes = useStyles();
   const t = useTrans();
-  const { toolGroup, workspace } = props;
+  const { toolGroup, workspaceId } = props;
   const { tools } = toolGroup;
   const showTitle = false;
 
@@ -26,7 +26,7 @@ const ToolPane: React.FunctionComponent<Props> = (props) => {
                   <Typography variant="h6">{t(tool.titleKey)}</Typography>
                 </Grid>}
                 <Grid item xs={12}>
-                  <ToolLoader tool={tool} workspace={workspace} />
+                  <ToolLoader tool={tool} workspaceId={workspaceId} />
                 </Grid>
               </React.Fragment>
             );

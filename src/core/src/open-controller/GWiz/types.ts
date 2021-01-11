@@ -1,4 +1,4 @@
-import {WorkspaceAxisMap} from '../Workspaces';
+import {MachineAxisMap} from '../Machines';
 
 export enum ViewMode {
   Perspective,
@@ -51,15 +51,27 @@ export interface IVisualizerStyles {
   renderGroups: { [key: string]: IMaterial };
 }
 
+// Things the user changes directly through UI forms.
 export interface IVisualizerPreferences {
   viewPlane: ViewPlane;
   controls: IVisualizerControlsPreferences;
   styles: IVisualizerStyles;
 }
 
+// Implicit tracking of the camera's position within the scene.
+export interface IVisualizerCameraState {
+  position: IVector3;
+}
 
 export interface IHaveVisualizerPreferences {
   visualizerPreferences: IVisualizerPreferences;
+  cameraState: IVisualizerCameraState;
+}
+
+export interface IVector3 {
+  x: number,
+  y: number,
+  z: number,
 }
 
 export type GWizState = IHaveVisualizerPreferences;

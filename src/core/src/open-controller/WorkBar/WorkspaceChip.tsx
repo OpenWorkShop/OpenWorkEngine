@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import {IHaveWorkspace, WorkspaceUnitSelect} from '../Workspaces';
+import {IHaveWorkspace, useWorkspaceSelector, useWorkspaceUnits, WorkspaceUnitSelect} from '../Workspaces';
 import PopoverWorkBarChip from './PopoverWorkBarChip';
 import {getWorkspaceStateIcon} from '../Workspaces/WorkspaceState';
 import {useOwsTrans} from '../../Hooks';
@@ -13,20 +13,21 @@ type Props = IHaveWorkspace;
 const WorkspaceChip: FunctionComponent<Props> = (props) => {
   const t = useOwsTrans();
   const classes = useStyles();
-  const { workspace } = props;
-  const workspaceState = workspace.state;
+  const { workspaceId } = props;
+  const units = useWorkspaceUnits(workspaceId);
+  const workspaceState = useWorkspaceSelector(workspaceId, ws => ws.state);
   const tip = t('Adjust common workspace settings.');
 
   return (
     <PopoverWorkBarChip
-      label={t(getDistanceUnitAbbreviationKey(workspace.isImperialUnits))}
+      label={t(getDistanceUnitAbbreviationKey(units))}
       faIcon={getWorkspaceStateIcon(workspaceState)}
     >
       <Grid item xs={12} className={classes.popoverRowAlt} >
         <HelpfulHeader tip={tip} title={t('Workspace')} variant="h6" />
       </Grid>
       <Grid item xs={12} className={classes.popoverRow} >
-        <WorkspaceUnitSelect workspace={workspace} />
+        <WorkspaceUnitSelect workspaceId={workspaceId} />
       </Grid>
     </PopoverWorkBarChip>
   );

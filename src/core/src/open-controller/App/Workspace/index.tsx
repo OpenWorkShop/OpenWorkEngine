@@ -1,25 +1,22 @@
 import React, {FunctionComponent} from 'react';
 import {useSystemPorts} from '../../Ports';
-import {useWorkspace, useWorkspaceEvent} from '../../Context';
 import {
-  PortStatusFragment,
+  ControlledMachineFragment,
   WorkspaceState
 } from '../../graphql';
-import {WorkspaceEventType, WorkspaceConnector} from '../../Workspaces';
-import ControllerProvider from '../../Controllers/ControllerProvider';
+import {WorkspaceConnector, IHaveWorkspace, useWorkspace, useWorkspaceSelector} from '../../Workspaces';
 import Workspace from './Workspace';
+import ControllerProvider from '../../Controllers/ControllerProvider';
 
-interface OwnProps {
-  id: string;
-}
-
-type Props = OwnProps;
+type Props = IHaveWorkspace;
 
 const index: FunctionComponent<Props> = (props) => {
   const ports = useSystemPorts();
-  const workspace = useWorkspace(props.id);
-  const { portName } = workspace.connection;
+  const { workspaceId } = props;
+  const workspaceState = useWorkspaceSelector(workspaceId, ws => ws.state);
+  const portName = useWorkspaceSelector(workspaceId, ws => ws.portName);
   const port = ports.portMap[portName];
+  const machine: ControlledMachineFragment | undefined = port.connection?.machine;
   //
   // // Local cache of port object to force updates.
   // const [port, setPort] = React.useState<PortStatusFragment>();
@@ -30,17 +27,20 @@ const index: FunctionComponent<Props> = (props) => {
   //   }
   // }, [portName, port, setPort]);
 
-  useWorkspaceEvent(workspace, WorkspaceEventType.State);
+  // useWorkspaceEvent(workspace, WorkspaceEventType.State);
 
   // Controls [Axes, Homing, Spindle/Laser, Hotend, Console(?)]
   // Project [Visualizer, Webcam, Gcode]
   // Settings [Machine Settings, Calibration, Probe, Test Laser, Edit Workspace]
 
-  if (workspace.state !== WorkspaceState.Active || !workspace.machine)
-    return <WorkspaceConnector workspaceId={props.id} port={port} />;
+  if (workspaceState !== WorkspaceState.Active || !machine) {
+    return <WorkspaceConnector workspaceId={workspaceId} port={port}/>;
+  }
 
-  return <ControllerProvider portName={port.portName} machine={workspace.machine} >
-    {<Workspace port={port} workspace={workspace} />}
+  // return <Workspace port={port} workspaceId={workspaceId} />;
+
+  return <ControllerProvider portName={port.portName} machine={machine} >
+    {<Workspace port={port} workspaceId={workspaceId} />}
   </ControllerProvider>;
 };
 

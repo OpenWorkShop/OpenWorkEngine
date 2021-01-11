@@ -8,3 +8,4 @@ export interface IMachineAxis {
   precision: number;
 }
 
+export type MachineAxisMap = { [key: string]: IMachineAxis };

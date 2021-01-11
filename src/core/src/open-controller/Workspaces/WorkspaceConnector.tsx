@@ -3,12 +3,12 @@ import ThreeColumns from '../../components/Layout/ThreeColumns';
 import ToolbarCard from '../../components/Cards/ToolbarCard';
 import PortConnectionSteps from '../Ports/PortConnectionSteps';
 import {IHaveWorkspaceId} from './types';
-import {useWorkspace} from '../Context';
 import { Grid } from '@material-ui/core';
 import {IMaybeHavePortStatus} from '../Ports';
 import useLogger from '../../utils/logging/UseLogger';
 import OpenWorkspaceButton from './OpenWorkspaceButton';
 import WorkspaceBar from './WorkspaceBar';
+import {useWorkspace} from './Hooks';
 
 type Props = IHaveWorkspaceId & IMaybeHavePortStatus;
 
@@ -20,11 +20,11 @@ const WorkspaceConnector: React.FunctionComponent<Props> = (props) => {
   log.verbose(port, workspace);
 
   return (
-    <WorkspaceBar workspace={workspace} port={port}>
+    <WorkspaceBar workspaceId={workspaceId} port={port}>
       <ThreeColumns size="md" >
         <ToolbarCard
-          title={workspace.name}
-          footer={<OpenWorkspaceButton workspace={workspace} />}
+          title={workspace.settings.name}
+          footer={<OpenWorkspaceButton workspaceId={workspaceId} />}
         >
           <Grid container>
             <Grid item xs={2} />

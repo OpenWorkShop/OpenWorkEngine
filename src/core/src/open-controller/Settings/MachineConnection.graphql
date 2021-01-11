@@ -1,6 +1,6 @@
 
 
-fragment MachineConnection on ConnectionSettings {
+fragment MachineConnectionSettings on ConnectionSettings {
     portName
     manufacturer
     firmware {

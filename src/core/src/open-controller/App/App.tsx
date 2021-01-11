@@ -5,38 +5,26 @@ import analytics from '../analytics';
 import { Settings, Home, WorkspaceCreator, Docs, Workspace } from './';
 import Navigation, { NotFound } from '../Navigation';
 import BackendDisconnectedModal from '../Modals/BackendDisconnectedModal';
-import _ from 'lodash';
+import {IMaybeHaveWorkspace, tryUseWorkspace, useWorkspaceIds} from '../Workspaces';
 import {
   IOpenControllerPackage,
-  useOpenController,
   useOpenControllerSettings
 } from '../Context';
 
-interface IProps {
-  currentWorkspaceId?: string;
-}
+type Props = IMaybeHaveWorkspace;
 
-
-const App: React.FunctionComponent<IProps> = (props) => {
+const App: React.FunctionComponent<Props> = (props) => {
   const log = useLogger(App);
-  const openController = useOpenController();
   const settings: IOpenControllerPackage = useOpenControllerSettings();
   const productName: string = settings.productName;
-  const workspaceIds = openController.workspaces.map(ws => ws.id);
-  const { currentWorkspaceId } = props;
-  const workspace = _.find(openController.workspaces, ws => ws.id === currentWorkspaceId);
+  const { workspaceId } = props;
+  const workspace = tryUseWorkspace(workspaceId);
+  const workspaceIds = useWorkspaceIds();
   const location = useLocation();
-
-  function toggleWorkspaceActiveFlags(activeWorkspaceId?: string) {
-    openController.workspaces.forEach((ws) => {
-      ws.isActive = Boolean(activeWorkspaceId && ws.id === activeWorkspaceId);
-    });
-  }
 
   function setPage(title: string, pathname: string) {
     document.title = title;
     analytics.trackPage(pathname);
-    toggleWorkspaceActiveFlags(currentWorkspaceId);
   }
 
   React.useEffect(() => {
@@ -44,8 +32,8 @@ const App: React.FunctionComponent<IProps> = (props) => {
 
     if (workspace) {
       setPage(
-        `${workspace.name} | ${productName}`,
-        '/' + [workspace.connection.firmware.controllerType].join('/') + '/'
+        `${workspace.settings.name} | ${productName}`,
+        '/' + [workspace.settings.connection.firmware.controllerType].join('/') + '/'
       );
     } else {
       setPage(productName, location.pathname);
@@ -53,13 +41,13 @@ const App: React.FunctionComponent<IProps> = (props) => {
   }, [analytics, log, workspace, productName]);
 
   return (
-    <Navigation workspace={workspace}>
+    <Navigation workspaceId={workspace?.id}>
       <BackendDisconnectedModal />
       <Switch>
         {workspaceIds.map((workspaceId) => {
           return (
             <Route exact key={workspaceId} path={`/workspaces/${workspaceId}/:selectedToolGroupId?`} >
-              <Workspace id={workspaceId} />
+              <Workspace workspaceId={workspaceId} />
             </Route>
           );
         })}

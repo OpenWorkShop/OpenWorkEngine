@@ -1494,6 +1494,10 @@
       <e p="OWS" t="Include" />
       <e p="package.json" t="Include" />
       <e p="packages" t="ExcludeRecursive" />
+      <e p="public" t="Include">
+        <e p="droid_sans_mono.json" t="Include" />
+        <e p="index.html" t="Include" />
+      </e>
       <e p="src" t="Include">
         <e p=".eslintcache" t="Include" />
         <e p=".graphqlconfig" t="Include" />
@@ -2855,6 +2859,7 @@
                 <e p="InchesMillimetersSelect.tsx" t="Include" />
                 <e p="index.ts" t="Include" />
                 <e p="Styles.ts" t="Include" />
+                <e p="types.ts" t="Include" />
               </e>
             </e>
             <e p="consts.ts" t="Include" />
@@ -2907,7 +2912,10 @@
               <e p="Gwiz" t="Include">
                 <e p="GWiz.tsx" t="Include" />
                 <e p="GWizAxes.ts" t="Include" />
+                <e p="GWizCamera.ts" t="Include" />
                 <e p="GWizCanvas.ts" t="Include" />
+                <e p="GWizControls.ts" t="Include" />
+                <e p="GWizSlice.ts" t="Include" />
                 <e p="Hooks.ts" t="Include" />
                 <e p="index.tsx" t="Include" />
                 <e p="Preferences" t="Include">
@@ -2917,10 +2925,9 @@
                   <e p="Styles.ts" t="Include" />
                   <e p="ViewModeSelect.tsx" t="Include" />
                 </e>
-                <e p="state.ts" t="Include" />
                 <e p="Styles.ts" t="Include" />
+                <e p="TextSprite.ts" t="Include" />
                 <e p="types.ts" t="Include" />
-                <e p="utils.ts" t="Include" />
                 <e p="ViewPlane.ts" t="Include" />
               </e>
               <e p="Identity" t="Include">
@@ -3055,6 +3062,7 @@
               </e>
               <e p="Workspaces" t="Include">
                 <e p="AxesTab.tsx" t="Include" />
+                <e p="Hooks.ts" t="Include" />
                 <e p="index.ts" t="Include" />
                 <e p="MachineSettings.jsx" t="Include" />
                 <e p="OpenWorkspaceButton.tsx" t="Include" />
@@ -3066,6 +3074,7 @@
                 <e p="WorkspaceBar.tsx" t="Include" />
                 <e p="WorkspaceConnector.tsx" t="Include" />
                 <e p="WorkspaceSettingsDialog.tsx" t="Include" />
+                <e p="WorkspacesSlice.ts" t="Include" />
                 <e p="WorkspaceState.ts" t="Include" />
                 <e p="WorkspaceStatus.tsx" t="Include" />
                 <e p="WorkspaceTab.tsx" t="Include" />

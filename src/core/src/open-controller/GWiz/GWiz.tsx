@@ -3,7 +3,7 @@ import {useTheme} from '@material-ui/core';
 import {useOpenController, useWindowSize} from '../Context';
 import GWizCanvas from './GWizCanvas';
 import {IVisualizerControlsPreferences, IVisualizerStyles, ViewPlane} from './types';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {AppState} from '../redux';
 import {IMachineAxis} from '../Machines';
 
@@ -19,31 +19,26 @@ const GWiz: FunctionComponent<Props> = (props) => {
   const oc = useOpenController();
   const domId = `gViz-${id}`;
   const log = oc.ows.logManager.getLogger(domId);
+  const { width, height } = useWindowSize();
 
   // Redux state.
+  const dispatch = useDispatch();
   const controls =
     useSelector<AppState, IVisualizerControlsPreferences>(s => s.gWiz.visualizerPreferences.controls);
   const styles = useSelector<AppState, IVisualizerStyles>(s => s.gWiz.visualizerPreferences.styles);
+  const viewPlane = useSelector<AppState, ViewPlane>(s => s.gWiz.visualizerPreferences.viewPlane);
 
   // Memo canvas must depend only upon immutable objects, so it does not get re-created.
-  const canvas: GWizCanvas = React.useMemo(
-    () => new GWizCanvas(axes, oc),
-    [axes, oc]
-  );
-  const { width, height } = useWindowSize();
-  //
-  // const [viewPlane, setViewPlane] = React.useState<ViewPlane>(ViewPlane.None);
-  // const [controls, setControls] = React.useState<IControlsPreferences>({});
-  // const [axesStyles, setAxesStyles] = React.useState({});
-  //
-  // const styles = {
-  //   backgroundColor: new THREE.Color(theme.palette.background.default),
-  //   axes: axesStyles,
-  // };
+  const canvas: GWizCanvas = React.useMemo(() => new GWizCanvas(oc), [oc]);
+
+  // Infrequent changes to machine axes themselves.
+  React.useEffect(() => {
+    canvas.draw(axes);
+  }, [canvas, axes]);
 
   // Respond to preferences changes.
-  React.useEffect(() => { canvas.applyControls(controls); }, [canvas, controls]);
-  React.useEffect(() => { canvas.applyAxes(axes); }, [canvas, axes]);
+  React.useEffect(() => { canvas.controls.applyPreferences(controls); }, [canvas, controls]);
+  React.useEffect(() => { canvas.applyViewPlane(viewPlane); }, [canvas, viewPlane]);
   React.useEffect(() => { canvas.applyStyles( styles ); }, [ canvas, styles ]);
 
   // Create and/or resize the canvas

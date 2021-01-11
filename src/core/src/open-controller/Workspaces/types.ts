@@ -1,16 +1,31 @@
-import Workspace from './Workspace';
-import {IMachineAxis} from '../Machines';
+import {
+  AlertError,
+  WorkspacePortConnectionFragment,
+  WorkspaceFullSettingsFragment,
+  WorkspaceState
+} from '../graphql';
+
+export interface IWorkspace {
+  id: string;
+  portName: string;
+  state: WorkspaceState;
+  error?: AlertError | null;
+  settings: WorkspaceFullSettingsFragment;
+  port?: WorkspacePortConnectionFragment | null;
+}
+
+export type Workspace = IWorkspace;
 
 export interface IHaveWorkspaceId {
   workspaceId: string;
 }
 
 export interface IMaybeHaveWorkspace {
-  workspace?: Workspace;
+  workspaceId?: string;
 }
 
 export interface IHaveWorkspace {
-  workspace: Workspace;
+  workspaceId: string;
 }
 
 export interface IWorkspaceSettingsTab {
@@ -21,14 +36,19 @@ export interface IWorkspaceSettingsTab {
   component: React.ReactNode,
 }
 
+export type WorkspacesMap = { [key: string]: IWorkspace };
+
+export type WorkspacesState = {
+  map: WorkspacesMap;
+  workspaceIds: string[];
+};
+
 export type ControllerEventMap = { [key: string]: () => void };
-
-export type WorkspaceAxisMap = { [key: string]: IMachineAxis };
-
-export enum WorkspaceEventType {
-  State,
-}
-
-export interface IWorkspaceEvent {
-  type: WorkspaceEventType;
-}
+//
+// export enum WorkspaceEventType {
+//   State,
+// }
+//
+// export interface IWorkspaceEvent {
+//   type: WorkspaceEventType;
+// }

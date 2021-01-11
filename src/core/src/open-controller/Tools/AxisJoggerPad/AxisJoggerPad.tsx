@@ -1,20 +1,31 @@
 import * as React from 'react';
-import { Grid } from '@material-ui/core';
+import _ from 'lodash';
+import {Grid} from '@material-ui/core';
 import {ToolBase} from '../types';
 import {IMoveRequest} from './types';
 import JogButton from './JogButton';
 import useStyles from './Styles';
 import JogStepSelect from './JogStepSelect';
 import {useTrans} from '../../Context';
+import {useWorkspaceSelector, useWorkspaceUnits} from '../../Workspaces';
+import {getMachineAxisJogSteps} from '../../Machines';
+import {AxisName} from '../../graphql';
+import {UnitType} from '../../../components/Units/types';
 
 const AxisJoggerPad: ToolBase = (props) => {
   const t = useTrans();
   const classes = useStyles();
-  const { workspace } = props;
+  const { workspaceId } = props;
+  const units = useWorkspaceUnits(workspaceId);
+  const jogOpts = { imperialUnits: units === UnitType.Imperial };
+  const axes = useWorkspaceSelector(workspaceId, ws => ws.settings.axes);
+  const zAxis = _.find(axes, a => a.name === AxisName.Z);
+  const xyAxis = _.find(axes, a => a.name === AxisName.X) ||
+    _.find(axes, a => a.name === AxisName.Y);
   const [xyStep, setXyStep] = React.useState<number>(1);
   const [zStep, setZStep] = React.useState<number>(1);
-  const zSteps = workspace.getAxisSteps(workspace.axes.Z);
-  const xySteps = workspace.getAxisSteps(workspace.axes.X);
+  const zSteps = zAxis ? getMachineAxisJogSteps(zAxis, jogOpts) : [];
+  const xySteps = xyAxis ? getMachineAxisJogSteps(xyAxis, jogOpts) : [];
 
   const reqs: IMoveRequest[] = [
     { xAxis: -xyStep, yAxis: xyStep },

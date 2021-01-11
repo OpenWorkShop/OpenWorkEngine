@@ -52,7 +52,7 @@ const ProtectedApp: React.FunctionComponent<IProps> = (props) => {
   }
 
   log.verbose('[TOKEN]', 'validated', data);
-  return <App currentWorkspaceId={currentWorkspaceId} />;
+  return <App workspaceId={currentWorkspaceId} />;
 };
 
 export default ProtectedApp;

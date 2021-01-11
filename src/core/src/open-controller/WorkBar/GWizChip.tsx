@@ -20,7 +20,7 @@ const GWizChip: React.FunctionComponent = () => {
   const viewPlane = useSelector<AppState, ViewPlane>(s => s.gWiz.visualizerPreferences.viewPlane);
   const tip = t('The visualizer renders your work in 3D.');
 
-  log.debug('draw');
+  log.verbose('draw');
 
   return (
     <PopoverWorkBarChip label={t(getViewPlaneNameKey(viewPlane))} faIcon={faCube} >

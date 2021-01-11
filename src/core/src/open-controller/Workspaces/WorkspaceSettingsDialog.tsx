@@ -17,7 +17,7 @@ type Props = IHaveWorkspace & {
 const WorkspaceSettingsDialog: React.FunctionComponent<Props> = (props) => {
   const t = useTrans();
   const log = useLogger(WorkspaceSettingsDialog);
-  const { open, onClose, workspace } = props;
+  const { open, onClose, workspaceId } = props;
   const classes = useStyles();
   const scroll = 'paper';
   const title = t('Settings');
@@ -27,17 +27,17 @@ const WorkspaceSettingsDialog: React.FunctionComponent<Props> = (props) => {
     {
       key: 'workspace',
       title: t('Workspace'),
-      component: <WorkspaceTab workspace={workspace} />
+      component: <WorkspaceTab workspaceId={workspaceId} />
     },
     {
       key: 'axes',
       title: t('Axes'),
-      component: <AxesTab workspace={workspace} />
+      component: <AxesTab workspaceId={workspaceId} />
     },
     {
       key: 'parts',
       title: t('Parts'),
-      component: <PartsTab workspace={workspace} />
+      component: <PartsTab workspaceId={workspaceId} />
     },
   ];
 

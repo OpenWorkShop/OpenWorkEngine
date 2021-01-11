@@ -2,7 +2,7 @@ import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
 import useStyles from './Styles';
 import UserMenu from './UserMenu';
-import {IMaybeHaveWorkspace} from '../Workspaces';
+import {IMaybeHaveWorkspace, tryUseWorkspace} from '../Workspaces';
 import {useOpenControllerSettings} from '../Context';
 
 interface OwnProps {
@@ -14,8 +14,9 @@ type Props = OwnProps & IMaybeHaveWorkspace;
 const HeaderBar: FunctionComponent<Props> = (props) => {
   const classes = useStyles();
   const settings = useOpenControllerSettings();
-  const { toggleDrawerOpen, workspace } = props;
-  const title = workspace ? workspace.name : settings.productName;
+  const { toggleDrawerOpen, workspaceId } = props;
+  const workspace = tryUseWorkspace(workspaceId);
+  const title = workspace ? workspace.settings.name : settings.productName;
 
   // const bk = workspace ? { backgroundColor: workspace.hexColor } : {};
   // log.debug('workspace', workspace, bk);

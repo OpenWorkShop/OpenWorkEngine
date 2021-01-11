@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { ButtonGroup, Button, Paper, Grid } from '@material-ui/core';
 import * as React from 'react';
 import {IHaveWorkspace} from '../../Workspaces';
@@ -10,6 +9,7 @@ import useLogger from '../../../utils/logging/UseLogger';
 import ToolPane from './ToolPane';
 import {Route, Switch, useHistory} from 'react-router-dom';
 import {IToolGroup} from '../../Tools';
+import {getWorkspaceTools, useWorkspace} from '../../Workspaces';
 
 type Props = IHaveWorkspace & {
   selectedToolGroupId?: string;
@@ -19,12 +19,14 @@ const ToolBar: React.FunctionComponent<Props> = (props) => {
   const log = useLogger(ToolBar);
   const classes = useStyles();
   const t = useTrans();
-  const { workspace, selectedToolGroupId } = props;
+  const { workspaceId, selectedToolGroupId } = props;
+  const workspace = useWorkspace(workspaceId);
   const history = useHistory();
   // const [selectedToolId, setSelectedToolId] = React.useState<string | undefined>(undefined);
   const windowSize = useWindowSize();
   const isOnBottom = windowSize.width < windowSize.height;
-  const workspacePath = `/workspaces/${workspace.id}`;
+  const workspacePath = `/workspaces/${workspaceId}`;
+  const tools = getWorkspaceTools(workspace);
 
   function getToolGroupPath(toolGroup: IToolGroup): string {
     return `${workspacePath}/${toolGroup.id}`;
@@ -49,10 +51,10 @@ const ToolBar: React.FunctionComponent<Props> = (props) => {
     >
       <Grid item xs={isOnBottom ? 12 : 10}>
         <Switch>
-          {workspace.tools.map((toolGroup) => {
+          {tools.map((toolGroup) => {
             return (
               <Route exact key={toolGroup.id} path={getToolGroupPath(toolGroup)} >
-                <ToolPane toolGroup={toolGroup} workspace={workspace} />
+                <ToolPane toolGroup={toolGroup} workspaceId={workspaceId} />
               </Route>
             );
           })}
@@ -65,7 +67,7 @@ const ToolBar: React.FunctionComponent<Props> = (props) => {
             orientation={isOnBottom ? 'horizontal' : 'vertical'}
             aria-label={t('Toolbar Tabs')}
           >
-            {workspace.tools.map(toolGroup => {
+            {tools.map(toolGroup => {
               return (
                 <Button
                   key={toolGroup.titleKey}

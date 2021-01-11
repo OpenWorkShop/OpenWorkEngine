@@ -7,7 +7,7 @@ import {MachinePartType} from '../graphql';
 
 export interface IAxisProps {
   accuracy: number;
-  id?: string;
+  id?: string | null;
   max: number;
   min: number;
   name: string;

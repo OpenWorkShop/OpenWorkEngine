@@ -1,21 +1,21 @@
 import * as React from 'react';
 import {useTrans} from '../Context';
 import useLogger from '../../utils/logging/UseLogger';
-import useStyles from './Styles';
 import {IHaveWorkspace} from './types';
 import ChooseMachineParts from '../../components/MachineProfiles/ChooseMachineParts';
 import {IMachinePartChoice, IMachinePartSetting} from '../Machines/CustomizedMachine';
-import {MachinePartFragment, MachineSettingFragment, MachineSettingsFragment} from '../graphql';
+import {MachinePartFragment, MachineSettingsFragment} from '../graphql';
 import HelpfulHeader from '../../components/Text/HelpfulHeader';
+import {useWorkspaceSelector} from './Hooks';
 
 type Props = IHaveWorkspace;
 
 const PartsTab: React.FunctionComponent<Props> = (props) => {
   const t = useTrans();
   const log = useLogger(PartsTab);
-  const classes = useStyles();
-  const { workspace } = props;
-  const parts = workspace.parts;
+  // const classes = useStyles();
+  const { workspaceId } = props;
+  const parts = useWorkspaceSelector(workspaceId, ws => ws.settings.parts);
 
   function onCompletedParts() {
     log.debug('hi');

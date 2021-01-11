@@ -5,22 +5,23 @@ import useStyles from './Styles';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useOpenWorkspaceMutation, WorkspaceState} from '../graphql';
 import {AlertList, AlertMessageList, sanitizeAlertMessages} from '../../components/Alerts';
-import {useTrans, useWorkspaceEvent} from '../Context';
-import {IHaveWorkspace, WorkspaceEventType} from './types';
+import {useTrans} from '../Context';
+import {IHaveWorkspace} from './types';
 import useLogger from '../../utils/logging/UseLogger';
+import {useWorkspaceSelector} from './Hooks';
 
 const OpenWorkspaceButton: React.FunctionComponent<IHaveWorkspace> = (props) => {
   const log = useLogger(OpenWorkspaceButton);
   const t = useTrans();
-  const { workspace } = props;
-  const variables = { workspaceId: workspace.id };
-  useWorkspaceEvent(workspace, WorkspaceEventType.State);
+  const { workspaceId } = props;
+  const variables = { workspaceId };
+  const workspaceState = useWorkspaceSelector(workspaceId, ws => ws.state);
   const [openWorkspace, openWorkspaceResult] = useOpenWorkspaceMutation({ variables });
   const errors:  AlertMessageList =
     sanitizeAlertMessages([openWorkspaceResult?.error, openWorkspaceResult.data?.workspace.error]);
   const classes = useStyles();
   const isConnecting = openWorkspaceResult.loading ?? false;
-  const canConnect = [WorkspaceState.Closed, WorkspaceState.Error].includes(workspace.state) && !isConnecting;
+  const canConnect = [WorkspaceState.Closed, WorkspaceState.Error].includes(workspaceState) && !isConnecting;
   const isDisabled = !canConnect;
 
   async function onPressConnect() {
@@ -37,7 +38,7 @@ const OpenWorkspaceButton: React.FunctionComponent<IHaveWorkspace> = (props) => 
     log.debug('cancel');
   }
 
-  log.debug('open workspace', workspace.state, openWorkspaceResult);
+  log.debug('open workspace', workspaceState, openWorkspaceResult);
 
   return (
     <Grid container spacing={2}>

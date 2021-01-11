@@ -2122,13 +2122,6 @@ export type FirmwareRequirementFragment =
   | FirmwareRequirement_MachineFirmware_Fragment
   | FirmwareRequirement_MachineFirmwareSettings_Fragment;
 
-export type ConnectedPortStatusFragment = { __typename?: 'ConnectedPort' } & {
-  machine: { __typename?: 'ControlledMachine' } & {
-    firmwareRequirement: { __typename?: 'FirmwareRequirement' } & FirmwareRequirement_FirmwareRequirement_Fragment;
-  };
-  status: { __typename?: 'PortStatus' } & PortIoStatusFragment;
-};
-
 export type ConnectedPortFragment = { __typename?: 'ConnectedPort' } & {
   machine: { __typename?: 'ControlledMachine' } & ControlledMachineFragment;
   status: { __typename?: 'PortStatus' } & PortIoStatusFragment;
@@ -2161,7 +2154,7 @@ export type SystemPortFragment = { __typename?: 'SystemPort' } & Pick<SystemPort
 
 export type PortStatusFragment = { __typename?: 'SystemPort' } & Pick<SystemPort, 'portName' | 'state'> & {
     error: Maybe<{ __typename?: 'AlertError' } & AlertErrorFragment>;
-    connection: Maybe<{ __typename?: 'ConnectedPort' } & ConnectedPortStatusFragment>;
+    connection: Maybe<{ __typename?: 'ConnectedPort' } & ConnectedPortFragment>;
   };
 
 export type ListPortsQueryVariables = Exact<{ [key: string]: never }>;
@@ -2214,7 +2207,7 @@ export type MachineCommandFragment = { __typename?: 'MachineCommandSettings' } &
   'id' | 'name' | 'value'
 >;
 
-export type MachineConnectionFragment = { __typename?: 'ConnectionSettings' } & Pick<
+export type MachineConnectionSettingsFragment = { __typename?: 'ConnectionSettings' } & Pick<
   ConnectionSettings,
   'portName' | 'manufacturer'
 > & { firmware: { __typename?: 'MachineFirmwareSettings' } & MachineFirmwareFragment };
@@ -2302,7 +2295,7 @@ export type WorkspacePropsFragment = { __typename?: 'WorkspaceSettings' } & Pick
 >;
 
 export type WorkspaceFullSettingsFragment = { __typename?: 'WorkspaceSettings' } & {
-  connection: { __typename?: 'ConnectionSettings' } & MachineConnectionFragment;
+  connection: { __typename?: 'ConnectionSettings' } & MachineConnectionSettingsFragment;
   axes: Array<{ __typename?: 'MachineAxisSettings' } & MachineAxisFragment>;
   features: Array<{ __typename?: 'MachineFeatureSettings' } & MachineFeatureFragment>;
   commands: Array<{ __typename?: 'MachineCommandSettings' } & MachineCommandFragment>;
@@ -2311,18 +2304,16 @@ export type WorkspaceFullSettingsFragment = { __typename?: 'WorkspaceSettings' }
 
 export type WorkspaceEssentialSettingsFragment = { __typename?: 'WorkspaceSettings' } & WorkspaceFullSettingsFragment;
 
+export type WorkspacePortConnectionFragment = { __typename?: 'SystemPort' } & {
+  connection: Maybe<
+    { __typename?: 'ConnectedPort' } & { machine: { __typename?: 'ControlledMachine' } & ControlledMachineFragment }
+  >;
+};
+
 export type WorkspaceFullFragment = { __typename?: 'Workspace' } & Pick<Workspace, 'id' | 'portName' | 'state'> & {
     error: Maybe<{ __typename?: 'AlertError' } & AlertErrorFragment>;
     settings: { __typename?: 'WorkspaceSettings' } & WorkspaceFullSettingsFragment;
-    port: Maybe<
-      { __typename?: 'SystemPort' } & {
-        connection: Maybe<
-          { __typename?: 'ConnectedPort' } & {
-            machine: { __typename?: 'ControlledMachine' } & ControlledMachineFragment;
-          }
-        >;
-      }
-    >;
+    port: Maybe<{ __typename?: 'SystemPort' } & WorkspacePortConnectionFragment>;
   };
 
 export type WorkspaceQueryVariables = Exact<{
@@ -2695,20 +2686,6 @@ export const SystemPortFragmentDoc = gql`
   ${PortOptionsFragmentDoc}
   ${ConnectedPortFragmentDoc}
 `;
-export const ConnectedPortStatusFragmentDoc = gql`
-  fragment ConnectedPortStatus on ConnectedPort {
-    machine {
-      firmwareRequirement {
-        ...FirmwareRequirement
-      }
-    }
-    status {
-      ...PortIOStatus
-    }
-  }
-  ${FirmwareRequirementFragmentDoc}
-  ${PortIoStatusFragmentDoc}
-`;
 export const PortStatusFragmentDoc = gql`
   fragment PortStatus on SystemPort {
     portName
@@ -2717,11 +2694,11 @@ export const PortStatusFragmentDoc = gql`
       ...AlertError
     }
     connection {
-      ...ConnectedPortStatus
+      ...ConnectedPort
     }
   }
   ${AlertErrorFragmentDoc}
-  ${ConnectedPortStatusFragmentDoc}
+  ${ConnectedPortFragmentDoc}
 `;
 export const FileSystemFragmentDoc = gql`
   fragment FileSystem on FileSystemSettings {
@@ -2818,8 +2795,8 @@ export const MachineFirmwareFragmentDoc = gql`
     helpUrl
   }
 `;
-export const MachineConnectionFragmentDoc = gql`
-  fragment MachineConnection on ConnectionSettings {
+export const MachineConnectionSettingsFragmentDoc = gql`
+  fragment MachineConnectionSettings on ConnectionSettings {
     portName
     manufacturer
     firmware {
@@ -2894,7 +2871,7 @@ export const WorkspaceFullSettingsFragmentDoc = gql`
   fragment WorkspaceFullSettings on WorkspaceSettings {
     ...WorkspaceProps
     connection {
-      ...MachineConnection
+      ...MachineConnectionSettings
     }
     axes {
       ...MachineAxis
@@ -2910,11 +2887,21 @@ export const WorkspaceFullSettingsFragmentDoc = gql`
     }
   }
   ${WorkspacePropsFragmentDoc}
-  ${MachineConnectionFragmentDoc}
+  ${MachineConnectionSettingsFragmentDoc}
   ${MachineAxisFragmentDoc}
   ${MachineFeatureFragmentDoc}
   ${MachineCommandFragmentDoc}
   ${MachinePartFragmentDoc}
+`;
+export const WorkspacePortConnectionFragmentDoc = gql`
+  fragment WorkspacePortConnection on SystemPort {
+    connection {
+      machine {
+        ...ControlledMachine
+      }
+    }
+  }
+  ${ControlledMachineFragmentDoc}
 `;
 export const WorkspaceFullFragmentDoc = gql`
   fragment WorkspaceFull on Workspace {
@@ -2928,16 +2915,12 @@ export const WorkspaceFullFragmentDoc = gql`
       ...WorkspaceFullSettings
     }
     port {
-      connection {
-        machine {
-          ...ControlledMachine
-        }
-      }
+      ...WorkspacePortConnection
     }
   }
   ${AlertErrorFragmentDoc}
   ${WorkspaceFullSettingsFragmentDoc}
-  ${ControlledMachineFragmentDoc}
+  ${WorkspacePortConnectionFragmentDoc}
 `;
 export const StartupFragmentDoc = gql`
   fragment Startup on Query {

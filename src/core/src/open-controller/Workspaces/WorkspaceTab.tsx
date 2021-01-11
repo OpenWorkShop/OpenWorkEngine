@@ -11,6 +11,7 @@ import {useCloseWorkspaceMutation, useDeleteWorkspaceMutation} from '../graphql'
 import {Redirect} from 'react-router-dom';
 import {AlertList, IAlertMessage} from '../../components/Alerts';
 import HelpfulHeader from '../../components/Text/HelpfulHeader';
+import {useWorkspaceSelector, useWorkspaceUnits} from './Hooks';
 
 type Props = IHaveWorkspace;
 
@@ -18,19 +19,20 @@ const WorkspaceTab: React.FunctionComponent<Props> = (props) => {
   const t = useTrans();
   const log = useLogger(WorkspaceTab);
   const classes = useStyles();
-  const { workspace } = props;
-  const [preferImperial, setPreferImperial] = React.useState(workspace.isImperialUnits);
-  const [autoReconnect, setAutoReconnect] = React.useState(workspace.autoReconnect);
+  const { workspaceId } = props;
+  const settings = useWorkspaceSelector(workspaceId, s => s.settings);
+  const [preferImperial, setPreferImperial] = React.useState(settings.preferImperial);
+  const [autoReconnect, setAutoReconnect] = React.useState(settings.autoReconnect);
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
   const [deleteWorkspace, deletedWorkspace] = useDeleteWorkspaceMutation();
-  const [closeWorkspace, closedWorkspace] = useCloseWorkspaceMutation();
+  const [closeWorkspace] = useCloseWorkspaceMutation();
   const [error, setError] = React.useState<IAlertMessage>();
 
   async function onAcceptDeleteWorkspace() {
-    log.debug('delete', workspace);
+    log.debug('delete', workspaceId);
     setDeleteDialogOpen(false);
     try {
-      const variables = { workspaceId: workspace.id };
+      const variables = { workspaceId };
       await deleteWorkspace({ variables });
     } catch (e) {
       log.error(e, 'Deleting workspace');
@@ -40,7 +42,7 @@ const WorkspaceTab: React.FunctionComponent<Props> = (props) => {
 
   async function onPressCloseWorkspace() {
     try {
-      const variables = { workspaceId: workspace.id };
+      const variables = { workspaceId };
       await closeWorkspace({ variables });
     } catch (e) {
       log.error(e, 'Closing workspace');

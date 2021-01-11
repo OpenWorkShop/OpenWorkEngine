@@ -16,7 +16,7 @@ import {
   Typography
 } from '@material-ui/core';
 import useStyles from './Styles';
-import {ConnectedPortStatusFragment, useChangeWorkspacePortMutation} from '../graphql';
+import {ConnectedPortFragment, useChangeWorkspacePortMutation} from '../graphql';
 import PortSelect from '../Ports/PortSelect';
 import {IHaveWorkspace} from '../Workspaces';
 import PortConnectionSteps from '../Ports/PortConnectionSteps';
@@ -31,7 +31,7 @@ const PortStatusChip: React.FunctionComponent<Props> = (props) => {
   const [changeWorkspacePort, changedWorkspace] = useChangeWorkspacePortMutation();
   const [error, setError] = React.useState<IAlertMessage | undefined>(undefined);
   const classes = useStyles();
-  const { port, workspace } = props;
+  const { port, workspaceId } = props;
   const ports = useSystemPorts();
   const changeToPort = changeToPortName.length > 0 ? ports.portMap[changeToPortName] : undefined;
   const errors = [error, changedWorkspace.error];
@@ -42,7 +42,7 @@ const PortStatusChip: React.FunctionComponent<Props> = (props) => {
     log.debug('[PORT] change', changeToPortName);
     setError(undefined);
     try {
-      const vars = { workspaceId: workspace.id, portName: changeToPortName };
+      const vars = { workspaceId, portName: changeToPortName };
       closeDialog();
       await changeWorkspacePort({ variables: vars });
       log.debug('[PORT] changed.');
@@ -55,7 +55,7 @@ const PortStatusChip: React.FunctionComponent<Props> = (props) => {
     setChangeToPortName('');
   }
 
-  function renderConnection(conn: ConnectedPortStatusFragment) {
+  function renderConnection(conn: ConnectedPortFragment) {
     return [
       <Grid item key="h-linesRead" xs={8} className={classes.popoverRowAlt} >
         <Typography variant="body1">{t('Lines Read')}</Typography>

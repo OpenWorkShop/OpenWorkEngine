@@ -6,13 +6,15 @@ import useLogger from '../../utils/logging/UseLogger';
 import {MachineAxes} from '../Machines/CustomizedMachine';
 import HelpfulHeader from '../../components/Text/HelpfulHeader';
 import {useTrans} from '../Context';
+import {useWorkspaceSelector} from './Hooks';
 
 type Props = IHaveWorkspace;
 
 const AxesTab: React.FunctionComponent<Props> = (props) => {
   const t = useTrans();
   const log = useLogger(AxesTab);
-  const { workspace } = props;
+  const { workspaceId } = props;
+  const axes = useWorkspaceSelector(workspaceId, ws => ws.settings.axes) ?? {};
   // const machine = workspace.machine;
 
   function onChangedAxes(a: MachineAxes) {
@@ -27,7 +29,7 @@ const AxesTab: React.FunctionComponent<Props> = (props) => {
         variant="subtitle1"
       />
       <MachineAxesEditor
-        axes={_.keyBy(workspace.axes, (a) => a.name)}
+        axes={_.keyBy(axes, (a) => a.name)}
         onChanged={onChangedAxes}
       />
     </div>

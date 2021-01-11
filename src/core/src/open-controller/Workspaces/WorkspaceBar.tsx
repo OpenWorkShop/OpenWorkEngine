@@ -13,7 +13,7 @@ type Props = IHaveWorkspace & IMaybeHavePortStatus & {
 const WorkspaceBar: React.FunctionComponent<Props> = (props) => {
   const log = useLogger(WorkspaceBar);
   const controller = tryUseController();
-  const { workspace, port, children } = props;
+  const { workspaceId, port, children } = props;
 
   log.debug('draw');
 
@@ -22,7 +22,7 @@ const WorkspaceBar: React.FunctionComponent<Props> = (props) => {
       <Grid container >
         <Grid item xs={12}>
           <WorkBar
-            workspace={workspace}
+            workspaceId={workspaceId}
             port={port}
             controller={controller}
           />

@@ -12,6 +12,8 @@
   <ItemGroup>
     <Content Remove="src\*\dist\**" />
     <Content Remove="src\*\build\**" />
+    <Content Include="public\droid_sans_mono.json" />
+    <Content Include="public\index.html" />
     <None Include="Makerverse\App\**" Exclude="Makerverse\App\build\**;Makerverse\App\node_modules\**" />
     <None Include="OpenWorkShop\App\**" Exclude="OpenWorkShop\App\build\**;OpenWorkShop\App\node_modules\**" />
     <None Include=".eslintcache;.gitignore;*.json;*.yml;*.yaml;*.ts;*.js;src\*;src\*\**" Exclude="src\*\dist\**;src\*\build\**;src\*\node_modules\**" />

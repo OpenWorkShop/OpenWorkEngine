@@ -1,25 +1,25 @@
-import { MenuItem, Select, Grid, FormControl } from '@material-ui/core';
+import {FormControl, Grid, MenuItem, Select} from '@material-ui/core';
 import * as React from 'react';
 import useStyles from './Styles';
 import {OpenWorkShopIcon} from '../../components';
 import {getDistanceUnitAbbreviationKey, getDistanceUnitIconKey} from './InchesMillimeters';
 import {useOwsTrans} from '../../Hooks';
+import {UnitType} from './types';
 
 type Props = {
-  isImperial: boolean;
-  setIsImperial: (imp: boolean) => void;
+  units: UnitType;
+  setUnits: (units: UnitType) => void;
 };
 
 const InchesMillimetersSelect: React.FunctionComponent<Props> = (props) => {
   const t = useOwsTrans();
   const classes = useStyles();
-  const { isImperial, setIsImperial } = props;
+  const { units, setUnits } = props;
 
-  function renderMenuItem(imperial: boolean) {
-    const title = t(getDistanceUnitAbbreviationKey(imperial));
-    const val = imperial ? 1 : 0;
-    const icon = getDistanceUnitIconKey(imperial);
-    return <MenuItem className={classes.selectMenuItem} value={val} >
+  function renderMenuItem(u: UnitType) {
+    const title = t(getDistanceUnitAbbreviationKey(u));
+    const icon = getDistanceUnitIconKey(u);
+    return <MenuItem className={classes.selectMenuItem} value={u} >
       <Grid container>
         <Grid item>
           <OpenWorkShopIcon name={icon} className={classes.selectIcon} />
@@ -32,12 +32,12 @@ const InchesMillimetersSelect: React.FunctionComponent<Props> = (props) => {
   return (
     <FormControl className={classes.formControl} >
       <Select
-        value={isImperial ? 1 : 0}
+        value={units}
         className={classes.selectMenu}
-        onChange={(e) => setIsImperial(e.target.value !== 0)}
+        onChange={(e) => setUnits(e.target.value)}
       >
-        {renderMenuItem(true)}
-        {renderMenuItem(false)}
+        {renderMenuItem(UnitType.Metric)}
+        {renderMenuItem(UnitType.Imperial)}
       </Select>
     </FormControl>
   );

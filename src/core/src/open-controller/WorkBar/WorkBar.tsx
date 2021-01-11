@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {IHaveWorkspace} from '../Workspaces';
+import {IHaveWorkspace, useWorkspace} from '../Workspaces';
 import {IMaybeHavePortStatus} from '../Ports';
 import useStyles from './Styles';
 import {Button, ButtonGroup, Tooltip} from '@material-ui/core';
@@ -25,7 +25,8 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
   const log = useLogger(WorkBar);
   const t = useTrans();
   const [ settingsOpen, setSettingsOpen ] = React.useState<boolean>(false);
-  const { workspace, controller, port, orientation } = props;
+  const { workspaceId, controller, port, orientation } = props;
+  const workspace = useWorkspace(workspaceId);
   const machineState = controller?.machine.state;
   const fwRequirement = controller?.machine.firmwareRequirement;
   const fwDetected = controller?.machine.configuration.firmware;
@@ -47,7 +48,7 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
         <Button onClick={() => setSettingsOpen(true)} className={classes.titleBarButton}>
           <FontAwesomeIcon icon={faCogs} size={'lg'} />
         </Button>
-        <PortStatusChip port={port} workspace={workspace} />
+        <PortStatusChip port={port} workspaceId={workspaceId} />
         {portState === PortState.Unplugged && (
           <Tooltip title={t('Port is not plugged in')} >
             <Button
@@ -60,11 +61,11 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
         {fwDetected && <FirmwareChip detectedFirmware={fwDetected} requiredFirmware={fwRequirement} />}
         {machinePosition && <MachinePositionChip positionType="machine" position={machinePosition} />}
         {workPosition && <MachinePositionChip positionType="work" position={workPosition} />}
-        {workspace.state === WorkspaceState.Active && <WorkspaceChip workspace={workspace} />}
+        {workspace.state === WorkspaceState.Active && <WorkspaceChip workspaceId={workspaceId} />}
         {workspace.state === WorkspaceState.Active && <GWizChip />}
       </ButtonGroup>
       <WorkspaceSettingsDialog
-        workspace={workspace}
+        workspaceId={workspaceId}
         open={settingsOpen}
         onClose={() => setSettingsOpen(false)}
       />

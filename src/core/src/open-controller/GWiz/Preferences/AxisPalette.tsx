@@ -8,7 +8,7 @@ import MaterialPicker from './MaterialPicker';
 import {defaultAxisMaterialParams} from '../GWizAxes';
 import {useTrans} from '../../Context';
 import HelpfulExponent from '../../../components/Text/HelpfulExponent';
-import gWizSlice from '../state';
+import gWizSlice from '../GWizSlice';
 
 type MaterialMap = { [key: string]: IMaterial };
 

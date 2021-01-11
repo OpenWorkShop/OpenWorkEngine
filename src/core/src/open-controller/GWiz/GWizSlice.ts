@@ -1,6 +1,6 @@
 import {
   ChangeMaterialPayload,
-  GWizState, RenderGroupType,
+  GWizState, IVector3, RenderGroupType,
   ViewPlane,
 } from './types';
 import * as THREE from 'three';
@@ -26,10 +26,13 @@ const initialState: GWizState = {
     viewPlane: ViewPlane.None,
     controls: {},
     styles: defaultVisualizerStyles,
-  }
+  },
+  cameraState: {
+    position: { x: 0, y: 0, z: 0 },
+  },
 };
 
-const gWizSlice = createSlice({
+const gWizState = createSlice({
   name: 'gWiz',
   initialState: initialState,
   reducers: {
@@ -41,7 +44,11 @@ const gWizSlice = createSlice({
       state.visualizerPreferences.styles.renderGroups[action.payload.key] = action.payload.material;
       return state;
     },
+    setCameraPosition: (state, action: PayloadAction<IVector3>) => {
+      state.cameraState.position = action.payload;
+      return state;
+    },
   }
 });
 
-export default gWizSlice;
+export default gWizState;

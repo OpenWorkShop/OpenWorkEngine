@@ -18,6 +18,8 @@ import ListMenuItem from './ListMenuItem';
 import {useSystemPorts} from '../Ports';
 import {Workspace, WorkspaceStatus} from '../Workspaces/';
 import {useOpenController, useTrans} from '../Context';
+import {useSelector} from 'react-redux';
+import {AppState} from '../redux';
 
 interface OwnProps {
   isOpen: boolean;
@@ -37,9 +39,9 @@ const ListMenu: FunctionComponent<Props> = (props) => {
   const t = useTrans();
   const portList: PortStatusFragment[] = Object.values(ports.portMap);
   const classes = useStyles();
-  const openController = useOpenController();
-  const workspaces: Workspace[] = _.sortBy(openController.workspaces, ws => ws.name.toLowerCase());
-  const showWorkspaces = openController.workspaces.length > 0;
+  const allWorkspaces = useSelector<AppState, Workspace[]>(s => Object.values(s.workspaces.map));
+  const workspaces: Workspace[] = _.sortBy(allWorkspaces, ws => ws.settings.name.toLowerCase());
+  const showWorkspaces = allWorkspaces.length > 0;
   const iconStyle = { width: 24, height: 24, marginLeft: -2 };
 
   function renderRouteItem(route: string, text: string, icon: IconProp, t2?: string) {
@@ -56,16 +58,16 @@ const ListMenu: FunctionComponent<Props> = (props) => {
         <List>
           {workspaces.map((workspace) => {
             const route = `/workspaces/${workspace.id}`;
-            const icon = <OpenWorkShopIcon style={iconStyle} name={workspace.icon ?? 'xyz'} />;
+            const icon = <OpenWorkShopIcon style={iconStyle} name={workspace.settings.icon ?? 'xyz'} />;
             const port = portList.length > 0 ?
-              _.find(portList, p => p.portName === workspace.connection.portName) : undefined;
+              _.find(portList, p => p.portName === workspace.settings.connection.portName) : undefined;
 
             return <ListMenuItem
               key={workspace.id}
               to={route}
-              title={workspace.name}
+              title={workspace.settings.name}
               icon={icon}
-              subcomponent={<WorkspaceStatus workspace={workspace} port={port} />}
+              subcomponent={<WorkspaceStatus workspaceId={workspace.id} port={port} />}
             />;
           })}
         </List>

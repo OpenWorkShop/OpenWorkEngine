@@ -1,11 +1,17 @@
-import {IMachineAxis} from './types';
+import {IMachineAxis, MachineAxisMap} from './types';
+import * as THREE from 'three';
+import _ from 'lodash';
 
 const INCH = 25.4;
 
 interface IJogStepsOpts {
-  imperialUnits?: boolean;
-  min: number;
-  max: number;
+  imperialUnits: boolean;
+  min?: number;
+  max?: number;
+}
+
+export function getMachineAxisMap(axes: IMachineAxis[]): MachineAxisMap {
+  return _.keyBy(axes, (a) => a.name);
 }
 
 // Convert a value on the axis to a string, rounding it to the appropriate precision.
@@ -58,7 +64,7 @@ export function iterateMachineAxisGridLines(
 
 // Returns an array of jog steps for this axis.
 export function getMachineAxisJogSteps(axis: IMachineAxis, opts: IJogStepsOpts): number[] {
-  const isImperialUnits = !!opts.imperialUnits;
+  const isImperialUnits = opts.imperialUnits;
   const range = getMachineAxisRange(axis);
   const max = opts.max || range / 2;
   const min = opts.min || axis.accuracy;
@@ -78,4 +84,25 @@ export function getMachineAxisJogSteps(axis: IMachineAxis, opts: IJogStepsOpts):
 
   steps.push(max);
   return steps;
+}
+
+// Get a box containing all axes.
+export function getMachineAxisBoundingBox(axes: IMachineAxis[]): THREE.Box3  {
+  const min = new THREE.Vector3();
+  const max = new THREE.Vector3();
+  axes.forEach((a) => {
+    if (a.name === 'X') {
+      min.x = a.min;
+      max.x = a.max;
+    }
+    if (a.name === 'Y') {
+      min.y = a.min;
+      max.y = a.max;
+    }
+    if (a.name === 'Z') {
+      min.z = a.min;
+      max.z = a.max;
+    }
+  });
+  return new THREE.Box3(min, max);
 }

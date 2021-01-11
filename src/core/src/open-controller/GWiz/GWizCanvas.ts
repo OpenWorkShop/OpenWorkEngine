@@ -1,14 +1,14 @@
 import _ from 'lodash';
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import {IVisualizerControlsPreferences, IVisualizerStyles} from './types';
+import {IVisualizerStyles, ViewPlane} from './types';
 import {IOpenController} from '../Context';
 import {Logger} from '../../utils/logging';
 import GWizAxes from './GWizAxes';
-import {getMachineAxisRange} from '../Machines/MachineAxis';
-import theme from '../../themes/GWiz';
+import {getMachineAxisRange, getMachineAxisBoundingBox} from '../Machines';
 import {IMachineAxis} from '../Machines';
-import {defaultVisualizerStyles} from './state';
+import {defaultVisualizerStyles} from './GWizSlice';
+import GWizControls from './GWizControls';
+import GWizCamera from './GWizCamera';
 
 const defaultCameraNear = 0.1;
 const defaultCameraFar = 2000;
@@ -18,100 +18,108 @@ const defaultCameraFar = 2000;
 ///
 class GWizCanvas {
   public scene: THREE.Scene;
-  public camera: THREE.PerspectiveCamera;
+  public camera: GWizCamera;
   public renderer: THREE.WebGLRenderer;
   public openController: IOpenController;
   public styles: IVisualizerStyles = defaultVisualizerStyles;
-  public controls: OrbitControls;
+  public controls: GWizControls;
   public axes: GWizAxes;
   public log: Logger;
+  public target?: THREE.Object3D;
 
-  private _axes: IMachineAxis[];
+  private _axes: IMachineAxis[] = [];
+  private _viewPlane: ViewPlane = ViewPlane.None;
 
   public get domElement(): HTMLCanvasElement { return this.renderer.domElement; }
 
-  constructor(axes: IMachineAxis[], oc: IOpenController) {
-    this._axes = axes;
+  constructor(oc: IOpenController) {
     this.openController = oc;
     this.log = oc.ows.logManager.getLogger('GWizCanvas');
-    this.log.debug('create', axes);
+    this.log.debug('create');
 
     this.renderer = new THREE.WebGLRenderer();
 
     // Scene
     this.scene = new THREE.Scene();
-
-    this.axes = new GWizAxes();
+    this.axes = new GWizAxes(this.styles);
     this.scene.add(this.axes);
 
     // Camera
-    this.camera = new THREE.PerspectiveCamera( );
-    this.camera.position.set( 0, 10, 50 );
+    this.camera = new GWizCamera();
 
     // Controls
-    this.controls = new OrbitControls(this.camera, this.domElement);
-    this.controls.enableDamping = true;
-    this.controls.enableKeys = true;
+    this.controls = new GWizControls(this.camera, this.domElement, oc);
+  }
 
-    // Compute
-    this.applyAxes(axes);
+  // Main startup (draw axes)
+  draw(axes: IMachineAxis[]): void {
+    this.log.verbose('axes', axes, this.styles);
+    this._axes = axes;
 
+    const maxAxisRange = _.max(Object.values(axes).map(getMachineAxisRange)) ?? defaultCameraFar;
+    const minAccuracy = _.min(Object.values(axes).map(a => a.accuracy)) ?? defaultCameraNear;
+
+    this.camera.setRange( minAccuracy, maxAxisRange);
+    this.controls.setRange(minAccuracy, maxAxisRange);
+
+    // this.scene.fog = new THREE.Fog(this.styles.backgroundColor, maxAxisRange * 0.75, maxAxisRange);
+
+    this.axes.redraw(axes);
+    this.lookAt(this.target);
+
+    // Start the animation loop.
     this.animate();
   }
 
-  applyAxes(axes: IMachineAxis[]): void {
-    this.log.debug('axes', axes, this.styles);
-    this._axes = axes;
-    const maxAxisRange = _.max(Object.values(axes).map(getMachineAxisRange)) ?? defaultCameraFar;
-    const minAccuracy = _.min(Object.values(axes).map(a => a.accuracy)) ?? defaultCameraNear;
-    this.controls.maxZoom = maxAxisRange;
-    this.camera.far = maxAxisRange;
-    this.camera.near = minAccuracy;
+  getBoundingBox(obj?: THREE.Object3D): THREE.Box3 {
+    if (!obj) return getMachineAxisBoundingBox(this._axes);
+    const boundingBox = new THREE.Box3();
+    boundingBox.setFromObject( obj );
+    return boundingBox;
+  }
 
-    this.scene.fog = new THREE.Fog(this.styles.backgroundColor, maxAxisRange * 0.75, maxAxisRange);
+  lookAt(obj?: THREE.Object3D): void {
+    this.target = obj;
+    const fitOffset = 0.5;
+    const box = this.getBoundingBox(obj);
 
-    this.axes.redraw(axes, this.styles);
+    const size = box.getSize( new THREE.Vector3() );
+    const center = obj ? box.getCenter( new THREE.Vector3() ) : new THREE.Vector3();
+    const target = center;
+
+    const maxSize = Math.max( size.x, size.y, size.z );
+    const fitHeightDistance = maxSize / ( 2 * Math.atan( Math.PI * this.camera.fov / 360 ) );
+    const fitWidthDistance = fitHeightDistance / this.camera.aspect;
+    const distance = fitOffset * Math.max( fitHeightDistance, fitWidthDistance );
+
+    const direction = target.clone()
+      .sub( this.camera.position )
+      .normalize()
+      .multiplyScalar( distance );
+
+    this.controls.lookAt(center);
+    this.camera.position.copy( target ).sub(direction);
+
+    this.log.debug('cam', size, center, this.camera.position);
+  }
+
+  applyViewPlane(viewPlane: ViewPlane): void {
+    const dist = 100;
+    this._viewPlane = viewPlane;
+    if (viewPlane === ViewPlane.Top) this.camera.position.set(0, 0, dist);
+    if (viewPlane === ViewPlane.Bottom) this.camera.position.set(0, 0, -dist);
+    if (viewPlane === ViewPlane.Left) this.camera.position.set(-dist, 0, 0);
+    if (viewPlane === ViewPlane.Right) this.camera.position.set(dist, 0, 0);
+    if (viewPlane === ViewPlane.Front) this.camera.position.set(0, -dist, 0);
+    if (viewPlane === ViewPlane.Front) this.camera.position.set(0, dist, 0);
+    this.lookAt(this.target);
+    this.controls.applyViewPlane(viewPlane);
   }
 
   applyStyles(styles: IVisualizerStyles): void {
     this.styles = styles;
+    this.axes.applyStyles(styles);
     this.scene.background = new THREE.Color(styles.backgroundColor);
-    this.applyAxes(this._axes);
-  }
-
-  applyControls(prefs: IVisualizerControlsPreferences): void {
-    this.log.verbose('controls', prefs);
-    if (prefs.dampingFactor) {
-      this.controls.dampingFactor = prefs.dampingFactor;
-      this.controls.enableDamping = true;
-    } else if (prefs.dampingFactor !== undefined) {
-      this.controls.enableDamping = false;
-    }
-
-    if (prefs.panSpeed) {
-      this.controls.panSpeed = prefs.panSpeed;
-      this.controls.enablePan = true;
-    } else if (prefs.panSpeed !== undefined) {
-      this.controls.enablePan = false;
-    }
-
-    if (prefs.zoomSpeed) {
-      this.controls.zoomSpeed = prefs.zoomSpeed;
-      this.controls.enableZoom = true;
-    } else if (prefs.zoomSpeed !== undefined) {
-      this.controls.enableZoom = false;
-    }
-
-    if (prefs.rotateSpeed) {
-      this.controls.rotateSpeed = prefs.rotateSpeed;
-      this.controls.enableRotate = true;
-    } else if (prefs.rotateSpeed !== undefined) {
-      this.controls.enableRotate = false;
-    }
-  }
-
-  processHexColor(hexStr: string) {
-    while (hexStr.startsWith('#')) hexStr = hexStr.substr(1);
   }
 
   private _lastWidth = 0;
@@ -136,7 +144,7 @@ class GWizCanvas {
 
   animate(): void {
     requestAnimationFrame( this.animate.bind(this) );
-    this.controls.update();
+    this.controls.animate();
     this.renderer.render( this.scene, this.camera );
   }
 }

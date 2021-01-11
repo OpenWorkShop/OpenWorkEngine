@@ -1,3 +1,11 @@
+fragment WorkspacePortConnection on SystemPort {
+    connection {
+        machine {
+            ...ControlledMachine
+        }
+    }
+}
+
 fragment WorkspaceFull on Workspace {
     id
     portName
@@ -9,11 +17,7 @@ fragment WorkspaceFull on Workspace {
         ...WorkspaceFullSettings
     }
     port {
-        connection {
-            machine {
-                ...ControlledMachine
-            }
-        }
+        ...WorkspacePortConnection
     }
 }
 

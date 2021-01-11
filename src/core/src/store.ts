@@ -3,7 +3,7 @@ import api from './api';
 import { IApiState } from './api';
 import * as Oidc from 'redux-oidc';
 import thunk from 'redux-thunk';
-import { GWizState } from './open-controller';
+import { GWizState, WorkspacesState } from './open-controller';
 import {
   AnyAction,
   applyMiddleware,
@@ -19,6 +19,7 @@ import {
 export interface IOwsState extends IApiState {
   oidc: Oidc.UserState;
   gWiz: GWizState;
+  workspaces: WorkspacesState;
 }
 
 export type ReducersTypes = AnyAction;

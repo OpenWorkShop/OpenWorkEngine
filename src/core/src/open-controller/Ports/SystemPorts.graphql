@@ -20,7 +20,7 @@ fragment PortStatus on SystemPort {
         ...AlertError
     }
     connection {
-        ...ConnectedPortStatus
+        ...ConnectedPort
     }
 }
 

@@ -1,6 +1,5 @@
 import {IOpenWorkShop, TTranslateFunc, HostnameMap} from '../../types';
 import {OpenControllerSessionFragment} from '../graphql';
-import {Workspace} from '../Workspaces';
 import {BackendConnection} from '../../api';
 import {ISemver} from '../../utils/semvers';
 import { UserManagerSettings } from 'oidc-client';
@@ -38,8 +37,6 @@ export interface IOpenController extends IHaveOpenControllerDeployment {
   connection: BackendConnection;
 
   session: OpenControllerSessionFragment | undefined;
-
-  workspaces: Workspace[];
 
   t: TTranslateFunc;
 }
