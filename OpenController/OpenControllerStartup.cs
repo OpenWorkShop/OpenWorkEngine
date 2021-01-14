@@ -5,11 +5,12 @@ using OpenWorkEngine.OpenController.Lib.Filesystem;
 using OpenWorkEngine.OpenController.Lib.Graphql;
 using OpenWorkEngine.OpenController.Programs.Services;
 using OpenWorkEngine.OpenController.Workspaces.Services;
+using Serilog;
 
 namespace OpenWorkEngine.OpenController {
   public static class OpenControllerStartup {
     public static void AddOpenController(this IServiceCollection services) {
-      services.AddSingleton(Serilog.Log.Logger);
+      services.AddSingleton(Log.Logger);
       services.AddSingleton<ConfigFile>();
       services.AddSingleton<SessionManager>();
       services.AddSingleton<ProgramFileManager>();

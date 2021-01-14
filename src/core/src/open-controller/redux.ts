@@ -2,6 +2,7 @@ import * as owsStore from '../store';
 import { Store } from 'redux';
 import { gWizSlice } from './GWiz';
 import { workspacesSlice } from './Workspaces';
+import {controllersSlice} from './Controllers';
 
 // The top-level state object
 export type AppState = owsStore.IOwsState; // & IMakerverseState;
@@ -21,6 +22,7 @@ export default function configureStore(): Store<AppState> {
     {
       gWiz: gWizSlice.reducer,
       workspaces: workspacesSlice.reducer,
+      controllers: controllersSlice.reducer,
     },
     [ ],
     enhancers,

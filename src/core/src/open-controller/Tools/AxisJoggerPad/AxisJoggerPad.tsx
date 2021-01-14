@@ -9,8 +9,7 @@ import JogStepSelect from './JogStepSelect';
 import {useTrans} from '../../Context';
 import {useWorkspaceSelector, useWorkspaceUnits} from '../../Workspaces';
 import {getMachineAxisJogSteps} from '../../Machines';
-import {AxisName} from '../../graphql';
-import {UnitType} from '../../../components/Units/types';
+import {AxisName, UnitType} from '../../graphql';
 
 const AxisJoggerPad: ToolBase = (props) => {
   const t = useTrans();

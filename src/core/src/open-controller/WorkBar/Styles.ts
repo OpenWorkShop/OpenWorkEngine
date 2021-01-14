@@ -6,10 +6,6 @@ export const iconSizeSm = 16;
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    backgroundColor: theme.palette.background.paper,
-    borderBottomWidth: 1,
-    borderBottomColor: theme.palette.divider,
-    borderBottomStyle: 'solid',
     padding: theme.spacing(0.5),
     textAlign: 'left',
     height: barHeight,

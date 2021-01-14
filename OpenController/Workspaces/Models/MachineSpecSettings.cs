@@ -9,18 +9,16 @@ using OpenWorkEngine.OpenController.MachineProfiles.Interfaces;
 namespace OpenWorkEngine.OpenController.Workspaces.Models {
   [AuthorizeOpenControllerUser]
   public class MachineSpecSettings : IMachineSpec, ILoadSettingsObject {
-    [JsonProperty("id")]
-    public string Id { get; set; } = default!;
+    [JsonProperty("id")] public string Id { get; set; } = default!;
+
+    public void LoadSettings(JObject obj) {
+      JsonConvert.PopulateObject(JsonConvert.SerializeObject(obj), this);
+    }
 
     [JsonProperty("specType")]
     [JsonConverter(typeof(StringEnumConverter))]
     public MachineSpecType SpecType { get; set; }
 
-    [JsonProperty("value")]
-    public decimal Value { get; set; }
-
-    public void LoadSettings(JObject obj) {
-      JsonConvert.PopulateObject(JsonConvert.SerializeObject(obj), this);
-    }
+    [JsonProperty("value")] public decimal Value { get; set; }
   }
 }

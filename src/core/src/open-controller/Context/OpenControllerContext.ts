@@ -1,7 +1,7 @@
 import { IOpenWorkShop } from '../../types';
 import React from 'react';
 import {OpenControllerSessionFragment} from '../graphql';
-import {Workspace} from '../Workspaces';
+import { IWorkspace } from '../Workspaces';
 import { StringMap } from 'i18next';
 import {IOpenController, IOpenControllerPackage} from './types';
 import {BackendConnection} from '../../api';
@@ -17,7 +17,7 @@ export class EmptyOpenController implements IOpenController {
 
   get session(): OpenControllerSessionFragment | undefined { throw new Error(msg); }
 
-  get workspaces(): Workspace[] { throw new Error(msg); }
+  get workspaces(): IWorkspace[] { throw new Error(msg); }
 
   public t(key: string, opts?: StringMap) { return ''; }
 }

@@ -1,8 +1,0 @@
-export * from './types';
-export * from './Hooks';
-export * from './Workspace';
-export { default as WorkspaceStatus } from './WorkspaceStatus';
-export { default as WorkspaceConnector } from './WorkspaceConnector';
-export { default as WorkspaceBar } from './WorkspaceBar';
-export { default as WorkspaceUnitSelect } from './WorkspaceUnitSelect';
-export { default as workspacesSlice } from './WorkspacesSlice';

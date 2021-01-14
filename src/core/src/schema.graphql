@@ -69,7 +69,7 @@ type ControlledMachine {
     lastTopic: MachineTopic!
     machineProfileId: String
     settings: [MachineSetting!]!
-    state: MachineState!
+    status: MachineStatus!
     topicId: String!
 }
 
@@ -122,6 +122,12 @@ type MachineAxisSettings {
     precision: Decimal!
 }
 
+type MachineBuffer {
+    availableReceive: Int!
+    availableSend: Int!
+    lineNumber: Int!
+}
+
 type MachineCommand {
     id: String!
     machineProfiles: [MachineProfile!]!
@@ -137,7 +143,8 @@ type MachineCommandSettings {
 
 type MachineConfiguration {
     firmware: MachineDetectedFirmware!
-    workOffset: MachinePosition!
+    modals: MachineModals!
+    spindle: SpindleConfig!
 }
 
 type MachineDetectedFirmware {
@@ -198,6 +205,24 @@ type MachineFirmwareSettings implements IMachineFirmwareRequirement {
     suggestedVersion: Decimal!
 }
 
+type MachineModals {
+    arcDistance: MovementDistanceType!
+    distance: MovementDistanceType!
+    feedRate: FeedRateMode!
+    motion: MachineMotionType!
+    plane: AxisPlane!
+    programState: MachineProgramState!
+    spindleDirection: SpinDirection!
+    units: UnitType!
+    workCoordinateSystem: Int!
+}
+
+type MachineOverrides {
+    feed: Decimal!
+    rapids: Decimal!
+    spindle: Decimal!
+}
+
 type MachinePart {
     dataBlob: String!
     description: String
@@ -225,6 +250,9 @@ type MachinePartSettings {
 }
 
 type MachinePosition {
+    a: Decimal
+    b: Decimal
+    c: Decimal
     e: Decimal
     isValid: Boolean!
     x: Decimal
@@ -287,11 +315,25 @@ type MachineSpecSettings {
     value: Decimal!
 }
 
-type MachineState {
+type MachineSpindle {
+    direction: SpinDirection!
+    feedRate: Decimal!
+    isFloodCoolantEnabled: Boolean!
+    isMistCoolantEnabled: Boolean!
+    isOn: Boolean!
+    spinSpeed: Decimal!
+}
+
+type MachineStatus {
+    activePins: [MachinePinType!]!
     activityState: ActiveState!
     alarm: MachineAlert
+    buffer: MachineBuffer!
     error: MachineAlert
     machinePosition: MachinePosition!
+    overrides: MachineOverrides
+    spindle: MachineSpindle!
+    workCoordinateOffset: MachinePosition
     workPosition: MachinePosition
 }
 
@@ -410,10 +452,18 @@ type Query {
     userProfile(id: String!): UserProfile!
 }
 
+type SpindleConfig {
+    feedRate: Decimal!
+    isFloodCoolantEnabled: Boolean!
+    isMistCoolantEnabled: Boolean!
+    spinSpeed: Decimal!
+    tool: String!
+}
+
 type Subscription {
     onMachineConfiguration(portName: String!): ControlledMachine!
     onMachineSetting(portName: String!): ControlledMachine!
-    onMachineState(portName: String!): ControlledMachine!
+    onMachineStatus(portName: String!): ControlledMachine!
     onPortChange: SystemPort!
     onWorkspaceChange: Workspace!
 }
@@ -442,6 +492,7 @@ type Workspace {
     settings: WorkspaceSettings!
     state: WorkspaceState!
     topicId: String!
+    units: UnitType!
 }
 
 type WorkspaceSettings {
@@ -485,6 +536,12 @@ enum AxisName {
     Z
 }
 
+enum AxisPlane {
+    XY
+    XZ
+    YZ
+}
+
 enum BaudRate {
     BR115200
     BR19200
@@ -493,6 +550,12 @@ enum BaudRate {
     BR38400
     BR57600
     BR9600
+}
+
+enum FeedRateMode {
+    INVERSE_TIME
+    UNITS_PER_MINUTE
+    UNITS_PER_REVOLUTION
 }
 
 enum Handshake {
@@ -516,6 +579,16 @@ enum MachineControllerType {
     UNKNOWN
 }
 
+enum MachineMotionType {
+    ARC
+    ARC_CCW
+    CANCEL
+    DWELL
+    LINEAR
+    PROBE
+    RAPID
+}
+
 enum MachinePartType {
     AXIS_MOTOR
     BOARD
@@ -530,6 +603,25 @@ enum MachinePartType {
     SLED
     SPINDLE
     UNKNOWN
+}
+
+enum MachinePinType {
+    A
+    D
+    H
+    P
+    R
+    S
+    X
+    Y
+    Z
+}
+
+enum MachineProgramState {
+    AUTOMATIC_CHANGE
+    COMPULSORY_STOP
+    END_OF_PROGRAM
+    OPTIONAL_STOP
 }
 
 enum MachineSettingType {
@@ -555,7 +647,12 @@ enum MachineSpecType {
 enum MachineTopic {
     CONFIGURATION
     SETTING
-    STATE
+    STATUS
+}
+
+enum MovementDistanceType {
+    ABSOLUTE
+    RELATIVE
 }
 
 enum Parity {
@@ -590,11 +687,22 @@ enum ProgramSyntax {
     GCODE
 }
 
+enum SpinDirection {
+    CCW
+    CW
+    NONE
+}
+
 enum StopBits {
     NONE
     ONE
     ONE_POINT_FIVE
     TWO
+}
+
+enum UnitType {
+    IMPERIAL
+    METRIC
 }
 
 enum WorkspaceState {

@@ -27,8 +27,7 @@ namespace OpenWorkEngine.OpenController.MachineProfiles.Interfaces {
     where TFeature : IMachineFeature
     where TFirmware : IMachineFirmware
     where TSetting : IMachineSetting
-    where TSpec : IMachineSpec
-  {
+    where TSpec : IMachineSpec {
     public List<TPart> Parts { get; }
 
     public List<TAxis> Axes { get; }

@@ -15,9 +15,7 @@ namespace OpenWorkEngine.OpenController.Lib.Graphql {
     ) {
       if (message.Payload?["token"] is string token) {
         ClaimsPrincipal? principal = await connection.HttpContext.ClaimMakerverseIdentity(token);
-        if (principal != null) {
-          connection.HttpContext.User = principal;
-        }
+        if (principal != null) connection.HttpContext.User = principal;
       }
       return await base.OnConnectAsync(connection, message, cancellationToken);
     }

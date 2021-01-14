@@ -1,5 +1,3 @@
-using OpenWorkEngine.OpenController.Lib;
-
 namespace OpenWorkEngine.OpenController.MachineProfiles.Interfaces {
   public interface IMachineFeature {
     public bool Disabled { get; }

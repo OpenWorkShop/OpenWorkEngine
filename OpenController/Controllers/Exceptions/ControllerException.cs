@@ -1,5 +1,3 @@
 namespace OpenWorkEngine.OpenController.Controllers.Exceptions {
-  public class ControllerException {
-    
-  }
+  public class ControllerException { }
 }

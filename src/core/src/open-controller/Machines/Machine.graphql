@@ -1,4 +1,5 @@
 fragment ControlledMachine on ControlledMachine {
+    topicId
     machineProfileId
     firmwareRequirement {
         ...FirmwareRequirement
@@ -6,8 +7,8 @@ fragment ControlledMachine on ControlledMachine {
     configuration {
         ...MachineConfig
     }
-    state {
-        ...MachineState
+    status {
+        ...MachineStatus
     }
     settings {
         ...MachineSetting
@@ -24,9 +25,27 @@ fragment DetectedFirmware on MachineDetectedFirmware {
     welcomeMessage
 }
 
+fragment MachineModals on MachineModals {
+    units
+}
+
+fragment SpindleConfig on SpindleConfig {
+    tool
+    spinSpeed
+    feedRate
+    isFloodCoolantEnabled
+    isMistCoolantEnabled
+}
+
 fragment MachineConfig on MachineConfiguration {
     firmware {
         ...DetectedFirmware
+    }
+    modals {
+        ...MachineModals
+    }
+    spindle {
+        ...SpindleConfig
     }
 }
 
@@ -44,7 +63,28 @@ fragment MachinePosition on MachinePosition {
     isValid
 }
 
-fragment MachineState on MachineState {
+fragment MachineBuffer on MachineBuffer {
+    lineNumber
+    availableReceive
+    availableSend
+}
+
+fragment SpindleState on MachineSpindle {
+    direction
+    isOn
+    spinSpeed
+    feedRate
+    isFloodCoolantEnabled
+    isMistCoolantEnabled
+}
+
+fragment MachineOverrides on MachineOverrides {
+    feed
+    rapids
+    spindle
+}
+
+fragment MachineStatus on MachineStatus {
     activityState
     machinePosition {
         ...MachinePosition
@@ -52,11 +92,24 @@ fragment MachineState on MachineState {
     workPosition {
         ...MachinePosition
     }
+    workCoordinateOffset {
+        ...MachinePosition
+    }
     error {
         ...MachineAlert
     }
     alarm {
         ...MachineAlert
+    }
+    buffer {
+        ...MachineBuffer
+    }
+    activePins
+    spindle {
+        ...SpindleState
+    }
+    overrides {
+        ...MachineOverrides
     }
 }
 
@@ -70,22 +123,25 @@ fragment MachineSetting on MachineSetting {
 
 subscription MachineConfiguration($portName: String!) {
     machine: onMachineConfiguration(portName: $portName) {
+        topicId
         configuration {
             ...MachineConfig
         }
     }
 }
 
-subscription MachineState($portName: String!) {
-    machine: onMachineConfiguration(portName: $portName) {
-        state {
-            ...MachineState
+subscription MachineStatus($portName: String!) {
+    machine: onMachineStatus(portName: $portName) {
+        topicId
+        status {
+            ...MachineStatus
         }
     }
 }
 
 subscription MachineSettings($portName: String!) {
     machine: onMachineSetting(portName: $portName) {
+        topicId
         settings {
             ...MachineSetting
         }

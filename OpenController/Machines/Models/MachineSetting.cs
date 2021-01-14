@@ -1,7 +1,5 @@
-using OpenWorkEngine.OpenController.Lib.Observables;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 using OpenWorkEngine.OpenController.MachineProfiles.Interfaces;
-using OpenWorkEngine.OpenController.Machines.Interfaces;
 
 namespace OpenWorkEngine.OpenController.Machines.Models {
   public class MachineSetting : IMachineSetting {

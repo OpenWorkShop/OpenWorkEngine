@@ -1,39 +1,27 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using HotChocolate.Execution;
-using HotChocolate.Subscriptions;
 using OpenWorkEngine.OpenController.Controllers.Grbl;
 using OpenWorkEngine.OpenController.Controllers.Grbl.Maslow;
 using OpenWorkEngine.OpenController.Lib;
-using OpenWorkEngine.OpenController.Lib.Graphql;
 using OpenWorkEngine.OpenController.Lib.Observables;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Interfaces;
-using OpenWorkEngine.OpenController.Machines.Messages;
 using OpenWorkEngine.OpenController.Machines.Models;
 using OpenWorkEngine.OpenController.Ports.Enums;
-using OpenWorkEngine.OpenController.Ports.Extensions;
 using OpenWorkEngine.OpenController.Ports.Interfaces;
-using OpenWorkEngine.OpenController.Ports.Messages;
 using OpenWorkEngine.OpenController.Ports.Models;
 using OpenWorkEngine.OpenController.Ports.Services;
 using Serilog;
 
 namespace OpenWorkEngine.OpenController.Controllers.Services {
   /// <summary>
-  /// Singleton DI service for creating/managing Controllers + Orchestrators.
+  ///   Singleton DI service for creating/managing Controllers + Orchestrators.
   /// </summary>
   public class ControllerManager : SubscriptionManager<MachineTopic, ControlledMachine>, IDisposable {
-    public override ILogger Log { get; }
-
-    public PortManager Ports { get; }
-
     // internal ITopicEventSender Sender { get; }
     //
     // public Controller this[string portName] =>
@@ -43,11 +31,36 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
     // PortName -> Controller (one controller per port).
     private readonly ConcurrentDictionary<string, Controller> _controllers = new();
 
-    private Controller Create(MachineControllerType type, ConnectedPort connection) {
-      if (type == MachineControllerType.Grbl) return new GrblController(this, connection);
-      if (type == MachineControllerType.Maslow) return new MaslowController(this, connection);
+    public ControllerManager(ILogger logger) {
+      Log = logger.ForContext("App", "OC").ForContext(typeof(ControllerManager));
+      Ports = new PortManager(this);
+    }
 
-      throw new ArgumentException($"Unsupported controller type: {type}");
+    public override ILogger Log { get; }
+
+    public PortManager Ports { get; }
+
+    public void Dispose() {
+      List<Controller> controllers = _controllers.Values.ToList();
+      _controllers.Clear();
+      foreach (Controller controller in controllers) {
+        ClosePort(controller.Connection.Port);
+        controller.Dispose();
+      }
+    }
+
+    private Controller Create(MachineControllerType type, ConnectedPort connection) {
+      Controller? controller = null;
+
+      if (type == MachineControllerType.Grbl)
+        controller = new GrblController(this, connection);
+      else if (type == MachineControllerType.Maslow)
+        controller = new MaslowController(this, connection);
+      else
+        throw new ArgumentException($"Unsupported controller type: {type}");
+
+      controller.StartTask();
+      return controller;
     }
 
     public async Task<Controller> Open(
@@ -59,6 +72,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       if (systemPort.SerialPort.IsOpen) {
         if (!optionsChanged && !reconnect && _controllers.TryGetValue(systemPort.PortName, out Controller? c)) {
           Log.Information("[OPEN] port was already open with the same options: {portName}", systemPort.PortName);
+          if (systemPort.State == PortState.Error) Log.Error("[OPEN] System port has error: {@error}", systemPort.Error);
           return c;
         }
         await Close(systemPort);
@@ -77,12 +91,10 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
         IMachineFirmwareRequirement req = machine.GetFirmwareRequirement();
         MachineControllerType controllerType = req.ControllerType;
         return _controllers.AddOrUpdate(systemPort.PortName,
-          (v) => Create(controllerType, systemPort.Connection),
+          v => Create(controllerType, systemPort.Connection),
           (k, v) => {
-            if (v.ControllerType != controllerType || v.Connection != systemPort.Connection) {
-              // Updating an existng controller implies the connection was not closed correctly.
+            if (v.ControllerType != controllerType || v.Connection != systemPort.Connection) // Updating an existng controller implies the connection was not closed correctly.
               throw new ArgumentException($"{systemPort.PortName} could not open because the last buffer was not closed.");
-            }
             // The controller exists, but a new client is connecting.
             return v;
           });
@@ -113,28 +125,13 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
     }
 
     public Task<SystemPort> Close(SystemPort systemPort) {
-      if (_controllers.TryRemove(systemPort.PortName, out Controller? controller)) {
+      if (_controllers.TryRemove(systemPort.PortName, out Controller? controller))
         controller.Dispose();
-      } else {
+      else
         Log.Debug("[DISPOSE] no controller to close {portName}", systemPort.PortName);
-      }
       ClosePort(systemPort);
       Ports.EmitState(systemPort);
       return Task.FromResult(systemPort);
-    }
-
-    public ControllerManager(ILogger logger) {
-      Log = logger.ForContext("App", "OC").ForContext(typeof(ControllerManager));
-      Ports = new PortManager(this);
-    }
-
-    public void Dispose() {
-      List<Controller> controllers = _controllers.Values.ToList();
-      _controllers.Clear();
-      foreach (Controller controller in controllers) {
-        ClosePort(controller.Connection.Port);
-        controller.Dispose();
-      }
     }
   }
 }

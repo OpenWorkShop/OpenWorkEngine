@@ -1,4 +1,4 @@
-import {AxisName} from '../graphql';
+import {AxisName, ControlledMachineFragment, MachineConfigFragment, MachineStatusFragment} from '../graphql';
 
 export interface IMachineAxis {
   name: AxisName;
@@ -9,3 +9,4 @@ export interface IMachineAxis {
 }
 
 export type MachineAxisMap = { [key: string]: IMachineAxis };
+

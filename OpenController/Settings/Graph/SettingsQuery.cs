@@ -1,6 +1,5 @@
 using HotChocolate;
 using HotChocolate.Types;
-using OpenWorkEngine.OpenController.Settings.Models;
 
 namespace OpenWorkEngine.OpenController.Settings.Graph {
   [ExtendObjectType(Name = OpenControllerSchema.Query)]

@@ -14,13 +14,24 @@ using Serilog;
 
 namespace OpenWorkEngine.OpenController.Controllers.Services {
   public abstract class Controller : IDisposable {
+    // Thread managament liveness
+    private bool _isAlive = true;
+    private ILogger? _logger;
+
+    public Controller(ControllerManager controllerManager, ConnectedPort connection) {
+      Manager = controllerManager;
+      Connection = connection;
+      Buffer = new SerialBuffer(this);
+      Commander = new Commander(this);
+      CreatedAt = DateTime.Now;
+    }
+
     internal ControllerManager Manager { get; }
 
     public ILogger Log => _logger ??= Manager.Log
                                              .ForContext("ControllerType", ControllerType.ToString())
                                              .ForContext("Buffer", Buffer)
                                              .ForContext("Connection", Connection);
-    private ILogger? _logger;
 
     public abstract MachineControllerType ControllerType { get; }
 
@@ -30,18 +41,20 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
 
     public Commander Commander { get; }
 
-    public ParserSet Parsers { get; } = new ParserSet();
+    public ParserSet Parsers { get; } = new();
 
     internal DateTime CreatedAt { get; }
 
     // Timeout for the entire startup process, including all firmware verification.
     internal int StartupTimeoutMs { get; } = 20000;
-
-    // Thread managament liveness
-    private bool _isAlive = true;
     public bool IsAlive => _isAlive && Connection.Port.SerialPort.IsOpen;
 
     public bool IsActive => IsAlive && Connection.Port.State == PortState.Active;
+
+    public void Dispose() {
+      Log.Information("[DISPOSE] controller: {controller}", ToString());
+      _isAlive = false;
+    }
 
     protected abstract Task RunStartupCommands();
 
@@ -49,6 +62,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
     // Coordinates all serial I/O.
     private async Task InfiniteWorkLoop() {
       while (IsActive) {
+        foreach (CommandResponsePoll poll in Parsers.Polls) await poll.Invoke(this);
         int readCharacters = await Buffer.TryRead();
         Log.Verbose("[WORK] I:{characters}", readCharacters);
       }
@@ -120,10 +134,8 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
           throw errBuilder();
         }
         await Task.Delay(delay);
-        if (becomeState > PortState.HasData) {
-          // Once we have data, we need to start consuming it for the startup conditions.
+        if (becomeState > PortState.HasData) // Once we have data, we need to start consuming it for the startup conditions.
           await Buffer.TryRead();
-        }
       }
       Manager.Ports.EmitState(Connection.Port, becomeState);
       return true;
@@ -138,25 +150,11 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
         return;
       }
       Log.Debug("[READ] {line}", line);
-      foreach (Parser patcher in Parsers.ToList()) {
-        await patcher.UpdateMachine(this, Connection.Machine, line);
-      }
+      await Parsers.Update(this, Connection.Machine, line);
       await ParseLine(line);
     }
 
-    public Controller(ControllerManager controllerManager, ConnectedPort connection) {
-      Manager = controllerManager;
-      Connection = connection;
-      Buffer = new SerialBuffer(this);
-      Commander = new Commander(this);
-      CreatedAt = DateTime.Now;
-      Task.Run(Startup);
-    }
-
-    public void Dispose() {
-      Log.Information("[DISPOSE] controller: {controller}", ToString());
-      _isAlive = false;
-    }
+    public void StartTask() => Task.Run(Startup);
 
     public override string ToString() => $"[{ControllerType}] {Connection}";
   }

@@ -16,9 +16,7 @@ namespace OpenWorkEngine.OpenController.Lib.Graphql {
       string auth = context.Request.Headers["Authorization"].ToString();
       if (auth.StartsWith("bearer ", true, CultureInfo.InvariantCulture)) {
         ClaimsPrincipal? principal = await context.ClaimMakerverseIdentity(auth.Substring("bearer ".Length).Trim());
-        if (principal != null) {
-          builder.TryAddProperty(nameof(ClaimsPrincipal), principal);
-        }
+        if (principal != null) builder.TryAddProperty(nameof(ClaimsPrincipal), principal);
       }
       await base.OnCreateAsync(context, executor, builder, cancellationToken);
     }

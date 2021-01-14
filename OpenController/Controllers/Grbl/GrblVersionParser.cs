@@ -30,14 +30,12 @@ namespace OpenWorkEngine.OpenController.Controllers.Grbl {
         versionParts.RemoveAt(0);
       }
       machine.Configuration.Firmware.Edition = string.Join('.', editions);
-      if (versionParts.Count > 0) {
-        if (decimal.TryParse(versionParts[0], out decimal val)) machine.Configuration.Firmware.Value = val;
-      }
+      if (versionParts.Count > 0)
+        if (decimal.TryParse(versionParts[0], out decimal val))
+          machine.Configuration.Firmware.Value = val;
       if (versionParts.Count > 1) {
         List<string> remain = versionParts.ToList().GetRange(1, versionParts.Count - 1);
-        if (remain.Count > 1) {
-          machine.Log.Warning("Several unparsed version pieces: {remain}", remain);
-        }
+        if (remain.Count > 1) machine.Log.Warning("Several unparsed version pieces: {remain}", remain);
         machine.Configuration.Firmware.Name = string.Join(':', remain);
       }
 

@@ -1,7 +1,7 @@
 namespace OpenWorkEngine.OpenController.MachineProfiles.Enums {
   public enum MachineCategory {
     CNC,
-    TDP, // "3DP" can't start with a number
+    TDP // "3DP" can't start with a number
   }
 
   public static class MachineCategoryExtensions {

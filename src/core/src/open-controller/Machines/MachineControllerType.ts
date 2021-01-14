@@ -12,6 +12,5 @@ export function getMachineControllerTypeIconName(controllerType: MachineControll
   return 'xyz';
 }
 
-
 export const isMachineControllerType = createEnumChecker(MachineControllerType);
 export const normalizeMachineControllerType = createEnumNormalizer(MachineControllerType);

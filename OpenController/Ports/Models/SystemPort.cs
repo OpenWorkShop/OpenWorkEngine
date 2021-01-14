@@ -1,9 +1,6 @@
-using System;
 using System.IO.Ports;
 using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.Lib.Observables;
-using OpenWorkEngine.OpenController.MachineProfiles.Enums;
-using OpenWorkEngine.OpenController.Machines.Interfaces;
 using OpenWorkEngine.OpenController.Ports.Enums;
 using OpenWorkEngine.OpenController.Ports.Interfaces;
 using Serilog;
@@ -11,15 +8,17 @@ using Serilog;
 namespace OpenWorkEngine.OpenController.Ports.Models {
   /// High-order wrapper around a SerialPort, so that it may be represented in the closed state.
   public class SystemPort : ITopicStateMessage<PortState> {
+    internal SystemPort(string portName) {
+      PortName = portName;
+      Log = Serilog.Log.Logger.ForContext("Port", PortName);
+
+      SerialPort = new SerialPort(portName);
+      Options = new PortOptions(SerialPort);
+    }
+
     internal ILogger Log { get; }
 
-    public string TopicId => PortName;
-
     public string PortName { get; }
-
-    public PortState State { get; set; } = PortState.Unplugged; // Will be set by PortManager.
-
-    public AlertError? Error { get; set; }
 
     public PortOptions Options { get; }
 
@@ -28,13 +27,11 @@ namespace OpenWorkEngine.OpenController.Ports.Models {
 
     internal SerialPort SerialPort { get; }
 
-    internal SystemPort(string portName) {
-      PortName = portName;
-      Log = Serilog.Log.Logger.ForContext("Port", PortName);
+    public string TopicId => PortName;
 
-      SerialPort = new SerialPort(portName);
-      Options = new(SerialPort);
-    }
+    public PortState State { get; set; } = PortState.Unplugged; // Will be set by PortManager.
+
+    public AlertError? Error { get; set; }
 
     internal bool ApplyPortOptions(ISerialPortOptions opts) {
       bool changed = SerialPort.BaudRate != opts.BaudRate;

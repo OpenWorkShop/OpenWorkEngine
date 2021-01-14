@@ -12,7 +12,7 @@ namespace OpenWorkEngine.OpenController.Machines.Enums {
     Door,
     Home,
     Sleep,
-    Check,
+    Check
 
     // // tinyg
     // Stop,

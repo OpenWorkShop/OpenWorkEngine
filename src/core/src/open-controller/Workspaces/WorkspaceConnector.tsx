@@ -7,20 +7,29 @@ import { Grid } from '@material-ui/core';
 import {IMaybeHavePortStatus} from '../Ports';
 import useLogger from '../../utils/logging/UseLogger';
 import OpenWorkspaceButton from './OpenWorkspaceButton';
-import WorkspaceBar from './WorkspaceBar';
 import {useWorkspace} from './Hooks';
+import WorkBar from '../WorkBar';
+import useStyles from './Styles';
 
 type Props = IHaveWorkspaceId & IMaybeHavePortStatus;
 
 const WorkspaceConnector: React.FunctionComponent<Props> = (props) => {
   const log = useLogger(WorkspaceConnector);
+  const classes = useStyles();
   const { workspaceId, port } = props;
   const workspace = useWorkspace(workspaceId);
 
   log.verbose(port, workspace);
 
   return (
-    <WorkspaceBar workspaceId={workspaceId} port={port}>
+    <Grid container >
+      <Grid item xs={12} className={classes.topBar}>
+        <WorkBar
+          workspaceId={workspaceId}
+          port={port}
+        />
+      </Grid>
+
       <ThreeColumns size="md" >
         <ToolbarCard
           title={workspace.settings.name}
@@ -35,7 +44,7 @@ const WorkspaceConnector: React.FunctionComponent<Props> = (props) => {
           </Grid>
         </ToolbarCard>
       </ThreeColumns>
-    </WorkspaceBar>
+    </Grid>
   );
 };
 

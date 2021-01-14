@@ -1,7 +1,7 @@
 using System.Linq;
 
 namespace OpenWorkEngine.OpenController.Machines.Models {
-  public class MachineDetectedFirmware {
+  public record MachineDetectedFirmware {
     public string? Name { get; set; }
 
     // GRBL, etc.
@@ -18,6 +18,6 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     public bool IsValid => !string.IsNullOrWhiteSpace(Name) || !string.IsNullOrWhiteSpace(Protocol) || Value.HasValue;
 
     public override string ToString() =>
-      string.Join('.', new string?[] {Name, FriendlyName, Edition, Value?.ToString()}.Where(s => s != null));
+      string.Join('.', new[] {Name, FriendlyName, Edition, Value?.ToString()}.Where(s => s != null));
   }
 }

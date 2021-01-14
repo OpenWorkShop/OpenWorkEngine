@@ -12,6 +12,6 @@ namespace OpenWorkEngine.OpenController.MachineProfiles.Enums {
     EmergencyStop,
     Psu,
     Hotend,
-    Heatbed,
+    Heatbed
   }
 }

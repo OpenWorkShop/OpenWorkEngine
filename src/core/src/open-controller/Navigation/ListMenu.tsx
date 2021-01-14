@@ -16,7 +16,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {PortStatusFragment} from '../graphql';
 import ListMenuItem from './ListMenuItem';
 import {useSystemPorts} from '../Ports';
-import {Workspace, WorkspaceStatus} from '../Workspaces/';
+import {IWorkspace, WorkspaceStatus} from '../Workspaces/';
 import {useOpenController, useTrans} from '../Context';
 import {useSelector} from 'react-redux';
 import {AppState} from '../redux';
@@ -24,7 +24,6 @@ import {AppState} from '../redux';
 interface OwnProps {
   isOpen: boolean;
 }
-
 
 type Props = OwnProps;
 const useStyles = makeStyles((theme: Theme) =>
@@ -39,8 +38,8 @@ const ListMenu: FunctionComponent<Props> = (props) => {
   const t = useTrans();
   const portList: PortStatusFragment[] = Object.values(ports.portMap);
   const classes = useStyles();
-  const allWorkspaces = useSelector<AppState, Workspace[]>(s => Object.values(s.workspaces.map));
-  const workspaces: Workspace[] = _.sortBy(allWorkspaces, ws => ws.settings.name.toLowerCase());
+  const allWorkspaces = useSelector<AppState, IWorkspace[]>(s => Object.values(s.workspaces.map));
+  const workspaces: IWorkspace[] = _.sortBy(allWorkspaces, ws => ws.settings.name.toLowerCase());
   const showWorkspaces = allWorkspaces.length > 0;
   const iconStyle = { width: 24, height: 24, marginLeft: -2 };
 

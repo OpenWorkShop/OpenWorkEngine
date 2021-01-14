@@ -3,32 +3,42 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using HotChocolate.Subscriptions;
-using OpenWorkEngine.OpenController.Ports.Extensions;
-using OpenWorkEngine.OpenController.Ports.Models;
 using OpenWorkEngine.OpenController.Controllers.Services;
-using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.Lib.Observables;
-using OpenWorkEngine.OpenController.Machines.Interfaces;
 using OpenWorkEngine.OpenController.Ports.Enums;
+using OpenWorkEngine.OpenController.Ports.Models;
 using Serilog;
 
 namespace OpenWorkEngine.OpenController.Ports.Services {
   public class PortManager : SubscriptionStateManager<PortTopic, SystemPort, PortState>, IDisposable {
+    // Once a port it detected via the scanner, it lives forever in memory.
+
+    private bool _isAlive = true;
+
+    internal PortManager(ControllerManager controllers) {
+      Log = controllers.Log.ForContext(typeof(PortManager));
+      Controllers = controllers;
+      ScanPorts().Wait(); // Run once on the main thread to ensure loaded before other classes try to use data.
+      Task.Run(DoWorkAsync);
+    }
+
     public override ILogger Log { get; }
 
     public SystemPort this[string portName] =>
       Map.TryGetValue(portName, out SystemPort? val) ? val : throw new ArgumentException($"Port missing: {portName}");
 
-    // Once a port it detected via the scanner, it lives forever in memory.
-    private readonly ConcurrentDictionary<string, SystemPort> _ports = new ();
-    public ConcurrentDictionary<string, SystemPort> Map => _ports;
-
-    private bool _isAlive = true;
+    public ConcurrentDictionary<string, SystemPort> Map { get; } = new();
 
     public ControllerManager Controllers { get; }
+
+    public override PortTopic StateTopic => PortTopic.State;
+    protected override PortState ErrorState => PortState.Error;
+
+    public void Dispose() {
+      Log.Information("[DISPOSE] PortManager");
+      _isAlive = false;
+    }
 
     // Work thread (background scanner)
     private async Task DoWorkAsync() {
@@ -43,17 +53,14 @@ namespace OpenWorkEngine.OpenController.Ports.Services {
     private async Task ScanPorts() {
       List<string> ports = SerialPort.GetPortNames().Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
 
-      foreach (string name in _ports.Keys) {
-        if (!ports.Contains(name) && _ports.TryGetValue(name, out SystemPort? port)) {
-          // Port is not in the list any more, so it has been unplugged.
+      foreach (string name in Map.Keys)
+        if (!ports.Contains(name) && Map.TryGetValue(name, out SystemPort? port)) // Port is not in the list any more, so it has been unplugged.
           await OnPortDisappeared(port);
-        }
-      }
 
-      foreach (string name in ports) {
-        _ports.AddOrUpdate(name, (p) => {
+      foreach (string name in ports)
+        Map.AddOrUpdate(name, p => {
           // New port just appeared for the first time in this run of the app.
-          SystemPort port = new SystemPort(p);
+          SystemPort port = new(p);
           OnPortAppeared(port);
           return port;
         }, (pn, port) => {
@@ -61,7 +68,6 @@ namespace OpenWorkEngine.OpenController.Ports.Services {
           OnPortAppeared(port);
           return port;
         });
-      }
     }
 
     private async Task OnPortDisappeared(SystemPort port) {
@@ -79,23 +85,6 @@ namespace OpenWorkEngine.OpenController.Ports.Services {
       GetSubscriptionTopic(PortTopic.State).Emit(port);
     }
 
-    public ConnectedPort GetConnection(string portName) {
-      return this[portName].Connection ?? throw new ArgumentException($"Port not open: {portName}");
-    }
-
-    internal PortManager(ControllerManager controllers) {
-      Log = controllers.Log.ForContext(typeof(PortManager));
-      Controllers = controllers;
-      ScanPorts().Wait(); // Run once on the main thread to ensure loaded before other classes try to use data.
-      Task.Run(DoWorkAsync);
-    }
-
-    public void Dispose() {
-      Log.Information("[DISPOSE] PortManager");
-      _isAlive = false;
-    }
-
-    public override PortTopic StateTopic => PortTopic.State;
-    protected override PortState ErrorState => PortState.Error;
+    public ConnectedPort GetConnection(string portName) => this[portName].Connection ?? throw new ArgumentException($"Port not open: {portName}");
   }
 }

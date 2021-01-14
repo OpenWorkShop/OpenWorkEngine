@@ -6,6 +6,6 @@ namespace OpenWorkEngine.OpenController.MachineProfiles.Enums {
     BR38400 = 38400,
     BR57600 = 57600,
     BR115200 = 115200,
-    BR250000 = 250000,
+    BR250000 = 250000
   }
 }

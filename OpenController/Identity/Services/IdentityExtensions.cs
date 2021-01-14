@@ -13,8 +13,8 @@ namespace OpenWorkEngine.OpenController.Identity.Services {
       try {
         OpenControllerSession session = await identityService.Authenticate(token);
 
-        GenericIdentity identity = new (session.User.Username);
-        GenericPrincipal principal = new (identity, session.Roles);
+        GenericIdentity identity = new(session.User.Username);
+        GenericPrincipal principal = new(identity, session.Roles);
 
         identityService.Log.Debug("[ID] create principal '{username}' with roles: {roles}", session.User.Username, session.Roles);
         return principal;

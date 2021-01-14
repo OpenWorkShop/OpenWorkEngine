@@ -14,6 +14,7 @@ import ReactGA from 'react-ga';
 type Props = {
   detectedFirmware: DetectedFirmwareFragment,
   requiredFirmware?: FirmwareRequirementFragment,
+  label?: string,
 };
 
 const FirmwareChip: React.FunctionComponent<Props> = (props) => {
@@ -21,7 +22,7 @@ const FirmwareChip: React.FunctionComponent<Props> = (props) => {
   const theme = useTheme();
   const classes = useStyles();
   const tip = t('Firmware is flashed directly on the board of the connected machine.');
-  const { detectedFirmware, requiredFirmware } = props;
+  const { detectedFirmware, requiredFirmware, label } = props;
   const icon = faMicrochip;
   const downloadUrl = requiredFirmware?.downloadUrl;
   const helpUrl = requiredFirmware?.helpUrl;
@@ -61,7 +62,7 @@ const FirmwareChip: React.FunctionComponent<Props> = (props) => {
     return detected === requirement.toLowerCase().trim();
   }
 
-  return (<PopoverWorkBarChip faIcon={icon}>
+  return (<PopoverWorkBarChip faIcon={icon} label={label} >
     <Grid item xs={12} className={classes.popoverRowAlt} >
       <HelpfulHeader tip={tip} title={'Detected Firmware'} variant="h6" />
     </Grid>

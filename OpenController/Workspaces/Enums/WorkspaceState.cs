@@ -5,6 +5,6 @@ namespace OpenWorkEngine.OpenController.Workspaces.Enums {
     Error = -1,
     Closed = 0,
     Opening,
-    Active,
+    Active
   }
 }

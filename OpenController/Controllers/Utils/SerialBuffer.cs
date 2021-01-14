@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Concurrent;
-using System.Threading;
 using System.Threading.Tasks;
 using OpenWorkEngine.OpenController.Controllers.Services;
 using OpenWorkEngine.OpenController.Ports.Enums;
@@ -9,9 +8,17 @@ using Serilog;
 
 namespace OpenWorkEngine.OpenController.Controllers.Utils {
   /// <summary>
-  /// Wraps the serial I/O for a ConnectedPort with a thread for doing work.
+  ///   Wraps the serial I/O for a ConnectedPort with a thread for doing work.
   /// </summary>
   public class SerialBuffer {
+    private readonly ConcurrentQueue<string> _writeBuffer = new();
+
+    public SerialBuffer(Controller controller) {
+      Log = controller.Log;
+      Controller = controller;
+      Connection = controller.Connection;
+    }
+
     internal ConnectedPort Connection { get; }
 
     internal Controller Controller { get; }
@@ -21,14 +28,6 @@ namespace OpenWorkEngine.OpenController.Controllers.Utils {
     public int BytesToRead => Connection.Status.BytesToRead;
 
     public bool HasPendingData => BytesToRead > 0;
-
-    private readonly ConcurrentQueue<string> _writeBuffer = new();
-
-    public SerialBuffer(Controller controller) {
-      Log = controller.Log;
-      Controller = controller;
-      Connection = controller.Connection;
-    }
 
     // try/catch around a core read loop; broadcasts state & returns # of characters read.
     internal async Task<int> TryRead() {
@@ -40,7 +39,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Utils {
           if (readCharacters > 0) {
             if (Connection.Port.State < PortState.HasData) Connection.Port.State = PortState.HasData;
             Connection.Status.CharactersRead += readCharacters;
-            Connection.Status.LinesRead ++;
+            Connection.Status.LinesRead++;
             Log.Verbose("[BUFFER] {count} characters on {portName}", readCharacters, Connection.Port.PortName);
             await Controller.HandleSerialRead(line);
           } else {

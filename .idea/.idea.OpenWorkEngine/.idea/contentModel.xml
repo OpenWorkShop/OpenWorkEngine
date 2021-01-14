@@ -902,9 +902,12 @@
             <e p="PortException.cs" t="Include" />
           </e>
           <e p="grbl" t="Include">
+            <e p="GrblActiveState.cs" t="Include" />
             <e p="GrblCommander.cs" t="Include" />
+            <e p="GrblConfigParser.cs" t="Include" />
             <e p="GrblController.cs" t="Include" />
             <e p="GrblParsers.cs" t="Include" />
+            <e p="GrblStatusParser.cs" t="Include" />
             <e p="GrblVersionParser.cs" t="Include" />
             <e p="maslow" t="Include">
               <e p="MaslowController.cs" t="Include" />
@@ -916,6 +919,7 @@
           </e>
           <e p="Utils" t="Include">
             <e p="Commander.cs" t="Include" />
+            <e p="CommandResponsePoll.cs" t="Include" />
             <e p="Parsers" t="Include">
               <e p="ConstantStringParser.cs" t="Include" />
               <e p="Parser.cs" t="Include" />
@@ -991,6 +995,7 @@
         <e p="MachineProfiles" t="Include">
           <e p="Enums" t="Include">
             <e p="AxisName.cs" t="Include" />
+            <e p="AxisPlane.cs" t="Include" />
             <e p="BaudRate.cs" t="Include" />
             <e p="MachineCategory.cs" t="Include" />
             <e p="MachineControllerType.cs" t="Include" />
@@ -1013,9 +1018,16 @@
         <e p="Machines" t="Include">
           <e p="Enums" t="Include">
             <e p="ActiveState.cs" t="Include" />
+            <e p="FeedRateMode.cs" t="Include" />
             <e p="MachineCommandType.cs" t="Include" />
+            <e p="MachineMotionType.cs" t="Include" />
+            <e p="MachinePinType.cs" t="Include" />
+            <e p="MachineProgramState.cs" t="Include" />
             <e p="MachineTopic.cs" t="Include" />
             <e p="ModalGroup.cs" t="Include" />
+            <e p="MovementDistanceType.cs" t="Include" />
+            <e p="SpinDirection.cs" t="Include" />
+            <e p="UnitType.cs" t="Include" />
           </e>
           <e p="Extensions" t="Include">
             <e p="FirmwareRequirementExtensions.cs" t="Include" />
@@ -1036,11 +1048,17 @@
           <e p="Models" t="Include">
             <e p="ControlledMachine.cs" t="Include" />
             <e p="MachineAlert.cs" t="Include" />
+            <e p="MachineBuffer.cs" t="Include" />
             <e p="MachineConfiguration.cs" t="Include" />
             <e p="MachineDetectedFirmware.cs" t="Include" />
+            <e p="MachineModals.cs" t="Include" />
+            <e p="MachineOverrides.cs" t="Include" />
             <e p="MachinePosition.cs" t="Include" />
             <e p="MachineSetting.cs" t="Include" />
-            <e p="MachineState.cs" t="Include" />
+            <e p="MachineSpindle.cs" t="Include" />
+            <e p="MachineStatus.cs" t="Include" />
+            <e p="SpindleConfig.cs" t="Include" />
+            <e p="SpindleState.cs" t="Include" />
           </e>
         </e>
         <e p="obj" t="ExcludeRecursive">
@@ -1087,14 +1105,9 @@
         </e>
         <e p="programs" t="Include">
           <e p="Enums" t="Include">
-            <e p="GCodeCommand.cs" t="Include" />
+            <e p="GCodeLetter.cs" t="Include" />
             <e p="ProgramInstructionType.cs" t="Include" />
             <e p="ProgramSyntax.cs" t="Include" />
-          </e>
-          <e p="GCode" t="Include">
-            <e p="GCodeChunk.cs" t="Include" />
-            <e p="GCodeLine.cs" t="Include" />
-            <e p="GCodeProgram.cs" t="Include" />
           </e>
           <e p="Graph" t="Include">
             <e p="ProgramsMutation.cs" t="Include" />
@@ -1109,6 +1122,15 @@
           </e>
           <e p="Services" t="Include">
             <e p="ProgramFileManager.cs" t="Include" />
+          </e>
+          <e p="Syntax" t="Include">
+            <e p="GCode" t="Include">
+              <e p="GCodeBlock.cs" t="Include" />
+              <e p="GCodeProgram.cs" t="Include" />
+              <e p="GCodeWord.cs" t="Include" />
+              <e p="MachineGCodeExtensions.cs" t="Include" />
+            </e>
+            <e p="SyntaxChunk.cs" t="Include" />
           </e>
         </e>
         <e p="Settings" t="Include">
@@ -1159,7 +1181,8 @@
       <e p="OpenControllerTests" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
-          <e p="VersionTests.cs" t="Include" />
+          <e p="GrblTests.cs" t="Include" />
+          <e p="MaslowTests.cs" t="Include" />
         </e>
         <e p="files" t="Include">
           <e p="makerverse112.json" t="Include" />
@@ -2859,7 +2882,6 @@
                 <e p="InchesMillimetersSelect.tsx" t="Include" />
                 <e p="index.ts" t="Include" />
                 <e p="Styles.ts" t="Include" />
-                <e p="types.ts" t="Include" />
               </e>
             </e>
             <e p="consts.ts" t="Include" />
@@ -2880,13 +2902,6 @@
                 <e p="Settings" t="Include">
                   <e p="index.tsx" t="Include" />
                 </e>
-                <e p="Workspace" t="Include">
-                  <e p="index.tsx" t="Include" />
-                  <e p="Styles.ts" t="Include" />
-                  <e p="ToolBar.tsx" t="Include" />
-                  <e p="ToolPane.tsx" t="Include" />
-                  <e p="Workspace.tsx" t="Include" />
-                </e>
                 <e p="WorkspaceCreator" t="Include">
                   <e p="CreateWorkspaceModal.tsx" t="Include" />
                   <e p="index.tsx" t="Include" />
@@ -2902,10 +2917,9 @@
               </e>
               <e p="ControllerMain.tsx" t="Include" />
               <e p="Controllers" t="Include">
-                <e p="ControllerContext.ts" t="Include" />
-                <e p="ControllerHooks.ts" t="Include" />
                 <e p="ControllerProvider.tsx" t="Include" />
                 <e p="index.ts" t="Include" />
+                <e p="slice.ts" t="Include" />
                 <e p="types.ts" t="Include" />
               </e>
               <e p="graphql.ts" t="Include" />
@@ -3061,23 +3075,27 @@
                 <e p="WorkspaceChip.tsx" t="Include" />
               </e>
               <e p="Workspaces" t="Include">
-                <e p="AxesTab.tsx" t="Include" />
+                <e p="ControlBar.tsx" t="Include" />
                 <e p="Hooks.ts" t="Include" />
-                <e p="index.ts" t="Include" />
+                <e p="index.tsx" t="Include" />
                 <e p="MachineSettings.jsx" t="Include" />
                 <e p="OpenWorkspaceButton.tsx" t="Include" />
-                <e p="PartsTab.tsx" t="Include" />
+                <e p="Settings" t="Include">
+                  <e p="AxesTab.tsx" t="Include" />
+                  <e p="PartsTab.tsx" t="Include" />
+                  <e p="WorkspaceTab.tsx" t="Include" />
+                </e>
+                <e p="slice.ts" t="Include" />
                 <e p="Styles.ts" t="Include" />
+                <e p="ToolBar.tsx" t="Include" />
+                <e p="ToolPane.tsx" t="Include" />
                 <e p="types.ts" t="Include" />
                 <e p="Workspace.graphql" t="Include" />
-                <e p="workspace.ts" t="Include" />
-                <e p="WorkspaceBar.tsx" t="Include" />
+                <e p="Workspace.tsx" t="Include" />
                 <e p="WorkspaceConnector.tsx" t="Include" />
                 <e p="WorkspaceSettingsDialog.tsx" t="Include" />
-                <e p="WorkspacesSlice.ts" t="Include" />
                 <e p="WorkspaceState.ts" t="Include" />
                 <e p="WorkspaceStatus.tsx" t="Include" />
-                <e p="WorkspaceTab.tsx" t="Include" />
                 <e p="WorkspaceUnitSelect.tsx" t="Include" />
               </e>
             </e>

@@ -4,7 +4,7 @@ import useStyles from './Styles';
 import {OpenWorkShopIcon} from '../../components';
 import {getDistanceUnitAbbreviationKey, getDistanceUnitIconKey} from './InchesMillimeters';
 import {useOwsTrans} from '../../Hooks';
-import {UnitType} from './types';
+import {UnitType} from '../../open-controller/graphql';
 
 type Props = {
   units: UnitType;
@@ -36,8 +36,8 @@ const InchesMillimetersSelect: React.FunctionComponent<Props> = (props) => {
         className={classes.selectMenu}
         onChange={(e) => setUnits(e.target.value)}
       >
-        {renderMenuItem(UnitType.Metric)}
         {renderMenuItem(UnitType.Imperial)}
+        {renderMenuItem(UnitType.Metric)}
       </Select>
     </FormControl>
   );

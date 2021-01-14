@@ -6,11 +6,10 @@ using OpenWorkEngine.OpenController.Machines.Models;
 
 namespace OpenWorkEngine.OpenController.Controllers.Utils.Parsers {
   public class ConstantStringParser : Parser {
-    private readonly string _str;
+    private readonly Action<ControlledMachine> _applyPatch;
 
     private readonly bool _ignoreCase;
-
-    private readonly Action<ControlledMachine> _applyPatch;
+    private readonly string _str;
 
     public ConstantStringParser(string str, Action<ControlledMachine> applyPatch, bool ignoreCase = true) {
       _str = str;
@@ -20,10 +19,10 @@ namespace OpenWorkEngine.OpenController.Controllers.Utils.Parsers {
 
     private bool Test(string line) => _ignoreCase ? _str.EqualsInvariantIgnoreCase(line) : _str.Equals(line);
 
-    public override Task UpdateMachine(Controller? controller, ControlledMachine machine, string line) {
-      if (!Test(line)) return Task.CompletedTask;
+    public override Task<bool> UpdateMachine(Controller? controller, ControlledMachine machine, string line) {
+      if (!Test(line)) return Task.FromResult(false);
       _applyPatch.Invoke(machine);
-      return Task.CompletedTask;
+      return Task.FromResult(true);
     }
   }
 }

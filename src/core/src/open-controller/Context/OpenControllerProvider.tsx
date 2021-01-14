@@ -9,8 +9,6 @@ import {
   EssentialSettingsFragment,
   OpenControllerSessionFragment,
   useWorkspaceChangeSubscription,
-  WorkspaceFullFragment,
-  WorkspaceState,
 } from '../graphql';
 import {
   IOpenController,
@@ -18,16 +16,13 @@ import {
 } from '../Context';
 import { LoginPage, CallbackPage } from '../Identity';
 import { StringMap } from 'i18next';
-import { Workspace, WorkspacesState } from '../Workspaces';
 import {AppState} from '../redux';
 import ProtectedApp from '../App/ProtectedApp';
 import {useDispatch, useSelector} from 'react-redux';
 import { User } from 'oidc-client';
 import SystemPortProvider from '../Ports/SystemPortProvider';
 import {IOpenControllerPackage} from './types';
-import workspacesSlice from '../Workspaces/WorkspacesSlice';
-//
-// const workspaceObjects: WorkspacesState = {};
+import { workspacesSlice} from '../Workspaces';
 
 interface IProps {
   deployment: IOpenControllerPackage;

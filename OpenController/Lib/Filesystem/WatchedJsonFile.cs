@@ -6,17 +6,13 @@ using Serilog;
 
 namespace OpenWorkEngine.OpenController.Lib.Filesystem {
   public abstract class WatchedJsonFile<TJson> : IDisposable {
-    public TJson? Data { get; protected set; }
-
-    public ILogger Log { get; }
-
-    private readonly FileSystemWatcher _watcher;
+    private const string DefaultContents = "{}";
 
     private readonly string _path;
 
-    private const string DefaultContents = "{}";
+    private readonly FileSystemWatcher _watcher;
 
-    private string? _lastContents = null;
+    private string? _lastContents;
 
     public WatchedJsonFile(ILogger logger, string path) {
       _path = path;
@@ -25,7 +21,7 @@ namespace OpenWorkEngine.OpenController.Lib.Filesystem {
       _watcher = new FileSystemWatcher {
         Path = Path.GetDirectoryName(path) ?? throw new InvalidOperationException(),
         Filter = Path.GetFileName(path),
-        NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite,
+        NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
       };
 
       // Add event handlers.
@@ -37,6 +33,14 @@ namespace OpenWorkEngine.OpenController.Lib.Filesystem {
       _watcher.EnableRaisingEvents = true;
 
       Reload();
+    }
+
+    public TJson? Data { get; protected set; }
+
+    public ILogger Log { get; }
+
+    public void Dispose() {
+      _watcher.Dispose();
     }
 
     public void Save() {
@@ -67,9 +71,7 @@ namespace OpenWorkEngine.OpenController.Lib.Filesystem {
         return;
       }
 
-      if (_lastContents != null && contents.Equals(_lastContents)) {
-        return;
-      }
+      if (_lastContents != null && contents.Equals(_lastContents)) return;
 
       _lastContents = contents;
       OnChanged(data);
@@ -77,10 +79,6 @@ namespace OpenWorkEngine.OpenController.Lib.Filesystem {
 
     private void OnChanged(object source, FileSystemEventArgs e) {
       Reload();
-    }
-
-    public void Dispose() {
-      _watcher.Dispose();
     }
 
     public override string ToString() => $"{_path} [{_lastContents?.Length ?? -1}]";

@@ -5,6 +5,10 @@ namespace OpenWorkEngine.OpenController.Ports.Models {
   public class PortOptions : ISerialPortOptions {
     public static int DefaultReadTimeoutMs = 100;
 
+    private readonly SerialPort _serialPort;
+
+    public PortOptions(SerialPort port) => _serialPort = port;
+
     public int BaudRate => _serialPort.BaudRate;
 
     public Parity? Parity => _serialPort.Parity;
@@ -33,12 +37,6 @@ namespace OpenWorkEngine.OpenController.Ports.Models {
       internal set {
         if (value != null) _serialPort.WriteTimeout = value.Value;
       }
-    }
-
-    private readonly SerialPort _serialPort;
-
-    public PortOptions(SerialPort port) {
-      _serialPort = port;
     }
   }
 }

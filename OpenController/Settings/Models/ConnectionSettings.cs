@@ -10,26 +10,23 @@ using OpenWorkEngine.OpenController.Workspaces.Models;
 namespace OpenWorkEngine.OpenController.Settings.Models {
   [AuthorizeOpenControllerUser]
   public class ConnectionSettings : IMachineConnectionSettings, ILoadSettingsObject {
-    [JsonProperty("port")]
-    public string PortName { get; set; } = default!;
+    [JsonProperty("manufacturer")] public string? Manufacturer { get; set; }
 
-    public string? MachineProfileId { get; internal set; }
-
-    public IMachineFirmwareRequirement GetFirmwareRequirement() => Firmware;
-
-    [JsonProperty("manufacturer")]
-    public string? Manufacturer { get; set; }
-
-    [JsonProperty("firmware")]
-    public MachineFirmwareSettings Firmware { get; set; } = new();
+    [JsonProperty("firmware")] public MachineFirmwareSettings Firmware { get; set; } = new();
 
     public void LoadSettings(JObject obj) {
       JsonConvert.PopulateObject(JsonConvert.SerializeObject(obj), this);
     }
 
-    public ISerialPortOptions ToSerialPortOptions() => new SerialPortOptions() {
+    [JsonProperty("port")] public string PortName { get; set; } = default!;
+
+    public string? MachineProfileId { get; internal set; }
+
+    public IMachineFirmwareRequirement GetFirmwareRequirement() => Firmware;
+
+    public ISerialPortOptions ToSerialPortOptions() => new SerialPortOptions {
       BaudRate = Firmware.BaudRateValue,
-      RtsEnable = Firmware.Rtscts,
+      RtsEnable = Firmware.Rtscts
     };
   }
 }

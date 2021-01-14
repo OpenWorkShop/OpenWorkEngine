@@ -1,17 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using HotChocolate;
-using HotChocolate.Subscriptions;
 using HotChocolate.Types;
 using OpenWorkEngine.OpenController.Controllers.Services;
-using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.Lib.Graphql;
 using OpenWorkEngine.OpenController.Ports.Enums;
 using OpenWorkEngine.OpenController.Ports.Models;
-using OpenWorkEngine.OpenController.Ports.Services;
 
 namespace OpenWorkEngine.OpenController.Ports.Graph {
   [ExtendObjectType(Name = OpenControllerSchema.Subscription)]

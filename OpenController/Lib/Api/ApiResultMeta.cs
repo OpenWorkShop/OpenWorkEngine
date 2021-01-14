@@ -7,6 +7,6 @@ namespace OpenWorkEngine.OpenController.Lib.Api {
     public const string OperationNameKey = "operationName";
 
     public static ApiResultMeta ForRedirectUrl(string? rUrl) =>
-      rUrl != null ? new ApiResultMeta() {[RedirectUrlKey] = rUrl} : new ApiResultMeta();
+      rUrl != null ? new ApiResultMeta {[RedirectUrlKey] = rUrl} : new ApiResultMeta();
   }
 }

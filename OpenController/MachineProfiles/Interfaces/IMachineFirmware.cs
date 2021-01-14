@@ -1,5 +1,3 @@
-using OpenWorkEngine.OpenController.Lib;
-using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 using OpenWorkEngine.OpenController.Machines.Interfaces;
 
 namespace OpenWorkEngine.OpenController.MachineProfiles.Interfaces {

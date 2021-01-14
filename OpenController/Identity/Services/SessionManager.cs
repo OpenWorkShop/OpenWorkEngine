@@ -6,13 +6,15 @@ using Serilog;
 namespace OpenWorkEngine.OpenController.Identity.Services {
   // Global singleton DI class for in-memory session management.
   public class SessionManager {
+    public SessionManager(ILogger logger) => Log = logger.ForContext(typeof(SessionManager));
+
     public ILogger Log { get; }
 
-    public ConcurrentDictionary<string, OpenControllerSession> Sessions { get; } = new ();
+    public ConcurrentDictionary<string, OpenControllerSession> Sessions { get; } = new();
 
     public OpenControllerSession LoadSession(string token, OpenControllerUser user, params string[] roles) {
-      OpenControllerSession session = Sessions.AddOrUpdate(token, (s) => {
-        OpenControllerSession newSession = new OpenControllerSession() {Token = s, User = user, Roles = roles};
+      OpenControllerSession session = Sessions.AddOrUpdate(token, s => {
+        OpenControllerSession newSession = new() {Token = s, User = user, Roles = roles};
         Log.Debug("[SESSION] create: {session}", newSession.ToString());
         return newSession;
       }, (s, existingSession) => {
@@ -27,10 +29,6 @@ namespace OpenWorkEngine.OpenController.Identity.Services {
         throw new ArgumentException("Token mismatch: invalid user.");
       }
       return session;
-    }
-
-    public SessionManager(ILogger logger) {
-      Log = logger.ForContext(typeof(SessionManager));
     }
   }
 }

@@ -1,12 +1,16 @@
 using System.Threading.Tasks;
 using OpenWorkEngine.OpenController.Controllers.Services;
-using OpenWorkEngine.OpenController.Controllers.Utils;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Ports.Models;
 
 namespace OpenWorkEngine.OpenController.Controllers.Grbl {
   public class GrblController : Controller {
+    public GrblController(ControllerManager controllerManager, ConnectedPort connection) : base(controllerManager, connection) {
+      Parsers.AddGrblParsers();
+      Commander.AddGrblCommands();
+    }
+
     public override MachineControllerType ControllerType => MachineControllerType.Grbl;
 
     protected override async Task RunStartupCommands() {
@@ -14,14 +18,6 @@ namespace OpenWorkEngine.OpenController.Controllers.Grbl {
       await Commander.Command(MachineCommandType.GetFirmware);
     }
 
-    protected override Task ParseLine(string line) {
-      return Task.CompletedTask;
-    }
-
-    public GrblController(ControllerManager controllerManager, ConnectedPort connection) : base(controllerManager, connection) {
-      Parsers.AddGrblParsers();
-      Commander.AddGrblCommands();
-    }
+    protected override Task ParseLine(string line) => Task.CompletedTask;
   }
 }
-

@@ -1,6 +1,6 @@
 namespace OpenWorkEngine.OpenController.Lib.Filesystem {
   /// <summary>
-  /// Mimics the "File" object type in Javascript.
+  ///   Mimics the "File" object type in Javascript.
   /// </summary>
   public interface IClientSelectedFile {
     public string Name { get; }

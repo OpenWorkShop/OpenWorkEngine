@@ -1,4 +1,4 @@
-import {UnitType} from './types';
+import {UnitType} from '../../open-controller/graphql';
 
 export const inchesMillimetersConversion = 25.4;
 

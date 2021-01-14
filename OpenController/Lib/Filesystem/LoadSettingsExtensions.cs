@@ -7,19 +7,17 @@ using Serilog;
 namespace OpenWorkEngine.OpenController.Lib.Filesystem {
   public static class LoadSettingsExtensions {
     public static List<TSetting> LoadArray<TSetting>(JObject obj, string key)
-      where TSetting : ILoadSettingsObject, new()
-    {
+      where TSetting : ILoadSettingsObject, new() {
       if (!(obj[key] is JArray arr)) return new List<TSetting>();
 
       List<TSetting> ret = new();
-      foreach (JToken t in arr) {
+      foreach (JToken t in arr)
         try {
           ret.Add(Build<TSetting>(t));
         } catch (Exception e) {
           Log.Error(e, "Failed to load array item {object}",
             JsonConvert.SerializeObject(t, Formatting.Indented));
         }
-      }
       return ret;
     }
 
@@ -29,31 +27,25 @@ namespace OpenWorkEngine.OpenController.Lib.Filesystem {
       List<TSetting> ret = new();
       if (builder == null) builder = (k, v) => Build<TSetting>(v);
 
-      if (obj[key] is JObject o) {
-        // legacy story as a dictionary
-        foreach (KeyValuePair<string, JToken?> kvp in o) {
+      if (obj[key] is JObject o) // legacy story as a dictionary
+        foreach (KeyValuePair<string, JToken?> kvp in o)
           try {
             ret.Add(builder(kvp.Key, kvp.Value));
           } catch (Exception e) {
             Log.Error(e, "Failed to load dictionary {key} from {object}", kvp.Key,
               JsonConvert.SerializeObject(kvp.Value, Formatting.Indented));
           }
-        }
-      }
-      if (obj[key] is JArray arr) {
-        ret = LoadArray<TSetting>(obj, key);
-      }
+      if (obj[key] is JArray arr) ret = LoadArray<TSetting>(obj, key);
 
       return ret;
     }
 
     public static TSetting Build<TSetting>(JToken? obj) where TSetting : ILoadSettingsObject, new() {
-      TSetting s = new ();
-      if (obj is JObject o) {
+      TSetting s = new();
+      if (obj is JObject o)
         s.LoadSettings(o);
-      } else {
+      else
         throw new ArgumentException("Invalid setting object");
-      }
       return s;
     }
 

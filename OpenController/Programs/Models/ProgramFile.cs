@@ -8,6 +8,6 @@ namespace OpenWorkEngine.OpenController.Programs.Models {
 
     public ProgramSyntax Syntax { get; set; } = ProgramSyntax.Gcode;
 
-    public List<ProgramInstruction> Instructions { get; set; } = new List<ProgramInstruction>();
+    public List<ProgramInstruction> Instructions { get; set; } = new();
   }
 }

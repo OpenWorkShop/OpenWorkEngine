@@ -1,16 +1,11 @@
 using System.Threading.Tasks;
 using HotChocolate;
-using HotChocolate.Subscriptions;
 using HotChocolate.Types;
 using OpenWorkEngine.OpenController.Controllers.Services;
 using OpenWorkEngine.OpenController.Lib.Graphql;
-using OpenWorkEngine.OpenController.MachineProfiles.Enums;
-using OpenWorkEngine.OpenController.Machines.Graph;
 using OpenWorkEngine.OpenController.Machines.Messages;
-using OpenWorkEngine.OpenController.Ports.Extensions;
 using OpenWorkEngine.OpenController.Ports.Messages;
 using OpenWorkEngine.OpenController.Ports.Models;
-using OpenWorkEngine.OpenController.Ports.Services;
 
 namespace OpenWorkEngine.OpenController.Ports.Graph {
   [ExtendObjectType(Name = OpenControllerSchema.Mutation)]

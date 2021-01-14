@@ -7,9 +7,8 @@ namespace OpenWorkEngine.OpenController.Settings.Graph {
     public override void OnConfigure(
       IDescriptorContext context,
       IObjectFieldDescriptor descriptor,
-      MemberInfo member)
-    {
-      descriptor.Use<Settings.Models.OpenControllerSettings>();
+      MemberInfo member) {
+      descriptor.Use<Models.OpenControllerSettings>();
     }
   }
 }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using OpenWorkEngine.OpenController.Controllers.Exceptions;
 using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.Lib.Observables;
+using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Ports.Enums;
 using OpenWorkEngine.OpenController.Ports.Models;
 using OpenWorkEngine.OpenController.Ports.Services;
@@ -12,27 +13,58 @@ using Serilog;
 
 namespace OpenWorkEngine.OpenController.Workspaces.Models {
   /// <summary>
-  /// In-memory representation of a single workspace. Lives as long as the workspace itself exists.
-  /// Maintains subscriptions for
+  ///   In-memory representation of a single workspace. Lives as long as the workspace itself exists.
+  ///   Maintains subscriptions for
   /// </summary>
   public class Workspace : ITopicStateMessage<WorkspaceState>, IObserver<SystemPort>, IDisposable {
-    public string Id => Settings.Id;
+    //
+    // Interfaces
+    //
 
-    public string TopicId => Id;
+    private IDisposable? _portListSubscription;
+
+    public Workspace(WorkspaceManager mgr, WorkspaceSettings settings) {
+      Log = mgr.Log.ForContext("WorkspaceSettings", Settings).ForContext(GetType());
+      Manager = mgr;
+      Settings = settings;
+
+      SetPortByName(Settings.Connection.PortName);
+    }
+
+    public string Id => Settings.Id;
 
     public string PortName => Settings.Connection.PortName;
 
     public SystemPort? Port { get; private set; }
 
-    public AlertError? Error { get; set; }
-
-    public WorkspaceState State { get; set; } = WorkspaceState.Closed;
-
     public WorkspaceSettings Settings { get; internal set; }
 
     private WorkspaceManager Manager { get; }
 
+    public UnitType Units => GetUnits();
+
     private ILogger Log { get; }
+
+    public void Dispose() {
+      State = WorkspaceState.Closed;
+      SetPortByName(null);
+    }
+
+    public void OnCompleted() { }
+    public void OnError(Exception error) { }
+    public void OnNext(SystemPort value) => UpdatePort(value);
+
+    public string TopicId => Id;
+
+    public AlertError? Error { get; set; }
+
+    public WorkspaceState State { get; set; } = WorkspaceState.Closed;
+
+    private UnitType GetUnits() {
+      UnitType def = Settings.PreferImperial ? UnitType.Imperial : UnitType.Metric;
+      UnitType movementUnits = Port?.Connection?.Machine.Configuration.Modals.Units ?? def;
+      return movementUnits == UnitType.Imperial ? UnitType.Imperial : UnitType.Metric;
+    }
 
     internal async Task<Workspace> Open() {
       if (State >= WorkspaceState.Active) {
@@ -90,12 +122,13 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
     // Respond to ports appearing and disappearing by keeping the SystemPort up to date.
     private void UpdatePort(SystemPort? port) {
       Log.Debug("[WORKSPACE] update port {port} on {workspace}", port?.ToString(), ToString());
-      if (port != null && !port.PortName.Equals(PortName)) return;
       bool hadPort = Port != null;
       bool hasPort = port != null;
       if (hadPort == hasPort && Port == port) {
-        if (port != null) UpdatePortState(port);
-        else Manager.EmitState(this, WorkspaceState.Disconnected);
+        if (port != null)
+          UpdatePortState(port);
+        else
+          Manager.EmitState(this, WorkspaceState.Disconnected);
         return;
       }
       Port = port;
@@ -103,18 +136,8 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
       Manager.EmitState(this, hasPort ? WorkspaceState.Closed : WorkspaceState.Disconnected);
     }
 
-    public Workspace(WorkspaceManager mgr, WorkspaceSettings settings) {
-      Log = mgr.Log.ForContext("WorkspaceSettings", Settings).ForContext(GetType());
-      Manager = mgr;
-      Settings = settings;
-
-      SetPortByName(Settings.Connection.PortName);
-    }
-
     public async Task ChangePort(string portName) {
-      if (State > WorkspaceState.Closed) {
-        await Close();
-      }
+      if (State > WorkspaceState.Closed) await Close();
       Settings.Connection.PortName = portName;
       SetPortByName(portName, true);
       // Enforce state change propagation.
@@ -129,11 +152,10 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
       _portListSubscription = null;
 
       if (portName != null) {
-        if (ports.Map.TryGetValue(portName, out port)) {
+        if (ports.Map.TryGetValue(portName, out port))
           _portListSubscription = ports
                                  .GetSubscriptionTopic(PortTopic.State)
                                  .SubscribeToTopicId(portName, this);
-        }
       } else if (requirePort) {
         throw new ArgumentException($"Cannot change Workspace to use missing port: {portName}");
       }
@@ -142,20 +164,6 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
       return port;
     }
 
-    public override string ToString() => $"[{State}] /workspaces/{Id}:{Port?.PortName}";
-
-    //
-    // Interfaces
-    //
-
-    private IDisposable? _portListSubscription;
-    public void OnCompleted() { }
-    public void OnError(Exception error) { }
-    public void OnNext(SystemPort value) => UpdatePort(value);
-
-    public void Dispose() {
-      State = WorkspaceState.Closed;
-      SetPortByName(null);
-    }
+    public override string ToString() => $"{Settings.Name} [{State}] /workspaces/{Id}:{Port?.PortName}";
   }
 }

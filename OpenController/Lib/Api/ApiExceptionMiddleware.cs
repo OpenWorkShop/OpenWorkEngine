@@ -19,8 +19,8 @@ namespace OpenWorkEngine.OpenController.Lib.Api {
       Exception? ex = http.Features.Get<IExceptionHandlerFeature>()?.Error;
       if (ex == null) return Task.CompletedTask;
 
-      ApiResultErrors errors = new (ApiResultError.BuildExceptionError(ex));
-      ApiResponse res = new (null, errors, http.BuildResultMeta<ApiResultMeta>());
+      ApiResultErrors errors = new(ApiResultError.BuildExceptionError(ex));
+      ApiResponse res = new(null, errors, http.BuildResultMeta<ApiResultMeta>());
       Dictionary<string, object> value = res.ToDictionaryValue();
       return ApiResultExecutor.Write(value, http, res.GetHttpStatusCode());
     }

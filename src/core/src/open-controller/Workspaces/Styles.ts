@@ -1,13 +1,104 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
+export const toolBarSize = 44;
+export const workBarHeight = 40;
+export const toolBarHeight = 44;
+const tabSize = 44;
+
+const maxWidth = 320;
+
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
+    padding: theme.spacing(2),
+    paddingTop: theme.spacing(2),
+    marginTop: 80,
+  },
+  topBar: {
+    borderBottomWidth: 1,
+    borderBottomColor: theme.palette.divider,
+    borderBottomStyle: 'solid',
+    backgroundColor: theme.palette.background.paper,
+  },
+  warningBar: {
+    backgroundColor: theme.palette.error.dark,
+  },
+  errorBar: {
+    backgroundColor: theme.palette.warning.dark,
+  },
+  bottomBar: {
+    padding: 8,
+    zIndex: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+  },
+  formControl: {
+    minWidth: 120,
+    width: '100%',
+    margin: theme.spacing(1),
+  },
+  toolBarPaper: {
+    // display: 'flex',
+    alignItems: 'center',
+    width: '100%',
+  },
+  controlBar: {
+    // left: theme.spacing(1),
+    padding: theme.spacing(1),
+    width: '100%',
+    height: toolBarHeight,
+    backgroundColor: theme.palette.background.paper,
+  },
+  controlBarCenterFab: {
+    position: 'relative',
+    bottom: 8,
+  },
+  toolBar: {
+    // height: controlBarHeight,
+    // position: 'fixed',
+    padding: theme.spacing(0),
+    // margin: theme.spacing(2),
+    position: 'fixed',
+    // bottom: 0,
+    right: theme.spacing(1),
+  },
+  toolBarSide: {
+    top: 168,
+    maxWidth: maxWidth, // Make space for right column, but keep ToolPane the same size.
+  },
+  toolBarBottom: {
+    bottom: theme.spacing(1),
+    maxWidth: maxWidth,
+  },
+  toolPaper: {
+    padding: theme.spacing(0),
+    maxHeight: '50vh',
+    // maxWidth: maxWidth * 10 / 12,
+    // display: 'flex',
+  },
+  tabs: {
+    width: '100%',
+  },
+  tabSide: {
+    padding: 0,
+    width: '100%',
+    height: toolBarSize,
+  },
+  tabBottom: {
+    maxHeight: tabSize,
+    minHeight: tabSize,
+    width: '100%',
+  },
+
+  visualizerWrapper: {
+    position: 'relative',
+    bottom: toolBarHeight + 8 * 2,
+  },
+  visualizer: {
+    height: `calc(100vh - ${workBarHeight + Number(theme.mixins.toolbar.height)}px)`,
   },
   dialog: {
     padding: 0,
-  },
-  formControl: {
-    width: '100%',
   },
   formSpacer: {
     width: '100%',
@@ -22,9 +113,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: 48,
     marginRight: theme.spacing(1),
   },
-  paper: {
-    padding: theme.spacing(1),
-  },
+
   titleBar: {
     backgroundColor: theme.palette.background.paper,
     borderBottomWidth: 1,

@@ -1,7 +1,7 @@
 namespace OpenWorkEngine.OpenController.Machines.Enums {
   public enum MachineTopic {
-    State,
+    Status,
     Configuration,
-    Setting,
+    Setting
   }
 }

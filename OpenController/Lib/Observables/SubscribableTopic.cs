@@ -5,11 +5,13 @@ using Serilog;
 
 namespace OpenWorkEngine.OpenController.Lib.Observables {
   /// <summary>
-  /// A single broadcastable event (topic), like a state change.
+  ///   A single broadcastable event (topic), like a state change.
   /// </summary>
   /// <typeparam name="T"></typeparam>
   public class SubscribableTopic<T> : IObservable<T> where T : ITopicMessage {
     private readonly List<IObserver<T>> _observers = new();
+
+    public IDisposable Subscribe(IObserver<T> observer) => new TopicSubscription<T>(_observers, observer);
 
     public void Emit(T obj) {
       Log.Debug("[EMIT] {type} to {count} observers: {obj}",
@@ -19,7 +21,5 @@ namespace OpenWorkEngine.OpenController.Lib.Observables {
         obs.OnNext(obj);
       }
     }
-
-    public IDisposable Subscribe(IObserver<T> observer) => new TopicSubscription<T>(_observers, observer);
   }
 }

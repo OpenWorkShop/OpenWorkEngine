@@ -1,7 +1,5 @@
-using HotChocolate.Utilities;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 using OpenWorkEngine.OpenController.Machines.Interfaces;
-using OpenWorkEngine.OpenController.Machines.Models;
 
 namespace OpenWorkEngine.OpenController.Ports.Messages {
   public class FirmwareRequirement : IMachineFirmwareRequirement {
@@ -20,4 +18,3 @@ namespace OpenWorkEngine.OpenController.Ports.Messages {
     public string? HelpUrl { get; set; }
   }
 }
-

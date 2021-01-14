@@ -4,7 +4,6 @@ using HotChocolate.Types;
 using OpenWorkEngine.OpenController.Controllers.Services;
 using OpenWorkEngine.OpenController.Lib.Graphql;
 using OpenWorkEngine.OpenController.Ports.Models;
-using OpenWorkEngine.OpenController.Ports.Services;
 
 namespace OpenWorkEngine.OpenController.Ports.Graph {
   [ExtendObjectType(Name = OpenControllerSchema.Query)]

@@ -5,6 +5,6 @@ namespace OpenWorkEngine.OpenController.MachineProfiles.Enums {
     Smoothie,
     Maslow,
     Grbl,
-    Marlin,
+    Marlin
   }
 }

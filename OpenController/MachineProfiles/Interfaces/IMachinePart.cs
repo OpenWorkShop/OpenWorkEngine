@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 
 namespace OpenWorkEngine.OpenController.MachineProfiles.Interfaces {
@@ -19,8 +18,7 @@ namespace OpenWorkEngine.OpenController.MachineProfiles.Interfaces {
   }
 
   public interface IMachinePart<TSetting, TSpec> : IMachinePart
-    where TSetting : IMachineSetting where TSpec : IMachineSpec
-  {
+    where TSetting : IMachineSetting where TSpec : IMachineSpec {
     public List<TSetting> Settings { get; }
 
     public List<TSpec> Specs { get; }

@@ -6,9 +6,8 @@ using Serilog;
 
 namespace OpenWorkEngine.OpenController.Lib.Observables {
   public abstract class SubscriptionManager<TType, TMsg> where TType : Enum where TMsg : ITopicMessage {
-    public abstract ILogger Log { get; }
-
     private readonly ConcurrentDictionary<string, SubscriptionTopic<TMsg>> _topics = new();
+    public abstract ILogger Log { get; }
 
     public SubscriptionTopic<TMsg> GetSubscriptionTopic(TType msgType) =>
       _topics.GetOrAdd(msgType.ToString(), new SubscriptionTopic<TMsg>());

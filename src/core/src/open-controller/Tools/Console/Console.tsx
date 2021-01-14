@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import useStyles from './Styles';
 import {ToolBase} from '../types';
 import useLogger from '../../../utils/logging/UseLogger';
-import {useController} from '../../Controllers';
+//import {useController} from '../../Controllers';
 // import { FitAddon } from 'xterm-addon-fit';
 // import { SearchAddon } from 'xterm-addon-search';
 // import { XTerm } from 'xterm-for-react';
@@ -11,9 +11,9 @@ import {useController} from '../../Controllers';
 const Console: ToolBase = (props) => {
   const log = useLogger(Console);
   const classes = useStyles();
-  const controller = useController();
+  //const controller = useController();
 
-  log.debug('controller', controller.machine.state);
+  //  log.debug('controller', controller.machine.status);
   // const xtermRef = React.useRef(null);
   // const fitAddon = new FitAddon();
   // const searchAddon = new SearchAddon();

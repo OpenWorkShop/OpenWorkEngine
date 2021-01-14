@@ -10,37 +10,28 @@ using Xunit.Abstractions;
 
 namespace OpenWorkEngine.OpenControllerTests.Settings {
   /// <summary>
-  /// CNCjs and early Makerverse file format legacy support.
+  ///   CNCjs and early Makerverse file format legacy support.
   /// </summary>
   public class MakerverseSettingsFileTests : TestBase {
     public MakerverseSettingsFileTests(ITestOutputHelper output) : base(output) { }
 
-    private bool ValidateCommand(CommandSettings c) {
-      return !string.IsNullOrWhiteSpace(c.Title) && !string.IsNullOrWhiteSpace(c.Id) &&
-        !string.IsNullOrWhiteSpace(c.Commands);
-    }
+    private bool ValidateCommand(CommandSettings c) =>
+      !string.IsNullOrWhiteSpace(c.Title) && !string.IsNullOrWhiteSpace(c.Id) &&
+      !string.IsNullOrWhiteSpace(c.Commands);
 
-    private bool ValidateEvent(EventSettings e) {
-      return !string.IsNullOrWhiteSpace(e.Event) && !string.IsNullOrWhiteSpace(e.Trigger) &&
-        !string.IsNullOrWhiteSpace(e.Id) && !string.IsNullOrWhiteSpace(e.Commands);
-    }
+    private bool ValidateEvent(EventSettings e) =>
+      !string.IsNullOrWhiteSpace(e.Event) && !string.IsNullOrWhiteSpace(e.Trigger) &&
+      !string.IsNullOrWhiteSpace(e.Id) && !string.IsNullOrWhiteSpace(e.Commands);
 
-    private bool ValidateFirmware(MachineFirmwareSettings fw) {
-      return fw.BaudRateValue > 2400 && fw.ControllerType > MachineControllerType.TinyG;
-    }
+    private bool ValidateFirmware(MachineFirmwareSettings fw) => fw.BaudRateValue > 2400 && fw.ControllerType > MachineControllerType.TinyG;
 
-    private bool ValidateConnection(ConnectionSettings c) {
-      return !string.IsNullOrEmpty(c.PortName) && ValidateFirmware(c.Firmware);
-    }
+    private bool ValidateConnection(ConnectionSettings c) => !string.IsNullOrEmpty(c.PortName) && ValidateFirmware(c.Firmware);
 
-    private bool ValidateWorkspace(WorkspaceSettings ws) {
-      return !string.IsNullOrWhiteSpace(ws.Id) && !string.IsNullOrWhiteSpace(ws.Name) &&
-        !string.IsNullOrWhiteSpace(ws.Path) && ValidateConnection(ws.Connection);
-    }
+    private bool ValidateWorkspace(WorkspaceSettings ws) =>
+      !string.IsNullOrWhiteSpace(ws.Id) && !string.IsNullOrWhiteSpace(ws.Name) &&
+      !string.IsNullOrWhiteSpace(ws.Path) && ValidateConnection(ws.Connection);
 
-    private bool ValidateUser(OpenControllerUser u) {
-      return !string.IsNullOrWhiteSpace(u.Username) && u.Tokens.Count > 0;
-    }
+    private bool ValidateUser(OpenControllerUser u) => !string.IsNullOrWhiteSpace(u.Username) && u.Tokens.Count > 0;
 
     [Theory]
     [JsonFileData("makerverse112.json")]

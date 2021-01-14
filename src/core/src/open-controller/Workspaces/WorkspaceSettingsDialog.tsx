@@ -5,9 +5,9 @@ import {IHaveWorkspace, IWorkspaceSettingsTab} from './types';
 import {useTrans} from '../Context';
 import {TabContext, TabList, TabPanel } from '@material-ui/lab';
 import useLogger from '../../utils/logging/UseLogger';
-import AxesTab from './AxesTab';
-import WorkspaceTab from './WorkspaceTab';
-import PartsTab from './PartsTab';
+import AxesTab from './Settings/AxesTab';
+import WorkspaceTab from './Settings/WorkspaceTab';
+import PartsTab from './Settings/PartsTab';
 
 type Props = IHaveWorkspace & {
   open: boolean;

@@ -3,10 +3,6 @@ using System.IO;
 
 namespace OpenWorkEngine.OpenController.Lib {
   public class AlertError {
-    public string Name { get; set; }
-
-    public string Message { get; set; }
-
     public AlertError(string name, string message) {
       Name = name;
       Message = message;
@@ -16,6 +12,10 @@ namespace OpenWorkEngine.OpenController.Lib {
       Name = GetExceptionErrorName(e);
       Message = e.Message;
     }
+
+    public string Name { get; set; }
+
+    public string Message { get; set; }
 
     private string GetExceptionErrorName(Exception e) {
       Type t = e.GetType();
@@ -28,7 +28,6 @@ namespace OpenWorkEngine.OpenController.Lib {
 
       // System.UnauthorizedAccessException: Access to the port '/dev/tty.AirPods-WirelessiAP' is denied.
       //   ---> System.IO.IOException: Resource busy
-
     }
   }
 }

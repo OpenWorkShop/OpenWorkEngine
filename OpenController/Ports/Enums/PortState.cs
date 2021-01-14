@@ -7,6 +7,6 @@ namespace OpenWorkEngine.OpenController.Ports.Enums {
     Startup,
     HasData,
     HasFirmware,
-    Active,
+    Active
   }
 }

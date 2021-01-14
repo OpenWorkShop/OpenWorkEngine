@@ -11,56 +11,39 @@ using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 using OpenWorkEngine.OpenController.Settings.Models;
 
 namespace OpenWorkEngine.OpenController.Workspaces.Models {
-  public class WorkspaceConfigType : ObjectType<WorkspaceSettings> {
-
-  }
+  public class WorkspaceConfigType : ObjectType<WorkspaceSettings> { }
 
   [Authorize]
   public class WorkspaceSettings : ILoadSettingsObject {
-    [JsonProperty("id")]
-    public string Id { get; set; } = default!;
+    [JsonProperty("id")] public string Id { get; set; } = default!;
 
-    [JsonProperty("name")]
-    public string Name { get; set; } = default!;
+    [JsonProperty("name")] public string Name { get; set; } = default!;
 
-    [JsonProperty("onboarded")]
-    public bool Onboarded { get; set; }
+    [JsonProperty("onboarded")] public bool Onboarded { get; set; }
 
-    [JsonProperty("machineProfileId")]
-    public string? MachineProfileId { get; set; }
+    [JsonProperty("machineProfileId")] public string? MachineProfileId { get; set; }
 
-    [JsonProperty("path")]
-    public string Path { get; set; } = default!;
+    [JsonProperty("path")] public string Path { get; set; } = default!;
 
-    [JsonProperty("color")]
-    public string? Color { get; set; }
+    [JsonProperty("color")] public string? Color { get; set; }
 
-    [JsonProperty("bkColor")]
-    public string? BkColor { get; set; }
+    [JsonProperty("bkColor")] public string? BkColor { get; set; }
 
-    [JsonProperty("icon")]
-    public string? Icon { get; set; }
+    [JsonProperty("icon")] public string? Icon { get; set; }
 
-    [JsonProperty("autoReconnect")]
-    public bool AutoReconnect { get; set; }
+    [JsonProperty("autoReconnect")] public bool AutoReconnect { get; set; }
 
-    [JsonProperty("preferImperial")]
-    public bool PreferImperial { get; set; }
+    [JsonProperty("preferImperial")] public bool PreferImperial { get; set; }
 
-    [JsonProperty("connection")]
-    public ConnectionSettings Connection { get; set; } = new ();
+    [JsonProperty("connection")] public ConnectionSettings Connection { get; set; } = new();
 
-    [JsonProperty("features")]
-    public List<MachineFeatureSettings> Features { get; set; } = new();
+    [JsonProperty("features")] public List<MachineFeatureSettings> Features { get; set; } = new();
 
-    [JsonProperty("axes")]
-    public List<MachineAxisSettings> Axes { get; set; } = new();
+    [JsonProperty("axes")] public List<MachineAxisSettings> Axes { get; set; } = new();
 
-    [JsonProperty("commands")]
-    public List<MachineCommandSettings> Commands { get; set; } = new();
+    [JsonProperty("commands")] public List<MachineCommandSettings> Commands { get; set; } = new();
 
-    [JsonProperty("parts")]
-    public List<MachinePartSettings> Parts { get; set; } = new();
+    [JsonProperty("parts")] public List<MachinePartSettings> Parts { get; set; } = new();
 
     public void LoadSettings(JObject obj) {
       this.AssignScalarValue<string>(obj, "id", v => Id = v);
@@ -81,20 +64,14 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
         Connection.LoadSettings(fw);
         Connection.Firmware.LoadSettings(fw);
       }
-      if (obj["connection"] is JObject conn) {
-        Connection.LoadSettings(conn);
-      }
+      if (obj["connection"] is JObject conn) Connection.LoadSettings(conn);
       Connection.MachineProfileId = MachineProfileId;
 
       Features = LoadSettingsExtensions.LoadDictionary(obj, "features", (key, token) => {
-        if (!(token is JObject obj)) {
-          // Disabled = boolean in legacy.
-          return new MachineFeatureSettings() {Key = key ?? "", Disabled = true};
-        }
+        if (!(token is JObject obj)) // Disabled = boolean in legacy.
+          return new MachineFeatureSettings {Key = key ?? "", Disabled = true};
         MachineFeatureSettings ft = LoadSettingsExtensions.Build<MachineFeatureSettings>(token as JObject);
-        if (key != null) {
-          ft.Key = key;
-        }
+        if (key != null) ft.Key = key;
         return ft;
       });
       Axes = LoadSettingsExtensions.LoadDictionary(obj, "axes", (key, token) => {
@@ -109,8 +86,8 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
           cmd.Id = key ?? "";
           cmd.Name = key ?? "";
           IEnumerable<string> cmds = arr.Select(t => t as JValue)
-                                         .Select(v => v?.Value<string>())
-                                         .SelectNonNull();
+                                        .Select(v => v?.Value<string>())
+                                        .SelectNonNull();
           cmd.Value = string.Join('\n', cmds);
           return cmd;
         }

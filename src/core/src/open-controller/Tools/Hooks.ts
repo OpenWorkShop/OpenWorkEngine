@@ -1,5 +1,7 @@
-import {ITool, ToolBase} from './types';
+import {ITool, IToolGroup, ToolBase} from './types';
 import * as React from 'react';
+import ToolGroup from './ToolGroup';
+import IWorkspace from '../Workspaces';
 
 // Lives as its own function so that it might be statically generated or perhaps load remote tools (?)
 export function useTool(tool: ITool): React.LazyExoticComponent<ToolBase> | undefined {
@@ -10,4 +12,13 @@ export function useTool(tool: ITool): React.LazyExoticComponent<ToolBase> | unde
   if (p === 'Machine') return React.lazy(() => import('./Machine'));
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return React.lazy(() => require(`./${p}`));
+}
+
+export function getWorkspaceTools(workspaceId: string): IToolGroup[] {
+  return [
+    new ToolGroup('Plans', 'blueprint', 'Plans'),
+    new ToolGroup('Controls', 'control-pad', 'AxisJoggerPad'),
+    new ToolGroup('Machine', 'machine', 'Machine'),
+    new ToolGroup('Console', 'console', 'Console'),
+  ];
 }

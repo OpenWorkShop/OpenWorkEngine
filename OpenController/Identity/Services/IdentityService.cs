@@ -14,6 +14,11 @@ using Serilog;
 
 namespace OpenWorkEngine.OpenController.Identity.Services {
   public class IdentityService {
+    public IdentityService(OpenControllerContext context) {
+      Context = context;
+      Log = Context.Log.ForContext(typeof(IdentityService));
+    }
+
     private OpenControllerContext Context { get; }
 
     public ILogger Log { get; }
@@ -31,7 +36,7 @@ namespace OpenWorkEngine.OpenController.Identity.Services {
 
     private ClaimsPrincipal GetClaimsPrincipal(OpenControllerSession session) {
       Log.Debug("[ID] user {username}", session.User.Username);
-      ClaimsIdentity identity = new ();
+      ClaimsIdentity identity = new();
       identity.AddClaim(new Claim(ClaimTypes.Name, session.User.Username));
       return new GenericPrincipal(identity, session.Roles);
     }
@@ -47,16 +52,12 @@ namespace OpenWorkEngine.OpenController.Identity.Services {
       try {
         res = await client.GetAsync("/api/users/me");
       } catch (HttpRequestException ex) {
-        if (previouslyAuthenticatedUser != null) {
-          return ValidateAccess(previouslyAuthenticatedUser, token);
-        }
+        if (previouslyAuthenticatedUser != null) return ValidateAccess(previouslyAuthenticatedUser, token);
         Log.Error(ex, "[TOKEN] Cannot connect.");
       } catch (Exception e) {
         Log.Error(e, "[TOKEN] Unknown exception.");
       }
-      if (res == null) {
-        throw new UnauthorizedAccessException($"Gatekeeper unreachable");
-      }
+      if (res == null) throw new UnauthorizedAccessException("Gatekeeper unreachable");
       string body = await res.Content.ReadAsStringAsync();
       if (res.StatusCode != HttpStatusCode.OK) {
         Log.Error("[TOKEN] Invalid token handoff: {statusCode} {body}}", res.StatusCode, body);
@@ -65,18 +66,16 @@ namespace OpenWorkEngine.OpenController.Identity.Services {
       JObject response = JsonConvert.DeserializeObject<JObject>(body);
       if (response.ContainsKey("errors") && response["errors"] is JArray errs && errs.FirstOrDefault() is JObject err) {
         Log.Error("[TOKEN] Error from gatekeeper: {error}", err);
-        throw new UnauthorizedAccessException($"Gatekeeper error code.");
+        throw new UnauthorizedAccessException("Gatekeeper error code.");
       }
       if (!response.ContainsKey("data")) {
         Log.Error("[TOKEN] No data in body: {body}}", res.StatusCode, body);
-        throw new UnauthorizedAccessException($"Gatekeeper missing data.");
+        throw new UnauthorizedAccessException("Gatekeeper missing data.");
       }
 
       string userStr = JsonConvert.SerializeObject(response["data"]);
       OpenControllerUser user = JsonConvert.DeserializeObject<OpenControllerUser>(userStr);
-      if (string.IsNullOrWhiteSpace(user.Username)) {
-        throw new UnauthorizedAccessException($"User did not have a username: {userStr}");
-      }
+      if (string.IsNullOrWhiteSpace(user.Username)) throw new UnauthorizedAccessException($"User did not have a username: {userStr}");
 
       Log.Information("[TOKEN] Exchanged token for user: {user}", user.ToString());
 
@@ -124,11 +123,6 @@ namespace OpenWorkEngine.OpenController.Identity.Services {
       OpenControllerSession session = Context.Sessions.LoadSession(token, user, OpenControllerRoles.User);
       Log.Debug("[ID] returning session: {session}", session.ToString());
       return session;
-    }
-
-    public IdentityService(OpenControllerContext context) {
-      Context = context;
-      Log = Context.Log.ForContext(typeof(IdentityService));
     }
   }
 }

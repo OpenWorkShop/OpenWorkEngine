@@ -4,7 +4,7 @@ import useLogger from '../../utils/logging/UseLogger';
 import useStyles from './Styles';
 import {InchesMillimetersSelect} from '../../components/Units';
 import {useWorkspaceUnits} from './Hooks';
-import {UnitType} from '../../components/Units/types';
+import {UnitType} from '../graphql';
 
 type Props = IHaveWorkspace;
 

@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using HotChocolate.Execution;
 using HotChocolate.Subscriptions;
 using OpenWorkEngine.OpenController.Lib.Observables;
-using OpenWorkEngine.OpenController.Machines.Interfaces;
 
 namespace OpenWorkEngine.OpenController.Lib.Graphql {
   public static class TopicEventExtensions {
@@ -13,9 +12,7 @@ namespace OpenWorkEngine.OpenController.Lib.Graphql {
     public static async Task BroadcastTopic(this ITopicEventSender sender, ITopicMessage topicMessage, string? idBroadcast) {
       string typeName = topicMessage.GetType().Name;
       await sender.SendAsync(typeName, topicMessage);
-      if (idBroadcast != null) {
-        await sender.SendAsync($"{typeName}_{idBroadcast}", topicMessage);
-      }
+      if (idBroadcast != null) await sender.SendAsync($"{typeName}_{idBroadcast}", topicMessage);
     }
 
     public static ValueTask<ISourceStream<T>> SubscribeTopicAll<T>(
@@ -32,5 +29,4 @@ namespace OpenWorkEngine.OpenController.Lib.Graphql {
       return receiver.SubscribeAsync<string, T>($"{typeName}_{idBroadcast}", ct);
     }
   }
-
 }

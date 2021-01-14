@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using HotChocolate;
 using HotChocolate.Types;
 using OpenWorkEngine.OpenController.Programs.Models;

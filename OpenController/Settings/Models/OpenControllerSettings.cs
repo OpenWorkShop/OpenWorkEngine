@@ -10,31 +10,24 @@ using Serilog;
 namespace OpenWorkEngine.OpenController.Settings.Models {
   [AuthorizeOpenControllerUser]
   public class OpenControllerSettings : ILoadSettingsObject {
-    [JsonProperty("fileSystem")]
-    public FileSystemSettings FileSystem { get; set; } = new ();
+    [JsonProperty("fileSystem")] public FileSystemSettings FileSystem { get; set; } = new();
 
-    [JsonProperty("appUpdates")]
-    public AppUpdates AppUpdates { get; set; } = new ();
+    [JsonProperty("appUpdates")] public AppUpdates AppUpdates { get; set; } = new();
 
-    [JsonProperty("workspaces")]
-    public List<WorkspaceSettings> Workspaces { get; set; } = new ();
+    [JsonProperty("workspaces")] public List<WorkspaceSettings> Workspaces { get; set; } = new();
 
-    [JsonProperty("commands")]
-    public List<CommandSettings> Commands { get; set; } = new ();
+    [JsonProperty("commands")] public List<CommandSettings> Commands { get; set; } = new();
 
-    [JsonProperty("events")]
-    public List<EventSettings> Events { get; set; } = new ();
+    [JsonProperty("events")] public List<EventSettings> Events { get; set; } = new();
 
-    [JsonProperty("macros")]
-    public List<MacroSettings> Macros { get; set; } = new ();
+    [JsonProperty("macros")] public List<MacroSettings> Macros { get; set; } = new();
 
-    [JsonProperty("users")]
-    public List<OpenControllerUser> Users { get; set; } = new ();
+    [JsonProperty("users")] public List<OpenControllerUser> Users { get; set; } = new();
 
     [JsonProperty("hub")] public MakerHubSettings Hub { get; set; } = new();
 
     public void LoadSettings(JObject obj) {
-      if (obj["watchDirectory"] is JValue wd) FileSystem.ProgramDirectory = wd.Value<string>(); // Legacy.
+      if (obj["watchDirectory"] is JValue wd) FileSystem.ProgramDirectory = wd.Value<string>();          // Legacy.
       FileSystem.MountPoints = LoadSettingsExtensions.LoadArray<MountPointSettings>(obj, "mountPoints"); // Legacy.
       if (obj["fileSystem"] is JObject fs) FileSystem.LoadSettings(fs);
 

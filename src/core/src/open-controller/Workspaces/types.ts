@@ -2,19 +2,18 @@ import {
   AlertError,
   WorkspacePortConnectionFragment,
   WorkspaceFullSettingsFragment,
-  WorkspaceState
+  WorkspaceState, UnitType
 } from '../graphql';
 
 export interface IWorkspace {
   id: string;
   portName: string;
   state: WorkspaceState;
+  units: UnitType;
   error?: AlertError | null;
   settings: WorkspaceFullSettingsFragment;
   port?: WorkspacePortConnectionFragment | null;
 }
-
-export type Workspace = IWorkspace;
 
 export interface IHaveWorkspaceId {
   workspaceId: string;

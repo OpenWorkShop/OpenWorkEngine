@@ -18,36 +18,9 @@ using Serilog;
 
 namespace OpenWorkEngine.OpenController {
   public class OpenControllerContext {
-    public OpenControllerSettings Settings { get; }
-
-    public IWebHostEnvironment WebHostEnvironment { get; }
-
-    public SessionManager Sessions { get; }
-
-    public PortManager Ports { get; }
-
-    public ControllerManager Controllers { get; }
-
-    public WorkspaceManager Workspaces { get; }
-
-    public ProgramFileManager Programs { get; }
-
-    public string? Subdomain { get; }
-
-    internal ITopicEventSender Sender { get; }
-
-    public string OwsHost { get; }
-
-    public ILogger Log { get; }
-
-    private List<OpenControllerUser>? _enabledUsers;
-
-    public List<OpenControllerUser> EnabledUsers => _enabledUsers ??=
-      (Settings?.Users.Where(u => u.Enabled).ToList() ?? new List<OpenControllerUser>());
-
     private readonly ConfigFile _configFile;
 
-    public void SaveSettings() => _configFile.Save();
+    private List<OpenControllerUser>? _enabledUsers;
 
     public OpenControllerContext(
       IWebHostEnvironment env, ITopicEventSender sender, WorkspaceManager work,
@@ -74,8 +47,35 @@ namespace OpenWorkEngine.OpenController {
       }
     }
 
+    public OpenControllerSettings Settings { get; }
+
+    public IWebHostEnvironment WebHostEnvironment { get; }
+
+    public SessionManager Sessions { get; }
+
+    public PortManager Ports { get; }
+
+    public ControllerManager Controllers { get; }
+
+    public WorkspaceManager Workspaces { get; }
+
+    public ProgramFileManager Programs { get; }
+
+    public string? Subdomain { get; }
+
+    internal ITopicEventSender Sender { get; }
+
+    public string OwsHost { get; }
+
+    public ILogger Log { get; }
+
+    public List<OpenControllerUser> EnabledUsers => _enabledUsers ??=
+      Settings?.Users.Where(u => u.Enabled).ToList() ?? new List<OpenControllerUser>();
+
+    public void SaveSettings() => _configFile.Save();
+
     public HttpClient LoadOwsClient(string token) {
-      HttpClient client = new HttpClient();
+      HttpClient client = new();
       client.BaseAddress = new Uri(OwsHost);
       client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
       client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
