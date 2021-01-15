@@ -14,7 +14,6 @@ export { default as WorkspaceStatus } from './WorkspaceStatus';
 export { default as WorkspaceConnector } from './WorkspaceConnector';
 export { default as WorkspaceUnitSelect } from './WorkspaceUnitSelect';
 export { default as workspacesSlice } from './slice';
-export { default as MachineHealthBanner } from './ControlBar';
 
 type Props = IHaveWorkspace;
 

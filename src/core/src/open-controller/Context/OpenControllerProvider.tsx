@@ -1,7 +1,6 @@
-import _ from 'lodash';
 import useLogger from '../../utils/logging/UseLogger';
 import React, { FunctionComponent } from 'react';
-import {Redirect, Route, Switch, useLocation, Link } from 'react-router-dom';
+import {Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import {useOpenWorkShop } from '../../Hooks';
 import { BackendConnection } from '../../api';
 import {
@@ -107,7 +106,7 @@ const OpenControllerProvider: FunctionComponent<IProps> = (props) => {
   }
 
   // Set up the IMakerverse interface for the .Provider...
-  const makerverse: IOpenController = { deployment, ows, connection, session, t };
+  const makerverse: IOpenController = { deployment, ows, connection, settings, session, t };
 
   function onLoaded(session: OpenControllerSessionFragment, startup: StartupFragment) {
     log.debug('loaded', 'session', !!session, 'settings', !!startup);

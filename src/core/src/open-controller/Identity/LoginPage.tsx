@@ -24,7 +24,7 @@ const LoginPage: FunctionComponent = () => {
   const urlSecurity = useDocumentationUrl('/features/security');
   const classes = useStyles();
   const t = useTrans();
-  const [guest, setGuest] = React.useState<OpenControllerUser | undefined>(undefined);
+  const [guest] = React.useState<OpenControllerUser | undefined>(undefined);
   const [useCookies, setUseCookies] = React.useState<boolean>(false);
   const [dangerous, setDangerous] = React.useState<boolean>(false);
   const [authenticating, setAuthenticating] = React.useState<boolean>(false);

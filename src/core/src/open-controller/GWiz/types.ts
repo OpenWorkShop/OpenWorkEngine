@@ -1,5 +1,3 @@
-import {MachineAxisMap} from '../Machines';
-
 export enum ViewMode {
   Perspective,
   Plane,

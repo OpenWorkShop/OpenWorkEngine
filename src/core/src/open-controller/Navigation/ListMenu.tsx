@@ -17,22 +17,17 @@ import {PortStatusFragment} from '../graphql';
 import ListMenuItem from './ListMenuItem';
 import {useSystemPorts} from '../Ports';
 import {IWorkspace, WorkspaceStatus} from '../Workspaces/';
-import {useOpenController, useTrans} from '../Context';
+import {useTrans} from '../Context';
 import {useSelector} from 'react-redux';
 import {AppState} from '../redux';
 
-interface OwnProps {
-  isOpen: boolean;
-}
-
-type Props = OwnProps;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     toolbar: theme.mixins.toolbar,
   }),
 );
 
-const ListMenu: FunctionComponent<Props> = (props) => {
+const ListMenu: FunctionComponent = () => {
   const log = useLogger(ListMenu);
   const ports = useSystemPorts();
   const t = useTrans();
@@ -41,23 +36,27 @@ const ListMenu: FunctionComponent<Props> = (props) => {
   const allWorkspaces = useSelector<AppState, IWorkspace[]>(s => Object.values(s.workspaces.map));
   const workspaces: IWorkspace[] = _.sortBy(allWorkspaces, ws => ws.settings.name.toLowerCase());
   const showWorkspaces = allWorkspaces.length > 0;
-  const iconStyle = { width: 24, height: 24, marginLeft: -2 };
+  const iconStyle = { width: 24, height: 24 };
 
   function renderRouteItem(route: string, text: string, icon: IconProp, t2?: string) {
-    const i = <FontAwesomeIcon size='lg' style={iconStyle} icon={icon} />;
-    const st = t2 ? <React.Fragment>{t2}</React.Fragment> : undefined;
-    return <ListMenuItem to={route} title={text} icon={i} subcomponent={st} />;
+    return <ListMenuItem
+      to={route}
+      title={text}
+      drawIcon={(color) => <FontAwesomeIcon size='lg' style={iconStyle} icon={icon} color={color} />}
+      subcomponent={t2 ? <React.Fragment>{t2}</React.Fragment> : undefined}
+    />;
   }
 
+  log.verbose('draw');
+
   return (
-    <div>
+    <React.Fragment>
       <div className={classes.toolbar} />
       {showWorkspaces && <React.Fragment>
         <Divider />
-        <List>
+        <List component="nav">
           {workspaces.map((workspace) => {
             const route = `/workspaces/${workspace.id}`;
-            const icon = <OpenWorkShopIcon style={iconStyle} name={workspace.settings.icon ?? 'xyz'} />;
             const port = portList.length > 0 ?
               _.find(portList, p => p.portName === workspace.settings.connection.portName) : undefined;
 
@@ -65,20 +64,23 @@ const ListMenu: FunctionComponent<Props> = (props) => {
               key={workspace.id}
               to={route}
               title={workspace.settings.name}
-              icon={icon}
+              drawIcon={(color) => <OpenWorkShopIcon
+                style={{ ...iconStyle, color }}
+                name={workspace.settings.icon ?? 'xyz'}
+              />}
               subcomponent={<WorkspaceStatus workspaceId={workspace.id} port={port} />}
             />;
           })}
         </List>
         <Divider />
       </React.Fragment>}
-      <List>
+      <List >
         {renderRouteItem('/home', t('Projects'), faProjectDiagram, t('MakerHub'))}
         {renderRouteItem('/workspaces', t('Connect'), faUsb, t('Create a Workspace'))}
         {renderRouteItem('/settings', t('Settings'), faCogs, t('& Useful Information'))}
         {renderRouteItem('/docs', t('Documentation'), faQuestionCircle, t('& Support Requests'))}
       </List>
-    </div>
+    </React.Fragment>
   );
 };
 

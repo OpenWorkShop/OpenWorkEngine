@@ -4,8 +4,8 @@ import {ToolBase} from '../types';
 import useStyles from './Styles';
 import {ActiveState} from '../../graphql';
 
-const Machine: ToolBase = (props) => {
-  const { workspaceId } = props;
+const Machine: ToolBase = () => {
+  // const { workspaceId } = props;
   const classes = useStyles();
   const activityState: ActiveState = ActiveState.Alarm;
   //useWorkspaceController

@@ -4,7 +4,7 @@ type Props = {
  
 };
 
-const Terminal: React.FunctionComponent<Props> = (props) => {
+const Terminal: React.FunctionComponent<Props> = () => {
   return (
     <div>
     

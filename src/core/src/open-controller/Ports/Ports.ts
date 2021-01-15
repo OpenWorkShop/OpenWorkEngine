@@ -3,8 +3,9 @@ import {PortState, PortStatusFragment} from '../graphql';
 import {useTrans} from '../Context';
 import {faUsb} from '@fortawesome/free-brands-svg-icons';
 import {faExclamationCircle, faPlug} from '@fortawesome/free-solid-svg-icons';
+import {IconDefinition} from '@fortawesome/fontawesome-common-types';
 
-export function getPortStatusText(port?: PortStatusFragment) {
+export function getPortStatusText(port?: PortStatusFragment): string {
   const t = useTrans();
   const st = port?.state;
   if (!port || st === PortState.Unplugged) return t('Unplugged');
@@ -29,7 +30,7 @@ export function doesPortHaveData(port?: PortStatusFragment): boolean {
     (port.connection.status.bytesToRead > 0 || port.connection.status.bytesToWrite > 0);
 }
 
-export function getPortColor(port?: PortStatusFragment) {
+export function getPortColor(port?: PortStatusFragment): string {
   const theme = useTheme();
   const st = port?.state;
   if (!port || st === PortState.Unplugged) return theme.palette.grey.A400;
@@ -45,8 +46,7 @@ export function getPortColor(port?: PortStatusFragment) {
   return theme.palette.grey.A700;
 }
 
-export function getPortIcon(port?: PortStatusFragment) {
-  const t = useTrans();
+export function getPortIcon(port?: PortStatusFragment): IconDefinition {
   const st = port?.state;
   if (!port || st === PortState.Unplugged) return faUsb;
   if (port.state === PortState.Error) return faExclamationCircle;

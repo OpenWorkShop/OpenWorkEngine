@@ -1,8 +1,7 @@
 import { IOpenWorkShop } from '../../types';
 import React from 'react';
-import {OpenControllerSessionFragment} from '../graphql';
+import {EssentialSettingsFragment, OpenControllerSessionFragment} from '../graphql';
 import { IWorkspace } from '../Workspaces';
-import { StringMap } from 'i18next';
 import {IOpenController, IOpenControllerPackage} from './types';
 import {BackendConnection} from '../../api';
 
@@ -15,11 +14,13 @@ export class EmptyOpenController implements IOpenController {
 
   get connection(): BackendConnection { throw new Error(msg); }
 
+  get settings(): EssentialSettingsFragment { throw new Error(msg); }
+
   get session(): OpenControllerSessionFragment | undefined { throw new Error(msg); }
 
   get workspaces(): IWorkspace[] { throw new Error(msg); }
 
-  public t(key: string, opts?: StringMap) { return ''; }
+  public t(): string { return ''; }
 }
 
 const OpenControllerContext: React.Context<IOpenController> = React.createContext<IOpenController>(new EmptyOpenController());

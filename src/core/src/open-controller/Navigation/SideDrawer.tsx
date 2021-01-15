@@ -49,7 +49,7 @@ const SideDrawer: React.FunctionComponent<Props> = (props) => {
           }),
         }}
       >
-        <ListMenu isOpen={isOpen} />
+        <ListMenu />
       </Drawer>
     </nav>
   );

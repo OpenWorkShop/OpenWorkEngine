@@ -8,9 +8,12 @@ import useLogger from '../../../utils/logging/UseLogger';
 // import { SearchAddon } from 'xterm-addon-search';
 // import { XTerm } from 'xterm-for-react';
 
-const Console: ToolBase = (props) => {
+const Console: ToolBase = () => {
   const log = useLogger(Console);
   const classes = useStyles();
+
+  log.verbose('draw');
+
   //const controller = useController();
 
   //  log.debug('controller', controller.machine.status);

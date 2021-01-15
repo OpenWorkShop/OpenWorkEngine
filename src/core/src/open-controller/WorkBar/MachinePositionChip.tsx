@@ -3,7 +3,7 @@ import {MachinePositionFragment} from '../graphql';
 import { faMapMarkerAlt, faMapMarkedAlt } from '@fortawesome/free-solid-svg-icons';
 import {useTrans} from '../Context';
 import PopoverWorkBarChip from './PopoverWorkBarChip';
-import {Grid, Typography } from '@material-ui/core';
+import {Grid } from '@material-ui/core';
 import useStyles from './Styles';
 import HelpfulHeader from '../../components/Text/HelpfulHeader';
 

@@ -2,7 +2,6 @@ import {AlertList} from '../../components/Alerts';
 import {
   FormControl,
   InputLabel,
-  ListItemIcon,
   MenuItem,
   Select,
   Typography,
@@ -11,7 +10,6 @@ import {
 import useLogger from '../../utils/logging/UseLogger';
 import React, {FunctionComponent} from 'react';
 import {useSystemPorts, IPortCollection} from '../Ports';
-import PortStatus from './PortStatus';
 import useStyles from './Styles';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import {PortState} from '../graphql';
@@ -46,10 +44,8 @@ const PortSelect: FunctionComponent<Props> = (props) => {
     const port = portCollection.portMap[portName];
     return (
       <MenuItem key={port.portName} value={port.portName}>
-        <div className={classes.portMenuIcon} >
-          <PortTip port={port} />
-        </div>
-        <Typography variant="body1">{port.portName}</Typography>
+        <PortTip port={port} />
+        {port.portName}
       </MenuItem>
     );
   }
@@ -64,7 +60,7 @@ const PortSelect: FunctionComponent<Props> = (props) => {
   const helperColor = !port || port.error ? theme.palette.error.main : theme.palette.grey.A700;
 
   return (
-    <FormControl required variant="outlined" className={classes.formControl}>
+    <FormControl fullWidth required variant="outlined" >
       <InputLabel >{t('Port Name')}</InputLabel>
       <Select
         value={selectedPortName}

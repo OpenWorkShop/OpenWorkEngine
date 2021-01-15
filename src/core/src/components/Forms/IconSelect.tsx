@@ -26,19 +26,18 @@ const IconSelect: React.FunctionComponent<ISelectProps<ISelectItem>> = (props) =
   const { help, helpColor, items, label, selectedId, setSelectedId, variant } = props;
 
   return (
-    <FormControl className={classes.formControl} >
+    <FormControl fullWidth className={classes.formControl} >
       {label && <InputLabel >{label}</InputLabel>}
       <Select
         value={selectedId}
         variant={variant}
-        className={classes.selectMenu}
         onChange={(e) => setSelectedId(e.target.value)}
         label={label}
       >
-        {items.map(i => {
-          return (
-            <MenuItem key={i.itemId} value={i.itemId} className={classes.selectMenuItem} >
-              <Grid container>
+        <Grid container>
+          {items.map(i => {
+            return (
+              <MenuItem key={i.itemId} value={i.itemId} >
                 <Grid item xs={2}>
                   <AnyIcon
                     faIcon={i.faIcon}
@@ -47,10 +46,10 @@ const IconSelect: React.FunctionComponent<ISelectProps<ISelectItem>> = (props) =
                   />
                 </Grid>
                 <Grid item xs={10}>{i.title}</Grid>
-              </Grid>
-            </MenuItem>
-          );
-        })}
+              </MenuItem>
+            );
+          })}
+        </Grid>
       </Select>
       <FormHelperText style={helpColor ? { color: helpColor } : {}}>{help}</FormHelperText>
     </FormControl>

@@ -9,6 +9,7 @@
       <excludeFolder url="file://$MODULE_DIR$/OpenWorkShop" />
       <excludeFolder url="file://$MODULE_DIR$/OpenControllerTests" />
       <excludeFolder url="file://$MODULE_DIR$/obj" />
+      <excludeFolder url="file://$MODULE_DIR$/src/core/dist" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -24,6 +24,8 @@ const OpenWorkShopCore: React.FunctionComponent<IOwsProps> = (props: IOwsProps) 
   const log = useLogger(OpenWorkShopCore);
   usePromise(() => fetchApp(props), [props]);
 
+  log.verbose('draw');
+
   return (
     <Provider store={ows.store}>
       <OpenWorkShop.Provider value={ows}>

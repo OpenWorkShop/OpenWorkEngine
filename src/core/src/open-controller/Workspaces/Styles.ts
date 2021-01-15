@@ -42,17 +42,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
     width: '100%',
   },
-  controlBar: {
-    // left: theme.spacing(1),
-    padding: theme.spacing(1),
-    width: '100%',
-    height: toolBarHeight,
-    backgroundColor: theme.palette.background.paper,
-  },
-  controlBarCenterFab: {
-    position: 'relative',
-    bottom: 8,
-  },
   toolBar: {
     // height: controlBarHeight,
     // position: 'fixed',
@@ -88,11 +77,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     maxHeight: tabSize,
     minHeight: tabSize,
     width: '100%',
-  },
-
-  visualizerWrapper: {
-    position: 'relative',
-    bottom: toolBarHeight + 8 * 2,
   },
   visualizer: {
     height: `calc(100vh - ${workBarHeight + Number(theme.mixins.toolbar.height)}px)`,

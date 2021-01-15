@@ -11,7 +11,7 @@ import {useCloseWorkspaceMutation, useDeleteWorkspaceMutation} from '../../graph
 import {Redirect} from 'react-router-dom';
 import {AlertList, IAlertMessage} from '../../../components/Alerts';
 import HelpfulHeader from '../../../components/Text/HelpfulHeader';
-import {useWorkspaceSelector, useWorkspaceUnits} from '../Hooks';
+import {useWorkspaceSelector} from '../Hooks';
 
 type Props = IHaveWorkspace;
 

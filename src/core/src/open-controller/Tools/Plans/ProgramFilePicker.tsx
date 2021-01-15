@@ -1,13 +1,9 @@
-import {Button, Grid, FormControl } from '@material-ui/core';
+import {Button, FormControl } from '@material-ui/core';
 import * as React from 'react';
 import useLogger from '../../../utils/logging/UseLogger';
 import {useTrans} from '../../Context';
 
-type Props = {
-
-};
-
-const ProgramFilePicker: React.FunctionComponent<Props> = (props) => {
+const ProgramFilePicker: React.FunctionComponent = () => {
   const log = useLogger(ProgramFilePicker);
   const t = useTrans();
 

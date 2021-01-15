@@ -16,7 +16,6 @@ import * as React from 'react';
 import CardDialog from '../../../components/Cards/CardDialog';
 import useStyles from './Styles';
 import useLogger from '../../../utils/logging/UseLogger';
-import analytics from '../../analytics';
 import {ICustomizedMachine} from '../../Machines/CustomizedMachine';
 import {slugify} from '../../../utils';
 import {useSystemPorts} from '../../Ports';

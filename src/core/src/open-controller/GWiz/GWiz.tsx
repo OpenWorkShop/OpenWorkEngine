@@ -1,9 +1,8 @@
 import React, { FunctionComponent } from 'react';
-import {useTheme} from '@material-ui/core';
 import {useOpenController, useWindowSize} from '../Context';
 import GWizCanvas from './GWizCanvas';
 import {IVisualizerControlsPreferences, IVisualizerStyles, ViewPlane} from './types';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {AppState} from '../redux';
 import {IMachineAxis} from '../Machines';
 
@@ -14,7 +13,6 @@ type Props = {
 };
 
 const GWiz: FunctionComponent<Props> = (props) => {
-  const theme = useTheme();
   const { id, className, axes } = props;
   const oc = useOpenController();
   const domId = `gViz-${id}`;
@@ -22,7 +20,6 @@ const GWiz: FunctionComponent<Props> = (props) => {
   const { width, height } = useWindowSize();
 
   // Redux state.
-  const dispatch = useDispatch();
   const controls =
     useSelector<AppState, IVisualizerControlsPreferences>(s => s.gWiz.visualizerPreferences.controls);
   const styles = useSelector<AppState, IVisualizerStyles>(s => s.gWiz.visualizerPreferences.styles);

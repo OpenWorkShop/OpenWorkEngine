@@ -10,7 +10,7 @@ type Props = IMoveRequest;
 const JogButton: React.FunctionComponent<Props> = (props) => {
   const t = useTrans();
   const classes = useStyles();
-  const { xAxis, yAxis, zAxis, type } = props;
+  const { xAxis, yAxis, zAxis } = props;
 
   function getIcon() {
     const parts = ['move'];

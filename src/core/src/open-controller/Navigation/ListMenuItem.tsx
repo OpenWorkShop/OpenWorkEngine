@@ -1,9 +1,10 @@
-import {ListItem, ListItemText, ListItemIcon, Typography } from '@material-ui/core';
+import {ListItem, ListItemText, ListItemIcon, Typography, useTheme} from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
 import { Link, LinkProps, useLocation } from 'react-router-dom';
+import useStyles from './Styles';
 
 interface OwnProps {
-  icon: React.ReactNode;
+  drawIcon: (col: string) => React.ReactNode;
   title: string;
   to: string;
   subcomponent?: React.ReactNode;
@@ -12,9 +13,13 @@ interface OwnProps {
 type Props = OwnProps;
 
 const ListMenuItem: FunctionComponent<Props> = (props) => {
-  const { icon, title, to, subcomponent } = props;
+  const { drawIcon, title, to, subcomponent } = props;
+  const theme = useTheme();
+  const classes = useStyles();
   const location = useLocation();
   const selected = location.pathname === to;
+  const col = selected ? theme.palette.secondary.dark : theme.palette.primary.main;
+  const icon = drawIcon(col);
 
   const CustomLink = React.useMemo(() =>
     React.forwardRef<HTMLAnchorElement, Omit<LinkProps, 'to'>>(
@@ -24,7 +29,7 @@ const ListMenuItem: FunctionComponent<Props> = (props) => {
 
   return (
     <ListItem selected={selected} button component={CustomLink}>
-      <ListItemIcon>{icon}</ListItemIcon>
+      <ListItemIcon className={classes.listMenuIcon}>{icon}</ListItemIcon>
       <ListItemText primary={<Typography variant='h6'>{title}</Typography>} secondary={subcomponent} />
     </ListItem>
   );

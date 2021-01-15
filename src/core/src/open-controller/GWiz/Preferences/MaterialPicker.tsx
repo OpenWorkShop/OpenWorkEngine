@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import {Color, ColorBox} from 'material-ui-color';
-import {Button, ColorObject, Popover} from '@material-ui/core';
+import {Button, Popover} from '@material-ui/core';
 import {IMaterial} from '../types';
 import useStyles from './Styles';
 import {useLogger} from '../../../Hooks';
@@ -22,6 +22,8 @@ const MaterialPicker: FunctionComponent<Props> = (props) => {
     // log.debug('color', c.rgb);
     onChange({ ...materialParameters, color: `#${c.hex}` });
   }
+
+  log.verbose('draw');
 
   return (
     <React.Fragment>

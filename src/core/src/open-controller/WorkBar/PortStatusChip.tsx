@@ -19,7 +19,6 @@ import useStyles from './Styles';
 import {ConnectedPortFragment, useChangeWorkspacePortMutation} from '../graphql';
 import PortSelect from '../Ports/PortSelect';
 import {IHaveWorkspace} from '../Workspaces';
-import PortConnectionSteps from '../Ports/PortConnectionSteps';
 import {AlertList, IAlertMessage} from '../../components';
 
 type Props = IMaybeHavePortStatus & IHaveWorkspace;

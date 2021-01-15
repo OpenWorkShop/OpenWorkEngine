@@ -1,4 +1,4 @@
-import React from 'react';;
+import React from 'react';
 
 export function usePortal(parentDomId: string): HTMLDivElement {
   const rootElemRef = React.useRef(document.createElement('div'));

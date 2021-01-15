@@ -1,8 +1,6 @@
 import * as React from 'react';
-import {useTrans} from '../Context';
-import {faExclamationCircle} from '@fortawesome/free-solid-svg-icons';
 import ToolBar from './ToolBar';
-import {Tooltip, Fab, useTheme, Grid, Paper} from '@material-ui/core';
+import { Grid  } from '@material-ui/core';
 import useStyles from './Styles';
 import {IHavePortStatus} from '../Ports';
 import GWiz  from '../GWiz';
@@ -10,8 +8,8 @@ import {useParams} from 'react-router-dom';
 import useLogger from '../../utils/logging/UseLogger';
 import {IHaveWorkspace} from './types';
 import {useWorkspaceSelector} from './Hooks';
-import ControlBar from './ControlBar';
 import WorkBar from '../WorkBar';
+import ControllerCard from '../Controllers/ControllerCard';
 
 type Props = IHaveWorkspace & IHavePortStatus;
 
@@ -35,16 +33,10 @@ const Workspace: React.FunctionComponent<Props> = (props) => {
       <Grid item xs={12} className={classes.topBar}>
         <WorkBar workspaceId={workspaceId} port={port} />
       </Grid>
-      <Grid container className={classes.bottomBar} >
-        <Grid item xs={1} md={2} lg={5} />
-        <Grid item xs={12} md={8} lg={2} >
-          <ControlBar workspaceId={workspaceId} />
-        </Grid>
-        <Grid item xs={1} md={2} lg={5} />
-      </Grid>
-      <Grid item xs={12} className={ classes.visualizerWrapper} >
+      <Grid item xs={12}>
         <GWiz id={workspaceId} className={classes.visualizer} axes={axes} />
       </Grid>
+      <ControllerCard workspaceId={workspaceId} />
       <ToolBar workspaceId={workspaceId} selectedToolGroupId={selectedToolGroupId}/>
     </Grid>
   );

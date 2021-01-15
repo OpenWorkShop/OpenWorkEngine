@@ -3,7 +3,6 @@ import {
   GWizState, IVector3, RenderGroupType,
   ViewPlane,
 } from './types';
-import * as THREE from 'three';
 import theme from '../../themes/GWiz';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 

@@ -8,9 +8,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     padding: theme.spacing(0.5),
     textAlign: 'left',
-    height: barHeight,
+    height: componentHeight,
   },
-  formControl: {
+  workbarChip: {
     marginLeft: theme.spacing(0.5),
     marginRight: theme.spacing(0.5),
     height: componentHeight,

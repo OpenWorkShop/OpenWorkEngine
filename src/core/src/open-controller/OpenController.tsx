@@ -1,4 +1,4 @@
-import { CssBaseline } from '@material-ui/core';
+import {CssBaseline, StylesProvider} from '@material-ui/core';
 import React from 'react';
 import { OpenWorkShopProvider } from '../components';
 import configureStore from './redux';
@@ -44,8 +44,9 @@ const OpenController: React.FunctionComponent<IHaveOpenControllerDeployment> = (
     >
       <ThemeProvider theme={theme}>
         <Router >
-          <CssBaseline />
-          <ControllerMain deployment={deployment} />
+          <StylesProvider injectFirst>
+            <ControllerMain deployment={deployment} />
+          </StylesProvider>
         </Router>
       </ThemeProvider>
     </OpenWorkShopProvider>

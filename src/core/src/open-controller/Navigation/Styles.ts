@@ -41,12 +41,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginLeft: 0,
     color: theme.palette.secondary.contrastText,
   },
+  listMenuIcon: {
+    display: 'block',
+    textAlign: 'center',
+  },
   hide: {
     display: 'none',
   },
   drawer: {
     flexShrink: 0,
-    whiteSpace: 'nowrap',
+    // whiteSpace: 'nowrap',
   },
   drawerOpen: {
     // Open: icons-only on small screens, icons+text on large screens.
@@ -83,7 +87,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   content: {
     flexGrow: 1,
     height: '100vh',
-    overflow: 'hidden',
   },
 }));
 

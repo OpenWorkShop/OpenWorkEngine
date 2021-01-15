@@ -1,4 +1,4 @@
-import {AxisName, ControlledMachineFragment, MachineConfigFragment, MachineStatusFragment} from '../graphql';
+import {AxisName} from '../graphql';
 
 export interface IMachineAxis {
   name: AxisName;

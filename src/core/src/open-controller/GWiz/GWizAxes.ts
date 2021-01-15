@@ -1,11 +1,8 @@
 import * as THREE from 'three';
-import _ from 'lodash';
 import {IMaterial, IVisualizerStyles, RenderGroupType} from './types';
-import {getMachineAxisMap, IMachineAxis, MachineAxisMap} from '../Machines';
-import {iterateMachineAxisGridLines} from '../Machines/MachineAxis';
+import {getMachineAxisMap, IMachineAxis, MachineAxisMap, iterateMachineAxisGridLines} from '../Machines';
 import createTextSprite from './TextSprite';
 import {AxisName} from '../graphql';
-import TextSprite from './TextSprite';
 
 type LineMaterial = THREE.LineBasicMaterial | THREE.LineDashedMaterial;
 

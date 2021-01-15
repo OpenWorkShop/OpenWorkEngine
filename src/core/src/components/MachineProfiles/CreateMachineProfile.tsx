@@ -138,7 +138,7 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
         </FormControl>
         <FormControlLabel
           control={
-            <Checkbox checked={firmware.rtscts} onChange={(e) => updateFirmware('rtscts', !firmware.rtscts)} />
+            <Checkbox checked={firmware.rtscts} onChange={() => updateFirmware('rtscts', !firmware.rtscts)} />
           }
           label={t('Hardware flow control (rtscts)?')}
         />
@@ -168,7 +168,7 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
             <Grid item xs={12}>
               <FormControlLabel
                 control={
-                  <Checkbox checked={profile.submit} onChange={(e) => updateProfile('submit', !profile.submit)} />
+                  <Checkbox checked={profile.submit} onChange={() => updateProfile('submit', !profile.submit)} />
                 }
                 label={t('Submit to community catalog?')}
               />

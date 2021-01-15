@@ -1,6 +1,5 @@
 import {BrowserRouter as Router} from 'react-router-dom';
 import React from 'react';
-import { CssBaseline } from '@material-ui/core';
 import usePromise from 'react-promise-suspense';
 import OpenControllerProvider from './Context/OpenControllerProvider';
 import useLogger from '../utils/logging/UseLogger';
@@ -20,7 +19,6 @@ const ControllerMain: React.FunctionComponent<IHaveOpenControllerDeployment> = (
 
   return (
     <Router >
-      <CssBaseline />
       <OpenControllerProvider
         deployment={props.deployment}
         connection={props.deployment.connection}

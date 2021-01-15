@@ -24,7 +24,7 @@ const PopoverWorkBarChip: React.FunctionComponent<Props> = (props) => {
   return (
     <React.Fragment>
       <Chip
-        className={classes.formControl}
+        className={classes.workbarChip}
         icon={label ? icon : undefined}
         label={label ? label : icon}
         clickable

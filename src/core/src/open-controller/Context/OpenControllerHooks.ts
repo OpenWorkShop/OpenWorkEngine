@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 import {IOpenController, IOpenControllerPackage} from './types';
 import OpenControllerContext from './OpenControllerContext';
@@ -39,8 +38,13 @@ export function useBackendConnectionState(): ConnectionState {
   return state;
 }
 
+export interface IWindowSize {
+  width: number,
+  height: number,
+}
+
 // Hook
-export function useWindowSize() {
+export function useWindowSize(): IWindowSize {
   // Initialize state with undefined width/height so server and client renders match
   // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
   const [windowSize, setWindowSize] = React.useState({

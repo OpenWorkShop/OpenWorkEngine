@@ -1,4 +1,3 @@
-import { MachineAxisPropsFragment } from '../../open-controller/graphql';
 import React from 'react';
 import { Grid, Paper } from '@material-ui/core';
 import {IAxisProps, MachineAxes} from '../../open-controller/Machines/CustomizedMachine';

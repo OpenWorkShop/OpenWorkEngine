@@ -22,14 +22,7 @@ const ControllerProvider: React.FunctionComponent<Props> = (props) => {
   const dispatch = useDispatch();
 
   // const onMachineSettingsChanged = useMachineSettingsSubscription({ variables });
-  //
-  // const cm: ControlledMachineFragment = {
-  //   ...machine,
-  //   status: onMachineStatusChanged?.data?.machine.status ?? machine.status,
-  //   configuration: onMachineConfigurationChanged?.data?.machine.configuration ?? machine.configuration,
-  //   settings: onMachineSettingsChanged?.data?.machine.settings ?? machine.settings,
-  // };
-
+  
   // Load initial machine.
   React.useEffect(() => {
     dispatch(controllersSlice.actions.updateControlledMachine(machine));

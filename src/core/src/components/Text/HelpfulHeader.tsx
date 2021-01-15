@@ -1,8 +1,6 @@
 import { Typography } from '@material-ui/core';
 import * as React from 'react';
 import {IHelpStep} from '../Alerts/HoverHelpStep';
-import {HoverHelpStep} from '../Alerts';
-import useStyles from './Styles';
 import HelpfulExponent from './HelpfulExponent';
 
 type Props = IHelpStep & {
