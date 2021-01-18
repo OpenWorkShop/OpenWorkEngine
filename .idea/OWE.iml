@@ -6,10 +6,10 @@
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/OpenController" />
-      <excludeFolder url="file://$MODULE_DIR$/OpenWorkShop" />
       <excludeFolder url="file://$MODULE_DIR$/OpenControllerTests" />
       <excludeFolder url="file://$MODULE_DIR$/obj" />
       <excludeFolder url="file://$MODULE_DIR$/src/core/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/OpenWorkShop/App/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

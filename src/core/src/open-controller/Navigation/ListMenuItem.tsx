@@ -1,7 +1,7 @@
 import {ListItem, ListItemText, ListItemIcon, Typography, useTheme} from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
 import { Link, LinkProps, useLocation } from 'react-router-dom';
-import useStyles from './Styles';
+import useStyles from './styles';
 
 interface OwnProps {
   drawIcon: (col: string) => React.ReactNode;

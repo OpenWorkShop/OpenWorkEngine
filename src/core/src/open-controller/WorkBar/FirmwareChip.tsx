@@ -5,7 +5,7 @@ import {useTrans} from '../Context';
 import { faMicrochip, faExclamationCircle, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import {DetectedFirmwareFragment, FirmwareRequirementFragment} from '../graphql';
 import { Grid, Tooltip } from '@material-ui/core';
-import useStyles from './Styles';
+import useStyles from './styles';
 import { Typography } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconButton, useTheme } from '@material-ui/core';

@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import {Color, ColorBox} from 'material-ui-color';
 import {Button, Popover} from '@material-ui/core';
 import {IMaterial} from '../types';
-import useStyles from './Styles';
+import useStyles from './styles';
 import {useLogger} from '../../../Hooks';
 
 type Props = {

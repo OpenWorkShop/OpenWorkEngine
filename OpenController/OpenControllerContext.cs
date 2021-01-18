@@ -67,7 +67,7 @@ namespace OpenWorkEngine.OpenController {
 
     public string OwsHost { get; }
 
-    public ILogger Log { get; }
+    internal ILogger Log { get; }
 
     public List<OpenControllerUser> EnabledUsers => _enabledUsers ??=
       Settings?.Users.Where(u => u.Enabled).ToList() ?? new List<OpenControllerUser>();

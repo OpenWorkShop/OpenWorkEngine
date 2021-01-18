@@ -10,3 +10,13 @@ export interface IMachineAxis {
 
 export type MachineAxisMap = { [key: string]: IMachineAxis };
 
+export interface IMachinePosition {
+  x?: number | null;
+  y?: number | null;
+  z?: number | null;
+  a?: number | null;
+  b?: number | null;
+  c?: number | null;
+}
+
+export type Axis3D = AxisName.X | AxisName.Y | AxisName.Z;

@@ -1,6 +1,6 @@
 namespace OpenWorkEngine.OpenController.Machines.Enums {
   public enum MachineMotionType {
-    Rapid,  // G0
+    Rapid = 0,  // G0
     Linear, // G01
     Arc,    // G02
     ArcCCW, // G03

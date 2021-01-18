@@ -1,4 +1,5 @@
 import Wizard from './Wizard';
+
 export * from './consts';
 export * from './Colors';
 

@@ -7,7 +7,7 @@ import NumericInput from '../Forms/NumericInput';
 import {IAlertMessage} from '../Alerts';
 import {useOwsTrans} from '../../Hooks';
 import {IAxisProps} from '../../open-controller/Machines/CustomizedMachine';
-import useStyles from './Styles';
+import useStyles from './styles';
 
 interface IMachineAxisEditorProps {
   axis: IAxisProps;

@@ -6,7 +6,7 @@ import {useTrans} from '../Context';
 import {getViewPlaneNameKey} from '../GWiz/ViewPlane';
 import {Grid} from '@material-ui/core';
 import HelpfulHeader from '../../components/Text/HelpfulHeader';
-import useStyles from './Styles';
+import useStyles from './styles';
 import {useLogger} from '../../Hooks';
 import {useSelector} from 'react-redux';
 import {AppState} from '../redux';

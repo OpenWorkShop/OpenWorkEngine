@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { CallbackComponent } from 'redux-oidc';
 import analytics from '../analytics';
 import ReconnectRedirect from '../Navigation/ReconnectRedirect';
-import useStyles from './Styles';
+import useStyles from './styles';
 import {useOpenController, useTrans} from '../Context';
 
 type Props = {

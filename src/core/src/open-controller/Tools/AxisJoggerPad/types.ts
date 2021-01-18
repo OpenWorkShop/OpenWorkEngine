@@ -1,9 +1,7 @@
+import {IMachinePosition} from '../../Machines';
+import {MachineMotionType, MovementDistanceType} from '../../graphql';
 
-export type MovementType = 'absolute' | 'relative';
-
-export interface IMoveRequest {
-  type?: MovementType; // default: relative
-  xAxis?: number;
-  yAxis?: number;
-  zAxis?: number;
+export interface IMoveRequest extends IMachinePosition {
+  distanceType: MovementDistanceType;
+  motionType?: MachineMotionType; // default: rapid
 }

@@ -1,6 +1,6 @@
 import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
-import useStyles from './Styles';
+import useStyles from './styles';
 import UserMenu from './UserMenu';
 import {IMaybeHaveWorkspace, tryUseWorkspace} from '../Workspaces';
 import {useOpenControllerSettings} from '../Context';

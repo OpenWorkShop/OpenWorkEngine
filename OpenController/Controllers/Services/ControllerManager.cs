@@ -24,9 +24,9 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
   public class ControllerManager : SubscriptionManager<MachineTopic, ControlledMachine>, IDisposable {
     // internal ITopicEventSender Sender { get; }
     //
-    // public Controller this[string portName] =>
-    //   _controllers.TryGetValue(portName, out Controller? val) ? val :
-    //     throw new ArgumentException($"Controller missing: {portName}");
+    public Controller this[string portName] =>
+      _controllers.TryGetValue(portName, out Controller? val) ? val :
+        throw new ArgumentException($"Controller missing: {portName}");
 
     // PortName -> Controller (one controller per port).
     private readonly ConcurrentDictionary<string, Controller> _controllers = new();
@@ -87,7 +87,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
         // Now wrap the systemPort with a ConnectedPort
         systemPort.Connection = new ConnectedPort(systemPort, machine);
 
-        // And wrap the ConnectedPort with a
+        // And wrap the ConnectedPort with a controller
         IMachineFirmwareRequirement req = machine.GetFirmwareRequirement();
         MachineControllerType controllerType = req.ControllerType;
         return _controllers.AddOrUpdate(systemPort.PortName,

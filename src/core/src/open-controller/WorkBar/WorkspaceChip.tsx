@@ -6,7 +6,7 @@ import {useOwsTrans} from '../../Hooks';
 import {getDistanceUnitAbbreviationKey} from '../../components/Units';
 import {Grid} from '@material-ui/core';
 import HelpfulHeader from '../../components/Text/HelpfulHeader';
-import useStyles from './Styles';
+import useStyles from './styles';
 
 type Props = IHaveWorkspace;
 

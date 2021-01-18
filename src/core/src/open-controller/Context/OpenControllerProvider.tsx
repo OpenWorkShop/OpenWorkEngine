@@ -16,7 +16,7 @@ import {
 import { LoginPage, CallbackPage } from '../Identity';
 import { StringMap } from 'i18next';
 import {AppState} from '../redux';
-import ProtectedApp from '../App/ProtectedApp';
+import ProtectedApp from '../ProtectedApp';
 import {useDispatch, useSelector} from 'react-redux';
 import { User } from 'oidc-client';
 import SystemPortProvider from '../Ports/SystemPortProvider';

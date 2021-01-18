@@ -8,13 +8,11 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     // n.b., the FirmwareRequirement is compared against this value.
     public MachineDetectedFirmware Firmware { get; } = new();
 
-    // n.b., the MachineSpindle reperesents *actual, current* sate. This is the "target" state.
-    public SpindleConfig Spindle { get; } = new();
+    // n.b., the MachineApplicatorStsate reperesents *actual, current* sate. This is the "target" state.
+    public ApplicatorConfig Applicator { get; } = new();
 
     // Mostly matches GCode Modal Groups.
     public MachineModals Modals { get; } = new();
-
-    // Feedback, Modal, ovF, ovS, Extruder, HeatedBed, rapidFeedrate
 
     // public override string ToString() => $"{Firmware}";
   }

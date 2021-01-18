@@ -4,13 +4,11 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  Typography,
   useTheme
 } from '@material-ui/core';
 import useLogger from '../../utils/logging/UseLogger';
 import React, {FunctionComponent} from 'react';
 import {useSystemPorts, IPortCollection} from '../Ports';
-import useStyles from './Styles';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import {PortState} from '../graphql';
 import {useTrans} from '../Context';
@@ -24,7 +22,6 @@ interface OwnProps {
 type Props = OwnProps;
 
 const PortSelect: FunctionComponent<Props> = (props) => {
-  const classes = useStyles();
   const t = useTrans();
   const theme = useTheme();
   const log = useLogger(PortSelect);

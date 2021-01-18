@@ -23,7 +23,7 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
 
     public List<MachinePinType> ActivePins { get; } = new();
 
-    public MachineSpindle Spindle { get; } = new();
+    public MachineApplicatorState Applicator { get; } = new();
 
     public MachineOverrides? Overrides { get; internal set; } = null;
   }

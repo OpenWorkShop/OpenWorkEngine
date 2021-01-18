@@ -7,7 +7,7 @@ using Serilog.Events;
 using Serilog.Sinks.InMemory;
 using Xunit.Abstractions;
 
-namespace MakerverseServerTests {
+namespace OpenWorkEngine.OpenControllerTests {
   public abstract class TestBase : IDisposable {
     public TestBase(ITestOutputHelper output) =>
       Log.Logger = new LoggerConfiguration()

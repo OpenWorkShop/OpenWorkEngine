@@ -14,18 +14,18 @@ using Xunit.Abstractions;
 namespace OpenWorkEngine.OpenControllerTests.Controllers {
   public class GrblTests : TestBase {
     private readonly ParserSet _parsers = new ParserSet().AddGrblParsers();
-    private ControlledMachine? _machine;
+    // private ControlledMachine? _machine;
 
     public GrblTests(ITestOutputHelper output) : base(output) { }
-    private ControlledMachine Machine => _machine ??= new ControlledMachine("", null, Log.Logger);
 
     [Theory]
     [InlineData("[VER:1.1f.20170801:LASER]")]
     [InlineData("[VER:2.0.0.20170522::CTRL0]")]
     public void CanParseGrblVersions(string versionString) {
-      _parsers.FirmwareParser?.UpdateMachine(null, Machine, versionString);
+      ControlledMachine machine = new ControlledMachine("", null, Log.Logger);
+      _parsers.FirmwareParser?.UpdateMachine(null, machine, versionString);
 
-      MachineDetectedFirmware fw = Machine.Configuration.Firmware;
+      MachineDetectedFirmware fw = machine.Configuration.Firmware;
       fw.Should().NotBeNull();
       fw.Name.Should().Be(MachineControllerType.Grbl.ToString());
       fw.IsValid.Should().BeTrue();
@@ -41,9 +41,10 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
     public void CanParseStatusActiveState(GrblActiveState state) {
       string line = $"<{state.ToString()}>";
       GrblStatusParser parser = new();
-      parser.UpdateMachine(null, Machine, line);
+      ControlledMachine machine = new ControlledMachine("", null, Log.Logger);
+      parser.UpdateMachine(null, machine, line);
 
-      Machine.Status.ActivityState.Should().Be(state.ToActiveState());
+      machine.Status.ActivityState.Should().Be(state.ToActiveState());
     }
 
     [Theory]
@@ -59,9 +60,10 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
     public void CanParseLocation(string line) {
       GrblStatusParser parser = new();
       Log.Information(line);
-      parser.UpdateMachine(null, Machine, line);
+      ControlledMachine machine = new ControlledMachine("", null, Log.Logger);
+      parser.UpdateMachine(null, machine, line);
 
-      Log.Information("Machine Status {@status}", JsonConvert.SerializeObject(Machine.Status, Formatting.Indented));
+      Log.Information("Machine Status {@status}", JsonConvert.SerializeObject(machine.Status, Formatting.Indented));
     }
 
     [Theory]
@@ -69,9 +71,10 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
     [InlineData("[GC:G0 G54 G17 G21 G90 G94 M0 M5 M9 T0 S0.0 F500.0]")]
     public void CanParseConfiguration(string line) {
       GrblConfigParser parser = new();
-      parser.UpdateMachine(null, Machine, line);
+      ControlledMachine machine = new ControlledMachine("", null, Log.Logger);
+      parser.UpdateMachine(null, machine, line);
 
-      Log.Information("Machine Config {@config}", JsonConvert.SerializeObject(Machine.Configuration, Formatting.Indented));
+      Log.Information("Machine Config {@config}", JsonConvert.SerializeObject(machine.Configuration, Formatting.Indented));
     }
 
     [Theory]
@@ -88,12 +91,13 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
       string line = $"[{string.Join(' ', args)}]";
 
       GrblConfigParser parser = new();
-      parser.UpdateMachine(null, Machine, line);
+      ControlledMachine machine = new ControlledMachine("", null, Log.Logger);
+      parser.UpdateMachine(null, machine, line);
 
       Log.Information("Machine Spindle {@config}",
-        JsonConvert.SerializeObject(Machine.Configuration.Spindle, Formatting.Indented));
+        JsonConvert.SerializeObject(machine.Configuration.Applicator, Formatting.Indented));
 
-      SpindleState sp = Machine.Configuration.Spindle;
+      ApplicatorState sp = machine.Configuration.Applicator;
       sp.FeedRate.Should().Be((decimal) (feed ?? 0));
       sp.SpinSpeed.Should().Be((decimal) (speed ?? 0));
       sp.IsMistCoolantEnabled.Should().Be(mist ?? false);

@@ -1,11 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import HeaderBar from './HeaderBar';
 import SideDrawer from './SideDrawer';
-import useStyles from './Styles';
+import useStyles from './styles';
 import useLogger from '../../utils/logging/UseLogger';
 import {IMaybeHaveWorkspace} from '../Workspaces';
-import {Drawer} from '@material-ui/core';
-import {Home} from '../App';
 export { default as NotFound } from './NotFound';
 
 interface OwnProps {

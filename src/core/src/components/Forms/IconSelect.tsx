@@ -1,6 +1,6 @@
 import {Grid, Select, MenuItem, FormControl, InputLabel} from '@material-ui/core';
 import * as React from 'react';
-import useStyles from './Styles';
+import useStyles from './styles';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import AnyIcon, {IHaveAnyIcon} from '../AnyIcon';
 

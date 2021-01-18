@@ -9,7 +9,7 @@ import useLogger from '../../utils/logging/UseLogger';
 import {owsClientOpts} from '../../consts';
 import OfflineAlertList from '../Alerts/OfflineAlertList';
 import OpenWorkShopIcon from '../OpenWorkShopIcon';
-import useStyles from './Styles';
+import useStyles from './styles';
 import {useOwsTrans} from '../../Hooks';
 
 type MP = MachineSearchResultFragment;

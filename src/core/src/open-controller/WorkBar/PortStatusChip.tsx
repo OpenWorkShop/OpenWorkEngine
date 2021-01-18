@@ -15,7 +15,7 @@ import {
   Grid,
   Typography
 } from '@material-ui/core';
-import useStyles from './Styles';
+import useStyles from './styles';
 import {ConnectedPortFragment, useChangeWorkspacePortMutation} from '../graphql';
 import PortSelect from '../Ports/PortSelect';
 import {IHaveWorkspace} from '../Workspaces';

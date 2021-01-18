@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {IHaveTool} from './types';
 import {IHaveWorkspace} from '../Workspaces';
-import {useTool} from './Hooks';
+import {useLazyToolLoader} from './Hooks';
 
 type Props = IHaveTool & IHaveWorkspace;
 
 const ToolLoader: React.FunctionComponent<Props> = (props) => {
   const { tool, workspaceId } = props;
-  const Tool = useTool(tool);
+  const Tool = useLazyToolLoader(tool);
 
   if (!Tool) return <span>Missing: {tool.componentPath}</span>;
 

@@ -1,19 +1,19 @@
 namespace OpenWorkEngine.OpenController.Machines.Models {
-  public class MachinePosition {
-    public decimal? X { get; internal set; }
+  public record MachinePosition {
+    public decimal? X { get; set; }
 
-    public decimal? Y { get; internal set; }
+    public decimal? Y { get; set; }
 
-    public decimal? Z { get; internal set; }
+    public decimal? Z { get; set; }
 
-    public decimal? A { get; internal set; }
+    public decimal? A { get; set; }
 
-    public decimal? B { get; internal set; }
+    public decimal? B { get; set; }
 
-    public decimal? C { get; internal set; }
+    public decimal? C { get; set; }
 
-    public decimal? E { get; internal set; }
+    // public decimal? E { get; set; }
 
-    public bool IsValid => X != null || Y != null || Z != null;
+    // public bool IsValid => X != null || Y != null || Z != null;
   }
 }

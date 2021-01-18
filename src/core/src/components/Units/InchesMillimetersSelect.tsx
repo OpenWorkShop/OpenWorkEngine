@@ -1,6 +1,6 @@
 import {FormControl, Grid, MenuItem, Select} from '@material-ui/core';
 import * as React from 'react';
-import useStyles from './Styles';
+import useStyles from './styles';
 import {OpenWorkShopIcon} from '../../components';
 import {getDistanceUnitAbbreviationKey, getDistanceUnitIconKey} from './InchesMillimeters';
 import {useOwsTrans} from '../../Hooks';

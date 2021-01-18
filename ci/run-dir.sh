@@ -8,4 +8,4 @@ if [[ ! -d "$d" ]]; then
 fi
 
 cd "$d"
-$("$cmd")
+exec $cmd

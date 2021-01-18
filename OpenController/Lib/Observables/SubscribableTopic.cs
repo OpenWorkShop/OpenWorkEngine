@@ -14,7 +14,7 @@ namespace OpenWorkEngine.OpenController.Lib.Observables {
     public IDisposable Subscribe(IObserver<T> observer) => new TopicSubscription<T>(_observers, observer);
 
     public void Emit(T obj) {
-      Log.Debug("[EMIT] {type} to {count} observers: {obj}",
+      Log.Verbose("[EMIT] {type} to {count} observers: {obj}",
         typeof(T).ToString().Split('.').Last(), _observers.Count, obj.ToString());
       foreach (IObserver<T> obs in _observers) {
         Log.Verbose("[EMIT] observer {obs}", obs);

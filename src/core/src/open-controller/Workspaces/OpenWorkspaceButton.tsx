@@ -1,7 +1,7 @@
 import {Fab, FormControl, Grid, Typography} from '@material-ui/core';
 import {faPlug} from '@fortawesome/free-solid-svg-icons';
 import * as React from 'react';
-import useStyles from './Styles';
+import useStyles from './styles';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useOpenWorkspaceMutation, WorkspaceState} from '../graphql';
 import {AlertList, AlertMessageList, sanitizeAlertMessages} from '../../components/Alerts';

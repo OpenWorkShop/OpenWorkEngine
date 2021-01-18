@@ -3,13 +3,12 @@ import Colors from './Colors';
 import 'typeface-roboto';
 import 'typeface-cabin';
 import { backgroundImage, getImageUrl } from '../components/Images';
+import {toolbarHeight} from './consts';
 
 const headerFont = 'Cabin';
 const bodyFont = 'Roboto';
 
 const defaultTheme = createMuiTheme();
-
-export const toolbarHeight = 50;
 
 const theme = createMuiTheme({
   palette: {

@@ -33,13 +33,22 @@ export function tryUseWorkspace(workspaceId?: string): IWorkspace | undefined {
 }
 
 
-export function tryUseWorkspaceController(workspaceId: string): IController | undefined {
-  return useSelector<AppState, IController | undefined>( (state) => {
+export function tryUseWorkspaceControllerSelector<T>(workspaceId: string, sel: (controller: IController) => T): T | undefined {
+  return useSelector<AppState, T | undefined>( (state) => {
     const workspace = state.workspaces.map[workspaceId];
+
     const machine: ControlledMachineFragment | undefined = workspace?.port?.connection?.machine;
     if (!machine) return undefined;
-    return state.controllers.controllerMap[machine.topicId];
+
+    const controller = state.controllers.controllerMap[machine.topicId];
+    if (!controller) return undefined;
+
+    return sel(controller);
   });
+}
+
+export function tryUseWorkspaceController(workspaceId: string): IController | undefined {
+  return tryUseWorkspaceControllerSelector(workspaceId, (c) => c);
 }
 
 export function useWorkspaceControllerSelector<T>(workspaceId: string, sel: (controller: IController) => T): T {

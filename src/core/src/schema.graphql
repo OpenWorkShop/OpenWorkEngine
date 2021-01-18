@@ -39,12 +39,37 @@ type AppUpdates {
     prereleases: Boolean!
 }
 
+type ApplicatorConfig {
+    feedRate: Decimal!
+    isFloodCoolantEnabled: Boolean!
+    isMistCoolantEnabled: Boolean!
+    spinSpeed: Decimal!
+    temperature: Decimal
+    tool: String!
+}
+
 type CommandSettings {
     commands: String!
     enabled: Boolean!
     id: String!
     mtime: Long!
     title: String!
+}
+
+type Commands {
+    configuration: ControlledMachine!
+    emergencyStop: ControlledMachine!
+    firmware: ControlledMachine!
+    help: ControlledMachine!
+    homing: ControlledMachine!
+    id: String!
+    move(moveCommand: MoveCommandInput!): ControlledMachine!
+    name: String!
+    parameters: ControlledMachine!
+    reset: ControlledMachine!
+    settings: ControlledMachine!
+    status: ControlledMachine!
+    syntax: ProgramSyntax!
 }
 
 type ConnectedPort {
@@ -103,6 +128,16 @@ type MachineAlert {
     name: String!
 }
 
+type MachineApplicatorState {
+    feedRate: Decimal!
+    isFloodCoolantEnabled: Boolean!
+    isMistCoolantEnabled: Boolean!
+    isOn: Boolean!
+    spinDirection: SpinDirection!
+    spinSpeed: Decimal!
+    temperature: Decimal
+}
+
 type MachineAxis {
     accuracy: Decimal!
     id: String!
@@ -132,19 +167,21 @@ type MachineCommand {
     id: String!
     machineProfiles: [MachineProfile!]!
     name: String!
+    syntax: ProgramSyntax!
     value: String!
 }
 
 type MachineCommandSettings {
     id: String!
     name: String!
+    syntax: ProgramSyntax!
     value: String!
 }
 
 type MachineConfiguration {
+    applicator: ApplicatorConfig!
     firmware: MachineDetectedFirmware!
     modals: MachineModals!
-    spindle: SpindleConfig!
 }
 
 type MachineDetectedFirmware {
@@ -205,15 +242,50 @@ type MachineFirmwareSettings implements IMachineFirmwareRequirement {
     suggestedVersion: Decimal!
 }
 
+type MachineModalStateOfAxisPlane {
+    code: String
+    value: AxisPlane!
+}
+
+type MachineModalStateOfFeedRateMode {
+    code: String
+    value: FeedRateMode!
+}
+
+type MachineModalStateOfMachineMotionType {
+    code: String
+    value: MachineMotionType!
+}
+
+type MachineModalStateOfMachineProgramState {
+    code: String
+    value: MachineProgramState!
+}
+
+type MachineModalStateOfMovementDistanceType {
+    code: String
+    value: MovementDistanceType!
+}
+
+type MachineModalStateOfSpinDirection {
+    code: String
+    value: SpinDirection!
+}
+
+type MachineModalStateOfUnitType {
+    code: String
+    value: UnitType!
+}
+
 type MachineModals {
-    arcDistance: MovementDistanceType!
-    distance: MovementDistanceType!
-    feedRate: FeedRateMode!
-    motion: MachineMotionType!
-    plane: AxisPlane!
-    programState: MachineProgramState!
-    spindleDirection: SpinDirection!
-    units: UnitType!
+    arcDistance: MachineModalStateOfMovementDistanceType
+    distance: MachineModalStateOfMovementDistanceType
+    feedRate: MachineModalStateOfFeedRateMode
+    motion: MachineModalStateOfMachineMotionType!
+    plane: MachineModalStateOfAxisPlane
+    programState: MachineModalStateOfMachineProgramState
+    spindleDirection: MachineModalStateOfSpinDirection!
+    units: MachineModalStateOfUnitType
     workCoordinateSystem: Int!
 }
 
@@ -253,8 +325,6 @@ type MachinePosition {
     a: Decimal
     b: Decimal
     c: Decimal
-    e: Decimal
-    isValid: Boolean!
     x: Decimal
     y: Decimal
     z: Decimal
@@ -315,24 +385,15 @@ type MachineSpecSettings {
     value: Decimal!
 }
 
-type MachineSpindle {
-    direction: SpinDirection!
-    feedRate: Decimal!
-    isFloodCoolantEnabled: Boolean!
-    isMistCoolantEnabled: Boolean!
-    isOn: Boolean!
-    spinSpeed: Decimal!
-}
-
 type MachineStatus {
     activePins: [MachinePinType!]!
     activityState: ActiveState!
     alarm: MachineAlert
+    applicator: MachineApplicatorState!
     buffer: MachineBuffer!
     error: MachineAlert
     machinePosition: MachinePosition!
     overrides: MachineOverrides
-    spindle: MachineSpindle!
     workCoordinateOffset: MachinePosition
     workPosition: MachinePosition
 }
@@ -357,6 +418,7 @@ type Mutation {
     changeWorkspacePort(portName: String!, workspaceId: String!): Workspace!
     closePort(portName: String!): SystemPort!
     closeWorkspace(workspaceId: String!): Workspace!
+    commandMachine(portName: String!): Commands!
     createWorkspace(workspaceSettings: WorkspaceSettingsInput!): Workspace!
     deleteWorkspace(workspaceId: String!): Workspace!
     openPort(firmware: FirmwareRequirementInput!, options: SerialPortOptionsInput!, portName: String!): SystemPort!
@@ -414,7 +476,6 @@ type PortStatus {
 }
 
 type ProgramFile {
-    instructions: [ProgramInstruction!]!
     name: String!
     syntax: ProgramSyntax!
 }
@@ -424,17 +485,6 @@ type ProgramFileUpload {
     name: String!
     size: Int!
     type: String!
-}
-
-type ProgramInstruction {
-    comment: String
-    instructionType: ProgramInstructionType!
-    parameters: [ProgramParameter!]!
-}
-
-type ProgramParameter {
-    key: String!
-    value: String!
 }
 
 type Query {
@@ -450,14 +500,6 @@ type Query {
     me: UserProfile
     programs: [ProgramFile!]!
     userProfile(id: String!): UserProfile!
-}
-
-type SpindleConfig {
-    feedRate: Decimal!
-    isFloodCoolantEnabled: Boolean!
-    isMistCoolantEnabled: Boolean!
-    spinSpeed: Decimal!
-    tool: String!
 }
 
 type Subscription {
@@ -531,6 +573,9 @@ enum ApplyPolicy {
 }
 
 enum AxisName {
+    A
+    B
+    C
     X
     Y
     Z
@@ -674,17 +719,8 @@ enum PortState {
     UNPLUGGED
 }
 
-enum ProgramInstructionType {
-    INVALID
-    MACHINE_CONFIGURATION
-    MOVE_ABSOLUTE
-    MOVE_RELATIVE
-    NONE
-    TOOL_CHANGE
-}
-
 enum ProgramSyntax {
-    GCODE
+    G_CODE
 }
 
 enum SpinDirection {
@@ -743,6 +779,7 @@ input MachineAxisSettingsInput {
 input MachineCommandSettingsInput {
     id: String!
     name: String!
+    syntax: ProgramSyntax!
     value: String!
 }
 
@@ -793,6 +830,17 @@ input MachineSpecSettingsInput {
     id: String!
     specType: MachineSpecType!
     value: Decimal!
+}
+
+input MoveCommandInput {
+    a: Decimal
+    b: Decimal
+    c: Decimal
+    distanceType: MovementDistanceType!
+    motionType: MachineMotionType!
+    x: Decimal
+    y: Decimal
+    z: Decimal
 }
 
 input ProgramFileUploadInput {

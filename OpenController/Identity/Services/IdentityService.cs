@@ -21,7 +21,7 @@ namespace OpenWorkEngine.OpenController.Identity.Services {
 
     private OpenControllerContext Context { get; }
 
-    public ILogger Log { get; }
+    internal ILogger Log { get; }
 
     // Exchange a token for a standard AspNetCore identity object.
     public async Task<ClaimsPrincipal?> ClaimIdentity(string token) {

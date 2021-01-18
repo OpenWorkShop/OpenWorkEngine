@@ -1,4 +1,4 @@
-import {CssBaseline, StylesProvider} from '@material-ui/core';
+import { StylesProvider} from '@material-ui/core';
 import React from 'react';
 import { OpenWorkShopProvider } from '../components';
 import configureStore from './redux';
@@ -10,8 +10,8 @@ import {IHaveOpenControllerDeployment} from './Context';
 import ControllerMain from './ControllerMain';
 import {ICustomizedOpenWorkShop, IOpenWorkShop} from '../';
 import useLogger from '../utils/logging/UseLogger';
-import {BackendConnection} from '../api';
-import {BrowserRouter as Router} from 'react-router-dom';
+import { BackendConnection} from '../api';
+import { BrowserRouter as Router} from 'react-router-dom';
 import analytics from './analytics';
 
 const container = document.createElement('div');

@@ -1,4 +1,5 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import { rowAlternateCss } from '../../themes';
 
 const padding = 2;
 
@@ -12,16 +13,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.background.default,
   },
   cardFooter: {
+    ...rowAlternateCss,
     justifyContent: 'center',
     margin: 0,
-    backgroundColor: theme.palette.background.default,
   },
   root: {
     margin: theme.spacing(4),
     minWidth: 300,
   },
   content: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(padding),
     paddingRight: theme.spacing(4),
     paddingLeft: theme.spacing(4),

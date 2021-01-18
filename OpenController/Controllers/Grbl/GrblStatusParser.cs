@@ -12,7 +12,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Grbl {
   /// <summary>
   ///   Grbl Status includes the GrblState (Active, Idle, etc.) as well as one or more arguments (WPos, MPos, etc.)
   /// </summary>
-  public class GrblStatusParser : RegexParser {
+  internal class GrblStatusParser : RegexParser {
     public GrblStatusParser() : base(@"^<(?<state>[\w:]+)(?<data>.*)>$", OnData) { }
 
     private static void OnData(Controller? controller, ControlledMachine machine, Dictionary<string, string> values) {
@@ -21,6 +21,8 @@ namespace OpenWorkEngine.OpenController.Controllers.Grbl {
 
       string? data = values["data"];
       if (data == null || data.Length <= 0) return;
+
+      int origStatusHash = machine.Status.GetHashCode();
 
       // Extract the various arguments
       string pattern = @"(?<key>[a-zA-Z]+)(:(?<value>[0-9\.\-\w]+(,[0-9\.\-]+){0,5}))?";
@@ -35,8 +37,10 @@ namespace OpenWorkEngine.OpenController.Controllers.Grbl {
       }
 
       // Broadcast status change.
-      machine.Log.Debug("[STATUS] {@status}", machine.Status);
-      controller?.Manager.GetSubscriptionTopic(MachineTopic.Status).Emit(machine);
+      if (machine.Status.GetHashCode() != origStatusHash) {
+        machine.Log.Debug("[STATUS] {@status}", machine.Status);
+        controller?.Manager.GetSubscriptionTopic(MachineTopic.Status).Emit(machine);
+      }
     }
 
     private static void ApplyState(string grblStateStr, ControlledMachine machine) {
@@ -82,13 +86,13 @@ namespace OpenWorkEngine.OpenController.Controllers.Grbl {
         // Feed Rate (v0.9, v1.1)
         // F:500 contains real-time feed rate data as the value.
         // This appears only when VARIABLE_SPINDLE is disabled.
-        machine.Status.Spindle.FeedRate = GetNumbers(value)[0];
+        machine.Status.Applicator.FeedRate = GetNumbers(value)[0];
       } else if (key.Equals("FS")) {
         // Current Feed and Speed (v1.1)
         // FS:500,8000 contains real-time feed rate, followed by spindle speed, data as the values.
         decimal[] nums = GetNumbers(value, 2);
-        machine.Status.Spindle.FeedRate = nums[0];
-        machine.Status.Spindle.SpinSpeed = nums[1];
+        machine.Status.Applicator.FeedRate = nums[0];
+        machine.Status.Applicator.SpinSpeed = nums[1];
       } else if (key.Equals("Lim")) {
         // Limit Pins (v0.9)
         // X_AXIS is (1<<0) or bit 0
@@ -134,14 +138,14 @@ namespace OpenWorkEngine.OpenController.Controllers.Grbl {
         //   - C indicates spindle is enabled in the CCW direction. This does not appear with S.
         else if (chars.Contains('C')) dir = SpinDirection.CCW;
 
-        if (dir != SpinDirection.None) machine.Status.Spindle.Direction = dir;
+        if (dir != SpinDirection.None) machine.Status.Applicator.SpinDirection = dir;
 
         if (chars.Contains('F') || chars.Contains('M')) {
           //   - F indicates flood coolant is enabled.
-          machine.Status.Spindle.IsFloodCoolantEnabled = chars.Contains('F');
+          machine.Status.Applicator.IsFloodCoolantEnabled = chars.Contains('F');
 
           //   - M indicates mist coolant is enabled.
-          machine.Status.Spindle.IsMistCoolantEnabled = chars.Contains('M');
+          machine.Status.Applicator.IsMistCoolantEnabled = chars.Contains('M');
         }
       } else {
         throw new ArgumentException($"Invalid Grbl Status Argument: '{key}' = {value}");

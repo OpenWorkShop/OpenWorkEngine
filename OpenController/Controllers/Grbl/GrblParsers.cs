@@ -15,8 +15,6 @@ namespace OpenWorkEngine.OpenController.Controllers.Grbl {
           machine.Log.Information("[WELCOME] {keys} {@vars}", vars.Keys, vars);
         });
 
-      parsers.Polls.Add(new CommandResponsePoll(MachineCommandType.QueryStatus, new GrblStatusParser()));
-      parsers.Polls.Add(new CommandResponsePoll(MachineCommandType.QueryState, new GrblConfigParser()));
       return parsers;
     }
   }

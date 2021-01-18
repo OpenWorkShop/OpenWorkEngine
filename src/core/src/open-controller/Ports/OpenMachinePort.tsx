@@ -15,7 +15,7 @@ import {
 } from '../graphql';
 import PortSelect from './PortSelect';
 import {useSystemPorts} from '../Ports';
-import useStyles from './Styles';
+import useStyles from './styles';
 import PortConnectionSteps from './PortConnectionSteps';
 import {AlertList} from '../../components/Alerts';
 import {useTrans} from '../Context';

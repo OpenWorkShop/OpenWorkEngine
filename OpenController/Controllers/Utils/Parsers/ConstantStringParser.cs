@@ -5,7 +5,7 @@ using OpenWorkEngine.OpenController.Controllers.Services;
 using OpenWorkEngine.OpenController.Machines.Models;
 
 namespace OpenWorkEngine.OpenController.Controllers.Utils.Parsers {
-  public class ConstantStringParser : Parser {
+  internal class ConstantStringParser : Parser {
     private readonly Action<ControlledMachine> _applyPatch;
 
     private readonly bool _ignoreCase;

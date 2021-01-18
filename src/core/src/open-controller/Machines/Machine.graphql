@@ -26,10 +26,44 @@ fragment DetectedFirmware on MachineDetectedFirmware {
 }
 
 fragment MachineModals on MachineModals {
-    units
+    motion {
+        code
+        value
+    }
+    plane {
+        code
+        value
+    }
+    distance {
+        code
+        value
+    }
+    arcDistance {
+        code
+        value
+    }
+    feedRate {
+        code
+        value
+    }
+    units {
+        code
+        value
+    }
+    # ...
+    programState {
+        code
+        value
+    }
+    spindleDirection {
+        code
+        value
+    }
+    # ...
+    workCoordinateSystem
 }
 
-fragment SpindleConfig on SpindleConfig {
+fragment ApplicatorConfig on ApplicatorConfig {
     tool
     spinSpeed
     feedRate
@@ -44,8 +78,8 @@ fragment MachineConfig on MachineConfiguration {
     modals {
         ...MachineModals
     }
-    spindle {
-        ...SpindleConfig
+    applicator {
+        ...ApplicatorConfig
     }
 }
 
@@ -59,8 +93,9 @@ fragment MachinePosition on MachinePosition {
     x
     y
     z
-    e
-    isValid
+    a
+    b
+    c
 }
 
 fragment MachineBuffer on MachineBuffer {
@@ -69,9 +104,9 @@ fragment MachineBuffer on MachineBuffer {
     availableSend
 }
 
-fragment SpindleState on MachineSpindle {
-    direction
+fragment MachineApplicatorState on MachineApplicatorState {
     isOn
+    spinDirection
     spinSpeed
     feedRate
     isFloodCoolantEnabled
@@ -105,8 +140,8 @@ fragment MachineStatus on MachineStatus {
         ...MachineBuffer
     }
     activePins
-    spindle {
-        ...SpindleState
+    applicator {
+        ...MachineApplicatorState
     }
     overrides {
         ...MachineOverrides
@@ -145,5 +180,27 @@ subscription MachineSettings($portName: String!) {
         settings {
             ...MachineSetting
         }
+    }
+}
+
+# -- commands
+mutation EmergencyStopMachine($portName: String!) {
+    command: commandMachine(portName: $portName) {
+        id
+        machine: emergencyStop { ...ControlledMachine }
+    }
+}
+
+mutation ResetMachine($portName: String!) {
+    command: commandMachine(portName: $portName) {
+        id
+        machine: reset { ...ControlledMachine }
+    }
+}
+
+mutation MoveMachine($portName: String!, $moveCommand: MoveCommandInput!) {
+    command: commandMachine(portName: $portName) {
+        id
+        machine: move(moveCommand: $moveCommand) { ...ControlledMachine }
     }
 }

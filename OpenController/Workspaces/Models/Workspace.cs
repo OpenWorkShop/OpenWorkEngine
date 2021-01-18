@@ -62,7 +62,7 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
 
     private UnitType GetUnits() {
       UnitType def = Settings.PreferImperial ? UnitType.Imperial : UnitType.Metric;
-      UnitType movementUnits = Port?.Connection?.Machine.Configuration.Modals.Units ?? def;
+      UnitType movementUnits = Port?.Connection?.Machine.Configuration.Modals.Units?.Value ?? def;
       return movementUnits == UnitType.Imperial ? UnitType.Imperial : UnitType.Metric;
     }
 

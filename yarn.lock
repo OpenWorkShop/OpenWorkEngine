@@ -2578,6 +2578,9 @@
   dependencies:
     mkdirp "^1.0.4"
 
+"@openworkshop/core@./src/core/dist":
+  version "0.0.0"
+
 "@pmmmwh/react-refresh-webpack-plugin@0.4.2":
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.4.2.tgz#1f9741e0bde9790a0e13272082ed7272a083620d"

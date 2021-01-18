@@ -4,10 +4,10 @@ using OpenWorkEngine.OpenController.Controllers.Services;
 using OpenWorkEngine.OpenController.Controllers.Utils.Parsers;
 using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Models;
-using OpenWorkEngine.OpenController.Programs.Syntax.GCode;
+using OpenWorkEngine.OpenController.Syntax.GCode;
 
 namespace OpenWorkEngine.OpenController.Controllers.Grbl {
-  public class GrblConfigParser : RegexParser {
+  internal class GrblConfigParser : RegexParser {
     public GrblConfigParser() : base(@"^\[(?:GC:)?(?<data>(?:[a-zA-Z][0-9]+(?:\.[0-9]*)?\s*)+)\]$", OnData) { }
 
     private static void OnData(Controller? controller, ControlledMachine machine, Dictionary<string, string> values) {

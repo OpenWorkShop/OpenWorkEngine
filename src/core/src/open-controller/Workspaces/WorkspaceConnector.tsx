@@ -9,7 +9,7 @@ import useLogger from '../../utils/logging/UseLogger';
 import OpenWorkspaceButton from './OpenWorkspaceButton';
 import {useWorkspace} from './Hooks';
 import WorkBar from '../WorkBar';
-import useStyles from './Styles';
+import useStyles from './styles';
 
 type Props = IHaveWorkspaceId & IMaybeHavePortStatus;
 

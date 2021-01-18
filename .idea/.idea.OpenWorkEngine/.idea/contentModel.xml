@@ -33,9 +33,15 @@
         <e p=".gitignore" t="Include" />
         <e p=".makerverse" t="Include" />
         <e p=".travis.yml" t="Include" />
-        <e p="App/node_modules/@fortawesome/free-brands-svg-icons" t="IncludeRecursive" />
-        <e p="App/node_modules/@fortawesome/free-regular-svg-icons" t="IncludeRecursive" />
-        <e p="App/node_modules/@fortawesome/free-solid-svg-icons" t="IncludeRecursive" />
+        <e p="App" t="Include">
+          <e p="node_modules/@fortawesome/free-brands-svg-icons" t="IncludeRecursive" />
+          <e p="node_modules/@fortawesome/free-regular-svg-icons" t="IncludeRecursive" />
+          <e p="node_modules/@fortawesome/free-solid-svg-icons" t="IncludeRecursive" />
+          <e p="src" t="Include">
+            <e p="makerverse-deployment.ts" t="Include" />
+            <e p="react-app-env.d.ts" t="Include" />
+          </e>
+        </e>
         <e p="appsettings.Development.json" t="Include" />
         <e p="appsettings.json" t="Include" />
         <e p="appsettings.Production.json" t="Include" />
@@ -359,11 +365,12 @@
       <e p="node_modules/@material-ui/types" t="IncludeRecursive" />
       <e p="node_modules/@material-ui/unstyled" t="IncludeRecursive" />
       <e p="node_modules/@material-ui/Utils" t="IncludeRecursive" />
+      <e p="node_modules/@openworkshop/core" t="IncludeRecursive" />
       <e p="node_modules/@pmmmwh/react-refresh-webpack-plugin" t="IncludeRecursive" />
       <e p="node_modules/@popperjs/core" t="IncludeRecursive" />
       <e p="node_modules/@reduxjs/toolkit" t="IncludeRecursive" />
-      <e p="node_modules/@rollup/plugin-commonjs" t="IncludeRecursive" />
       <e p="node_modules/@rollup/plugin-node-resolve" t="IncludeRecursive" />
+      <e p="node_modules/@rollup/plugin-replace" t="IncludeRecursive" />
       <e p="node_modules/@rollup/pluginutils" t="IncludeRecursive" />
       <e p="node_modules/@svgr/core" t="IncludeRecursive" />
       <e p="node_modules/@svgr/plugin-prettier" t="IncludeRecursive" />
@@ -509,7 +516,6 @@
       <e p="node_modules/is-path-in-cwd" t="IncludeRecursive" />
       <e p="node_modules/is-path-inside" t="IncludeRecursive" />
       <e p="node_modules/is-promise" t="IncludeRecursive" />
-      <e p="node_modules/is-reference" t="IncludeRecursive" />
       <e p="node_modules/iterall" t="IncludeRecursive" />
       <e p="node_modules/jest" t="IncludeRecursive" />
       <e p="node_modules/jest-changed-files" t="IncludeRecursive" />
@@ -603,7 +609,7 @@
       <e p="node_modules/resolve-from" t="IncludeRecursive" />
       <e p="node_modules/rifm" t="IncludeRecursive" />
       <e p="node_modules/rollup" t="IncludeRecursive" />
-      <e p="node_modules/rollup-plugin-typescript2" t="IncludeRecursive" />
+      <e p="node_modules/rollup-plugin-terser" t="IncludeRecursive" />
       <e p="node_modules/rollup-pluginutils" t="IncludeRecursive" />
       <e p="node_modules/rxjs" t="IncludeRecursive" />
       <e p="node_modules/sentence-case" t="IncludeRecursive" />
@@ -718,23 +724,34 @@
           </e>
           <e p="grbl" t="Include">
             <e p="GrblActiveState.cs" t="Include" />
-            <e p="GrblCommander.cs" t="Include" />
+            <e p="GrblCommands.cs" t="Include" />
             <e p="GrblConfigParser.cs" t="Include" />
             <e p="GrblController.cs" t="Include" />
             <e p="GrblParsers.cs" t="Include" />
             <e p="GrblStatusParser.cs" t="Include" />
             <e p="GrblVersionParser.cs" t="Include" />
             <e p="maslow" t="Include">
+              <e p="MaslowCommands.cs" t="Include" />
               <e p="MaslowController.cs" t="Include" />
             </e>
+          </e>
+          <e p="Interfaces" t="Include">
+            <e p="IControllerInstruction.cs" t="Include" />
+          </e>
+          <e p="Messages" t="Include">
+            <e p="MoveCommand.cs" t="Include" />
+          </e>
+          <e p="Models" t="Include">
+            <e p="ControllerScript.cs" t="Include" />
+            <e p="TerminalCommand.cs" t="Include" />
           </e>
           <e p="Services" t="Include">
             <e p="Controller.cs" t="Include" />
             <e p="ControllerManager.cs" t="Include" />
           </e>
           <e p="Utils" t="Include">
-            <e p="Commander.cs" t="Include" />
-            <e p="CommandResponsePoll.cs" t="Include" />
+            <e p="Commands.cs" t="Include" />
+            <e p="ControllerCommand.cs" t="Include" />
             <e p="Parsers" t="Include">
               <e p="ConstantStringParser.cs" t="Include" />
               <e p="Parser.cs" t="Include" />
@@ -742,6 +759,7 @@
               <e p="RegexParser.cs" t="Include" />
             </e>
             <e p="SerialBuffer.cs" t="Include" />
+            <e p="StatusPoll.cs" t="Include" />
           </e>
         </e>
         <e p="Identity" t="Include">
@@ -848,21 +866,25 @@
             <e p="FirmwareRequirementExtensions.cs" t="Include" />
           </e>
           <e p="Graph" t="Include">
+            <e p="MachinesMutation.cs" t="Include" />
             <e p="MachinesSchema.cs" t="Include" />
             <e p="MachinesSubscription.cs" t="Include" />
           </e>
           <e p="Interfaces" t="Include">
-            <e p="ICommandMachines.cs" t="Include" />
             <e p="IMachineConnectionSettings.cs" t="Include" />
             <e p="IMachineFirmwareRequirement.cs" t="Include" />
           </e>
           <e p="Messages" t="Include">
             <e p="MachineConnectionOptions.cs" t="Include" />
+            <e p="MachineModalState.cs" t="Include" />
             <e p="MachinePatch.cs" t="Include" />
           </e>
           <e p="Models" t="Include">
+            <e p="ApplicatorConfig.cs" t="Include" />
+            <e p="ApplicatorState.cs" t="Include" />
             <e p="ControlledMachine.cs" t="Include" />
             <e p="MachineAlert.cs" t="Include" />
+            <e p="MachineApplicatorState.cs" t="Include" />
             <e p="MachineBuffer.cs" t="Include" />
             <e p="MachineConfiguration.cs" t="Include" />
             <e p="MachineDetectedFirmware.cs" t="Include" />
@@ -870,10 +892,7 @@
             <e p="MachineOverrides.cs" t="Include" />
             <e p="MachinePosition.cs" t="Include" />
             <e p="MachineSetting.cs" t="Include" />
-            <e p="MachineSpindle.cs" t="Include" />
             <e p="MachineStatus.cs" t="Include" />
-            <e p="SpindleConfig.cs" t="Include" />
-            <e p="SpindleState.cs" t="Include" />
           </e>
         </e>
         <e p="obj" t="ExcludeRecursive">
@@ -920,14 +939,15 @@
         </e>
         <e p="programs" t="Include">
           <e p="Enums" t="Include">
-            <e p="GCodeLetter.cs" t="Include" />
             <e p="ProgramInstructionType.cs" t="Include" />
-            <e p="ProgramSyntax.cs" t="Include" />
           </e>
           <e p="Graph" t="Include">
             <e p="ProgramsMutation.cs" t="Include" />
             <e p="ProgramsQuery.cs" t="Include" />
             <e p="ProgramsSchema.cs" t="Include" />
+          </e>
+          <e p="Interfaces" t="Include">
+            <e p="IProgramSource.cs" t="Include" />
           </e>
           <e p="Models" t="Include">
             <e p="ProgramFile.cs" t="Include" />
@@ -937,15 +957,6 @@
           </e>
           <e p="Services" t="Include">
             <e p="ProgramFileManager.cs" t="Include" />
-          </e>
-          <e p="Syntax" t="Include">
-            <e p="GCode" t="Include">
-              <e p="GCodeBlock.cs" t="Include" />
-              <e p="GCodeProgram.cs" t="Include" />
-              <e p="GCodeWord.cs" t="Include" />
-              <e p="MachineGCodeExtensions.cs" t="Include" />
-            </e>
-            <e p="SyntaxChunk.cs" t="Include" />
           </e>
         </e>
         <e p="Settings" t="Include">
@@ -965,6 +976,18 @@
             <e p="MountPointSettings.cs" t="Include" />
             <e p="OpenControllerSettings.cs" t="Include" />
           </e>
+        </e>
+        <e p="Syntax" t="Include">
+          <e p="GCode" t="Include">
+            <e p="GCodeBlock.cs" t="Include" />
+            <e p="GCodeLetter.cs" t="Include" />
+            <e p="GCodeProgram.cs" t="Include" />
+            <e p="GCodeWord.cs" t="Include" />
+            <e p="MachineGCodeExtensions.cs" t="Include" />
+            <e p="ProgramSourceExtensions.cs" t="Include" />
+          </e>
+          <e p="ProgramSyntax.cs" t="Include" />
+          <e p="SyntaxChunk.cs" t="Include" />
         </e>
         <e p="Workspaces" t="Include">
           <e p="Enums" t="Include">
@@ -997,6 +1020,7 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
           <e p="GrblTests.cs" t="Include" />
+          <e p="InstructionTests.cs" t="Include" />
           <e p="MaslowTests.cs" t="Include" />
         </e>
         <e p="files" t="Include">
@@ -1247,11 +1271,6 @@
       <e p="OWE" t="Include" />
       <e p="OWS" t="Include" />
       <e p="packages" t="ExcludeRecursive" />
-      <e p="src/core/node_modules/@fortawesome/free-brands-svg-icons" t="IncludeRecursive" />
-      <e p="src/core/node_modules/@fortawesome/free-regular-svg-icons" t="IncludeRecursive" />
-      <e p="src/core/node_modules/@fortawesome/free-solid-svg-icons" t="IncludeRecursive" />
-      <e p="src/core/node_modules/husky" t="IncludeRecursive" />
-      <e p="src/core/node_modules/material-ui-color" t="IncludeRecursive" />
     </e>
   </component>
 </project>

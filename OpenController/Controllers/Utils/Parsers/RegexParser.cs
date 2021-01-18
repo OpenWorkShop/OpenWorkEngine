@@ -10,7 +10,7 @@ using ParserAction = System.Action<
 >;
 
 namespace OpenWorkEngine.OpenController.Controllers.Utils.Parsers {
-  public class RegexParser : Parser {
+  internal class RegexParser : Parser {
     private readonly ParserAction _handler;
     private readonly string _pattern;
 

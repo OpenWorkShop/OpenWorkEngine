@@ -4,7 +4,7 @@ namespace OpenWorkEngine.OpenController.Machines.Enums {
     GetFirmware,
     GetSettings,
     GetParameters,
-    QueryStatus, // $G
-    QueryState   // ?
+    QueryStatus,  // $G
+    QueryState,   // ?
   }
 }

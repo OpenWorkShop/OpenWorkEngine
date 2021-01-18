@@ -12,7 +12,7 @@ import ToolbarCard from '../../components/Cards/ToolbarCard';
 import ThreeColumns from '../../components/Layout/ThreeColumns';
 import React, { FunctionComponent } from 'react';
 import {OpenControllerUser} from '../graphql';
-import useStyles from './Styles';
+import useStyles from './styles';
 import analytics from '../analytics';
 import ReactGA from 'react-ga';
 import {useOpenControllerSettings, useTrans, useDocumentationUrl} from '../Context';

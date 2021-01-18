@@ -8,7 +8,7 @@ using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Models;
 
 namespace OpenWorkEngine.OpenController.Controllers.Grbl {
-  public class GrblVersionParser : RegexParser {
+  internal class GrblVersionParser : RegexParser {
     public GrblVersionParser() : base(@"^\[(?:VER:)(?<data>.+)\]$", OnData) { }
 
     private static void OnData(Controller? controller, ControlledMachine machine, Dictionary<string, string> values) {

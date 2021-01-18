@@ -1,15 +1,20 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using OpenWorkEngine.OpenController.Controllers.Exceptions;
+using OpenWorkEngine.OpenController.Controllers.Interfaces;
+using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.Controllers.Utils;
 using OpenWorkEngine.OpenController.Controllers.Utils.Parsers;
 using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
+using OpenWorkEngine.OpenController.MachineProfiles.Interfaces;
 using OpenWorkEngine.OpenController.Machines.Extensions;
 using OpenWorkEngine.OpenController.Machines.Interfaces;
 using OpenWorkEngine.OpenController.Machines.Models;
 using OpenWorkEngine.OpenController.Ports.Enums;
 using OpenWorkEngine.OpenController.Ports.Models;
+using OpenWorkEngine.OpenController.Syntax.GCode;
 using Serilog;
 
 namespace OpenWorkEngine.OpenController.Controllers.Services {
@@ -22,16 +27,15 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       Manager = controllerManager;
       Connection = connection;
       Buffer = new SerialBuffer(this);
-      Commander = new Commander(this);
       CreatedAt = DateTime.Now;
     }
 
     internal ControllerManager Manager { get; }
 
-    public ILogger Log => _logger ??= Manager.Log
-                                             .ForContext("ControllerType", ControllerType.ToString())
-                                             .ForContext("Buffer", Buffer)
-                                             .ForContext("Connection", Connection);
+    internal ILogger Log => _logger ??= Manager.Log
+                                               .ForContext("ControllerType", ControllerType.ToString())
+                                               .ForContext("Buffer", Buffer)
+                                               .ForContext("Connection", Connection);
 
     public abstract MachineControllerType ControllerType { get; }
 
@@ -39,9 +43,11 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
 
     internal SerialBuffer Buffer { get; }
 
-    public Commander Commander { get; }
+    internal abstract Commands Commands { get; }
 
-    public ParserSet Parsers { get; } = new();
+    internal ParserSet Parsers { get; } = new();
+
+    internal List<StatusPoll> Polls { get; } = new();
 
     internal DateTime CreatedAt { get; }
 
@@ -58,13 +64,38 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
 
     protected abstract Task RunStartupCommands();
 
+    /// <summary>
+    /// Actually sends an instruction to the serial buffer, first compiling its code with the provided arguments.
+    /// </summary>
+    /// <param name="instruction">Some templated instruction.</param>
+    /// <param name="args">Object with field/props for the instruction.</param>
+    /// <returns>Task from the Buffer.</returns>
+    internal Task Instruct(IControllerInstruction instruction, object? args = null) {
+      string compiled = instruction.Compile(args);
+      string s = instruction.InstructionSource;
+      if (!s.Equals(nameof(Commands.GetStatus)) && !s.Equals(nameof(Commands.GetConfiguration))) {
+        Log.Debug("[WRITE] [{src}] {cmd}", s, compiled);
+      } else {
+        Log.Verbose("[WRITE] [{src}] {cmd}", s, compiled);
+      }
+      return instruction.Inline ? Buffer.Write(compiled) : Buffer.WriteLine(compiled);
+    }
+
+    internal async Task<ControlledMachine> Execute(ControllerScript script, object? args = null) {
+      // Execute each instruction in the script.
+      foreach (IControllerInstruction instruction in script.Instructions) {
+        await Instruct(instruction, args);
+      }
+      return Connection.Machine;
+    }
+
     // Background thread "main" function for this port/controller combo.
     // Coordinates all serial I/O.
     private async Task InfiniteWorkLoop() {
       while (IsActive) {
-        foreach (CommandResponsePoll poll in Parsers.Polls) await poll.Invoke(this);
         int readCharacters = await Buffer.TryRead();
         Log.Verbose("[WORK] I:{characters}", readCharacters);
+        foreach (StatusPoll poll in Polls) await poll.Invoke();
       }
       Log.Debug("[WORK] termination state: {state}", Connection.Port.State);
     }
@@ -149,8 +180,17 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
         Log.Verbose("Whitespace line: {line}", line);
         return;
       }
-      Log.Debug("[READ] {line}", line);
-      await Parsers.Update(this, Connection.Machine, line);
+      if (line == "ok") {
+        Log.Verbose("[READ] {line}", line);
+      } else {
+        Log.Debug("[READ] {line}", line);
+      }
+      foreach (StatusPoll poll in Polls) {
+        await poll.UpdateMachine(line);
+      }
+      foreach (Parser parser in Parsers.ToList()) {
+        await parser.UpdateMachine(this, Connection.Machine, line);
+      }
       await ParseLine(line);
     }
 

@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading.Tasks;
+using OpenWorkEngine.OpenController.Controllers.Interfaces;
+using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.Controllers.Services;
 using OpenWorkEngine.OpenController.Ports.Enums;
 using OpenWorkEngine.OpenController.Ports.Models;
@@ -61,20 +64,27 @@ namespace OpenWorkEngine.OpenController.Controllers.Utils {
       return 0;
     }
 
-    internal Task Write(string text) {
-      if (text.EndsWith('\n') || text.EndsWith('\r')) {
-        WriteLine(text);
-      } else {
-        Log.Debug("{connection} > {text}", Connection.ToString(), text);
-        Connection.Port.SerialPort.Write(text);
+    internal async Task Write(string text) {
+      // Invariant: the write function should only write raw text which does NOT contain a line break.
+      string[] lines = text.Split(new char[] {'\n', '\r'});
+      for (int i = 0; i < (lines.Length - 1); i++) {
+        await WriteLine(lines[i]);
       }
-      return Task.CompletedTask;
+
+      string rawText = lines.Last();
+      Log.Verbose("[WRITE] {connection} > {text}", Connection.ToString(), rawText);
+      Connection.Port.SerialPort.Write(rawText);
+      Connection.Status.CharactersWritten += rawText.Length;
     }
 
-    internal void WriteLine(string line) {
+    internal Task WriteLine(string line) {
       line = line.Trim();
-      Log.Debug("{connection} >> {line}", Connection.ToString(), line);
+      if (line.Length <= 0) return Task.CompletedTask;
+      Log.Verbose("[WRITE] {connection} >> {line}", Connection.ToString(), line);
       Connection.Port.SerialPort.WriteLine(line);
+      Connection.Status.CharactersWritten += line.Length + 1; // Account for newline.
+      Connection.Status.LinesWritten++;
+      return Task.CompletedTask;
     }
   }
 }

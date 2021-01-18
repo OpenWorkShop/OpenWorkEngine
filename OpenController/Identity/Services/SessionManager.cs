@@ -8,7 +8,7 @@ namespace OpenWorkEngine.OpenController.Identity.Services {
   public class SessionManager {
     public SessionManager(ILogger logger) => Log = logger.ForContext(typeof(SessionManager));
 
-    public ILogger Log { get; }
+    internal ILogger Log { get; }
 
     public ConcurrentDictionary<string, OpenControllerSession> Sessions { get; } = new();
 

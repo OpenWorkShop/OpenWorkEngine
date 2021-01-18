@@ -1,6 +1,6 @@
 import {FormControl, FormControlLabel, Grid, Checkbox, DialogTitle, Paper } from '@material-ui/core';
 import * as React from 'react';
-import useStyles from '../Styles';
+import useStyles from '../styles';
 import {IHaveWorkspace} from '../types';
 import {useTrans} from '../../Context';
 import { Button, Dialog, DialogActions, DialogContentText, DialogContent } from '@material-ui/core';

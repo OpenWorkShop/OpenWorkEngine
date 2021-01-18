@@ -37,7 +37,7 @@ namespace OpenWorkEngine.OpenController.Lib.Filesystem {
 
     public TJson? Data { get; protected set; }
 
-    public ILogger Log { get; }
+    internal ILogger Log { get; }
 
     public void Dispose() {
       _watcher.Dispose();

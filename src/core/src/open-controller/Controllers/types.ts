@@ -31,4 +31,3 @@ export interface IMachineStatusUpdate extends IControlledMachineUpdate {
 export interface IMachineConfigUpdate extends IControlledMachineUpdate {
   configuration: MachineConfigFragment;
 }
-

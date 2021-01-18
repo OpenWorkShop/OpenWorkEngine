@@ -8,6 +8,7 @@
     "icons": "cd src/core && node ./generate-icons.js",
     "start": "NODE_OPTIONS=\"--trace-warnings\" PORT=8001 react-scripts start",
     "build": "react-scripts build",
+    "package": "yarn run pkg build core",
     "dev": "concurrently \"yarn run start\" \"yarn run pkg dev core\"",
     "ows-app": "./ci/run-dir.sh \"OpenWorkShop/App\" \"yarn run start\"",
     "ows-server": "./ci/run-dir.sh \"OpenWorkShop\" \"dotnet watch run\"",
@@ -15,6 +16,7 @@
     "backend": "concurrently \"cd Makerverse && dotnet watch run\" \"yarn run ows-server\""
   },
   "resolutions": {
+    "@openworkshop/core": "./src/core/dist",
     "subscriptions-transport-ws": "^0.9.18",
     "nib/stylus": "0.54.8",
     "@material-ui/core": "5.0.0-alpha.23",

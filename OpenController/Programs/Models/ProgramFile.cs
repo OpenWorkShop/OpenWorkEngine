@@ -1,13 +1,21 @@
-using System.Collections.Generic;
-using OpenWorkEngine.OpenController.Programs.Enums;
+using OpenWorkEngine.OpenController.Programs.Interfaces;
+using OpenWorkEngine.OpenController.Syntax;
+using Serilog;
+using Serilog.Core;
 
 namespace OpenWorkEngine.OpenController.Programs.Models {
-  public class ProgramFile {
+  public abstract class ProgramFile : IProgramSource {
+    internal ILogger Log { get; }
+
     // (File) name (without extension)
-    public string Name { get; set; } = default!;
+    public string Name { get; } = default!;
 
-    public ProgramSyntax Syntax { get; set; } = ProgramSyntax.Gcode;
+    public abstract ProgramSyntax Syntax { get; }
 
-    public List<ProgramInstruction> Instructions { get; set; } = new();
+    public ProgramFile(string name, ILogger log) {
+      Name = name;
+      Log = log.ForContext(GetType())
+               .ForContext(Syntax.ToString(), Name);
+    }
   }
 }
