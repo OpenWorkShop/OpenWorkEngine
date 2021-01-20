@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using OpenWorkEngine.OpenController.Controllers.Services;
 using OpenWorkEngine.OpenController.Controllers.Utils.Parsers;
+using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Models;
 
 namespace OpenWorkEngine.OpenController.Controllers.Utils {
@@ -38,16 +40,15 @@ namespace OpenWorkEngine.OpenController.Controllers.Utils {
       LastParseAt = DateTime.MinValue;
     }
 
-    public async Task<bool> UpdateMachine(string line) {
+    public async Task<HashSet<MachineTopic>?> UpdateMachine(string line) {
       ControlledMachine machine = _controller.Connection.Machine;
-      bool parsed = await Parser.UpdateMachine(_controller, machine, line);
-      if (parsed) {
+      HashSet<MachineTopic>? parsed = await Parser.UpdateMachine(_controller, machine, line);
+      if (parsed != null) {
         LastParseAt = DateTime.Now;
         PendingResponse = false;
-        return true;
       }
 
-      return false;
+      return parsed;
     }
 
     public async Task Invoke() {

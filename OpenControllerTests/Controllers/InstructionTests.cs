@@ -33,7 +33,7 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
     [InlineData(GrblCommands.MoveTemplate, "{ \"X\": 2, \"Y\": 5 }")]
     [InlineData(GrblCommands.MoveTemplate, "{ \"G\": 0, \"X\": 2.2, \"Z\": 5.5 }")]
     public void CanCompileInstructions(string template, string? json) {
-      GCodeBlock block = new GCodeBlock(template, "Test");
+      GCodeBlock block = new GCodeBlock(template, "Test", false);
       MoveCommand move = json == null ? new MoveCommand() : JsonConvert.DeserializeObject<MoveCommand>(json);
       string compiled = block.Compile(move);
       compiled.Should().NotBeEmpty()

@@ -43,9 +43,11 @@ type ApplicatorConfig {
     feedRate: Decimal!
     isFloodCoolantEnabled: Boolean!
     isMistCoolantEnabled: Boolean!
+    probePosition: MachinePosition
     spinSpeed: Decimal!
     temperature: Decimal
-    tool: String!
+    toolId: String!
+    toolLengthOffset: MachinePosition
 }
 
 type CommandSettings {
@@ -57,8 +59,8 @@ type CommandSettings {
 }
 
 type Commands {
+    checkCode: ControlledMachine!
     configuration: ControlledMachine!
-    emergencyStop: ControlledMachine!
     firmware: ControlledMachine!
     help: ControlledMachine!
     homing: ControlledMachine!
@@ -66,10 +68,14 @@ type Commands {
     move(moveCommand: MoveCommandInput!): ControlledMachine!
     name: String!
     parameters: ControlledMachine!
+    pause: ControlledMachine!
+    play: ControlledMachine!
     reset: ControlledMachine!
     settings: ControlledMachine!
+    startup: ControlledMachine!
     status: ControlledMachine!
     syntax: ProgramSyntax!
+    unlock: ControlledMachine!
 }
 
 type ConnectedPort {
@@ -182,6 +188,10 @@ type MachineConfiguration {
     applicator: ApplicatorConfig!
     firmware: MachineDetectedFirmware!
     modals: MachineModals!
+    options: MachineOptions
+    referencePosition: [MachinePosition!]!
+    workCoordinates: [MachinePosition!]!
+    workOffset: MachinePosition!
 }
 
 type MachineDetectedFirmware {
@@ -289,6 +299,10 @@ type MachineModals {
     workCoordinateSystem: Int!
 }
 
+type MachineOptions {
+    raw: String!
+}
+
 type MachineOverrides {
     feed: Decimal!
     rapids: Decimal!
@@ -361,6 +375,7 @@ type MachineSetting {
     key: String!
     settingType: MachineSettingType!
     title: String
+    units: MachineSettingUnits!
     value: String!
 }
 
@@ -393,6 +408,7 @@ type MachineStatus {
     buffer: MachineBuffer!
     error: MachineAlert
     machinePosition: MachinePosition!
+    message: String
     overrides: MachineOverrides
     workCoordinateOffset: MachinePosition
     workPosition: MachinePosition
@@ -674,6 +690,20 @@ enum MachineSettingType {
     KV
 }
 
+enum MachineSettingUnits {
+    BOOLEAN
+    MASK
+    MICROSECONDS
+    MILLIMETERS
+    MILLIMETERS_PER_MINUTE
+    MILLIMETERS_PER_SECONDS_SQUARED
+    MILLISECONDS
+    PERCENT
+    RPM
+    STEPS_PER_MILLIMETER
+    UNKNOWN
+}
+
 enum MachineSpecType {
     MAX_AMPS
     MAX_LAYER_HEIGHT
@@ -837,7 +867,7 @@ input MoveCommandInput {
     b: Decimal
     c: Decimal
     distanceType: MovementDistanceType!
-    motionType: MachineMotionType!
+    motionType: MachineMotionType
     x: Decimal
     y: Decimal
     z: Decimal

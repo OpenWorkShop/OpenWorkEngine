@@ -8,21 +8,23 @@ using OpenWorkEngine.OpenController.Controllers.Utils.Parsers;
 using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Models;
 
-namespace OpenWorkEngine.OpenController.Controllers.Grbl {
+namespace OpenWorkEngine.OpenController.Controllers.Grbl.Parsers {
   /// <summary>
   ///   Grbl Status includes the GrblState (Active, Idle, etc.) as well as one or more arguments (WPos, MPos, etc.)
   /// </summary>
   internal class GrblStatusParser : RegexParser {
     public GrblStatusParser() : base(@"^<(?<state>[\w:]+)(?<data>.*)>$", OnData) { }
 
-    private static void OnData(Controller? controller, ControlledMachine machine, Dictionary<string, string> values) {
+    private static HashSet<MachineTopic> OnData(Controller? controller, ControlledMachine machine, Dictionary<string, string> values) {
+      int orig = machine.Status.GetHashCode();
+
       string? state = values["state"];
       if (state != null) ApplyState(state, machine);
 
       string? data = values["data"];
-      if (data == null || data.Length <= 0) return;
-
-      int origStatusHash = machine.Status.GetHashCode();
+      if (data == null || data.Length <= 0) {
+        return BroadcastChange(controller, machine, orig, machine.Status.GetHashCode(), MachineTopic.Status);
+      }
 
       // Extract the various arguments
       string pattern = @"(?<key>[a-zA-Z]+)(:(?<value>[0-9\.\-\w]+(,[0-9\.\-]+){0,5}))?";
@@ -36,11 +38,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Grbl {
         ApplyArgument(args["key"], val, machine);
       }
 
-      // Broadcast status change.
-      if (machine.Status.GetHashCode() != origStatusHash) {
-        machine.Log.Debug("[STATUS] {@status}", machine.Status);
-        controller?.Manager.GetSubscriptionTopic(MachineTopic.Status).Emit(machine);
-      }
+      return BroadcastChange(controller, machine, orig, machine.Status.GetHashCode(), MachineTopic.Status);
     }
 
     private static void ApplyState(string grblStateStr, ControlledMachine machine) {
@@ -160,7 +158,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Grbl {
     }
 
     // String to coordinates: "0.00,1.00,1.00" => { x: 0, y: 1, z: 1 }
-    private static MachinePosition GetPositionArgument(string? val) {
+    public static MachinePosition GetPositionArgument(string? val) {
       string[] parts = val?.Split(',') ?? new string[] { };
       decimal x = 0, y = 0, z = 0, a = 0, b = 0, c = 0;
       if (parts.Length >= 1) decimal.TryParse(parts[0], out x);

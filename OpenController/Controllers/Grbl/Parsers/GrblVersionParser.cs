@@ -7,16 +7,20 @@ using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Models;
 
-namespace OpenWorkEngine.OpenController.Controllers.Grbl {
+namespace OpenWorkEngine.OpenController.Controllers.Grbl.Parsers {
   internal class GrblVersionParser : RegexParser {
     public GrblVersionParser() : base(@"^\[(?:VER:)(?<data>.+)\]$", OnData) { }
 
-    private static void OnData(Controller? controller, ControlledMachine machine, Dictionary<string, string> values) {
-      if (!values.ContainsKey("data")) return;
+    private static HashSet<MachineTopic> OnData(
+      Controller? controller, ControlledMachine machine, Dictionary<string, string> values
+    ) {
+      HashSet<MachineTopic> ret = new HashSet<MachineTopic>();
+      if (!values.ContainsKey("data")) return ret;
+      int orig = machine.Configuration.GetHashCode();
       string data = values["data"];
 
       string[] halves = data.Split(':');
-      if (halves.Length < 1) return;
+      if (halves.Length < 1) return ret;
 
       string versionStr = halves.First();
       List<string> versionParts = versionStr.Split('.').ToList();
@@ -42,7 +46,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Grbl {
       if (halves.Length > 1) machine.Configuration.Firmware.FriendlyName = halves.Last();
 
       machine.Log.Debug("[FIRMWARE] {@firmware}", machine.Configuration.Firmware);
-      controller?.Manager.GetSubscriptionTopic(MachineTopic.Configuration).Emit(machine);
+      return BroadcastChange(controller, machine, orig, machine.Configuration.GetHashCode(), MachineTopic.Configuration);
     }
   }
 }

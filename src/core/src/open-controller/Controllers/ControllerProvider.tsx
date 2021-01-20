@@ -2,7 +2,7 @@ import * as React from 'react';
 import {
   useMachineConfigurationSubscription,
   useMachineStatusSubscription,
-  ControlledMachineFragment
+  ControlledMachineFragment, useMachineSettingsSubscription
 } from '../graphql';
 import {useLogger} from '../../Hooks';
 import {useDispatch} from 'react-redux';
@@ -20,13 +20,20 @@ const ControllerProvider: React.FunctionComponent<Props> = (props) => {
   const variables = { portName: props.portName };
 
   const dispatch = useDispatch();
-
-  // const onMachineSettingsChanged = useMachineSettingsSubscription({ variables });
   
   // Load initial machine.
   React.useEffect(() => {
     dispatch(controllersSlice.actions.updateControlledMachine(machine));
   }, [machine]);
+
+  const onMachineSettingsChanged = useMachineSettingsSubscription({ variables });
+  const newMachineSettings = onMachineSettingsChanged?.data?.machine;
+  React.useEffect(() => {
+    if (newMachineSettings?.settings) {
+      log.debug('[MACHINE]', '[SETTINGS]', newMachineSettings);
+      dispatch(controllersSlice.actions.onControlledMachineSettings(newMachineSettings));
+    }
+  }, [newMachineSettings]);
 
   const onMachineStatusChanged = useMachineStatusSubscription({ variables });
   const newMachineStatus = onMachineStatusChanged?.data?.machine;

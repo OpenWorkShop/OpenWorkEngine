@@ -15,9 +15,10 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode {
     public static ControllerScript ToScript(this IMachineCommand cmd) => cmd.CompileScript(cmd.Value);
 
     // Generic
-    public static bool ApplyGCodeConfigurationWord(this ControlledMachine machine, string wordStr) {
-      GCodeWord word = new(wordStr);
+    public static bool SetGCodeConfigurationWord(this ControlledMachine machine, string wordStr) =>
+      machine.SetGCodeConfigurationWord(new GCodeWord(wordStr));
 
+    public static bool SetGCodeConfigurationWord(this ControlledMachine machine, GCodeWord word) {
       if (word.Letter == GCodeLetter.F) {
         machine.Configuration.Applicator.FeedRate = word.Value;
       } else if (word.Letter == GCodeLetter.G) {
@@ -27,9 +28,9 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode {
       } else if (word.Letter == GCodeLetter.S) {
         machine.Configuration.Applicator.SpinSpeed = word.Value;
       } else if (word.Letter == GCodeLetter.T) {
-        machine.Configuration.Applicator.Tool = word.Value.ToString(CultureInfo.InvariantCulture);
+        machine.Configuration.Applicator.ToolId = word.Value.ToString(CultureInfo.InvariantCulture);
       } else {
-        machine.Log.Error($"Invalid GCode '{word.Letter}' from word: {wordStr}");
+        machine.Log.Error($"Invalid GCode '{word.Letter}' from word: {word.Raw}");
         return false;
       }
       return true;

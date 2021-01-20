@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ControlledMachineFragment} from '../graphql';
-import {IMachineConfigUpdate, IMachineStatusUpdate, ControllersState } from './types';
+import {IMachineConfigUpdate, IMachineStatusUpdate, ControllersState, IMachineSettingsUpdate} from './types';
 
 const initialState: ControllersState = {
   controllerMap: {},
@@ -24,7 +24,12 @@ const controllersSlice = createSlice({
     updateControlledMachine: (state, action: PayloadAction<ControlledMachineFragment>) =>
       updateControlledMachine(state, action.payload),
 
-    onControlledMachineStatus(state, action: PayloadAction<IMachineStatusUpdate>) {
+    onControlledMachineSettings(state, action: PayloadAction<IMachineSettingsUpdate>) {
+      state.controllerMap[action.payload.topicId].machine.settings = action.payload.settings;
+      return state;
+    },
+
+    onControlledMachineStatus(state, action:  PayloadAction<IMachineStatusUpdate>) {
       state.controllerMap[action.payload.topicId].machine.status = action.payload.status;
       return state;
     },

@@ -8,13 +8,17 @@ namespace OpenWorkEngine.OpenController.Controllers.Grbl {
     public GrblCommands(Controller controller) : base(controller) {
       SetCommandCode(nameof(GetHelp), "$$");
       SetCommandCode(nameof(GetSettings), "$$");
-      SetCommandCode(nameof(EmergencyStop), "$X");
-      SetCommandCode(nameof(Reset), "$X");
-      SetCommandCode(nameof(GetFirmware), "$I");
-      SetCommandCode(nameof(GetParameters), "$#");
-      SetCommandCode(nameof(GetConfiguration), "$G");
-      SetCommandCode(nameof(GetStatus), "?");
+      SetCommandCode(nameof(Unlock), "$X"); // kill alarm
+      SetCommandCode(nameof(GetFirmware), "$I"); // build info
+      SetCommandCode(nameof(GetParameters), "$#"); //
+      SetCommandCode(nameof(GetConfiguration), "$G"); // Parser state
+      SetCommandCode(nameof(CheckCode), "$C"); // GCode mode
+      SetCommandCode(nameof(GetStartup), "$N"); // Startup blocks
       SetCommandCode(nameof(Homing), "$H");
+      SetCommandCode(nameof(GetStatus), "?", true);
+      SetCommandCode(nameof(Pause), "!", true);
+      SetCommandCode(nameof(Play), "~", true);
+      SetCommandCode(nameof(Reset), "\u0018", true); // ctrl+x
       SetCommandCode(nameof(Move), MoveTemplate);
     }
   }

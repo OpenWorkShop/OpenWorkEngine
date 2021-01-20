@@ -64,7 +64,13 @@ fragment MachineModals on MachineModals {
 }
 
 fragment ApplicatorConfig on ApplicatorConfig {
-    tool
+    toolId
+    toolLengthOffset {
+        ...MachinePosition
+    }
+    probePosition {
+        ...MachinePosition
+    }
     spinSpeed
     feedRate
     isFloodCoolantEnabled
@@ -80,6 +86,15 @@ fragment MachineConfig on MachineConfiguration {
     }
     applicator {
         ...ApplicatorConfig
+    }
+    workCoordinates {
+        ...MachinePosition
+    }
+    workOffset {
+        ...MachinePosition
+    }
+    referencePosition {
+        ...MachinePosition
     }
 }
 
@@ -184,10 +199,10 @@ subscription MachineSettings($portName: String!) {
 }
 
 # -- commands
-mutation EmergencyStopMachine($portName: String!) {
+mutation UnlockMachine($portName: String!) {
     command: commandMachine(portName: $portName) {
         id
-        machine: emergencyStop { ...ControlledMachine }
+        machine: unlock { ...ControlledMachine }
     }
 }
 

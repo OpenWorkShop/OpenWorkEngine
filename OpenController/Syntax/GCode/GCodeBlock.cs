@@ -13,11 +13,12 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode {
   public class GCodeBlock : IControllerInstruction {
     public string InstructionSource { get; }
     public string Template { get; }
-    public bool Inline => false;
+    public bool Inline { get; }
 
-    public GCodeBlock(string line, string instructionSource) {
+    public GCodeBlock(string line, string instructionSource, bool inline) {
       InstructionSource = instructionSource;
       Template = line;
+      Inline = inline;
       Chunks = ParseLine(line);
     }
 

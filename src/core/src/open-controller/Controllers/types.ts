@@ -1,4 +1,9 @@
-import {ControlledMachineFragment, MachineConfigFragment, MachineStatusFragment} from '../graphql';
+import {
+  ControlledMachineFragment,
+  MachineConfigFragment,
+  MachineSettingFragment,
+  MachineStatusFragment
+} from '../graphql';
 
 export interface IController {
   machine: ControlledMachineFragment;
@@ -22,6 +27,10 @@ export type ControllersState = {
 
 export interface IControlledMachineUpdate {
   topicId: string;
+}
+
+export interface IMachineSettingsUpdate extends IControlledMachineUpdate {
+  settings: MachineSettingFragment[];
 }
 
 export interface IMachineStatusUpdate extends IControlledMachineUpdate {

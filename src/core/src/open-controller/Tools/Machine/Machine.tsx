@@ -11,10 +11,11 @@ const Machine: ToolBase = (props) => {
   const { workspaceId } = props;
   const classes = useStyles();
   const modals = useWorkspaceControllerSelector(workspaceId, c => c.machine.configuration.modals);
+  const settings = useWorkspaceControllerSelector(workspaceId, c => c.machine.settings);
   //useWorkspaceController
   //<ActiveState>(workspaceId, (c: IController) => c.machine.status.activityState);
 
-  log.debug('[CONFIG MODALS]', modals);
+  log.debug('[CONFIG MODALS]', modals, '[SETTINGS]', settings);
 
   return (
     <Grid container className={classes.root}>

@@ -17,7 +17,7 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
     [Theory]
     [InlineData("[VER:1.1g.20200915.MaslowDue:]")]
     public void CanParseMaslowVersions(string versionString) {
-      _parsers.FirmwareParser?.UpdateMachine(null, _machine, versionString);
+      _parsers.Firmware?.UpdateMachine(null, _machine, versionString);
 
       MachineDetectedFirmware fw = _machine.Configuration.Firmware;
       fw.Should().NotBeNull();

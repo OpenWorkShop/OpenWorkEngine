@@ -63,9 +63,11 @@ export type ApplicatorConfig = {
   feedRate: Scalars['Decimal'];
   isFloodCoolantEnabled: Scalars['Boolean'];
   isMistCoolantEnabled: Scalars['Boolean'];
+  probePosition: Maybe<MachinePosition>;
   spinSpeed: Scalars['Decimal'];
   temperature: Maybe<Scalars['Decimal']>;
-  tool: Scalars['String'];
+  toolId: Scalars['String'];
+  toolLengthOffset: Maybe<MachinePosition>;
 };
 
 export type CommandSettings = {
@@ -79,8 +81,8 @@ export type CommandSettings = {
 
 export type Commands = {
   __typename?: 'Commands';
+  checkCode: ControlledMachine;
   configuration: ControlledMachine;
-  emergencyStop: ControlledMachine;
   firmware: ControlledMachine;
   help: ControlledMachine;
   homing: ControlledMachine;
@@ -88,10 +90,14 @@ export type Commands = {
   move: ControlledMachine;
   name: Scalars['String'];
   parameters: ControlledMachine;
+  pause: ControlledMachine;
+  play: ControlledMachine;
   reset: ControlledMachine;
   settings: ControlledMachine;
+  startup: ControlledMachine;
   status: ControlledMachine;
   syntax: ProgramSyntax;
+  unlock: ControlledMachine;
 };
 
 export type CommandsMoveArgs = {
@@ -222,6 +228,10 @@ export type MachineConfiguration = {
   applicator: ApplicatorConfig;
   firmware: MachineDetectedFirmware;
   modals: MachineModals;
+  options: Maybe<MachineOptions>;
+  referencePosition: Array<MachinePosition>;
+  workCoordinates: Array<MachinePosition>;
+  workOffset: MachinePosition;
 };
 
 export type MachineDetectedFirmware = {
@@ -342,6 +352,11 @@ export type MachineModals = {
   workCoordinateSystem: Scalars['Int'];
 };
 
+export type MachineOptions = {
+  __typename?: 'MachineOptions';
+  raw: Scalars['String'];
+};
+
 export type MachineOverrides = {
   __typename?: 'MachineOverrides';
   feed: Scalars['Decimal'];
@@ -421,6 +436,7 @@ export type MachineSetting = {
   key: Scalars['String'];
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
+  units: MachineSettingUnits;
   value: Scalars['String'];
 };
 
@@ -457,6 +473,7 @@ export type MachineStatus = {
   buffer: MachineBuffer;
   error: Maybe<MachineAlert>;
   machinePosition: MachinePosition;
+  message: Maybe<Scalars['String']>;
   overrides: Maybe<MachineOverrides>;
   workCoordinateOffset: Maybe<MachinePosition>;
   workPosition: Maybe<MachinePosition>;
@@ -834,6 +851,20 @@ export enum MachineSettingType {
   Kv = 'KV',
 }
 
+export enum MachineSettingUnits {
+  Boolean = 'BOOLEAN',
+  Mask = 'MASK',
+  Microseconds = 'MICROSECONDS',
+  Millimeters = 'MILLIMETERS',
+  MillimetersPerMinute = 'MILLIMETERS_PER_MINUTE',
+  MillimetersPerSecondsSquared = 'MILLIMETERS_PER_SECONDS_SQUARED',
+  Milliseconds = 'MILLISECONDS',
+  Percent = 'PERCENT',
+  Rpm = 'RPM',
+  StepsPerMillimeter = 'STEPS_PER_MILLIMETER',
+  Unknown = 'UNKNOWN',
+}
+
 export enum MachineSpecType {
   MaxAmps = 'MAX_AMPS',
   MaxLayerHeight = 'MAX_LAYER_HEIGHT',
@@ -997,7 +1028,7 @@ export type MoveCommandInput = {
   b: Maybe<Scalars['Decimal']>;
   c: Maybe<Scalars['Decimal']>;
   distanceType: MovementDistanceType;
-  motionType: MachineMotionType;
+  motionType: Maybe<MachineMotionType>;
   x: Maybe<Scalars['Decimal']>;
   y: Maybe<Scalars['Decimal']>;
   z: Maybe<Scalars['Decimal']>;
@@ -1162,6 +1193,7 @@ export type ResolversTypes = {
   MachineModalStateOfSpinDirection: ResolverTypeWrapper<MachineModalStateOfSpinDirection>;
   MachineModalStateOfUnitType: ResolverTypeWrapper<MachineModalStateOfUnitType>;
   MachineModals: ResolverTypeWrapper<MachineModals>;
+  MachineOptions: ResolverTypeWrapper<MachineOptions>;
   MachineOverrides: ResolverTypeWrapper<MachineOverrides>;
   MachinePart: ResolverTypeWrapper<MachinePart>;
   MachinePartSettings: ResolverTypeWrapper<MachinePartSettings>;
@@ -1204,6 +1236,7 @@ export type ResolversTypes = {
   MachinePinType: MachinePinType;
   MachineProgramState: MachineProgramState;
   MachineSettingType: MachineSettingType;
+  MachineSettingUnits: MachineSettingUnits;
   MachineSpecType: MachineSpecType;
   MachineTopic: MachineTopic;
   MovementDistanceType: MovementDistanceType;
@@ -1274,6 +1307,7 @@ export type ResolversParentTypes = {
   MachineModalStateOfSpinDirection: MachineModalStateOfSpinDirection;
   MachineModalStateOfUnitType: MachineModalStateOfUnitType;
   MachineModals: MachineModals;
+  MachineOptions: MachineOptions;
   MachineOverrides: MachineOverrides;
   MachinePart: MachinePart;
   MachinePartSettings: MachinePartSettings;
@@ -1380,9 +1414,11 @@ export type ApplicatorConfigResolvers<
   feedRate: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
   isFloodCoolantEnabled: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   isMistCoolantEnabled: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  probePosition: Resolver<Maybe<ResolversTypes['MachinePosition']>, ParentType, ContextType>;
   spinSpeed: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
   temperature: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
-  tool: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  toolId: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  toolLengthOffset: Resolver<Maybe<ResolversTypes['MachinePosition']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1402,8 +1438,8 @@ export type CommandsResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Commands'] = ResolversParentTypes['Commands']
 > = {
+  checkCode: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
   configuration: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  emergencyStop: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
   firmware: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
   help: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
   homing: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
@@ -1416,10 +1452,14 @@ export type CommandsResolvers<
   >;
   name: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   parameters: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  pause: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  play: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
   reset: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
   settings: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  startup: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
   status: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
   syntax: Resolver<ResolversTypes['ProgramSyntax'], ParentType, ContextType>;
+  unlock: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1588,6 +1628,10 @@ export type MachineConfigurationResolvers<
   applicator: Resolver<ResolversTypes['ApplicatorConfig'], ParentType, ContextType>;
   firmware: Resolver<ResolversTypes['MachineDetectedFirmware'], ParentType, ContextType>;
   modals: Resolver<ResolversTypes['MachineModals'], ParentType, ContextType>;
+  options: Resolver<Maybe<ResolversTypes['MachineOptions']>, ParentType, ContextType>;
+  referencePosition: Resolver<Array<ResolversTypes['MachinePosition']>, ParentType, ContextType>;
+  workCoordinates: Resolver<Array<ResolversTypes['MachinePosition']>, ParentType, ContextType>;
+  workOffset: Resolver<ResolversTypes['MachinePosition'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1748,6 +1792,14 @@ export type MachineModalsResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type MachineOptionsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MachineOptions'] = ResolversParentTypes['MachineOptions']
+> = {
+  raw: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type MachineOverridesResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['MachineOverrides'] = ResolversParentTypes['MachineOverrides']
@@ -1847,6 +1899,7 @@ export type MachineSettingResolvers<
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
   title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
   value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -1895,6 +1948,7 @@ export type MachineStatusResolvers<
   buffer: Resolver<ResolversTypes['MachineBuffer'], ParentType, ContextType>;
   error: Resolver<Maybe<ResolversTypes['MachineAlert']>, ParentType, ContextType>;
   machinePosition: Resolver<ResolversTypes['MachinePosition'], ParentType, ContextType>;
+  message: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   overrides: Resolver<Maybe<ResolversTypes['MachineOverrides']>, ParentType, ContextType>;
   workCoordinateOffset: Resolver<Maybe<ResolversTypes['MachinePosition']>, ParentType, ContextType>;
   workPosition: Resolver<Maybe<ResolversTypes['MachinePosition']>, ParentType, ContextType>;
@@ -2263,6 +2317,7 @@ export type Resolvers<ContextType = any> = {
   MachineModalStateOfSpinDirection: MachineModalStateOfSpinDirectionResolvers<ContextType>;
   MachineModalStateOfUnitType: MachineModalStateOfUnitTypeResolvers<ContextType>;
   MachineModals: MachineModalsResolvers<ContextType>;
+  MachineOptions: MachineOptionsResolvers<ContextType>;
   MachineOverrides: MachineOverridesResolvers<ContextType>;
   MachinePart: MachinePartResolvers<ContextType>;
   MachinePartSettings: MachinePartSettingsResolvers<ContextType>;
@@ -2379,13 +2434,19 @@ export type MachineModalsFragment = { __typename?: 'MachineModals' } & Pick<Mach
 
 export type ApplicatorConfigFragment = { __typename?: 'ApplicatorConfig' } & Pick<
   ApplicatorConfig,
-  'tool' | 'spinSpeed' | 'feedRate' | 'isFloodCoolantEnabled' | 'isMistCoolantEnabled'
->;
+  'toolId' | 'spinSpeed' | 'feedRate' | 'isFloodCoolantEnabled' | 'isMistCoolantEnabled'
+> & {
+    toolLengthOffset: Maybe<{ __typename?: 'MachinePosition' } & MachinePositionFragment>;
+    probePosition: Maybe<{ __typename?: 'MachinePosition' } & MachinePositionFragment>;
+  };
 
 export type MachineConfigFragment = { __typename?: 'MachineConfiguration' } & {
   firmware: { __typename?: 'MachineDetectedFirmware' } & DetectedFirmwareFragment;
   modals: { __typename?: 'MachineModals' } & MachineModalsFragment;
   applicator: { __typename?: 'ApplicatorConfig' } & ApplicatorConfigFragment;
+  workCoordinates: Array<{ __typename?: 'MachinePosition' } & MachinePositionFragment>;
+  workOffset: { __typename?: 'MachinePosition' } & MachinePositionFragment;
+  referencePosition: Array<{ __typename?: 'MachinePosition' } & MachinePositionFragment>;
 };
 
 export type MachineAlertFragment = { __typename?: 'MachineAlert' } & Pick<MachineAlert, 'code' | 'name' | 'message'>;
@@ -2459,11 +2520,11 @@ export type MachineSettingsSubscription = { __typename?: 'Subscription' } & {
     };
 };
 
-export type EmergencyStopMachineMutationVariables = Exact<{
+export type UnlockMachineMutationVariables = Exact<{
   portName: Scalars['String'];
 }>;
 
-export type EmergencyStopMachineMutation = { __typename?: 'Mutation' } & {
+export type UnlockMachineMutation = { __typename?: 'Mutation' } & {
   command: { __typename?: 'Commands' } & Pick<Commands, 'id'> & {
       machine: { __typename?: 'ControlledMachine' } & ControlledMachineFragment;
     };
@@ -3075,14 +3136,31 @@ export const MachineModalsFragmentDoc = gql`
     workCoordinateSystem
   }
 `;
+export const MachinePositionFragmentDoc = gql`
+  fragment MachinePosition on MachinePosition {
+    x
+    y
+    z
+    a
+    b
+    c
+  }
+`;
 export const ApplicatorConfigFragmentDoc = gql`
   fragment ApplicatorConfig on ApplicatorConfig {
-    tool
+    toolId
+    toolLengthOffset {
+      ...MachinePosition
+    }
+    probePosition {
+      ...MachinePosition
+    }
     spinSpeed
     feedRate
     isFloodCoolantEnabled
     isMistCoolantEnabled
   }
+  ${MachinePositionFragmentDoc}
 `;
 export const MachineConfigFragmentDoc = gql`
   fragment MachineConfig on MachineConfiguration {
@@ -3095,20 +3173,20 @@ export const MachineConfigFragmentDoc = gql`
     applicator {
       ...ApplicatorConfig
     }
+    workCoordinates {
+      ...MachinePosition
+    }
+    workOffset {
+      ...MachinePosition
+    }
+    referencePosition {
+      ...MachinePosition
+    }
   }
   ${DetectedFirmwareFragmentDoc}
   ${MachineModalsFragmentDoc}
   ${ApplicatorConfigFragmentDoc}
-`;
-export const MachinePositionFragmentDoc = gql`
-  fragment MachinePosition on MachinePosition {
-    x
-    y
-    z
-    a
-    b
-    c
-  }
+  ${MachinePositionFragmentDoc}
 `;
 export const MachineAlertFragmentDoc = gql`
   fragment MachineAlert on MachineAlert {
@@ -3657,52 +3735,46 @@ export function useMachineSettingsSubscription(
 }
 export type MachineSettingsSubscriptionHookResult = ReturnType<typeof useMachineSettingsSubscription>;
 export type MachineSettingsSubscriptionResult = Apollo.SubscriptionResult<MachineSettingsSubscription>;
-export const EmergencyStopMachineDocument = gql`
-  mutation EmergencyStopMachine($portName: String!) {
+export const UnlockMachineDocument = gql`
+  mutation UnlockMachine($portName: String!) {
     command: commandMachine(portName: $portName) {
       id
-      machine: emergencyStop {
+      machine: unlock {
         ...ControlledMachine
       }
     }
   }
   ${ControlledMachineFragmentDoc}
 `;
-export type EmergencyStopMachineMutationFn = Apollo.MutationFunction<
-  EmergencyStopMachineMutation,
-  EmergencyStopMachineMutationVariables
->;
+export type UnlockMachineMutationFn = Apollo.MutationFunction<UnlockMachineMutation, UnlockMachineMutationVariables>;
 
 /**
- * __useEmergencyStopMachineMutation__
+ * __useUnlockMachineMutation__
  *
- * To run a mutation, you first call `useEmergencyStopMachineMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useEmergencyStopMachineMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useUnlockMachineMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnlockMachineMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [emergencyStopMachineMutation, { data, loading, error }] = useEmergencyStopMachineMutation({
+ * const [unlockMachineMutation, { data, loading, error }] = useUnlockMachineMutation({
  *   variables: {
  *      portName: // value for 'portName'
  *   },
  * });
  */
-export function useEmergencyStopMachineMutation(
-  baseOptions?: Apollo.MutationHookOptions<EmergencyStopMachineMutation, EmergencyStopMachineMutationVariables>,
+export function useUnlockMachineMutation(
+  baseOptions?: Apollo.MutationHookOptions<UnlockMachineMutation, UnlockMachineMutationVariables>,
 ) {
-  return Apollo.useMutation<EmergencyStopMachineMutation, EmergencyStopMachineMutationVariables>(
-    EmergencyStopMachineDocument,
-    baseOptions,
-  );
+  return Apollo.useMutation<UnlockMachineMutation, UnlockMachineMutationVariables>(UnlockMachineDocument, baseOptions);
 }
-export type EmergencyStopMachineMutationHookResult = ReturnType<typeof useEmergencyStopMachineMutation>;
-export type EmergencyStopMachineMutationResult = Apollo.MutationResult<EmergencyStopMachineMutation>;
-export type EmergencyStopMachineMutationOptions = Apollo.BaseMutationOptions<
-  EmergencyStopMachineMutation,
-  EmergencyStopMachineMutationVariables
+export type UnlockMachineMutationHookResult = ReturnType<typeof useUnlockMachineMutation>;
+export type UnlockMachineMutationResult = Apollo.MutationResult<UnlockMachineMutation>;
+export type UnlockMachineMutationOptions = Apollo.BaseMutationOptions<
+  UnlockMachineMutation,
+  UnlockMachineMutationVariables
 >;
 export const ResetMachineDocument = gql`
   mutation ResetMachine($portName: String!) {

@@ -8,7 +8,7 @@ export function isMachinePositionValid(p?: IMachinePosition): boolean {
   return _.findIndex(ps, p => p != null && p != undefined) >= 0;
 }
 
-export function getMachineAxisPosition(p: IMachinePosition, axisName: AxisName): number | null {
+export function getMachineAxisPosition(p: IMachinePosition, axisName: AxisName): number | null | undefined {
   if (axisName == AxisName.X) return p.x;
   if (axisName == AxisName.Y) return p.y;
   if (axisName == AxisName.Z) return p.z;

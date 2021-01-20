@@ -6,18 +6,31 @@ using OpenWorkEngine.OpenController.Machines.Models;
 
 namespace OpenWorkEngine.OpenController.Controllers.Utils.Parsers {
   public class ParserSet {
-    internal Parser? WelcomeParser { get; set; }
+    // Generic command acknowledgement, e.g., "ok"
+    internal Parser? Response { get; set; }
 
-    internal Parser? FirmwareParser { get; set; }
+    // Connection message (startup)
+    internal Parser? Welcome { get; set; }
+
+    internal Parser? Firmware { get; set; }
+
+    internal Parser? Alarm { get; set; }
+
+    // Feedback to user
+    internal Parser? Message { get; set; }
+
+    internal Parser? Help { get; set; }
+
+    // eg.g., work coordinates (G54-G59), predefined positions (G28, G30), tool length, probing
+    internal Parser? Parameters { get; set; }
+
+    // e.g., firmware settings
+    internal Parser? Settings { get; set; }
+
+    //
+    internal Parser? Options { get; set; }
 
     internal List<Parser> ToList() =>
-      new List<Parser?> {WelcomeParser, FirmwareParser}.SelectNonNull();
-    //
-    // public async Task<bool> Update(Controller? controller, ControlledMachine machine, string line) {
-    //   for (int i = 0; i < Polls.Count; i++) await Polls[i].Parse(controller, machine, line);
-    //   foreach (Parser parser in ToList()) await parser.UpdateMachine(controller, machine, line);
-    //
-    //   return false;
-    // }
+      new List<Parser?> {Response, Welcome, Firmware, Alarm, Message, Help, Parameters, Settings, Options}.SelectNonNull();
   }
 }

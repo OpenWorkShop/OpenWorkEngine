@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using HotChocolate.Language;
 using OpenWorkEngine.OpenController.Lib.Observables;
 using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Interfaces;
@@ -52,5 +54,18 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     public List<MachineSetting> Settings { get; } = new();
 
     public string TopicId => PortName;
+
+    internal bool SetSetting(MachineSetting setting) {
+      int i = Settings.FindIndex(s => s.Key.Equals(setting.Key));
+      if (i >= 0) {
+        if (setting.GetHashCode() == Settings[i].GetHashCode()) {
+          return false;
+        }
+        Settings.RemoveAt(i);
+      }
+      Settings.Push(setting);
+      Settings.Sort((a, b) => String.Compare(a.Key, b.Key, StringComparison.Ordinal));
+      return true;
+    }
   }
 }

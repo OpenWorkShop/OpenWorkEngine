@@ -10,7 +10,7 @@ using Serilog;
 namespace OpenWorkEngine.OpenController.Syntax.GCode {
   public static class ProgramGCodeExtensions {
     public static ControllerScript CompileScript(
-      this IProgramSource source, string value, string? sourceName = null
+      this IProgramSource source, string value, string? sourceName = null, bool inline = false
     ) {
       if (source.Syntax != ProgramSyntax.GCode) {
         throw new ArgumentException(source.Syntax.ToString());
@@ -20,7 +20,7 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode {
                   .Split('\n')
                   .Where(s => !string.IsNullOrWhiteSpace(s))
                   .Select(s => s.Trim())
-                  .Select(s => new GCodeBlock(s, sourceName) as IControllerInstruction)
+                  .Select(s => new GCodeBlock(s, sourceName, inline) as IControllerInstruction)
                   .ToArray();
       return new ControllerScript(instructions);
     }

@@ -72,7 +72,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Utils {
       }
 
       string rawText = lines.Last();
-      Log.Verbose("[WRITE] {connection} > {text}", Connection.ToString(), rawText);
+      Log.Verbose("[WRITE] {connection} > {text}", Connection.ToString(), rawText.ToCharArray()[0]);
       Connection.Port.SerialPort.Write(rawText);
       Connection.Status.CharactersWritten += rawText.Length;
     }

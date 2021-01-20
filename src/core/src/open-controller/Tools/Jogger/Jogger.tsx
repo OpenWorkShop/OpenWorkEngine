@@ -9,12 +9,19 @@ import JogStepSelect from './JogStepSelect';
 import {useTrans} from '../../Context';
 import {useWorkspaceSelector, useWorkspaceUnits} from '../../Workspaces';
 import {getMachineAxisJogSteps} from '../../Machines';
-import {AxisName, MovementDistanceType, UnitType, useMoveMachineMutation} from '../../graphql';
+import {
+  AxisName,
+  MachineMotionType,
+  MoveCommandInput,
+  MovementDistanceType,
+  UnitType,
+  useMoveMachineMutation
+} from '../../graphql';
 import {useLogger} from '../../../Hooks';
 
-const AxisJoggerPad: ToolBase = (props) => {
+const Jogger: ToolBase = (props) => {
   const t = useTrans();
-  const log = useLogger(AxisJoggerPad);
+  const log = useLogger(Jogger);
   const classes = useStyles();
   const { workspaceId } = props;
   const units = useWorkspaceUnits(workspaceId);
@@ -45,9 +52,24 @@ const AxisJoggerPad: ToolBase = (props) => {
     { distanceType: MovementDistanceType.Relative, z: -zStep },
   ];
 
+  function undefinedToNull<T>(v: T | null | undefined): T | null {
+    return v === undefined ? null : v;
+  }
+
   async function move(req: IMoveRequest): Promise<void> {
     try {
-      await moveMachine({ variables: { portName, moveCommand: req }});
+      const moveCommand: MoveCommandInput = {
+        x: undefinedToNull(req.x),
+        y: undefinedToNull(req.y),
+        z: undefinedToNull(req.z),
+        a: undefinedToNull(req.a),
+        b: undefinedToNull(req.b),
+        c: undefinedToNull(req.c),
+        motionType: req.motionType || MachineMotionType.Rapid,
+        distanceType: req.distanceType,
+      };
+      log.debug('move', Object.keys(req), moveCommand);
+      await moveMachine({ variables: { portName, moveCommand }});
     } catch (e) {
       log.error(e);
     }
@@ -84,4 +106,4 @@ const AxisJoggerPad: ToolBase = (props) => {
   );
 };
 
-export default AxisJoggerPad;
+export default Jogger;

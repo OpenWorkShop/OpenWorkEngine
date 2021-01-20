@@ -31,12 +31,20 @@ namespace OpenWorkEngine.OpenController.Controllers.Utils {
     public Task<ControlledMachine> GetSettings() => Invoke(nameof(GetSettings));
     public Task<ControlledMachine> GetFirmware() => Invoke(nameof(GetFirmware));
     public Task<ControlledMachine> GetParameters() => Invoke(nameof(GetParameters));
+    public Task<ControlledMachine> GetStartup() => Invoke(nameof(GetStartup));
+    public Task<ControlledMachine> CheckCode() => Invoke(nameof(CheckCode));
+    public Task<ControlledMachine> Startup() =>
+      Invoke(nameof(GetFirmware), nameof(GetSettings), nameof(GetParameters));
+
+    // Polling:
     public Task<ControlledMachine> GetConfiguration() => Invoke(nameof(GetConfiguration));
     public Task<ControlledMachine> GetStatus() => Invoke(nameof(GetStatus));
 
-    public Task<ControlledMachine> EmergencyStop() => Invoke(nameof(EmergencyStop), nameof(GetStatus));
+    public Task<ControlledMachine> Unlock() => Invoke(nameof(Unlock), nameof(GetStatus));
     public Task<ControlledMachine> Reset() => Invoke(nameof(Reset), nameof(GetStatus));
     public Task<ControlledMachine> Homing() => Invoke(nameof(Homing));
+    public Task<ControlledMachine> Pause() => Invoke(nameof(Pause));
+    public Task<ControlledMachine> Play() => Invoke(nameof(Play));
 
     public Task<ControlledMachine> Move(MoveCommand moveCommand) => Execute(nameof(Move), moveCommand);
 
@@ -47,8 +55,8 @@ namespace OpenWorkEngine.OpenController.Controllers.Utils {
       Controller = controller;
     }
 
-    protected void SetCommandCode(string command, string code) {
-      _commandScripts[command] = this.CompileScript(code, command);
+    protected void SetCommandCode(string command, string code, bool inline = false) {
+      _commandScripts[command] = this.CompileScript(code, command, inline);
     }
 
     //

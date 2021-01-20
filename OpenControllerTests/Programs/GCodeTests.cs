@@ -18,7 +18,7 @@ namespace OpenWorkEngine.OpenControllerTests.Programs {
     [InlineData("(Test) G0 X100")]
     [InlineData("G0 (Test) X100 (Two) (or) (more)     (commments)")]
     public void CanParseComments(string line) {
-      GCodeBlock gCodeBlock = new(line, nameof(GCodeTests));
+      GCodeBlock gCodeBlock = new(line, nameof(GCodeTests), false);
       Log.Information("Commands: {commands}", gCodeBlock.CodeChunks);
       gCodeBlock.CodeChunks.Count.Should().Be(2);
       gCodeBlock.CodeChunks.First().Value.Should().Be("G0");

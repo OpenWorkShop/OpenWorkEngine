@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using OpenWorkEngine.OpenController.Controllers.Exceptions;
 using OpenWorkEngine.OpenController.Controllers.Interfaces;
@@ -9,6 +10,7 @@ using OpenWorkEngine.OpenController.Controllers.Utils.Parsers;
 using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 using OpenWorkEngine.OpenController.MachineProfiles.Interfaces;
+using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Extensions;
 using OpenWorkEngine.OpenController.Machines.Interfaces;
 using OpenWorkEngine.OpenController.Machines.Models;
@@ -62,7 +64,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       _isAlive = false;
     }
 
-    protected abstract Task RunStartupCommands();
+    protected abstract Task OnStartupComplete();
 
     /// <summary>
     /// Actually sends an instruction to the serial buffer, first compiling its code with the provided arguments.
@@ -107,7 +109,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       Log.Debug("[STARTUP] {controller}", ToString());
       try {
         Manager.Ports.EmitState(Connection.Port, PortState.Startup);
-        await RunStartupCommands();
+        await Commands.GetFirmware();
 
         Log.Debug("[AWAIT] data from {port}", Connection.Port.ToString());
         if (!await StartupCondition(
@@ -117,6 +119,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
         )
           return;
         Log.Debug("[DATA] {controller}: {count} bytes", ToString(), Connection.Status.BytesToRead);
+        await Commands.GetSettings();
 
         // Any kind of valid firmware (well-known response from board)
         MachineDetectedFirmware firmware = Connection.Machine.Configuration.Firmware;
@@ -127,6 +130,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
         )
           return;
         Log.Debug("[FIRMWARE] requirement?: {firmwareRequirement}", Connection.Machine.FirmwareRequirement.ToString());
+        await Commands.GetParameters();
 
         // Ensure that any required firmware is met.
         IMachineFirmwareRequirement req = Connection.Machine.FirmwareRequirement;
@@ -137,6 +141,9 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
         )
           return;
         Log.Information("[FIRMWARE] requirements satisfied: {firmware}", firmware.ToString());
+
+        //
+        await OnStartupComplete();
       } catch (Exception e) {
         Log.Error(e, "[STARTUP] failed");
         Connection.Port.Error = new AlertError(e);
@@ -172,26 +179,31 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       return true;
     }
 
-    protected abstract Task ParseLine(string line);
-
     public async Task HandleSerialRead(string line) {
       line = line.Trim();
       if (string.IsNullOrWhiteSpace(line)) {
         Log.Verbose("Whitespace line: {line}", line);
         return;
       }
-      if (line == "ok") {
-        Log.Verbose("[READ] {line}", line);
-      } else {
-        Log.Debug("[READ] {line}", line);
-      }
+      Log.Debug("[READ] {line}", line);
+      bool handled = false;
+      HashSet<MachineTopic> changedTopics = new HashSet<MachineTopic>();
       foreach (StatusPoll poll in Polls) {
-        await poll.UpdateMachine(line);
+        HashSet<MachineTopic>? ts = await poll.UpdateMachine(line);
+        if (ts != null) handled = true;
+        if (ts?.Any() ?? false) changedTopics.UnionWith(ts);
       }
       foreach (Parser parser in Parsers.ToList()) {
-        await parser.UpdateMachine(this, Connection.Machine, line);
+        HashSet<MachineTopic>? ts = await parser.UpdateMachine(this, Connection.Machine, line);
+        if (ts != null) handled = true;
+        if (ts?.Any() ?? false) changedTopics.UnionWith(ts);
       }
-      await ParseLine(line);
+      if (!handled) {
+        Log.Warning("[READ] unparsed line: '{line}'", line);
+      }
+      if (changedTopics.Any()) {
+        Log.Debug("[MACHINE] topics: {topics}", changedTopics.Select(ct => ct.ToString()));
+      }
     }
 
     public void StartTask() => Task.Run(Startup);

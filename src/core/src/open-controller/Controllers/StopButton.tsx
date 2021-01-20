@@ -1,5 +1,5 @@
 import React, {FunctionComponent} from 'react';
-import {ActiveState, useEmergencyStopMachineMutation, useResetMachineMutation} from '../graphql';
+import {ActiveState, useUnlockMachineMutation, useResetMachineMutation} from '../graphql';
 import useStyles from './styles';
 import {useTrans} from '../Context';
 import {useLogger} from '../../Hooks';
@@ -17,7 +17,7 @@ const StopButton: FunctionComponent<Props> = (props) => {
   const activeState = useWorkspaceControllerSelector(workspaceId, c => c.machine.status.activityState);
   const alarm = useWorkspaceControllerSelector(workspaceId, c => c.machine.status.alarm);
   const portName = useWorkspaceSelector(workspaceId, ws => ws.portName);
-  const [emergencyStop] = useEmergencyStopMachineMutation();
+  const [unlock] = useUnlockMachineMutation();
   const [reset] = useResetMachineMutation();
   const hasAlarm = activeState === ActiveState.Alarm || alarm;
   const isInit = !hasAlarm && activeState === ActiveState.Initializing;
@@ -38,9 +38,9 @@ const StopButton: FunctionComponent<Props> = (props) => {
     try {
       const variables = { portName: portName };
       if (hasAlarm) {
-        await reset({ variables });
+        await unlock({ variables });
       } else {
-        await emergencyStop({ variables });
+        await reset({ variables });
       }
     } catch (e) {
       log.error(e);

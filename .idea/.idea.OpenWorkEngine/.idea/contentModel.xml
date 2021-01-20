@@ -725,14 +725,24 @@
           <e p="grbl" t="Include">
             <e p="GrblActiveState.cs" t="Include" />
             <e p="GrblCommands.cs" t="Include" />
-            <e p="GrblConfigParser.cs" t="Include" />
             <e p="GrblController.cs" t="Include" />
             <e p="GrblParsers.cs" t="Include" />
-            <e p="GrblStatusParser.cs" t="Include" />
-            <e p="GrblVersionParser.cs" t="Include" />
             <e p="maslow" t="Include">
               <e p="MaslowCommands.cs" t="Include" />
               <e p="MaslowController.cs" t="Include" />
+            </e>
+            <e p="Parsers" t="Include">
+              <e p="GrblAlarmParser.cs" t="Include" />
+              <e p="GrblConfigParser.cs" t="Include" />
+              <e p="GrblHelpParser.cs" t="Include" />
+              <e p="GrblMessageParser.cs" t="Include" />
+              <e p="GrblOptionParser.cs" t="Include" />
+              <e p="GrblParameterParser.cs" t="Include" />
+              <e p="GrblResponseParser.cs" t="Include" />
+              <e p="GrblSettingsParser.cs" t="Include" />
+              <e p="GrblStatusParser.cs" t="Include" />
+              <e p="GrblVersionParser.cs" t="Include" />
+              <e p="GrblWelcomeParser.cs" t="Include" />
             </e>
           </e>
           <e p="Interfaces" t="Include">
@@ -856,6 +866,7 @@
             <e p="MachineMotionType.cs" t="Include" />
             <e p="MachinePinType.cs" t="Include" />
             <e p="MachineProgramState.cs" t="Include" />
+            <e p="MachineSettingUnits.cs" t="Include" />
             <e p="MachineTopic.cs" t="Include" />
             <e p="ModalGroup.cs" t="Include" />
             <e p="MovementDistanceType.cs" t="Include" />
@@ -889,6 +900,7 @@
             <e p="MachineConfiguration.cs" t="Include" />
             <e p="MachineDetectedFirmware.cs" t="Include" />
             <e p="MachineModals.cs" t="Include" />
+            <e p="MachineOptions.cs" t="Include" />
             <e p="MachineOverrides.cs" t="Include" />
             <e p="MachinePosition.cs" t="Include" />
             <e p="MachineSetting.cs" t="Include" />
