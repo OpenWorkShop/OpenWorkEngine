@@ -15,7 +15,7 @@ type Props = {
 const GWiz: FunctionComponent<Props> = (props) => {
   const { id, className, axes } = props;
   const oc = useOpenController();
-  const domId = `gViz-${id}`;
+  const domId = `gWiz-${id}`;
   const log = oc.ows.logManager.getLogger(domId);
   const { width, height } = useWindowSize();
 

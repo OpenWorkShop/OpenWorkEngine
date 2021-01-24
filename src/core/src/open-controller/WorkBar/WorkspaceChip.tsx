@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import {IHaveWorkspace, useWorkspaceSelector, useWorkspaceUnits, WorkspaceUnitSelect} from '../Workspaces';
 import PopoverWorkBarChip from './PopoverWorkBarChip';
 import {getWorkspaceStateIcon} from '../Workspaces/WorkspaceState';
-import {useOwsTrans} from '../../Hooks';
+import {useOwsTrans} from '../../hooks';
 import {getDistanceUnitAbbreviationKey} from '../../components/Units';
 import {Grid} from '@material-ui/core';
 import HelpfulHeader from '../../components/Text/HelpfulHeader';

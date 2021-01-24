@@ -31,6 +31,6 @@ namespace OpenWorkEngine.OpenController.Ports.Models {
     // Machines represent the entirity of the state object. Their "business logic" lives in the Controller.
     public ControlledMachine Machine { get; }
 
-    public override string ToString() => $"[{Port.PortName}] [{Status}]";
+    public override string ToString() => $"{Port.PortName}:{Status}";
   }
 }

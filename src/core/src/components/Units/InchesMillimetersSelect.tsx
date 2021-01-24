@@ -3,7 +3,7 @@ import * as React from 'react';
 import useStyles from './styles';
 import {OpenWorkShopIcon} from '../../components';
 import {getDistanceUnitAbbreviationKey, getDistanceUnitIconKey} from './InchesMillimeters';
-import {useOwsTrans} from '../../Hooks';
+import {useOwsTrans} from '../../hooks';
 import {UnitType} from '../../open-controller/graphql';
 
 type Props = {

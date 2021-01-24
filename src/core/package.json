@@ -48,7 +48,8 @@
     "redux-oidc": "^4.0.0-beta1",
     "redux-thunk": "^2.3.0",
     "typeface-cabin": "^1.1.13",
-    "typeface-roboto": "^1.1.13"
+    "typeface-roboto": "^1.1.13",
+    "typeface-roboto-mono": "^1.1.13"
   },
   "devDependencies": {
     "@apollo/client": "^3.3.6",
@@ -79,6 +80,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "fast-json-stable-stringify": "^2.1.0",
     "material-ui-color": "^0.4.6",
+    "react-hotkeys-hook": "^3.0.3",
     "fs": "^0.0.1-security",
     "glob": "^7.1.6",
     "graphql": "^15.4.0",
@@ -109,6 +111,7 @@
     "rollup-plugin-typescript2": "^0.29.0",
     "typeface-cabin": "^1.1.13",
     "typeface-roboto": "^1.1.13",
+    "typeface-roboto-mono": "^1.1.13",
     "typescript": "^4.1.2"
   },
   "scripts": {

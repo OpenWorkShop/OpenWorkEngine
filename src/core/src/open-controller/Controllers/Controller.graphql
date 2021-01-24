@@ -1,0 +1,29 @@
+
+# -- commands
+mutation CommandMachine($workspaceId: String!, $code: String!, $source: String!) {
+    controller: controlMachine(workspaceId: $workspaceId) {
+        id
+        machine: writeCommand(commandCode: $code, sourceName: $source) { ...ControlledMachine }
+    }
+}
+
+mutation UnlockMachine($workspaceId: String!) {
+    controller: controlMachine(workspaceId: $workspaceId) {
+        id
+        machine: unlock { ...ControlledMachine }
+    }
+}
+
+mutation ResetMachine($workspaceId: String!) {
+    controller: controlMachine(workspaceId: $workspaceId) {
+        id
+        machine: reset { ...ControlledMachine }
+    }
+}
+
+mutation MoveMachine($workspaceId: String!, $moveCommand: MoveCommandInput!) {
+    controller: controlMachine(workspaceId: $workspaceId) {
+        id
+        machine: move(moveCommand: $moveCommand) { ...ControlledMachine }
+    }
+}

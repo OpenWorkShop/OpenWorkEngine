@@ -11,10 +11,6 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
 
     public MachineAlert? Alarm { get; internal set; } = null;
 
-    public MachineAlert? Error { get; internal set; } = null;
-
-    public string? Message { get; internal set; } = null;
-
     public MachinePosition MachinePosition { get; internal set; } = new();
 
     public MachinePosition? WorkPosition { get; internal set; } = new();

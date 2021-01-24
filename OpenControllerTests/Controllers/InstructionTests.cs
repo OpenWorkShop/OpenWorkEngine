@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using FluentAssertions;
 using MakerverseServerTests;
 using Newtonsoft.Json;
-using OpenWorkEngine.OpenController.Controllers.Grbl;
 using OpenWorkEngine.OpenController.Controllers.Interfaces;
 using OpenWorkEngine.OpenController.Controllers.Messages;
+using OpenWorkEngine.OpenController.ControllerSyntax.Grbl;
 using OpenWorkEngine.OpenController.Machines.Models;
 using OpenWorkEngine.OpenController.Syntax.GCode;
 using Serilog;
@@ -30,17 +30,20 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
   public class InstructionTests : TestBase {
     [Theory]
     [InlineData("G0 X2", null)]
-    [InlineData(GrblCommands.MoveTemplate, "{ \"X\": 2, \"Y\": 5 }")]
-    [InlineData(GrblCommands.MoveTemplate, "{ \"G\": 0, \"X\": 2.2, \"Z\": 5.5 }")]
+    [InlineData(GrblSyntax.MoveCommandTemplate, "{ \"X\": 2, \"Y\": 5 }")]
+    [InlineData(GrblSyntax.MoveCommandTemplate, "{ \"G\": 0, \"X\": 2.2, \"Z\": 5.5 }")]
     public void CanCompileInstructions(string template, string? json) {
-      GCodeBlock block = new GCodeBlock(template, "Test", false);
+      string src = nameof(InstructionTests);
+      GCodeBlock block = new GCodeBlock(template, src);
       MoveCommand move = json == null ? new MoveCommand() : JsonConvert.DeserializeObject<MoveCommand>(json);
-      string compiled = block.Compile(move);
-      compiled.Should().NotBeEmpty()
+      CompiledInstruction compiled = block.Compile(move);
+      compiled.Code
+              .Should().NotBeEmpty()
               .And.NotContain("$", "{", "}")
               .And.NotContain("A", "B", "C")
               .And.Contain("X2")
               .And.StartWith("G0");
+      compiled.Source.Should().Be(src);
     }
 
     public InstructionTests(ITestOutputHelper output) : base(output) { }

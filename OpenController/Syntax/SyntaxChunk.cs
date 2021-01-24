@@ -8,6 +8,8 @@ namespace OpenWorkEngine.OpenController.Syntax {
   public class SyntaxChunk {
     public string Value { get; set; } = "";
 
+    public string Comment => string.Join(' ', Comments);
+
     public List<string> Comments { get; } = new();
 
     public bool IsCode => !string.IsNullOrWhiteSpace(Value);

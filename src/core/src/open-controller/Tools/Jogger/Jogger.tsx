@@ -17,7 +17,7 @@ import {
   UnitType,
   useMoveMachineMutation
 } from '../../graphql';
-import {useLogger} from '../../../Hooks';
+import {useLogger} from '../../../hooks';
 
 const Jogger: ToolBase = (props) => {
   const t = useTrans();
@@ -27,7 +27,6 @@ const Jogger: ToolBase = (props) => {
   const units = useWorkspaceUnits(workspaceId);
   const jogOpts = { imperialUnits: units === UnitType.Imperial };
   const axes = useWorkspaceSelector(workspaceId, ws => ws.settings.axes);
-  const portName = useWorkspaceSelector(workspaceId, ws => ws.portName);
   const zAxis = _.find(axes, a => a.name === AxisName.Z);
   const xyAxis = _.find(axes, a => a.name === AxisName.X) ||
     _.find(axes, a => a.name === AxisName.Y);
@@ -69,7 +68,7 @@ const Jogger: ToolBase = (props) => {
         distanceType: req.distanceType,
       };
       log.debug('move', Object.keys(req), moveCommand);
-      await moveMachine({ variables: { portName, moveCommand }});
+      await moveMachine({ variables: { workspaceId, moveCommand }});
     } catch (e) {
       log.error(e);
     }

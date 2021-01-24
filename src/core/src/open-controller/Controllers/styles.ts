@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   controllerCardContent: {
     padding: 0,
+    paddingBottom: 0,
   },
   toolTabPanel: {
     padding: 0,
@@ -61,6 +62,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   running: {
     backgroundColor: theme.palette.secondary.dark,
+    color: lightColor,
+  },
+  paused: {
+    backgroundColor: theme.palette.info.dark,
     color: lightColor,
   },
   done: {

@@ -1,30 +1,32 @@
 using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using HotChocolate.Language;
 using MakerverseServerTests;
 using Newtonsoft.Json;
-using OpenWorkEngine.OpenController.Controllers.Grbl;
-using OpenWorkEngine.OpenController.Controllers.Grbl.Parsers;
-using OpenWorkEngine.OpenController.Controllers.Utils.Parsers;
+using OpenWorkEngine.OpenController.Controllers.Services.Serial;
+using OpenWorkEngine.OpenController.ControllerSyntax;
+using OpenWorkEngine.OpenController.ControllerSyntax.Grbl;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Models;
 using Serilog;
 using Xunit;
 using Xunit.Abstractions;
-using Parser = OpenWorkEngine.OpenController.Controllers.Utils.Parsers.Parser;
+using Parser = OpenWorkEngine.OpenController.Controllers.Services.Serial.Parser;
 
 namespace OpenWorkEngine.OpenControllerTests.Controllers {
   public class GrblTests : TestBase {
-    private readonly ParserSet _parsers = new ParserSet().AddGrblParsers();
+    private readonly ControllerTranslator _parsers = new ControllerTranslator().UseGrblSyntax();
     // private ControlledMachine? _machine;
 
     public GrblTests(ITestOutputHelper output) : base(output) { }
 
-    private ControlledMachine TestParser(Parser? parser, string line) {
+    internal static ControlledMachine TestParser(Parser? parser, string line) {
+      parser.Should().NotBeNull();
       ControlledMachine machine = new ControlledMachine("", null, Log.Logger);
-      HashSet<MachineTopic>? changed = parser?.UpdateMachine(null, machine, line).Result ?? null;
-      changed.Should().NotBeEmpty();
+      MachineOutputLine outputLine = parser.UpdateMachine(new MachineOutputLine(line, machine, null)).Result;
+      outputLine.WasParsed.Should().BeTrue();
       return machine;
     }
 
@@ -120,10 +122,11 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
     [InlineData("[MSG:'$H'|'$X' to unlock]")]
     [InlineData("[MSG:Enabled]")]
     [InlineData("[MSG:Disabled]")]
+    [InlineData("[echo:hello]")]
     public void CanParseMessage(string line) {
-      ControlledMachine machine = TestParser(_parsers.Message, line);
+      ControlledMachine machine = TestParser(_parsers.Fallback, line);
       Log.Information("Machine Status {@status}", JsonConvert.SerializeObject(machine.Status, Formatting.Indented));
-      line.Should().Be($"[MSG:{machine.Status.Message}]");
+      line.Should().Contain(machine.LogEntries.Last().Message);
     }
 
     [Theory]

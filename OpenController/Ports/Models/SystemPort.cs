@@ -75,6 +75,8 @@ namespace OpenWorkEngine.OpenController.Ports.Models {
       return changed;
     }
 
-    public override string ToString() => $"[{PortName}] [{State}] [{Connection?.ToString() ?? "disconnected"}]";
+    private string ConnectionString => Connection != null ? Connection.ToString() : $"{PortName}/disconnected";
+
+    public override string ToString() => $"<p:[{ConnectionString}:{State}]>";
   }
 }

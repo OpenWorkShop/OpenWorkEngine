@@ -13,7 +13,7 @@
     "ows-app": "./ci/run-dir.sh \"OpenWorkShop/App\" \"yarn run start\"",
     "ows-server": "./ci/run-dir.sh \"OpenWorkShop\" \"dotnet watch run\"",
     "frontend": "concurrently \"yarn run start\" \"yarn run pkg dev core\" \"yarn run schema\" \"yarn run ows-app\"",
-    "backend": "concurrently \"cd Makerverse && dotnet watch run\" \"yarn run ows-server\""
+    "backend": "concurrently --raw \"cd Makerverse && dotnet watch run\" \"yarn run ows-server\""
   },
   "resolutions": {
     "@openworkshop/core": "./src/core/dist",
@@ -70,6 +70,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-ga": "^3.3.0",
+    "react-hotkeys-hook": "^3.0.3",
     "react-i18next": "^11.8.5",
     "react-promise-suspense": "^0.3.3",
     "react-redux": "^7.2.2",
@@ -86,6 +87,7 @@
     "three": "^0.124.0",
     "typeface-cabin": "^1.1.13",
     "typeface-roboto": "^1.1.13",
+    "typeface-roboto-mono": "^1.1.13",
     "web-vitals": "^1.1.0",
     "xterm": "^4.9.0",
     "xterm-addon-fit": "^0.4.0",

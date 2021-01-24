@@ -15,7 +15,7 @@ import {
   FormControlLabel,
 } from '@material-ui/core';
 import useLogger from '../../utils/logging/UseLogger';
-import {useOwsTrans} from '../../Hooks';
+import {useOwsTrans} from '../../hooks';
 
 interface IChooseMachinePartsProps {
   partGroup: MachinePartCompleteFragment[];

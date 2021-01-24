@@ -7,7 +7,7 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
       Code = code;
     }
 
-    public MachineAlert(Exception e) : base(e) { }
+    // public MachineAlert(Exception e) : base(e) { }
     public string Code { get; set; } = default!;
   }
 }

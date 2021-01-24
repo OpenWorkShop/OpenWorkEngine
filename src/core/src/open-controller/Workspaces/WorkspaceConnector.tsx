@@ -7,7 +7,7 @@ import { Grid } from '@material-ui/core';
 import {IMaybeHavePortStatus} from '../Ports';
 import useLogger from '../../utils/logging/UseLogger';
 import OpenWorkspaceButton from './OpenWorkspaceButton';
-import {useWorkspace} from './Hooks';
+import {useWorkspace} from './hooks';
 import WorkBar from '../WorkBar';
 import useStyles from './styles';
 

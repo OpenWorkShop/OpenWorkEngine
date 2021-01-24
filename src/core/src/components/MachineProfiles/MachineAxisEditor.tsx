@@ -5,7 +5,7 @@ import AlertList from '../Alerts/AlertList';
 import HoverHelpStep from '../Alerts/HoverHelpStep';
 import NumericInput from '../Forms/NumericInput';
 import {IAlertMessage} from '../Alerts';
-import {useOwsTrans} from '../../Hooks';
+import {useOwsTrans} from '../../hooks';
 import {IAxisProps} from '../../open-controller/Machines/CustomizedMachine';
 import useStyles from './styles';
 

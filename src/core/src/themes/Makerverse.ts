@@ -2,6 +2,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import Colors from './Colors';
 import themeBase from './';
 import 'typeface-roboto';
+import 'typeface-roboto-mono';
 import 'typeface-cabin';
 
 const theme = createMuiTheme({

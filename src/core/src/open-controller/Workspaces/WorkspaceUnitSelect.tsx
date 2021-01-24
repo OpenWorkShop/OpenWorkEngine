@@ -2,7 +2,7 @@ import * as React from 'react';
 import {IHaveWorkspace} from './types';
 import useLogger from '../../utils/logging/UseLogger';
 import {InchesMillimetersSelect} from '../../components/Units';
-import {useWorkspaceUnits} from './Hooks';
+import {useWorkspaceUnits} from './hooks';
 import {UnitType} from '../graphql';
 
 type Props = IHaveWorkspace;

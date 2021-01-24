@@ -1,3 +1,4 @@
+using HotChocolate.Execution.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OpenWorkEngine.OpenController.Controllers.Services;
 using OpenWorkEngine.OpenController.Identity.Services;
@@ -9,7 +10,7 @@ using Serilog;
 
 namespace OpenWorkEngine.OpenController {
   public static class OpenControllerStartup {
-    public static void AddOpenController(this IServiceCollection services) {
+    public static void AddOpenControllerServices(this IServiceCollection services) {
       services.AddSingleton(Log.Logger);
       services.AddSingleton<ConfigFile>();
       services.AddSingleton<SessionManager>();
@@ -19,21 +20,22 @@ namespace OpenWorkEngine.OpenController {
       services.AddTransient<OpenControllerContext>();
       services.AddScoped<IdentityService>();
       services.AddHttpContextAccessor();
+    }
 
-      services.AddAuthentication();
-      services.AddAuthorization(opts => {
-        opts.AddControllerPolicies();
-      });
 
-      services.AddHttpResultSerializer<GraphqlHttpResultSerializer>()
-              .AddInMemorySubscriptions()
-              .AddGraphQLServer()
-              .AddDiagnosticEventListener<GraphqlDiagnosticEventListener>()
-              .AddSocketSessionInterceptor<MakerverseSocketSessionInterceptor>()
-              .AddHttpRequestInterceptor<MakerverseHttpRequestInterceptor>()
-              .AddAuthorization()
-              .AddOpenControllerSchema()
-              .AddErrorFilter<GraphqlErrorFilter>();
+    public static IRequestExecutorBuilder AddOpenControllerGraphQLServer(this IServiceCollection services) {
+      return services.AddHttpResultSerializer<GraphqlHttpResultSerializer>()
+                     .AddInMemorySubscriptions()
+                     .AddGraphQLServer()
+                     .AddDiagnosticEventListener<GraphqlDiagnosticEventListener>()
+                     .AddSocketSessionInterceptor<OpenControllerSocketSessionInterceptor>()
+                     .AddHttpRequestInterceptor<OpenControllerHttpRequestInterceptor>()
+                     .AddAuthorization()
+                     .AddOpenControllerSchema()
+                      // .EnableRelaySupport()
+                     .AddFiltering()
+                     .AddSorting()
+                     .AddErrorFilter<GraphqlErrorFilter>();
     }
   }
 }

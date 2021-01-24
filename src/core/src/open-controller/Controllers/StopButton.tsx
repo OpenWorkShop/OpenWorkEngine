@@ -2,10 +2,10 @@ import React, {FunctionComponent} from 'react';
 import {ActiveState, useUnlockMachineMutation, useResetMachineMutation} from '../graphql';
 import useStyles from './styles';
 import {useTrans} from '../Context';
-import {useLogger} from '../../Hooks';
+import {useLogger} from '../../hooks';
 import {Fab, Tooltip, Typography} from '@material-ui/core';
 import clsx from 'clsx';
-import {IHaveWorkspace, useWorkspaceControllerSelector, useWorkspaceSelector} from '../Workspaces';
+import {IHaveWorkspace, useWorkspaceControllerSelector} from '../Workspaces';
 
 type Props = IHaveWorkspace;
 
@@ -16,7 +16,6 @@ const StopButton: FunctionComponent<Props> = (props) => {
   const { workspaceId } = props;
   const activeState = useWorkspaceControllerSelector(workspaceId, c => c.machine.status.activityState);
   const alarm = useWorkspaceControllerSelector(workspaceId, c => c.machine.status.alarm);
-  const portName = useWorkspaceSelector(workspaceId, ws => ws.portName);
   const [unlock] = useUnlockMachineMutation();
   const [reset] = useResetMachineMutation();
   const hasAlarm = activeState === ActiveState.Alarm || alarm;
@@ -36,7 +35,7 @@ const StopButton: FunctionComponent<Props> = (props) => {
   async function onClick(): Promise<void> {
     if (isInit) return;
     try {
-      const variables = { portName: portName };
+      const variables = { workspaceId };
       if (hasAlarm) {
         await unlock({ variables });
       } else {

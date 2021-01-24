@@ -1,7 +1,7 @@
 import useLogger from '../../utils/logging/UseLogger';
 import React, { FunctionComponent } from 'react';
 import {Redirect, Route, Switch, useLocation } from 'react-router-dom';
-import {useOpenWorkShop } from '../../Hooks';
+import {useOpenWorkShop } from '../../hooks';
 import { BackendConnection } from '../../api';
 import {
   StartupFragment,

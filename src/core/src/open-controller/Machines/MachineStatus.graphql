@@ -1,0 +1,56 @@
+
+fragment MachineBuffer on MachineBuffer {
+    lineNumber
+    availableReceive
+    availableSend
+}
+
+fragment MachineApplicatorState on MachineApplicatorState {
+    isOn
+    spinDirection
+    spinSpeed
+    feedRate
+    isFloodCoolantEnabled
+    isMistCoolantEnabled
+}
+
+fragment MachineOverrides on MachineOverrides {
+    feed
+    rapids
+    spindle
+}
+
+fragment MachineStatus on MachineStatus {
+    activityState
+    machinePosition {
+        ...MachinePosition
+    }
+    workPosition {
+        ...MachinePosition
+    }
+    workCoordinateOffset {
+        ...MachinePosition
+    }
+    alarm {
+        ...MachineAlert
+    }
+    buffer {
+        ...MachineBuffer
+    }
+    activePins
+    applicator {
+        ...MachineApplicatorState
+    }
+    overrides {
+        ...MachineOverrides
+    }
+}
+
+subscription MachineStatus($portName: String!) {
+    machine: onMachineStatus(portName: $portName) {
+        topicId
+        status {
+            ...MachineStatus
+        }
+    }
+}

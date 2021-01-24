@@ -5,7 +5,7 @@ import {
   FormControlLabel,
   Typography,
 } from '@material-ui/core';
-import { useOpenWorkShop } from '../../Hooks';
+import { useOpenWorkShop } from '../../hooks';
 import useLogger from '../../utils/logging/UseLogger';
 import {AlertList} from '../../components/Alerts';
 import ToolbarCard from '../../components/Cards/ToolbarCard';

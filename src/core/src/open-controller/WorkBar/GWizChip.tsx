@@ -7,7 +7,7 @@ import {getViewPlaneNameKey} from '../GWiz/ViewPlane';
 import {Grid} from '@material-ui/core';
 import HelpfulHeader from '../../components/Text/HelpfulHeader';
 import useStyles from './styles';
-import {useLogger} from '../../Hooks';
+import {useLogger} from '../../hooks';
 import {useSelector} from 'react-redux';
 import {AppState} from '../redux';
 import ViewModeSelect from '../GWiz/Preferences/ViewModeSelect';

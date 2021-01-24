@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Typography } from '@material-ui/core';
 import { favicon32 } from '../Images';
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
-import {useOwsTrans} from '../../Hooks';
+import {useOwsTrans} from '../../hooks';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

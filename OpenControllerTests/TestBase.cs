@@ -25,7 +25,8 @@ namespace OpenWorkEngine.OpenControllerTests {
     }
 
     protected void AssertHealthyLogs() {
-      List<LogEvent> badLogs = FatalLogs.Concat(ErrorLogs).Concat(WarningLogs).ToList();
+      // .Concat(WarningLogs)
+      List<LogEvent> badLogs = FatalLogs.Concat(ErrorLogs).ToList();
       badLogs.Should().BeEmpty(string.Join('\n', badLogs.Select(l => l.MessageTemplate.Text)));
     }
 

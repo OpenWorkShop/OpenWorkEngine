@@ -6,7 +6,7 @@ import useLogger from '../../../utils/logging/UseLogger';
 import {MachineAxes} from '../../Machines/CustomizedMachine';
 import HelpfulHeader from '../../../components/Text/HelpfulHeader';
 import {useTrans} from '../../Context';
-import {useWorkspaceSelector} from '../Hooks';
+import {useWorkspaceSelector} from '../hooks';
 
 type Props = IHaveWorkspace;
 

@@ -1,6 +1,7 @@
 import {
+  AlertError,
   ControlledMachineFragment,
-  MachineConfigFragment,
+  MachineConfigFragment, MachineLogEntryConnectionFragment,
   MachineSettingFragment,
   MachineStatusFragment
 } from '../graphql';
@@ -22,6 +23,7 @@ export type ControllerStateMap = { [key: string]: IController };
 export type ControllersState = {
   controllerMap: ControllerStateMap;
   controllerIds: string[];
+  logMap: { [key: string]: MachineLogEntryConnectionFragment };
 };
 
 
@@ -40,3 +42,22 @@ export interface IMachineStatusUpdate extends IControlledMachineUpdate {
 export interface IMachineConfigUpdate extends IControlledMachineUpdate {
   configuration: MachineConfigFragment;
 }
+
+export interface IMachineLogsUpdate extends IControlledMachineUpdate {
+  logs: MachineLogEntryConnectionFragment | null;
+}
+
+export interface IMachineLogUpdate extends IControlledMachineUpdate {
+  logs: MachineConfigFragment;
+}
+
+export interface IControllerVars {
+  workspaceId: string;
+}
+
+export interface IMutationResult<TData> {
+  error?: AlertError;
+  data?: TData;
+}
+
+export type MutationResultAsync<TData, TVars> = (vars: TVars) => Promise<IMutationResult<TData>>;

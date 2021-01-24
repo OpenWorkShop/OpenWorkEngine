@@ -3,7 +3,7 @@ import * as React from 'react';
 import AlertList, {IAlertList} from './AlertList';
 import useLogger from '../../utils/logging/UseLogger';
 import {sanitizeAlertMessages} from './types';
-import {useOwsTrans} from '../../Hooks';
+import {useOwsTrans} from '../../hooks';
 
 type AlertDialogProps = IAlertList & {
   title: string;

@@ -30,7 +30,7 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     };
 
     internal void SetWorkCoordinatePosition(int idx, MachinePosition p) {
-      Log.Debug("Set {i} to {p}", idx, p);
+      Log.Debug("[SET] [WC] {i} to {p}", idx, p);
       while (WorkCoordinates.Count <= idx) WorkCoordinates.Add(new MachinePosition());
       WorkCoordinates[idx] = p;
     }
@@ -42,7 +42,5 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
         WorkCoordinates.Sum(wc => (long)wc.GetHashCode()) + ReferencePosition.Sum(rp => (long)rp.GetHashCode());
       return (int) (hc % int.MaxValue);
     }
-
-    // public override string ToString() => $"{Firmware}";
   }
 }

@@ -17,10 +17,10 @@ export type Scalars = {
   Float: number;
   /** The built-in `Decimal` scalar type. */
   Decimal: any;
-  /** The `Long` scalar type represents non-fractional signed whole 64-bit numeric values. Long can represent values between -(2^63) and 2^63 - 1. */
-  Long: any;
   /** The `DateTime` scalar represents an ISO-8601 compliant date time type. */
   DateTime: any;
+  /** The `Long` scalar type represents non-fractional signed whole 64-bit numeric values. Long can represent values between -(2^63) and 2^63 - 1. */
+  Long: any;
 };
 
 export type IMachineFirmwareRequirement = {
@@ -79,29 +79,11 @@ export type CommandSettings = {
   title: Scalars['String'];
 };
 
-export type Commands = {
-  __typename?: 'Commands';
-  checkCode: ControlledMachine;
-  configuration: ControlledMachine;
-  firmware: ControlledMachine;
-  help: ControlledMachine;
-  homing: ControlledMachine;
-  id: Scalars['String'];
-  move: ControlledMachine;
-  name: Scalars['String'];
-  parameters: ControlledMachine;
-  pause: ControlledMachine;
-  play: ControlledMachine;
-  reset: ControlledMachine;
-  settings: ControlledMachine;
-  startup: ControlledMachine;
-  status: ControlledMachine;
-  syntax: ProgramSyntax;
-  unlock: ControlledMachine;
-};
-
-export type CommandsMoveArgs = {
-  moveCommand: MoveCommandInput;
+export type CompiledInstruction = {
+  __typename?: 'CompiledInstruction';
+  chunks: Array<SyntaxChunk>;
+  code: Scalars['String'];
+  source: Scalars['String'];
 };
 
 export type ConnectedPort = {
@@ -126,11 +108,52 @@ export type ControlledMachine = {
   __typename?: 'ControlledMachine';
   configuration: MachineConfiguration;
   firmwareRequirement: FirmwareRequirement;
-  lastTopic: MachineTopic;
+  id: Scalars['String'];
+  logs: Maybe<MachineLogEntryConnection>;
   machineProfileId: Maybe<Scalars['String']>;
   settings: Array<MachineSetting>;
   status: MachineStatus;
   topicId: Scalars['String'];
+};
+
+export type ControlledMachineLogsArgs = {
+  after: Maybe<Scalars['String']>;
+  before: Maybe<Scalars['String']>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
+  order: Maybe<Array<MachineLogEntrySortInput>>;
+  where: Maybe<MachineLogEntryFilterInput>;
+};
+
+export type Controller = {
+  __typename?: 'Controller';
+  checkCode: ControlledMachine;
+  configuration: ControlledMachine;
+  controllerType: MachineControllerType;
+  createdAt: Scalars['DateTime'];
+  firmware: ControlledMachine;
+  help: ControlledMachine;
+  homing: ControlledMachine;
+  id: Scalars['String'];
+  move: ControlledMachine;
+  parameters: ControlledMachine;
+  pause: ControlledMachine;
+  play: ControlledMachine;
+  reset: ControlledMachine;
+  settings: ControlledMachine;
+  startup: ControlledMachine;
+  status: ControlledMachine;
+  unlock: ControlledMachine;
+  writeCommand: ControlledMachine;
+};
+
+export type ControllerMoveArgs = {
+  moveCommand: MoveCommandInput;
+};
+
+export type ControllerWriteCommandArgs = {
+  commandCode: Scalars['String'];
+  sourceName: Scalars['String'];
 };
 
 export type EventSettings = {
@@ -295,6 +318,38 @@ export type MachineFirmwareSettings = IMachineFirmwareRequirement & {
   requiredVersion: Scalars['Decimal'];
   rtscts: Scalars['Boolean'];
   suggestedVersion: Scalars['Decimal'];
+};
+
+export type MachineLogEntry = {
+  __typename?: 'MachineLogEntry';
+  count: Scalars['Int'];
+  error: Maybe<MachineAlert>;
+  id: Scalars['String'];
+  instruction: Maybe<CompiledInstruction>;
+  logLevel: MachineLogLevel;
+  message: Scalars['String'];
+  timestamp: Scalars['DateTime'];
+  timestamps: Array<Scalars['DateTime']>;
+};
+
+/** A connection to a list of items. */
+export type MachineLogEntryConnection = {
+  __typename?: 'MachineLogEntryConnection';
+  /** A list of edges. */
+  edges: Maybe<Array<MachineLogEntryEdge>>;
+  /** A flattened list of the nodes. */
+  nodes: Maybe<Array<MachineLogEntry>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+/** An edge in a connection. */
+export type MachineLogEntryEdge = {
+  __typename?: 'MachineLogEntryEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge. */
+  node: MachineLogEntry;
 };
 
 export type MachineModalStateOfAxisPlane = {
@@ -471,9 +526,7 @@ export type MachineStatus = {
   alarm: Maybe<MachineAlert>;
   applicator: MachineApplicatorState;
   buffer: MachineBuffer;
-  error: Maybe<MachineAlert>;
   machinePosition: MachinePosition;
-  message: Maybe<Scalars['String']>;
   overrides: Maybe<MachineOverrides>;
   workCoordinateOffset: Maybe<MachinePosition>;
   workPosition: Maybe<MachinePosition>;
@@ -503,7 +556,7 @@ export type Mutation = {
   changeWorkspacePort: Workspace;
   closePort: SystemPort;
   closeWorkspace: Workspace;
-  commandMachine: Commands;
+  controlMachine: Controller;
   createWorkspace: Workspace;
   deleteWorkspace: Workspace;
   openPort: SystemPort;
@@ -525,8 +578,8 @@ export type MutationCloseWorkspaceArgs = {
   workspaceId: Scalars['String'];
 };
 
-export type MutationCommandMachineArgs = {
-  portName: Scalars['String'];
+export type MutationControlMachineArgs = {
+  workspaceId: Scalars['String'];
 };
 
 export type MutationCreateWorkspaceArgs = {
@@ -581,6 +634,19 @@ export type OpenControllerUser = {
   id: Maybe<Scalars['String']>;
   tokens: Array<Scalars['String']>;
   username: Scalars['String'];
+};
+
+/** Information about pagination in a connection. */
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor: Maybe<Scalars['String']>;
+  /** Indicates whether more edges exist following the set defined by the clients arguments. */
+  hasNextPage: Scalars['Boolean'];
+  /** Indicates whether more edges exist prior the set defined by the clients arguments. */
+  hasPreviousPage: Scalars['Boolean'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor: Maybe<Scalars['String']>;
 };
 
 export type PortOptions = ISerialPortOptions & {
@@ -665,6 +731,7 @@ export type QueryUserProfileArgs = {
 export type Subscription = {
   __typename?: 'Subscription';
   onMachineConfiguration: ControlledMachine;
+  onMachineLog: ControlledMachine;
   onMachineSetting: ControlledMachine;
   onMachineStatus: ControlledMachine;
   onPortChange: SystemPort;
@@ -675,12 +742,25 @@ export type SubscriptionOnMachineConfigurationArgs = {
   portName: Scalars['String'];
 };
 
+export type SubscriptionOnMachineLogArgs = {
+  portName: Scalars['String'];
+};
+
 export type SubscriptionOnMachineSettingArgs = {
   portName: Scalars['String'];
 };
 
 export type SubscriptionOnMachineStatusArgs = {
   portName: Scalars['String'];
+};
+
+export type SyntaxChunk = {
+  __typename?: 'SyntaxChunk';
+  comment: Scalars['String'];
+  comments: Array<Scalars['String']>;
+  isCode: Scalars['Boolean'];
+  isValid: Scalars['Boolean'];
+  value: Scalars['String'];
 };
 
 export type SystemPort = {
@@ -801,6 +881,13 @@ export enum MachineControllerType {
   Unknown = 'UNKNOWN',
 }
 
+export enum MachineLogLevel {
+  Dbg = 'DBG',
+  Err = 'ERR',
+  Inf = 'INF',
+  Wrn = 'WRN',
+}
+
 export enum MachineMotionType {
   Arc = 'ARC',
   ArcCcw = 'ARC_CCW',
@@ -880,12 +967,6 @@ export enum MachineSpecType {
   WaveLength = 'WAVE_LENGTH',
 }
 
-export enum MachineTopic {
-  Configuration = 'CONFIGURATION',
-  Setting = 'SETTING',
-  Status = 'STATUS',
-}
-
 export enum MovementDistanceType {
   Absolute = 'ABSOLUTE',
   Relative = 'RELATIVE',
@@ -912,6 +993,11 @@ export enum PortState {
 
 export enum ProgramSyntax {
   GCode = 'G_CODE',
+}
+
+export enum SortEnumType {
+  Asc = 'ASC',
+  Desc = 'DESC',
 }
 
 export enum SpinDirection {
@@ -941,6 +1027,54 @@ export enum WorkspaceState {
   Opening = 'OPENING',
 }
 
+export type BooleanOperationFilterInput = {
+  eq: Maybe<Scalars['Boolean']>;
+  neq: Maybe<Scalars['Boolean']>;
+};
+
+export type ComparableDateTimeOperationFilterInput = {
+  eq: Maybe<Scalars['DateTime']>;
+  gt: Maybe<Scalars['DateTime']>;
+  gte: Maybe<Scalars['DateTime']>;
+  in: Maybe<Array<Scalars['DateTime']>>;
+  lt: Maybe<Scalars['DateTime']>;
+  lte: Maybe<Scalars['DateTime']>;
+  neq: Maybe<Scalars['DateTime']>;
+  ngt: Maybe<Scalars['DateTime']>;
+  ngte: Maybe<Scalars['DateTime']>;
+  nin: Maybe<Array<Scalars['DateTime']>>;
+  nlt: Maybe<Scalars['DateTime']>;
+  nlte: Maybe<Scalars['DateTime']>;
+};
+
+export type ComparableInt32OperationFilterInput = {
+  eq: Maybe<Scalars['Int']>;
+  gt: Maybe<Scalars['Int']>;
+  gte: Maybe<Scalars['Int']>;
+  in: Maybe<Array<Scalars['Int']>>;
+  lt: Maybe<Scalars['Int']>;
+  lte: Maybe<Scalars['Int']>;
+  neq: Maybe<Scalars['Int']>;
+  ngt: Maybe<Scalars['Int']>;
+  ngte: Maybe<Scalars['Int']>;
+  nin: Maybe<Array<Scalars['Int']>>;
+  nlt: Maybe<Scalars['Int']>;
+  nlte: Maybe<Scalars['Int']>;
+};
+
+export type CompiledInstructionFilterInput = {
+  and: Maybe<Array<CompiledInstructionFilterInput>>;
+  chunks: Maybe<ListFilterInputTypeOfSyntaxChunkFilterInput>;
+  code: Maybe<StringOperationFilterInput>;
+  or: Maybe<Array<CompiledInstructionFilterInput>>;
+  source: Maybe<StringOperationFilterInput>;
+};
+
+export type CompiledInstructionSortInput = {
+  code: Maybe<SortEnumType>;
+  source: Maybe<SortEnumType>;
+};
+
 export type ConnectionSettingsInput = {
   firmware: MachineFirmwareSettingsInput;
   machineProfileId: Maybe<Scalars['String']>;
@@ -956,6 +1090,41 @@ export type FirmwareRequirementInput = {
   name: Maybe<Scalars['String']>;
   requiredVersion: Scalars['Decimal'];
   suggestedVersion: Scalars['Decimal'];
+};
+
+export type ListComparableDateTimeOperationFilterInput = {
+  all: Maybe<ComparableDateTimeOperationFilterInput>;
+  any: Maybe<Scalars['Boolean']>;
+  none: Maybe<ComparableDateTimeOperationFilterInput>;
+  some: Maybe<ComparableDateTimeOperationFilterInput>;
+};
+
+export type ListFilterInputTypeOfSyntaxChunkFilterInput = {
+  all: Maybe<SyntaxChunkFilterInput>;
+  any: Maybe<Scalars['Boolean']>;
+  none: Maybe<SyntaxChunkFilterInput>;
+  some: Maybe<SyntaxChunkFilterInput>;
+};
+
+export type ListStringOperationFilterInput = {
+  all: Maybe<StringOperationFilterInput>;
+  any: Maybe<Scalars['Boolean']>;
+  none: Maybe<StringOperationFilterInput>;
+  some: Maybe<StringOperationFilterInput>;
+};
+
+export type MachineAlertFilterInput = {
+  and: Maybe<Array<MachineAlertFilterInput>>;
+  code: Maybe<StringOperationFilterInput>;
+  message: Maybe<StringOperationFilterInput>;
+  name: Maybe<StringOperationFilterInput>;
+  or: Maybe<Array<MachineAlertFilterInput>>;
+};
+
+export type MachineAlertSortInput = {
+  code: Maybe<SortEnumType>;
+  message: Maybe<SortEnumType>;
+  name: Maybe<SortEnumType>;
 };
 
 export type MachineAxisSettingsInput = {
@@ -995,6 +1164,35 @@ export type MachineFirmwareSettingsInput = {
   requiredVersion: Scalars['Decimal'];
   rtscts: Scalars['Boolean'];
   suggestedVersion: Scalars['Decimal'];
+};
+
+export type MachineLogEntryFilterInput = {
+  and: Maybe<Array<MachineLogEntryFilterInput>>;
+  count: Maybe<ComparableInt32OperationFilterInput>;
+  error: Maybe<MachineAlertFilterInput>;
+  instruction: Maybe<CompiledInstructionFilterInput>;
+  logLevel: Maybe<MachineLogLevelOperationFilterInput>;
+  message: Maybe<StringOperationFilterInput>;
+  or: Maybe<Array<MachineLogEntryFilterInput>>;
+  timestamp: Maybe<ComparableDateTimeOperationFilterInput>;
+  timestamps: Maybe<ListComparableDateTimeOperationFilterInput>;
+};
+
+export type MachineLogEntrySortInput = {
+  count: Maybe<SortEnumType>;
+  error: Maybe<MachineAlertSortInput>;
+  id: Maybe<SortEnumType>;
+  instruction: Maybe<CompiledInstructionSortInput>;
+  logLevel: Maybe<SortEnumType>;
+  message: Maybe<SortEnumType>;
+  timestamp: Maybe<SortEnumType>;
+};
+
+export type MachineLogLevelOperationFilterInput = {
+  eq: Maybe<MachineLogLevel>;
+  in: Maybe<Array<MachineLogLevel>>;
+  neq: Maybe<MachineLogLevel>;
+  nin: Maybe<Array<MachineLogLevel>>;
 };
 
 export type MachinePartSettingsInput = {
@@ -1052,6 +1250,31 @@ export type SerialPortOptionsInput = {
   stopBits: Maybe<StopBits>;
   writeBufferSize: Maybe<Scalars['Int']>;
   writeTimeout: Maybe<Scalars['Int']>;
+};
+
+export type StringOperationFilterInput = {
+  and: Maybe<Array<StringOperationFilterInput>>;
+  contains: Maybe<Scalars['String']>;
+  endsWith: Maybe<Scalars['String']>;
+  eq: Maybe<Scalars['String']>;
+  in: Maybe<Array<Maybe<Scalars['String']>>>;
+  ncontains: Maybe<Scalars['String']>;
+  nendsWith: Maybe<Scalars['String']>;
+  neq: Maybe<Scalars['String']>;
+  nin: Maybe<Array<Maybe<Scalars['String']>>>;
+  nstartsWith: Maybe<Scalars['String']>;
+  or: Maybe<Array<StringOperationFilterInput>>;
+  startsWith: Maybe<Scalars['String']>;
+};
+
+export type SyntaxChunkFilterInput = {
+  and: Maybe<Array<SyntaxChunkFilterInput>>;
+  comment: Maybe<StringOperationFilterInput>;
+  comments: Maybe<ListStringOperationFilterInput>;
+  isCode: Maybe<BooleanOperationFilterInput>;
+  isValid: Maybe<BooleanOperationFilterInput>;
+  or: Maybe<Array<SyntaxChunkFilterInput>>;
+  value: Maybe<StringOperationFilterInput>;
 };
 
 export type WorkspaceSettingsInput = {
@@ -1165,10 +1388,11 @@ export type ResolversTypes = {
   AppUpdates: ResolverTypeWrapper<AppUpdates>;
   ApplicatorConfig: ResolverTypeWrapper<ApplicatorConfig>;
   CommandSettings: ResolverTypeWrapper<CommandSettings>;
-  Commands: ResolverTypeWrapper<Commands>;
+  CompiledInstruction: ResolverTypeWrapper<CompiledInstruction>;
   ConnectedPort: ResolverTypeWrapper<ConnectedPort>;
   ConnectionSettings: ResolverTypeWrapper<ConnectionSettings>;
   ControlledMachine: ResolverTypeWrapper<ControlledMachine>;
+  Controller: ResolverTypeWrapper<Controller>;
   EventSettings: ResolverTypeWrapper<EventSettings>;
   FileSystemSettings: ResolverTypeWrapper<FileSystemSettings>;
   FirmwareRequirement: ResolverTypeWrapper<FirmwareRequirement>;
@@ -1185,6 +1409,9 @@ export type ResolversTypes = {
   MachineFeatureSettings: ResolverTypeWrapper<MachineFeatureSettings>;
   MachineFirmware: ResolverTypeWrapper<MachineFirmware>;
   MachineFirmwareSettings: ResolverTypeWrapper<MachineFirmwareSettings>;
+  MachineLogEntry: ResolverTypeWrapper<MachineLogEntry>;
+  MachineLogEntryConnection: ResolverTypeWrapper<MachineLogEntryConnection>;
+  MachineLogEntryEdge: ResolverTypeWrapper<MachineLogEntryEdge>;
   MachineModalStateOfAxisPlane: ResolverTypeWrapper<MachineModalStateOfAxisPlane>;
   MachineModalStateOfFeedRateMode: ResolverTypeWrapper<MachineModalStateOfFeedRateMode>;
   MachineModalStateOfMachineMotionType: ResolverTypeWrapper<MachineModalStateOfMachineMotionType>;
@@ -1212,12 +1439,14 @@ export type ResolversTypes = {
   OpenControllerSession: ResolverTypeWrapper<OpenControllerSession>;
   OpenControllerSettings: ResolverTypeWrapper<OpenControllerSettings>;
   OpenControllerUser: ResolverTypeWrapper<OpenControllerUser>;
+  PageInfo: ResolverTypeWrapper<PageInfo>;
   PortOptions: ResolverTypeWrapper<PortOptions>;
   PortStatus: ResolverTypeWrapper<PortStatus>;
   ProgramFile: ResolverTypeWrapper<ProgramFile>;
   ProgramFileUpload: ResolverTypeWrapper<ProgramFileUpload>;
   Query: ResolverTypeWrapper<{}>;
   Subscription: ResolverTypeWrapper<{}>;
+  SyntaxChunk: ResolverTypeWrapper<SyntaxChunk>;
   SystemPort: ResolverTypeWrapper<SystemPort>;
   UserProfile: ResolverTypeWrapper<UserProfile>;
   Workspace: ResolverTypeWrapper<Workspace>;
@@ -1231,6 +1460,7 @@ export type ResolversTypes = {
   Handshake: Handshake;
   MachineCategory: MachineCategory;
   MachineControllerType: MachineControllerType;
+  MachineLogLevel: MachineLogLevel;
   MachineMotionType: MachineMotionType;
   MachinePartType: MachinePartType;
   MachinePinType: MachinePinType;
@@ -1238,31 +1468,46 @@ export type ResolversTypes = {
   MachineSettingType: MachineSettingType;
   MachineSettingUnits: MachineSettingUnits;
   MachineSpecType: MachineSpecType;
-  MachineTopic: MachineTopic;
   MovementDistanceType: MovementDistanceType;
   Parity: Parity;
   PortState: PortState;
   ProgramSyntax: ProgramSyntax;
+  SortEnumType: SortEnumType;
   SpinDirection: SpinDirection;
   StopBits: StopBits;
   UnitType: UnitType;
   WorkspaceState: WorkspaceState;
+  BooleanOperationFilterInput: BooleanOperationFilterInput;
+  ComparableDateTimeOperationFilterInput: ComparableDateTimeOperationFilterInput;
+  ComparableInt32OperationFilterInput: ComparableInt32OperationFilterInput;
+  CompiledInstructionFilterInput: CompiledInstructionFilterInput;
+  CompiledInstructionSortInput: CompiledInstructionSortInput;
   ConnectionSettingsInput: ConnectionSettingsInput;
   FirmwareRequirementInput: FirmwareRequirementInput;
+  ListComparableDateTimeOperationFilterInput: ListComparableDateTimeOperationFilterInput;
+  ListFilterInputTypeOfSyntaxChunkFilterInput: ListFilterInputTypeOfSyntaxChunkFilterInput;
+  ListStringOperationFilterInput: ListStringOperationFilterInput;
+  MachineAlertFilterInput: MachineAlertFilterInput;
+  MachineAlertSortInput: MachineAlertSortInput;
   MachineAxisSettingsInput: MachineAxisSettingsInput;
   MachineCommandSettingsInput: MachineCommandSettingsInput;
   MachineFeatureSettingsInput: MachineFeatureSettingsInput;
   MachineFirmwareSettingsInput: MachineFirmwareSettingsInput;
+  MachineLogEntryFilterInput: MachineLogEntryFilterInput;
+  MachineLogEntrySortInput: MachineLogEntrySortInput;
+  MachineLogLevelOperationFilterInput: MachineLogLevelOperationFilterInput;
   MachinePartSettingsInput: MachinePartSettingsInput;
   MachineSettingSettingsInput: MachineSettingSettingsInput;
   MachineSpecSettingsInput: MachineSpecSettingsInput;
   MoveCommandInput: MoveCommandInput;
   ProgramFileUploadInput: ProgramFileUploadInput;
   SerialPortOptionsInput: SerialPortOptionsInput;
+  StringOperationFilterInput: StringOperationFilterInput;
+  SyntaxChunkFilterInput: SyntaxChunkFilterInput;
   WorkspaceSettingsInput: WorkspaceSettingsInput;
   Decimal: ResolverTypeWrapper<Scalars['Decimal']>;
-  Long: ResolverTypeWrapper<Scalars['Long']>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
+  Long: ResolverTypeWrapper<Scalars['Long']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -1279,10 +1524,11 @@ export type ResolversParentTypes = {
   AppUpdates: AppUpdates;
   ApplicatorConfig: ApplicatorConfig;
   CommandSettings: CommandSettings;
-  Commands: Commands;
+  CompiledInstruction: CompiledInstruction;
   ConnectedPort: ConnectedPort;
   ConnectionSettings: ConnectionSettings;
   ControlledMachine: ControlledMachine;
+  Controller: Controller;
   EventSettings: EventSettings;
   FileSystemSettings: FileSystemSettings;
   FirmwareRequirement: FirmwareRequirement;
@@ -1299,6 +1545,9 @@ export type ResolversParentTypes = {
   MachineFeatureSettings: MachineFeatureSettings;
   MachineFirmware: MachineFirmware;
   MachineFirmwareSettings: MachineFirmwareSettings;
+  MachineLogEntry: MachineLogEntry;
+  MachineLogEntryConnection: MachineLogEntryConnection;
+  MachineLogEntryEdge: MachineLogEntryEdge;
   MachineModalStateOfAxisPlane: MachineModalStateOfAxisPlane;
   MachineModalStateOfFeedRateMode: MachineModalStateOfFeedRateMode;
   MachineModalStateOfMachineMotionType: MachineModalStateOfMachineMotionType;
@@ -1326,32 +1575,49 @@ export type ResolversParentTypes = {
   OpenControllerSession: OpenControllerSession;
   OpenControllerSettings: OpenControllerSettings;
   OpenControllerUser: OpenControllerUser;
+  PageInfo: PageInfo;
   PortOptions: PortOptions;
   PortStatus: PortStatus;
   ProgramFile: ProgramFile;
   ProgramFileUpload: ProgramFileUpload;
   Query: {};
   Subscription: {};
+  SyntaxChunk: SyntaxChunk;
   SystemPort: SystemPort;
   UserProfile: UserProfile;
   Workspace: Workspace;
   WorkspaceSettings: WorkspaceSettings;
+  BooleanOperationFilterInput: BooleanOperationFilterInput;
+  ComparableDateTimeOperationFilterInput: ComparableDateTimeOperationFilterInput;
+  ComparableInt32OperationFilterInput: ComparableInt32OperationFilterInput;
+  CompiledInstructionFilterInput: CompiledInstructionFilterInput;
+  CompiledInstructionSortInput: CompiledInstructionSortInput;
   ConnectionSettingsInput: ConnectionSettingsInput;
   FirmwareRequirementInput: FirmwareRequirementInput;
+  ListComparableDateTimeOperationFilterInput: ListComparableDateTimeOperationFilterInput;
+  ListFilterInputTypeOfSyntaxChunkFilterInput: ListFilterInputTypeOfSyntaxChunkFilterInput;
+  ListStringOperationFilterInput: ListStringOperationFilterInput;
+  MachineAlertFilterInput: MachineAlertFilterInput;
+  MachineAlertSortInput: MachineAlertSortInput;
   MachineAxisSettingsInput: MachineAxisSettingsInput;
   MachineCommandSettingsInput: MachineCommandSettingsInput;
   MachineFeatureSettingsInput: MachineFeatureSettingsInput;
   MachineFirmwareSettingsInput: MachineFirmwareSettingsInput;
+  MachineLogEntryFilterInput: MachineLogEntryFilterInput;
+  MachineLogEntrySortInput: MachineLogEntrySortInput;
+  MachineLogLevelOperationFilterInput: MachineLogLevelOperationFilterInput;
   MachinePartSettingsInput: MachinePartSettingsInput;
   MachineSettingSettingsInput: MachineSettingSettingsInput;
   MachineSpecSettingsInput: MachineSpecSettingsInput;
   MoveCommandInput: MoveCommandInput;
   ProgramFileUploadInput: ProgramFileUploadInput;
   SerialPortOptionsInput: SerialPortOptionsInput;
+  StringOperationFilterInput: StringOperationFilterInput;
+  SyntaxChunkFilterInput: SyntaxChunkFilterInput;
   WorkspaceSettingsInput: WorkspaceSettingsInput;
   Decimal: Scalars['Decimal'];
-  Long: Scalars['Long'];
   DateTime: Scalars['DateTime'];
+  Long: Scalars['Long'];
 };
 
 export type IMachineFirmwareRequirementResolvers<
@@ -1434,32 +1700,13 @@ export type CommandSettingsResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type CommandsResolvers<
+export type CompiledInstructionResolvers<
   ContextType = any,
-  ParentType extends ResolversParentTypes['Commands'] = ResolversParentTypes['Commands']
+  ParentType extends ResolversParentTypes['CompiledInstruction'] = ResolversParentTypes['CompiledInstruction']
 > = {
-  checkCode: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  configuration: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  firmware: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  help: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  homing: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  move: Resolver<
-    ResolversTypes['ControlledMachine'],
-    ParentType,
-    ContextType,
-    RequireFields<CommandsMoveArgs, 'moveCommand'>
-  >;
-  name: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  parameters: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  pause: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  play: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  reset: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  settings: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  startup: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  status: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  syntax: Resolver<ResolversTypes['ProgramSyntax'], ParentType, ContextType>;
-  unlock: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  chunks: Resolver<Array<ResolversTypes['SyntaxChunk']>, ParentType, ContextType>;
+  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  source: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1493,11 +1740,52 @@ export type ControlledMachineResolvers<
 > = {
   configuration: Resolver<ResolversTypes['MachineConfiguration'], ParentType, ContextType>;
   firmwareRequirement: Resolver<ResolversTypes['FirmwareRequirement'], ParentType, ContextType>;
-  lastTopic: Resolver<ResolversTypes['MachineTopic'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  logs: Resolver<
+    Maybe<ResolversTypes['MachineLogEntryConnection']>,
+    ParentType,
+    ContextType,
+    RequireFields<ControlledMachineLogsArgs, never>
+  >;
   machineProfileId: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   settings: Resolver<Array<ResolversTypes['MachineSetting']>, ParentType, ContextType>;
   status: Resolver<ResolversTypes['MachineStatus'], ParentType, ContextType>;
   topicId: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ControllerResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Controller'] = ResolversParentTypes['Controller']
+> = {
+  checkCode: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  configuration: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  controllerType: Resolver<ResolversTypes['MachineControllerType'], ParentType, ContextType>;
+  createdAt: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  firmware: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  help: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  homing: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  move: Resolver<
+    ResolversTypes['ControlledMachine'],
+    ParentType,
+    ContextType,
+    RequireFields<ControllerMoveArgs, 'moveCommand'>
+  >;
+  parameters: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  pause: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  play: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  reset: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  settings: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  startup: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  status: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  unlock: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  writeCommand: Resolver<
+    ResolversTypes['ControlledMachine'],
+    ParentType,
+    ContextType,
+    RequireFields<ControllerWriteCommandArgs, 'commandCode' | 'sourceName'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1710,6 +1998,40 @@ export type MachineFirmwareSettingsResolvers<
   requiredVersion: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
   rtscts: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   suggestedVersion: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MachineLogEntryResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MachineLogEntry'] = ResolversParentTypes['MachineLogEntry']
+> = {
+  count: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  error: Resolver<Maybe<ResolversTypes['MachineAlert']>, ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  instruction: Resolver<Maybe<ResolversTypes['CompiledInstruction']>, ParentType, ContextType>;
+  logLevel: Resolver<ResolversTypes['MachineLogLevel'], ParentType, ContextType>;
+  message: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  timestamp: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  timestamps: Resolver<Array<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MachineLogEntryConnectionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MachineLogEntryConnection'] = ResolversParentTypes['MachineLogEntryConnection']
+> = {
+  edges: Resolver<Maybe<Array<ResolversTypes['MachineLogEntryEdge']>>, ParentType, ContextType>;
+  nodes: Resolver<Maybe<Array<ResolversTypes['MachineLogEntry']>>, ParentType, ContextType>;
+  pageInfo: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MachineLogEntryEdgeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MachineLogEntryEdge'] = ResolversParentTypes['MachineLogEntryEdge']
+> = {
+  cursor: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  node: Resolver<ResolversTypes['MachineLogEntry'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1946,9 +2268,7 @@ export type MachineStatusResolvers<
   alarm: Resolver<Maybe<ResolversTypes['MachineAlert']>, ParentType, ContextType>;
   applicator: Resolver<ResolversTypes['MachineApplicatorState'], ParentType, ContextType>;
   buffer: Resolver<ResolversTypes['MachineBuffer'], ParentType, ContextType>;
-  error: Resolver<Maybe<ResolversTypes['MachineAlert']>, ParentType, ContextType>;
   machinePosition: Resolver<ResolversTypes['MachinePosition'], ParentType, ContextType>;
-  message: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   overrides: Resolver<Maybe<ResolversTypes['MachineOverrides']>, ParentType, ContextType>;
   workCoordinateOffset: Resolver<Maybe<ResolversTypes['MachinePosition']>, ParentType, ContextType>;
   workPosition: Resolver<Maybe<ResolversTypes['MachinePosition']>, ParentType, ContextType>;
@@ -2005,11 +2325,11 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationCloseWorkspaceArgs, 'workspaceId'>
   >;
-  commandMachine: Resolver<
-    ResolversTypes['Commands'],
+  controlMachine: Resolver<
+    ResolversTypes['Controller'],
     ParentType,
     ContextType,
-    RequireFields<MutationCommandMachineArgs, 'portName'>
+    RequireFields<MutationControlMachineArgs, 'workspaceId'>
   >;
   createWorkspace: Resolver<
     ResolversTypes['Workspace'],
@@ -2083,6 +2403,17 @@ export type OpenControllerUserResolvers<
   id: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   tokens: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
   username: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type PageInfoResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']
+> = {
+  endCursor: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  hasNextPage: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  hasPreviousPage: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  startCursor: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2191,6 +2522,13 @@ export type SubscriptionResolvers<
     ContextType,
     RequireFields<SubscriptionOnMachineConfigurationArgs, 'portName'>
   >;
+  onMachineLog: SubscriptionResolver<
+    ResolversTypes['ControlledMachine'],
+    'onMachineLog',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionOnMachineLogArgs, 'portName'>
+  >;
   onMachineSetting: SubscriptionResolver<
     ResolversTypes['ControlledMachine'],
     'onMachineSetting',
@@ -2207,6 +2545,18 @@ export type SubscriptionResolvers<
   >;
   onPortChange: SubscriptionResolver<ResolversTypes['SystemPort'], 'onPortChange', ParentType, ContextType>;
   onWorkspaceChange: SubscriptionResolver<ResolversTypes['Workspace'], 'onWorkspaceChange', ParentType, ContextType>;
+};
+
+export type SyntaxChunkResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['SyntaxChunk'] = ResolversParentTypes['SyntaxChunk']
+> = {
+  comment: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  comments: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  isCode: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  isValid: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type SystemPortResolvers<
@@ -2274,12 +2624,12 @@ export interface DecimalScalarConfig extends GraphQLScalarTypeConfig<ResolversTy
   name: 'Decimal';
 }
 
-export interface LongScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Long'], any> {
-  name: 'Long';
-}
-
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
   name: 'DateTime';
+}
+
+export interface LongScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Long'], any> {
+  name: 'Long';
 }
 
 export type Resolvers<ContextType = any> = {
@@ -2289,10 +2639,11 @@ export type Resolvers<ContextType = any> = {
   AppUpdates: AppUpdatesResolvers<ContextType>;
   ApplicatorConfig: ApplicatorConfigResolvers<ContextType>;
   CommandSettings: CommandSettingsResolvers<ContextType>;
-  Commands: CommandsResolvers<ContextType>;
+  CompiledInstruction: CompiledInstructionResolvers<ContextType>;
   ConnectedPort: ConnectedPortResolvers<ContextType>;
   ConnectionSettings: ConnectionSettingsResolvers<ContextType>;
   ControlledMachine: ControlledMachineResolvers<ContextType>;
+  Controller: ControllerResolvers<ContextType>;
   EventSettings: EventSettingsResolvers<ContextType>;
   FileSystemSettings: FileSystemSettingsResolvers<ContextType>;
   FirmwareRequirement: FirmwareRequirementResolvers<ContextType>;
@@ -2309,6 +2660,9 @@ export type Resolvers<ContextType = any> = {
   MachineFeatureSettings: MachineFeatureSettingsResolvers<ContextType>;
   MachineFirmware: MachineFirmwareResolvers<ContextType>;
   MachineFirmwareSettings: MachineFirmwareSettingsResolvers<ContextType>;
+  MachineLogEntry: MachineLogEntryResolvers<ContextType>;
+  MachineLogEntryConnection: MachineLogEntryConnectionResolvers<ContextType>;
+  MachineLogEntryEdge: MachineLogEntryEdgeResolvers<ContextType>;
   MachineModalStateOfAxisPlane: MachineModalStateOfAxisPlaneResolvers<ContextType>;
   MachineModalStateOfFeedRateMode: MachineModalStateOfFeedRateModeResolvers<ContextType>;
   MachineModalStateOfMachineMotionType: MachineModalStateOfMachineMotionTypeResolvers<ContextType>;
@@ -2336,19 +2690,21 @@ export type Resolvers<ContextType = any> = {
   OpenControllerSession: OpenControllerSessionResolvers<ContextType>;
   OpenControllerSettings: OpenControllerSettingsResolvers<ContextType>;
   OpenControllerUser: OpenControllerUserResolvers<ContextType>;
+  PageInfo: PageInfoResolvers<ContextType>;
   PortOptions: PortOptionsResolvers<ContextType>;
   PortStatus: PortStatusResolvers<ContextType>;
   ProgramFile: ProgramFileResolvers<ContextType>;
   ProgramFileUpload: ProgramFileUploadResolvers<ContextType>;
   Query: QueryResolvers<ContextType>;
   Subscription: SubscriptionResolvers<ContextType>;
+  SyntaxChunk: SyntaxChunkResolvers<ContextType>;
   SystemPort: SystemPortResolvers<ContextType>;
   UserProfile: UserProfileResolvers<ContextType>;
   Workspace: WorkspaceResolvers<ContextType>;
   WorkspaceSettings: WorkspaceSettingsResolvers<ContextType>;
   Decimal: GraphQLScalarType;
-  Long: GraphQLScalarType;
   DateTime: GraphQLScalarType;
+  Long: GraphQLScalarType;
 };
 
 /**
@@ -2356,6 +2712,49 @@ export type Resolvers<ContextType = any> = {
  * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
  */
 export type IResolvers<ContextType = any> = Resolvers<ContextType>;
+
+export type CommandMachineMutationVariables = Exact<{
+  workspaceId: Scalars['String'];
+  code: Scalars['String'];
+  source: Scalars['String'];
+}>;
+
+export type CommandMachineMutation = { __typename?: 'Mutation' } & {
+  controller: { __typename?: 'Controller' } & Pick<Controller, 'id'> & {
+      machine: { __typename?: 'ControlledMachine' } & ControlledMachineFragment;
+    };
+};
+
+export type UnlockMachineMutationVariables = Exact<{
+  workspaceId: Scalars['String'];
+}>;
+
+export type UnlockMachineMutation = { __typename?: 'Mutation' } & {
+  controller: { __typename?: 'Controller' } & Pick<Controller, 'id'> & {
+      machine: { __typename?: 'ControlledMachine' } & ControlledMachineFragment;
+    };
+};
+
+export type ResetMachineMutationVariables = Exact<{
+  workspaceId: Scalars['String'];
+}>;
+
+export type ResetMachineMutation = { __typename?: 'Mutation' } & {
+  controller: { __typename?: 'Controller' } & Pick<Controller, 'id'> & {
+      machine: { __typename?: 'ControlledMachine' } & ControlledMachineFragment;
+    };
+};
+
+export type MoveMachineMutationVariables = Exact<{
+  workspaceId: Scalars['String'];
+  moveCommand: MoveCommandInput;
+}>;
+
+export type MoveMachineMutation = { __typename?: 'Mutation' } & {
+  controller: { __typename?: 'Controller' } & Pick<Controller, 'id'> & {
+      machine: { __typename?: 'ControlledMachine' } & ControlledMachineFragment;
+    };
+};
 
 export type AuthenticateQueryVariables = Exact<{
   token: Scalars['String'];
@@ -2389,11 +2788,29 @@ export type ControlledMachineFragment = { __typename?: 'ControlledMachine' } & P
     configuration: { __typename?: 'MachineConfiguration' } & MachineConfigFragment;
     status: { __typename?: 'MachineStatus' } & MachineStatusFragment;
     settings: Array<{ __typename?: 'MachineSetting' } & MachineSettingFragment>;
+    logs: Maybe<{ __typename?: 'MachineLogEntryConnection' } & MachineLogEntryConnectionFragment>;
   };
 
 export type DetectedFirmwareFragment = { __typename?: 'MachineDetectedFirmware' } & Pick<
   MachineDetectedFirmware,
   'friendlyName' | 'isValid' | 'name' | 'value' | 'edition' | 'protocol' | 'welcomeMessage'
+>;
+
+export type MachineAlertFragment = { __typename?: 'MachineAlert' } & Pick<MachineAlert, 'code' | 'name' | 'message'>;
+
+export type MachinePositionFragment = { __typename?: 'MachinePosition' } & Pick<
+  MachinePosition,
+  'x' | 'y' | 'z' | 'a' | 'b' | 'c'
+>;
+
+export type MachineAxisPropsFragment = { __typename?: 'MachineAxis' } & Pick<
+  MachineAxis,
+  'id' | 'name' | 'min' | 'max' | 'accuracy' | 'precision'
+>;
+
+export type MachineCommandPropsFragment = { __typename?: 'MachineCommand' } & Pick<
+  MachineCommand,
+  'id' | 'name' | 'value'
 >;
 
 export type MachineModalsFragment = { __typename?: 'MachineModals' } & Pick<MachineModals, 'workCoordinateSystem'> & {
@@ -2449,47 +2866,6 @@ export type MachineConfigFragment = { __typename?: 'MachineConfiguration' } & {
   referencePosition: Array<{ __typename?: 'MachinePosition' } & MachinePositionFragment>;
 };
 
-export type MachineAlertFragment = { __typename?: 'MachineAlert' } & Pick<MachineAlert, 'code' | 'name' | 'message'>;
-
-export type MachinePositionFragment = { __typename?: 'MachinePosition' } & Pick<
-  MachinePosition,
-  'x' | 'y' | 'z' | 'a' | 'b' | 'c'
->;
-
-export type MachineBufferFragment = { __typename?: 'MachineBuffer' } & Pick<
-  MachineBuffer,
-  'lineNumber' | 'availableReceive' | 'availableSend'
->;
-
-export type MachineApplicatorStateFragment = { __typename?: 'MachineApplicatorState' } & Pick<
-  MachineApplicatorState,
-  'isOn' | 'spinDirection' | 'spinSpeed' | 'feedRate' | 'isFloodCoolantEnabled' | 'isMistCoolantEnabled'
->;
-
-export type MachineOverridesFragment = { __typename?: 'MachineOverrides' } & Pick<
-  MachineOverrides,
-  'feed' | 'rapids' | 'spindle'
->;
-
-export type MachineStatusFragment = { __typename?: 'MachineStatus' } & Pick<
-  MachineStatus,
-  'activityState' | 'activePins'
-> & {
-    machinePosition: { __typename?: 'MachinePosition' } & MachinePositionFragment;
-    workPosition: Maybe<{ __typename?: 'MachinePosition' } & MachinePositionFragment>;
-    workCoordinateOffset: Maybe<{ __typename?: 'MachinePosition' } & MachinePositionFragment>;
-    error: Maybe<{ __typename?: 'MachineAlert' } & MachineAlertFragment>;
-    alarm: Maybe<{ __typename?: 'MachineAlert' } & MachineAlertFragment>;
-    buffer: { __typename?: 'MachineBuffer' } & MachineBufferFragment;
-    applicator: { __typename?: 'MachineApplicatorState' } & MachineApplicatorStateFragment;
-    overrides: Maybe<{ __typename?: 'MachineOverrides' } & MachineOverridesFragment>;
-  };
-
-export type MachineSettingFragment = { __typename?: 'MachineSetting' } & Pick<
-  MachineSetting,
-  'id' | 'title' | 'settingType' | 'key' | 'value'
->;
-
 export type MachineConfigurationSubscriptionVariables = Exact<{
   portName: Scalars['String'];
 }>;
@@ -2499,67 +2875,6 @@ export type MachineConfigurationSubscription = { __typename?: 'Subscription' } &
       configuration: { __typename?: 'MachineConfiguration' } & MachineConfigFragment;
     };
 };
-
-export type MachineStatusSubscriptionVariables = Exact<{
-  portName: Scalars['String'];
-}>;
-
-export type MachineStatusSubscription = { __typename?: 'Subscription' } & {
-  machine: { __typename?: 'ControlledMachine' } & Pick<ControlledMachine, 'topicId'> & {
-      status: { __typename?: 'MachineStatus' } & MachineStatusFragment;
-    };
-};
-
-export type MachineSettingsSubscriptionVariables = Exact<{
-  portName: Scalars['String'];
-}>;
-
-export type MachineSettingsSubscription = { __typename?: 'Subscription' } & {
-  machine: { __typename?: 'ControlledMachine' } & Pick<ControlledMachine, 'topicId'> & {
-      settings: Array<{ __typename?: 'MachineSetting' } & MachineSettingFragment>;
-    };
-};
-
-export type UnlockMachineMutationVariables = Exact<{
-  portName: Scalars['String'];
-}>;
-
-export type UnlockMachineMutation = { __typename?: 'Mutation' } & {
-  command: { __typename?: 'Commands' } & Pick<Commands, 'id'> & {
-      machine: { __typename?: 'ControlledMachine' } & ControlledMachineFragment;
-    };
-};
-
-export type ResetMachineMutationVariables = Exact<{
-  portName: Scalars['String'];
-}>;
-
-export type ResetMachineMutation = { __typename?: 'Mutation' } & {
-  command: { __typename?: 'Commands' } & Pick<Commands, 'id'> & {
-      machine: { __typename?: 'ControlledMachine' } & ControlledMachineFragment;
-    };
-};
-
-export type MoveMachineMutationVariables = Exact<{
-  portName: Scalars['String'];
-  moveCommand: MoveCommandInput;
-}>;
-
-export type MoveMachineMutation = { __typename?: 'Mutation' } & {
-  command: { __typename?: 'Commands' } & Pick<Commands, 'id'> & {
-      machine: { __typename?: 'ControlledMachine' } & ControlledMachineFragment;
-    };
-};
-
-export type MachineAxisPropsFragment = { __typename?: 'MachineAxis' } & Pick<
-  MachineAxis,
-  'id' | 'name' | 'min' | 'max' | 'accuracy' | 'precision'
->;
-
-export type MachineCommandPropsFragment = { __typename?: 'MachineCommand' } & Pick<
-  MachineCommand,
-  'id' | 'name' | 'value'
->;
 
 export type MachineFeaturePropsFragment = { __typename?: 'MachineFeature' } & Pick<
   MachineFeature,
@@ -2576,6 +2891,45 @@ export type MachineFirmwarePropsFragment = { __typename?: 'MachineFirmware' } & 
   'id' | 'requiredVersion' | 'suggestedVersion' | 'name' | 'edition' | 'downloadUrl' | 'helpUrl'
 > &
   MachineFirmwareMinimalFragment;
+
+export type MachineLogEntryConnectionFragment = { __typename?: 'MachineLogEntryConnection' } & {
+  edges: Maybe<
+    Array<
+      { __typename?: 'MachineLogEntryEdge' } & Pick<MachineLogEntryEdge, 'cursor'> & {
+          node: { __typename?: 'MachineLogEntry' } & MachineLogEntryFragment;
+        }
+    >
+  >;
+  nodes: Maybe<Array<{ __typename?: 'MachineLogEntry' } & MachineLogEntryFragment>>;
+  pageInfo: { __typename?: 'PageInfo' } & PageInfoFragment;
+};
+
+export type PageInfoFragment = { __typename?: 'PageInfo' } & Pick<PageInfo, 'endCursor' | 'hasNextPage'>;
+
+export type SyntaxChunkFragment = { __typename?: 'SyntaxChunk' } & Pick<SyntaxChunk, 'value' | 'comment'>;
+
+export type CompiledInstructionFragment = { __typename?: 'CompiledInstruction' } & Pick<
+  CompiledInstruction,
+  'code' | 'source'
+> & { chunks: Array<{ __typename?: 'SyntaxChunk' } & SyntaxChunkFragment> };
+
+export type MachineLogEntryFragment = { __typename?: 'MachineLogEntry' } & Pick<
+  MachineLogEntry,
+  'id' | 'timestamp' | 'message' | 'logLevel'
+> & {
+    error: Maybe<{ __typename?: 'MachineAlert' } & MachineAlertFragment>;
+    instruction: Maybe<{ __typename?: 'CompiledInstruction' } & CompiledInstructionFragment>;
+  };
+
+export type MachineLogsSubscriptionVariables = Exact<{
+  portName: Scalars['String'];
+}>;
+
+export type MachineLogsSubscription = { __typename?: 'Subscription' } & {
+  machine: { __typename?: 'ControlledMachine' } & Pick<ControlledMachine, 'topicId'> & {
+      logs: Maybe<{ __typename?: 'MachineLogEntryConnection' } & MachineLogEntryConnectionFragment>;
+    };
+};
 
 export type MachinePartPropsFragment = { __typename?: 'MachinePart' } & Pick<
   MachinePart,
@@ -2623,7 +2977,60 @@ export type MachinePresetSettingPropsFragment = { __typename?: 'MachinePresetSet
   'id' | 'title' | 'settingType' | 'key' | 'value'
 >;
 
+export type MachineSettingFragment = { __typename?: 'MachineSetting' } & Pick<
+  MachineSetting,
+  'id' | 'title' | 'settingType' | 'key' | 'value'
+>;
+
+export type MachineSettingsSubscriptionVariables = Exact<{
+  portName: Scalars['String'];
+}>;
+
+export type MachineSettingsSubscription = { __typename?: 'Subscription' } & {
+  machine: { __typename?: 'ControlledMachine' } & Pick<ControlledMachine, 'topicId'> & {
+      settings: Array<{ __typename?: 'MachineSetting' } & MachineSettingFragment>;
+    };
+};
+
 export type MachineSpecPropsFragment = { __typename?: 'MachineSpec' } & Pick<MachineSpec, 'id' | 'specType' | 'value'>;
+
+export type MachineBufferFragment = { __typename?: 'MachineBuffer' } & Pick<
+  MachineBuffer,
+  'lineNumber' | 'availableReceive' | 'availableSend'
+>;
+
+export type MachineApplicatorStateFragment = { __typename?: 'MachineApplicatorState' } & Pick<
+  MachineApplicatorState,
+  'isOn' | 'spinDirection' | 'spinSpeed' | 'feedRate' | 'isFloodCoolantEnabled' | 'isMistCoolantEnabled'
+>;
+
+export type MachineOverridesFragment = { __typename?: 'MachineOverrides' } & Pick<
+  MachineOverrides,
+  'feed' | 'rapids' | 'spindle'
+>;
+
+export type MachineStatusFragment = { __typename?: 'MachineStatus' } & Pick<
+  MachineStatus,
+  'activityState' | 'activePins'
+> & {
+    machinePosition: { __typename?: 'MachinePosition' } & MachinePositionFragment;
+    workPosition: Maybe<{ __typename?: 'MachinePosition' } & MachinePositionFragment>;
+    workCoordinateOffset: Maybe<{ __typename?: 'MachinePosition' } & MachinePositionFragment>;
+    alarm: Maybe<{ __typename?: 'MachineAlert' } & MachineAlertFragment>;
+    buffer: { __typename?: 'MachineBuffer' } & MachineBufferFragment;
+    applicator: { __typename?: 'MachineApplicatorState' } & MachineApplicatorStateFragment;
+    overrides: Maybe<{ __typename?: 'MachineOverrides' } & MachineOverridesFragment>;
+  };
+
+export type MachineStatusSubscriptionVariables = Exact<{
+  portName: Scalars['String'];
+}>;
+
+export type MachineStatusSubscription = { __typename?: 'Subscription' } & {
+  machine: { __typename?: 'ControlledMachine' } & Pick<ControlledMachine, 'topicId'> & {
+      status: { __typename?: 'MachineStatus' } & MachineStatusFragment;
+    };
+};
 
 type FirmwareRequirement_FirmwareRequirement_Fragment = { __typename?: 'FirmwareRequirement' } & Pick<
   FirmwareRequirement,
@@ -3231,9 +3638,6 @@ export const MachineStatusFragmentDoc = gql`
     workCoordinateOffset {
       ...MachinePosition
     }
-    error {
-      ...MachineAlert
-    }
     alarm {
       ...MachineAlert
     }
@@ -3263,6 +3667,62 @@ export const MachineSettingFragmentDoc = gql`
     value
   }
 `;
+export const SyntaxChunkFragmentDoc = gql`
+  fragment SyntaxChunk on SyntaxChunk {
+    value
+    comment
+  }
+`;
+export const CompiledInstructionFragmentDoc = gql`
+  fragment CompiledInstruction on CompiledInstruction {
+    code
+    source
+    chunks {
+      ...SyntaxChunk
+    }
+  }
+  ${SyntaxChunkFragmentDoc}
+`;
+export const MachineLogEntryFragmentDoc = gql`
+  fragment MachineLogEntry on MachineLogEntry {
+    id
+    timestamp
+    message
+    logLevel
+    error {
+      ...MachineAlert
+    }
+    instruction {
+      ...CompiledInstruction
+    }
+  }
+  ${MachineAlertFragmentDoc}
+  ${CompiledInstructionFragmentDoc}
+`;
+export const PageInfoFragmentDoc = gql`
+  fragment PageInfo on PageInfo {
+    endCursor
+    hasNextPage
+  }
+`;
+export const MachineLogEntryConnectionFragmentDoc = gql`
+  fragment MachineLogEntryConnection on MachineLogEntryConnection {
+    edges {
+      cursor
+      node {
+        ...MachineLogEntry
+      }
+    }
+    nodes {
+      ...MachineLogEntry
+    }
+    pageInfo {
+      ...PageInfo
+    }
+  }
+  ${MachineLogEntryFragmentDoc}
+  ${PageInfoFragmentDoc}
+`;
 export const ControlledMachineFragmentDoc = gql`
   fragment ControlledMachine on ControlledMachine {
     topicId
@@ -3279,11 +3739,15 @@ export const ControlledMachineFragmentDoc = gql`
     settings {
       ...MachineSetting
     }
+    logs {
+      ...MachineLogEntryConnection
+    }
   }
   ${FirmwareRequirementFragmentDoc}
   ${MachineConfigFragmentDoc}
   ${MachineStatusFragmentDoc}
   ${MachineSettingFragmentDoc}
+  ${MachineLogEntryConnectionFragmentDoc}
 `;
 export const PortIoStatusFragmentDoc = gql`
   fragment PortIOStatus on PortStatus {
@@ -3580,6 +4044,173 @@ export const WorkspaceEssentialSettingsFragmentDoc = gql`
   }
   ${WorkspaceFullSettingsFragmentDoc}
 `;
+export const CommandMachineDocument = gql`
+  mutation CommandMachine($workspaceId: String!, $code: String!, $source: String!) {
+    controller: controlMachine(workspaceId: $workspaceId) {
+      id
+      machine: writeCommand(commandCode: $code, sourceName: $source) {
+        ...ControlledMachine
+      }
+    }
+  }
+  ${ControlledMachineFragmentDoc}
+`;
+export type CommandMachineMutationFn = Apollo.MutationFunction<CommandMachineMutation, CommandMachineMutationVariables>;
+
+/**
+ * __useCommandMachineMutation__
+ *
+ * To run a mutation, you first call `useCommandMachineMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCommandMachineMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [commandMachineMutation, { data, loading, error }] = useCommandMachineMutation({
+ *   variables: {
+ *      workspaceId: // value for 'workspaceId'
+ *      code: // value for 'code'
+ *      source: // value for 'source'
+ *   },
+ * });
+ */
+export function useCommandMachineMutation(
+  baseOptions?: Apollo.MutationHookOptions<CommandMachineMutation, CommandMachineMutationVariables>,
+) {
+  return Apollo.useMutation<CommandMachineMutation, CommandMachineMutationVariables>(
+    CommandMachineDocument,
+    baseOptions,
+  );
+}
+export type CommandMachineMutationHookResult = ReturnType<typeof useCommandMachineMutation>;
+export type CommandMachineMutationResult = Apollo.MutationResult<CommandMachineMutation>;
+export type CommandMachineMutationOptions = Apollo.BaseMutationOptions<
+  CommandMachineMutation,
+  CommandMachineMutationVariables
+>;
+export const UnlockMachineDocument = gql`
+  mutation UnlockMachine($workspaceId: String!) {
+    controller: controlMachine(workspaceId: $workspaceId) {
+      id
+      machine: unlock {
+        ...ControlledMachine
+      }
+    }
+  }
+  ${ControlledMachineFragmentDoc}
+`;
+export type UnlockMachineMutationFn = Apollo.MutationFunction<UnlockMachineMutation, UnlockMachineMutationVariables>;
+
+/**
+ * __useUnlockMachineMutation__
+ *
+ * To run a mutation, you first call `useUnlockMachineMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnlockMachineMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unlockMachineMutation, { data, loading, error }] = useUnlockMachineMutation({
+ *   variables: {
+ *      workspaceId: // value for 'workspaceId'
+ *   },
+ * });
+ */
+export function useUnlockMachineMutation(
+  baseOptions?: Apollo.MutationHookOptions<UnlockMachineMutation, UnlockMachineMutationVariables>,
+) {
+  return Apollo.useMutation<UnlockMachineMutation, UnlockMachineMutationVariables>(UnlockMachineDocument, baseOptions);
+}
+export type UnlockMachineMutationHookResult = ReturnType<typeof useUnlockMachineMutation>;
+export type UnlockMachineMutationResult = Apollo.MutationResult<UnlockMachineMutation>;
+export type UnlockMachineMutationOptions = Apollo.BaseMutationOptions<
+  UnlockMachineMutation,
+  UnlockMachineMutationVariables
+>;
+export const ResetMachineDocument = gql`
+  mutation ResetMachine($workspaceId: String!) {
+    controller: controlMachine(workspaceId: $workspaceId) {
+      id
+      machine: reset {
+        ...ControlledMachine
+      }
+    }
+  }
+  ${ControlledMachineFragmentDoc}
+`;
+export type ResetMachineMutationFn = Apollo.MutationFunction<ResetMachineMutation, ResetMachineMutationVariables>;
+
+/**
+ * __useResetMachineMutation__
+ *
+ * To run a mutation, you first call `useResetMachineMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useResetMachineMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [resetMachineMutation, { data, loading, error }] = useResetMachineMutation({
+ *   variables: {
+ *      workspaceId: // value for 'workspaceId'
+ *   },
+ * });
+ */
+export function useResetMachineMutation(
+  baseOptions?: Apollo.MutationHookOptions<ResetMachineMutation, ResetMachineMutationVariables>,
+) {
+  return Apollo.useMutation<ResetMachineMutation, ResetMachineMutationVariables>(ResetMachineDocument, baseOptions);
+}
+export type ResetMachineMutationHookResult = ReturnType<typeof useResetMachineMutation>;
+export type ResetMachineMutationResult = Apollo.MutationResult<ResetMachineMutation>;
+export type ResetMachineMutationOptions = Apollo.BaseMutationOptions<
+  ResetMachineMutation,
+  ResetMachineMutationVariables
+>;
+export const MoveMachineDocument = gql`
+  mutation MoveMachine($workspaceId: String!, $moveCommand: MoveCommandInput!) {
+    controller: controlMachine(workspaceId: $workspaceId) {
+      id
+      machine: move(moveCommand: $moveCommand) {
+        ...ControlledMachine
+      }
+    }
+  }
+  ${ControlledMachineFragmentDoc}
+`;
+export type MoveMachineMutationFn = Apollo.MutationFunction<MoveMachineMutation, MoveMachineMutationVariables>;
+
+/**
+ * __useMoveMachineMutation__
+ *
+ * To run a mutation, you first call `useMoveMachineMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMoveMachineMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [moveMachineMutation, { data, loading, error }] = useMoveMachineMutation({
+ *   variables: {
+ *      workspaceId: // value for 'workspaceId'
+ *      moveCommand: // value for 'moveCommand'
+ *   },
+ * });
+ */
+export function useMoveMachineMutation(
+  baseOptions?: Apollo.MutationHookOptions<MoveMachineMutation, MoveMachineMutationVariables>,
+) {
+  return Apollo.useMutation<MoveMachineMutation, MoveMachineMutationVariables>(MoveMachineDocument, baseOptions);
+}
+export type MoveMachineMutationHookResult = ReturnType<typeof useMoveMachineMutation>;
+export type MoveMachineMutationResult = Apollo.MutationResult<MoveMachineMutation>;
+export type MoveMachineMutationOptions = Apollo.BaseMutationOptions<MoveMachineMutation, MoveMachineMutationVariables>;
 export const AuthenticateDocument = gql`
   query Authenticate($token: String!) {
     session: authenticate(token: $token) {
@@ -3659,203 +4290,44 @@ export function useMachineConfigurationSubscription(
 }
 export type MachineConfigurationSubscriptionHookResult = ReturnType<typeof useMachineConfigurationSubscription>;
 export type MachineConfigurationSubscriptionResult = Apollo.SubscriptionResult<MachineConfigurationSubscription>;
-export const MachineStatusDocument = gql`
-  subscription MachineStatus($portName: String!) {
-    machine: onMachineStatus(portName: $portName) {
+export const MachineLogsDocument = gql`
+  subscription MachineLogs($portName: String!) {
+    machine: onMachineLog(portName: $portName) {
       topicId
-      status {
-        ...MachineStatus
+      logs {
+        ...MachineLogEntryConnection
       }
     }
   }
-  ${MachineStatusFragmentDoc}
+  ${MachineLogEntryConnectionFragmentDoc}
 `;
 
 /**
- * __useMachineStatusSubscription__
+ * __useMachineLogsSubscription__
  *
- * To run a query within a React component, call `useMachineStatusSubscription` and pass it any options that fit your needs.
- * When your component renders, `useMachineStatusSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useMachineLogsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useMachineLogsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useMachineStatusSubscription({
+ * const { data, loading, error } = useMachineLogsSubscription({
  *   variables: {
  *      portName: // value for 'portName'
  *   },
  * });
  */
-export function useMachineStatusSubscription(
-  baseOptions: Apollo.SubscriptionHookOptions<MachineStatusSubscription, MachineStatusSubscriptionVariables>,
+export function useMachineLogsSubscription(
+  baseOptions: Apollo.SubscriptionHookOptions<MachineLogsSubscription, MachineLogsSubscriptionVariables>,
 ) {
-  return Apollo.useSubscription<MachineStatusSubscription, MachineStatusSubscriptionVariables>(
-    MachineStatusDocument,
+  return Apollo.useSubscription<MachineLogsSubscription, MachineLogsSubscriptionVariables>(
+    MachineLogsDocument,
     baseOptions,
   );
 }
-export type MachineStatusSubscriptionHookResult = ReturnType<typeof useMachineStatusSubscription>;
-export type MachineStatusSubscriptionResult = Apollo.SubscriptionResult<MachineStatusSubscription>;
-export const MachineSettingsDocument = gql`
-  subscription MachineSettings($portName: String!) {
-    machine: onMachineSetting(portName: $portName) {
-      topicId
-      settings {
-        ...MachineSetting
-      }
-    }
-  }
-  ${MachineSettingFragmentDoc}
-`;
-
-/**
- * __useMachineSettingsSubscription__
- *
- * To run a query within a React component, call `useMachineSettingsSubscription` and pass it any options that fit your needs.
- * When your component renders, `useMachineSettingsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useMachineSettingsSubscription({
- *   variables: {
- *      portName: // value for 'portName'
- *   },
- * });
- */
-export function useMachineSettingsSubscription(
-  baseOptions: Apollo.SubscriptionHookOptions<MachineSettingsSubscription, MachineSettingsSubscriptionVariables>,
-) {
-  return Apollo.useSubscription<MachineSettingsSubscription, MachineSettingsSubscriptionVariables>(
-    MachineSettingsDocument,
-    baseOptions,
-  );
-}
-export type MachineSettingsSubscriptionHookResult = ReturnType<typeof useMachineSettingsSubscription>;
-export type MachineSettingsSubscriptionResult = Apollo.SubscriptionResult<MachineSettingsSubscription>;
-export const UnlockMachineDocument = gql`
-  mutation UnlockMachine($portName: String!) {
-    command: commandMachine(portName: $portName) {
-      id
-      machine: unlock {
-        ...ControlledMachine
-      }
-    }
-  }
-  ${ControlledMachineFragmentDoc}
-`;
-export type UnlockMachineMutationFn = Apollo.MutationFunction<UnlockMachineMutation, UnlockMachineMutationVariables>;
-
-/**
- * __useUnlockMachineMutation__
- *
- * To run a mutation, you first call `useUnlockMachineMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUnlockMachineMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [unlockMachineMutation, { data, loading, error }] = useUnlockMachineMutation({
- *   variables: {
- *      portName: // value for 'portName'
- *   },
- * });
- */
-export function useUnlockMachineMutation(
-  baseOptions?: Apollo.MutationHookOptions<UnlockMachineMutation, UnlockMachineMutationVariables>,
-) {
-  return Apollo.useMutation<UnlockMachineMutation, UnlockMachineMutationVariables>(UnlockMachineDocument, baseOptions);
-}
-export type UnlockMachineMutationHookResult = ReturnType<typeof useUnlockMachineMutation>;
-export type UnlockMachineMutationResult = Apollo.MutationResult<UnlockMachineMutation>;
-export type UnlockMachineMutationOptions = Apollo.BaseMutationOptions<
-  UnlockMachineMutation,
-  UnlockMachineMutationVariables
->;
-export const ResetMachineDocument = gql`
-  mutation ResetMachine($portName: String!) {
-    command: commandMachine(portName: $portName) {
-      id
-      machine: reset {
-        ...ControlledMachine
-      }
-    }
-  }
-  ${ControlledMachineFragmentDoc}
-`;
-export type ResetMachineMutationFn = Apollo.MutationFunction<ResetMachineMutation, ResetMachineMutationVariables>;
-
-/**
- * __useResetMachineMutation__
- *
- * To run a mutation, you first call `useResetMachineMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useResetMachineMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [resetMachineMutation, { data, loading, error }] = useResetMachineMutation({
- *   variables: {
- *      portName: // value for 'portName'
- *   },
- * });
- */
-export function useResetMachineMutation(
-  baseOptions?: Apollo.MutationHookOptions<ResetMachineMutation, ResetMachineMutationVariables>,
-) {
-  return Apollo.useMutation<ResetMachineMutation, ResetMachineMutationVariables>(ResetMachineDocument, baseOptions);
-}
-export type ResetMachineMutationHookResult = ReturnType<typeof useResetMachineMutation>;
-export type ResetMachineMutationResult = Apollo.MutationResult<ResetMachineMutation>;
-export type ResetMachineMutationOptions = Apollo.BaseMutationOptions<
-  ResetMachineMutation,
-  ResetMachineMutationVariables
->;
-export const MoveMachineDocument = gql`
-  mutation MoveMachine($portName: String!, $moveCommand: MoveCommandInput!) {
-    command: commandMachine(portName: $portName) {
-      id
-      machine: move(moveCommand: $moveCommand) {
-        ...ControlledMachine
-      }
-    }
-  }
-  ${ControlledMachineFragmentDoc}
-`;
-export type MoveMachineMutationFn = Apollo.MutationFunction<MoveMachineMutation, MoveMachineMutationVariables>;
-
-/**
- * __useMoveMachineMutation__
- *
- * To run a mutation, you first call `useMoveMachineMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useMoveMachineMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [moveMachineMutation, { data, loading, error }] = useMoveMachineMutation({
- *   variables: {
- *      portName: // value for 'portName'
- *      moveCommand: // value for 'moveCommand'
- *   },
- * });
- */
-export function useMoveMachineMutation(
-  baseOptions?: Apollo.MutationHookOptions<MoveMachineMutation, MoveMachineMutationVariables>,
-) {
-  return Apollo.useMutation<MoveMachineMutation, MoveMachineMutationVariables>(MoveMachineDocument, baseOptions);
-}
-export type MoveMachineMutationHookResult = ReturnType<typeof useMoveMachineMutation>;
-export type MoveMachineMutationResult = Apollo.MutationResult<MoveMachineMutation>;
-export type MoveMachineMutationOptions = Apollo.BaseMutationOptions<MoveMachineMutation, MoveMachineMutationVariables>;
+export type MachineLogsSubscriptionHookResult = ReturnType<typeof useMachineLogsSubscription>;
+export type MachineLogsSubscriptionResult = Apollo.SubscriptionResult<MachineLogsSubscription>;
 export const SearchMachineProfilesDocument = gql`
   query searchMachineProfiles($q: String) {
     machineProfiles: machineProfiles(query: $q) {
@@ -3950,6 +4422,82 @@ export type GetCompleteMachineProfileQueryResult = Apollo.QueryResult<
   GetCompleteMachineProfileQuery,
   GetCompleteMachineProfileQueryVariables
 >;
+export const MachineSettingsDocument = gql`
+  subscription MachineSettings($portName: String!) {
+    machine: onMachineSetting(portName: $portName) {
+      topicId
+      settings {
+        ...MachineSetting
+      }
+    }
+  }
+  ${MachineSettingFragmentDoc}
+`;
+
+/**
+ * __useMachineSettingsSubscription__
+ *
+ * To run a query within a React component, call `useMachineSettingsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useMachineSettingsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMachineSettingsSubscription({
+ *   variables: {
+ *      portName: // value for 'portName'
+ *   },
+ * });
+ */
+export function useMachineSettingsSubscription(
+  baseOptions: Apollo.SubscriptionHookOptions<MachineSettingsSubscription, MachineSettingsSubscriptionVariables>,
+) {
+  return Apollo.useSubscription<MachineSettingsSubscription, MachineSettingsSubscriptionVariables>(
+    MachineSettingsDocument,
+    baseOptions,
+  );
+}
+export type MachineSettingsSubscriptionHookResult = ReturnType<typeof useMachineSettingsSubscription>;
+export type MachineSettingsSubscriptionResult = Apollo.SubscriptionResult<MachineSettingsSubscription>;
+export const MachineStatusDocument = gql`
+  subscription MachineStatus($portName: String!) {
+    machine: onMachineStatus(portName: $portName) {
+      topicId
+      status {
+        ...MachineStatus
+      }
+    }
+  }
+  ${MachineStatusFragmentDoc}
+`;
+
+/**
+ * __useMachineStatusSubscription__
+ *
+ * To run a query within a React component, call `useMachineStatusSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useMachineStatusSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMachineStatusSubscription({
+ *   variables: {
+ *      portName: // value for 'portName'
+ *   },
+ * });
+ */
+export function useMachineStatusSubscription(
+  baseOptions: Apollo.SubscriptionHookOptions<MachineStatusSubscription, MachineStatusSubscriptionVariables>,
+) {
+  return Apollo.useSubscription<MachineStatusSubscription, MachineStatusSubscriptionVariables>(
+    MachineStatusDocument,
+    baseOptions,
+  );
+}
+export type MachineStatusSubscriptionHookResult = ReturnType<typeof useMachineStatusSubscription>;
+export type MachineStatusSubscriptionResult = Apollo.SubscriptionResult<MachineStatusSubscription>;
 export const ListPortsDocument = gql`
   query ListPorts {
     ports: listPorts {

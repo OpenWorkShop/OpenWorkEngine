@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretSquareDown } from '@fortawesome/free-solid-svg-icons';
-import {useOwsTrans} from '../../Hooks';
+import {useOwsTrans} from '../../hooks';
 import { IMachinePartChoice } from '../../open-controller/Machines/CustomizedMachine';
 
 interface IMachineOptionsProps {

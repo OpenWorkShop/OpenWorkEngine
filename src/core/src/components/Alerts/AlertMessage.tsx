@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { Alert, Typography } from '@material-ui/core';
 import * as React from 'react';
 import {IAlertMessage} from './types';
-import {useOwsTrans} from '../../Hooks';
+import {useOwsTrans} from '../../hooks';
 
 
 type Props = IAlertMessage & {

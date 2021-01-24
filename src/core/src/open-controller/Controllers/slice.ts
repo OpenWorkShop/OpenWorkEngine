@@ -1,10 +1,17 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ControlledMachineFragment} from '../graphql';
-import {IMachineConfigUpdate, IMachineStatusUpdate, ControllersState, IMachineSettingsUpdate} from './types';
+import {
+  IMachineConfigUpdate,
+  IMachineStatusUpdate,
+  ControllersState,
+  IMachineSettingsUpdate,
+  IMachineLogsUpdate
+} from './types';
 
 const initialState: ControllersState = {
   controllerMap: {},
   controllerIds: [],
+  logMap: {},
 };
 
 function updateControlledMachine(state: ControllersState, machine: ControlledMachineFragment): ControllersState {
@@ -38,20 +45,18 @@ const controllersSlice = createSlice({
       state.controllerMap[action.payload.topicId].machine.configuration = action.payload.configuration;
       return state;
     },
-    //
-    // deleteControlledMachineId: (state, action: PayloadAction<string>) =>
-    //   deleteControlledMachineTopicId(state, action.payload),
-    //
-    // // Replacement. Will delete missing workspaces.
-    // updateControlledMachines: (state, action: PayloadAction<ControlledMachineFragment[]>) => {
-    //   const machines = action.payload;
-    //   const existingIds = Object.keys(state);
-    //   const updatedIds = machines.map(machine => machine.topicId);
-    //   const deletedIds = _.difference(existingIds, updatedIds);
-    //   deletedIds.forEach(id => deleteControlledMachineTopicId(state, id));
-    //   machines.forEach(ws => updateControlledMachine(state, ws));
-    //   return state;
-    // },
+
+    onControlledMachineLogs(state, action: PayloadAction<IMachineLogsUpdate>) {
+      if (!action.payload.logs) return;
+      const m = state.controllerMap[action.payload.topicId].machine;
+      if (!m.logs) {
+        console.log('set', action.payload.logs);
+      }
+      else {
+        console.log('merge', m.logs, action.payload.logs);
+      }
+      return state;
+    },
   }
 });
 

@@ -5,3 +5,20 @@ fragment MachinePresetSettingProps on MachinePresetSetting {
   key
   value
 }
+
+fragment MachineSetting on MachineSetting {
+  id
+  title
+  settingType
+  key
+  value
+}
+
+subscription MachineSettings($portName: String!) {
+  machine: onMachineSetting(portName: $portName) {
+    topicId
+    settings {
+      ...MachineSetting
+    }
+  }
+}

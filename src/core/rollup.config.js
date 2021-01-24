@@ -47,6 +47,7 @@ export default {
     'redux-oidc',
     'typeface-cabin',
     'typeface-roboto',
+    'typeface-roboto-mono',
     'oidc-client',
     'js-logger',
     'react-i18next',

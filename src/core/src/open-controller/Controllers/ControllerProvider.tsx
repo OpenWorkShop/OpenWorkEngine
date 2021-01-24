@@ -2,29 +2,23 @@ import * as React from 'react';
 import {
   useMachineConfigurationSubscription,
   useMachineStatusSubscription,
-  ControlledMachineFragment, useMachineSettingsSubscription
+  useMachineSettingsSubscription, useMachineLogsSubscription,
 } from '../graphql';
-import {useLogger} from '../../Hooks';
+import {useLogger} from '../../hooks';
 import {useDispatch} from 'react-redux';
 import controllersSlice from './slice';
 
 type Props = {
   portName: string,
-  machine: ControlledMachineFragment;
   children: React.ReactNode;
 };
 
 const ControllerProvider: React.FunctionComponent<Props> = (props) => {
   const log = useLogger(ControllerProvider);
-  const { children, machine } = props;
-  const variables = { portName: props.portName };
+  const { children, portName } = props;
+  const variables = { portName };
 
   const dispatch = useDispatch();
-  
-  // Load initial machine.
-  React.useEffect(() => {
-    dispatch(controllersSlice.actions.updateControlledMachine(machine));
-  }, [machine]);
 
   const onMachineSettingsChanged = useMachineSettingsSubscription({ variables });
   const newMachineSettings = onMachineSettingsChanged?.data?.machine;
@@ -52,6 +46,15 @@ const ControllerProvider: React.FunctionComponent<Props> = (props) => {
       dispatch(controllersSlice.actions.onControlledMachineConfiguration(newMachineConfig));
     }
   }, [newMachineConfig]);
+
+  const onMachineLogsChanged = useMachineLogsSubscription({ variables });
+  const newMachineLogs = onMachineLogsChanged?.data?.machine;
+  React.useEffect(() => {
+    if (newMachineLogs) {
+      log.debug('[MACHINE]', '[LOGS]', newMachineLogs);
+      dispatch(controllersSlice.actions.onControlledMachineLogs(newMachineLogs));
+    }
+  }, [newMachineLogs]);
 
   // log.debug('machine', cm);
 

@@ -3,7 +3,7 @@ import {Grid} from '@material-ui/core';
 import {ToolBase} from '../types';
 import useStyles from './styles';
 import {useWorkspaceControllerSelector} from '../../Workspaces';
-import {useLogger} from '../../../Hooks';
+import {useLogger} from '../../../hooks';
 import MachineModals from './MachineModals';
 
 const Machine: ToolBase = (props) => {

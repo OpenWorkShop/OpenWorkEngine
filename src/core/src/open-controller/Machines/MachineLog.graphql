@@ -1,0 +1,57 @@
+
+fragment MachineLogEntryConnection on MachineLogEntryConnection {
+    edges {
+        cursor
+        node {
+            ...MachineLogEntry
+        }
+    }
+    nodes {
+        ...MachineLogEntry
+    }
+    pageInfo {
+        ...PageInfo
+    }
+}
+
+fragment PageInfo on PageInfo {
+    endCursor
+    hasNextPage
+}
+
+fragment SyntaxChunk on SyntaxChunk {
+    value
+    comment
+    # comments, isCode, isValid
+}
+
+fragment CompiledInstruction on CompiledInstruction {
+    code
+    source
+    chunks {
+        ...SyntaxChunk
+    }
+}
+
+fragment MachineLogEntry on MachineLogEntry {
+    id
+    timestamp
+#    count
+    message
+    logLevel
+    error {
+        ...MachineAlert
+    }
+    instruction {
+        ...CompiledInstruction
+    }
+}
+
+subscription MachineLogs($portName: String!) {
+    machine: onMachineLog(portName: $portName) {
+        topicId
+        logs {
+            ...MachineLogEntryConnection
+        }
+    }
+}

@@ -29,5 +29,7 @@ namespace OpenWorkEngine.OpenController.Lib {
       // System.UnauthorizedAccessException: Access to the port '/dev/tty.AirPods-WirelessiAP' is denied.
       //   ---> System.IO.IOException: Resource busy
     }
+
+    public override string ToString() => $"<{GetType().Name} name:{Name} msg:{Message}>";
   }
 }

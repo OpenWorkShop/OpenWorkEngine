@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using HotChocolate.Language;
@@ -6,19 +7,24 @@ using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.Programs.Interfaces;
 using OpenWorkEngine.OpenController.Programs.Models;
 using Serilog;
-using Parser = OpenWorkEngine.OpenController.Controllers.Utils.Parsers.Parser;
+using Parser = OpenWorkEngine.OpenController.Controllers.Services.Serial.Parser;
 
 namespace OpenWorkEngine.OpenController.Syntax.GCode {
   // https://www.cnccookbook.com/g-code-basics-program-format-structure-blocks/
   public class GCodeBlock : IControllerInstruction {
+    // Those commands which are realtime (sent inline, no Response expected).
+    private static readonly string[] RealTimeCommands = new[] { "?", "!", "~", "\u0018" };
+
     public string InstructionSource { get; }
     public string Template { get; }
     public bool Inline { get; }
 
-    public GCodeBlock(string line, string instructionSource, bool inline) {
+    public GCodeBlock(string line, string instructionSource) {
+      if (line.Contains('\n') || line.Contains('\r'))
+        throw new ArgumentException($"GCode block '{line}' had a line break.");
       InstructionSource = instructionSource;
       Template = line;
-      Inline = inline;
+      Inline = RealTimeCommands.Contains(line);
       Chunks = ParseLine(line);
     }
 
@@ -30,7 +36,9 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode {
 
     public List<SyntaxChunk> CodeChunks => Chunks.Where(c => c.IsCode).ToList();
 
-    private List<SyntaxChunk> ParseLine(string line) {
+    public List<SyntaxChunk> CompileChunks(string line) => ParseLine(line);
+
+    public static List<SyntaxChunk> ParseLine(string line) {
       List<SyntaxChunk> chunks = new();
       SyntaxChunk curChunk = new();
       bool whitespace = false;

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using OpenWorkEngine.OpenController.Controllers.Exceptions;
 using OpenWorkEngine.OpenController.Controllers.Interfaces;
+using OpenWorkEngine.OpenController.Controllers.Messages;
 using OpenWorkEngine.OpenController.Controllers.Models;
-using OpenWorkEngine.OpenController.Controllers.Utils;
-using OpenWorkEngine.OpenController.Controllers.Utils.Parsers;
+using OpenWorkEngine.OpenController.Controllers.Services.Serial;
+using OpenWorkEngine.OpenController.ControllerSyntax;
 using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 using OpenWorkEngine.OpenController.MachineProfiles.Interfaces;
@@ -16,21 +17,60 @@ using OpenWorkEngine.OpenController.Machines.Interfaces;
 using OpenWorkEngine.OpenController.Machines.Models;
 using OpenWorkEngine.OpenController.Ports.Enums;
 using OpenWorkEngine.OpenController.Ports.Models;
+using OpenWorkEngine.OpenController.Programs.Interfaces;
+using OpenWorkEngine.OpenController.Syntax;
 using OpenWorkEngine.OpenController.Syntax.GCode;
 using Serilog;
 
 namespace OpenWorkEngine.OpenController.Controllers.Services {
-  public abstract class Controller : IDisposable {
-    // Thread managament liveness
-    private bool _isAlive = true;
-    private ILogger? _logger;
+  /// <summary>
+  /// Controllers are exposed directly as an object in GraphQL, allowing public methods to be invoked.
+  /// They wrap a ConnectedPort, which contains a machine.
+  /// </summary>
+  public sealed class Controller : IDisposable {
 
-    public Controller(ControllerManager controllerManager, ConnectedPort connection) {
-      Manager = controllerManager;
-      Connection = connection;
-      Buffer = new SerialBuffer(this);
-      CreatedAt = DateTime.Now;
+    public MachineControllerType ControllerType { get; }
+
+    // Used by GraphQL client for caching purposes.
+    public string Id => Connection.Port.PortName;
+
+    // Reference timestamp in case client is curious how long online/connected.
+    public DateTime CreatedAt { get; }
+
+    // Command methods simply invoke the correct "Code"
+    // Concrete methods names are useful in many ways
+    // 1. These are exposed via GraphQL mutations directly
+    // 2. Using nameof() on the concrete names affords constant strings
+    public Task<ControlledMachine> GetHelp() => Invoke(nameof(GetHelp));
+    public Task<ControlledMachine> GetSettings() => Invoke(nameof(GetSettings));
+    public Task<ControlledMachine> GetFirmware() => Invoke(nameof(GetFirmware));
+    public Task<ControlledMachine> GetParameters() => Invoke(nameof(GetParameters));
+    public Task<ControlledMachine> GetStartup() => Invoke(nameof(GetStartup));
+    public Task<ControlledMachine> CheckCode() => Invoke(nameof(CheckCode));
+
+    // Polling:
+    public Task<ControlledMachine> GetConfiguration() => Invoke(nameof(GetConfiguration));
+    public Task<ControlledMachine> GetStatus() => Invoke(nameof(GetStatus));
+
+    public Task<ControlledMachine> Unlock() => Invoke(nameof(Unlock), nameof(GetStatus));
+    public Task<ControlledMachine> Reset() => Invoke(nameof(Reset), nameof(GetStatus));
+    public Task<ControlledMachine> Homing() => Invoke(nameof(Homing));
+    public Task<ControlledMachine> Pause() => Invoke(nameof(Pause));
+    public Task<ControlledMachine> Play() => Invoke(nameof(Play));
+
+    public Task<ControlledMachine> Move(MoveCommand moveCommand) => Execute(nameof(Move), moveCommand);
+
+    // Raw command
+    public async Task<ControlledMachine> WriteCommand(string commandCode, string sourceName) {
+      ControllerScript script = new (Compiler.LoadInstructions(commandCode, c => new GCodeBlock(c, sourceName)));
+      Log.Verbose("[CMD] {code} from {src}", commandCode, sourceName);
+      await Buffer.Execute(script);
+      return Connection.Machine;
     }
+
+    internal bool IsAlive => _isAlive && Connection.Port.SerialPort.IsOpen;
+
+    internal bool IsActive => IsAlive && Connection.Port.State == PortState.Active;
 
     internal ControllerManager Manager { get; }
 
@@ -39,65 +79,56 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
                                                .ForContext("Buffer", Buffer)
                                                .ForContext("Connection", Connection);
 
-    public abstract MachineControllerType ControllerType { get; }
-
     internal ConnectedPort Connection { get; }
 
     internal SerialBuffer Buffer { get; }
 
-    internal abstract Commands Commands { get; }
-
-    internal ParserSet Parsers { get; } = new();
-
-    internal List<StatusPoll> Polls { get; } = new();
-
-    internal DateTime CreatedAt { get; }
+    internal ControllerTranslator Translator { get; } = new();
 
     // Timeout for the entire startup process, including all firmware verification.
     internal int StartupTimeoutMs { get; } = 20000;
-    public bool IsAlive => _isAlive && Connection.Port.SerialPort.IsOpen;
 
-    public bool IsActive => IsAlive && Connection.Port.State == PortState.Active;
+    // Thread managament liveness
+    private bool _isAlive = true;
+    private ILogger? _logger;
+
+    internal Controller(ControllerManager controllerManager, ConnectedPort connection, MachineControllerType type) {
+      ControllerType = type;
+      Manager = controllerManager;
+      Connection = connection;
+      Buffer = new SerialBuffer(this);
+      CreatedAt = DateTime.Now;
+      this.LoadMachineSyntax();
+    }
+
+    // Look up the code for a given method name and write it to the port.
+    // Made private so that only the concrete methods are exposed
+    private async Task<ControlledMachine> Invoke(params string[] methodNames) {
+      foreach (string methodName in methodNames) {
+        await Execute(methodName);
+      }
+      return Connection.Machine;
+    }
+
+    internal async Task<ControlledMachine> Execute(string methodName, object? args = null) {
+      ControllerScript script = Translator.GetCommandScript(methodName);
+      Log.Verbose("[CMD] {name} args {args}", methodName, args);
+      await Buffer.Execute(script, args);
+      return Connection.Machine;
+    }
 
     public void Dispose() {
       Log.Information("[DISPOSE] controller: {controller}", ToString());
       _isAlive = false;
     }
 
-    protected abstract Task OnStartupComplete();
-
-    /// <summary>
-    /// Actually sends an instruction to the serial buffer, first compiling its code with the provided arguments.
-    /// </summary>
-    /// <param name="instruction">Some templated instruction.</param>
-    /// <param name="args">Object with field/props for the instruction.</param>
-    /// <returns>Task from the Buffer.</returns>
-    internal Task Instruct(IControllerInstruction instruction, object? args = null) {
-      string compiled = instruction.Compile(args);
-      string s = instruction.InstructionSource;
-      if (!s.Equals(nameof(Commands.GetStatus)) && !s.Equals(nameof(Commands.GetConfiguration))) {
-        Log.Debug("[WRITE] [{src}] {cmd}", s, compiled);
-      } else {
-        Log.Verbose("[WRITE] [{src}] {cmd}", s, compiled);
-      }
-      return instruction.Inline ? Buffer.Write(compiled) : Buffer.WriteLine(compiled);
-    }
-
-    internal async Task<ControlledMachine> Execute(ControllerScript script, object? args = null) {
-      // Execute each instruction in the script.
-      foreach (IControllerInstruction instruction in script.Instructions) {
-        await Instruct(instruction, args);
-      }
-      return Connection.Machine;
-    }
-
     // Background thread "main" function for this port/controller combo.
     // Coordinates all serial I/O.
     private async Task InfiniteWorkLoop() {
       while (IsActive) {
-        int readCharacters = await Buffer.TryRead();
-        Log.Verbose("[WORK] I:{characters}", readCharacters);
-        foreach (StatusPoll poll in Polls) await poll.Invoke();
+        await Buffer.TryReadSerial();
+        await Buffer.TryEmitChanges();
+        await Buffer.TryWriteSerial();
       }
       Log.Debug("[WORK] termination state: {state}", Connection.Port.State);
     }
@@ -109,7 +140,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       Log.Debug("[STARTUP] {controller}", ToString());
       try {
         Manager.Ports.EmitState(Connection.Port, PortState.Startup);
-        await Commands.GetFirmware();
+        await GetFirmware();
 
         Log.Debug("[AWAIT] data from {port}", Connection.Port.ToString());
         if (!await StartupCondition(
@@ -119,7 +150,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
         )
           return;
         Log.Debug("[DATA] {controller}: {count} bytes", ToString(), Connection.Status.BytesToRead);
-        await Commands.GetSettings();
+        await GetSettings();
 
         // Any kind of valid firmware (well-known response from board)
         MachineDetectedFirmware firmware = Connection.Machine.Configuration.Firmware;
@@ -130,7 +161,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
         )
           return;
         Log.Debug("[FIRMWARE] requirement?: {firmwareRequirement}", Connection.Machine.FirmwareRequirement.ToString());
-        await Commands.GetParameters();
+        await GetParameters();
 
         // Ensure that any required firmware is met.
         IMachineFirmwareRequirement req = Connection.Machine.FirmwareRequirement;
@@ -141,9 +172,6 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
         )
           return;
         Log.Information("[FIRMWARE] requirements satisfied: {firmware}", firmware.ToString());
-
-        //
-        await OnStartupComplete();
       } catch (Exception e) {
         Log.Error(e, "[STARTUP] failed");
         Connection.Port.Error = new AlertError(e);
@@ -173,37 +201,10 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
         }
         await Task.Delay(delay);
         if (becomeState > PortState.HasData) // Once we have data, we need to start consuming it for the startup conditions.
-          await Buffer.TryRead();
+          await Buffer.TryReadSerial();
       }
       Manager.Ports.EmitState(Connection.Port, becomeState);
       return true;
-    }
-
-    public async Task HandleSerialRead(string line) {
-      line = line.Trim();
-      if (string.IsNullOrWhiteSpace(line)) {
-        Log.Verbose("Whitespace line: {line}", line);
-        return;
-      }
-      Log.Debug("[READ] {line}", line);
-      bool handled = false;
-      HashSet<MachineTopic> changedTopics = new HashSet<MachineTopic>();
-      foreach (StatusPoll poll in Polls) {
-        HashSet<MachineTopic>? ts = await poll.UpdateMachine(line);
-        if (ts != null) handled = true;
-        if (ts?.Any() ?? false) changedTopics.UnionWith(ts);
-      }
-      foreach (Parser parser in Parsers.ToList()) {
-        HashSet<MachineTopic>? ts = await parser.UpdateMachine(this, Connection.Machine, line);
-        if (ts != null) handled = true;
-        if (ts?.Any() ?? false) changedTopics.UnionWith(ts);
-      }
-      if (!handled) {
-        Log.Warning("[READ] unparsed line: '{line}'", line);
-      }
-      if (changedTopics.Any()) {
-        Log.Debug("[MACHINE] topics: {topics}", changedTopics.Select(ct => ct.ToString()));
-      }
     }
 
     public void StartTask() => Task.Run(Startup);

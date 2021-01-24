@@ -492,6 +492,7 @@
       <e p="node_modules/hash.js" t="IncludeRecursive" />
       <e p="node_modules/header-case" t="IncludeRecursive" />
       <e p="node_modules/hoist-non-react-statics" t="IncludeRecursive" />
+      <e p="node_modules/hotkeys-js" t="IncludeRecursive" />
       <e p="node_modules/html-entities" t="IncludeRecursive" />
       <e p="node_modules/http-proxy-agent" t="IncludeRecursive" />
       <e p="node_modules/https-proxy-agent" t="IncludeRecursive" />
@@ -594,6 +595,7 @@
       <e p="node_modules/react" t="IncludeRecursive" />
       <e p="node_modules/react-dom" t="IncludeRecursive" />
       <e p="node_modules/react-ga" t="IncludeRecursive" />
+      <e p="node_modules/react-hotkeys-hook" t="IncludeRecursive" />
       <e p="node_modules/react-i18next" t="IncludeRecursive" />
       <e p="node_modules/react-promise-suspense" t="IncludeRecursive" />
       <e p="node_modules/react-redux" t="IncludeRecursive" />
@@ -644,6 +646,7 @@
       <e p="node_modules/type-fest" t="IncludeRecursive" />
       <e p="node_modules/typeface-cabin" t="IncludeRecursive" />
       <e p="node_modules/typeface-roboto" t="IncludeRecursive" />
+      <e p="node_modules/typeface-roboto-mono" t="IncludeRecursive" />
       <e p="node_modules/typescript/Lib/lib.d.ts" t="IncludeRecursive" />
       <e p="node_modules/typescript/Lib/lib.dom.d.ts" t="IncludeRecursive" />
       <e p="node_modules/typescript/Lib/lib.dom.iterable.d.ts" t="IncludeRecursive" />
@@ -717,33 +720,13 @@
       <e p="OpenController" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
+          <e p="Enums" t="Include">
+            <e p="ControllerAlarmType.cs" t="Include" />
+          </e>
           <e p="Exceptions" t="Include">
             <e p="ControllerException.cs" t="Include" />
             <e p="FirmwareException.cs" t="Include" />
             <e p="PortException.cs" t="Include" />
-          </e>
-          <e p="grbl" t="Include">
-            <e p="GrblActiveState.cs" t="Include" />
-            <e p="GrblCommands.cs" t="Include" />
-            <e p="GrblController.cs" t="Include" />
-            <e p="GrblParsers.cs" t="Include" />
-            <e p="maslow" t="Include">
-              <e p="MaslowCommands.cs" t="Include" />
-              <e p="MaslowController.cs" t="Include" />
-            </e>
-            <e p="Parsers" t="Include">
-              <e p="GrblAlarmParser.cs" t="Include" />
-              <e p="GrblConfigParser.cs" t="Include" />
-              <e p="GrblHelpParser.cs" t="Include" />
-              <e p="GrblMessageParser.cs" t="Include" />
-              <e p="GrblOptionParser.cs" t="Include" />
-              <e p="GrblParameterParser.cs" t="Include" />
-              <e p="GrblResponseParser.cs" t="Include" />
-              <e p="GrblSettingsParser.cs" t="Include" />
-              <e p="GrblStatusParser.cs" t="Include" />
-              <e p="GrblVersionParser.cs" t="Include" />
-              <e p="GrblWelcomeParser.cs" t="Include" />
-            </e>
           </e>
           <e p="Interfaces" t="Include">
             <e p="IControllerInstruction.cs" t="Include" />
@@ -753,23 +736,40 @@
           </e>
           <e p="Models" t="Include">
             <e p="ControllerScript.cs" t="Include" />
-            <e p="TerminalCommand.cs" t="Include" />
           </e>
           <e p="Services" t="Include">
             <e p="Controller.cs" t="Include" />
             <e p="ControllerManager.cs" t="Include" />
-          </e>
-          <e p="Utils" t="Include">
-            <e p="Commands.cs" t="Include" />
-            <e p="ControllerCommand.cs" t="Include" />
-            <e p="Parsers" t="Include">
+            <e p="Serial" t="Include">
               <e p="ConstantStringParser.cs" t="Include" />
+              <e p="MachineOutputLine.cs" t="Include" />
               <e p="Parser.cs" t="Include" />
-              <e p="ParserSet.cs" t="Include" />
               <e p="RegexParser.cs" t="Include" />
+              <e p="SerialPoll.cs" t="Include" />
             </e>
             <e p="SerialBuffer.cs" t="Include" />
-            <e p="StatusPoll.cs" t="Include" />
+          </e>
+        </e>
+        <e p="ControllerSyntax" t="Include">
+          <e p="ControllerTranslator.cs" t="Include" />
+          <e p="FallbackParser.cs" t="Include" />
+          <e p="grbl" t="Include">
+            <e p="GrblActiveState.cs" t="Include" />
+            <e p="GrblAlarmParser.cs" t="Include" />
+            <e p="GrblConfigParser.cs" t="Include" />
+            <e p="GrblHelpParser.cs" t="Include" />
+            <e p="GrblOptionParser.cs" t="Include" />
+            <e p="GrblParameterParser.cs" t="Include" />
+            <e p="GrblResponseParser.cs" t="Include" />
+            <e p="GrblSettingsParser.cs" t="Include" />
+            <e p="GrblStatusParser.cs" t="Include" />
+            <e p="GrblSyntax.cs" t="Include" />
+            <e p="GrblVersionParser.cs" t="Include" />
+            <e p="GrblWelcomeParser.cs" t="Include" />
+            <e p="maslow" t="Include">
+              <e p="MaslowFallbackParser.cs" t="Include" />
+              <e p="MaslowSyntax.cs" t="Include" />
+            </e>
           </e>
         </e>
         <e p="Identity" t="Include">
@@ -817,8 +817,8 @@
             <e p="GraphqlDiagnosticEventListener.cs" t="Include" />
             <e p="GraphqlErrorFilter.cs" t="Include" />
             <e p="GraphqlHttpResultSerializer.cs" t="Include" />
-            <e p="MakerverseHttpRequestInterceptor.cs" t="Include" />
-            <e p="MakerverseSocketSessionInterceptor.cs" t="Include" />
+            <e p="OpenControllerHttpRequestInterceptor.cs" t="Include" />
+            <e p="OpenControllerSocketSessionInterceptor.cs" t="Include" />
             <e p="TopicEventExtensions.cs" t="Include" />
           </e>
           <e p="IHasStringId.cs" t="Include" />
@@ -863,6 +863,8 @@
             <e p="ActiveState.cs" t="Include" />
             <e p="FeedRateMode.cs" t="Include" />
             <e p="MachineCommandType.cs" t="Include" />
+            <e p="MachineErrorType.cs" t="Include" />
+            <e p="MachineLogLevel.cs" t="Include" />
             <e p="MachineMotionType.cs" t="Include" />
             <e p="MachinePinType.cs" t="Include" />
             <e p="MachineProgramState.cs" t="Include" />
@@ -877,7 +879,6 @@
             <e p="FirmwareRequirementExtensions.cs" t="Include" />
           </e>
           <e p="Graph" t="Include">
-            <e p="MachinesMutation.cs" t="Include" />
             <e p="MachinesSchema.cs" t="Include" />
             <e p="MachinesSubscription.cs" t="Include" />
           </e>
@@ -887,6 +888,7 @@
           </e>
           <e p="Messages" t="Include">
             <e p="MachineConnectionOptions.cs" t="Include" />
+            <e p="MachineLogEntryFilterInputType.cs" t="Include" />
             <e p="MachineModalState.cs" t="Include" />
             <e p="MachinePatch.cs" t="Include" />
           </e>
@@ -899,6 +901,7 @@
             <e p="MachineBuffer.cs" t="Include" />
             <e p="MachineConfiguration.cs" t="Include" />
             <e p="MachineDetectedFirmware.cs" t="Include" />
+            <e p="MachineLogEntry.cs" t="Include" />
             <e p="MachineModals.cs" t="Include" />
             <e p="MachineOptions.cs" t="Include" />
             <e p="MachineOverrides.cs" t="Include" />
@@ -990,13 +993,16 @@
           </e>
         </e>
         <e p="Syntax" t="Include">
+          <e p="Compiler.cs" t="Include" />
           <e p="GCode" t="Include">
+            <e p="Extensions" t="Include">
+              <e p="MachineGCodeExtensions.cs" t="Include" />
+              <e p="ProgramSourceExtensions.cs" t="Include" />
+            </e>
             <e p="GCodeBlock.cs" t="Include" />
             <e p="GCodeLetter.cs" t="Include" />
             <e p="GCodeProgram.cs" t="Include" />
             <e p="GCodeWord.cs" t="Include" />
-            <e p="MachineGCodeExtensions.cs" t="Include" />
-            <e p="ProgramSourceExtensions.cs" t="Include" />
           </e>
           <e p="ProgramSyntax.cs" t="Include" />
           <e p="SyntaxChunk.cs" t="Include" />

@@ -1,5 +1,4 @@
-export * from './types';
-export * from './Hooks';
+import {controllersSlice} from '../Controllers';
 import React, {FunctionComponent} from 'react';
 import {useSystemPorts} from '../Ports';
 import {
@@ -9,45 +8,37 @@ import {
 import {WorkspaceConnector, IHaveWorkspace, useWorkspaceSelector} from '../Workspaces';
 import ControllerProvider from '../Controllers/ControllerProvider';
 import Workspace from './Workspace';
+import {useDispatch} from 'react-redux';
 
 export { default as WorkspaceStatus } from './WorkspaceStatus';
 export { default as WorkspaceConnector } from './WorkspaceConnector';
 export { default as WorkspaceUnitSelect } from './WorkspaceUnitSelect';
 export { default as workspacesSlice } from './slice';
+export * from './types';
+export * from './hooks';
 
 type Props = IHaveWorkspace;
 
 const index: FunctionComponent<Props> = (props) => {
   const ports = useSystemPorts();
   const { workspaceId } = props;
+  const dispatch = useDispatch();
   const workspaceState = useWorkspaceSelector(workspaceId, ws => ws.state);
   const portName = useWorkspaceSelector(workspaceId, ws => ws.portName);
   const port = ports.portMap[portName];
   const machine: ControlledMachineFragment | undefined = port?.connection?.machine;
-  //
-  // // Local cache of port object to force updates.
-  // const [port, setPort] = React.useState<PortStatusFragment>();
-  //
-  // React.useEffect(() => {
-  //   if (port?.portName !== portName) {
-  //     setPort(ports.portMap[portName]);
-  //   }
-  // }, [portName, port, setPort]);
+  const workspaceReady = workspaceState === WorkspaceState.Active && machine;
 
-  // useWorkspaceEvent(workspace, WorkspaceEventType.State);
+  // When the connector connects, save the initial machine state.
+  React.useEffect(() => {
+    if (machine) {
+      dispatch(controllersSlice.actions.updateControlledMachine(machine));
+    }
+  }, [machine, controllersSlice]);
 
-  // Controls [Axes, Homing, Spindle/Laser, Hotend, Console(?)]
-  // Project [Visualizer, Webcam, Gcode]
-  // Settings [Machine Settings, Calibration, Probe, Test Laser, Edit Workspace]
-
-  if (workspaceState !== WorkspaceState.Active || !machine) {
-    return <WorkspaceConnector workspaceId={workspaceId} port={port}/>;
-  }
-
-  // return <Workspace port={port} workspaceId={workspaceId} />;
-
-  return <ControllerProvider portName={port.portName} machine={machine} >
-    {<Workspace port={port} workspaceId={workspaceId} />}
+  return <ControllerProvider portName={port.portName} >
+    {!workspaceReady && <WorkspaceConnector workspaceId={workspaceId} port={port}/>}
+    {workspaceReady && <Workspace workspaceId={workspaceId} port={port} />}
   </ControllerProvider>;
 };
 

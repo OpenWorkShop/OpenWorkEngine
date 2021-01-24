@@ -19,7 +19,7 @@ import CreateMachineProfile from './CreateMachineProfile';
 import MachineAxesEditor from './MachineAxesEditor';
 import MachineProfileSearchBar from './MachineProfileSearchBar';
 import { Grid, CircularProgress, Typography, Button, useTheme, Paper } from '@material-ui/core';
-import {useOwsTrans} from '../../Hooks';
+import {useOwsTrans} from '../../hooks';
 import HelpfulHeader from '../Text/HelpfulHeader';
 
 import {IMachinePartChoice} from '../../open-controller/Machines/CustomizedMachine';

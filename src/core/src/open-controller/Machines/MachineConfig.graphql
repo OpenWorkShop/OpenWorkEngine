@@ -1,0 +1,83 @@
+
+
+fragment MachineModals on MachineModals {
+    motion {
+        code
+        value
+    }
+    plane {
+        code
+        value
+    }
+    distance {
+        code
+        value
+    }
+    arcDistance {
+        code
+        value
+    }
+    feedRate {
+        code
+        value
+    }
+    units {
+        code
+        value
+    }
+    # ...
+    programState {
+        code
+        value
+    }
+    spindleDirection {
+        code
+        value
+    }
+    # ...
+    workCoordinateSystem
+}
+
+fragment ApplicatorConfig on ApplicatorConfig {
+    toolId
+    toolLengthOffset {
+        ...MachinePosition
+    }
+    probePosition {
+        ...MachinePosition
+    }
+    spinSpeed
+    feedRate
+    isFloodCoolantEnabled
+    isMistCoolantEnabled
+}
+
+fragment MachineConfig on MachineConfiguration {
+    firmware {
+        ...DetectedFirmware
+    }
+    modals {
+        ...MachineModals
+    }
+    applicator {
+        ...ApplicatorConfig
+    }
+    workCoordinates {
+        ...MachinePosition
+    }
+    workOffset {
+        ...MachinePosition
+    }
+    referencePosition {
+        ...MachinePosition
+    }
+}
+
+subscription MachineConfiguration($portName: String!) {
+    machine: onMachineConfiguration(portName: $portName) {
+        topicId
+        configuration {
+            ...MachineConfig
+        }
+    }
+}

@@ -6,7 +6,7 @@ import ChooseMachineParts from '../../../components/MachineProfiles/ChooseMachin
 import {IMachinePartChoice, IMachinePartSetting} from '../../Machines/CustomizedMachine';
 import {MachinePartFragment, MachineSettingsFragment} from '../../graphql';
 import HelpfulHeader from '../../../components/Text/HelpfulHeader';
-import {useWorkspaceSelector} from '../Hooks';
+import {useWorkspaceSelector} from '../hooks';
 
 type Props = IHaveWorkspace;
 

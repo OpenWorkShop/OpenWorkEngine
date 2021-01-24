@@ -3,8 +3,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using OpenWorkEngine.OpenController.Controllers.Grbl;
-using OpenWorkEngine.OpenController.Controllers.Grbl.Maslow;
 using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.Lib.Observables;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
@@ -24,9 +22,9 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
   public class ControllerManager : SubscriptionManager<MachineTopic, ControlledMachine>, IDisposable {
     // internal ITopicEventSender Sender { get; }
     //
-    public Controller this[string portName] =>
-      _controllers.TryGetValue(portName, out Controller? val) ? val :
-        throw new ArgumentException($"Controller missing: {portName}");
+    public Controller this[string controllerId] =>
+      _controllers.TryGetValue(controllerId, out Controller? val) ? val :
+        throw new ArgumentException($"Controller missing: {controllerId}");
 
     // PortName -> Controller (one controller per port).
     private readonly ConcurrentDictionary<string, Controller> _controllers = new();
@@ -50,15 +48,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
     }
 
     private Controller Create(MachineControllerType type, ConnectedPort connection) {
-      Controller? controller = null;
-
-      if (type == MachineControllerType.Grbl)
-        controller = new GrblController(this, connection);
-      else if (type == MachineControllerType.Maslow)
-        controller = new MaslowController(this, connection);
-      else
-        throw new ArgumentException($"Unsupported controller type: {type}");
-
+      Controller controller = new Controller(this, connection, type);
       controller.StartTask();
       return controller;
     }
@@ -71,9 +61,12 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       bool optionsChanged = systemPort.ApplyPortOptions(opts);
       if (systemPort.SerialPort.IsOpen) {
         if (!optionsChanged && !reconnect && _controllers.TryGetValue(systemPort.PortName, out Controller? c)) {
-          Log.Information("[OPEN] port was already open with the same options: {portName}", systemPort.PortName);
-          if (systemPort.State == PortState.Error) Log.Error("[OPEN] System port has error: {@error}", systemPort.Error);
-          return c;
+          if (systemPort.State == PortState.Error) {
+            Log.Debug("[OPEN] port open with same options; had error (will retry): {portName}", systemPort.PortName);
+          } else {
+            Log.Information("[OPEN] port open with same options; returning existing: {portName}", systemPort.PortName);
+            return c;
+          }
         }
         await Close(systemPort);
       }

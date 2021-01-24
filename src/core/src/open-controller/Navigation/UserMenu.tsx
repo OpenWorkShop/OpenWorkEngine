@@ -1,7 +1,7 @@
 import {faUserShield, faUserSecret} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {Alert, IconButton, Menu, MenuItem, Typography} from '@material-ui/core';
-import {useOpenWorkShop} from '../../Hooks';
+import {useOpenWorkShop} from '../../hooks';
 import {useNetworkStatus} from '../../utils/device';
 import useLogger from '../../utils/logging/UseLogger';
 import React, {FunctionComponent} from 'react';

@@ -20,8 +20,8 @@ namespace OpenWorkEngine.OpenController.Ports.Models {
 
     public bool IsOpen => _serialPort.IsOpen;
 
-    public override string ToString() =>
-      (IsOpen ? "[OPEN] " : "[CLOSED] ") +
-      $"[I] {BytesToRead}/{CharactersRead}/{LinesRead} [O] {BytesToWrite}/{CharactersWritten}/{LinesWritten}";
+    public override string ToString() => IsOpen ?
+      $"[I:{BytesToRead}/{CharactersRead}/{LinesRead} O:{BytesToWrite}/{CharactersWritten}/{LinesWritten}]" :
+      "[CLOSED]";
   }
 }

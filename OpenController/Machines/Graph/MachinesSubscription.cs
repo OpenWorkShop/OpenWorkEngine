@@ -27,8 +27,8 @@ namespace OpenWorkEngine.OpenController.Machines.Graph {
     public ControlledMachine OnMachineStatus(
       [Service] ControllerManager controllers,
       string portName,
-      [EventMessage] ControlledMachine state
-    ) => state;
+      [EventMessage] ControlledMachine machine
+    ) => machine;
 
     public ValueTask<IObservable<ControlledMachine>> SubscribeToMachineStatus(
       string portName,
@@ -40,13 +40,26 @@ namespace OpenWorkEngine.OpenController.Machines.Graph {
     public ControlledMachine OnMachineSetting(
       [Service] ControllerManager controllers,
       string portName,
-      [EventMessage] ControlledMachine setting
-    ) => setting;
+      [EventMessage] ControlledMachine machine
+    ) => machine;
 
     public ValueTask<IObservable<ControlledMachine>> SubscribeToMachineSetting(
       string portName,
       [Service] ControllerManager controllers,
       CancellationToken cancellationToken
     ) => controllers.SubscribeToTopicId(MachineTopic.Setting, portName, cancellationToken);
+
+    [Subscribe(With = nameof(SubscribeToMachineLog))]
+    public ControlledMachine OnMachineLog(
+      [Service] ControllerManager controllers,
+      string portName,
+      [EventMessage] ControlledMachine machine
+    ) => machine;
+
+    public ValueTask<IObservable<ControlledMachine>> SubscribeToMachineLog(
+      string portName,
+      [Service] ControllerManager controllers,
+      CancellationToken cancellationToken
+    ) => controllers.SubscribeToTopicId(MachineTopic.Log, portName, cancellationToken);
   }
 }

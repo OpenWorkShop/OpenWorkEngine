@@ -9,8 +9,18 @@ import { Logger } from './';
 //   return owsCore.logManager.getLogger(component.displayName || component.name);
 // };
 
-export function useLogger<TProps>(component: React.ComponentType<unknown> | React.FunctionComponent<TProps>): Logger {
-  return React.useContext(OpenWorkShop).logManager.getLogger(component.displayName || component.name);
+type Component<TProps> = React.ComponentType<unknown> | React.FunctionComponent<TProps>;
+
+export function useComponentName<TProps>(component: Component<TProps>): string {
+  return component.displayName || component.name;
+}
+
+export function useLogger<TProps>(component: Component<TProps>): Logger {
+  return React.useContext(OpenWorkShop).logManager.getLogger(useComponentName(component));
+}
+
+export function useLoggerName(name: string): Logger {
+  return React.useContext(OpenWorkShop).logManager.getLogger(name);
 }
 
 export default useLogger;

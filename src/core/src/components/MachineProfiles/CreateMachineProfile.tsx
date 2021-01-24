@@ -20,7 +20,7 @@ import {
 import {ToggleButton, ToggleButtonGroup} from '@material-ui/lab';
 import {normalizeMachineControllerType} from '../../open-controller/Machines/MachineControllerType';
 import {BaudRate} from '../../open-controller/Machines/BaudRate';
-import {useOwsTrans} from '../../Hooks';
+import {useOwsTrans} from '../../hooks';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

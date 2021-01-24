@@ -5,7 +5,7 @@ import {IHavePortStatus} from '../Ports';
 import GWiz  from '../GWiz';
 import useLogger from '../../utils/logging/UseLogger';
 import {IHaveWorkspace} from './types';
-import {tryUseWorkspaceControllerSelector, useWorkspaceSelector} from './Hooks';
+import {tryUseWorkspaceControllerSelector, useWorkspaceSelector} from './hooks';
 import WorkBar from '../WorkBar';
 import ControllerCard from '../Controllers/ControllerCard';
 

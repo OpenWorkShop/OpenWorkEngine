@@ -13,6 +13,9 @@ fragment ControlledMachine on ControlledMachine {
     settings {
         ...MachineSetting
     }
+    logs {
+        ...MachineLogEntryConnection
+    }
 }
 
 fragment DetectedFirmware on MachineDetectedFirmware {
@@ -23,79 +26,6 @@ fragment DetectedFirmware on MachineDetectedFirmware {
     edition
     protocol
     welcomeMessage
-}
-
-fragment MachineModals on MachineModals {
-    motion {
-        code
-        value
-    }
-    plane {
-        code
-        value
-    }
-    distance {
-        code
-        value
-    }
-    arcDistance {
-        code
-        value
-    }
-    feedRate {
-        code
-        value
-    }
-    units {
-        code
-        value
-    }
-    # ...
-    programState {
-        code
-        value
-    }
-    spindleDirection {
-        code
-        value
-    }
-    # ...
-    workCoordinateSystem
-}
-
-fragment ApplicatorConfig on ApplicatorConfig {
-    toolId
-    toolLengthOffset {
-        ...MachinePosition
-    }
-    probePosition {
-        ...MachinePosition
-    }
-    spinSpeed
-    feedRate
-    isFloodCoolantEnabled
-    isMistCoolantEnabled
-}
-
-fragment MachineConfig on MachineConfiguration {
-    firmware {
-        ...DetectedFirmware
-    }
-    modals {
-        ...MachineModals
-    }
-    applicator {
-        ...ApplicatorConfig
-    }
-    workCoordinates {
-        ...MachinePosition
-    }
-    workOffset {
-        ...MachinePosition
-    }
-    referencePosition {
-        ...MachinePosition
-    }
 }
 
 fragment MachineAlert on MachineAlert {
@@ -111,111 +41,4 @@ fragment MachinePosition on MachinePosition {
     a
     b
     c
-}
-
-fragment MachineBuffer on MachineBuffer {
-    lineNumber
-    availableReceive
-    availableSend
-}
-
-fragment MachineApplicatorState on MachineApplicatorState {
-    isOn
-    spinDirection
-    spinSpeed
-    feedRate
-    isFloodCoolantEnabled
-    isMistCoolantEnabled
-}
-
-fragment MachineOverrides on MachineOverrides {
-    feed
-    rapids
-    spindle
-}
-
-fragment MachineStatus on MachineStatus {
-    activityState
-    machinePosition {
-        ...MachinePosition
-    }
-    workPosition {
-        ...MachinePosition
-    }
-    workCoordinateOffset {
-        ...MachinePosition
-    }
-    error {
-        ...MachineAlert
-    }
-    alarm {
-        ...MachineAlert
-    }
-    buffer {
-        ...MachineBuffer
-    }
-    activePins
-    applicator {
-        ...MachineApplicatorState
-    }
-    overrides {
-        ...MachineOverrides
-    }
-}
-
-fragment MachineSetting on MachineSetting {
-    id
-    title
-    settingType
-    key
-    value
-}
-
-subscription MachineConfiguration($portName: String!) {
-    machine: onMachineConfiguration(portName: $portName) {
-        topicId
-        configuration {
-            ...MachineConfig
-        }
-    }
-}
-
-subscription MachineStatus($portName: String!) {
-    machine: onMachineStatus(portName: $portName) {
-        topicId
-        status {
-            ...MachineStatus
-        }
-    }
-}
-
-subscription MachineSettings($portName: String!) {
-    machine: onMachineSetting(portName: $portName) {
-        topicId
-        settings {
-            ...MachineSetting
-        }
-    }
-}
-
-# -- commands
-mutation UnlockMachine($portName: String!) {
-    command: commandMachine(portName: $portName) {
-        id
-        machine: unlock { ...ControlledMachine }
-    }
-}
-
-mutation ResetMachine($portName: String!) {
-    command: commandMachine(portName: $portName) {
-        id
-        machine: reset { ...ControlledMachine }
-    }
-}
-
-mutation MoveMachine($portName: String!, $moveCommand: MoveCommandInput!) {
-    command: commandMachine(portName: $portName) {
-        id
-        machine: move(moveCommand: $moveCommand) { ...ControlledMachine }
-    }
 }

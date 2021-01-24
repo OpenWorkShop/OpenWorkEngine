@@ -3,7 +3,7 @@ import {Color, ColorBox} from 'material-ui-color';
 import {Button, Popover} from '@material-ui/core';
 import {IMaterial} from '../types';
 import useStyles from './styles';
-import {useLogger} from '../../../Hooks';
+import {useLogger} from '../../../hooks';
 
 type Props = {
   materialParameters: IMaterial;

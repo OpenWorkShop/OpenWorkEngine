@@ -8,7 +8,7 @@ using OpenWorkEngine.OpenController.Identity.Models;
 
 namespace OpenWorkEngine.OpenController.Identity.Services {
   public static class IdentityExtensions {
-    public static async Task<ClaimsPrincipal?> ClaimMakerverseIdentity(this HttpContext httpContext, string token) {
+    public static async Task<ClaimsPrincipal?> ClaimOpenControllerIdentity(this HttpContext httpContext, string token) {
       IdentityService identityService = httpContext.RequestServices.GetRequiredService<IdentityService>();
       try {
         OpenControllerSession session = await identityService.Authenticate(token);

@@ -71,8 +71,13 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
         Log.Debug("[WORKSPACE] already active {workspace}", ToString());
         return this;
       }
-      Log.Debug("[WORKSPACE] beginning port-open");
       try {
+        if (Port != null && Port.State != PortState.Ready) {
+          Log.Debug("[WORKSPACE] closing port before opening...");
+          await Manager.Ports.Controllers.Close(Port);
+        }
+
+        Log.Debug("[WORKSPACE] beginning port-open");
         Manager.EmitState(this, WorkspaceState.Opening);
         Log.Information("[WORKSPACE] opening: {workspace}", ToString());
         SystemPort? port = Port;
@@ -121,18 +126,21 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
 
     // Respond to ports appearing and disappearing by keeping the SystemPort up to date.
     private void UpdatePort(SystemPort? port) {
-      Log.Debug("[WORKSPACE] update port {port} on {workspace}", port?.ToString(), ToString());
       bool hadPort = Port != null;
       bool hasPort = port != null;
       if (hadPort == hasPort && Port == port) {
-        if (port != null)
+        if (port != null) {
+          Log.Debug("[WORKSPACE] update {port} [STATE] on {workspace}", port.ToString(), ToString());
           UpdatePortState(port);
-        else
+        } else {
+          Log.Debug("[WORKSPACE] port disconnected: {workspace}", ToString());
           Manager.EmitState(this, WorkspaceState.Disconnected);
+        }
         return;
       }
+      Log.Debug("[WORKSPACE] port changed from {oldPort} to {port} on {workspace}",
+        Port?.ToString(), port?.ToString(), ToString());
       Port = port;
-      Log.Debug("[WORKSPACE] port updated: {workspace}", ToString());
       Manager.EmitState(this, hasPort ? WorkspaceState.Closed : WorkspaceState.Disconnected);
     }
 

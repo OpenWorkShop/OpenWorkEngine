@@ -8,7 +8,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useTheme} from '@material-ui/core';
 import {useTrans} from '../Context';
 import {getWorkspaceStateColor, getWorkspaceStateIcon, getWorkspaceStateTextKey} from './WorkspaceState';
-import {useWorkspaceSelector} from './Hooks';
+import {useWorkspaceSelector} from './hooks';
 
 type Props = IHaveWorkspace & IMaybeHavePortStatus & {
   hideText?: boolean,

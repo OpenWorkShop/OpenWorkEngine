@@ -36,8 +36,9 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
   const machineStatus = machine?.status;
   const fwRequirement = machine?.firmwareRequirement;
   const fwDetected = machine?.configuration.firmware;
-  const mPos = machineStatus ? machineStatus.machinePosition : undefined;
-  const wPos = machineStatus ? machineStatus.workPosition : undefined;
+  const isActive = workspaceState === WorkspaceState.Active;
+  const mPos = isActive && machineStatus ? machineStatus.machinePosition : undefined;
+  const wPos = isActive && machineStatus ? machineStatus.workPosition : undefined;
   const portState = port?.state ?? PortState.Unplugged;
   // const bkCol = useMachineStatusColor(machineStatus);
 
@@ -68,8 +69,8 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
         />}
         {mPos && <MachinePositionChip positionType="machine" position={mPos} />}
         {wPos && isMachinePositionValid(wPos) && <MachinePositionChip positionType="work" position={wPos} />}
-        {workspaceState === WorkspaceState.Active && <WorkspaceChip workspaceId={workspaceId} />}
-        {workspaceState === WorkspaceState.Active && <GWizChip />}
+        {isActive && <WorkspaceChip workspaceId={workspaceId} />}
+        {isActive && <GWizChip />}
       </ButtonGroup>
       <ButtonGroup
         className={classes.titleBarRightGroup}

@@ -2,7 +2,7 @@ import { useNetworkStatus } from '../../utils/device';
 import React from 'react';
 import AlertList, {IAlertList} from './AlertList';
 import {IAlertMessage, sanitizeAlertMessages} from './types';
-import {useOwsTrans} from '../../Hooks';
+import {useOwsTrans} from '../../hooks';
 
 type OfflineAlertListProps = IAlertList & {
   severity?: 'warning' | 'error';

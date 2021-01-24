@@ -8,8 +8,6 @@ export function useMachineStatusColor(machineStatus?: MachineStatusFragment, def
   const st = machineStatus.activityState;
   if (machineStatus.alarm || st == ActiveState.Alarm) {
     col = theme.palette.error.dark;
-  } else if (machineStatus.error) {
-    col = theme.palette.warning.dark;
   } else if (st == ActiveState.Run || st == ActiveState.Initializing) {
     col = theme.palette.primary.light;
   } else if (st == ActiveState.IdleReady) {

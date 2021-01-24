@@ -1,8 +1,10 @@
 using System.Threading.Tasks;
 using HotChocolate;
 using HotChocolate.Types;
+using OpenWorkEngine.OpenController.Controllers.Services;
 using OpenWorkEngine.OpenController.Lib.Graphql;
 using OpenWorkEngine.OpenController.Workspaces.Models;
+using OpenWorkEngine.OpenController.Workspaces.Services;
 
 namespace OpenWorkEngine.OpenController.Workspaces.Graph {
   [ExtendObjectType(Name = OpenControllerSchema.Mutation)]
@@ -37,5 +39,13 @@ namespace OpenWorkEngine.OpenController.Workspaces.Graph {
       string workspaceId,
       string portName
     ) => openControllerContext.Workspaces.ChangePort(workspaceId, portName);
+
+    [AuthorizeWriteControllers]
+    public Controller ControlMachine(
+      [Service] OpenControllerContext openControllerContext,
+      string workspaceId
+    ) => openControllerContext.Controllers[
+      openControllerContext.Workspaces[workspaceId].PortName
+    ];
   }
 }

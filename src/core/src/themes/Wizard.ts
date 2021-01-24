@@ -6,7 +6,7 @@ import { backgroundImage, getImageUrl } from '../components/Images';
 import {toolbarHeight} from './consts';
 
 const headerFont = 'Cabin';
-const bodyFont = 'Roboto';
+const bodyFont = 'Cabin';
 
 const defaultTheme = createMuiTheme();
 

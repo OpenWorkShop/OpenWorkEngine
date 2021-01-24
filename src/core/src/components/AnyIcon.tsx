@@ -1,7 +1,7 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import {OwsIconName} from './OpenWorkShopIcon';
 import React, { FunctionComponent } from 'react';
-import {useLogger} from '../Hooks';
+import {useLogger} from '../hooks';
 import {OpenWorkShopIcon} from './index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 

@@ -3,7 +3,7 @@ import {
   getMachineSpecTypeUnits,
 } from '../../open-controller/Machines/MachineSpecType';
 import React from 'react';
-import {useOwsTrans} from '../../Hooks';
+import {useOwsTrans} from '../../hooks';
 import {IMachinePartSpec} from '../../open-controller/Machines/CustomizedMachine';
 
 interface IMachineSpecProps {

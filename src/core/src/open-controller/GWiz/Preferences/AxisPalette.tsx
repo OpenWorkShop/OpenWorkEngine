@@ -1,6 +1,6 @@
 import React, {FunctionComponent} from 'react';
 import {FormControlLabel, Grid, Typography, useTheme} from '@material-ui/core';
-import {useLogger} from '../../../Hooks';
+import {useLogger} from '../../../hooks';
 import {IMaterial, IVisualizerStyles, RenderGroupType} from '../types';
 import {AppState} from '../../redux';
 import {useDispatch, useSelector} from 'react-redux';
