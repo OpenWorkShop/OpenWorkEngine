@@ -6,18 +6,23 @@ import {useLogger} from '../../hooks';
 import {Fab, Tooltip, Typography} from '@material-ui/core';
 import clsx from 'clsx';
 import {IHaveWorkspace, useWorkspaceControllerSelector} from '../Workspaces';
+import {useControllerCommand} from './hooks';
 
 type Props = IHaveWorkspace;
+
 
 const StopButton: FunctionComponent<Props> = (props) => {
   const classes = useStyles();
   const t = useTrans();
   const log = useLogger(StopButton);
   const { workspaceId } = props;
+  const variables = { workspaceId };
   const activeState = useWorkspaceControllerSelector(workspaceId, c => c.machine.status.activityState);
   const alarm = useWorkspaceControllerSelector(workspaceId, c => c.machine.status.alarm);
-  const [unlock] = useUnlockMachineMutation();
-  const [reset] = useResetMachineMutation();
+
+  const [unlockMutation, unlockResult] = useControllerCommand(workspaceId, useUnlockMachineMutation());
+  const [resetMutation, resetResult] = useControllerCommand(workspaceId, useResetMachineMutation());
+
   const hasAlarm = activeState === ActiveState.Alarm || alarm;
   const isInit = !hasAlarm && activeState === ActiveState.Initializing;
   const isDisabled = isInit;
@@ -34,17 +39,11 @@ const StopButton: FunctionComponent<Props> = (props) => {
 
   async function onClick(): Promise<void> {
     if (isInit) return;
-    try {
-      const variables = { workspaceId };
-      if (hasAlarm) {
-        await unlock({ variables });
-      } else {
-        await reset({ variables });
-      }
-    } catch (e) {
-      log.error(e);
-    }
+    await (hasAlarm ? unlockMutation({ variables }) : resetMutation({ variables }));
   }
+
+  if (unlockResult.error) log.warn('unlockResult command error', unlockResult.error);
+  if (resetResult.error) log.warn('unlockResult command error', unlockResult.error);
 
   return (
     <Tooltip title={getQuickActionTip()}>

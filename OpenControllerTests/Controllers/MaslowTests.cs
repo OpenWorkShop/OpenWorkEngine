@@ -1,8 +1,10 @@
+using System.Linq;
 using FluentAssertions;
 using MakerverseServerTests;
 using OpenWorkEngine.OpenController.ControllerSyntax;
 using OpenWorkEngine.OpenController.ControllerSyntax.Grbl;
 using OpenWorkEngine.OpenController.ControllerSyntax.Grbl.Maslow;
+using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Models;
 using Serilog;
 using Xunit;
@@ -17,7 +19,7 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
     [Theory]
     [InlineData("[VER:1.1g.20200915.MaslowDue:]")]
     public void CanParseMaslowVersions(string versionString) {
-      ControlledMachine machine = GrblTests.TestParser(_parsers.Firmware, versionString);
+      ControlledMachine machine = GrblTests.TestParser(_parsers.FirmwareParser, versionString);
 
       MachineDetectedFirmware fw = machine.Configuration.Firmware;
       fw.Should().NotBeNull();
@@ -31,7 +33,7 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
     public void CanParseMaslowErrorFeedback(string line) {
       ControlledMachine m = GrblTests.TestParser(_parsers.Fallback, line);
 
-      m.Status.Alarm.Should().NotBeNull();
+      m.LogEntries.Last().LogLevel.Should().Be(MachineLogLevel.Err);
     }
   }
 }

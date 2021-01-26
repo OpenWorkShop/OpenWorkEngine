@@ -4,11 +4,17 @@ using System.Linq;
 using HotChocolate.Language;
 using HotChocolate.Types;
 using OpenWorkEngine.OpenController.Controllers.Interfaces;
+using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.Controllers.Services.Serial;
 using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Syntax;
 
 namespace OpenWorkEngine.OpenController.Machines.Models {
+  public enum MachineLogSource {
+    SerialRead,
+    SerialWrite,
+  }
+
   public class MachineLogEntry : IEquatable<MachineLogEntry> {
     public string Id { get; }
     public string Message { get; }
@@ -16,8 +22,9 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     public int Count => Timestamps.Count;
     public DateTime Timestamp => Timestamps.Last();
     public MachineLogLevel LogLevel { get; }
+    public MachineLogSource Source { get; } = MachineLogSource.SerialRead;
     public MachineAlert? Error { get; }
-    public CompiledInstruction? Instruction { get; }
+    public SyntaxChunk[] Code { get; } = new SyntaxChunk[]{};
 
     // Log a write-line.
     public MachineLogEntry(
@@ -27,19 +34,23 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
       Timestamps.Push( DateTime.Now );
 
       Message = compiled.Source;
-      Instruction = compiled;
+      Code = compiled.Chunks.ToArray();
       LogLevel = logLevel;
+      Source = MachineLogSource.SerialWrite;
     }
 
-    public MachineLogEntry(MachineOutputLine line, string message, MachineLogLevel logLevel = MachineLogLevel.Inf) {
+    internal MachineLogEntry(
+      string message, MachineLogLevel logLevel = MachineLogLevel.Inf, params SyntaxChunk[] code
+    ) {
       Id = Guid.NewGuid().ToString();
       Timestamps.Push( DateTime.Now );
 
       Message = message.Trim();
       LogLevel = logLevel;
+      Code = code;
     }
 
-    public MachineLogEntry(MachineOutputLine line, string message, MachineAlert error) {
+    internal MachineLogEntry(string message, MachineAlert error) {
       Id = Guid.NewGuid().ToString();
       Timestamps.Push( DateTime.Now );
 
@@ -59,6 +70,17 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
       if (ReferenceEquals(this, obj)) return true;
       if (obj.GetType() != this.GetType()) return false;
       return Equals((MachineLogEntry) obj);
+    }
+
+    public bool CanMergeWith(MachineLogEntry entry) {
+      bool msg = Code.Length == entry.Code.Length && entry.LogLevel == LogLevel && entry.Message.Equals(Message);
+      if (!msg) return false;
+      for (int i = 0; i < Code.Length; i++) {
+        if (!Code[i].Value.Equals(entry.Code[i].Value)) {
+          return false;
+        }
+      }
+      return true;
     }
 
     public override int GetHashCode() => Id.GetHashCode();

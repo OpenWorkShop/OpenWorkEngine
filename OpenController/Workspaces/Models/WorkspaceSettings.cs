@@ -23,6 +23,8 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
 
     [JsonProperty("machineProfileId")] public string? MachineProfileId { get; set; }
 
+    [JsonProperty("machineCategory")] public MachineCategory MachineCategory { get; set; }
+
     [JsonProperty("path")] public string Path { get; set; } = default!;
 
     [JsonProperty("color")] public string? Color { get; set; }
@@ -48,6 +50,7 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
     public void LoadSettings(JObject obj) {
       this.AssignScalarValue<string>(obj, "id", v => Id = v);
       this.AssignScalarValue<string>(obj, "machineProfileId", v => MachineProfileId = v);
+      this.AssignScalarValue<MachineCategory>(obj, "machineCategory", v => MachineCategory = v);
       this.AssignScalarValue<string>(obj, "name", v => Name = v);
       this.AssignScalarValue<bool>(obj, "onboarded", v => Onboarded = v);
       this.AssignScalarValue<string>(obj, "path", v => Path = v);

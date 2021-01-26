@@ -1,6 +1,7 @@
 fragment WorkspaceProps on WorkspaceSettings {
     id
     machineProfileId
+    machineCategory
     name
     onboarded
     path

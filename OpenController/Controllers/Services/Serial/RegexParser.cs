@@ -25,7 +25,10 @@ namespace OpenWorkEngine.OpenController.Controllers.Services.Serial {
       MatchCollection matches = Regex.Matches(line.Raw, _pattern, RegexOptions.IgnoreCase);
 
       foreach (Match match in matches) {
-        line = OnData(line, MatchToDictionary(match)).WithParsedResponse();
+        line = OnData(line, MatchToDictionary(match));
+      }
+      if (matches.Any()) {
+        line = line.WithParsedResponse();
       }
       return Task.FromResult<MachineOutputLine>(line);
     }

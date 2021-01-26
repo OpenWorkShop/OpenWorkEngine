@@ -6,7 +6,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
   useCloseWorkspaceMutation,
   useOpenWorkspaceMutation,
-  WorkspaceFullFragment,
   WorkspaceState
 } from '../graphql';
 import {AlertList, IAlertMessage} from '../../components/Alerts';
@@ -16,11 +15,6 @@ import useLogger from '../../utils/logging/UseLogger';
 import {useWorkspaceSelector} from './hooks';
 import {useDispatch} from 'react-redux';
 import workspacesSlice from './slice';
-import {tryUseMutations} from '../../utils';
-
-interface IResponse {
-  workspace: WorkspaceFullFragment;
-}
 
 const OpenWorkspaceButton: React.FunctionComponent<IHaveWorkspace> = (props) => {
   const log = useLogger(OpenWorkspaceButton);
@@ -28,31 +22,31 @@ const OpenWorkspaceButton: React.FunctionComponent<IHaveWorkspace> = (props) => 
   const dispatch = useDispatch();
 
   const { workspaceId } = props;
-  const variables = { workspaceId };
 
   const wsState = useWorkspaceSelector(workspaceId, ws => ws.state);
 
-  const [mutations, [openWorkspace, closeWorkspace]] = tryUseMutations(
-    { variables },
-    useOpenWorkspaceMutation,
-    useCloseWorkspaceMutation,
-  );
+  // Mutations
+  const variables = { workspaceId };
+  const [error, onError] = React.useState<IAlertMessage | undefined>(undefined);
+  const opts = { variables, onError };
+  const [openMutation, openResult] = useOpenWorkspaceMutation(opts);
+  const [closeMutation] = useCloseWorkspaceMutation(opts);
 
   // React to workspace changes by dispatching state.
-  const loadedWorkspace = mutations.data?.workspace;
+  const loadedWorkspace = openResult.data?.workspace;
   React.useEffect(() => {
     if (loadedWorkspace) dispatch(workspacesSlice.actions.updateWorkspace(loadedWorkspace));
   }, [loadedWorkspace]);
 
   const classes = useStyles();
-  const isConnecting = wsState === WorkspaceState.Opening || mutations.loading;
+  const isConnecting = wsState === WorkspaceState.Opening || openResult.loading;
   const canConnect = !isConnecting && [WorkspaceState.Closed, WorkspaceState.Error].includes(wsState);
   const isDisabled = !isConnecting && !canConnect;
 
   log.debug('[OPEN]', 'workspace', workspaceId, wsState, isConnecting, canConnect);
 
   async function onClick() {
-    return await (isConnecting ? closeWorkspace.invoke() : openWorkspace.invoke());
+    return await (isConnecting ? closeMutation() : openMutation());
   }
 
   return (
@@ -73,8 +67,8 @@ const OpenWorkspaceButton: React.FunctionComponent<IHaveWorkspace> = (props) => 
           </Fab>
         </FormControl>
       </Grid>
-      {mutations.error && <Grid item xs={12}>
-        <AlertList error={mutations.error} />
+      {error && <Grid item xs={12}>
+        <AlertList error={error} />
       </Grid>}
     </Grid>
   );

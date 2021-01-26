@@ -22,27 +22,30 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax {
 
     internal List<SerialPoll> Polls => new List<SerialPoll?> {StatusPoll, ConfigPoll}.SelectNonNull();
 
+    internal List<SettingDefinition> SettingDefinitions { get; } = new List<SettingDefinition>();
+
     // Connection message (startup)
-    internal Parser? Welcome { get; set; }
+    internal Parser? WelcomeParser { get; set; }
 
-    internal Parser? Firmware { get; set; }
+    internal Parser? FirmwareParser { get; set; }
 
-    internal Parser? Alarm { get; set; }
+    internal Parser? AlarmParser { get; set; }
 
     // Tip, etc.
-    internal Parser? Help { get; set; }
+    internal Parser? HelpParser { get; set; }
 
     // eg.g., work coordinates (G54-G59), predefined positions (G28, G30), tool length, probing
-    internal Parser? Parameters { get; set; }
+    internal Parser? ParameterParser { get; set; }
 
     // e.g., firmware settings
-    internal Parser? Settings { get; set; }
+    internal Parser? SettingParser { get; set; }
 
     // ??
-    internal Parser? Options { get; set; }
+    internal Parser? OptionParser { get; set; }
 
-    internal List<Parser> OptionalParsers =>
-      new List<Parser?> {Alarm, Welcome, Firmware, Help, Parameters, Settings, Options}.SelectNonNull();
+    internal List<Parser> OptionalParsers => new List<Parser?> {
+      AlarmParser, WelcomeParser, FirmwareParser, HelpParser, ParameterParser, SettingParser, OptionParser
+    }.SelectNonNull();
 
     // Command codes that apply to all types of machines.
     private readonly Dictionary<string, ControllerScript> _commandScripts = new () { };

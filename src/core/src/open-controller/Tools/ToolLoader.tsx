@@ -12,6 +12,7 @@ const ToolLoader: React.FunctionComponent<Props> = (props) => {
   if (!Tool) return <span>Missing: {tool.componentPath}</span>;
 
 
+  // return <Tool tool={tool} workspaceId={workspaceId} />;
   return React.useMemo(() => <Tool tool={tool} workspaceId={workspaceId} />, [tool, workspaceId]);
 };
 

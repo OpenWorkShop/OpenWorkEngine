@@ -34,7 +34,7 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
     [InlineData("[VER:1.1f.20170801:LASER]")]
     [InlineData("[VER:2.0.0.20170522::CTRL0]")]
     public void CanParseGrblVersions(string versionString) {
-      ControlledMachine machine = TestParser(_parsers.Firmware, versionString);
+      ControlledMachine machine = TestParser(_parsers.FirmwareParser, versionString);
 
       MachineDetectedFirmware fw = machine.Configuration.Firmware;
       fw.Should().NotBeNull();
@@ -111,7 +111,7 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
     [InlineData("[TLO:0.000,1.000,0,000]")]
     [InlineData("[G54:4.000,0.000,-2.000]")]
     public void CanParseParameters(string line) {
-      ControlledMachine machine = TestParser(_parsers.Parameters, line);
+      ControlledMachine machine = TestParser(_parsers.ParameterParser, line);
 
       Log.Information("Machine Config {@config}", JsonConvert.SerializeObject(machine.Configuration, Formatting.Indented));
     }
@@ -125,7 +125,7 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
     [InlineData("[echo:hello]")]
     public void CanParseMessage(string line) {
       ControlledMachine machine = TestParser(_parsers.Fallback, line);
-      Log.Information("Machine Status {@status}", JsonConvert.SerializeObject(machine.Status, Formatting.Indented));
+      Log.Information("Machine Status {@status}", JsonConvert.SerializeObject(machine, Formatting.Indented));
       line.Should().Contain(machine.LogEntries.Last().Message);
     }
 
@@ -140,7 +140,7 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
     [Theory]
     [InlineData("ALARM: 9")]
     public void CanParseAlarm(string line) {
-      ControlledMachine machine = TestParser(_parsers.Alarm, line);
+      ControlledMachine machine = TestParser(_parsers.AlarmParser, line);
       Log.Information("Machine Status {@status}", JsonConvert.SerializeObject(machine.Status, Formatting.Indented));
       machine.Status.Alarm.Should().NotBeNull();
     }
@@ -148,7 +148,7 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
     [Theory]
     [InlineData("[OPT:VNM+H,35,255]")]
     public void CanParseOptions(string line) {
-      ControlledMachine machine = TestParser(_parsers.Options, line);
+      ControlledMachine machine = TestParser(_parsers.OptionParser, line);
       Log.Information("Machine Status {@status}", JsonConvert.SerializeObject(machine.Configuration, Formatting.Indented));
       machine.Configuration.Options.Should().NotBeNull();
     }
@@ -159,7 +159,7 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
     [InlineData("$110=635.00")]
     [InlineData("$90=139.100 (rotation radius, mm)")]
     public void CanParseSettings(string line) {
-      ControlledMachine machine = TestParser(_parsers.Settings, line);
+      ControlledMachine machine = TestParser(_parsers.SettingParser, line);
       Log.Information("Machine Settings {@status}", JsonConvert.SerializeObject(machine.Settings, Formatting.Indented));
       machine.Settings.Should().NotBeNull();
     }

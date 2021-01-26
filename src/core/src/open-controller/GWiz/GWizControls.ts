@@ -20,7 +20,7 @@ class GWizControls extends OrbitControls {
     // this.controls.enableDamping = true;
     this.enableKeys = true;
     this.addEventListener('change', (e) => {
-      this.log.debug('change', camera.position, e);
+      this.log.verbose('change', camera.position, e);
     });
   }
 

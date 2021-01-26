@@ -39,21 +39,21 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
 
       // An OK or non-null status indicates a successful response, which broadcasts the (spammy) "ACK" message.
       if (status.Equals("ok") || error == null) {
-        logEntry = new MachineLogEntry(line, status, MachineLogLevel.Dbg);
+        logEntry = new MachineLogEntry(status, MachineLogLevel.Dbg);
       } else if (!int.TryParse(error, out int val)) {
-        logEntry = GetAlertEntry(line, GrblError.Unknown, error);
+        logEntry = GetAlertEntry(GrblError.Unknown, error);
       } else if (val >= (int) GrblError.InvalidGCode) {
-        logEntry = GetAlertEntry(line, GrblError.InvalidGCode);
+        logEntry = GetAlertEntry(GrblError.InvalidGCode);
       } else {
-        logEntry = GetAlertEntry(line, (GrblError) val);
+        logEntry = GetAlertEntry((GrblError) val);
       }
 
       line.Controller?.Buffer.Ack(logEntry);
       return line.WithLogEntry(logEntry);
     }
 
-    internal static MachineLogEntry GetAlertEntry(MachineOutputLine line, GrblError err, string msg = "") =>
-      new MachineLogEntry(line, string.IsNullOrWhiteSpace(msg) ? err.ToString() : msg,
+    internal static MachineLogEntry GetAlertEntry(GrblError err, string msg = "") =>
+      new MachineLogEntry(string.IsNullOrWhiteSpace(msg) ? err.ToString() : msg,
         new MachineAlert(err.ToString(), msg, ((int) err).ToString()));
   }
 }

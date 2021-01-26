@@ -30,7 +30,7 @@ const BackendDisconnectedModal: React.FunctionComponent = () => {
 
   return (
     <CardDialog
-      open={!isConnected} title={t('Disconnected')} onClose={() => log.warn('close forbidden')}
+      open={!isConnected} title={t('Disconnected')} preventClose={true}
     >
       <div style={{ textAlign: 'center' }}>
         <CircularProgress />

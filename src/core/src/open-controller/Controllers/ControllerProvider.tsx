@@ -52,7 +52,7 @@ const ControllerProvider: React.FunctionComponent<Props> = (props) => {
   React.useEffect(() => {
     if (newMachineLogs) {
       log.debug('[MACHINE]', '[LOGS]', newMachineLogs);
-      dispatch(controllersSlice.actions.onControlledMachineLogs(newMachineLogs));
+      dispatch(controllersSlice.actions.onControlledMachineLogPage(newMachineLogs));
     }
   }, [newMachineLogs]);
 

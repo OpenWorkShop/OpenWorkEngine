@@ -1,7 +1,7 @@
 import {ICustomizedMachineProfile} from '../../open-controller/Machines/CustomizedMachine';
 import {useLogger} from '../../utils/logging/UseLogger';
 import React from 'react';
-import {MachineControllerType, MachineFirmwareMinimalFragment} from '../../open-controller/graphql';
+import {MachineCategory, MachineControllerType, MachineFirmwareMinimalFragment} from '../../open-controller/graphql';
 import {
   Checkbox,
   createStyles,
@@ -64,12 +64,16 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
   const [profile, setProfile] = React.useState<ICustomizedMachineProfile>({
     brand: '',
     model: '',
+    category: MachineCategory.Cnc,
     submit: true,
   });
 
   const baudRate: number = (firmware.baudRateValue ) || 0;
 
   function onChange(fw: MachineFirmwareMinimalFragment, pr: ICustomizedMachineProfile) {
+    pr = {
+      ...pr, category: fw.controllerType === MachineControllerType.Marlin ? MachineCategory.Tdp : MachineCategory.Cnc
+    };
     setFirmware(fw);
     setProfile(pr);
     log.verbose('update', fw, pr);

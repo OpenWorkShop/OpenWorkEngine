@@ -79,13 +79,6 @@ export type CommandSettings = {
   title: Scalars['String'];
 };
 
-export type CompiledInstruction = {
-  __typename?: 'CompiledInstruction';
-  chunks: Array<SyntaxChunk>;
-  code: Scalars['String'];
-  source: Scalars['String'];
-};
-
 export type ConnectedPort = {
   __typename?: 'ConnectedPort';
   createdAt: Scalars['DateTime'];
@@ -127,24 +120,24 @@ export type ControlledMachineLogsArgs = {
 
 export type Controller = {
   __typename?: 'Controller';
-  checkCode: ControlledMachine;
-  configuration: ControlledMachine;
+  checkCode: MachineExecutionResult;
+  configuration: MachineExecutionResult;
   controllerType: MachineControllerType;
   createdAt: Scalars['DateTime'];
-  firmware: ControlledMachine;
-  help: ControlledMachine;
-  homing: ControlledMachine;
+  firmware: MachineExecutionResult;
+  help: MachineExecutionResult;
+  homing: MachineExecutionResult;
   id: Scalars['String'];
-  move: ControlledMachine;
-  parameters: ControlledMachine;
-  pause: ControlledMachine;
-  play: ControlledMachine;
-  reset: ControlledMachine;
-  settings: ControlledMachine;
-  startup: ControlledMachine;
-  status: ControlledMachine;
-  unlock: ControlledMachine;
-  writeCommand: ControlledMachine;
+  move: MachineExecutionResult;
+  parameters: MachineExecutionResult;
+  pause: MachineExecutionResult;
+  play: MachineExecutionResult;
+  reset: MachineExecutionResult;
+  settings: MachineExecutionResult;
+  startup: MachineExecutionResult;
+  status: MachineExecutionResult;
+  unlock: MachineExecutionResult;
+  writeCommand: MachineExecutionResult;
 };
 
 export type ControllerMoveArgs = {
@@ -268,6 +261,12 @@ export type MachineDetectedFirmware = {
   welcomeMessage: Maybe<Scalars['String']>;
 };
 
+export type MachineExecutionResult = {
+  __typename?: 'MachineExecutionResult';
+  logs: Array<MachineLogEntry>;
+  machine: ControlledMachine;
+};
+
 export type MachineFeature = {
   __typename?: 'MachineFeature';
   description: Maybe<Scalars['String']>;
@@ -322,12 +321,14 @@ export type MachineFirmwareSettings = IMachineFirmwareRequirement & {
 
 export type MachineLogEntry = {
   __typename?: 'MachineLogEntry';
+  canMergeWith: Scalars['Boolean'];
+  code: Array<SyntaxChunk>;
   count: Scalars['Int'];
   error: Maybe<MachineAlert>;
   id: Scalars['String'];
-  instruction: Maybe<CompiledInstruction>;
   logLevel: MachineLogLevel;
   message: Scalars['String'];
+  source: MachineLogSource;
   timestamp: Scalars['DateTime'];
   timestamps: Array<Scalars['DateTime']>;
 };
@@ -488,9 +489,11 @@ export type MachineProfile = {
 export type MachineSetting = {
   __typename?: 'MachineSetting';
   id: Scalars['String'];
+  isSameSetting: Scalars['Boolean'];
   key: Scalars['String'];
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
+  toLogEntry: MachineLogEntry;
   units: MachineSettingUnits;
   value: Scalars['String'];
 };
@@ -760,6 +763,7 @@ export type SyntaxChunk = {
   comments: Array<Scalars['String']>;
   isCode: Scalars['Boolean'];
   isValid: Scalars['Boolean'];
+  type: SyntaxType;
   value: Scalars['String'];
 };
 
@@ -804,6 +808,7 @@ export type WorkspaceSettings = {
   features: Array<MachineFeatureSettings>;
   icon: Maybe<Scalars['String']>;
   id: Scalars['String'];
+  machineCategory: MachineCategory;
   machineProfileId: Maybe<Scalars['String']>;
   name: Scalars['String'];
   onboarded: Scalars['Boolean'];
@@ -882,10 +887,16 @@ export enum MachineControllerType {
 }
 
 export enum MachineLogLevel {
+  Cfg = 'CFG',
   Dbg = 'DBG',
   Err = 'ERR',
   Inf = 'INF',
   Wrn = 'WRN',
+}
+
+export enum MachineLogSource {
+  SerialRead = 'SERIAL_READ',
+  SerialWrite = 'SERIAL_WRITE',
 }
 
 export enum MachineMotionType {
@@ -934,8 +945,42 @@ export enum MachineProgramState {
 }
 
 export enum MachineSettingType {
+  AccelerationX = 'ACCELERATION_X',
+  AccelerationY = 'ACCELERATION_Y',
+  AccelerationZ = 'ACCELERATION_Z',
+  ArcTolerance = 'ARC_TOLERANCE',
+  DirectionPortInvert = 'DIRECTION_PORT_INVERT',
   Grbl = 'GRBL',
+  HardLimits = 'HARD_LIMITS',
+  HomingCycle = 'HOMING_CYCLE',
+  HomingDebounce = 'HOMING_DEBOUNCE',
+  HomingDirectionInvert = 'HOMING_DIRECTION_INVERT',
+  HomingFeed = 'HOMING_FEED',
+  HomingPullOff = 'HOMING_PULL_OFF',
+  HomingSeek = 'HOMING_SEEK',
+  JunctionDeviation = 'JUNCTION_DEVIATION',
   Kv = 'KV',
+  LaserMode = 'LASER_MODE',
+  LimitPinsInvert = 'LIMIT_PINS_INVERT',
+  MaxSpindleSpeed = 'MAX_SPINDLE_SPEED',
+  MinSpindleSpeed = 'MIN_SPINDLE_SPEED',
+  ProbePinInvert = 'PROBE_PIN_INVERT',
+  RateMaxX = 'RATE_MAX_X',
+  RateMaxY = 'RATE_MAX_Y',
+  RateMaxZ = 'RATE_MAX_Z',
+  ReportInches = 'REPORT_INCHES',
+  SoftLimits = 'SOFT_LIMITS',
+  StatusReport = 'STATUS_REPORT',
+  StepsX = 'STEPS_X',
+  StepsY = 'STEPS_Y',
+  StepsZ = 'STEPS_Z',
+  StepEnableInvert = 'STEP_ENABLE_INVERT',
+  StepIdleDelay = 'STEP_IDLE_DELAY',
+  StepPortInvert = 'STEP_PORT_INVERT',
+  StepPulse = 'STEP_PULSE',
+  TravelMaxX = 'TRAVEL_MAX_X',
+  TravelMaxY = 'TRAVEL_MAX_Y',
+  TravelMaxZ = 'TRAVEL_MAX_Z',
 }
 
 export enum MachineSettingUnits {
@@ -1013,6 +1058,13 @@ export enum StopBits {
   Two = 'TWO',
 }
 
+export enum SyntaxType {
+  Keyword = 'KEYWORD',
+  Operator = 'OPERATOR',
+  Unknown = 'UNKNOWN',
+  Value = 'VALUE',
+}
+
 export enum UnitType {
   Imperial = 'IMPERIAL',
   Metric = 'METRIC',
@@ -1060,19 +1112,6 @@ export type ComparableInt32OperationFilterInput = {
   nin: Maybe<Array<Scalars['Int']>>;
   nlt: Maybe<Scalars['Int']>;
   nlte: Maybe<Scalars['Int']>;
-};
-
-export type CompiledInstructionFilterInput = {
-  and: Maybe<Array<CompiledInstructionFilterInput>>;
-  chunks: Maybe<ListFilterInputTypeOfSyntaxChunkFilterInput>;
-  code: Maybe<StringOperationFilterInput>;
-  or: Maybe<Array<CompiledInstructionFilterInput>>;
-  source: Maybe<StringOperationFilterInput>;
-};
-
-export type CompiledInstructionSortInput = {
-  code: Maybe<SortEnumType>;
-  source: Maybe<SortEnumType>;
 };
 
 export type ConnectionSettingsInput = {
@@ -1168,12 +1207,13 @@ export type MachineFirmwareSettingsInput = {
 
 export type MachineLogEntryFilterInput = {
   and: Maybe<Array<MachineLogEntryFilterInput>>;
+  code: Maybe<ListFilterInputTypeOfSyntaxChunkFilterInput>;
   count: Maybe<ComparableInt32OperationFilterInput>;
   error: Maybe<MachineAlertFilterInput>;
-  instruction: Maybe<CompiledInstructionFilterInput>;
   logLevel: Maybe<MachineLogLevelOperationFilterInput>;
   message: Maybe<StringOperationFilterInput>;
   or: Maybe<Array<MachineLogEntryFilterInput>>;
+  source: Maybe<MachineLogSourceOperationFilterInput>;
   timestamp: Maybe<ComparableDateTimeOperationFilterInput>;
   timestamps: Maybe<ListComparableDateTimeOperationFilterInput>;
 };
@@ -1182,9 +1222,9 @@ export type MachineLogEntrySortInput = {
   count: Maybe<SortEnumType>;
   error: Maybe<MachineAlertSortInput>;
   id: Maybe<SortEnumType>;
-  instruction: Maybe<CompiledInstructionSortInput>;
   logLevel: Maybe<SortEnumType>;
   message: Maybe<SortEnumType>;
+  source: Maybe<SortEnumType>;
   timestamp: Maybe<SortEnumType>;
 };
 
@@ -1193,6 +1233,13 @@ export type MachineLogLevelOperationFilterInput = {
   in: Maybe<Array<MachineLogLevel>>;
   neq: Maybe<MachineLogLevel>;
   nin: Maybe<Array<MachineLogLevel>>;
+};
+
+export type MachineLogSourceOperationFilterInput = {
+  eq: Maybe<MachineLogSource>;
+  in: Maybe<Array<MachineLogSource>>;
+  neq: Maybe<MachineLogSource>;
+  nin: Maybe<Array<MachineLogSource>>;
 };
 
 export type MachinePartSettingsInput = {
@@ -1274,7 +1321,15 @@ export type SyntaxChunkFilterInput = {
   isCode: Maybe<BooleanOperationFilterInput>;
   isValid: Maybe<BooleanOperationFilterInput>;
   or: Maybe<Array<SyntaxChunkFilterInput>>;
+  type: Maybe<SyntaxTypeOperationFilterInput>;
   value: Maybe<StringOperationFilterInput>;
+};
+
+export type SyntaxTypeOperationFilterInput = {
+  eq: Maybe<SyntaxType>;
+  in: Maybe<Array<SyntaxType>>;
+  neq: Maybe<SyntaxType>;
+  nin: Maybe<Array<SyntaxType>>;
 };
 
 export type WorkspaceSettingsInput = {
@@ -1287,6 +1342,7 @@ export type WorkspaceSettingsInput = {
   features: Array<MachineFeatureSettingsInput>;
   icon: Maybe<Scalars['String']>;
   id: Scalars['String'];
+  machineCategory: MachineCategory;
   machineProfileId: Maybe<Scalars['String']>;
   name: Scalars['String'];
   onboarded: Scalars['Boolean'];
@@ -1388,7 +1444,6 @@ export type ResolversTypes = {
   AppUpdates: ResolverTypeWrapper<AppUpdates>;
   ApplicatorConfig: ResolverTypeWrapper<ApplicatorConfig>;
   CommandSettings: ResolverTypeWrapper<CommandSettings>;
-  CompiledInstruction: ResolverTypeWrapper<CompiledInstruction>;
   ConnectedPort: ResolverTypeWrapper<ConnectedPort>;
   ConnectionSettings: ResolverTypeWrapper<ConnectionSettings>;
   ControlledMachine: ResolverTypeWrapper<ControlledMachine>;
@@ -1405,6 +1460,7 @@ export type ResolversTypes = {
   MachineCommandSettings: ResolverTypeWrapper<MachineCommandSettings>;
   MachineConfiguration: ResolverTypeWrapper<MachineConfiguration>;
   MachineDetectedFirmware: ResolverTypeWrapper<MachineDetectedFirmware>;
+  MachineExecutionResult: ResolverTypeWrapper<MachineExecutionResult>;
   MachineFeature: ResolverTypeWrapper<MachineFeature>;
   MachineFeatureSettings: ResolverTypeWrapper<MachineFeatureSettings>;
   MachineFirmware: ResolverTypeWrapper<MachineFirmware>;
@@ -1461,6 +1517,7 @@ export type ResolversTypes = {
   MachineCategory: MachineCategory;
   MachineControllerType: MachineControllerType;
   MachineLogLevel: MachineLogLevel;
+  MachineLogSource: MachineLogSource;
   MachineMotionType: MachineMotionType;
   MachinePartType: MachinePartType;
   MachinePinType: MachinePinType;
@@ -1475,13 +1532,12 @@ export type ResolversTypes = {
   SortEnumType: SortEnumType;
   SpinDirection: SpinDirection;
   StopBits: StopBits;
+  SyntaxType: SyntaxType;
   UnitType: UnitType;
   WorkspaceState: WorkspaceState;
   BooleanOperationFilterInput: BooleanOperationFilterInput;
   ComparableDateTimeOperationFilterInput: ComparableDateTimeOperationFilterInput;
   ComparableInt32OperationFilterInput: ComparableInt32OperationFilterInput;
-  CompiledInstructionFilterInput: CompiledInstructionFilterInput;
-  CompiledInstructionSortInput: CompiledInstructionSortInput;
   ConnectionSettingsInput: ConnectionSettingsInput;
   FirmwareRequirementInput: FirmwareRequirementInput;
   ListComparableDateTimeOperationFilterInput: ListComparableDateTimeOperationFilterInput;
@@ -1496,6 +1552,7 @@ export type ResolversTypes = {
   MachineLogEntryFilterInput: MachineLogEntryFilterInput;
   MachineLogEntrySortInput: MachineLogEntrySortInput;
   MachineLogLevelOperationFilterInput: MachineLogLevelOperationFilterInput;
+  MachineLogSourceOperationFilterInput: MachineLogSourceOperationFilterInput;
   MachinePartSettingsInput: MachinePartSettingsInput;
   MachineSettingSettingsInput: MachineSettingSettingsInput;
   MachineSpecSettingsInput: MachineSpecSettingsInput;
@@ -1504,6 +1561,7 @@ export type ResolversTypes = {
   SerialPortOptionsInput: SerialPortOptionsInput;
   StringOperationFilterInput: StringOperationFilterInput;
   SyntaxChunkFilterInput: SyntaxChunkFilterInput;
+  SyntaxTypeOperationFilterInput: SyntaxTypeOperationFilterInput;
   WorkspaceSettingsInput: WorkspaceSettingsInput;
   Decimal: ResolverTypeWrapper<Scalars['Decimal']>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
@@ -1524,7 +1582,6 @@ export type ResolversParentTypes = {
   AppUpdates: AppUpdates;
   ApplicatorConfig: ApplicatorConfig;
   CommandSettings: CommandSettings;
-  CompiledInstruction: CompiledInstruction;
   ConnectedPort: ConnectedPort;
   ConnectionSettings: ConnectionSettings;
   ControlledMachine: ControlledMachine;
@@ -1541,6 +1598,7 @@ export type ResolversParentTypes = {
   MachineCommandSettings: MachineCommandSettings;
   MachineConfiguration: MachineConfiguration;
   MachineDetectedFirmware: MachineDetectedFirmware;
+  MachineExecutionResult: MachineExecutionResult;
   MachineFeature: MachineFeature;
   MachineFeatureSettings: MachineFeatureSettings;
   MachineFirmware: MachineFirmware;
@@ -1590,8 +1648,6 @@ export type ResolversParentTypes = {
   BooleanOperationFilterInput: BooleanOperationFilterInput;
   ComparableDateTimeOperationFilterInput: ComparableDateTimeOperationFilterInput;
   ComparableInt32OperationFilterInput: ComparableInt32OperationFilterInput;
-  CompiledInstructionFilterInput: CompiledInstructionFilterInput;
-  CompiledInstructionSortInput: CompiledInstructionSortInput;
   ConnectionSettingsInput: ConnectionSettingsInput;
   FirmwareRequirementInput: FirmwareRequirementInput;
   ListComparableDateTimeOperationFilterInput: ListComparableDateTimeOperationFilterInput;
@@ -1606,6 +1662,7 @@ export type ResolversParentTypes = {
   MachineLogEntryFilterInput: MachineLogEntryFilterInput;
   MachineLogEntrySortInput: MachineLogEntrySortInput;
   MachineLogLevelOperationFilterInput: MachineLogLevelOperationFilterInput;
+  MachineLogSourceOperationFilterInput: MachineLogSourceOperationFilterInput;
   MachinePartSettingsInput: MachinePartSettingsInput;
   MachineSettingSettingsInput: MachineSettingSettingsInput;
   MachineSpecSettingsInput: MachineSpecSettingsInput;
@@ -1614,6 +1671,7 @@ export type ResolversParentTypes = {
   SerialPortOptionsInput: SerialPortOptionsInput;
   StringOperationFilterInput: StringOperationFilterInput;
   SyntaxChunkFilterInput: SyntaxChunkFilterInput;
+  SyntaxTypeOperationFilterInput: SyntaxTypeOperationFilterInput;
   WorkspaceSettingsInput: WorkspaceSettingsInput;
   Decimal: Scalars['Decimal'];
   DateTime: Scalars['DateTime'];
@@ -1700,16 +1758,6 @@ export type CommandSettingsResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type CompiledInstructionResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['CompiledInstruction'] = ResolversParentTypes['CompiledInstruction']
-> = {
-  chunks: Resolver<Array<ResolversTypes['SyntaxChunk']>, ParentType, ContextType>;
-  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  source: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type ConnectedPortResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['ConnectedPort'] = ResolversParentTypes['ConnectedPort']
@@ -1758,30 +1806,30 @@ export type ControllerResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Controller'] = ResolversParentTypes['Controller']
 > = {
-  checkCode: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  configuration: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  checkCode: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
+  configuration: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
   controllerType: Resolver<ResolversTypes['MachineControllerType'], ParentType, ContextType>;
   createdAt: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  firmware: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  help: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  homing: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  firmware: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
+  help: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
+  homing: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   move: Resolver<
-    ResolversTypes['ControlledMachine'],
+    ResolversTypes['MachineExecutionResult'],
     ParentType,
     ContextType,
     RequireFields<ControllerMoveArgs, 'moveCommand'>
   >;
-  parameters: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  pause: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  play: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  reset: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  settings: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  startup: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  status: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
-  unlock: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  parameters: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
+  pause: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
+  play: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
+  reset: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
+  settings: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
+  startup: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
+  status: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
+  unlock: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
   writeCommand: Resolver<
-    ResolversTypes['ControlledMachine'],
+    ResolversTypes['MachineExecutionResult'],
     ParentType,
     ContextType,
     RequireFields<ControllerWriteCommandArgs, 'commandCode' | 'sourceName'>
@@ -1937,6 +1985,15 @@ export type MachineDetectedFirmwareResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type MachineExecutionResultResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MachineExecutionResult'] = ResolversParentTypes['MachineExecutionResult']
+> = {
+  logs: Resolver<Array<ResolversTypes['MachineLogEntry']>, ParentType, ContextType>;
+  machine: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type MachineFeatureResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['MachineFeature'] = ResolversParentTypes['MachineFeature']
@@ -2005,12 +2062,14 @@ export type MachineLogEntryResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['MachineLogEntry'] = ResolversParentTypes['MachineLogEntry']
 > = {
+  canMergeWith: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  code: Resolver<Array<ResolversTypes['SyntaxChunk']>, ParentType, ContextType>;
   count: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   error: Resolver<Maybe<ResolversTypes['MachineAlert']>, ParentType, ContextType>;
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  instruction: Resolver<Maybe<ResolversTypes['CompiledInstruction']>, ParentType, ContextType>;
   logLevel: Resolver<ResolversTypes['MachineLogLevel'], ParentType, ContextType>;
   message: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  source: Resolver<ResolversTypes['MachineLogSource'], ParentType, ContextType>;
   timestamp: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   timestamps: Resolver<Array<ResolversTypes['DateTime']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -2218,9 +2277,11 @@ export type MachineSettingResolvers<
   ParentType extends ResolversParentTypes['MachineSetting'] = ResolversParentTypes['MachineSetting']
 > = {
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  isSameSetting: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
   title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  toLogEntry: Resolver<ResolversTypes['MachineLogEntry'], ParentType, ContextType>;
   units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
   value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -2555,6 +2616,7 @@ export type SyntaxChunkResolvers<
   comments: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
   isCode: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   isValid: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  type: Resolver<ResolversTypes['SyntaxType'], ParentType, ContextType>;
   value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -2611,6 +2673,7 @@ export type WorkspaceSettingsResolvers<
   features: Resolver<Array<ResolversTypes['MachineFeatureSettings']>, ParentType, ContextType>;
   icon: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  machineCategory: Resolver<ResolversTypes['MachineCategory'], ParentType, ContextType>;
   machineProfileId: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   onboarded: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
@@ -2639,7 +2702,6 @@ export type Resolvers<ContextType = any> = {
   AppUpdates: AppUpdatesResolvers<ContextType>;
   ApplicatorConfig: ApplicatorConfigResolvers<ContextType>;
   CommandSettings: CommandSettingsResolvers<ContextType>;
-  CompiledInstruction: CompiledInstructionResolvers<ContextType>;
   ConnectedPort: ConnectedPortResolvers<ContextType>;
   ConnectionSettings: ConnectionSettingsResolvers<ContextType>;
   ControlledMachine: ControlledMachineResolvers<ContextType>;
@@ -2656,6 +2718,7 @@ export type Resolvers<ContextType = any> = {
   MachineCommandSettings: MachineCommandSettingsResolvers<ContextType>;
   MachineConfiguration: MachineConfigurationResolvers<ContextType>;
   MachineDetectedFirmware: MachineDetectedFirmwareResolvers<ContextType>;
+  MachineExecutionResult: MachineExecutionResultResolvers<ContextType>;
   MachineFeature: MachineFeatureResolvers<ContextType>;
   MachineFeatureSettings: MachineFeatureSettingsResolvers<ContextType>;
   MachineFirmware: MachineFirmwareResolvers<ContextType>;
@@ -2713,6 +2776,13 @@ export type Resolvers<ContextType = any> = {
  */
 export type IResolvers<ContextType = any> = Resolvers<ContextType>;
 
+export type SyntaxChunkFragment = { __typename?: 'SyntaxChunk' } & Pick<SyntaxChunk, 'value' | 'comment' | 'type'>;
+
+export type MachineExecutionResultFragment = { __typename?: 'MachineExecutionResult' } & {
+  logs: Array<{ __typename?: 'MachineLogEntry' } & MachineLogEntryFragment>;
+  machine: { __typename?: 'ControlledMachine' } & ControlledMachineFragment;
+};
+
 export type CommandMachineMutationVariables = Exact<{
   workspaceId: Scalars['String'];
   code: Scalars['String'];
@@ -2721,7 +2791,7 @@ export type CommandMachineMutationVariables = Exact<{
 
 export type CommandMachineMutation = { __typename?: 'Mutation' } & {
   controller: { __typename?: 'Controller' } & Pick<Controller, 'id'> & {
-      machine: { __typename?: 'ControlledMachine' } & ControlledMachineFragment;
+      result: { __typename?: 'MachineExecutionResult' } & MachineExecutionResultFragment;
     };
 };
 
@@ -2731,7 +2801,7 @@ export type UnlockMachineMutationVariables = Exact<{
 
 export type UnlockMachineMutation = { __typename?: 'Mutation' } & {
   controller: { __typename?: 'Controller' } & Pick<Controller, 'id'> & {
-      machine: { __typename?: 'ControlledMachine' } & ControlledMachineFragment;
+      result: { __typename?: 'MachineExecutionResult' } & MachineExecutionResultFragment;
     };
 };
 
@@ -2741,7 +2811,7 @@ export type ResetMachineMutationVariables = Exact<{
 
 export type ResetMachineMutation = { __typename?: 'Mutation' } & {
   controller: { __typename?: 'Controller' } & Pick<Controller, 'id'> & {
-      machine: { __typename?: 'ControlledMachine' } & ControlledMachineFragment;
+      result: { __typename?: 'MachineExecutionResult' } & MachineExecutionResultFragment;
     };
 };
 
@@ -2752,7 +2822,7 @@ export type MoveMachineMutationVariables = Exact<{
 
 export type MoveMachineMutation = { __typename?: 'Mutation' } & {
   controller: { __typename?: 'Controller' } & Pick<Controller, 'id'> & {
-      machine: { __typename?: 'ControlledMachine' } & ControlledMachineFragment;
+      result: { __typename?: 'MachineExecutionResult' } & MachineExecutionResultFragment;
     };
 };
 
@@ -2788,8 +2858,7 @@ export type ControlledMachineFragment = { __typename?: 'ControlledMachine' } & P
     configuration: { __typename?: 'MachineConfiguration' } & MachineConfigFragment;
     status: { __typename?: 'MachineStatus' } & MachineStatusFragment;
     settings: Array<{ __typename?: 'MachineSetting' } & MachineSettingFragment>;
-    logs: Maybe<{ __typename?: 'MachineLogEntryConnection' } & MachineLogEntryConnectionFragment>;
-  };
+  } & MachineLogsFragment;
 
 export type DetectedFirmwareFragment = { __typename?: 'MachineDetectedFirmware' } & Pick<
   MachineDetectedFirmware,
@@ -2906,29 +2975,24 @@ export type MachineLogEntryConnectionFragment = { __typename?: 'MachineLogEntryC
 
 export type PageInfoFragment = { __typename?: 'PageInfo' } & Pick<PageInfo, 'endCursor' | 'hasNextPage'>;
 
-export type SyntaxChunkFragment = { __typename?: 'SyntaxChunk' } & Pick<SyntaxChunk, 'value' | 'comment'>;
-
-export type CompiledInstructionFragment = { __typename?: 'CompiledInstruction' } & Pick<
-  CompiledInstruction,
-  'code' | 'source'
-> & { chunks: Array<{ __typename?: 'SyntaxChunk' } & SyntaxChunkFragment> };
-
 export type MachineLogEntryFragment = { __typename?: 'MachineLogEntry' } & Pick<
   MachineLogEntry,
-  'id' | 'timestamp' | 'message' | 'logLevel'
+  'id' | 'timestamp' | 'count' | 'message' | 'logLevel' | 'source'
 > & {
     error: Maybe<{ __typename?: 'MachineAlert' } & MachineAlertFragment>;
-    instruction: Maybe<{ __typename?: 'CompiledInstruction' } & CompiledInstructionFragment>;
+    code: Array<{ __typename?: 'SyntaxChunk' } & SyntaxChunkFragment>;
   };
+
+export type MachineLogsFragment = { __typename?: 'ControlledMachine' } & {
+  logs: Maybe<{ __typename?: 'MachineLogEntryConnection' } & MachineLogEntryConnectionFragment>;
+};
 
 export type MachineLogsSubscriptionVariables = Exact<{
   portName: Scalars['String'];
 }>;
 
 export type MachineLogsSubscription = { __typename?: 'Subscription' } & {
-  machine: { __typename?: 'ControlledMachine' } & Pick<ControlledMachine, 'topicId'> & {
-      logs: Maybe<{ __typename?: 'MachineLogEntryConnection' } & MachineLogEntryConnectionFragment>;
-    };
+  machine: { __typename?: 'ControlledMachine' } & Pick<ControlledMachine, 'topicId'> & MachineLogsFragment;
 };
 
 export type MachinePartPropsFragment = { __typename?: 'MachinePart' } & Pick<
@@ -3214,6 +3278,7 @@ export type WorkspacePropsFragment = { __typename?: 'WorkspaceSettings' } & Pick
   WorkspaceSettings,
   | 'id'
   | 'machineProfileId'
+  | 'machineCategory'
   | 'name'
   | 'onboarded'
   | 'path'
@@ -3306,6 +3371,282 @@ export type ChangeWorkspacePortMutation = { __typename?: 'Mutation' } & {
 
 export type AlertErrorFragment = { __typename?: 'AlertError' } & Pick<AlertError, 'name' | 'message'>;
 
+export const MachineAlertFragmentDoc = gql`
+  fragment MachineAlert on MachineAlert {
+    code
+    name
+    message
+  }
+`;
+export const SyntaxChunkFragmentDoc = gql`
+  fragment SyntaxChunk on SyntaxChunk {
+    value
+    comment
+    type
+  }
+`;
+export const MachineLogEntryFragmentDoc = gql`
+  fragment MachineLogEntry on MachineLogEntry {
+    id
+    timestamp
+    count
+    message
+    logLevel
+    source
+    error {
+      ...MachineAlert
+    }
+    code {
+      ...SyntaxChunk
+    }
+  }
+  ${MachineAlertFragmentDoc}
+  ${SyntaxChunkFragmentDoc}
+`;
+export const FirmwareRequirementFragmentDoc = gql`
+  fragment FirmwareRequirement on IMachineFirmwareRequirement {
+    controllerType
+    name
+    edition
+    requiredVersion
+    suggestedVersion
+    helpUrl
+    downloadUrl
+  }
+`;
+export const DetectedFirmwareFragmentDoc = gql`
+  fragment DetectedFirmware on MachineDetectedFirmware {
+    friendlyName
+    isValid
+    name
+    value
+    edition
+    protocol
+    welcomeMessage
+  }
+`;
+export const MachineModalsFragmentDoc = gql`
+  fragment MachineModals on MachineModals {
+    motion {
+      code
+      value
+    }
+    plane {
+      code
+      value
+    }
+    distance {
+      code
+      value
+    }
+    arcDistance {
+      code
+      value
+    }
+    feedRate {
+      code
+      value
+    }
+    units {
+      code
+      value
+    }
+    programState {
+      code
+      value
+    }
+    spindleDirection {
+      code
+      value
+    }
+    workCoordinateSystem
+  }
+`;
+export const MachinePositionFragmentDoc = gql`
+  fragment MachinePosition on MachinePosition {
+    x
+    y
+    z
+    a
+    b
+    c
+  }
+`;
+export const ApplicatorConfigFragmentDoc = gql`
+  fragment ApplicatorConfig on ApplicatorConfig {
+    toolId
+    toolLengthOffset {
+      ...MachinePosition
+    }
+    probePosition {
+      ...MachinePosition
+    }
+    spinSpeed
+    feedRate
+    isFloodCoolantEnabled
+    isMistCoolantEnabled
+  }
+  ${MachinePositionFragmentDoc}
+`;
+export const MachineConfigFragmentDoc = gql`
+  fragment MachineConfig on MachineConfiguration {
+    firmware {
+      ...DetectedFirmware
+    }
+    modals {
+      ...MachineModals
+    }
+    applicator {
+      ...ApplicatorConfig
+    }
+    workCoordinates {
+      ...MachinePosition
+    }
+    workOffset {
+      ...MachinePosition
+    }
+    referencePosition {
+      ...MachinePosition
+    }
+  }
+  ${DetectedFirmwareFragmentDoc}
+  ${MachineModalsFragmentDoc}
+  ${ApplicatorConfigFragmentDoc}
+  ${MachinePositionFragmentDoc}
+`;
+export const MachineBufferFragmentDoc = gql`
+  fragment MachineBuffer on MachineBuffer {
+    lineNumber
+    availableReceive
+    availableSend
+  }
+`;
+export const MachineApplicatorStateFragmentDoc = gql`
+  fragment MachineApplicatorState on MachineApplicatorState {
+    isOn
+    spinDirection
+    spinSpeed
+    feedRate
+    isFloodCoolantEnabled
+    isMistCoolantEnabled
+  }
+`;
+export const MachineOverridesFragmentDoc = gql`
+  fragment MachineOverrides on MachineOverrides {
+    feed
+    rapids
+    spindle
+  }
+`;
+export const MachineStatusFragmentDoc = gql`
+  fragment MachineStatus on MachineStatus {
+    activityState
+    machinePosition {
+      ...MachinePosition
+    }
+    workPosition {
+      ...MachinePosition
+    }
+    workCoordinateOffset {
+      ...MachinePosition
+    }
+    alarm {
+      ...MachineAlert
+    }
+    buffer {
+      ...MachineBuffer
+    }
+    activePins
+    applicator {
+      ...MachineApplicatorState
+    }
+    overrides {
+      ...MachineOverrides
+    }
+  }
+  ${MachinePositionFragmentDoc}
+  ${MachineAlertFragmentDoc}
+  ${MachineBufferFragmentDoc}
+  ${MachineApplicatorStateFragmentDoc}
+  ${MachineOverridesFragmentDoc}
+`;
+export const MachineSettingFragmentDoc = gql`
+  fragment MachineSetting on MachineSetting {
+    id
+    title
+    settingType
+    key
+    value
+  }
+`;
+export const PageInfoFragmentDoc = gql`
+  fragment PageInfo on PageInfo {
+    endCursor
+    hasNextPage
+  }
+`;
+export const MachineLogEntryConnectionFragmentDoc = gql`
+  fragment MachineLogEntryConnection on MachineLogEntryConnection {
+    edges {
+      cursor
+      node {
+        ...MachineLogEntry
+      }
+    }
+    nodes {
+      ...MachineLogEntry
+    }
+    pageInfo {
+      ...PageInfo
+    }
+  }
+  ${MachineLogEntryFragmentDoc}
+  ${PageInfoFragmentDoc}
+`;
+export const MachineLogsFragmentDoc = gql`
+  fragment MachineLogs on ControlledMachine {
+    logs(first: 50, order: { timestamp: DESC }) {
+      ...MachineLogEntryConnection
+    }
+  }
+  ${MachineLogEntryConnectionFragmentDoc}
+`;
+export const ControlledMachineFragmentDoc = gql`
+  fragment ControlledMachine on ControlledMachine {
+    topicId
+    machineProfileId
+    firmwareRequirement {
+      ...FirmwareRequirement
+    }
+    configuration {
+      ...MachineConfig
+    }
+    status {
+      ...MachineStatus
+    }
+    settings {
+      ...MachineSetting
+    }
+    ...MachineLogs
+  }
+  ${FirmwareRequirementFragmentDoc}
+  ${MachineConfigFragmentDoc}
+  ${MachineStatusFragmentDoc}
+  ${MachineSettingFragmentDoc}
+  ${MachineLogsFragmentDoc}
+`;
+export const MachineExecutionResultFragmentDoc = gql`
+  fragment MachineExecutionResult on MachineExecutionResult {
+    logs {
+      ...MachineLogEntry
+    }
+    machine {
+      ...ControlledMachine
+    }
+  }
+  ${MachineLogEntryFragmentDoc}
+  ${ControlledMachineFragmentDoc}
+`;
 export const OpenControllerUserMinFragmentDoc = gql`
   fragment OpenControllerUserMin on OpenControllerUser {
     username
@@ -3484,271 +3825,6 @@ export const PortOptionsFragmentDoc = gql`
     writeTimeout
   }
 `;
-export const FirmwareRequirementFragmentDoc = gql`
-  fragment FirmwareRequirement on IMachineFirmwareRequirement {
-    controllerType
-    name
-    edition
-    requiredVersion
-    suggestedVersion
-    helpUrl
-    downloadUrl
-  }
-`;
-export const DetectedFirmwareFragmentDoc = gql`
-  fragment DetectedFirmware on MachineDetectedFirmware {
-    friendlyName
-    isValid
-    name
-    value
-    edition
-    protocol
-    welcomeMessage
-  }
-`;
-export const MachineModalsFragmentDoc = gql`
-  fragment MachineModals on MachineModals {
-    motion {
-      code
-      value
-    }
-    plane {
-      code
-      value
-    }
-    distance {
-      code
-      value
-    }
-    arcDistance {
-      code
-      value
-    }
-    feedRate {
-      code
-      value
-    }
-    units {
-      code
-      value
-    }
-    programState {
-      code
-      value
-    }
-    spindleDirection {
-      code
-      value
-    }
-    workCoordinateSystem
-  }
-`;
-export const MachinePositionFragmentDoc = gql`
-  fragment MachinePosition on MachinePosition {
-    x
-    y
-    z
-    a
-    b
-    c
-  }
-`;
-export const ApplicatorConfigFragmentDoc = gql`
-  fragment ApplicatorConfig on ApplicatorConfig {
-    toolId
-    toolLengthOffset {
-      ...MachinePosition
-    }
-    probePosition {
-      ...MachinePosition
-    }
-    spinSpeed
-    feedRate
-    isFloodCoolantEnabled
-    isMistCoolantEnabled
-  }
-  ${MachinePositionFragmentDoc}
-`;
-export const MachineConfigFragmentDoc = gql`
-  fragment MachineConfig on MachineConfiguration {
-    firmware {
-      ...DetectedFirmware
-    }
-    modals {
-      ...MachineModals
-    }
-    applicator {
-      ...ApplicatorConfig
-    }
-    workCoordinates {
-      ...MachinePosition
-    }
-    workOffset {
-      ...MachinePosition
-    }
-    referencePosition {
-      ...MachinePosition
-    }
-  }
-  ${DetectedFirmwareFragmentDoc}
-  ${MachineModalsFragmentDoc}
-  ${ApplicatorConfigFragmentDoc}
-  ${MachinePositionFragmentDoc}
-`;
-export const MachineAlertFragmentDoc = gql`
-  fragment MachineAlert on MachineAlert {
-    code
-    name
-    message
-  }
-`;
-export const MachineBufferFragmentDoc = gql`
-  fragment MachineBuffer on MachineBuffer {
-    lineNumber
-    availableReceive
-    availableSend
-  }
-`;
-export const MachineApplicatorStateFragmentDoc = gql`
-  fragment MachineApplicatorState on MachineApplicatorState {
-    isOn
-    spinDirection
-    spinSpeed
-    feedRate
-    isFloodCoolantEnabled
-    isMistCoolantEnabled
-  }
-`;
-export const MachineOverridesFragmentDoc = gql`
-  fragment MachineOverrides on MachineOverrides {
-    feed
-    rapids
-    spindle
-  }
-`;
-export const MachineStatusFragmentDoc = gql`
-  fragment MachineStatus on MachineStatus {
-    activityState
-    machinePosition {
-      ...MachinePosition
-    }
-    workPosition {
-      ...MachinePosition
-    }
-    workCoordinateOffset {
-      ...MachinePosition
-    }
-    alarm {
-      ...MachineAlert
-    }
-    buffer {
-      ...MachineBuffer
-    }
-    activePins
-    applicator {
-      ...MachineApplicatorState
-    }
-    overrides {
-      ...MachineOverrides
-    }
-  }
-  ${MachinePositionFragmentDoc}
-  ${MachineAlertFragmentDoc}
-  ${MachineBufferFragmentDoc}
-  ${MachineApplicatorStateFragmentDoc}
-  ${MachineOverridesFragmentDoc}
-`;
-export const MachineSettingFragmentDoc = gql`
-  fragment MachineSetting on MachineSetting {
-    id
-    title
-    settingType
-    key
-    value
-  }
-`;
-export const SyntaxChunkFragmentDoc = gql`
-  fragment SyntaxChunk on SyntaxChunk {
-    value
-    comment
-  }
-`;
-export const CompiledInstructionFragmentDoc = gql`
-  fragment CompiledInstruction on CompiledInstruction {
-    code
-    source
-    chunks {
-      ...SyntaxChunk
-    }
-  }
-  ${SyntaxChunkFragmentDoc}
-`;
-export const MachineLogEntryFragmentDoc = gql`
-  fragment MachineLogEntry on MachineLogEntry {
-    id
-    timestamp
-    message
-    logLevel
-    error {
-      ...MachineAlert
-    }
-    instruction {
-      ...CompiledInstruction
-    }
-  }
-  ${MachineAlertFragmentDoc}
-  ${CompiledInstructionFragmentDoc}
-`;
-export const PageInfoFragmentDoc = gql`
-  fragment PageInfo on PageInfo {
-    endCursor
-    hasNextPage
-  }
-`;
-export const MachineLogEntryConnectionFragmentDoc = gql`
-  fragment MachineLogEntryConnection on MachineLogEntryConnection {
-    edges {
-      cursor
-      node {
-        ...MachineLogEntry
-      }
-    }
-    nodes {
-      ...MachineLogEntry
-    }
-    pageInfo {
-      ...PageInfo
-    }
-  }
-  ${MachineLogEntryFragmentDoc}
-  ${PageInfoFragmentDoc}
-`;
-export const ControlledMachineFragmentDoc = gql`
-  fragment ControlledMachine on ControlledMachine {
-    topicId
-    machineProfileId
-    firmwareRequirement {
-      ...FirmwareRequirement
-    }
-    configuration {
-      ...MachineConfig
-    }
-    status {
-      ...MachineStatus
-    }
-    settings {
-      ...MachineSetting
-    }
-    logs {
-      ...MachineLogEntryConnection
-    }
-  }
-  ${FirmwareRequirementFragmentDoc}
-  ${MachineConfigFragmentDoc}
-  ${MachineStatusFragmentDoc}
-  ${MachineSettingFragmentDoc}
-  ${MachineLogEntryConnectionFragmentDoc}
-`;
 export const PortIoStatusFragmentDoc = gql`
   fragment PortIOStatus on PortStatus {
     bytesToRead
@@ -3874,6 +3950,7 @@ export const WorkspacePropsFragmentDoc = gql`
   fragment WorkspaceProps on WorkspaceSettings {
     id
     machineProfileId
+    machineCategory
     name
     onboarded
     path
@@ -4048,12 +4125,12 @@ export const CommandMachineDocument = gql`
   mutation CommandMachine($workspaceId: String!, $code: String!, $source: String!) {
     controller: controlMachine(workspaceId: $workspaceId) {
       id
-      machine: writeCommand(commandCode: $code, sourceName: $source) {
-        ...ControlledMachine
+      result: writeCommand(commandCode: $code, sourceName: $source) {
+        ...MachineExecutionResult
       }
     }
   }
-  ${ControlledMachineFragmentDoc}
+  ${MachineExecutionResultFragmentDoc}
 `;
 export type CommandMachineMutationFn = Apollo.MutationFunction<CommandMachineMutation, CommandMachineMutationVariables>;
 
@@ -4094,12 +4171,12 @@ export const UnlockMachineDocument = gql`
   mutation UnlockMachine($workspaceId: String!) {
     controller: controlMachine(workspaceId: $workspaceId) {
       id
-      machine: unlock {
-        ...ControlledMachine
+      result: unlock {
+        ...MachineExecutionResult
       }
     }
   }
-  ${ControlledMachineFragmentDoc}
+  ${MachineExecutionResultFragmentDoc}
 `;
 export type UnlockMachineMutationFn = Apollo.MutationFunction<UnlockMachineMutation, UnlockMachineMutationVariables>;
 
@@ -4135,12 +4212,12 @@ export const ResetMachineDocument = gql`
   mutation ResetMachine($workspaceId: String!) {
     controller: controlMachine(workspaceId: $workspaceId) {
       id
-      machine: reset {
-        ...ControlledMachine
+      result: reset {
+        ...MachineExecutionResult
       }
     }
   }
-  ${ControlledMachineFragmentDoc}
+  ${MachineExecutionResultFragmentDoc}
 `;
 export type ResetMachineMutationFn = Apollo.MutationFunction<ResetMachineMutation, ResetMachineMutationVariables>;
 
@@ -4176,12 +4253,12 @@ export const MoveMachineDocument = gql`
   mutation MoveMachine($workspaceId: String!, $moveCommand: MoveCommandInput!) {
     controller: controlMachine(workspaceId: $workspaceId) {
       id
-      machine: move(moveCommand: $moveCommand) {
-        ...ControlledMachine
+      result: move(moveCommand: $moveCommand) {
+        ...MachineExecutionResult
       }
     }
   }
-  ${ControlledMachineFragmentDoc}
+  ${MachineExecutionResultFragmentDoc}
 `;
 export type MoveMachineMutationFn = Apollo.MutationFunction<MoveMachineMutation, MoveMachineMutationVariables>;
 
@@ -4294,12 +4371,10 @@ export const MachineLogsDocument = gql`
   subscription MachineLogs($portName: String!) {
     machine: onMachineLog(portName: $portName) {
       topicId
-      logs {
-        ...MachineLogEntryConnection
-      }
+      ...MachineLogs
     }
   }
-  ${MachineLogEntryConnectionFragmentDoc}
+  ${MachineLogsFragmentDoc}
 `;
 
 /**

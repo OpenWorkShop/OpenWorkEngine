@@ -732,9 +732,11 @@
             <e p="IControllerInstruction.cs" t="Include" />
           </e>
           <e p="Messages" t="Include">
+            <e p="MachineExecutionResult.cs" t="Include" />
             <e p="MoveCommand.cs" t="Include" />
           </e>
           <e p="Models" t="Include">
+            <e p="CompiledInstruction.cs" t="Include" />
             <e p="ControllerScript.cs" t="Include" />
           </e>
           <e p="Services" t="Include">
@@ -761,6 +763,7 @@
             <e p="GrblOptionParser.cs" t="Include" />
             <e p="GrblParameterParser.cs" t="Include" />
             <e p="GrblResponseParser.cs" t="Include" />
+            <e p="GrblSettings.cs" t="Include" />
             <e p="GrblSettingsParser.cs" t="Include" />
             <e p="GrblStatusParser.cs" t="Include" />
             <e p="GrblSyntax.cs" t="Include" />
@@ -771,6 +774,7 @@
               <e p="MaslowSyntax.cs" t="Include" />
             </e>
           </e>
+          <e p="SettingDefinition.cs" t="Include" />
         </e>
         <e p="Identity" t="Include">
           <e p="Graph" t="Include">

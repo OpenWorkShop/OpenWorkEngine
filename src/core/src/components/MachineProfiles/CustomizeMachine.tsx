@@ -50,6 +50,7 @@ const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props
           machineProfileId: loadedMachineProfile.id,
           brand: loadedMachineProfile.brand ?? undefined,
           model: loadedMachineProfile.model,
+          category: loadedMachineProfile.machineCategory,
           submit: false,
         },
         name: loadedMachineProfile.name,

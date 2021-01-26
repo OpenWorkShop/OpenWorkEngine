@@ -19,39 +19,30 @@ fragment PageInfo on PageInfo {
     hasNextPage
 }
 
-fragment SyntaxChunk on SyntaxChunk {
-    value
-    comment
-    # comments, isCode, isValid
-}
-
-fragment CompiledInstruction on CompiledInstruction {
-    code
+fragment MachineLogEntry on MachineLogEntry {
+    id
+    timestamp
+    count
+    message
+    logLevel
     source
-    chunks {
+    error {
+        ...MachineAlert
+    }
+    code {
         ...SyntaxChunk
     }
 }
 
-fragment MachineLogEntry on MachineLogEntry {
-    id
-    timestamp
-#    count
-    message
-    logLevel
-    error {
-        ...MachineAlert
-    }
-    instruction {
-        ...CompiledInstruction
+fragment MachineLogs on ControlledMachine {
+    logs(first: 50, order: { timestamp: DESC }) {
+        ...MachineLogEntryConnection
     }
 }
 
 subscription MachineLogs($portName: String!) {
     machine: onMachineLog(portName: $portName) {
         topicId
-        logs {
-            ...MachineLogEntryConnection
-        }
+        ...MachineLogs
     }
 }

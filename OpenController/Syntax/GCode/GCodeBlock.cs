@@ -40,7 +40,7 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode {
 
     public static List<SyntaxChunk> ParseLine(string line) {
       List<SyntaxChunk> chunks = new();
-      SyntaxChunk curChunk = new();
+      SyntaxChunk curChunk = new() {Type = SyntaxType.Keyword};
       bool whitespace = false;
       for (int i = 0; i < line.Length; i++) {
         char c = line[i];

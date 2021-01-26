@@ -1,4 +1,5 @@
 import {
+  MachineCategory,
   MachineCommandPropsFragment, MachineControllerType,
   MachineFeaturePropsFragment,
   MachineFirmwarePropsFragment, MachineSettingType, MachineSpecType,
@@ -19,6 +20,7 @@ export type MachineAxes = { [key: string]: IAxisProps };
 // A wrapper interface that supports both sever machine
 export interface ICustomizedMachineProfile {
   machineProfileId?: string; // null if came from a custom creator
+  category: MachineCategory;
   brand?: string;
   model: string;
   submit: boolean;

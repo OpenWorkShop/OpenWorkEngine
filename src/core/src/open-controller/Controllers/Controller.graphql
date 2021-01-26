@@ -1,29 +1,46 @@
+fragment SyntaxChunk on SyntaxChunk {
+    value
+    comment
+    type
+    # comments, isCode, isValid
+}
+
+fragment MachineExecutionResult on MachineExecutionResult {
+    logs {
+        ...MachineLogEntry
+    }
+    machine {
+        ...ControlledMachine
+    }
+}
+
 
 # -- commands
+
 mutation CommandMachine($workspaceId: String!, $code: String!, $source: String!) {
     controller: controlMachine(workspaceId: $workspaceId) {
         id
-        machine: writeCommand(commandCode: $code, sourceName: $source) { ...ControlledMachine }
+        result: writeCommand(commandCode: $code, sourceName: $source) { ...MachineExecutionResult }
     }
 }
 
 mutation UnlockMachine($workspaceId: String!) {
     controller: controlMachine(workspaceId: $workspaceId) {
         id
-        machine: unlock { ...ControlledMachine }
+        result: unlock { ...MachineExecutionResult }
     }
 }
 
 mutation ResetMachine($workspaceId: String!) {
     controller: controlMachine(workspaceId: $workspaceId) {
         id
-        machine: reset { ...ControlledMachine }
+        result: reset { ...MachineExecutionResult }
     }
 }
 
 mutation MoveMachine($workspaceId: String!, $moveCommand: MoveCommandInput!) {
     controller: controlMachine(workspaceId: $workspaceId) {
         id
-        machine: move(moveCommand: $moveCommand) { ...ControlledMachine }
+        result: move(moveCommand: $moveCommand) { ...MachineExecutionResult }
     }
 }

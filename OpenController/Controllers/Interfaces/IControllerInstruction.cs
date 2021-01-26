@@ -7,23 +7,11 @@ using System.Text.RegularExpressions;
 using HotChocolate.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.Syntax;
 using Serilog;
 
 namespace OpenWorkEngine.OpenController.Controllers.Interfaces {
-  public sealed class CompiledInstruction {
-    public string Code { get; }
-
-    public string Source { get; }
-
-    public List<SyntaxChunk> Chunks { get; }
-
-    public CompiledInstruction(IControllerInstruction instruction, string code) {
-      Code = code;
-      Source = instruction.InstructionSource;
-      Chunks = instruction.CompileChunks(code);
-    }
-  }
 
   /// <summary>
   /// Encapsulates text to be written to the serial port.

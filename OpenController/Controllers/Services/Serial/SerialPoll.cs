@@ -35,7 +35,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services.Serial {
       LastParseAt = DateTime.MinValue;
     }
 
-    public async Task<MachineOutputLine> UpdateController(MachineOutputLine line) {
+    internal async Task<MachineOutputLine> UpdateController(MachineOutputLine line) {
       line = await Parser.UpdateMachine(line);
       if (line.WasParsed) {
         LastParseAt = DateTime.Now;

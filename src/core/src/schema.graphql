@@ -58,12 +58,6 @@ type CommandSettings {
     title: String!
 }
 
-type CompiledInstruction {
-    chunks: [SyntaxChunk!]!
-    code: String!
-    source: String!
-}
-
 type ConnectedPort {
     createdAt: DateTime!
     machine: ControlledMachine!
@@ -92,24 +86,24 @@ type ControlledMachine {
 }
 
 type Controller {
-    checkCode: ControlledMachine!
-    configuration: ControlledMachine!
+    checkCode: MachineExecutionResult!
+    configuration: MachineExecutionResult!
     controllerType: MachineControllerType!
     createdAt: DateTime!
-    firmware: ControlledMachine!
-    help: ControlledMachine!
-    homing: ControlledMachine!
+    firmware: MachineExecutionResult!
+    help: MachineExecutionResult!
+    homing: MachineExecutionResult!
     id: String!
-    move(moveCommand: MoveCommandInput!): ControlledMachine!
-    parameters: ControlledMachine!
-    pause: ControlledMachine!
-    play: ControlledMachine!
-    reset: ControlledMachine!
-    settings: ControlledMachine!
-    startup: ControlledMachine!
-    status: ControlledMachine!
-    unlock: ControlledMachine!
-    writeCommand(commandCode: String!, sourceName: String!): ControlledMachine!
+    move(moveCommand: MoveCommandInput!): MachineExecutionResult!
+    parameters: MachineExecutionResult!
+    pause: MachineExecutionResult!
+    play: MachineExecutionResult!
+    reset: MachineExecutionResult!
+    settings: MachineExecutionResult!
+    startup: MachineExecutionResult!
+    status: MachineExecutionResult!
+    unlock: MachineExecutionResult!
+    writeCommand(commandCode: String!, sourceName: String!): MachineExecutionResult!
 }
 
 type EventSettings {
@@ -212,6 +206,11 @@ type MachineDetectedFirmware {
     welcomeMessage: String
 }
 
+type MachineExecutionResult {
+    logs: [MachineLogEntry!]!
+    machine: ControlledMachine!
+}
+
 type MachineFeature {
     description: String
     disabled: Boolean!
@@ -261,12 +260,14 @@ type MachineFirmwareSettings implements IMachineFirmwareRequirement {
 }
 
 type MachineLogEntry {
+    canMergeWith: Boolean!
+    code: [SyntaxChunk!]!
     count: Int!
     error: MachineAlert
     id: String!
-    instruction: CompiledInstruction
     logLevel: MachineLogLevel!
     message: String!
+    source: MachineLogSource!
     timestamp: DateTime!
     timestamps: [DateTime!]!
 }
@@ -409,9 +410,11 @@ type MachineProfile {
 
 type MachineSetting {
     id: String!
+    isSameSetting: Boolean!
     key: String!
     settingType: MachineSettingType!
     title: String
+    toLogEntry: MachineLogEntry!
     units: MachineSettingUnits!
     value: String!
 }
@@ -579,6 +582,7 @@ type SyntaxChunk {
     comments: [String!]!
     isCode: Boolean!
     isValid: Boolean!
+    type: SyntaxType!
     value: String!
 }
 
@@ -619,6 +623,7 @@ type WorkspaceSettings {
     features: [MachineFeatureSettings!]!
     icon: String
     id: String!
+    machineCategory: MachineCategory!
     machineProfileId: String
     name: String!
     onboarded: Boolean!
@@ -697,10 +702,16 @@ enum MachineControllerType {
 }
 
 enum MachineLogLevel {
+    CFG
     DBG
     ERR
     INF
     WRN
+}
+
+enum MachineLogSource {
+    SERIAL_READ
+    SERIAL_WRITE
 }
 
 enum MachineMotionType {
@@ -749,8 +760,42 @@ enum MachineProgramState {
 }
 
 enum MachineSettingType {
+    ACCELERATION_X
+    ACCELERATION_Y
+    ACCELERATION_Z
+    ARC_TOLERANCE
+    DIRECTION_PORT_INVERT
     GRBL
+    HARD_LIMITS
+    HOMING_CYCLE
+    HOMING_DEBOUNCE
+    HOMING_DIRECTION_INVERT
+    HOMING_FEED
+    HOMING_PULL_OFF
+    HOMING_SEEK
+    JUNCTION_DEVIATION
     KV
+    LASER_MODE
+    LIMIT_PINS_INVERT
+    MAX_SPINDLE_SPEED
+    MIN_SPINDLE_SPEED
+    PROBE_PIN_INVERT
+    RATE_MAX_X
+    RATE_MAX_Y
+    RATE_MAX_Z
+    REPORT_INCHES
+    SOFT_LIMITS
+    STATUS_REPORT
+    STEPS_X
+    STEPS_Y
+    STEPS_Z
+    STEP_ENABLE_INVERT
+    STEP_IDLE_DELAY
+    STEP_PORT_INVERT
+    STEP_PULSE
+    TRAVEL_MAX_X
+    TRAVEL_MAX_Y
+    TRAVEL_MAX_Z
 }
 
 enum MachineSettingUnits {
@@ -828,6 +873,13 @@ enum StopBits {
     TWO
 }
 
+enum SyntaxType {
+    KEYWORD
+    OPERATOR
+    UNKNOWN
+    VALUE
+}
+
 enum UnitType {
     IMPERIAL
     METRIC
@@ -875,19 +927,6 @@ input ComparableInt32OperationFilterInput {
     nin: [Int!]
     nlt: Int
     nlte: Int
-}
-
-input CompiledInstructionFilterInput {
-    and: [CompiledInstructionFilterInput!]
-    chunks: ListFilterInputTypeOfSyntaxChunkFilterInput
-    code: StringOperationFilterInput
-    or: [CompiledInstructionFilterInput!]
-    source: StringOperationFilterInput
-}
-
-input CompiledInstructionSortInput {
-    code: SortEnumType
-    source: SortEnumType
 }
 
 input ConnectionSettingsInput {
@@ -983,12 +1022,13 @@ input MachineFirmwareSettingsInput {
 
 input MachineLogEntryFilterInput {
     and: [MachineLogEntryFilterInput!]
+    code: ListFilterInputTypeOfSyntaxChunkFilterInput
     count: ComparableInt32OperationFilterInput
     error: MachineAlertFilterInput
-    instruction: CompiledInstructionFilterInput
     logLevel: MachineLogLevelOperationFilterInput
     message: StringOperationFilterInput
     or: [MachineLogEntryFilterInput!]
+    source: MachineLogSourceOperationFilterInput
     timestamp: ComparableDateTimeOperationFilterInput
     timestamps: ListComparableDateTimeOperationFilterInput
 }
@@ -997,9 +1037,9 @@ input MachineLogEntrySortInput {
     count: SortEnumType
     error: MachineAlertSortInput
     id: SortEnumType
-    instruction: CompiledInstructionSortInput
     logLevel: SortEnumType
     message: SortEnumType
+    source: SortEnumType
     timestamp: SortEnumType
 }
 
@@ -1008,6 +1048,13 @@ input MachineLogLevelOperationFilterInput {
     in: [MachineLogLevel!]
     neq: MachineLogLevel
     nin: [MachineLogLevel!]
+}
+
+input MachineLogSourceOperationFilterInput {
+    eq: MachineLogSource
+    in: [MachineLogSource!]
+    neq: MachineLogSource
+    nin: [MachineLogSource!]
 }
 
 input MachinePartSettingsInput {
@@ -1089,7 +1136,15 @@ input SyntaxChunkFilterInput {
     isCode: BooleanOperationFilterInput
     isValid: BooleanOperationFilterInput
     or: [SyntaxChunkFilterInput!]
+    type: SyntaxTypeOperationFilterInput
     value: StringOperationFilterInput
+}
+
+input SyntaxTypeOperationFilterInput {
+    eq: SyntaxType
+    in: [SyntaxType!]
+    neq: SyntaxType
+    nin: [SyntaxType!]
 }
 
 input WorkspaceSettingsInput {
@@ -1102,6 +1157,7 @@ input WorkspaceSettingsInput {
     features: [MachineFeatureSettingsInput!]!
     icon: String
     id: String!
+    machineCategory: MachineCategory!
     machineProfileId: String
     name: String!
     onboarded: Boolean!

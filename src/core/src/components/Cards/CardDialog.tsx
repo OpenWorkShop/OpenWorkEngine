@@ -2,24 +2,46 @@ import { Dialog, Toolbar, DialogTitle, DialogContent, DialogActions } from '@mat
 import * as React from 'react';
 import {IToolbarCardProps} from './ToolbarCard';
 import useStyles from './CardStyles';
+import {useLogger} from '../../hooks';
 
-type Props = IToolbarCardProps & {
-  open: boolean;
-  onClose: () => void;
-};
+export interface ICardDialogProps {
+  open?: boolean;
+  onClose?: () => void;
+  preventClose?: boolean;
+}
+
+type Props = IToolbarCardProps & ICardDialogProps;
 
 const CardDialog: React.FunctionComponent<Props> = (props) => {
-  const { open, onClose } = props;
+  const log = useLogger(CardDialog);
+  const { open, onClose, preventClose } = props;
+  const [ internalOpen, setInternalOpen ] = React.useState(Boolean(open));
   const classes = useStyles();
   const scroll = 'paper';
 
+  function handleClose() {
+    if (preventClose) {
+      log.warn('dialog may not be closed');
+      return;
+    }
+    setInternalOpen(false);
+    if (onClose) onClose();
+  }
+
+  React.useEffect(() => {
+    if (open !== undefined && open != internalOpen) {
+      setInternalOpen(open);
+    }
+  }, [open, internalOpen]);
 
   return (
     <Dialog
-      open={open}
-      onClose={onClose}
+      open={internalOpen}
+      onClose={handleClose}
       scroll={scroll}
       aria-labelledby={props.title}
+      fullWidth={true}
+      maxWidth="xs"
     >
       <DialogTitle className={classes.cardHeader}>
         <Toolbar>

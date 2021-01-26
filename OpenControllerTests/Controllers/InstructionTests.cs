@@ -4,6 +4,7 @@ using MakerverseServerTests;
 using Newtonsoft.Json;
 using OpenWorkEngine.OpenController.Controllers.Interfaces;
 using OpenWorkEngine.OpenController.Controllers.Messages;
+using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.ControllerSyntax.Grbl;
 using OpenWorkEngine.OpenController.Machines.Models;
 using OpenWorkEngine.OpenController.Syntax.GCode;

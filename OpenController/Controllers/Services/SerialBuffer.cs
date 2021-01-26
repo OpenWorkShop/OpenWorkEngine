@@ -6,6 +6,7 @@ using System.Reflection.PortableExecutable;
 using System.Threading.Tasks;
 using HotChocolate.Language;
 using OpenWorkEngine.OpenController.Controllers.Interfaces;
+using OpenWorkEngine.OpenController.Controllers.Messages;
 using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.Controllers.Services.Serial;
 using OpenWorkEngine.OpenController.ControllerSyntax;
@@ -52,6 +53,8 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
 
     // When any parser indicates the line WasParsed...
     private void OnLineParsed(MachineOutputLine line) {
+      line = line.Finish();
+
       // Track topic changes....
       if (!(line.Topics?.Any() ?? false)) return;
 
@@ -88,7 +91,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
               if (!outputLine.WasParsed) {
                 // Handle the failed line as a message.
                 _failedParseLine.WithLogEntry(
-                  new MachineLogEntry(_failedParseLine, _failedParseLine.Raw, MachineLogLevel.Wrn)
+                  new MachineLogEntry(_failedParseLine.Raw, MachineLogLevel.Wrn)
                 );
                 outputLine = await ParseLine(line);
               }
@@ -168,8 +171,10 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
 
     internal async Task TryWriteSerial() {
       try {
-        // Internal system polls.
-        foreach (SerialPoll poll in Controller.Translator.Polls) await poll.Write(Controller);
+        if (Controller.IsActive) {
+          // Internal system polls.
+          foreach (SerialPoll poll in Controller.Translator.Polls) await poll.Write(Controller);
+        }
       } catch (Exception e) {
         Log.Error(e, "[BUFFER] Unknown IO exception for {portName}", Connection.Port.PortName);
       }
@@ -207,7 +212,6 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       return line;
     }
 
-
     /// <summary>
     /// Actually sends an instruction to the serial buffer, first compiling its code with the provided arguments.
     /// </summary>
@@ -215,11 +219,13 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
     /// <param name="args">Object with field/props for the instruction.</param>
     /// <param name="machineLogs">Write </param>
     /// <returns>Task from the Buffer.</returns>
-    internal async Task<CompiledInstruction> Instruct(
-      IControllerInstruction instruction, object? args = null, bool machineLogs = true) {
+    internal async Task<MachineLogEntry> Instruct(
+      IControllerInstruction instruction, object? args = null, bool machineLogs = true
+    ) {
       CompiledInstruction compiled = instruction.Compile(args);
       MachineLogLevel lvl = machineLogs ? MachineLogLevel.Inf : MachineLogLevel.Dbg;
-      Machine.AddLogEntry(new MachineLogEntry(compiled, lvl));
+      MachineLogEntry logEntry = new MachineLogEntry(compiled, lvl);
+      Machine.AddLogEntry(logEntry);
 
       if (instruction.Inline) {
         Connection.Port.SerialPort.Write(compiled.Code);
@@ -231,15 +237,17 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
         _instructionsPendingResponse.Enqueue(instruction);
         await Task.Delay(10);
       }
-      return compiled;
+      return logEntry;
     }
 
-    internal async Task<ControlledMachine> Execute(ControllerScript script, object? args = null, bool machineLogs = true) {
+    internal async Task<MachineExecutionResult> Execute(ControllerScript script, object? args = null, bool machineLogs = true) {
       // Execute each instruction in the script.
+      List<MachineLogEntry> instructionResults = new List<MachineLogEntry>();
       foreach (IControllerInstruction instruction in script.Instructions) {
-        await Instruct(instruction, args, machineLogs);
+        MachineLogEntry res = await Instruct(instruction, args, machineLogs);
+        instructionResults.Push(res);
       }
-      return Machine;
+      return new MachineExecutionResult(Machine, instructionResults);
     }
 
     //

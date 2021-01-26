@@ -3,22 +3,25 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Logging.Abstractions;
 using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Models;
+using OpenWorkEngine.OpenController.Syntax;
 using Serilog;
 
 namespace OpenWorkEngine.OpenController.Controllers.Services.Serial {
-  public class MachineOutputLine {
-    public string Raw { get; }
+  internal class MachineOutputLine {
+    internal string Raw { get; }
 
-    public Controller? Controller { get; }
+    internal Controller? Controller { get; }
 
-    public ControlledMachine Machine { get; }
+    internal ControlledMachine Machine { get; }
 
-    private MachineLogEntry? _logEntry;
-
-    public HashSet<MachineTopic>? Topics { get; private set; }
+    internal HashSet<MachineTopic>? Topics { get; private set; }
 
     //
     public bool WasParsed { get; private set; }
+
+    private bool _finished;
+
+    private MachineLogEntry? _logEntry;
 
     internal ILogger Log => Machine.Log;
 
@@ -43,6 +46,18 @@ namespace OpenWorkEngine.OpenController.Controllers.Services.Serial {
 
     public MachineOutputLine WithParsedResponse() {
       WasParsed = true;
+      return this;
+    }
+
+    public MachineOutputLine Finish() {
+      if (!WasParsed) {
+        // Should be prevented by serial buffer
+        throw new SystemException($"Line was never parsed: {Raw}");
+      }
+      if (_finished) {
+        throw new SystemException($"Line was already finished: {Raw}");
+      }
+      _finished = true;
       return this;
     }
   }

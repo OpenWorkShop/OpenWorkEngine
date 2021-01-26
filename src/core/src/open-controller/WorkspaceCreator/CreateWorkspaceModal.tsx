@@ -116,6 +116,7 @@ const CreateWorkspaceModal: React.FunctionComponent<Props> = (props) => {
       icon,
       preferImperial,
       machineProfileId: machine.profile.machineProfileId ?? null,
+      machineCategory: machine.profile.category,
       onboarded: false,
       axes: Object.values(machine.axes).map((axis) => {
         return {

@@ -80,11 +80,12 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     }
 
     internal HashSet<MachineTopic> AddLogEntry(MachineLogEntry entry, bool dedupe = true) {
-      MachineLogEntry? duplicate = !dedupe ? null :
-        LogEntries.LastOrDefault(l => l.Message.Equals(entry.Message) && l.LogLevel == entry.LogLevel);
-      if (duplicate != null) {
-        duplicate.Timestamps.Push(DateTime.Now);
-        return OnLogEntry(entry);
+      if (dedupe && LogEntries.Any()) {
+        MachineLogEntry last = LogEntries.Last();
+        if (last.CanMergeWith(entry)) {
+          last.Timestamps.Push(DateTime.Now);
+          return OnLogEntry(entry);
+        }
       }
       LogEntries.Push(entry);
       return OnLogEntry(entry);
@@ -94,11 +95,13 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
       // Timestamps may have been updated.
       LogEntries.Sort((a, b) => DateTime.Compare(a.Timestamp, b.Timestamp));
 
-      const string template = "[LOG] {message}";
-      if (entry.LogLevel == MachineLogLevel.Dbg) Log.Verbose(template, entry.Message);
-      else if (entry.LogLevel == MachineLogLevel.Inf) Log.Debug(template, entry.Message);
-      else if (entry.LogLevel == MachineLogLevel.Wrn) Log.Information(template, entry.Message);
-      else if (entry.LogLevel == MachineLogLevel.Err) Log.Warning(template, entry.Message);
+      const string template = "[LOG] {message} [{code}]";
+      List<string> code = entry.Code.Select(c => c.Value).ToList();
+      if (entry.LogLevel == MachineLogLevel.Dbg) Log.Verbose(template, entry.Message, code);
+      else if (entry.LogLevel == MachineLogLevel.Cfg) Log.Debug(template, entry.Message, code);
+      else if (entry.LogLevel == MachineLogLevel.Inf) Log.Debug(template, entry.Message, code);
+      else if (entry.LogLevel == MachineLogLevel.Wrn) Log.Information(template, entry.Message, code);
+      else if (entry.LogLevel == MachineLogLevel.Err) Log.Warning(template, entry.Message, code);
       return new HashSet<MachineTopic>() {MachineTopic.Log};
     }
   }

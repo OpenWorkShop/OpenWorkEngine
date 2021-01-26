@@ -41,31 +41,30 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
     // Concrete methods names are useful in many ways
     // 1. These are exposed via GraphQL mutations directly
     // 2. Using nameof() on the concrete names affords constant strings
-    public Task<ControlledMachine> GetHelp() => Invoke(nameof(GetHelp));
-    public Task<ControlledMachine> GetSettings() => Invoke(nameof(GetSettings));
-    public Task<ControlledMachine> GetFirmware() => Invoke(nameof(GetFirmware));
-    public Task<ControlledMachine> GetParameters() => Invoke(nameof(GetParameters));
-    public Task<ControlledMachine> GetStartup() => Invoke(nameof(GetStartup));
-    public Task<ControlledMachine> CheckCode() => Invoke(nameof(CheckCode));
+    public Task<MachineExecutionResult> GetHelp() => Invoke(nameof(GetHelp));
+    public Task<MachineExecutionResult> GetSettings() => Invoke(nameof(GetSettings));
+    public Task<MachineExecutionResult> GetFirmware() => Invoke(nameof(GetFirmware));
+    public Task<MachineExecutionResult> GetParameters() => Invoke(nameof(GetParameters));
+    public Task<MachineExecutionResult> GetStartup() => Invoke(nameof(GetStartup));
+    public Task<MachineExecutionResult> CheckCode() => Invoke(nameof(CheckCode));
 
     // Polling:
-    public Task<ControlledMachine> GetConfiguration() => Invoke(nameof(GetConfiguration));
-    public Task<ControlledMachine> GetStatus() => Invoke(nameof(GetStatus));
+    public Task<MachineExecutionResult> GetConfiguration() => Invoke(nameof(GetConfiguration));
+    public Task<MachineExecutionResult> GetStatus() => Invoke(nameof(GetStatus));
 
-    public Task<ControlledMachine> Unlock() => Invoke(nameof(Unlock), nameof(GetStatus));
-    public Task<ControlledMachine> Reset() => Invoke(nameof(Reset), nameof(GetStatus));
-    public Task<ControlledMachine> Homing() => Invoke(nameof(Homing));
-    public Task<ControlledMachine> Pause() => Invoke(nameof(Pause));
-    public Task<ControlledMachine> Play() => Invoke(nameof(Play));
+    public Task<MachineExecutionResult> Unlock() => Invoke(nameof(Unlock), nameof(GetStatus));
+    public Task<MachineExecutionResult> Reset() => Invoke(nameof(Reset), nameof(GetStatus));
+    public Task<MachineExecutionResult> Homing() => Invoke(nameof(Homing));
+    public Task<MachineExecutionResult> Pause() => Invoke(nameof(Pause));
+    public Task<MachineExecutionResult> Play() => Invoke(nameof(Play));
 
-    public Task<ControlledMachine> Move(MoveCommand moveCommand) => Execute(nameof(Move), moveCommand);
+    public Task<MachineExecutionResult> Move(MoveCommand moveCommand) => Execute(nameof(Move), moveCommand);
 
     // Raw command
-    public async Task<ControlledMachine> WriteCommand(string commandCode, string sourceName) {
+    public Task<MachineExecutionResult> WriteCommand(string commandCode, string sourceName) {
       ControllerScript script = new (Compiler.LoadInstructions(commandCode, c => new GCodeBlock(c, sourceName)));
       Log.Verbose("[CMD] {code} from {src}", commandCode, sourceName);
-      await Buffer.Execute(script);
-      return Connection.Machine;
+      return Buffer.Execute(script);
     }
 
     internal bool IsAlive => _isAlive && Connection.Port.SerialPort.IsOpen;
@@ -103,18 +102,23 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
 
     // Look up the code for a given method name and write it to the port.
     // Made private so that only the concrete methods are exposed
-    private async Task<ControlledMachine> Invoke(params string[] methodNames) {
-      foreach (string methodName in methodNames) {
-        await Execute(methodName);
+    private async Task<MachineExecutionResult> Invoke(params string[] methodNames) {
+      MachineExecutionResult res = new MachineExecutionResult(Connection.Machine, new List<MachineLogEntry>());
+      for(int x=0; x<methodNames.Length; x++) {
+        string methodName = methodNames[x];
+        MachineExecutionResult methodRes = await Execute(methodName);
+        if (x == 0) {
+          // Secondary commands (anything after the first) are not exposed; they are side-effects.
+          res.Logs.AddRange(methodRes.Logs);
+        }
       }
-      return Connection.Machine;
+      return res;
     }
 
-    internal async Task<ControlledMachine> Execute(string methodName, object? args = null) {
+    internal Task<MachineExecutionResult> Execute(string methodName, object? args = null) {
       ControllerScript script = Translator.GetCommandScript(methodName);
       Log.Verbose("[CMD] {name} args {args}", methodName, args);
-      await Buffer.Execute(script, args);
-      return Connection.Machine;
+      return Buffer.Execute(script, args);
     }
 
     public void Dispose() {
@@ -122,13 +126,17 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       _isAlive = false;
     }
 
+    private async Task DoWork() {
+      await Buffer.TryReadSerial();
+      await Buffer.TryEmitChanges();
+      await Buffer.TryWriteSerial();
+    }
+
     // Background thread "main" function for this port/controller combo.
     // Coordinates all serial I/O.
     private async Task InfiniteWorkLoop() {
       while (IsActive) {
-        await Buffer.TryReadSerial();
-        await Buffer.TryEmitChanges();
-        await Buffer.TryWriteSerial();
+        await DoWork();
       }
       Log.Debug("[WORK] termination state: {state}", Connection.Port.State);
     }
@@ -201,7 +209,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
         }
         await Task.Delay(delay);
         if (becomeState > PortState.HasData) // Once we have data, we need to start consuming it for the startup conditions.
-          await Buffer.TryReadSerial();
+          await DoWork();
       }
       Manager.Ports.EmitState(Connection.Port, becomeState);
       return true;

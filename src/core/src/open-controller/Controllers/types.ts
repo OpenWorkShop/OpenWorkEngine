@@ -1,13 +1,24 @@
 import {
   AlertError,
   ControlledMachineFragment,
-  MachineConfigFragment, MachineLogEntryConnectionFragment,
+  MachineConfigFragment,
+  MachineExecutionResultFragment,
+  MachineLogEntryConnectionFragment,
+  MachineLogEntryFragment,
   MachineSettingFragment,
-  MachineStatusFragment
+  MachineStatusFragment,
+  PageInfoFragment
 } from '../graphql';
+
+export interface IMachineLogs {
+  // The machine contains a cursor; this aggregates all logs into a single sorted list:
+  sortedLogs: MachineLogEntryFragment[];
+  pageInfo?: PageInfoFragment;
+}
 
 export interface IController {
   machine: ControlledMachineFragment;
+  logs: IMachineLogs;
 }
 
 export interface IHaveController {
@@ -23,7 +34,6 @@ export type ControllerStateMap = { [key: string]: IController };
 export type ControllersState = {
   controllerMap: ControllerStateMap;
   controllerIds: string[];
-  logMap: { [key: string]: MachineLogEntryConnectionFragment };
 };
 
 
@@ -43,16 +53,12 @@ export interface IMachineConfigUpdate extends IControlledMachineUpdate {
   configuration: MachineConfigFragment;
 }
 
-export interface IMachineLogsUpdate extends IControlledMachineUpdate {
+export interface IMachineLogPageUpdate extends IControlledMachineUpdate {
   logs: MachineLogEntryConnectionFragment | null;
 }
 
-export interface IMachineLogUpdate extends IControlledMachineUpdate {
-  logs: MachineConfigFragment;
-}
-
-export interface IControllerVars {
-  workspaceId: string;
+export interface IMachineLogsUpdate extends IControlledMachineUpdate {
+  logs: MachineLogEntryFragment[];
 }
 
 export interface IMutationResult<TData> {
@@ -61,3 +67,16 @@ export interface IMutationResult<TData> {
 }
 
 export type MutationResultAsync<TData, TVars> = (vars: TVars) => Promise<IMutationResult<TData>>;
+
+export interface IControllerCommandArgsBase {
+  workspaceId: string;
+}
+
+export interface IControllerCommandResult {
+  id: string;
+  result: MachineExecutionResultFragment;
+}
+
+export interface IControllerCommandResponse {
+  controller: IControllerCommandResult;
+}

@@ -1,3 +1,5 @@
+
+
 fragment ControlledMachine on ControlledMachine {
     topicId
     machineProfileId
@@ -13,9 +15,7 @@ fragment ControlledMachine on ControlledMachine {
     settings {
         ...MachineSetting
     }
-    logs {
-        ...MachineLogEntryConnection
-    }
+    ...MachineLogs
 }
 
 fragment DetectedFirmware on MachineDetectedFirmware {

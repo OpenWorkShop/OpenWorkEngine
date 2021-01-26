@@ -11,7 +11,7 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax {
   internal class FallbackParser : RegexParser {
     // Works for Grbl & Marlin & anything that puts the data between the []s
     // Should always be used as the last parser, because it is greedy.
-    public FallbackParser() : base(@"^(?<open>\[)?(?<pre>\w+)?:?\s*(?<message>.+)(?<close>\])?$") { }
+    public FallbackParser() : base(@"^(?<open>\[)?(?<pre>\w+)?:?\s*(?<message>[^\]]+)(?<close>\])?$") { }
 
     protected virtual MachineOutputLine GetLine(MachineOutputLine line, string msg, string? pre, bool open, bool close) {
       // By default, only parse messages contained within brackets (complete lines).
@@ -22,7 +22,7 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax {
         // Unknown prefix. Re-combine message.
         msg = $"{pre}:{msg}";
       }
-      return line.WithLogEntry(new MachineLogEntry(line, msg)).WithParsedResponse();
+      return line.WithLogEntry(new MachineLogEntry(msg)).WithParsedResponse();
     }
 
     protected override MachineOutputLine OnData(
