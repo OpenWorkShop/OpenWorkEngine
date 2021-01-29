@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useTrans} from '../../Context';
 import useLogger from '../../../utils/logging/UseLogger';
 import {IHaveWorkspace} from '../types';
-import ChooseMachineParts from '../../../components/MachineProfiles/ChooseMachineParts';
+import ChooseMachineParts from '../../MachineProfiles/ChooseMachineParts';
 import {IMachinePartChoice, IMachinePartSetting} from '../../Machines/CustomizedMachine';
 import {MachinePartFragment, MachineSettingsFragment} from '../../graphql';
 import HelpfulHeader from '../../../components/Text/HelpfulHeader';

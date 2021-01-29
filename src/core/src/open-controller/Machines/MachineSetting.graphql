@@ -6,19 +6,122 @@ fragment MachinePresetSettingProps on MachinePresetSetting {
   value
 }
 
-fragment MachineSetting on MachineSetting {
+fragment FirmwareSettingDecimal on FirmwareSettingOfDecimal {
   id
   title
-  settingType
   key
-  value
+  currentValue
+}
+
+fragment FirmwareSettingBool on FirmwareSettingOfBoolean {
+  id
+  title
+  key
+  currentValue
+}
+
+fragment FirmwareAxisFlags on FirmwareSettingOfFirmwareAxisFlags {
+  id
+  title
+  key
+  currentValue {
+    x
+    y
+    z
+  }
+}
+
+fragment FirmwareAxisValues on FirmwareAxisValues {
+  x { ...FirmwareSettingDecimal }
+  y { ...FirmwareSettingDecimal }
+  z { ...FirmwareSettingDecimal }
+}
+
+fragment FirmwareApplicatorSettings on FirmwareApplicatorSettings {
+  speedMax { ...FirmwareSettingDecimal }
+  speedMin { ...FirmwareSettingDecimal }
+  laserEnabled { ...FirmwareSettingBool }
+  shuttleRadius { ...FirmwareSettingDecimal }
+  shuttleWeight { ...FirmwareSettingDecimal }
+}
+
+fragment FirmwareCalibrationSettings on FirmwareCalibrationSettings {
+  kinematics {
+    id
+    title
+    key
+    currentValue
+  }
+  motorDistance { ...FirmwareAxisValues }
+  scaling { ...FirmwareAxisValues }
+  chainLength { ...FirmwareSettingDecimal }
+  chainOverSprocket { ...FirmwareSettingBool }
+  chainSagCorrection { ...FirmwareSettingDecimal }
+  chainElongationFactor { ...FirmwareSettingDecimal }
+  leftChainTolerance { ...FirmwareSettingDecimal }
+  rightChainTolerance { ...FirmwareSettingDecimal }
+  homeChainLengths { ...FirmwareSettingDecimal }
+}
+
+fragment FirmwareHomingSettings on FirmwareHomingSettings {
+  enabled { ...FirmwareSettingBool }
+  directionInvert { ...FirmwareAxisFlags }
+  feedRate { ...FirmwareSettingDecimal }
+  seekRate { ...FirmwareSettingDecimal }
+  debounce { ...FirmwareSettingDecimal }
+  pullOff { ...FirmwareSettingDecimal }
+}
+
+fragment FirmwareMovementSettings on FirmwareMovementSettings {
+  junctionDeviation { ...FirmwareSettingDecimal }
+  arcTolerance { ...FirmwareSettingDecimal }
+  softLimits { ...FirmwareSettingBool }
+  hardLimits { ...FirmwareSettingBool }
+  rateMax { ...FirmwareAxisValues }
+  acceleration { ...FirmwareAxisValues }
+  positionMax { ...FirmwareAxisValues }
+  positionMin { ...FirmwareAxisValues }
+  machineSize { ...FirmwareAxisValues }
+}
+
+fragment FirmwarePinsSettings on FirmwarePinsSettings {
+  stepPulse { ...FirmwareSettingDecimal }
+  stepIdleDelay { ...FirmwareSettingDecimal }
+  stepSignalInvert { ...FirmwareAxisFlags }
+  stepDirectionInvert { ...FirmwareAxisFlags }
+  stepEnableInvert { ...FirmwareSettingBool }
+  limitPinsInvert { ...FirmwareSettingBool }
+  probePinInvert { ...FirmwareSettingBool }
+  steps { ...FirmwareAxisValues }
+  kProportional { ...FirmwareAxisValues }
+  kDerivative { ...FirmwareAxisValues }
+  kIntegral { ...FirmwareAxisValues }
+  imax { ...FirmwareAxisValues }
+}
+
+fragment FirmwareReportingSettings on FirmwareReportingSettings {
+  statusReport {
+    id
+    title
+    settingType
+    key
+    currentValue
+  }
+  reportInches { ...FirmwareSettingBool }
+}
+
+fragment FirmwareSettings on FirmwareSettings {
+  applicator { ...FirmwareApplicatorSettings }
+  calibration { ...FirmwareCalibrationSettings }
+  homing { ...FirmwareHomingSettings }
+  movement { ...FirmwareMovementSettings }
+  pins { ...FirmwarePinsSettings }
+  reporting { ...FirmwareReportingSettings }
 }
 
 subscription MachineSettings($portName: String!) {
   machine: onMachineSetting(portName: $portName) {
     topicId
-    settings {
-      ...MachineSetting
-    }
+    settings { ...FirmwareSettings }
   }
 }

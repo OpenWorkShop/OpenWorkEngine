@@ -33,7 +33,7 @@ const OpenController: React.FunctionComponent<IHaveOpenControllerDeployment> = (
     };
   }
 
-  log.verbose('Startup');
+  log.debug('Startup');
 
   return (
     <OpenWorkShopProvider

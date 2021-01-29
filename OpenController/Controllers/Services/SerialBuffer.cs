@@ -55,6 +55,11 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
     private void OnLineParsed(MachineOutputLine line) {
       line = line.Finish();
 
+      // ACK (ok/error) from machine.
+      if (line.LogEntry?.IsResponse ?? false) {
+        Ack(line.LogEntry);
+      }
+
       // Track topic changes....
       if (!(line.Topics?.Any() ?? false)) return;
 
@@ -91,7 +96,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
               if (!outputLine.WasParsed) {
                 // Handle the failed line as a message.
                 _failedParseLine.WithLogEntry(
-                  new MachineLogEntry(_failedParseLine.Raw, MachineLogLevel.Wrn)
+                  MachineLogEntry.FromReadMessage(_failedParseLine.Raw, MachineLogLevel.Wrn)
                 );
                 outputLine = await ParseLine(line);
               }
@@ -189,7 +194,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       strLine = strLine.Trim();
 
       Log.Verbose("[PARSE] {line}", strLine);
-      MachineOutputLine line = new(strLine, Connection.Machine, Controller);
+      MachineOutputLine line = new(strLine, Connection.Machine, Controller.Translator);
 
       // 1. Check for responses.
       line = await Controller.Translator.Response.UpdateMachine(line);
@@ -224,7 +229,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
     ) {
       CompiledInstruction compiled = instruction.Compile(args);
       MachineLogLevel lvl = machineLogs ? MachineLogLevel.Inf : MachineLogLevel.Dbg;
-      MachineLogEntry logEntry = new MachineLogEntry(compiled, lvl);
+      MachineLogEntry logEntry = MachineLogEntry.FromWrittenInstruction(compiled, lvl);
       Machine.AddLogEntry(logEntry);
 
       if (instruction.Inline) {

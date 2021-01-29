@@ -1,15 +1,15 @@
 namespace OpenWorkEngine.OpenController.Machines.Enums {
   public enum MachineSettingUnits {
     Unknown = 0,
-    Boolean,
+    Pid,
     Millimeters,
     Percent,
     Milliseconds,
     Microseconds,
-    Mask,
     Rpm,
     StepsPerMillimeter,
     MillimetersPerMinute,
     MillimetersPerSecondsSquared,
+    Newtons,
   }
 }

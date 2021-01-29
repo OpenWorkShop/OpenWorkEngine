@@ -1,13 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.Controllers.Services.Serial;
 using OpenWorkEngine.OpenController.ControllerSyntax.Grbl;
 using OpenWorkEngine.OpenController.Lib.Linq;
 using OpenWorkEngine.OpenController.Syntax;
 using OpenWorkEngine.OpenController.Syntax.GCode;
+using Serilog;
 
 namespace OpenWorkEngine.OpenController.ControllerSyntax {
+
   internal class ControllerTranslator {
     // Generic command acknowledgement, e.g., "ok", executed before all others.
     internal Parser Response { get; set; } = new GrblResponseParser();
@@ -21,8 +27,6 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax {
     internal SerialPoll? ConfigPoll { get; set; }
 
     internal List<SerialPoll> Polls => new List<SerialPoll?> {StatusPoll, ConfigPoll}.SelectNonNull();
-
-    internal List<SettingDefinition> SettingDefinitions { get; } = new List<SettingDefinition>();
 
     // Connection message (startup)
     internal Parser? WelcomeParser { get; set; }
@@ -76,6 +80,66 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax {
       // Scripts are uncompiled. But the compiler parses the instructions into a script.
       _commandScripts[methodName] =
         new ControllerScript(Compiler.LoadInstructions(code, line => new GCodeBlock(line, methodName)));
+    }
+
+    internal readonly Dictionary<string, Func<FirmwareSettings, FirmwareSetting>> settingCodes = new();
+    internal readonly Dictionary<string, string> settingPaths = new();
+
+    internal FirmwareSetting? GetSetting(FirmwareSettings settings, string code) {
+      if (!settingCodes.ContainsKey(code)) {
+        return null;
+      }
+      FirmwareSetting? setting = settingCodes[code].Invoke(settings);
+      if (string.IsNullOrWhiteSpace(setting.Title)) {
+        List<string> paths = settingPaths[code].Split('.').ToList();
+        setting.Id = string.Join('-', paths);
+        paths.RemoveAt(0);
+        setting.Title = string.Join('.', paths);
+      }
+      return setting;
+    }
+
+    internal void DefineSetting<TData>(string code, Expression<Func<FirmwareSettings, FirmwareSetting<TData>>> expression) {
+      // if (!(expression.Body is MemberExpression member))
+      //   throw new ArgumentException($"Expression '{expression}' refers to a method, not a property.");
+      // PropertyInfo? propInfo = member.Member as PropertyInfo;
+      string path = GetExpressionPath(expression);
+      Log.Verbose("Defining {prop} as {code} ({type})", path, code, typeof(TData).Name);
+      settingCodes[code] = expression.Compile();
+      settingPaths[code] = path;
+      // settingSetters[code] = setter;
+    }
+
+    // e.g., "StepperPins.Steps.X" -- the path from the root of the FirmwareSettings.
+    private string GetExpressionPath<T>(Expression<Func<FirmwareSettings, T>> expression)
+    {
+      var body = expression.Body as MemberExpression;
+
+      if (body == null)
+      {
+        body = ((UnaryExpression)expression.Body).Operand as MemberExpression;
+      }
+
+      return string.Join(".", GetPropertyNames(body).Reverse());
+    }
+
+    private IEnumerable<string> GetPropertyNames(MemberExpression? body)
+    {
+      while (body != null)
+      {
+        yield return body.Member.Name;
+        Expression? inner = body.Expression;
+        switch (inner?.NodeType)
+        {
+          case ExpressionType.MemberAccess:
+            body = inner as MemberExpression;
+            break;
+          default:
+            body = null;
+            break;
+
+        }
+      }
     }
   }
 }

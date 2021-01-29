@@ -19,49 +19,62 @@ export class BackendConnection extends EventEmitter {
 
   private _webSocketLink: WebSocketLink;
   private _ows: IOpenWorkShop;
-  private _log: Logger;
+  private _log?: Logger;
   private _state: ConnectionState = ConnectionState.Disconnected;
 
   constructor(ows: IOpenWorkShop) {
     super();
     this._ows = ows;
+    [this._subscriptionClient, this._webSocketLink] = this.rebuild();
+  }
+
+  private rebuild(): [SubscriptionClient, WebSocketLink] {
+    if (this._subscriptionClient) {
+      this._subscriptionClient.close(true, false);
+    }
+
     const url = 'ws://localhost:8000/api/graphql';
-    this._log = ows.logManager.getLogger(url);
     const subscriptionClient = new SubscriptionClient(url, {
       reconnect: true,
       connectionParams: async () => {
-        const user = await ows.authManager.getUser();
+        const user = await this._ows.authManager.getUser();
         return user ? { token: user.access_token } : { };
+      },
+      connectionCallback: (error, result) => {
+        this.log.info('[connection]', error, result);
       },
     });
 
     subscriptionClient.onConnected((a) => {
-      this.log.debug('[subscription]', 'connected.', a);
+      this.log.info('[subscription]', 'connected.', a);
       this.setState(ConnectionState.Connected);
     });
 
     subscriptionClient.onConnecting((a) => {
-      this.log.debug('[subscription]', 'connecting...', a);
+      this.log.info('[subscription]', 'connecting...', a);
       this.setState(ConnectionState.Connecting);
     });
 
     subscriptionClient.onReconnected ((a) => {
-      this.log.debug('[subscription]', 're-connected.', a);
+      this.log.info('[subscription]', 're-connected.', a);
       this.setState(ConnectionState.Connected);
     });
 
     subscriptionClient.onReconnecting((a) => {
-      this.log.debug('[subscription]', 're-connecting...', a);
+      this.log.info('[subscription]', 're-connecting...', a);
       this.setState(ConnectionState.Connecting);
     });
 
     subscriptionClient.onDisconnected((a) => {
-      this.log.debug('[subscription]', 'disconnected.', a);
+      this.log.info('[subscription]', 'disconnected.', a);
       this.setState(ConnectionState.Disconnected);
     });
 
     subscriptionClient.onError((a) => {
       this.log.error('[subscription]', 'error', a);
+      if (this.state === ConnectionState.Connecting) {
+        this.setState(ConnectionState.Disconnected);
+      }
     });
 
     const ws =  new WebSocketLink(subscriptionClient);
@@ -69,30 +82,40 @@ export class BackendConnection extends EventEmitter {
       this.log.error('request error', req);
     });
 
-    this._subscriptionClient = subscriptionClient;
-    this._webSocketLink = ws;
+    return [subscriptionClient, ws];
   }
 
-  public async reconnect(): Promise<void> {
+  public async reconnect(): Promise<boolean> {
+    this.log.debug('reconnecting...');
     this._subscriptionClient.close(false);
+    // [this._subscriptionClient, this._webSocketLink] = this.rebuild();
     while (!this.isConnected) {
-      this.log.debug('waiting for re-connection...');
+      this.log.debug('reconnection pending...', this.state);
       await new Promise((r) => setTimeout(r, 1000));
+      if (this.state === ConnectionState.Disconnected) {
+        this.log.warn('reconnection failed.');
+        return false;
+      }
     }
+    this.log.debug('reconnection', this.state, this.isConnected);
+    return this.isConnected;
   }
 
   private setState(state: ConnectionState) {
     if (this._state === state) return;
     this._state = state;
-    this.log.info(state);
+    this.log.debug('state', state);
     this.emit(BackendConnectionEvent.ConnectionStateChanged.toString(), state);
   }
 
   public get state(): ConnectionState { return this._state; }
 
-  public get isConnected(): boolean { return this._state === ConnectionState.Connected; }
+  public get isConnected(): boolean { return this.state === ConnectionState.Connected; }
 
-  public get log(): Logger { return this._log; }
+  public get log(): Logger {
+    if (!this._log) this._log = this._ows.logManager.getLogger('Backend');
+    return this._log;
+  }
 
   public get webSocketLink(): WebSocketLink { return this._webSocketLink; }
 }

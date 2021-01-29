@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using HotChocolate.Language;
 using MakerverseServerTests;
 using Newtonsoft.Json;
+using OpenWorkEngine.OpenController.Controllers.Messages;
+using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.Controllers.Services.Serial;
 using OpenWorkEngine.OpenController.ControllerSyntax;
 using OpenWorkEngine.OpenController.ControllerSyntax.Grbl;
@@ -17,15 +20,19 @@ using Parser = OpenWorkEngine.OpenController.Controllers.Services.Serial.Parser;
 
 namespace OpenWorkEngine.OpenControllerTests.Controllers {
   public class GrblTests : TestBase {
-    private readonly ControllerTranslator _parsers = new ControllerTranslator().UseGrblSyntax();
+    private ControllerTranslator? _translator = null;
+
+    internal ControllerTranslator Translator => _translator ??= BuildTranslator();
     // private ControlledMachine? _machine;
+
+    internal virtual ControllerTranslator BuildTranslator() => new ControllerTranslator().UseGrblSyntax();
 
     public GrblTests(ITestOutputHelper output) : base(output) { }
 
-    internal static ControlledMachine TestParser(Parser? parser, string line) {
-      parser.Should().NotBeNull();
+    internal ControlledMachine TestParser( Parser? parser, string line) {
+      if (parser == null) throw new ArgumentException(nameof(parser));
       ControlledMachine machine = new ControlledMachine("", null, Log.Logger);
-      MachineOutputLine outputLine = parser.UpdateMachine(new MachineOutputLine(line, machine, null)).Result;
+      MachineOutputLine outputLine = parser.UpdateMachine(new MachineOutputLine(line, machine, Translator)).Result;
       outputLine.WasParsed.Should().BeTrue();
       return machine;
     }
@@ -34,7 +41,7 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
     [InlineData("[VER:1.1f.20170801:LASER]")]
     [InlineData("[VER:2.0.0.20170522::CTRL0]")]
     public void CanParseGrblVersions(string versionString) {
-      ControlledMachine machine = TestParser(_parsers.FirmwareParser, versionString);
+      ControlledMachine machine = TestParser(Translator.FirmwareParser, versionString);
 
       MachineDetectedFirmware fw = machine.Configuration.Firmware;
       fw.Should().NotBeNull();
@@ -111,7 +118,7 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
     [InlineData("[TLO:0.000,1.000,0,000]")]
     [InlineData("[G54:4.000,0.000,-2.000]")]
     public void CanParseParameters(string line) {
-      ControlledMachine machine = TestParser(_parsers.ParameterParser, line);
+      ControlledMachine machine = TestParser(Translator.ParameterParser, line);
 
       Log.Information("Machine Config {@config}", JsonConvert.SerializeObject(machine.Configuration, Formatting.Indented));
     }
@@ -124,7 +131,7 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
     [InlineData("[MSG:Disabled]")]
     [InlineData("[echo:hello]")]
     public void CanParseMessage(string line) {
-      ControlledMachine machine = TestParser(_parsers.Fallback, line);
+      ControlledMachine machine = TestParser(Translator.Fallback, line);
       Log.Information("Machine Status {@status}", JsonConvert.SerializeObject(machine, Formatting.Indented));
       line.Should().Contain(machine.LogEntries.Last().Message);
     }
@@ -133,14 +140,14 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
     [InlineData("ok")]
     [InlineData("error:9")]
     public void CanParseResponse(string line) {
-      ControlledMachine machine = TestParser(_parsers.Response, line);
+      ControlledMachine machine = TestParser(Translator.Response, line);
       Log.Information("Machine Status {@status}", JsonConvert.SerializeObject(machine.Status, Formatting.Indented));
     }
 
     [Theory]
     [InlineData("ALARM: 9")]
     public void CanParseAlarm(string line) {
-      ControlledMachine machine = TestParser(_parsers.AlarmParser, line);
+      ControlledMachine machine = TestParser(Translator.AlarmParser, line);
       Log.Information("Machine Status {@status}", JsonConvert.SerializeObject(machine.Status, Formatting.Indented));
       machine.Status.Alarm.Should().NotBeNull();
     }
@@ -148,20 +155,77 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
     [Theory]
     [InlineData("[OPT:VNM+H,35,255]")]
     public void CanParseOptions(string line) {
-      ControlledMachine machine = TestParser(_parsers.OptionParser, line);
+      ControlledMachine machine = TestParser(Translator.OptionParser, line);
       Log.Information("Machine Status {@status}", JsonConvert.SerializeObject(machine.Configuration, Formatting.Indented));
       machine.Configuration.Options.Should().NotBeNull();
     }
 
     [Theory]
+    [InlineData(0, false, false, false)]
+    [InlineData(1, true, false, false)]
+    [InlineData(2, false, true, false)]
+    [InlineData(3, true, true, false)]
+    [InlineData(4, false, false, true)]
+    [InlineData(5, true, false, true)]
+    [InlineData(6, false, true, true)]
+    [InlineData(7, true, true, true)]
+    public void CanConvertAxisFlags(int val, bool x, bool y, bool z) {
+      FirmwareSetting<FirmwareAxisFlags> s = new FirmwareSetting<FirmwareAxisFlags>(new FirmwareAxisFlags());
+      s.Value = val.ToString();
+      s.CurrentValue.X.Should().Be(x);
+      s.CurrentValue.Y.Should().Be(y);
+      s.CurrentValue.Z.Should().Be(z);
+    }
+
+    [Theory]
     [InlineData("$0=10")]
     [InlineData("$1=25")]
-    [InlineData("$110=635.00")]
-    [InlineData("$90=139.100 (rotation radius, mm)")]
+    [InlineData("$2=0")]
+    [InlineData("$3=0")]
+    [InlineData("$3=1")]
+    [InlineData("$3=2")]
+    [InlineData("$4=0")]
+    [InlineData("$5=0")]
+    [InlineData("$6=0")]
+    [InlineData("$10=1")]
+    [InlineData("$11=0.010")]
+    [InlineData("$12=0.002")]
+    [InlineData("$13=0")]
+    [InlineData("$20=1")]
+    [InlineData("$21=1")]
+    [InlineData("$22=1")]
+    [InlineData("$23=0")]
+    [InlineData("$24=250.000")]
+    [InlineData("$25=500.000")]
+    [InlineData("$26=250")]
+    [InlineData("$27=1.000")]
+    [InlineData("$30=24000")]
+    [InlineData("$31=4000")]
+    [InlineData("$32=0")]
+
+    [InlineData("$100=127.775")]
+    [InlineData("$101=127.775")]
+    [InlineData("$102=918.750")]
+    [InlineData("$110=1000.000")]
+    [InlineData("$111=1000.000")]
+    [InlineData("$112=250.000")]
+    [InlineData("$120=25.000")]
+    [InlineData("$121=25.000")]
+    [InlineData("$122=10.000")]
+    [InlineData("$130=2438.400")]
+    [InlineData("$131=1219.200")]
+    [InlineData("$132=25.000")]
     public void CanParseSettings(string line) {
-      ControlledMachine machine = TestParser(_parsers.SettingParser, line);
-      Log.Information("Machine Settings {@status}", JsonConvert.SerializeObject(machine.Settings, Formatting.Indented));
-      machine.Settings.Should().NotBeNull();
+      ControlledMachine machine = TestParser(Translator.SettingParser, line);
+
+      List<FirmwareSetting> changedSettings = machine.Settings.AllSettings.Where(s => s.HasValue).ToList();
+      changedSettings.Count.Should().Be(1);
+      FirmwareSetting setting = changedSettings.First();
+      Log.Information("Machine Setting {@setting}", JsonConvert.SerializeObject(setting, Formatting.Indented));
+      setting.Key.Should().NotBeEmpty();
+      setting.Title.Should().NotBeEmpty();
+      setting.Value.Should().NotBeEmpty();
+      line.Should().Contain(setting.ToString());
     }
   }
 }

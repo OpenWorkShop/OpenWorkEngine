@@ -50,7 +50,8 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
     public void LoadSettings(JObject obj) {
       this.AssignScalarValue<string>(obj, "id", v => Id = v);
       this.AssignScalarValue<string>(obj, "machineProfileId", v => MachineProfileId = v);
-      this.AssignScalarValue<MachineCategory>(obj, "machineCategory", v => MachineCategory = v);
+      this.AssignScalarValue<string>(obj, "machineCategory",
+        v => MachineCategory = Enum.TryParse(v, out MachineCategory mc) ? mc : MachineCategory.CNC);
       this.AssignScalarValue<string>(obj, "name", v => Name = v);
       this.AssignScalarValue<bool>(obj, "onboarded", v => Onboarded = v);
       this.AssignScalarValue<string>(obj, "path", v => Path = v);

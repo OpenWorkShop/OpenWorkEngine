@@ -13,7 +13,7 @@ fragment ControlledMachine on ControlledMachine {
         ...MachineStatus
     }
     settings {
-        ...MachineSetting
+        ...FirmwareSettings
     }
     ...MachineLogs
 }

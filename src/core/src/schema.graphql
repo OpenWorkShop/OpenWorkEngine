@@ -80,7 +80,7 @@ type ControlledMachine {
     id: String!
     logs(after: String, before: String, first: Int, last: Int, order: [MachineLogEntrySortInput!], where: MachineLogEntryFilterInput): MachineLogEntryConnection
     machineProfileId: String
-    settings: [MachineSetting!]!
+    settings: FirmwareSettings!
     status: MachineStatus!
     topicId: String!
 }
@@ -116,8 +116,88 @@ type EventSettings {
 }
 
 type FileSystemSettings {
+    documentsDirectory: String
     mountPoints: [MountPointSettings!]!
-    programDirectory: String!
+}
+
+type FirmwareApplicatorSettings {
+    laserEnabled: FirmwareSettingOfBoolean!
+    settings: [FirmwareSetting!]!
+    shuttleRadius: FirmwareSettingOfDecimal!
+    shuttleWeight: FirmwareSettingOfDecimal!
+    speedMax: FirmwareSettingOfDecimal!
+    speedMin: FirmwareSettingOfDecimal!
+}
+
+type FirmwareAxisFlags {
+    x: Boolean!
+    y: Boolean!
+    z: Boolean!
+}
+
+type FirmwareAxisValues {
+    x: FirmwareSettingOfDecimal!
+    y: FirmwareSettingOfDecimal!
+    z: FirmwareSettingOfDecimal!
+}
+
+type FirmwareCalibrationSettings {
+    chainElongationFactor: FirmwareSettingOfDecimal!
+    chainLength: FirmwareSettingOfDecimal!
+    chainOverSprocket: FirmwareSettingOfBoolean!
+    chainSagCorrection: FirmwareSettingOfDecimal!
+    homeChainLengths: FirmwareSettingOfDecimal!
+    kinematics: FirmwareSettingOfKinematicsMode!
+    leftChainTolerance: FirmwareSettingOfDecimal!
+    motorDistance: FirmwareAxisValues!
+    rightChainTolerance: FirmwareSettingOfDecimal!
+    scaling: FirmwareAxisValues!
+    settings: [FirmwareSetting!]!
+}
+
+type FirmwareHomingSettings {
+    debounce: FirmwareSettingOfDecimal!
+    directionInvert: FirmwareSettingOfFirmwareAxisFlags!
+    enabled: FirmwareSettingOfBoolean!
+    feedRate: FirmwareSettingOfDecimal!
+    pullOff: FirmwareSettingOfDecimal!
+    seekRate: FirmwareSettingOfDecimal!
+    settings: [FirmwareSetting!]!
+}
+
+type FirmwareMovementSettings {
+    acceleration: FirmwareAxisValues!
+    arcTolerance: FirmwareSettingOfDecimal!
+    hardLimits: FirmwareSettingOfBoolean!
+    junctionDeviation: FirmwareSettingOfDecimal!
+    machineSize: FirmwareAxisValues!
+    positionMax: FirmwareAxisValues!
+    positionMin: FirmwareAxisValues!
+    rateMax: FirmwareAxisValues!
+    settings: [FirmwareSetting!]!
+    softLimits: FirmwareSettingOfBoolean!
+}
+
+type FirmwarePinsSettings {
+    imax: FirmwareAxisValues!
+    kDerivative: FirmwareAxisValues!
+    kIntegral: FirmwareAxisValues!
+    kProportional: FirmwareAxisValues!
+    limitPinsInvert: FirmwareSettingOfBoolean!
+    probePinInvert: FirmwareSettingOfBoolean!
+    settings: [FirmwareSetting!]!
+    stepDirectionInvert: FirmwareSettingOfFirmwareAxisFlags!
+    stepEnableInvert: FirmwareSettingOfBoolean!
+    stepIdleDelay: FirmwareSettingOfDecimal!
+    stepPulse: FirmwareSettingOfDecimal!
+    stepSignalInvert: FirmwareSettingOfFirmwareAxisFlags!
+    steps: FirmwareAxisValues!
+}
+
+type FirmwareReportingSettings {
+    reportInches: FirmwareSettingOfBoolean!
+    settings: [FirmwareSetting!]!
+    statusReport: FirmwareSettingOfStatusReportType!
 }
 
 type FirmwareRequirement implements IMachineFirmwareRequirement {
@@ -128,6 +208,86 @@ type FirmwareRequirement implements IMachineFirmwareRequirement {
     name: String
     requiredVersion: Decimal!
     suggestedVersion: Decimal!
+}
+
+type FirmwareSetting {
+    comment: String
+    id: String!
+    key: String!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+}
+
+type FirmwareSettingOfBoolean {
+    comment: String
+    currentValue: Boolean!
+    defaultVaule: Boolean!
+    id: String!
+    key: String!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+}
+
+type FirmwareSettingOfDecimal {
+    comment: String
+    currentValue: Decimal!
+    defaultVaule: Decimal!
+    id: String!
+    key: String!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+}
+
+type FirmwareSettingOfFirmwareAxisFlags {
+    comment: String
+    currentValue: FirmwareAxisFlags!
+    defaultVaule: FirmwareAxisFlags!
+    id: String!
+    key: String!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+}
+
+type FirmwareSettingOfKinematicsMode {
+    comment: String
+    currentValue: KinematicsMode!
+    defaultVaule: KinematicsMode!
+    id: String!
+    key: String!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+}
+
+type FirmwareSettingOfStatusReportType {
+    comment: String
+    currentValue: StatusReportType!
+    defaultVaule: StatusReportType!
+    id: String!
+    key: String!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+}
+
+type FirmwareSettings {
+    allSettings: [FirmwareSetting!]!
+    applicator: FirmwareApplicatorSettings!
+    calibration: FirmwareCalibrationSettings!
+    homing: FirmwareHomingSettings!
+    movement: FirmwareMovementSettings!
+    pins: FirmwarePinsSettings!
+    reporting: FirmwareReportingSettings!
 }
 
 type MachineAlert {
@@ -264,7 +424,8 @@ type MachineLogEntry {
     code: [SyntaxChunk!]!
     count: Int!
     error: MachineAlert
-    id: String!
+    id: Int!
+    isResponse: Boolean!
     logLevel: MachineLogLevel!
     message: String!
     source: MachineLogSource!
@@ -406,17 +567,6 @@ type MachineProfile {
     model: String!
     name: String!
     parts: [MachinePart!]!
-}
-
-type MachineSetting {
-    id: String!
-    isSameSetting: Boolean!
-    key: String!
-    settingType: MachineSettingType!
-    title: String
-    toLogEntry: MachineLogEntry!
-    units: MachineSettingUnits!
-    value: String!
 }
 
 type MachineSettingSettings {
@@ -687,6 +837,11 @@ enum Handshake {
     X_ON_X_OFF
 }
 
+enum KinematicsMode {
+    LINEAR
+    TRIANGULAR
+}
+
 enum MachineCategory {
     CNC
     TDP
@@ -760,11 +915,18 @@ enum MachineProgramState {
 }
 
 enum MachineSettingType {
-    ACCELERATION_X
-    ACCELERATION_Y
-    ACCELERATION_Z
+    ACCELERATION
+    APPLICATOR_WEIGHT
     ARC_TOLERANCE
+    AXIS_SCALE
+    CHAIN_ELONGATION_FACTOR
+    CHAIN_LENGTH
+    CHAIN_OVER_SPROCKET
+    CHAIN_SAG_CORRECTION
+    CHAIN_TOLERANCE_LEFT
+    CHAIN_TOLERANCE_RIGHT
     DIRECTION_PORT_INVERT
+    DIST_BETWEEN_MOTORS
     GRBL
     HARD_LIMITS
     HOMING_CYCLE
@@ -773,40 +935,43 @@ enum MachineSettingType {
     HOMING_FEED
     HOMING_PULL_OFF
     HOMING_SEEK
+    IMAX
     JUNCTION_DEVIATION
     KV
     LASER_MODE
     LIMIT_PINS_INVERT
+    MACHINE_SIZE
     MAX_SPINDLE_SPEED
     MIN_SPINDLE_SPEED
+    MOTOR_OFFSET_Y
+    PID_KD
+    PID_KI
+    PID_KP
     PROBE_PIN_INVERT
-    RATE_MAX_X
-    RATE_MAX_Y
-    RATE_MAX_Z
+    RATE_MAX
     REPORT_INCHES
+    ROTATION_DISK_RADIUS
+    SIMPLE_KINEMATICS
     SOFT_LIMITS
     STATUS_REPORT
-    STEPS_X
-    STEPS_Y
-    STEPS_Z
+    STEPS
     STEP_ENABLE_INVERT
     STEP_IDLE_DELAY
     STEP_PORT_INVERT
     STEP_PULSE
-    TRAVEL_MAX_X
-    TRAVEL_MAX_Y
-    TRAVEL_MAX_Z
+    TRAVEL_MAX
+    TRAVEL_MIN
 }
 
 enum MachineSettingUnits {
-    BOOLEAN
-    MASK
     MICROSECONDS
     MILLIMETERS
     MILLIMETERS_PER_MINUTE
     MILLIMETERS_PER_SECONDS_SQUARED
     MILLISECONDS
+    NEWTONS
     PERCENT
+    PID
     RPM
     STEPS_PER_MILLIMETER
     UNKNOWN
@@ -864,6 +1029,11 @@ enum SpinDirection {
     CCW
     CW
     NONE
+}
+
+enum StatusReportType {
+    BUFFER_DATA
+    POSITION
 }
 
 enum StopBits {
@@ -1025,6 +1195,7 @@ input MachineLogEntryFilterInput {
     code: ListFilterInputTypeOfSyntaxChunkFilterInput
     count: ComparableInt32OperationFilterInput
     error: MachineAlertFilterInput
+    isResponse: BooleanOperationFilterInput
     logLevel: MachineLogLevelOperationFilterInput
     message: StringOperationFilterInput
     or: [MachineLogEntryFilterInput!]
@@ -1037,6 +1208,7 @@ input MachineLogEntrySortInput {
     count: SortEnumType
     error: MachineAlertSortInput
     id: SortEnumType
+    isResponse: SortEnumType
     logLevel: SortEnumType
     message: SortEnumType
     source: SortEnumType

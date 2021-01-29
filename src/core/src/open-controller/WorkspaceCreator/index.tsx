@@ -1,7 +1,7 @@
 import {Typography, Container } from '@material-ui/core';
 import {ICustomizedMachine} from '../Machines/CustomizedMachine';
 import useLogger from '../../utils/logging/UseLogger';
-import CustomizeMachine from '../../components/MachineProfiles/CustomizeMachine';
+import CustomizeMachine from '../MachineProfiles/CustomizeMachine';
 import React, { FunctionComponent } from 'react';
 import OpenMachinePort from '../Ports/OpenMachinePort';
 import CreateWorkspaceModal from './CreateWorkspaceModal';

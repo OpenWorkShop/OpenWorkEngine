@@ -6,322 +6,89 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="627b5cbe-4e90-410d-9ab6-326b1616b6e2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/OpenController/Controllers/Attributes/FirmwareSettingAttribute.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OpenController/Controllers/Enums/KinematicsMode.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OpenController/Controllers/Enums/StatusReportType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OpenController/Controllers/Messages/FirmwareAxisFlags.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OpenController/Controllers/Messages/FirmwareAxisValues.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareApplicatorSettings.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareCalibrationSettings.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareHomingSettings.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareMovementSettings.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwarePinsSettings.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareReportingSettings.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareSetting.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareSettings.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OpenController/Properties/AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Makerverse.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Makerverse.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/Controllers/VersionTests.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/JsonFileDataAttribute.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/MakerverseServerTests.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/Settings/MakerverseSettingsFileTests.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/TestBase.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/ElectronNET.API.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/EngineIoClientDotNet.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/FluentAssertions.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/GreenDonut.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/HotChocolate.Abstractions.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/HotChocolate.AspNetCore.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/HotChocolate.Execution.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/HotChocolate.Fetching.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/HotChocolate.Language.SyntaxTree.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/HotChocolate.Language.Utf8.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/HotChocolate.Language.Visitors.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/HotChocolate.Language.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/HotChocolate.Subscriptions.InMemory.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/HotChocolate.Subscriptions.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/HotChocolate.Types.CursorPagination.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/HotChocolate.Types.OffsetPagination.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/HotChocolate.Types.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/HotChocolate.Utilities.Introspection.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/HotChocolate.Utilities.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/HotChocolate.Validation.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/HotChocolate.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Makerverse.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Makerverse.pdb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/MakerverseServerTests.deps.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/MakerverseServerTests.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/MakerverseServerTests.pdb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/MakerverseServerTests.runtimeconfig.dev.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/MakerverseServerTests.runtimeconfig.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Microsoft.AspNetCore.SpaServices.Extensions.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Microsoft.Bcl.AsyncInterfaces.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Microsoft.Extensions.DependencyModel.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Microsoft.Extensions.DiagnosticAdapter.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Microsoft.TestPlatform.CommunicationUtilities.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Microsoft.TestPlatform.CoreUtilities.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Microsoft.TestPlatform.CrossPlatEngine.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Microsoft.TestPlatform.PlatformAbstractions.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Microsoft.TestPlatform.Utilities.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Microsoft.VisualStudio.CodeCoverage.Shim.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Microsoft.VisualStudio.TestPlatform.Common.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Microsoft.VisualStudio.TestPlatform.ObjectModel.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Newtonsoft.Json.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/NuGet.Frameworks.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/OpenWorkEngine.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/OpenWorkEngine.pdb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/SemanticVersion.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Serilog.AspNetCore.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Serilog.Enrichers.Environment.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Serilog.Enrichers.Process.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Serilog.Enrichers.Thread.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Serilog.Exceptions.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Serilog.Extensions.Hosting.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Serilog.Extensions.Logging.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Serilog.Formatting.Compact.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Serilog.Settings.Configuration.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Serilog.Sinks.Console.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Serilog.Sinks.Debug.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Serilog.Sinks.File.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Serilog.Sinks.XUnit.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/Serilog.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/SocketIoClientDotNet.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/SuperSocket.ClientEngine.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/System.Configuration.ConfigurationManager.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/System.Security.Cryptography.ProtectedData.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/WebSocket4Net.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/appsettings.Development.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/appsettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/ci/raspbian-desktop.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/ci/raspbian-lite.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/cs/Microsoft.TestPlatform.CommunicationUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/cs/Microsoft.TestPlatform.CoreUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/cs/Microsoft.TestPlatform.CrossPlatEngine.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/cs/Microsoft.VisualStudio.TestPlatform.Common.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/cs/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/de/Microsoft.TestPlatform.CommunicationUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/de/Microsoft.TestPlatform.CoreUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/de/Microsoft.TestPlatform.CrossPlatEngine.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/de/Microsoft.VisualStudio.TestPlatform.Common.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/de/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/docs/_site/assets/js/search-data.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/electron.manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/es/Microsoft.TestPlatform.CommunicationUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/es/Microsoft.TestPlatform.CoreUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/es/Microsoft.TestPlatform.CrossPlatEngine.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/es/Microsoft.VisualStudio.TestPlatform.Common.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/es/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/files/makerverse112.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/fr/Microsoft.TestPlatform.CommunicationUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/fr/Microsoft.TestPlatform.CoreUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/fr/Microsoft.TestPlatform.CrossPlatEngine.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/fr/Microsoft.VisualStudio.TestPlatform.Common.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/fr/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/it/Microsoft.TestPlatform.CommunicationUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/it/Microsoft.TestPlatform.CoreUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/it/Microsoft.TestPlatform.CrossPlatEngine.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/it/Microsoft.VisualStudio.TestPlatform.Common.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/it/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/ja/Microsoft.TestPlatform.CommunicationUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/ja/Microsoft.TestPlatform.CoreUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/ja/Microsoft.TestPlatform.CrossPlatEngine.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/ja/Microsoft.VisualStudio.TestPlatform.Common.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/ja/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/ko/Microsoft.TestPlatform.CommunicationUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/ko/Microsoft.TestPlatform.CoreUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/ko/Microsoft.TestPlatform.CrossPlatEngine.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/ko/Microsoft.VisualStudio.TestPlatform.Common.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/ko/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/pl/Microsoft.TestPlatform.CommunicationUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/pl/Microsoft.TestPlatform.CoreUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/pl/Microsoft.TestPlatform.CrossPlatEngine.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/pl/Microsoft.VisualStudio.TestPlatform.Common.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/pl/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/pt-BR/Microsoft.TestPlatform.CommunicationUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/pt-BR/Microsoft.TestPlatform.CoreUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/pt-BR/Microsoft.TestPlatform.CrossPlatEngine.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/pt-BR/Microsoft.VisualStudio.TestPlatform.Common.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/pt-BR/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/ref/MakerverseServerTests.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/ru/Microsoft.TestPlatform.CommunicationUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/ru/Microsoft.TestPlatform.CoreUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/ru/Microsoft.TestPlatform.CrossPlatEngine.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/ru/Microsoft.VisualStudio.TestPlatform.Common.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/ru/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/testhost.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/tr/Microsoft.TestPlatform.CommunicationUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/tr/Microsoft.TestPlatform.CoreUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/tr/Microsoft.TestPlatform.CrossPlatEngine.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/tr/Microsoft.VisualStudio.TestPlatform.Common.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/tr/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/xunit.abstractions.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/xunit.assert.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/xunit.core.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/xunit.execution.dotnet.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/xunit.runner.reporters.netcoreapp10.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/xunit.runner.utility.netcoreapp10.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/xunit.runner.visualstudio.dotnetcore.testadapter.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/zh-Hans/Microsoft.TestPlatform.CommunicationUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/zh-Hans/Microsoft.TestPlatform.CoreUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/zh-Hans/Microsoft.TestPlatform.CrossPlatEngine.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/zh-Hans/Microsoft.VisualStudio.TestPlatform.Common.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/zh-Hans/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/zh-Hant/Microsoft.TestPlatform.CommunicationUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/zh-Hant/Microsoft.TestPlatform.CoreUtilities.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/zh-Hant/Microsoft.TestPlatform.CrossPlatEngine.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/zh-Hant/Microsoft.VisualStudio.TestPlatform.Common.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/bin/Debug/net5.0/zh-Hant/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/MakerverseServerTests/files/makerverse112.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/app/src/makerverse-deployment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/app/src/makerverse-deployment.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/appsettings.Production.json" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/appsettings.Production.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makerverse/src/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/src/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/ControllerSyntax/ControllerTranslator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/ControllerSyntax/ControllerTranslator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/ControllerSyntax/FallbackParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/ControllerSyntax/FallbackParser.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblHelpParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblHelpParser.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblResponseParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblResponseParser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblSettings.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblSettingsParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblSettingsParser.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/Maslow/MaslowFallbackParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/Maslow/MaslowFallbackParser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Interfaces/IControllerInstruction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Controllers/Interfaces/IControllerInstruction.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/Maslow/MaslowSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/Maslow/MaslowSyntax.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Services/Controller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Controllers/Services/Controller.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Services/Serial/MachineOutputLine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Controllers/Services/Serial/MachineOutputLine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Services/Serial/RegexParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Controllers/Services/Serial/RegexParser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Services/Serial/SerialPoll.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Controllers/Services/Serial/SerialPoll.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Services/SerialBuffer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Controllers/Services/SerialBuffer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Identity/Services/IdentityService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Identity/Services/IdentityService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Lib/Filesystem/WatchedJsonFile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Lib/Filesystem/WatchedJsonFile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Lib/Linq/NonNullEnumerables.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Lib/Linq/NonNullEnumerables.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/MachineProfiles/Enums/MachineSettingType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/MachineProfiles/Enums/MachineSettingType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Enums/MachineLogLevel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Enums/MachineLogLevel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Enums/MachineSettingUnits.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Enums/MachineSettingUnits.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/Machines/Models/ControlledMachine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/ControlledMachine.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/Machines/Models/MachineLogEntry.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/MachineLogEntry.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/Machines/Models/MachineSetting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/MachineSetting.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Syntax/GCode/GCodeBlock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Syntax/GCode/GCodeBlock.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Syntax/SyntaxChunk.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Syntax/SyntaxChunk.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/OpenController.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/OpenController.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Settings/Models/FileSystemSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Settings/Models/FileSystemSettings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Settings/Models/OpenControllerSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Settings/Models/OpenControllerSettings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Workspaces/Models/MachineSpecSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Workspaces/Models/MachineSpecSettings.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/Workspaces/Models/WorkspaceSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Workspaces/Models/WorkspaceSettings.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenControllerTests/Controllers/GrblTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenControllerTests/Controllers/GrblTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenControllerTests/Controllers/InstructionTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenControllerTests/Controllers/InstructionTests.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenControllerTests/Controllers/MaslowTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenControllerTests/Controllers/MaslowTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Health/DatabaseHealth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Health/DatabaseHealth.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Health/Healthcheck.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Health/Healthcheck.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Health/ProcessHealth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Health/ProcessHealth.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/I18n/Database/I18nDatabase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/I18n/Database/I18nDatabase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/I18n/Database/ModelBuilderExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/I18n/Database/ModelBuilderExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/I18n/LocalizedPropertyAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/I18n/LocalizedPropertyAttribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/I18n/Models/LocaleCode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/I18n/Models/LocaleCode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/I18n/Models/LocalizedProperty.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/I18n/Models/LocalizedProperty.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/I18n/Models/LocalizedString.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/I18n/Models/LocalizedString.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/I18n/Schema/I18nSchema.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/I18n/Schema/I18nSchema.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/I18n/Schema/LocalizedPropertyLoader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/I18n/Schema/LocalizedPropertyLoader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/I18n/Schema/LocalizedPropertyRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/I18n/Schema/LocalizedPropertyRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Controllers/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Controllers/AuthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Controllers/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Controllers/UsersController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Database/IdentityDatabase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Database/IdentityDatabase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Models/EmailValidation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Models/EmailValidation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Models/UserProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Models/UserProfile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Controllers/MachinesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Controllers/MachinesController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Database/Extensions/FirmwareExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Database/Extensions/FirmwareExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Database/Extensions/PartExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Database/Extensions/PartExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Database/Fluent/MachineBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Database/Fluent/MachineBuilder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Database/Fluent/MachinePartBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Database/Fluent/MachinePartBuilder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Database/Fluent/MachineSeed.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Database/Fluent/MachineSeed.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Database/MachineDatabase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Database/MachineDatabase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Database/Seed/MaslowData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Database/Seed/MaslowData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Database/Seed/PrusaSeed.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Database/Seed/PrusaSeed.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Database/Seed/SainSmartSeed.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Database/Seed/SainSmartSeed.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachineAxis.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachineAxis.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachineCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachineCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachineFeature.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachineFeature.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachineFirmware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachineFirmware.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachinePart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachinePart.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachinePresetSetting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachinePresetSetting.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachineProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachineProfile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachineSpec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Models/MachineSpec.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Schema/MachineQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Schema/MachineQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Schema/MachineSchema.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Schema/MachineSchema.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/OWSData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/OWSData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/OWSObjectType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/OWSObjectType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/OWSSchema.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/OWSSchema.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/.eslintcache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/.eslintrc.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/components/NavMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/components/NavMenu.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/store/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/store/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/views/About/AboutPoweredBy.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/views/About/AboutPoweredBy.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Account/ManageAccount.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Account/ManageAccount.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Account/Styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Account/Styles.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Account/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Account/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenControllerTests/Settings/MakerverseSettingsFileTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenControllerTests/Settings/MakerverseSettingsFileTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/gql/Machines/machineProfiles.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/gql/Machines/machineProfiles.graphql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/components/Text/Text.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Catalog/Machines.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Catalog/Machines.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Catalog/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Catalog/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Docs/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Docs/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Identity/Callbacks/Callback.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Identity/Callbacks/Callback.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Identity/Callbacks/LoggedInCallback.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Identity/Callbacks/LoggedInCallback.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Identity/Callbacks/LoggedInExternalCallback.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Identity/Callbacks/LoggedInExternalCallback.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Identity/Callbacks/VerifiedCallback.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Identity/Callbacks/VerifiedCallback.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Identity/ForgotPasswordForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Identity/ForgotPasswordForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Identity/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Identity/LoginPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Identity/LoginRegisterForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Identity/LoginRegisterForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Identity/ReSendEmailButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Identity/ReSendEmailButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Identity/ResetPasswordPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/App/src/views/Identity/ResetPasswordPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/EfcDataSet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/EfcDataSet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/Api/ApiControllerBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/Api/ApiControllerBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/Api/IdentityExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/Api/IdentityExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/Auth/AuthReturnUrl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/Auth/AuthReturnUrl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/Auth/CurrentUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/Auth/CurrentUser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/Email/Outbox.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/Email/Outbox.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/ExecutableExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/ExecutableExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/Graphql/GraphqlErrorHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/Graphql/GraphqlErrorHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/Graphql/HotChocolateExtensions/EntityFrameworkLoader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/Graphql/HotChocolateExtensions/EntityFrameworkLoader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/Graphql/HotChocolateExtensions/EntityResolverExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/Graphql/HotChocolateExtensions/EntityResolverExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/Graphql/UseOWSDataAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/Graphql/UseOWSDataAttribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/IExecutable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/IExecutable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/Middleware/RewriteApiSubdomainToPath.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/Middleware/RewriteApiSubdomainToPath.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/Middleware/UseForwardedProto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/Middleware/UseForwardedProto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/ModelBuilderExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/ModelBuilderExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/Models/ITimeStampData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/Models/ITimeStampData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/Models/ModelBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/Models/ModelBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/OWSLib.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/OWSLib.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/Observability/O11Y.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/Observability/O11Y.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/SecurityHeadersAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/SecurityHeadersAttribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Lib/WebHostOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Lib/WebHostOptions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Migrations/20201014153320_MySql5731.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Migrations/20201014153320_MySql5731.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Migrations/20201018194144_Nullability.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Migrations/20201018194144_Nullability.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Migrations/20201025191604_I18n_Firmware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Migrations/20201025191604_I18n_Firmware.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Migrations/20201030145350_Prusa_SainSmart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Migrations/20201030145350_Prusa_SainSmart.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Migrations/20201114231838_Machine_Fixes_Email_Validation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Migrations/20201114231838_Machine_Fixes_Email_Validation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Migrations/20201127191637_Machine_Preset_Settings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Migrations/20201127191637_Machine_Preset_Settings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Migrations/OWSDataModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Migrations/OWSDataModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/OWSApp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/OWSApp.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/OWSContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/OWSContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/OWSMetadata.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/OWSMetadata.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/OpenWorkShop.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/OpenWorkShop.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/StartupAuth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/StartupAuth.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/appsettings.Staging.json" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/appsettings.Staging.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenWorkShop/ci/link-dev.sh" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/ci/link-dev.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/components/Cards/CardDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/components/Cards/CardDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/components/Forms/IconSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/components/Forms/IconSelect.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/components/Forms/styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/components/Forms/styles.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/components/MachineProfiles/CreateMachineProfile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/components/MachineProfiles/CreateMachineProfile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/components/MachineProfiles/CustomizeMachine.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/components/MachineProfiles/CustomizeMachine.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Controllers/Controller.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Controllers/Controller.graphql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/api/BackendConnection.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/api/BackendConnection.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/Alerts/AlertList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/components/Alerts/AlertList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/Alerts/AlertMessage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/components/Alerts/AlertMessage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/MachineProfiles/ChooseMachinePart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/MachineProfiles/ChooseMachinePart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/MachineProfiles/ChooseMachineParts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/MachineProfiles/ChooseMachineParts.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/MachineProfiles/CreateMachineProfile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/MachineProfiles/CreateMachineProfile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/MachineProfiles/CustomizeMachine.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/MachineProfiles/CustomizeMachine.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/MachineProfiles/MachineAxesEditor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/MachineProfiles/MachineAxesEditor.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/MachineProfiles/MachineAxisEditor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/MachineProfiles/MachineAxisEditor.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/MachineProfiles/MachineProfileSearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/MachineProfiles/MachineProfileSearchBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/MachineProfiles/MachineSpecList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/MachineProfiles/MachineSpecList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/MachineProfiles/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/MachineProfiles/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/MachineProfiles/styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/MachineProfiles/styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/components/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Context/OpenControllerProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Context/OpenControllerProvider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/ControllerMain.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/ControllerMain.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Controllers/StopButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Controllers/StopButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Controllers/slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Controllers/slice.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Controllers/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Controllers/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWizControls.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWizControls.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Machines/CustomizedMachine.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Machines/CustomizedMachine.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Identity/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Identity/LoginPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Machines/Machine.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Machines/Machine.graphql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Machines/MachineLog.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Machines/MachineLog.graphql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Machines/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Machines/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Modals/BackendDisconnectedModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Modals/BackendDisconnectedModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Settings/WorkspaceSettings.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Settings/WorkspaceSettings.graphql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Terminal/Terminal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Terminal/Terminal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Terminal/styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Terminal/styles.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/ToolLoader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/ToolLoader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/hooks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/hooks.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/WorkspaceCreator/CreateWorkspaceModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/WorkspaceCreator/CreateWorkspaceModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/OpenWorkspaceButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/OpenWorkspaceButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Machines/MachineSetting.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Machines/MachineSetting.graphql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Navigation/ReconnectRedirect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Navigation/ReconnectRedirect.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/OpenController.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/OpenController.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Settings/FileSystem.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Settings/FileSystem.graphql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Terminal/LogLine.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Terminal/LogLine.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/WorkspaceCreator/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/WorkspaceCreator/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/Settings/AxesTab.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/Settings/AxesTab.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/Settings/PartsTab.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/Settings/PartsTab.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/graphql.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/graphql.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/schema.graphql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/utils/apollo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/utils/apollo.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -352,91 +119,66 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/936188FA-ED5D-4F35-B589-932B5715FA6E/34/IQueryRequest.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2159DF55-4DE9-4CC2-A3B7-EBCB1955A60C/3/HttpServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1F4F0914-5411-4A47-9D76-C00412957903/228/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/51254468-47F8-4F99-8312-2AF29C3EBED9/80/DiagnosticEventListener.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0B34D08C-2BA2-49ED-870C-45B44B4C275C/a9/66f8aa83/IObjectTypeDescriptor.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0B34D08C-2BA2-49ED-870C-45B44B4C275C/b4/84bed574/ISchemaBuilder.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8D2EEE9D-CA22-4FAB-A1AD-6076ECDDF014/1/MvcServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0B34D08C-2BA2-49ED-870C-45B44B4C275C/f2/48134203/ISchema.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/905C795E-39F5-4AA3-9D08-93DC4B947C8F/e1/95d0af40/ITopicEventSender.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CF926AA0-ABDC-4989-933F-7BD75EF9D3CC/1d/41692213/ConsoleLoggerConfigurationExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/20735148-1523-4917-A5E8-F91B0B239405/D/JsonPropertyAttribute.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1D3A0C3A-A265-4D2C-8261-1063FB829858/37/Object.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1D3A0C3A-A265-4D2C-8261-1063FB829858/4F/DateTime.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$USER_HOME$/.nuget/packages/microsoft.net.test.sdk/16.7.1/build/netcoreapp2.1/Microsoft.NET.Test.Sdk.Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/C09F9004-2D4F-42DE-9B41-A6E1DE987648/0/RegexOptions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5FBFE4B8-9ABD-41DD-9FCE-05171C2BEBC8/3/System.IO.Ports.notsupported.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/EFB0273D-A98C-4881-BAC1-BC27603C69AA/b2/93502f46/PatternLogEventsAssertions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/0B34D08C-2BA2-49ED-870C-45B44B4C275C/1E4/ISchemaInterceptor.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/905C795E-39F5-4AA3-9D08-93DC4B947C8F/08/3dd841dd/ITopicEventReceiver.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/0B34D08C-2BA2-49ED-870C-45B44B4C275C/85/ExtendObjectTypeAttribute.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/EFB0273D-A98C-4881-BAC1-BC27603C69AA/34/362ab4c7/InMemorySinkAssertions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0B34D08C-2BA2-49ED-870C-45B44B4C275C/27/210b0c44/IDescriptorContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/C9C5A075-95E7-427D-88D6-0E688438E069/1b/03ad71f8/ConcurrentDictionary`2.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/F0CF0C42-58BA-4421-86E7-2CD7E4BF86FE/4F/IHasContextData.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/21BCA824-3AF7-4B5B-A3D8-97D8E6C79E81/25/LogEvent.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CF926AA0-ABDC-4989-933F-7BD75EF9D3CC/cb/1a2f5340/AnsiConsoleTheme.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1D3A0C3A-A265-4D2C-8261-1063FB829858/ea/b9ccb439/Action`3.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1D3A0C3A-A265-4D2C-8261-1063FB829858/29/fa7d4176/IObservable`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5F014CDC-DDBF-4849-8B91-8DEF8F5D0EDB/47/3bab74f9/MySqlDbContextOptionsBuilder.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0B34D08C-2BA2-49ED-870C-45B44B4C275C/1a/0a14e87c/CreateConvention.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/62C3C544-B083-4761-BC8E-34B51B9A6C6D/15/SchemaRequestExecutorBuilderExtensions.TypeInterceptor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/F6596DDF-B8A5-4511-8B80-A32F82CD494C/8/AuthorizeAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/20735148-1523-4917-A5E8-F91B0B239405/A1/StringEnumConverter.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/0469A94D-BD01-4AEE-B0AC-4684866FFAF0/24/LambdaExpression.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/20735148-1523-4917-A5E8-F91B0B239405/3D/CamelCaseNamingStrategy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/B1AF7E98-236D-4C20-A153-7B232DC972A6/66/AttributeUsageAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/A0A7087A-13E9-4FFC-B4D5-3C83A769C158/05/281e4949/DescriptorAttribute.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblOptionParser.cs" />
-      <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblParameterParser.cs" />
-      <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblStatusParser.cs" />
-      <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblVersionParser.cs" />
-      <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblWelcomeParser.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Controllers/Services/Serial/ConstantStringParser.cs" />
-      <option value="$PROJECT_DIR$/OpenControllerTests/TestBase.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Machines/Enums/MachineTopic.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Controllers/Grbl/Parsers/ResponseParser.cs" />
-      <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/ResponseParser.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Machines/Models/MachineAlert.cs" />
-      <option value="$PROJECT_DIR$/OpenWorkShop/Startup.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Controllers/Services/ControllerManager.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Workspaces/Models/Workspace.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Ports/Models/SystemPort.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Ports/Models/ConnectedPort.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Ports/Models/PortStatus.cs" />
-      <option value="$PROJECT_DIR$/OpenController/OpenControllerStartup.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Workspaces/Models/WorkspaceSettings.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Machines/Interfaces/IMachineFirmwareRequirement.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Controllers/Messages/ScriptResult.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Machines/Messages/MachineLogEntryFilterInputType.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Controllers/Services/Controller.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Controllers/Messages/MachineExecutionResult.cs" />
-      <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblSetting.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Machines/Enums/MachineSettingUnits.cs" />
-      <option value="$PROJECT_DIR$/OpenController/MachineProfiles/Enums/MachineSettingType.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Controllers/Models/CompiledInstruction.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Controllers/Interfaces/IControllerInstruction.cs" />
-      <option value="$PROJECT_DIR$/OpenControllerTests/Controllers/InstructionTests.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Controllers/Services/Serial/SerialPoll.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Controllers/Services/SerialBuffer.cs" />
-      <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblHelpParser.cs" />
-      <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/Maslow/MaslowFallbackParser.cs" />
-      <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblResponseParser.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Syntax/SyntaxChunk.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Syntax/GCode/GCodeBlock.cs" />
       <option value="$PROJECT_DIR$/OpenController/Controllers/Services/Serial/RegexParser.cs" />
-      <option value="$PROJECT_DIR$/OpenControllerTests/Controllers/GrblTests.cs" />
-      <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/FallbackParser.cs" />
-      <option value="$PROJECT_DIR$/OpenControllerTests/Controllers/MaslowTests.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Controllers/Services/Serial/MachineOutputLine.cs" />
       <option value="$PROJECT_DIR$/OpenController/Machines/Enums/MachineLogLevel.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Machines/Models/ControlledMachine.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Machines/Models/MachineSetting.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Machines/Models/MachineLogEntry.cs" />
-      <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblSettings.cs" />
       <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/SettingsDefinitions.cs" />
-      <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblSyntax.cs" />
+      <option value="$PROJECT_DIR$/OpenController/obj/Debug/net5.0/OpenController.AssemblyInfo.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Properties/AssemblyInfo.cs" />
+      <option value="$PROJECT_DIR$/OpenWorkShop/Startup.cs" />
+      <option value="$PROJECT_DIR$/Makerverse/Program.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Settings/Models/FileSystemSettings.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Lib/Filesystem/WatchedJsonFile.cs" />
+      <option value="$PROJECT_DIR$/OpenWorkShop/Lib/ExecutableExtensions.cs" />
+      <option value="$PROJECT_DIR$/OpenController/OpenControllerContext.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Identity/Services/IdentityService.cs" />
+      <option value="$PROJECT_DIR$/OpenController/MachineProfiles/Enums/MachineSettingType.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Machines/Models/MachineSettings.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Lib/Graphql/AuthorizeOpenControllerUserAttribute.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Controllers/Attributes/FirmwareSettingAttribute.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Workspaces/Models/WorkspaceSettings.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Workspaces/Models/MachineSpecSettings.cs" />
+      <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblSettings.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Controllers/Enums/StatusReportType.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Controllers/Messages/FirmwareAxisValues.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Lib/Linq/NonNullEnumerables.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Controllers/Messages/FirmwareAxisFlags.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Machines/Models/MachineLogEntry.cs" />
+      <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/FallbackParser.cs" />
+      <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblHelpParser.cs" />
+      <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblResponseParser.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Controllers/Services/Controller.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Controllers/Services/Serial/MachineOutputLine.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Controllers/Services/SerialBuffer.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareReportingSettings.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareHomingSettings.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareStepperPinsSettings.cs" />
       <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/ControllerTranslator.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareMaslowSettings.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Controllers/Enums/KinematicsMode.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Machines/Enums/MachineSettingUnits.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareApplicatorSettings.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareCalibrationSettings.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareSettings.cs" />
+      <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/Maslow/MaslowSyntax.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareMovementSettings.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwarePinsSettings.cs" />
       <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblSettingsParser.cs" />
+      <option value="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblSyntax.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Machines/Models/ControlledMachine.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Lib/Graphql/OpenControllerSocketSessionInterceptor.cs" />
+      <option value="$PROJECT_DIR$/OpenControllerTests/Controllers/MaslowTests.cs" />
+      <option value="$PROJECT_DIR$/OpenControllerTests/Controllers/GrblTests.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareSetting.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Machines/Models/MachineSetting.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1l4my4TnlSIUe2KMx2jkxdZSpZ6" />
@@ -461,7 +203,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.standard" value="" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Console Colors" />
+    <property name="settings.editor.selected.configurable" value="InlayHintsGeneralOptionsPageId" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -565,6 +307,13 @@
       <workItem from="1611326792427" duration="2160000" />
       <workItem from="1611431014019" duration="991000" />
       <workItem from="1611493630644" duration="27803000" />
+      <workItem from="1611751867902" duration="56000" />
+      <workItem from="1611751954869" duration="718000" />
+      <workItem from="1611753672456" duration="637000" />
+      <workItem from="1611755996413" duration="3538000" />
+      <workItem from="1611759984258" duration="3713000" />
+      <workItem from="1611768472600" duration="36220000" />
+      <workItem from="1611875229157" duration="10137000" />
     </task>
     <servers />
   </component>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import MachineAxesEditor from '../../../components/MachineProfiles/MachineAxesEditor';
+import MachineAxesEditor from '../../MachineProfiles/MachineAxesEditor';
 import _ from 'lodash';
 import {IHaveWorkspace} from '../types';
 import useLogger from '../../../utils/logging/UseLogger';

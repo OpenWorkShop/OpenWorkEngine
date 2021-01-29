@@ -64,7 +64,8 @@ namespace OpenWorkEngine.OpenController.Lib.Filesystem {
       string contents = DefaultContents;
       TJson? data;
       try {
-        contents = File.ReadAllText(_path);
+        contents = File.Exists(_path) ? File.ReadAllText(_path) : "";
+        contents = string.IsNullOrWhiteSpace(contents) ? "{}" : contents;
         data = Load(JsonConvert.DeserializeObject<JObject>(contents));
       } catch (Exception e) {
         Log.Error(e, $"Failed to read {_path}");

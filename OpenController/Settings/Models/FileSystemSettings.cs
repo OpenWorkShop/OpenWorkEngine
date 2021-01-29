@@ -7,7 +7,7 @@ using OpenWorkEngine.OpenController.Lib.Graphql;
 namespace OpenWorkEngine.OpenController.Settings.Models {
   [AuthorizeOpenControllerUser]
   public class FileSystemSettings : ILoadSettingsObject {
-    [JsonProperty("programDirectory")] public string ProgramDirectory { get; set; } = default!;
+    [JsonProperty("documentsDirectory")] public string? DocumentsDirectory { get; set; }
 
     [JsonProperty("mountPoints")] public List<MountPointSettings> MountPoints { get; set; } = new();
 

@@ -1,11 +1,10 @@
 import {
   AlertError,
-  ControlledMachineFragment,
+  ControlledMachineFragment, FirmwareSettingsFragment,
   MachineConfigFragment,
   MachineExecutionResultFragment,
   MachineLogEntryConnectionFragment,
   MachineLogEntryFragment,
-  MachineSettingFragment,
   MachineStatusFragment,
   PageInfoFragment
 } from '../graphql';
@@ -42,7 +41,7 @@ export interface IControlledMachineUpdate {
 }
 
 export interface IMachineSettingsUpdate extends IControlledMachineUpdate {
-  settings: MachineSettingFragment[];
+  settings: FirmwareSettingsFragment;
 }
 
 export interface IMachineStatusUpdate extends IControlledMachineUpdate {

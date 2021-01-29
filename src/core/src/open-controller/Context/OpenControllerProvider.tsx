@@ -105,8 +105,8 @@ const OpenControllerProvider: FunctionComponent<IProps> = (props) => {
     return ows.t(key, opts);
   }
 
-  // Set up the IMakerverse interface for the .Provider...
-  const makerverse: IOpenController = { deployment, ows, connection, settings, session, t };
+  // Set up the interface for the .Provider...
+  const openController: IOpenController = { deployment, ows, connection, settings, session, t };
 
   function onLoaded(session: OpenControllerSessionFragment, startup: StartupFragment) {
     log.debug('loaded', 'session', !!session, 'settings', !!startup);
@@ -117,7 +117,7 @@ const OpenControllerProvider: FunctionComponent<IProps> = (props) => {
   }
 
   return (
-    <OpenControllerContext.Provider value={makerverse} >
+    <OpenControllerContext.Provider value={openController} >
       <SystemPortProvider >
         <Switch>
           <Route path='/login' component={LoginPage} />

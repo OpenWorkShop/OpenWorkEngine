@@ -9,5 +9,13 @@ namespace OpenWorkEngine.OpenController.Lib.Linq {
           nonEmpty.Add(t);
       return nonEmpty;
     }
+
+    public static List<string> SelectNonWhiteSpaceStrings(this IEnumerable<string?> items) {
+      List<string> nonEmpty = new();
+      foreach (string? t in items)
+        if (t != null && !string.IsNullOrWhiteSpace(t))
+          nonEmpty.Add(t);
+      return nonEmpty;
+    }
   }
 }

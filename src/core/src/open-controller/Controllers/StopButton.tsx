@@ -46,20 +46,20 @@ const StopButton: FunctionComponent<Props> = (props) => {
   if (resetResult.error) log.warn('unlockResult command error', unlockResult.error);
 
   return (
-    <Tooltip title={getQuickActionTip()}>
-      <Fab
-        onClick={onClick}
-        className={clsx(classes.controllerCardQuickActionButton, {
-          [classes.emergencyButton]: !hasAlarm,
-          [classes.emergencyButtonInverted]: hasAlarm,
-        })}
-        disabled={isDisabled}
-      >
+    <Fab
+      onClick={onClick}
+      className={clsx(classes.controllerCardQuickActionButton, {
+        [classes.emergencyButton]: !hasAlarm,
+        [classes.emergencyButtonInverted]: hasAlarm,
+      })}
+      disabled={isDisabled}
+    >
+      <Tooltip title={getQuickActionTip()}>
         <Typography variant="h5">
           {getAbbreviation()}
         </Typography>
-      </Fab>
-    </Tooltip>
+      </Tooltip>
+    </Fab>
   );
 };
 

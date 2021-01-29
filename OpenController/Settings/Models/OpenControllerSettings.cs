@@ -27,7 +27,7 @@ namespace OpenWorkEngine.OpenController.Settings.Models {
     [JsonProperty("hub")] public MakerHubSettings Hub { get; set; } = new();
 
     public void LoadSettings(JObject obj) {
-      if (obj["watchDirectory"] is JValue wd) FileSystem.ProgramDirectory = wd.Value<string>();          // Legacy.
+      if (obj["watchDirectory"] is JValue wd) FileSystem.DocumentsDirectory = wd.Value<string>();          // Legacy.
       FileSystem.MountPoints = LoadSettingsExtensions.LoadArray<MountPointSettings>(obj, "mountPoints"); // Legacy.
       if (obj["fileSystem"] is JObject fs) FileSystem.LoadSettings(fs);
 

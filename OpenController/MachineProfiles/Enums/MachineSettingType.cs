@@ -26,17 +26,28 @@ namespace OpenWorkEngine.OpenController.MachineProfiles.Enums {
     MaxSpindleSpeed,
     MinSpindleSpeed,
     LaserMode,
-    StepsX,
-    StepsY,
-    StepsZ,
-    RateMaxX,
-    RateMaxY,
-    RateMaxZ,
-    AccelerationX,
-    AccelerationY,
-    AccelerationZ,
-    TravelMaxX,
-    TravelMaxY,
-    TravelMaxZ,
+    Steps,        // X/Y/Z
+    RateMax,      // X/Y/Z
+    Acceleration, // X/Y/Z
+    TravelMax,    // X/Y/Z
+    // Maslow...
+    TravelMin,    // X/Y/Z
+    PidKp,        // X/Y/Z
+    PidKi,        // X/Y/Z
+    PidKd,        // X/Y/Z
+    Imax,
+    ChainOverSprocket,
+    MachineSize,  // X/Y (e.g., workspace)
+    DistBetweenMotors,
+    MotorOffsetY,
+    AxisScale, // X/Y/Z
+    ChainSagCorrection,
+    ChainToleranceLeft,
+    ChainToleranceRight,
+    RotationDiskRadius,
+    ChainLength,
+    SimpleKinematics,
+    ApplicatorWeight,
+    ChainElongationFactor,
   }
 }

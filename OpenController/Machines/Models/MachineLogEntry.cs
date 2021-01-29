@@ -16,7 +16,7 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
   }
 
   public class MachineLogEntry : IEquatable<MachineLogEntry> {
-    public string Id { get; }
+    public int Id { get; internal set; } = 0;
     public string Message { get; }
     public List<DateTime> Timestamps { get; } = new();
     public int Count => Timestamps.Count;
@@ -25,39 +25,42 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     public MachineLogSource Source { get; } = MachineLogSource.SerialRead;
     public MachineAlert? Error { get; }
     public SyntaxChunk[] Code { get; } = new SyntaxChunk[]{};
+    public bool IsResponse { get; init; }
 
-    // Log a write-line.
-    public MachineLogEntry(
-      CompiledInstruction compiled, MachineLogLevel logLevel = MachineLogLevel.Inf
+    private MachineLogEntry(
+      string message,
+      MachineLogLevel logLevel = MachineLogLevel.Inf,
+      bool isResponse = false,
+      MachineLogSource source = MachineLogSource.SerialRead,
+      MachineAlert? error = null,
+      params SyntaxChunk[] code
     ) {
-      Id = Guid.NewGuid().ToString();
-      Timestamps.Push( DateTime.Now );
-
-      Message = compiled.Source;
-      Code = compiled.Chunks.ToArray();
-      LogLevel = logLevel;
-      Source = MachineLogSource.SerialWrite;
-    }
-
-    internal MachineLogEntry(
-      string message, MachineLogLevel logLevel = MachineLogLevel.Inf, params SyntaxChunk[] code
-    ) {
-      Id = Guid.NewGuid().ToString();
-      Timestamps.Push( DateTime.Now );
-
-      Message = message.Trim();
-      LogLevel = logLevel;
-      Code = code;
-    }
-
-    internal MachineLogEntry(string message, MachineAlert error) {
-      Id = Guid.NewGuid().ToString();
       Timestamps.Push( DateTime.Now );
 
       Error = error;
       Message = message;
-      LogLevel = MachineLogLevel.Err;
+      IsResponse = isResponse;
+      LogLevel = logLevel;
+      Source = source;
+      Code = code;
     }
+
+    public static MachineLogEntry FromReadAck(string message) =>
+      new(message, MachineLogLevel.Dbg, isResponse: true);
+
+    public static MachineLogEntry FromReadCode
+      (string message, MachineLogLevel logLevel = MachineLogLevel.Inf, params SyntaxChunk[] code) =>
+      new(message, logLevel, code: code);
+
+    public static MachineLogEntry FromReadMessage(string message, MachineLogLevel logLevel = MachineLogLevel.Inf) =>
+      new(message, logLevel);
+
+    public static MachineLogEntry FromReadError(string message, MachineAlert error) =>
+      new(message, MachineLogLevel.Err, error: error, isResponse: true);
+
+    public static MachineLogEntry FromWrittenInstruction(
+      CompiledInstruction compiled, MachineLogLevel logLevel = MachineLogLevel.Inf
+    ) => new (compiled.Source, logLevel, code: compiled.Chunks.ToArray(), source: MachineLogSource.SerialWrite);
 
     public bool Equals(MachineLogEntry? other) {
       if (ReferenceEquals(null, other)) return false;

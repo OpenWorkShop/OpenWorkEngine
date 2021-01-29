@@ -9,21 +9,20 @@ using OpenWorkEngine.OpenController.Workspaces.Models;
 
 namespace OpenWorkEngine.OpenController.Machines.Models {
   public class MachineSetting : IMachineSetting, IEquatable<MachineSetting> {
-    public string Id { get; } = "";
+    public string Id { get; internal set; } = "";
 
-    public string? Title { get; init; }
+    public string? Title { get; internal set; }
 
     public MachineSettingType SettingType { get; init; }
 
-    public string Key { get; init; } = default!;
+    public virtual string Key { get; internal set; } = default!;
 
-    public string Value { get; init; } = default!;
+    public virtual string Value { get; internal set; } = default!;
 
     public MachineSettingUnits Units { get; init; } = MachineSettingUnits.Unknown;
 
-    public MachineLogEntry ToLogEntry() {
-      string val = Value;
-      if (val.Contains('.')) val = val.Trim('0').Trim('.');
+    internal MachineLogEntry ToLogEntry() {
+      string valStr = ShortNumber(Value);
       string title = Title ?? Key;
 
       List<SyntaxChunk> chunks = new List<SyntaxChunk>();
@@ -31,14 +30,20 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
         chunks.Push(new SyntaxChunk() {Value = Key, Type = SyntaxType.Keyword});
         chunks.Push(new SyntaxChunk() {Value = "=", Type = SyntaxType.Operator});
       }
-      chunks.Push(new SyntaxChunk() {Value = val, Type = SyntaxType.Value});
+      chunks.Push(new SyntaxChunk() {Value = valStr, Type = SyntaxType.Value});
 
-      return new MachineLogEntry(title, MachineLogLevel.Cfg, chunks.ToArray());
+      return MachineLogEntry.FromReadCode(title, MachineLogLevel.Cfg, chunks.ToArray());
+    }
+
+    public static string ShortNumber(string val) {
+      if (val.Contains('.')) val = val.Trim('0').TrimEnd('.');
+      if (val.StartsWith('.') || val.Length <= 0) val = $"0{val}";
+      return val;
     }
 
     public override string ToString() => $"[{SettingType}: {Key}={Value}]";
 
-    public bool IsSameSetting(MachineSetting other) => SettingType == other.SettingType && Key == other.Key;
+    internal bool IsSameSetting(MachineSetting other) => SettingType == other.SettingType && Key == other.Key;
 
     public bool Equals(MachineSetting? other) {
       if (ReferenceEquals(null, other)) return false;

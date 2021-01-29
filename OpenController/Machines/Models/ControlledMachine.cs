@@ -4,6 +4,7 @@ using System.Linq;
 using HotChocolate.Data;
 using HotChocolate.Language;
 using HotChocolate.Types;
+using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.Lib.Observables;
 using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Interfaces;
@@ -28,7 +29,8 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
 
     public MachineConfiguration Configuration { get; } = new();
 
-    public List<MachineSetting> Settings { get; } = new();
+    public FirmwareSettings Settings { get; } = new();
+    // public List<MachineSetting> Settings { get; } = new();
 
     [UsePaging]
     [UseFiltering(typeof(MachineLogEntryFilterInputType))]
@@ -65,19 +67,19 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     internal string PortName { get; }
 
     internal List<MachineLogEntry> LogEntries { get; } = new();
-
-    internal bool SetSetting(MachineSetting setting) {
-      int i = Settings.FindIndex(s => s.Key.Equals(setting.Key));
-      if (i >= 0) {
-        if (setting.GetHashCode() == Settings[i].GetHashCode()) {
-          return false;
-        }
-        Settings.RemoveAt(i);
-      }
-      Settings.Push(setting);
-      Settings.Sort((a, b) => String.Compare(a.Key, b.Key, StringComparison.Ordinal));
-      return true;
-    }
+    //
+    // internal bool SetSetting(MachineSetting setting) {
+    //   int i = Settings.FindIndex(s => s.Key.Equals(setting.Key));
+    //   if (i >= 0) {
+    //     if (setting.GetHashCode() == Settings[i].GetHashCode()) {
+    //       return false;
+    //     }
+    //     Settings.RemoveAt(i);
+    //   }
+    //   Settings.Push(setting);
+    //   Settings.Sort((a, b) => String.Compare(a.Key, b.Key, StringComparison.Ordinal));
+    //   return true;
+    // }
 
     internal HashSet<MachineTopic> AddLogEntry(MachineLogEntry entry, bool dedupe = true) {
       if (dedupe && LogEntries.Any()) {
@@ -87,6 +89,7 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
           return OnLogEntry(entry);
         }
       }
+      entry.Id = LogEntries.Count + 1;
       LogEntries.Push(entry);
       return OnLogEntry(entry);
     }

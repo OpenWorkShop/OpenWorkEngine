@@ -9,6 +9,6 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
     public GrblHelpParser() : base(@"^\[(?:HLP:)(?<help>.+)\]$") { }
 
     protected override MachineOutputLine OnData(MachineOutputLine line, Dictionary<string, string> values) =>
-      line.WithLogEntry(new MachineLogEntry(values["help"]));
+      line.WithLogEntry(MachineLogEntry.FromReadMessage(values["help"]));
   }
 }

@@ -22,7 +22,7 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax {
         // Unknown prefix. Re-combine message.
         msg = $"{pre}:{msg}";
       }
-      return line.WithLogEntry(new MachineLogEntry(msg)).WithParsedResponse();
+      return line.WithLogEntry(MachineLogEntry.FromReadMessage(msg)).WithParsedResponse();
     }
 
     protected override MachineOutputLine OnData(

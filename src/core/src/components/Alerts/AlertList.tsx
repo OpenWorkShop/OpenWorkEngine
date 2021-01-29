@@ -44,13 +44,13 @@ const AlertList: React.FunctionComponent<OwnProps> = (props) => {
     <div className={classes.root}>
       {allErrors.map((e) => {
         return (
-          <AlertMessage key={i} {...e} severity="error" />
+          <AlertMessage key={i} alert={e} severity="error" />
         );
       })}
       {allWarnings.map((a) => {
         i++;
         return (
-          <AlertMessage key={i} {...a} severity="warning" />
+          <AlertMessage key={i} alert={a} severity="warning" />
         );
       })}
     </div>

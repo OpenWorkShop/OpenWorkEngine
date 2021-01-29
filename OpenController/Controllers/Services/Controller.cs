@@ -130,6 +130,8 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       await Buffer.TryReadSerial();
       await Buffer.TryEmitChanges();
       await Buffer.TryWriteSerial();
+      // Ensure that every line-read happens at a different timestamp, and that other threads are not starved.
+      await Task.Delay(1);
     }
 
     // Background thread "main" function for this port/controller combo.

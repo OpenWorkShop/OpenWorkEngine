@@ -28,7 +28,8 @@ const LogLine: FunctionComponent<Props> = (props) => {
     t('{{ level }} message reported by the machine', { level });
   const stateColor = getLogLevelColor(logEntry.logLevel, theme);
   const ts = new Date(logEntry.timestamp);
-  const timestamp = ts.toLocaleTimeString().split(' ')[0];
+
+  const timestamp = ts.getMilliseconds().toString();// ts.toLocaleTimeString().split(' ')[0];
   const tip = t('{{ title }} at {{ timestamp }}',{ title, timestamp });
   const icon = getLogEntryIcon(logEntry);
   const logSysColor = getLogLevelColor(MachineLogLevel.Dbg, theme);
@@ -38,7 +39,7 @@ const LogLine: FunctionComponent<Props> = (props) => {
     return <span style={{ color: color ?? 'white' }} key={key} >{text}</span>;
   }
 
-  function renderInstruction(id: string, stateColor: string, code: SyntaxChunkFragment[]) {
+  function renderInstruction(id: number, stateColor: string, code: SyntaxChunkFragment[]) {
     const ret: React.ReactNode[] = [
       // renderTextSpan(inst.source, stateColor, `${id}-translation`),
       renderTextSpan(' [', logSysColor, `${id}-open`),

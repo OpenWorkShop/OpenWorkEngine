@@ -39,7 +39,7 @@ namespace OpenWorkEngine.OpenControllerTests.Settings {
       OpenControllerSettings settings = new();
       settings.LoadSettings(obj);
 
-      settings.FileSystem.ProgramDirectory.Should().NotBeEmpty();
+      settings.FileSystem.DocumentsDirectory.Should().NotBeEmpty();
 
       settings.AppUpdates.Prereleases.Should().BeTrue();
       settings.AppUpdates.CheckForUpdates.Should().BeFalse();

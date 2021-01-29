@@ -2,7 +2,7 @@ import { useLogger } from '../../utils/logging/UseLogger';
 import _ from 'lodash';
 import ChooseMachinePart from './ChooseMachinePart';
 import MachineSpecList from './MachineSpecList';
-import { getMachinePartTypeTranslationKey } from '../../open-controller/Machines/MachinePartType';
+import { getMachinePartTypeTranslationKey } from '../Machines/MachinePartType';
 import React from 'react';
 import {
   Typography,
@@ -16,7 +16,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretSquareDown } from '@fortawesome/free-solid-svg-icons';
 import {useOwsTrans} from '../../hooks';
-import { IMachinePartChoice } from '../../open-controller/Machines/CustomizedMachine';
+import { IMachinePartChoice } from '../Machines/CustomizedMachine';
 
 interface IMachineOptionsProps {
   parts: IMachinePartChoice[];

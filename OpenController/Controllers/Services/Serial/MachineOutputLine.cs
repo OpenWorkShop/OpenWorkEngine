@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging.Abstractions;
+using OpenWorkEngine.OpenController.ControllerSyntax;
 using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Models;
 using OpenWorkEngine.OpenController.Syntax;
@@ -10,7 +11,9 @@ namespace OpenWorkEngine.OpenController.Controllers.Services.Serial {
   internal class MachineOutputLine {
     internal string Raw { get; }
 
-    internal Controller? Controller { get; }
+    // internal Controller? Controller { get; }
+
+    internal ControllerTranslator Translator { get; }
 
     internal ControlledMachine Machine { get; }
 
@@ -21,14 +24,14 @@ namespace OpenWorkEngine.OpenController.Controllers.Services.Serial {
 
     private bool _finished;
 
-    private MachineLogEntry? _logEntry;
+    internal MachineLogEntry? LogEntry { get; private set; }
 
     internal ILogger Log => Machine.Log;
 
-    public MachineOutputLine(string line, ControlledMachine machine, Controller? controller) {
+    public MachineOutputLine(string line, ControlledMachine machine, ControllerTranslator translator) {
       Raw = line;
       Machine = machine;
-      Controller = controller;
+      Translator = translator;
     }
 
     public MachineOutputLine WithTopics(params MachineTopic[] topics) {
@@ -38,8 +41,8 @@ namespace OpenWorkEngine.OpenController.Controllers.Services.Serial {
     }
 
     public MachineOutputLine WithLogEntry(MachineLogEntry entry) {
-      if (_logEntry != null) throw new ArgumentException($"Log entry already provided for {Raw}");
-      _logEntry = entry;
+      if (LogEntry != null) throw new ArgumentException($"Log entry already provided for {Raw}");
+      LogEntry = entry;
       Machine.AddLogEntry(entry);
       return WithTopics(MachineTopic.Log);
     }

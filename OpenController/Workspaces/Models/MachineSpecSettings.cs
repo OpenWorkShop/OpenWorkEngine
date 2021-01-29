@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
@@ -12,7 +13,16 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
     [JsonProperty("id")] public string Id { get; set; } = default!;
 
     public void LoadSettings(JObject obj) {
-      JsonConvert.PopulateObject(JsonConvert.SerializeObject(obj), this);
+      // JsonConvert.PopulateObject(JsonConvert.SerializeObject(obj), this);
+      this.AssignScalarValue<string>(obj, "id", v => Id = v);
+      this.AssignScalarValue<decimal>(obj, "value", v => Value = v);
+      this.AssignScalarValue<string>(obj, "specType", AssignSpecType);
+    }
+
+    private void AssignSpecType(string val) {
+      // handle legacy MAX_AMPS, etc.
+      val = val.Replace("_", "");
+      SpecType = Enum.Parse<MachineSpecType>(val, true);
     }
 
     [JsonProperty("specType")]

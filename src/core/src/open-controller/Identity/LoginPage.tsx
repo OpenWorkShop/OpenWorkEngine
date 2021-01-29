@@ -16,6 +16,8 @@ import useStyles from './styles';
 import analytics from '../analytics';
 import ReactGA from 'react-ga';
 import {useOpenControllerSettings, useTrans, useDocumentationUrl} from '../Context';
+import BackendDisconnectedModal from '../Modals/BackendDisconnectedModal';
+import Navigation from '../Navigation';
 
 const LoginPage: FunctionComponent = () => {
   const log = useLogger(LoginPage);
@@ -76,7 +78,7 @@ const LoginPage: FunctionComponent = () => {
         />
         <FormControlLabel
           control={<Checkbox checked={dangerous} onChange={() => setDangerous(!dangerous)} />}
-          label={t('I understand "guest mode" is hazardous. ')}
+          label={t('I understand "guest mode" is hazardous.')}
         />
         <br />
         <Button onClick={() => handleGuest()} disabled={authenticating || !dangerous}>

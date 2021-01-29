@@ -87,7 +87,7 @@ namespace OpenWorkEngine.OpenController.Identity.Services {
       bool changed = false;
       if (Context.EnabledUsers.Count < 1) {
         // First user. Automatically add as a user.
-        Context.EnabledUsers.Push(user);
+        Context.Settings.Users.Push(user);
         changed = true;
       } else {
         // Already have users. Check that this user is one of them.

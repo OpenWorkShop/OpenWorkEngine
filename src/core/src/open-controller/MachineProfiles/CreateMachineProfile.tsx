@@ -1,7 +1,7 @@
-import {ICustomizedMachineProfile} from '../../open-controller/Machines/CustomizedMachine';
+import {ICustomizedMachineProfile} from '../Machines/CustomizedMachine';
 import {useLogger} from '../../utils/logging/UseLogger';
 import React from 'react';
-import {MachineCategory, MachineControllerType, MachineFirmwareMinimalFragment} from '../../open-controller/graphql';
+import {MachineCategory, MachineControllerType, MachineFirmwareMinimalFragment} from '../graphql';
 import {
   Checkbox,
   createStyles,
@@ -18,8 +18,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import {ToggleButton, ToggleButtonGroup} from '@material-ui/lab';
-import {normalizeMachineControllerType} from '../../open-controller/Machines/MachineControllerType';
-import {BaudRate} from '../../open-controller/Machines/BaudRate';
+import {normalizeMachineControllerType} from '../Machines/MachineControllerType';
+import {BaudRate} from '../Machines/BaudRate';
 import {useOwsTrans} from '../../hooks';
 
 const useStyles = makeStyles((theme: Theme) =>

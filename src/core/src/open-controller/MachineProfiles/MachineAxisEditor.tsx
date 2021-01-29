@@ -1,12 +1,12 @@
 
 import React from 'react';
 import { Grid, Typography, InputAdornment } from '@material-ui/core';
-import AlertList from '../Alerts/AlertList';
-import HoverHelpStep from '../Alerts/HoverHelpStep';
-import NumericInput from '../Forms/NumericInput';
-import {IAlertMessage} from '../Alerts';
+import AlertList from '../../components/Alerts/AlertList';
+import HoverHelpStep from '../../components/Alerts/HoverHelpStep';
+import NumericInput from '../../components/Forms/NumericInput';
+import {IAlertMessage} from '../../components/Alerts';
 import {useOwsTrans} from '../../hooks';
-import {IAxisProps} from '../../open-controller/Machines/CustomizedMachine';
+import {IAxisProps} from '../Machines/CustomizedMachine';
 import useStyles from './styles';
 
 interface IMachineAxisEditorProps {

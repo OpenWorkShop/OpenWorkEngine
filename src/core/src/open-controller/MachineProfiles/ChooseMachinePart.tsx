@@ -1,5 +1,5 @@
-import { MachinePartCompleteFragment } from '../../open-controller/graphql';
-import { getMachinePartTypeTranslationKey } from '../../open-controller/Machines/MachinePartType';
+import { MachinePartCompleteFragment } from '../graphql';
+import { getMachinePartTypeTranslationKey } from '../Machines/MachinePartType';
 import * as React from 'react';
 import _ from 'lodash';
 import {
