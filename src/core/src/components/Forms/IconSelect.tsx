@@ -7,26 +7,30 @@ import AnyIcon, {IHaveAnyIcon} from '../AnyIcon';
 
 export type SelectId = string | number;
 
-interface ISelectItem extends IHaveAnyIcon {
+export interface ISelectItem {
   itemId: SelectId;
   title: string;
   color?: string;
 }
 
-interface ISelectProps<T extends ISelectItem> {
+export type SelectItemIcon = ISelectItem & IHaveAnyIcon;
+
+interface ISelectProps<T extends SelectItemIcon> {
   items: T[];
   selectedId: SelectId;
   setSelectedId: (v: SelectId) => void;
+  className?: string;
   help?: string;
   helpColor?: string;
   label?: string;
   variant?: 'standard' | 'outlined' | 'filled';
 }
 
-const IconSelect: React.FunctionComponent<ISelectProps<ISelectItem>> = (props) => {
+const IconSelect: React.FunctionComponent<ISelectProps<SelectItemIcon>> = (props) => {
   const classes = useStyles();
   const { help, helpColor, items, label, selectedId, setSelectedId, variant } = props;
   const value = selectedId?.toString();
+  const className = props.className ?? classes.formControl;
 
   function renderValue(selected: string) {
     const i = _.find(items, i => i.itemId.toString() === selected);
@@ -55,7 +59,7 @@ const IconSelect: React.FunctionComponent<ISelectProps<ISelectItem>> = (props) =
   }
 
   return (
-    <FormControl fullWidth className={classes.formControl} >
+    <FormControl fullWidth className={className} >
       {label && <InputLabel >{label}</InputLabel>}
       <Select
         value={value}

@@ -44,6 +44,8 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     // Override Switches (Group 9)
     // User Defined (Group 10)
 
-    public int WorkCoordinateSystem { get; internal set; } = 0; // G54 == #0
+    public int WorkCoordinateSystemCurrent { get; internal set; } = 0; // G54 == #0
+
+    public int WorkCoordinateSystemCount { get; internal set; } = 5;
   }
 }

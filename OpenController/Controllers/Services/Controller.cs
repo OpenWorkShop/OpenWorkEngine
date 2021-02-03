@@ -7,6 +7,7 @@ using OpenWorkEngine.OpenController.Controllers.Interfaces;
 using OpenWorkEngine.OpenController.Controllers.Messages;
 using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.Controllers.Services.Serial;
+using OpenWorkEngine.OpenController.Controllers.Services.Values;
 using OpenWorkEngine.OpenController.ControllerSyntax;
 using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
@@ -23,6 +24,9 @@ using OpenWorkEngine.OpenController.Syntax.GCode;
 using Serilog;
 
 namespace OpenWorkEngine.OpenController.Controllers.Services {
+  // Simple change request for a specific firmware setting ID. Will get converted to correct type before writing.
+  public record FirmwareSettingChange(string Id, string Value);
+
   /// <summary>
   /// Controllers are exposed directly as an object in GraphQL, allowing public methods to be invoked.
   /// They wrap a ConnectedPort, which contains a machine.
@@ -58,13 +62,38 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
     public Task<MachineExecutionResult> Pause() => Invoke(nameof(Pause));
     public Task<MachineExecutionResult> Play() => Invoke(nameof(Play));
 
-    public Task<MachineExecutionResult> Move(MoveCommand moveCommand) => Execute(nameof(Move), moveCommand);
+    public Task<MachineExecutionResult> Move(MoveCommand moveCommand) =>
+      ExecuteCommand(nameof(Move), new ControllerExecutionOptions() { Args = moveCommand });
 
     // Raw command
     public Task<MachineExecutionResult> WriteCommand(string commandCode, string sourceName) {
       ControllerScript script = new (Compiler.LoadInstructions(commandCode, c => new GCodeBlock(c, sourceName)));
       Log.Verbose("[CMD] {code} from {src}", commandCode, sourceName);
       return Buffer.Execute(script);
+    }
+
+    // Directly modify a setting.
+    public async Task<MachineExecutionResult> SetFirmwareSetting(FirmwareSettingChange settingChange) {
+      FirmwareSetting setting = Connection.Machine.Settings.Settings.First(s => s.Id.Equals(settingChange.Id));
+      setting.Value = settingChange.Value;
+      MachineExecutionResult res = await Buffer.Execute(Translator.SettingScript, new ControllerExecutionOptions() {
+        Args = setting,
+        AwaitResponse = true,
+        Source = setting.Title,
+      });
+      // If the setting was successfully set, update the machine's state.
+
+      return res;
+    }
+
+    // Modify multiple settings, executing each modification in series, waiting for the response on each.
+    public async Task<List<MachineExecutionResult>> SetFirmwareSettings(List<FirmwareSettingChange> settingChanges) {
+      List<MachineExecutionResult> res = new List<MachineExecutionResult>();
+      foreach (FirmwareSettingChange settingChange in settingChanges) {
+        MachineExecutionResult changeRes = await SetFirmwareSetting(settingChange);
+        res.Add(changeRes);
+      }
+      return res;
     }
 
     internal bool IsAlive => _isAlive && Connection.Port.SerialPort.IsOpen;
@@ -98,27 +127,28 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       Buffer = new SerialBuffer(this);
       CreatedAt = DateTime.Now;
       this.LoadMachineSyntax();
+      Translator.ApplyDefaultSettings(connection.Machine);
     }
 
     // Look up the code for a given method name and write it to the port.
     // Made private so that only the concrete methods are exposed
     private async Task<MachineExecutionResult> Invoke(params string[] methodNames) {
-      MachineExecutionResult res = new MachineExecutionResult(Connection.Machine, new List<MachineLogEntry>());
+      MachineExecutionResult res = new (Connection.Machine, new List<MachineInstructionResult>());
       for(int x=0; x<methodNames.Length; x++) {
         string methodName = methodNames[x];
-        MachineExecutionResult methodRes = await Execute(methodName);
+        MachineExecutionResult methodRes = await ExecuteCommand(methodName);
         if (x == 0) {
           // Secondary commands (anything after the first) are not exposed; they are side-effects.
-          res.Logs.AddRange(methodRes.Logs);
+          res.InstructionResults.AddRange(methodRes.InstructionResults);
         }
       }
       return res;
     }
 
-    internal Task<MachineExecutionResult> Execute(string methodName, object? args = null) {
-      ControllerScript script = Translator.GetCommandScript(methodName);
-      Log.Verbose("[CMD] {name} args {args}", methodName, args);
-      return Buffer.Execute(script, args);
+    internal Task<MachineExecutionResult> ExecuteCommand(string commandName, ControllerExecutionOptions? opts = null) {
+      ControllerScript script = Translator.GetCommandScript(commandName);
+      Log.Verbose("[CMD] {name} opts {@opts}", commandName, opts);
+      return Buffer.Execute(script, opts);
     }
 
     public void Dispose() {
@@ -150,7 +180,6 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       Log.Debug("[STARTUP] {controller}", ToString());
       try {
         Manager.Ports.EmitState(Connection.Port, PortState.Startup);
-        await GetFirmware();
 
         Log.Debug("[AWAIT] data from {port}", Connection.Port.ToString());
         if (!await StartupCondition(
@@ -160,7 +189,8 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
         )
           return;
         Log.Debug("[DATA] {controller}: {count} bytes", ToString(), Connection.Status.BytesToRead);
-        await GetSettings();
+
+        // await GetFirmware();
 
         // Any kind of valid firmware (well-known response from board)
         MachineDetectedFirmware firmware = Connection.Machine.Configuration.Firmware;
@@ -171,7 +201,10 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
         )
           return;
         Log.Debug("[FIRMWARE] requirement?: {firmwareRequirement}", Connection.Machine.FirmwareRequirement.ToString());
-        await GetParameters();
+
+        // Load settings before flagging port as active.
+        await Task.Delay(100);
+        await GetSettings();
 
         // Ensure that any required firmware is met.
         IMachineFirmwareRequirement req = Connection.Machine.FirmwareRequirement;
@@ -182,11 +215,12 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
         )
           return;
         Log.Information("[FIRMWARE] requirements satisfied: {firmware}", firmware.ToString());
+
+        // await GetParameters();
       } catch (Exception e) {
         Log.Error(e, "[STARTUP] failed");
         Connection.Port.Error = new AlertError(e);
         Manager.Ports.EmitState(Connection.Port, PortState.Error);
-        // Serial port is still open in the "error" state.
         return;
       }
 

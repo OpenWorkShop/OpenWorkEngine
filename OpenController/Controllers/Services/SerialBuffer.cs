@@ -24,7 +24,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
   /// </summary>
   public class SerialBuffer {
     public SerialBuffer(Controller controller) {
-      Log = controller.Log;
+      Log = controller.Log.ForContext(typeof(SerialBuffer));
       Controller = controller;
       Connection = controller.Connection;
     }
@@ -44,8 +44,9 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
     // If the last try failed, it stores a copy of the failed string to concat with next read.
     private MachineOutputLine? _failedParseLine = null;
 
-    // Those things which have not yet received OK or error
-    private readonly ConcurrentQueue<IControllerInstruction> _instructionsPendingResponse = new ();
+    private ConcurrentQueue<MachineInstructionResult> WriteQueue => Machine.Status.Buffer.WriteQueue;
+
+    private ConcurrentQueue<MachineInstructionResult> ResponseQueue => Machine.Status.Buffer.ResponseQueue;
 
     // For those topics which are batched, store the timestamp of when they should be emitted.
     private readonly Dictionary<MachineTopic, DateTime> _batchedTopicDispatchTime = new();
@@ -55,9 +56,14 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
     private void OnLineParsed(MachineOutputLine line) {
       line = line.Finish();
 
+      Log.Verbose("[READ] [PARSED] {line}", line.ToString());
+
       // ACK (ok/error) from machine.
       if (line.LogEntry?.IsResponse ?? false) {
-        Ack(line.LogEntry);
+        List<MachineLogEntry> entries = OnResponseReceived(line.LogEntry);
+        if (entries.Any()) {
+          line.Topics?.Add(MachineTopic.Log);
+        }
       }
 
       // Track topic changes....
@@ -86,8 +92,8 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
 
           if (readCharacters > 0 && !string.IsNullOrWhiteSpace(line)) {
             if (Connection.Port.State < PortState.HasData) Connection.Port.State = PortState.HasData;
-            Log.Verbose("[BUFFER] {count} characters on {portName}", readCharacters, Connection.Port.PortName);
 
+            Log.Verbose("[READ] '{line}'", line.Trim());
             MachineOutputLine? outputLine = null;
 
             // If there was a prior failed read, try concating the line.
@@ -154,7 +160,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       //
       // bool logOnly = topics.Length == 1 && topics.Contains(MachineTopic.Log);
       // if (!logOnly)
-      Log.Information("[MACHINE] [{state}] {topics}", Machine.Status.ActivityState, topics);
+      Log.Information("[MACHINE] EMIT [{state}] {topics}", Machine.Status.ActivityState, topics);
       foreach (MachineTopic topic in topics) {
         Controller.Manager.GetSubscriptionTopic(topic).Emit(Machine);
       }
@@ -163,15 +169,31 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
     /// <summary>
     /// Parser informs Buffer that a response was received.
     /// </summary>
-    /// <param name="entry"></param>
-    internal void Ack(MachineLogEntry entry) {
-      if (!_instructionsPendingResponse.TryDequeue(out IControllerInstruction? instruction)) {
-        Log.Warning("[ACK] [{size}] no instruction to ACK for {ack}",
-          _instructionsPendingResponse.Count, entry.ToString().Trim());
-        return;
+    /// <param name="responseEntry"></param>
+    internal List<MachineLogEntry> OnResponseReceived(MachineLogEntry responseEntry) {
+      List<MachineLogEntry> modifiedLogs = new List<MachineLogEntry>();
+      if (!ResponseQueue.TryDequeue(out MachineInstructionResult? res)) {
+        Log.Warning("[WRITE] [ACK] no responses => {ack} via {buffer}", responseEntry.ToString(), ToString());
+        return modifiedLogs;
       }
-      Log.Debug("[ACK] [{size}] {instruction} {ack}",
-        _instructionsPendingResponse.Select(i => i.ToString()), instruction.ToString()?.Trim(), entry.ToString().Trim());
+      Log.Debug("[WRITE] [ACK] {instruction} => {ack} via {buffer}",
+        res.Instruction.ToString(), responseEntry.ToString(), ToString());
+
+      if (responseEntry.Error != null) {
+        res.WriteLogEntry.WriteState = SerialWriteState.Error;
+      } else {
+        res.WriteLogEntry.WriteState = SerialWriteState.Ok;
+      }
+      res.WriteLogEntry.WriteState = responseEntry.Error != null ? SerialWriteState.Error : SerialWriteState.Ok;
+      res.ResponseLogEntry = responseEntry;
+      modifiedLogs.Add(res.WriteLogEntry);
+
+      if (WriteQueue.Any() && WriteQueue.TryDequeue(out MachineInstructionResult? next)) {
+        WriteInstruction(next);
+        modifiedLogs.Add(next.WriteLogEntry);
+      }
+
+      return modifiedLogs;
     }
 
     internal async Task TryWriteSerial() {
@@ -217,43 +239,68 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       return line;
     }
 
-    /// <summary>
-    /// Actually sends an instruction to the serial buffer, first compiling its code with the provided arguments.
-    /// </summary>
-    /// <param name="instruction">Some templated instruction.</param>
-    /// <param name="args">Object with field/props for the instruction.</param>
-    /// <param name="machineLogs">Write </param>
-    /// <returns>Task from the Buffer.</returns>
-    internal async Task<MachineLogEntry> Instruct(
-      IControllerInstruction instruction, object? args = null, bool machineLogs = true
-    ) {
-      CompiledInstruction compiled = instruction.Compile(args);
-      MachineLogLevel lvl = machineLogs ? MachineLogLevel.Inf : MachineLogLevel.Dbg;
-      MachineLogEntry logEntry = MachineLogEntry.FromWrittenInstruction(compiled, lvl);
-      Machine.AddLogEntry(logEntry);
-
-      if (instruction.Inline) {
-        Connection.Port.SerialPort.Write(compiled.Code);
-        Connection.Status.CharactersWritten += compiled.Code.Length;
+    private void WriteInstruction(MachineInstructionResult res) {
+      if (res.Instruction.InstructionDefinition.ResponseExpected) {
+        ResponseQueue.Enqueue(res);
+        Log.Debug("[WRITE] {code} via {buffer}", res.WriteLogEntry.Code, ToString());
       } else {
-        Connection.Port.SerialPort.WriteLine(compiled.Code);
-        Connection.Status.CharactersWritten += compiled.Code.Length + 1;
-        Connection.Status.LinesWritten++;
-        _instructionsPendingResponse.Enqueue(instruction);
-        await Task.Delay(10);
+        Log.Verbose("[WRITE] {code} via {buffer}", res.WriteLogEntry.Code, ToString());
       }
-      return logEntry;
+      res.WriteLogEntry.WriteState = SerialWriteState.Sent;
+      string code = res.Instruction.Code;
+
+      if (res.Instruction.InstructionDefinition.Inline) {
+        Connection.Port.SerialPort.Write(code);
+        Connection.Status.CharactersWritten += code.Length;
+      } else {
+        Connection.Port.SerialPort.WriteLine(code);
+        Connection.Status.CharactersWritten += code.Length + 1;
+        Connection.Status.LinesWritten++;
+      }
     }
 
-    internal async Task<MachineExecutionResult> Execute(ControllerScript script, object? args = null, bool machineLogs = true) {
+    internal async Task<MachineInstructionResult> Instruct(
+      IControllerInstruction instruction, ControllerExecutionOptions? opts = null
+    ) {
+      opts ??= new ControllerExecutionOptions();
+      CompiledInstruction compiled = instruction.Compile(opts);
+      MachineLogEntry logEntry = MachineLogEntry.FromWrittenInstruction(compiled, opts.LogLevel);
+      Machine.AddLogEntry(logEntry);
+
+      MachineInstructionResult res = new(compiled, logEntry);
+      if (!instruction.Immediate && ResponseQueue.Any()) {
+        // When waiting on a response, queue the send rather than sending immediately.
+        Log.Debug("[WRITE] [QUEUE] {source} {code} {buffer}", compiled.Source, compiled.Code, ToString());
+        WriteQueue.Enqueue(res);
+      } else {
+        // If we're not waiting on any responses, we can write immediately.
+        WriteInstruction(res);
+      }
+
+      if (opts.AwaitResponse) {
+        if (!instruction.ResponseExpected) throw new ArgumentException($"Cannot await a response on {instruction}");
+        await logEntry.TryWaitForResponse();
+      } else {
+        // Ensures spacing between commands / logs.
+        await Task.Delay(1);
+      }
+
+      return res;
+    }
+
+    internal async Task<MachineExecutionResult> Execute(
+      ControllerScript script, ControllerExecutionOptions? opts = null
+    ) {
       // Execute each instruction in the script.
-      List<MachineLogEntry> instructionResults = new List<MachineLogEntry>();
+      List<MachineInstructionResult> instructionResults = new ();
       foreach (IControllerInstruction instruction in script.Instructions) {
-        MachineLogEntry res = await Instruct(instruction, args, machineLogs);
+        MachineInstructionResult res = await Instruct(instruction, opts);
         instructionResults.Push(res);
       }
       return new MachineExecutionResult(Machine, instructionResults);
     }
+
+    public override string ToString() => $"<I:{BytesToRead}> <WQ:{WriteQueue.Count}> <RQ:{ResponseQueue.Count}>";
 
     //
     // internal async Task Write(string text) {

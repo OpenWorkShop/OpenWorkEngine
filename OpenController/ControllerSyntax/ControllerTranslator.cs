@@ -8,6 +8,7 @@ using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.Controllers.Services.Serial;
 using OpenWorkEngine.OpenController.ControllerSyntax.Grbl;
 using OpenWorkEngine.OpenController.Lib.Linq;
+using OpenWorkEngine.OpenController.Machines.Models;
 using OpenWorkEngine.OpenController.Syntax;
 using OpenWorkEngine.OpenController.Syntax.GCode;
 using Serilog;
@@ -62,6 +63,9 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax {
       return script;
     }
 
+    internal ControllerScript SettingScript =
+      new (Compiler.LoadInstructions("{Key}={Value}", line => new GCodeBlock(line, "Setting")));
+
     /// <summary>
     /// Directly set code for some well-known command (methodName) derived from an actual method name on the controller.
     /// </summary>
@@ -85,26 +89,33 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax {
     internal readonly Dictionary<string, Func<FirmwareSettings, FirmwareSetting>> settingCodes = new();
     internal readonly Dictionary<string, string> settingPaths = new();
 
-    internal FirmwareSetting? GetSetting(FirmwareSettings settings, string code) {
-      if (!settingCodes.ContainsKey(code)) {
-        return null;
+    internal FirmwareSetting? GetSetting(ControlledMachine machine, string code) =>
+      settingCodes.ContainsKey(code) ? settingCodes[code].Invoke(machine.Settings) : null;
+
+    internal void ApplyDefaultSettings(ControlledMachine machine) {
+      foreach (string code in settingCodes.Keys) {
+        FirmwareSetting? setting = GetSetting(machine, code);
+        if (setting == null) {
+          throw new ArgumentException($"Missing setting {code} for machine {machine.Id}");
+        }
+        if (string.IsNullOrWhiteSpace(setting.Title)) {
+          List<string> paths = settingPaths[code].Split('.').ToList();
+          setting.Id = string.Join('.', paths);
+          string title = paths.Last();
+          if (title.Length < 2 && paths.Count > 1) {
+            title = paths[^2] + '.' + title;
+          }
+          setting.Title = title;
+        }
       }
-      FirmwareSetting? setting = settingCodes[code].Invoke(settings);
-      if (string.IsNullOrWhiteSpace(setting.Title)) {
-        List<string> paths = settingPaths[code].Split('.').ToList();
-        setting.Id = string.Join('-', paths);
-        paths.RemoveAt(0);
-        setting.Title = string.Join('.', paths);
-      }
-      return setting;
     }
 
-    internal void DefineSetting<TData>(string code, Expression<Func<FirmwareSettings, FirmwareSetting<TData>>> expression) {
+    internal void DefineSetting(string code, Expression<Func<FirmwareSettings, FirmwareSetting>> expression) {
       // if (!(expression.Body is MemberExpression member))
       //   throw new ArgumentException($"Expression '{expression}' refers to a method, not a property.");
       // PropertyInfo? propInfo = member.Member as PropertyInfo;
       string path = GetExpressionPath(expression);
-      Log.Verbose("Defining {prop} as {code} ({type})", path, code, typeof(TData).Name);
+      // Log.Verbose("Defining {prop} as {code} ({type})", path, code, typeof(TData).Name);
       settingCodes[code] = expression.Compile();
       settingPaths[code] = path;
       // settingSetters[code] = setter;

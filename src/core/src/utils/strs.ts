@@ -1,4 +1,4 @@
-export default (str: string): string => {
+export function slugify (str: string): string {
   const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;';
   const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------';
   const p = new RegExp(a.split('').join('|'), 'g');
@@ -11,4 +11,9 @@ export default (str: string): string => {
     .replace(/\-\-+/g, '-') // Replace multiple - with single -
     .replace(/^-+/, '') // Trim - from start of text
     .replace(/-+$/, ''); // Trim - from end of text
-};
+}
+
+export function titlize(str: string) {
+  return str.replace('_', ' ')
+    .split(' ').map(s => s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase()).join(' ');
+}

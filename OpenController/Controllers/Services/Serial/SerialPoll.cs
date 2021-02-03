@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Models;
 
@@ -52,8 +53,9 @@ namespace OpenWorkEngine.OpenController.Controllers.Services.Serial {
       double elapsed = (now - since).TotalMilliseconds;
       if (elapsed > max) {
         _lastCommandAt = DateTime.Now;
-        // By NOT using controller.Execute, we avoid creating a log entry.
-        await controller.Buffer.Execute(controller.Translator.GetCommandScript(MethodName), null, false);
+        await controller.ExecuteCommand(MethodName, new ControllerExecutionOptions() {
+          LogLevel = MachineLogLevel.Dbg
+        });
         PendingResponse = true;
       }
     }

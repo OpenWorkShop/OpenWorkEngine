@@ -3,7 +3,8 @@ import {
   MachineLogEntryFragment,
   MachineLogLevel,
   MachineLogSource,
-  SyntaxChunkFragment, SyntaxType
+  SyntaxChunkFragment,
+  SyntaxType
 } from '../../graphql';
 import {Grid, IconButton, Tooltip, useTheme} from '@material-ui/core';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -29,11 +30,12 @@ const LogLine: FunctionComponent<Props> = (props) => {
   const stateColor = getLogLevelColor(logEntry.logLevel, theme);
   const ts = new Date(logEntry.timestamp);
 
-  const timestamp = ts.getMilliseconds().toString();// ts.toLocaleTimeString().split(' ')[0];
+  const timestamp = ts.toLocaleTimeString().split(' ')[0];
   const tip = t('{{ title }} at {{ timestamp }}',{ title, timestamp });
   const icon = getLogEntryIcon(logEntry);
   const logSysColor = getLogLevelColor(MachineLogLevel.Dbg, theme);
   const gCodeColor = 'white';
+  const logCommentColor = theme.palette.success.light;
 
   function renderTextSpan(text: string, color?: string, key?: string) {
     return <span style={{ color: color ?? 'white' }} key={key} >{text}</span>;
@@ -50,10 +52,11 @@ const LogLine: FunctionComponent<Props> = (props) => {
 
       const hv = c.value.length > 0;
       const hc = c.comment.length > 0;
+      const col = c.type === SyntaxType.Operator ? logSysColor : gCodeColor;
 
-      if (hv) ret.push(renderTextSpan(c.value, gCodeColor, `${id}-${i}-code`));
-      if (hv && hc) ret.push(renderTextSpan(' ', gCodeColor, `${id}-${i}-space`));
-      if (hc) ret.push(renderTextSpan(c.comment, gCodeColor, `${id}-${i}-comment`));
+      if (hv) ret.push(renderTextSpan(c.value, col, `${id}-${i}-code`));
+      if (hv && hc) ret.push(renderTextSpan(' ', col, `${id}-${i}-space`));
+      if (hc) ret.push(renderTextSpan(c.comment, logCommentColor, `${id}-${i}-comment`));
 
       space = c.type === SyntaxType.Value || c.type === SyntaxType.Unknown;
     });
@@ -69,8 +72,8 @@ const LogLine: FunctionComponent<Props> = (props) => {
     }
   }
 
+  //   {renderTextSpan(timestamp, logSysColor)}
   return <Grid key={logEntry.id} item xs={12}>
-    {renderTextSpan(timestamp, logSysColor)}
     <Tooltip title={tip}>
       <IconButton aria-label={tip} size='small' disableFocusRipple>
         <FontAwesomeIcon color={stateColor} icon={icon} />

@@ -15,7 +15,10 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
 
     public decimal? Value { get; set; }
 
-    public bool IsValid => !string.IsNullOrWhiteSpace(Name) || !string.IsNullOrWhiteSpace(Protocol) || Value.HasValue;
+    public bool IsValid =>
+      !string.IsNullOrWhiteSpace(Protocol) &&
+      !string.IsNullOrWhiteSpace(Name) &&
+      Value.HasValue;
 
     public override string ToString() =>
       string.Join('.', new[] {Name, FriendlyName, Edition, Value?.ToString()}.Where(s => s != null));

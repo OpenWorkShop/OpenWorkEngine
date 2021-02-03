@@ -37,7 +37,7 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
       string src = nameof(InstructionTests);
       GCodeBlock block = new GCodeBlock(template, src);
       MoveCommand move = json == null ? new MoveCommand() : JsonConvert.DeserializeObject<MoveCommand>(json);
-      CompiledInstruction compiled = block.Compile(move);
+      CompiledInstruction compiled = block.Compile(new ControllerExecutionOptions() { Args = move });
       compiled.Code
               .Should().NotBeEmpty()
               .And.NotContain("$", "{", "}")

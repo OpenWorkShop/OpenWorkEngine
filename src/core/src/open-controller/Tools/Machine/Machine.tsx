@@ -1,15 +1,23 @@
 import * as React from 'react';
-import {Grid} from '@material-ui/core';
+import {
+  Button,
+} from '@material-ui/core';
 import {ToolBase} from '../types';
 import useStyles from './styles';
 import {useWorkspaceControllerSelector} from '../../Workspaces';
 import {useLogger} from '../../../hooks';
 import MachineModals from './MachineModals';
+import FirmwareSettingsDialog from './FirmwareSettingsDialog';
+import {useTrans} from '../../Context';
+import {faMicrochip} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Machine: ToolBase = (props) => {
+  const t = useTrans();
   const log = useLogger(Machine);
   const { workspaceId } = props;
   const classes = useStyles();
+  const [dialogOpen, setDialogOpen] = React.useState(false);
   const modals = useWorkspaceControllerSelector(workspaceId, c => c.machine.configuration.modals);
   const settings = useWorkspaceControllerSelector(workspaceId, c => c.machine.settings);
   //useWorkspaceController
@@ -17,12 +25,29 @@ const Machine: ToolBase = (props) => {
 
   log.debug('[CONFIG MODALS]', modals, '[SETTINGS]', settings);
 
+  // Modes, Movement, Reporting, Homing, Calibration
+
   return (
-    <Grid container className={classes.root}>
-      <Grid item xs={12}>
-        <MachineModals workspaceId={workspaceId} />
-      </Grid>
-    </Grid>
+    <React.Fragment>
+      <div className={classes.root}>
+        <MachineModals modals={modals} />
+      </div>
+      <div className={classes.dialogFooter}>
+        <Button
+          color="primary"
+          onClick={() => setDialogOpen(true)}
+        >
+          <FontAwesomeIcon icon={faMicrochip} className={classes.buttonIcon} />
+          {t('Open Firmware Settings (EEPROM)')}
+        </Button>
+      </div>
+      <FirmwareSettingsDialog
+        workspaceId={workspaceId}
+        settings={settings}
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+      />
+    </React.Fragment>
   );
 };
 

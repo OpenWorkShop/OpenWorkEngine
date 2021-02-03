@@ -30,9 +30,8 @@ const AnyIcon: FunctionComponent<Props> = (props) => {
       icon={faIcon} />
   );
 
-  log.warn('[ICON]', 'neither owsIcon nor faIcon were passed.');
-
-  return <span />;
+  log.verbose('[ICON]', 'neither owsIcon nor faIcon were passed.');
+  return null;
 };
 
 export default AnyIcon;

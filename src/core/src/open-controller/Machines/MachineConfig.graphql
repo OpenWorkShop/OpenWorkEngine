@@ -35,7 +35,8 @@ fragment MachineModals on MachineModals {
         value
     }
     # ...
-    workCoordinateSystem
+    workCoordinateSystemCurrent
+    workCoordinateSystemCount
 }
 
 fragment ApplicatorConfig on ApplicatorConfig {

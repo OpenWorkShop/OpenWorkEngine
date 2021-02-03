@@ -26,6 +26,7 @@ fragment MachineLogEntry on MachineLogEntry {
     message
     logLevel
     source
+    writeState
     error {
         ...MachineAlert
     }

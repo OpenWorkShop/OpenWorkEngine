@@ -3,5 +3,5 @@ using OpenWorkEngine.OpenController.Controllers.Interfaces;
 using OpenWorkEngine.OpenController.Machines.Models;
 
 namespace OpenWorkEngine.OpenController.Controllers.Messages {
-  public record MachineExecutionResult(ControlledMachine Machine, List<MachineLogEntry> Logs);
+  public record MachineExecutionResult(ControlledMachine Machine, List<MachineInstructionResult> InstructionResults);
 }

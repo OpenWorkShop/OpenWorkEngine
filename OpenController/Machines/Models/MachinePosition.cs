@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using OpenWorkEngine.OpenController.Lib.Linq;
+
 namespace OpenWorkEngine.OpenController.Machines.Models {
   public record MachinePosition {
     public decimal? X { get; set; }
@@ -15,5 +18,9 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     // public decimal? E { get; set; }
 
     // public bool IsValid => X != null || Y != null || Z != null;
+
+    public override string ToString() => string.Join(',', (new List<string?>() {
+      X?.ToString(), Y?.ToString(), Z?.ToString(), A?.ToString(), B?.ToString(), C?.ToString()
+    }).SelectNonNull());
   }
 }

@@ -63,5 +63,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services.Serial {
       _finished = true;
       return this;
     }
+
+    public override string ToString() => $"<L:{Raw}> Res:{LogEntry?.IsResponse}";
   }
 }

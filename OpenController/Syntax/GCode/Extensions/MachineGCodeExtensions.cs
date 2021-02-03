@@ -58,7 +58,7 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode.Extensions {
       } else if (v == 38.2M || v == 38.3M || v == 38.4M || v == 38.5M) {
         modals.Motion = new (MachineMotionType.Probe, word.Raw);
       } else if (v >= 54 && v <= 59) {
-        modals.WorkCoordinateSystem = (int) Math.Floor(v) - 54;
+        modals.WorkCoordinateSystemCurrent = (int) Math.Floor(v) - 54;
       } else if (v == 80) {
         modals.Motion = new (MachineMotionType.Cancel, word.Raw);
       } else if (v == 90) {

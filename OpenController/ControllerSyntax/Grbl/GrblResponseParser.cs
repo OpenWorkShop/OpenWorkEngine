@@ -51,8 +51,7 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
       return line.WithLogEntry(logEntry);
     }
 
-    internal static MachineLogEntry GetAlertEntry(GrblError err, string msg = "") =>
-      MachineLogEntry.FromReadError(string.IsNullOrWhiteSpace(msg) ? err.ToString() : msg,
-        new MachineAlert(err.ToString(), msg, ((int) err).ToString()));
+    internal static MachineLogEntry GetAlertEntry(GrblError err, string msg = "", bool isResponse = true) =>
+      MachineLogEntry.FromReadError(string.IsNullOrWhiteSpace(msg) ? err.ToString() : msg, MachineAlert.FromError(err, msg), isResponse);
   }
 }

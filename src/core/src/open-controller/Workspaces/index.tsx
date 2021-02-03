@@ -36,7 +36,7 @@ const index: FunctionComponent<Props> = (props) => {
     }
   }, [machine, controllersSlice]);
 
-  return <ControllerProvider portName={port.portName} >
+  return <ControllerProvider portName={portName} >
     {!workspaceReady && <WorkspaceConnector workspaceId={workspaceId} port={port}/>}
     {workspaceReady && <Workspace workspaceId={workspaceId} port={port} />}
   </ControllerProvider>;

@@ -16,4 +16,13 @@ export function createEnumNormalizer<T extends string, TEnumValue extends string
   };
 }
 
+export function createEnumKeyer<T extends string, TEnumValue extends string>(enumVariable: { [key in T]: TEnumValue }): (v: string) => string | undefined {
+  const enumKeys: string[] = Object.keys(enumVariable);
+  const enumValues: TEnumValue[] = Object.values(enumVariable);
+  return (value: string): string | undefined => {
+    const idx = _.findIndex(enumValues, (ev) => ev.toString() === value);
+    return idx >= 0 ? enumKeys[idx] : undefined;
+  };
+}
+
 export default {};

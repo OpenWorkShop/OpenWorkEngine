@@ -35,6 +35,16 @@ namespace OpenWorkEngine.OpenController.Controllers.Interfaces {
     public bool Inline { get; }
 
     /// <summary>
+    /// Bypass the queue (Real-Time Commands)
+    /// </summary>
+    public bool Immediate { get; }
+
+    /// <summary>
+    /// e.g., ok/error
+    /// </summary>
+    public bool ResponseExpected { get; }
+
+    /// <summary>
     /// The parsed syntax chunks (words) from the line.
     /// </summary>
     public List<SyntaxChunk> CompileChunks(string line);
@@ -45,15 +55,15 @@ namespace OpenWorkEngine.OpenController.Controllers.Interfaces {
     /// Turn an instruction into something which can be written onto the serial port by replacing variables (args).
     /// </summary>
     /// <param name="instruction">Templated instruction</param>
-    /// <param name="args">Object which has public properties relating to the instruction's template.</param>
+    /// <param name="opts"></param>
     /// <returns>String which may be written to the serial port.</returns>
-    public static CompiledInstruction Compile(this IControllerInstruction instruction, object? args) {
+    public static CompiledInstruction Compile(this IControllerInstruction instruction, ControllerExecutionOptions opts) {
       string template = instruction.Template;
-      if (args == null) return new CompiledInstruction(instruction, template);
+      object? args = opts.Args;
+      if (args == null) return new CompiledInstruction(instruction, template, opts.Source);
 
       string compiled = $"{template}"; // lazy clone
-      string src = instruction.InstructionSource;
-      string pattern = @"(\${(?<name>\w+)(:=(?<def>[\w\d]+))?})";
+      string pattern = @"((?<pre>\$)?{(?<name>\w+)(:=(?<def>[\w\d]+))?})";
       Log.Verbose("[INSTRUCTION] compile template {temp}", template);
       Dictionary<string, PropertyInfo> argProps = args.GetType()
                                         .GetProperties().Where(p => p.CanRead)
@@ -62,6 +72,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Interfaces {
                                            p => p);
       foreach (Match match in Regex.Matches(template, pattern, RegexOptions.IgnoreCase)) {
         string varName = match.Groups["name"].Value; // "X"
+        string pre = match.Groups["pre"].Value;
         string varTmpStr = match.Value; // "${X}"
         string? defaultVal = match.Groups.ContainsKey("def") ? match.Groups["def"].Value : null;
         object? val = defaultVal;
@@ -79,7 +90,13 @@ namespace OpenWorkEngine.OpenController.Controllers.Interfaces {
         }
         string strVal = val?.ToString() ?? "";
         Log.Verbose("[INSTRUCTION] template {name} = {val}", varName, strVal);
-        string replacement = strVal.Length > 0 ? $"{varName}{strVal} " : "";
+        string replacement = "";
+        if (strVal.Length > 0) {
+          if (pre.Equals("$"))
+            replacement = $"{varName}{strVal} ";
+          else
+            replacement = strVal;
+        }
         compiled = compiled.Replace(varTmpStr, replacement);
       }
 
@@ -98,9 +115,9 @@ namespace OpenWorkEngine.OpenController.Controllers.Interfaces {
       Log.Debug("[INSTRUCTION] '{template}' => '{compiled}'", template, compiled);
 
       if (compiled.Contains('\n') || compiled.Contains('\r'))
-        throw new ArgumentException($"Compiled instruction '{compiled}' from '{src}' had a line break.");
+        throw new ArgumentException($"Compiled instruction '{compiled}' had a line break.");
 
-      return new CompiledInstruction(instruction, compiled);
+      return new CompiledInstruction(instruction, compiled, opts.Source);
     }
   }
 }

@@ -1,6 +1,6 @@
 import {
   AlertError,
-  ControlledMachineFragment, FirmwareSettingsFragment,
+  ControlledMachineFragment, FirmwareSettingsTypedFragment,
   MachineConfigFragment,
   MachineExecutionResultFragment,
   MachineLogEntryConnectionFragment,
@@ -41,7 +41,7 @@ export interface IControlledMachineUpdate {
 }
 
 export interface IMachineSettingsUpdate extends IControlledMachineUpdate {
-  settings: FirmwareSettingsFragment;
+  settings: FirmwareSettingsTypedFragment;
 }
 
 export interface IMachineStatusUpdate extends IControlledMachineUpdate {
@@ -76,6 +76,15 @@ export interface IControllerCommandResult {
   result: MachineExecutionResultFragment;
 }
 
+export interface IControllerCommandResults {
+  id: string;
+  results: MachineExecutionResultFragment[];
+}
+
 export interface IControllerCommandResponse {
   controller: IControllerCommandResult;
+}
+
+export interface IControllerCommandResponses {
+  controller: IControllerCommandResults;
 }

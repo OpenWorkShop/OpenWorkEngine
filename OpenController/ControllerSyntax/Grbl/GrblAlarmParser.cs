@@ -24,8 +24,7 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
         msg = alarm;
       }
 
-      line.Machine.Status.Alarm =
-        new MachineAlert(controllerAlarmType.ToString(), msg, ((int) controllerAlarmType).ToString());
+      line.Machine.Status.Alarm = MachineAlert.FromAlarm(controllerAlarmType, msg);
 
       return CheckChange(line, orig, line.Machine.Status.GetHashCode(), MachineTopic.Status);
     }

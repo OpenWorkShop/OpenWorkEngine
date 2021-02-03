@@ -10,10 +10,13 @@ namespace OpenWorkEngine.OpenController.Controllers.Models {
 
     public List<SyntaxChunk> Chunks { get; }
 
-    public CompiledInstruction(IControllerInstruction instruction, string code) {
+    internal IControllerInstruction InstructionDefinition { get; }
+
+    public CompiledInstruction(IControllerInstruction instructionDefinition, string code, string? source = null) {
       Code = code;
-      Source = instruction.InstructionSource;
-      Chunks = instruction.CompileChunks(code);
+      InstructionDefinition = instructionDefinition;
+      Source = source ?? instructionDefinition.InstructionSource;
+      Chunks = instructionDefinition.CompileChunks(code);
     }
   }
 }

@@ -7,6 +7,7 @@ using OpenWorkEngine.OpenController.Controllers.Services;
 using OpenWorkEngine.OpenController.Controllers.Services.Serial;
 using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Models;
+using Serilog;
 
 namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
   /// <summary>
@@ -38,7 +39,11 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
         ApplyArgument(args["key"], val, line.Machine);
       }
 
-      return CheckChange(line, orig, line.Machine.Status.GetHashCode(), MachineTopic.Status);
+      if (orig != line.Machine.Status.GetHashCode()) {
+        line.Log.Debug("[STATUS] {status}", line.Machine.Status.ToString());
+        line = line.WithTopics(MachineTopic.Status);
+      }
+      return line;
     }
 
     private static void ApplyState(string grblStateStr, ControlledMachine machine) {

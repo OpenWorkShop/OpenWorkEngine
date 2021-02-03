@@ -19,7 +19,7 @@ namespace OpenWorkEngine.OpenController.Syntax {
 
     public string Comment => string.Join(' ', Comments);
 
-    public List<string> Comments { get; } = new();
+    public List<string> Comments { get; internal init; } = new();
 
     public bool IsCode => !string.IsNullOrWhiteSpace(Value);
 

@@ -13,7 +13,7 @@ fragment ControlledMachine on ControlledMachine {
         ...MachineStatus
     }
     settings {
-        ...FirmwareSettings
+        ...FirmwareSettingsTyped
     }
     ...MachineLogs
 }
@@ -29,6 +29,7 @@ fragment DetectedFirmware on MachineDetectedFirmware {
 }
 
 fragment MachineAlert on MachineAlert {
+    type
     code
     name
     message

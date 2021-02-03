@@ -5,6 +5,7 @@ using FluentAssertions;
 using HotChocolate.Language;
 using MakerverseServerTests;
 using Newtonsoft.Json;
+using OpenWorkEngine.OpenController.Controllers.Interfaces;
 using OpenWorkEngine.OpenController.Controllers.Messages;
 using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.Controllers.Services.Serial;
@@ -12,6 +13,7 @@ using OpenWorkEngine.OpenController.ControllerSyntax;
 using OpenWorkEngine.OpenController.ControllerSyntax.Grbl;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 using OpenWorkEngine.OpenController.Machines.Enums;
+using OpenWorkEngine.OpenController.Machines.Messages;
 using OpenWorkEngine.OpenController.Machines.Models;
 using Serilog;
 using Xunit;
@@ -170,62 +172,70 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
     [InlineData(6, false, true, true)]
     [InlineData(7, true, true, true)]
     public void CanConvertAxisFlags(int val, bool x, bool y, bool z) {
-      FirmwareSetting<FirmwareAxisFlags> s = new FirmwareSetting<FirmwareAxisFlags>(new FirmwareAxisFlags());
+      FirmwareSetting<AxisFlags> s = FirmwareSetting.Define(new AxisFlags());
       s.Value = val.ToString();
-      s.CurrentValue.X.Should().Be(x);
-      s.CurrentValue.Y.Should().Be(y);
-      s.CurrentValue.Z.Should().Be(z);
+      AxisFlags flags = s.Data;
+      flags.X.Should().Be(x);
+      flags.Y.Should().Be(y);
+      flags.Z.Should().Be(z);
     }
 
     [Theory]
-    [InlineData("$0=10")]
-    [InlineData("$1=25")]
-    [InlineData("$2=0")]
-    [InlineData("$3=0")]
-    [InlineData("$3=1")]
-    [InlineData("$3=2")]
-    [InlineData("$4=0")]
-    [InlineData("$5=0")]
-    [InlineData("$6=0")]
-    [InlineData("$10=1")]
-    [InlineData("$11=0.010")]
-    [InlineData("$12=0.002")]
-    [InlineData("$13=0")]
-    [InlineData("$20=1")]
-    [InlineData("$21=1")]
-    [InlineData("$22=1")]
-    [InlineData("$23=0")]
-    [InlineData("$24=250.000")]
-    [InlineData("$25=500.000")]
-    [InlineData("$26=250")]
-    [InlineData("$27=1.000")]
-    [InlineData("$30=24000")]
-    [InlineData("$31=4000")]
-    [InlineData("$32=0")]
+    [InlineData("$0", "10")]
+    [InlineData("$1", "25")]
+    [InlineData("$2", "0")]
+    [InlineData("$3", "0")]
+    [InlineData("$3", "1")]
+    [InlineData("$3", "2")]
+    [InlineData("$4", "0")]
+    [InlineData("$5", "0")]
+    [InlineData("$6", "0")]
+    [InlineData("$10", "1")]
+    [InlineData("$11", "0.010")]
+    [InlineData("$12", "0.002")]
+    [InlineData("$13", "0")]
+    [InlineData("$20", "1")]
+    [InlineData("$21", "1")]
+    [InlineData("$22", "1")]
+    [InlineData("$23", "0")]
+    [InlineData("$24", "250.000")]
+    [InlineData("$25", "500.000")]
+    [InlineData("$26", "250")]
+    [InlineData("$27", "1.000")]
+    [InlineData("$30", "24000")]
+    [InlineData("$31", "4000")]
+    [InlineData("$32", "0")]
 
-    [InlineData("$100=127.775")]
-    [InlineData("$101=127.775")]
-    [InlineData("$102=918.750")]
-    [InlineData("$110=1000.000")]
-    [InlineData("$111=1000.000")]
-    [InlineData("$112=250.000")]
-    [InlineData("$120=25.000")]
-    [InlineData("$121=25.000")]
-    [InlineData("$122=10.000")]
-    [InlineData("$130=2438.400")]
-    [InlineData("$131=1219.200")]
-    [InlineData("$132=25.000")]
-    public void CanParseSettings(string line) {
+    [InlineData("$100", "127.775")]
+    [InlineData("$101", "127.775")]
+    [InlineData("$102", "918.750")]
+    [InlineData("$110", "1000.000")]
+    [InlineData("$111", "1000.000")]
+    [InlineData("$112", "250.000")]
+    [InlineData("$120", "25.000")]
+    [InlineData("$121", "25.000")]
+    [InlineData("$122", "10.000")]
+    [InlineData("$130", "2438.400")]
+    [InlineData("$131", "1219.200")]
+    [InlineData("$132", "25.000")]
+    public void CanParseSettings(string key, string value, string? comment = null) {
+      string line = $"{key}={value}";
+      if (comment != null) line += $" ({comment})";
       ControlledMachine machine = TestParser(Translator.SettingParser, line);
 
-      List<FirmwareSetting> changedSettings = machine.Settings.AllSettings.Where(s => s.HasValue).ToList();
+      List<FirmwareSetting> changedSettings = machine.Settings.Settings.Where(s => s.HasBeenRead).ToList();
       changedSettings.Count.Should().Be(1);
       FirmwareSetting setting = changedSettings.First();
       Log.Information("Machine Setting {@setting}", JsonConvert.SerializeObject(setting, Formatting.Indented));
       setting.Key.Should().NotBeEmpty();
       setting.Title.Should().NotBeEmpty();
-      setting.Value.Should().NotBeEmpty();
+      setting.Value.Should().Be(value);
+      setting.Key.Should().Be(key);
       line.Should().Contain(setting.ToString());
+
+      IControllerInstruction i = Translator.SettingScript.Instructions[0];
+      CompiledInstruction setter = i.Compile(new ControllerExecutionOptions() { Args = setting });
+      line.Should().StartWith(setter.Code);
     }
   }
 }

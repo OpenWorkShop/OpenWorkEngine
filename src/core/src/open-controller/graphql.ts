@@ -6,6 +6,7 @@ export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } &
   { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
@@ -46,6 +47,14 @@ export type ISerialPortOptions = {
   writeTimeout: Maybe<Scalars['Int']>;
 };
 
+export type IParsedValue =
+  | ParsedAxisFlags
+  | ParsedBool
+  | ParsedDecimal
+  | ParsedEnumOfKinematicsMode
+  | ParsedEnumOfStatusReportType
+  | ParsedString;
+
 export type AlertError = {
   __typename?: 'AlertError';
   message: Scalars['String'];
@@ -70,6 +79,13 @@ export type ApplicatorConfig = {
   toolLengthOffset: Maybe<MachinePosition>;
 };
 
+export type AxisFlags = {
+  __typename?: 'AxisFlags';
+  x: Scalars['Boolean'];
+  y: Scalars['Boolean'];
+  z: Scalars['Boolean'];
+};
+
 export type CommandSettings = {
   __typename?: 'CommandSettings';
   commands: Scalars['String'];
@@ -77,6 +93,13 @@ export type CommandSettings = {
   id: Scalars['String'];
   mtime: Scalars['Long'];
   title: Scalars['String'];
+};
+
+export type CompiledInstruction = {
+  __typename?: 'CompiledInstruction';
+  chunks: Array<SyntaxChunk>;
+  code: Scalars['String'];
+  source: Scalars['String'];
 };
 
 export type ConnectedPort = {
@@ -133,6 +156,8 @@ export type Controller = {
   pause: MachineExecutionResult;
   play: MachineExecutionResult;
   reset: MachineExecutionResult;
+  setFirmwareSetting: MachineExecutionResult;
+  setFirmwareSettings: Array<MachineExecutionResult>;
   settings: MachineExecutionResult;
   startup: MachineExecutionResult;
   status: MachineExecutionResult;
@@ -142,6 +167,14 @@ export type Controller = {
 
 export type ControllerMoveArgs = {
   moveCommand: MoveCommandInput;
+};
+
+export type ControllerSetFirmwareSettingArgs = {
+  settingChange: FirmwareSettingChangeInput;
+};
+
+export type ControllerSetFirmwareSettingsArgs = {
+  settingChanges: Array<FirmwareSettingChangeInput>;
 };
 
 export type ControllerWriteCommandArgs = {
@@ -175,15 +208,9 @@ export type FirmwareApplicatorSettings = {
   speedMin: FirmwareSettingOfDecimal;
 };
 
-export type FirmwareAxisFlags = {
-  __typename?: 'FirmwareAxisFlags';
-  x: Scalars['Boolean'];
-  y: Scalars['Boolean'];
-  z: Scalars['Boolean'];
-};
-
 export type FirmwareAxisValues = {
   __typename?: 'FirmwareAxisValues';
+  settings: Array<FirmwareSetting>;
   x: FirmwareSettingOfDecimal;
   y: FirmwareSettingOfDecimal;
   z: FirmwareSettingOfDecimal;
@@ -207,7 +234,7 @@ export type FirmwareCalibrationSettings = {
 export type FirmwareHomingSettings = {
   __typename?: 'FirmwareHomingSettings';
   debounce: FirmwareSettingOfDecimal;
-  directionInvert: FirmwareSettingOfFirmwareAxisFlags;
+  directionInvert: FirmwareSettingOfAxisFlags;
   enabled: FirmwareSettingOfBoolean;
   feedRate: FirmwareSettingOfDecimal;
   pullOff: FirmwareSettingOfDecimal;
@@ -238,11 +265,11 @@ export type FirmwarePinsSettings = {
   limitPinsInvert: FirmwareSettingOfBoolean;
   probePinInvert: FirmwareSettingOfBoolean;
   settings: Array<FirmwareSetting>;
-  stepDirectionInvert: FirmwareSettingOfFirmwareAxisFlags;
+  stepDirectionInvert: FirmwareSettingOfAxisFlags;
   stepEnableInvert: FirmwareSettingOfBoolean;
   stepIdleDelay: FirmwareSettingOfDecimal;
   stepPulse: FirmwareSettingOfDecimal;
-  stepSignalInvert: FirmwareSettingOfFirmwareAxisFlags;
+  stepSignalInvert: FirmwareSettingOfAxisFlags;
   steps: FirmwareAxisValues;
 };
 
@@ -267,7 +294,26 @@ export type FirmwareRequirement = IMachineFirmwareRequirement & {
 export type FirmwareSetting = {
   __typename?: 'FirmwareSetting';
   comment: Maybe<Scalars['String']>;
+  currentValue: Maybe<IParsedValue>;
+  defaultValue: Maybe<IParsedValue>;
+  hasBeenRead: Scalars['Boolean'];
   id: Scalars['String'];
+  index: Scalars['Int'];
+  key: Scalars['String'];
+  settingType: MachineSettingType;
+  title: Maybe<Scalars['String']>;
+  units: MachineSettingUnits;
+  value: Scalars['String'];
+};
+
+export type FirmwareSettingOfAxisFlags = {
+  __typename?: 'FirmwareSettingOfAxisFlags';
+  comment: Maybe<Scalars['String']>;
+  currentValue: Maybe<IParsedValue>;
+  data: AxisFlags;
+  hasBeenRead: Scalars['Boolean'];
+  id: Scalars['String'];
+  index: Scalars['Int'];
   key: Scalars['String'];
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -278,9 +324,11 @@ export type FirmwareSetting = {
 export type FirmwareSettingOfBoolean = {
   __typename?: 'FirmwareSettingOfBoolean';
   comment: Maybe<Scalars['String']>;
-  currentValue: Scalars['Boolean'];
-  defaultVaule: Scalars['Boolean'];
+  currentValue: Maybe<IParsedValue>;
+  data: Scalars['Boolean'];
+  hasBeenRead: Scalars['Boolean'];
   id: Scalars['String'];
+  index: Scalars['Int'];
   key: Scalars['String'];
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -291,22 +339,11 @@ export type FirmwareSettingOfBoolean = {
 export type FirmwareSettingOfDecimal = {
   __typename?: 'FirmwareSettingOfDecimal';
   comment: Maybe<Scalars['String']>;
-  currentValue: Scalars['Decimal'];
-  defaultVaule: Scalars['Decimal'];
+  currentValue: Maybe<IParsedValue>;
+  data: Scalars['Decimal'];
+  hasBeenRead: Scalars['Boolean'];
   id: Scalars['String'];
-  key: Scalars['String'];
-  settingType: MachineSettingType;
-  title: Maybe<Scalars['String']>;
-  units: MachineSettingUnits;
-  value: Scalars['String'];
-};
-
-export type FirmwareSettingOfFirmwareAxisFlags = {
-  __typename?: 'FirmwareSettingOfFirmwareAxisFlags';
-  comment: Maybe<Scalars['String']>;
-  currentValue: FirmwareAxisFlags;
-  defaultVaule: FirmwareAxisFlags;
-  id: Scalars['String'];
+  index: Scalars['Int'];
   key: Scalars['String'];
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -317,9 +354,11 @@ export type FirmwareSettingOfFirmwareAxisFlags = {
 export type FirmwareSettingOfKinematicsMode = {
   __typename?: 'FirmwareSettingOfKinematicsMode';
   comment: Maybe<Scalars['String']>;
-  currentValue: KinematicsMode;
-  defaultVaule: KinematicsMode;
+  currentValue: Maybe<IParsedValue>;
+  data: KinematicsMode;
+  hasBeenRead: Scalars['Boolean'];
   id: Scalars['String'];
+  index: Scalars['Int'];
   key: Scalars['String'];
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -330,9 +369,11 @@ export type FirmwareSettingOfKinematicsMode = {
 export type FirmwareSettingOfStatusReportType = {
   __typename?: 'FirmwareSettingOfStatusReportType';
   comment: Maybe<Scalars['String']>;
-  currentValue: StatusReportType;
-  defaultVaule: StatusReportType;
+  currentValue: Maybe<IParsedValue>;
+  data: StatusReportType;
+  hasBeenRead: Scalars['Boolean'];
   id: Scalars['String'];
+  index: Scalars['Int'];
   key: Scalars['String'];
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -342,13 +383,25 @@ export type FirmwareSettingOfStatusReportType = {
 
 export type FirmwareSettings = {
   __typename?: 'FirmwareSettings';
-  allSettings: Array<FirmwareSetting>;
   applicator: FirmwareApplicatorSettings;
   calibration: FirmwareCalibrationSettings;
   homing: FirmwareHomingSettings;
   movement: FirmwareMovementSettings;
   pins: FirmwarePinsSettings;
   reporting: FirmwareReportingSettings;
+  settings: Array<FirmwareSetting>;
+};
+
+export type KeyValuePairOfKinematicsModeAndInt32 = {
+  __typename?: 'KeyValuePairOfKinematicsModeAndInt32';
+  key: KinematicsMode;
+  value: Scalars['Int'];
+};
+
+export type KeyValuePairOfStatusReportTypeAndInt32 = {
+  __typename?: 'KeyValuePairOfStatusReportTypeAndInt32';
+  key: StatusReportType;
+  value: Scalars['Int'];
 };
 
 export type MachineAlert = {
@@ -356,6 +409,7 @@ export type MachineAlert = {
   code: Scalars['String'];
   message: Scalars['String'];
   name: Scalars['String'];
+  type: MachineAlertType;
 };
 
 export type MachineApplicatorState = {
@@ -395,6 +449,8 @@ export type MachineBuffer = {
   availableReceive: Scalars['Int'];
   availableSend: Scalars['Int'];
   lineNumber: Scalars['Int'];
+  responseQueueLength: Scalars['Int'];
+  writeQueueLength: Scalars['Int'];
 };
 
 export type MachineCommand = {
@@ -438,7 +494,7 @@ export type MachineDetectedFirmware = {
 
 export type MachineExecutionResult = {
   __typename?: 'MachineExecutionResult';
-  logs: Array<MachineLogEntry>;
+  instructionResults: Array<MachineInstructionResult>;
   machine: ControlledMachine;
 };
 
@@ -494,6 +550,13 @@ export type MachineFirmwareSettings = IMachineFirmwareRequirement & {
   suggestedVersion: Scalars['Decimal'];
 };
 
+export type MachineInstructionResult = {
+  __typename?: 'MachineInstructionResult';
+  instruction: CompiledInstruction;
+  responseLogEntry: Maybe<MachineLogEntry>;
+  writeLogEntry: MachineLogEntry;
+};
+
 export type MachineLogEntry = {
   __typename?: 'MachineLogEntry';
   canMergeWith: Scalars['Boolean'];
@@ -507,6 +570,7 @@ export type MachineLogEntry = {
   source: MachineLogSource;
   timestamp: Scalars['DateTime'];
   timestamps: Array<Scalars['DateTime']>;
+  writeState: SerialWriteState;
 };
 
 /** A connection to a list of items. */
@@ -581,7 +645,8 @@ export type MachineModals = {
   programState: Maybe<MachineModalStateOfMachineProgramState>;
   spindleDirection: MachineModalStateOfSpinDirection;
   units: Maybe<MachineModalStateOfUnitType>;
-  workCoordinateSystem: Scalars['Int'];
+  workCoordinateSystemCount: Scalars['Int'];
+  workCoordinateSystemCurrent: Scalars['Int'];
 };
 
 export type MachineOptions = {
@@ -816,6 +881,43 @@ export type PageInfo = {
   startCursor: Maybe<Scalars['String']>;
 };
 
+export type ParsedAxisFlags = {
+  __typename?: 'ParsedAxisFlags';
+  valueAxisFlags: AxisFlags;
+  valueString: Scalars['String'];
+};
+
+export type ParsedBool = {
+  __typename?: 'ParsedBool';
+  valueBool: Scalars['Boolean'];
+  valueString: Scalars['String'];
+};
+
+export type ParsedDecimal = {
+  __typename?: 'ParsedDecimal';
+  valueDecimal: Scalars['Decimal'];
+  valueString: Scalars['String'];
+};
+
+export type ParsedEnumOfKinematicsMode = {
+  __typename?: 'ParsedEnumOfKinematicsMode';
+  valueEnum: KinematicsMode;
+  valueString: Scalars['String'];
+  values: Array<KeyValuePairOfKinematicsModeAndInt32>;
+};
+
+export type ParsedEnumOfStatusReportType = {
+  __typename?: 'ParsedEnumOfStatusReportType';
+  valueEnum: StatusReportType;
+  valueString: Scalars['String'];
+  values: Array<KeyValuePairOfStatusReportTypeAndInt32>;
+};
+
+export type ParsedString = {
+  __typename?: 'ParsedString';
+  valueString: Scalars['String'];
+};
+
 export type PortOptions = ISerialPortOptions & {
   __typename?: 'PortOptions';
   baudRate: Scalars['Int'];
@@ -1041,6 +1143,12 @@ export enum KinematicsMode {
   Triangular = 'TRIANGULAR',
 }
 
+export enum MachineAlertType {
+  Alarm = 'ALARM',
+  Error = 'ERROR',
+  Exception = 'EXCEPTION',
+}
+
 export enum MachineCategory {
   Cnc = 'CNC',
   Tdp = 'TDP',
@@ -1219,6 +1327,14 @@ export enum ProgramSyntax {
   GCode = 'G_CODE',
 }
 
+export enum SerialWriteState {
+  Error = 'ERROR',
+  None = 'NONE',
+  Ok = 'OK',
+  Queued = 'QUEUED',
+  Sent = 'SENT',
+}
+
 export enum SortEnumType {
   Asc = 'ASC',
   Desc = 'DESC',
@@ -1315,6 +1431,11 @@ export type FirmwareRequirementInput = {
   suggestedVersion: Scalars['Decimal'];
 };
 
+export type FirmwareSettingChangeInput = {
+  id: Scalars['String'];
+  value: Scalars['String'];
+};
+
 export type ListComparableDateTimeOperationFilterInput = {
   all: Maybe<ComparableDateTimeOperationFilterInput>;
   any: Maybe<Scalars['Boolean']>;
@@ -1342,12 +1463,21 @@ export type MachineAlertFilterInput = {
   message: Maybe<StringOperationFilterInput>;
   name: Maybe<StringOperationFilterInput>;
   or: Maybe<Array<MachineAlertFilterInput>>;
+  type: Maybe<MachineAlertTypeOperationFilterInput>;
 };
 
 export type MachineAlertSortInput = {
   code: Maybe<SortEnumType>;
   message: Maybe<SortEnumType>;
   name: Maybe<SortEnumType>;
+  type: Maybe<SortEnumType>;
+};
+
+export type MachineAlertTypeOperationFilterInput = {
+  eq: Maybe<MachineAlertType>;
+  in: Maybe<Array<MachineAlertType>>;
+  neq: Maybe<MachineAlertType>;
+  nin: Maybe<Array<MachineAlertType>>;
 };
 
 export type MachineAxisSettingsInput = {
@@ -1401,6 +1531,7 @@ export type MachineLogEntryFilterInput = {
   source: Maybe<MachineLogSourceOperationFilterInput>;
   timestamp: Maybe<ComparableDateTimeOperationFilterInput>;
   timestamps: Maybe<ListComparableDateTimeOperationFilterInput>;
+  writeState: Maybe<SerialWriteStateOperationFilterInput>;
 };
 
 export type MachineLogEntrySortInput = {
@@ -1412,6 +1543,7 @@ export type MachineLogEntrySortInput = {
   message: Maybe<SortEnumType>;
   source: Maybe<SortEnumType>;
   timestamp: Maybe<SortEnumType>;
+  writeState: Maybe<SortEnumType>;
 };
 
 export type MachineLogLevelOperationFilterInput = {
@@ -1483,6 +1615,13 @@ export type SerialPortOptionsInput = {
   stopBits: Maybe<StopBits>;
   writeBufferSize: Maybe<Scalars['Int']>;
   writeTimeout: Maybe<Scalars['Int']>;
+};
+
+export type SerialWriteStateOperationFilterInput = {
+  eq: Maybe<SerialWriteState>;
+  in: Maybe<Array<SerialWriteState>>;
+  neq: Maybe<SerialWriteState>;
+  nin: Maybe<Array<SerialWriteState>>;
 };
 
 export type StringOperationFilterInput = {
@@ -1626,10 +1765,19 @@ export type ResolversTypes = {
   ISerialPortOptions: ResolversTypes['PortOptions'];
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  IParsedValue:
+    | ResolversTypes['ParsedAxisFlags']
+    | ResolversTypes['ParsedBool']
+    | ResolversTypes['ParsedDecimal']
+    | ResolversTypes['ParsedEnumOfKinematicsMode']
+    | ResolversTypes['ParsedEnumOfStatusReportType']
+    | ResolversTypes['ParsedString'];
   AlertError: ResolverTypeWrapper<AlertError>;
   AppUpdates: ResolverTypeWrapper<AppUpdates>;
   ApplicatorConfig: ResolverTypeWrapper<ApplicatorConfig>;
+  AxisFlags: ResolverTypeWrapper<AxisFlags>;
   CommandSettings: ResolverTypeWrapper<CommandSettings>;
+  CompiledInstruction: ResolverTypeWrapper<CompiledInstruction>;
   ConnectedPort: ResolverTypeWrapper<ConnectedPort>;
   ConnectionSettings: ResolverTypeWrapper<ConnectionSettings>;
   ControlledMachine: ResolverTypeWrapper<ControlledMachine>;
@@ -1637,7 +1785,6 @@ export type ResolversTypes = {
   EventSettings: ResolverTypeWrapper<EventSettings>;
   FileSystemSettings: ResolverTypeWrapper<FileSystemSettings>;
   FirmwareApplicatorSettings: ResolverTypeWrapper<FirmwareApplicatorSettings>;
-  FirmwareAxisFlags: ResolverTypeWrapper<FirmwareAxisFlags>;
   FirmwareAxisValues: ResolverTypeWrapper<FirmwareAxisValues>;
   FirmwareCalibrationSettings: ResolverTypeWrapper<FirmwareCalibrationSettings>;
   FirmwareHomingSettings: ResolverTypeWrapper<FirmwareHomingSettings>;
@@ -1645,13 +1792,30 @@ export type ResolversTypes = {
   FirmwarePinsSettings: ResolverTypeWrapper<FirmwarePinsSettings>;
   FirmwareReportingSettings: ResolverTypeWrapper<FirmwareReportingSettings>;
   FirmwareRequirement: ResolverTypeWrapper<FirmwareRequirement>;
-  FirmwareSetting: ResolverTypeWrapper<FirmwareSetting>;
-  FirmwareSettingOfBoolean: ResolverTypeWrapper<FirmwareSettingOfBoolean>;
-  FirmwareSettingOfDecimal: ResolverTypeWrapper<FirmwareSettingOfDecimal>;
-  FirmwareSettingOfFirmwareAxisFlags: ResolverTypeWrapper<FirmwareSettingOfFirmwareAxisFlags>;
-  FirmwareSettingOfKinematicsMode: ResolverTypeWrapper<FirmwareSettingOfKinematicsMode>;
-  FirmwareSettingOfStatusReportType: ResolverTypeWrapper<FirmwareSettingOfStatusReportType>;
+  FirmwareSetting: ResolverTypeWrapper<
+    Omit<FirmwareSetting, 'currentValue' | 'defaultValue'> & {
+      currentValue: Maybe<ResolversTypes['IParsedValue']>;
+      defaultValue: Maybe<ResolversTypes['IParsedValue']>;
+    }
+  >;
+  FirmwareSettingOfAxisFlags: ResolverTypeWrapper<
+    Omit<FirmwareSettingOfAxisFlags, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
+  FirmwareSettingOfBoolean: ResolverTypeWrapper<
+    Omit<FirmwareSettingOfBoolean, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
+  FirmwareSettingOfDecimal: ResolverTypeWrapper<
+    Omit<FirmwareSettingOfDecimal, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
+  FirmwareSettingOfKinematicsMode: ResolverTypeWrapper<
+    Omit<FirmwareSettingOfKinematicsMode, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
+  FirmwareSettingOfStatusReportType: ResolverTypeWrapper<
+    Omit<FirmwareSettingOfStatusReportType, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
   FirmwareSettings: ResolverTypeWrapper<FirmwareSettings>;
+  KeyValuePairOfKinematicsModeAndInt32: ResolverTypeWrapper<KeyValuePairOfKinematicsModeAndInt32>;
+  KeyValuePairOfStatusReportTypeAndInt32: ResolverTypeWrapper<KeyValuePairOfStatusReportTypeAndInt32>;
   MachineAlert: ResolverTypeWrapper<MachineAlert>;
   MachineApplicatorState: ResolverTypeWrapper<MachineApplicatorState>;
   MachineAxis: ResolverTypeWrapper<MachineAxis>;
@@ -1666,6 +1830,7 @@ export type ResolversTypes = {
   MachineFeatureSettings: ResolverTypeWrapper<MachineFeatureSettings>;
   MachineFirmware: ResolverTypeWrapper<MachineFirmware>;
   MachineFirmwareSettings: ResolverTypeWrapper<MachineFirmwareSettings>;
+  MachineInstructionResult: ResolverTypeWrapper<MachineInstructionResult>;
   MachineLogEntry: ResolverTypeWrapper<MachineLogEntry>;
   MachineLogEntryConnection: ResolverTypeWrapper<MachineLogEntryConnection>;
   MachineLogEntryEdge: ResolverTypeWrapper<MachineLogEntryEdge>;
@@ -1696,6 +1861,12 @@ export type ResolversTypes = {
   OpenControllerSettings: ResolverTypeWrapper<OpenControllerSettings>;
   OpenControllerUser: ResolverTypeWrapper<OpenControllerUser>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
+  ParsedAxisFlags: ResolverTypeWrapper<ParsedAxisFlags>;
+  ParsedBool: ResolverTypeWrapper<ParsedBool>;
+  ParsedDecimal: ResolverTypeWrapper<ParsedDecimal>;
+  ParsedEnumOfKinematicsMode: ResolverTypeWrapper<ParsedEnumOfKinematicsMode>;
+  ParsedEnumOfStatusReportType: ResolverTypeWrapper<ParsedEnumOfStatusReportType>;
+  ParsedString: ResolverTypeWrapper<ParsedString>;
   PortOptions: ResolverTypeWrapper<PortOptions>;
   PortStatus: ResolverTypeWrapper<PortStatus>;
   ProgramFile: ResolverTypeWrapper<ProgramFile>;
@@ -1715,6 +1886,7 @@ export type ResolversTypes = {
   FeedRateMode: FeedRateMode;
   Handshake: Handshake;
   KinematicsMode: KinematicsMode;
+  MachineAlertType: MachineAlertType;
   MachineCategory: MachineCategory;
   MachineControllerType: MachineControllerType;
   MachineLogLevel: MachineLogLevel;
@@ -1730,6 +1902,7 @@ export type ResolversTypes = {
   Parity: Parity;
   PortState: PortState;
   ProgramSyntax: ProgramSyntax;
+  SerialWriteState: SerialWriteState;
   SortEnumType: SortEnumType;
   SpinDirection: SpinDirection;
   StatusReportType: StatusReportType;
@@ -1742,11 +1915,13 @@ export type ResolversTypes = {
   ComparableInt32OperationFilterInput: ComparableInt32OperationFilterInput;
   ConnectionSettingsInput: ConnectionSettingsInput;
   FirmwareRequirementInput: FirmwareRequirementInput;
+  FirmwareSettingChangeInput: FirmwareSettingChangeInput;
   ListComparableDateTimeOperationFilterInput: ListComparableDateTimeOperationFilterInput;
   ListFilterInputTypeOfSyntaxChunkFilterInput: ListFilterInputTypeOfSyntaxChunkFilterInput;
   ListStringOperationFilterInput: ListStringOperationFilterInput;
   MachineAlertFilterInput: MachineAlertFilterInput;
   MachineAlertSortInput: MachineAlertSortInput;
+  MachineAlertTypeOperationFilterInput: MachineAlertTypeOperationFilterInput;
   MachineAxisSettingsInput: MachineAxisSettingsInput;
   MachineCommandSettingsInput: MachineCommandSettingsInput;
   MachineFeatureSettingsInput: MachineFeatureSettingsInput;
@@ -1761,6 +1936,7 @@ export type ResolversTypes = {
   MoveCommandInput: MoveCommandInput;
   ProgramFileUploadInput: ProgramFileUploadInput;
   SerialPortOptionsInput: SerialPortOptionsInput;
+  SerialWriteStateOperationFilterInput: SerialWriteStateOperationFilterInput;
   StringOperationFilterInput: StringOperationFilterInput;
   SyntaxChunkFilterInput: SyntaxChunkFilterInput;
   SyntaxTypeOperationFilterInput: SyntaxTypeOperationFilterInput;
@@ -1780,10 +1956,19 @@ export type ResolversParentTypes = {
   ISerialPortOptions: ResolversParentTypes['PortOptions'];
   Int: Scalars['Int'];
   Boolean: Scalars['Boolean'];
+  IParsedValue:
+    | ResolversParentTypes['ParsedAxisFlags']
+    | ResolversParentTypes['ParsedBool']
+    | ResolversParentTypes['ParsedDecimal']
+    | ResolversParentTypes['ParsedEnumOfKinematicsMode']
+    | ResolversParentTypes['ParsedEnumOfStatusReportType']
+    | ResolversParentTypes['ParsedString'];
   AlertError: AlertError;
   AppUpdates: AppUpdates;
   ApplicatorConfig: ApplicatorConfig;
+  AxisFlags: AxisFlags;
   CommandSettings: CommandSettings;
+  CompiledInstruction: CompiledInstruction;
   ConnectedPort: ConnectedPort;
   ConnectionSettings: ConnectionSettings;
   ControlledMachine: ControlledMachine;
@@ -1791,7 +1976,6 @@ export type ResolversParentTypes = {
   EventSettings: EventSettings;
   FileSystemSettings: FileSystemSettings;
   FirmwareApplicatorSettings: FirmwareApplicatorSettings;
-  FirmwareAxisFlags: FirmwareAxisFlags;
   FirmwareAxisValues: FirmwareAxisValues;
   FirmwareCalibrationSettings: FirmwareCalibrationSettings;
   FirmwareHomingSettings: FirmwareHomingSettings;
@@ -1799,13 +1983,28 @@ export type ResolversParentTypes = {
   FirmwarePinsSettings: FirmwarePinsSettings;
   FirmwareReportingSettings: FirmwareReportingSettings;
   FirmwareRequirement: FirmwareRequirement;
-  FirmwareSetting: FirmwareSetting;
-  FirmwareSettingOfBoolean: FirmwareSettingOfBoolean;
-  FirmwareSettingOfDecimal: FirmwareSettingOfDecimal;
-  FirmwareSettingOfFirmwareAxisFlags: FirmwareSettingOfFirmwareAxisFlags;
-  FirmwareSettingOfKinematicsMode: FirmwareSettingOfKinematicsMode;
-  FirmwareSettingOfStatusReportType: FirmwareSettingOfStatusReportType;
+  FirmwareSetting: Omit<FirmwareSetting, 'currentValue' | 'defaultValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+    defaultValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
+  FirmwareSettingOfAxisFlags: Omit<FirmwareSettingOfAxisFlags, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
+  FirmwareSettingOfBoolean: Omit<FirmwareSettingOfBoolean, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
+  FirmwareSettingOfDecimal: Omit<FirmwareSettingOfDecimal, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
+  FirmwareSettingOfKinematicsMode: Omit<FirmwareSettingOfKinematicsMode, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
+  FirmwareSettingOfStatusReportType: Omit<FirmwareSettingOfStatusReportType, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
   FirmwareSettings: FirmwareSettings;
+  KeyValuePairOfKinematicsModeAndInt32: KeyValuePairOfKinematicsModeAndInt32;
+  KeyValuePairOfStatusReportTypeAndInt32: KeyValuePairOfStatusReportTypeAndInt32;
   MachineAlert: MachineAlert;
   MachineApplicatorState: MachineApplicatorState;
   MachineAxis: MachineAxis;
@@ -1820,6 +2019,7 @@ export type ResolversParentTypes = {
   MachineFeatureSettings: MachineFeatureSettings;
   MachineFirmware: MachineFirmware;
   MachineFirmwareSettings: MachineFirmwareSettings;
+  MachineInstructionResult: MachineInstructionResult;
   MachineLogEntry: MachineLogEntry;
   MachineLogEntryConnection: MachineLogEntryConnection;
   MachineLogEntryEdge: MachineLogEntryEdge;
@@ -1850,6 +2050,12 @@ export type ResolversParentTypes = {
   OpenControllerSettings: OpenControllerSettings;
   OpenControllerUser: OpenControllerUser;
   PageInfo: PageInfo;
+  ParsedAxisFlags: ParsedAxisFlags;
+  ParsedBool: ParsedBool;
+  ParsedDecimal: ParsedDecimal;
+  ParsedEnumOfKinematicsMode: ParsedEnumOfKinematicsMode;
+  ParsedEnumOfStatusReportType: ParsedEnumOfStatusReportType;
+  ParsedString: ParsedString;
   PortOptions: PortOptions;
   PortStatus: PortStatus;
   ProgramFile: ProgramFile;
@@ -1866,11 +2072,13 @@ export type ResolversParentTypes = {
   ComparableInt32OperationFilterInput: ComparableInt32OperationFilterInput;
   ConnectionSettingsInput: ConnectionSettingsInput;
   FirmwareRequirementInput: FirmwareRequirementInput;
+  FirmwareSettingChangeInput: FirmwareSettingChangeInput;
   ListComparableDateTimeOperationFilterInput: ListComparableDateTimeOperationFilterInput;
   ListFilterInputTypeOfSyntaxChunkFilterInput: ListFilterInputTypeOfSyntaxChunkFilterInput;
   ListStringOperationFilterInput: ListStringOperationFilterInput;
   MachineAlertFilterInput: MachineAlertFilterInput;
   MachineAlertSortInput: MachineAlertSortInput;
+  MachineAlertTypeOperationFilterInput: MachineAlertTypeOperationFilterInput;
   MachineAxisSettingsInput: MachineAxisSettingsInput;
   MachineCommandSettingsInput: MachineCommandSettingsInput;
   MachineFeatureSettingsInput: MachineFeatureSettingsInput;
@@ -1885,6 +2093,7 @@ export type ResolversParentTypes = {
   MoveCommandInput: MoveCommandInput;
   ProgramFileUploadInput: ProgramFileUploadInput;
   SerialPortOptionsInput: SerialPortOptionsInput;
+  SerialWriteStateOperationFilterInput: SerialWriteStateOperationFilterInput;
   StringOperationFilterInput: StringOperationFilterInput;
   SyntaxChunkFilterInput: SyntaxChunkFilterInput;
   SyntaxTypeOperationFilterInput: SyntaxTypeOperationFilterInput;
@@ -1929,6 +2138,22 @@ export type ISerialPortOptionsResolvers<
   writeTimeout: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
 };
 
+export type IParsedValueResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['IParsedValue'] = ResolversParentTypes['IParsedValue']
+> = {
+  __resolveType: TypeResolveFn<
+    | 'ParsedAxisFlags'
+    | 'ParsedBool'
+    | 'ParsedDecimal'
+    | 'ParsedEnumOfKinematicsMode'
+    | 'ParsedEnumOfStatusReportType'
+    | 'ParsedString',
+    ParentType,
+    ContextType
+  >;
+};
+
 export type AlertErrorResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['AlertError'] = ResolversParentTypes['AlertError']
@@ -1962,6 +2187,16 @@ export type ApplicatorConfigResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type AxisFlagsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['AxisFlags'] = ResolversParentTypes['AxisFlags']
+> = {
+  x: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  y: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  z: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type CommandSettingsResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['CommandSettings'] = ResolversParentTypes['CommandSettings']
@@ -1971,6 +2206,16 @@ export type CommandSettingsResolvers<
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mtime: Resolver<ResolversTypes['Long'], ParentType, ContextType>;
   title: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CompiledInstructionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['CompiledInstruction'] = ResolversParentTypes['CompiledInstruction']
+> = {
+  chunks: Resolver<Array<ResolversTypes['SyntaxChunk']>, ParentType, ContextType>;
+  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  source: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2040,6 +2285,18 @@ export type ControllerResolvers<
   pause: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
   play: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
   reset: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
+  setFirmwareSetting: Resolver<
+    ResolversTypes['MachineExecutionResult'],
+    ParentType,
+    ContextType,
+    RequireFields<ControllerSetFirmwareSettingArgs, 'settingChange'>
+  >;
+  setFirmwareSettings: Resolver<
+    Array<ResolversTypes['MachineExecutionResult']>,
+    ParentType,
+    ContextType,
+    RequireFields<ControllerSetFirmwareSettingsArgs, 'settingChanges'>
+  >;
   settings: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
   startup: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
   status: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
@@ -2088,20 +2345,11 @@ export type FirmwareApplicatorSettingsResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type FirmwareAxisFlagsResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['FirmwareAxisFlags'] = ResolversParentTypes['FirmwareAxisFlags']
-> = {
-  x: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  y: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  z: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type FirmwareAxisValuesResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['FirmwareAxisValues'] = ResolversParentTypes['FirmwareAxisValues']
 > = {
+  settings: Resolver<Array<ResolversTypes['FirmwareSetting']>, ParentType, ContextType>;
   x: Resolver<ResolversTypes['FirmwareSettingOfDecimal'], ParentType, ContextType>;
   y: Resolver<ResolversTypes['FirmwareSettingOfDecimal'], ParentType, ContextType>;
   z: Resolver<ResolversTypes['FirmwareSettingOfDecimal'], ParentType, ContextType>;
@@ -2131,7 +2379,7 @@ export type FirmwareHomingSettingsResolvers<
   ParentType extends ResolversParentTypes['FirmwareHomingSettings'] = ResolversParentTypes['FirmwareHomingSettings']
 > = {
   debounce: Resolver<ResolversTypes['FirmwareSettingOfDecimal'], ParentType, ContextType>;
-  directionInvert: Resolver<ResolversTypes['FirmwareSettingOfFirmwareAxisFlags'], ParentType, ContextType>;
+  directionInvert: Resolver<ResolversTypes['FirmwareSettingOfAxisFlags'], ParentType, ContextType>;
   enabled: Resolver<ResolversTypes['FirmwareSettingOfBoolean'], ParentType, ContextType>;
   feedRate: Resolver<ResolversTypes['FirmwareSettingOfDecimal'], ParentType, ContextType>;
   pullOff: Resolver<ResolversTypes['FirmwareSettingOfDecimal'], ParentType, ContextType>;
@@ -2168,11 +2416,11 @@ export type FirmwarePinsSettingsResolvers<
   limitPinsInvert: Resolver<ResolversTypes['FirmwareSettingOfBoolean'], ParentType, ContextType>;
   probePinInvert: Resolver<ResolversTypes['FirmwareSettingOfBoolean'], ParentType, ContextType>;
   settings: Resolver<Array<ResolversTypes['FirmwareSetting']>, ParentType, ContextType>;
-  stepDirectionInvert: Resolver<ResolversTypes['FirmwareSettingOfFirmwareAxisFlags'], ParentType, ContextType>;
+  stepDirectionInvert: Resolver<ResolversTypes['FirmwareSettingOfAxisFlags'], ParentType, ContextType>;
   stepEnableInvert: Resolver<ResolversTypes['FirmwareSettingOfBoolean'], ParentType, ContextType>;
   stepIdleDelay: Resolver<ResolversTypes['FirmwareSettingOfDecimal'], ParentType, ContextType>;
   stepPulse: Resolver<ResolversTypes['FirmwareSettingOfDecimal'], ParentType, ContextType>;
-  stepSignalInvert: Resolver<ResolversTypes['FirmwareSettingOfFirmwareAxisFlags'], ParentType, ContextType>;
+  stepSignalInvert: Resolver<ResolversTypes['FirmwareSettingOfAxisFlags'], ParentType, ContextType>;
   steps: Resolver<ResolversTypes['FirmwareAxisValues'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -2206,7 +2454,29 @@ export type FirmwareSettingResolvers<
   ParentType extends ResolversParentTypes['FirmwareSetting'] = ResolversParentTypes['FirmwareSetting']
 > = {
   comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  defaultValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
+  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type FirmwareSettingOfAxisFlagsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['FirmwareSettingOfAxisFlags'] = ResolversParentTypes['FirmwareSettingOfAxisFlags']
+> = {
+  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['AxisFlags'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
   title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -2220,9 +2490,11 @@ export type FirmwareSettingOfBooleanResolvers<
   ParentType extends ResolversParentTypes['FirmwareSettingOfBoolean'] = ResolversParentTypes['FirmwareSettingOfBoolean']
 > = {
   comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  currentValue: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  defaultVaule: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
   title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -2236,25 +2508,11 @@ export type FirmwareSettingOfDecimalResolvers<
   ParentType extends ResolversParentTypes['FirmwareSettingOfDecimal'] = ResolversParentTypes['FirmwareSettingOfDecimal']
 > = {
   comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  currentValue: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
-  defaultVaule: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
-  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
-  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type FirmwareSettingOfFirmwareAxisFlagsResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['FirmwareSettingOfFirmwareAxisFlags'] = ResolversParentTypes['FirmwareSettingOfFirmwareAxisFlags']
-> = {
-  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  currentValue: Resolver<ResolversTypes['FirmwareAxisFlags'], ParentType, ContextType>;
-  defaultVaule: Resolver<ResolversTypes['FirmwareAxisFlags'], ParentType, ContextType>;
-  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
   title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -2268,9 +2526,11 @@ export type FirmwareSettingOfKinematicsModeResolvers<
   ParentType extends ResolversParentTypes['FirmwareSettingOfKinematicsMode'] = ResolversParentTypes['FirmwareSettingOfKinematicsMode']
 > = {
   comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  currentValue: Resolver<ResolversTypes['KinematicsMode'], ParentType, ContextType>;
-  defaultVaule: Resolver<ResolversTypes['KinematicsMode'], ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['KinematicsMode'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
   title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -2284,9 +2544,11 @@ export type FirmwareSettingOfStatusReportTypeResolvers<
   ParentType extends ResolversParentTypes['FirmwareSettingOfStatusReportType'] = ResolversParentTypes['FirmwareSettingOfStatusReportType']
 > = {
   comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  currentValue: Resolver<ResolversTypes['StatusReportType'], ParentType, ContextType>;
-  defaultVaule: Resolver<ResolversTypes['StatusReportType'], ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['StatusReportType'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
   title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -2299,13 +2561,31 @@ export type FirmwareSettingsResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['FirmwareSettings'] = ResolversParentTypes['FirmwareSettings']
 > = {
-  allSettings: Resolver<Array<ResolversTypes['FirmwareSetting']>, ParentType, ContextType>;
   applicator: Resolver<ResolversTypes['FirmwareApplicatorSettings'], ParentType, ContextType>;
   calibration: Resolver<ResolversTypes['FirmwareCalibrationSettings'], ParentType, ContextType>;
   homing: Resolver<ResolversTypes['FirmwareHomingSettings'], ParentType, ContextType>;
   movement: Resolver<ResolversTypes['FirmwareMovementSettings'], ParentType, ContextType>;
   pins: Resolver<ResolversTypes['FirmwarePinsSettings'], ParentType, ContextType>;
   reporting: Resolver<ResolversTypes['FirmwareReportingSettings'], ParentType, ContextType>;
+  settings: Resolver<Array<ResolversTypes['FirmwareSetting']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type KeyValuePairOfKinematicsModeAndInt32Resolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeyValuePairOfKinematicsModeAndInt32'] = ResolversParentTypes['KeyValuePairOfKinematicsModeAndInt32']
+> = {
+  key: Resolver<ResolversTypes['KinematicsMode'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type KeyValuePairOfStatusReportTypeAndInt32Resolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeyValuePairOfStatusReportTypeAndInt32'] = ResolversParentTypes['KeyValuePairOfStatusReportTypeAndInt32']
+> = {
+  key: Resolver<ResolversTypes['StatusReportType'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2316,6 +2596,7 @@ export type MachineAlertResolvers<
   code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   message: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  type: Resolver<ResolversTypes['MachineAlertType'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2367,6 +2648,8 @@ export type MachineBufferResolvers<
   availableReceive: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   availableSend: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   lineNumber: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  responseQueueLength: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  writeQueueLength: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2425,7 +2708,7 @@ export type MachineExecutionResultResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['MachineExecutionResult'] = ResolversParentTypes['MachineExecutionResult']
 > = {
-  logs: Resolver<Array<ResolversTypes['MachineLogEntry']>, ParentType, ContextType>;
+  instructionResults: Resolver<Array<ResolversTypes['MachineInstructionResult']>, ParentType, ContextType>;
   machine: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -2494,6 +2777,16 @@ export type MachineFirmwareSettingsResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type MachineInstructionResultResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MachineInstructionResult'] = ResolversParentTypes['MachineInstructionResult']
+> = {
+  instruction: Resolver<ResolversTypes['CompiledInstruction'], ParentType, ContextType>;
+  responseLogEntry: Resolver<Maybe<ResolversTypes['MachineLogEntry']>, ParentType, ContextType>;
+  writeLogEntry: Resolver<ResolversTypes['MachineLogEntry'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type MachineLogEntryResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['MachineLogEntry'] = ResolversParentTypes['MachineLogEntry']
@@ -2509,6 +2802,7 @@ export type MachineLogEntryResolvers<
   source: Resolver<ResolversTypes['MachineLogSource'], ParentType, ContextType>;
   timestamp: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   timestamps: Resolver<Array<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  writeState: Resolver<ResolversTypes['SerialWriteState'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2606,7 +2900,8 @@ export type MachineModalsResolvers<
   programState: Resolver<Maybe<ResolversTypes['MachineModalStateOfMachineProgramState']>, ParentType, ContextType>;
   spindleDirection: Resolver<ResolversTypes['MachineModalStateOfSpinDirection'], ParentType, ContextType>;
   units: Resolver<Maybe<ResolversTypes['MachineModalStateOfUnitType']>, ParentType, ContextType>;
-  workCoordinateSystem: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  workCoordinateSystemCount: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  workCoordinateSystemCurrent: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2900,6 +3195,61 @@ export type PageInfoResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type ParsedAxisFlagsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedAxisFlags'] = ResolversParentTypes['ParsedAxisFlags']
+> = {
+  valueAxisFlags: Resolver<ResolversTypes['AxisFlags'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedBoolResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedBool'] = ResolversParentTypes['ParsedBool']
+> = {
+  valueBool: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedDecimalResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedDecimal'] = ResolversParentTypes['ParsedDecimal']
+> = {
+  valueDecimal: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedEnumOfKinematicsModeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedEnumOfKinematicsMode'] = ResolversParentTypes['ParsedEnumOfKinematicsMode']
+> = {
+  valueEnum: Resolver<ResolversTypes['KinematicsMode'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  values: Resolver<Array<ResolversTypes['KeyValuePairOfKinematicsModeAndInt32']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedEnumOfStatusReportTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedEnumOfStatusReportType'] = ResolversParentTypes['ParsedEnumOfStatusReportType']
+> = {
+  valueEnum: Resolver<ResolversTypes['StatusReportType'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  values: Resolver<Array<ResolversTypes['KeyValuePairOfStatusReportTypeAndInt32']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedStringResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedString'] = ResolversParentTypes['ParsedString']
+> = {
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type PortOptionsResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['PortOptions'] = ResolversParentTypes['PortOptions']
@@ -3120,10 +3470,13 @@ export interface LongScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 export type Resolvers<ContextType = any> = {
   IMachineFirmwareRequirement: IMachineFirmwareRequirementResolvers<ContextType>;
   ISerialPortOptions: ISerialPortOptionsResolvers<ContextType>;
+  IParsedValue: IParsedValueResolvers<ContextType>;
   AlertError: AlertErrorResolvers<ContextType>;
   AppUpdates: AppUpdatesResolvers<ContextType>;
   ApplicatorConfig: ApplicatorConfigResolvers<ContextType>;
+  AxisFlags: AxisFlagsResolvers<ContextType>;
   CommandSettings: CommandSettingsResolvers<ContextType>;
+  CompiledInstruction: CompiledInstructionResolvers<ContextType>;
   ConnectedPort: ConnectedPortResolvers<ContextType>;
   ConnectionSettings: ConnectionSettingsResolvers<ContextType>;
   ControlledMachine: ControlledMachineResolvers<ContextType>;
@@ -3131,7 +3484,6 @@ export type Resolvers<ContextType = any> = {
   EventSettings: EventSettingsResolvers<ContextType>;
   FileSystemSettings: FileSystemSettingsResolvers<ContextType>;
   FirmwareApplicatorSettings: FirmwareApplicatorSettingsResolvers<ContextType>;
-  FirmwareAxisFlags: FirmwareAxisFlagsResolvers<ContextType>;
   FirmwareAxisValues: FirmwareAxisValuesResolvers<ContextType>;
   FirmwareCalibrationSettings: FirmwareCalibrationSettingsResolvers<ContextType>;
   FirmwareHomingSettings: FirmwareHomingSettingsResolvers<ContextType>;
@@ -3140,12 +3492,14 @@ export type Resolvers<ContextType = any> = {
   FirmwareReportingSettings: FirmwareReportingSettingsResolvers<ContextType>;
   FirmwareRequirement: FirmwareRequirementResolvers<ContextType>;
   FirmwareSetting: FirmwareSettingResolvers<ContextType>;
+  FirmwareSettingOfAxisFlags: FirmwareSettingOfAxisFlagsResolvers<ContextType>;
   FirmwareSettingOfBoolean: FirmwareSettingOfBooleanResolvers<ContextType>;
   FirmwareSettingOfDecimal: FirmwareSettingOfDecimalResolvers<ContextType>;
-  FirmwareSettingOfFirmwareAxisFlags: FirmwareSettingOfFirmwareAxisFlagsResolvers<ContextType>;
   FirmwareSettingOfKinematicsMode: FirmwareSettingOfKinematicsModeResolvers<ContextType>;
   FirmwareSettingOfStatusReportType: FirmwareSettingOfStatusReportTypeResolvers<ContextType>;
   FirmwareSettings: FirmwareSettingsResolvers<ContextType>;
+  KeyValuePairOfKinematicsModeAndInt32: KeyValuePairOfKinematicsModeAndInt32Resolvers<ContextType>;
+  KeyValuePairOfStatusReportTypeAndInt32: KeyValuePairOfStatusReportTypeAndInt32Resolvers<ContextType>;
   MachineAlert: MachineAlertResolvers<ContextType>;
   MachineApplicatorState: MachineApplicatorStateResolvers<ContextType>;
   MachineAxis: MachineAxisResolvers<ContextType>;
@@ -3160,6 +3514,7 @@ export type Resolvers<ContextType = any> = {
   MachineFeatureSettings: MachineFeatureSettingsResolvers<ContextType>;
   MachineFirmware: MachineFirmwareResolvers<ContextType>;
   MachineFirmwareSettings: MachineFirmwareSettingsResolvers<ContextType>;
+  MachineInstructionResult: MachineInstructionResultResolvers<ContextType>;
   MachineLogEntry: MachineLogEntryResolvers<ContextType>;
   MachineLogEntryConnection: MachineLogEntryConnectionResolvers<ContextType>;
   MachineLogEntryEdge: MachineLogEntryEdgeResolvers<ContextType>;
@@ -3190,6 +3545,12 @@ export type Resolvers<ContextType = any> = {
   OpenControllerSettings: OpenControllerSettingsResolvers<ContextType>;
   OpenControllerUser: OpenControllerUserResolvers<ContextType>;
   PageInfo: PageInfoResolvers<ContextType>;
+  ParsedAxisFlags: ParsedAxisFlagsResolvers<ContextType>;
+  ParsedBool: ParsedBoolResolvers<ContextType>;
+  ParsedDecimal: ParsedDecimalResolvers<ContextType>;
+  ParsedEnumOfKinematicsMode: ParsedEnumOfKinematicsModeResolvers<ContextType>;
+  ParsedEnumOfStatusReportType: ParsedEnumOfStatusReportTypeResolvers<ContextType>;
+  ParsedString: ParsedStringResolvers<ContextType>;
   PortOptions: PortOptionsResolvers<ContextType>;
   PortStatus: PortStatusResolvers<ContextType>;
   ProgramFile: ProgramFileResolvers<ContextType>;
@@ -3214,9 +3575,25 @@ export type IResolvers<ContextType = any> = Resolvers<ContextType>;
 
 export type SyntaxChunkFragment = { __typename?: 'SyntaxChunk' } & Pick<SyntaxChunk, 'value' | 'comment' | 'type'>;
 
+export type MachineInstructionResultFragment = { __typename?: 'MachineInstructionResult' } & {
+  writeLogEntry: { __typename?: 'MachineLogEntry' } & MachineLogEntryFragment;
+  responseLogEntry: Maybe<{ __typename?: 'MachineLogEntry' } & MachineLogEntryFragment>;
+};
+
 export type MachineExecutionResultFragment = { __typename?: 'MachineExecutionResult' } & {
-  logs: Array<{ __typename?: 'MachineLogEntry' } & MachineLogEntryFragment>;
+  instructionResults: Array<{ __typename?: 'MachineInstructionResult' } & MachineInstructionResultFragment>;
   machine: { __typename?: 'ControlledMachine' } & ControlledMachineFragment;
+};
+
+export type SetFirmwareSettingsMutationVariables = Exact<{
+  workspaceId: Scalars['String'];
+  changeSet: Array<FirmwareSettingChangeInput>;
+}>;
+
+export type SetFirmwareSettingsMutation = { __typename?: 'Mutation' } & {
+  controller: { __typename?: 'Controller' } & Pick<Controller, 'id'> & {
+      results: Array<{ __typename?: 'MachineExecutionResult' } & MachineExecutionResultFragment>;
+    };
 };
 
 export type CommandMachineMutationVariables = Exact<{
@@ -3293,7 +3670,7 @@ export type ControlledMachineFragment = { __typename?: 'ControlledMachine' } & P
     firmwareRequirement: { __typename?: 'FirmwareRequirement' } & FirmwareRequirement_FirmwareRequirement_Fragment;
     configuration: { __typename?: 'MachineConfiguration' } & MachineConfigFragment;
     status: { __typename?: 'MachineStatus' } & MachineStatusFragment;
-    settings: { __typename?: 'FirmwareSettings' } & FirmwareSettingsFragment;
+    settings: { __typename?: 'FirmwareSettings' } & FirmwareSettingsTypedFragment;
   } & MachineLogsFragment;
 
 export type DetectedFirmwareFragment = { __typename?: 'MachineDetectedFirmware' } & Pick<
@@ -3301,7 +3678,10 @@ export type DetectedFirmwareFragment = { __typename?: 'MachineDetectedFirmware' 
   'friendlyName' | 'isValid' | 'name' | 'value' | 'edition' | 'protocol' | 'welcomeMessage'
 >;
 
-export type MachineAlertFragment = { __typename?: 'MachineAlert' } & Pick<MachineAlert, 'code' | 'name' | 'message'>;
+export type MachineAlertFragment = { __typename?: 'MachineAlert' } & Pick<
+  MachineAlert,
+  'type' | 'code' | 'name' | 'message'
+>;
 
 export type MachinePositionFragment = { __typename?: 'MachinePosition' } & Pick<
   MachinePosition,
@@ -3318,7 +3698,10 @@ export type MachineCommandPropsFragment = { __typename?: 'MachineCommand' } & Pi
   'id' | 'name' | 'value'
 >;
 
-export type MachineModalsFragment = { __typename?: 'MachineModals' } & Pick<MachineModals, 'workCoordinateSystem'> & {
+export type MachineModalsFragment = { __typename?: 'MachineModals' } & Pick<
+  MachineModals,
+  'workCoordinateSystemCurrent' | 'workCoordinateSystemCount'
+> & {
     motion: { __typename?: 'MachineModalStateOfMachineMotionType' } & Pick<
       MachineModalStateOfMachineMotionType,
       'code' | 'value'
@@ -3413,7 +3796,7 @@ export type PageInfoFragment = { __typename?: 'PageInfo' } & Pick<PageInfo, 'end
 
 export type MachineLogEntryFragment = { __typename?: 'MachineLogEntry' } & Pick<
   MachineLogEntry,
-  'id' | 'timestamp' | 'count' | 'message' | 'logLevel' | 'source'
+  'id' | 'timestamp' | 'count' | 'message' | 'logLevel' | 'source' | 'writeState'
 > & {
     error: Maybe<{ __typename?: 'MachineAlert' } & MachineAlertFragment>;
     code: Array<{ __typename?: 'SyntaxChunk' } & SyntaxChunkFragment>;
@@ -3477,20 +3860,40 @@ export type MachinePresetSettingPropsFragment = { __typename?: 'MachinePresetSet
   'id' | 'title' | 'settingType' | 'key' | 'value'
 >;
 
+export type FirmwareSettingPolymorphicFragment = { __typename?: 'FirmwareSetting' } & Pick<
+  FirmwareSetting,
+  'id' | 'title' | 'key' | 'value' | 'units' | 'hasBeenRead'
+> & {
+    currentValue: Maybe<
+      | ({ __typename?: 'ParsedAxisFlags' } & {
+          valueAxisFlags: { __typename?: 'AxisFlags' } & Pick<AxisFlags, 'x' | 'y' | 'z'>;
+        })
+      | ({ __typename?: 'ParsedBool' } & Pick<ParsedBool, 'valueBool'>)
+      | ({ __typename?: 'ParsedDecimal' } & Pick<ParsedDecimal, 'valueDecimal'>)
+      | ({ __typename?: 'ParsedEnumOfKinematicsMode' } & {
+          valueKinematicsMode: ParsedEnumOfKinematicsMode['valueEnum'];
+        })
+      | ({ __typename?: 'ParsedEnumOfStatusReportType' } & {
+          valueStatusReportType: ParsedEnumOfStatusReportType['valueEnum'];
+        })
+      | ({ __typename?: 'ParsedString' } & Pick<ParsedString, 'valueString'>)
+    >;
+  };
+
 export type FirmwareSettingDecimalFragment = { __typename?: 'FirmwareSettingOfDecimal' } & Pick<
   FirmwareSettingOfDecimal,
-  'id' | 'title' | 'key' | 'currentValue'
+  'id' | 'title' | 'key' | 'data'
 >;
 
 export type FirmwareSettingBoolFragment = { __typename?: 'FirmwareSettingOfBoolean' } & Pick<
   FirmwareSettingOfBoolean,
-  'id' | 'title' | 'key' | 'currentValue'
+  'id' | 'title' | 'key' | 'data'
 >;
 
-export type FirmwareAxisFlagsFragment = { __typename?: 'FirmwareSettingOfFirmwareAxisFlags' } & Pick<
-  FirmwareSettingOfFirmwareAxisFlags,
+export type FirmwareSettingAxisFlagsFragment = { __typename?: 'FirmwareSettingOfAxisFlags' } & Pick<
+  FirmwareSettingOfAxisFlags,
   'id' | 'title' | 'key'
-> & { currentValue: { __typename?: 'FirmwareAxisFlags' } & Pick<FirmwareAxisFlags, 'x' | 'y' | 'z'> };
+> & { data: { __typename?: 'AxisFlags' } & Pick<AxisFlags, 'x' | 'y' | 'z'> };
 
 export type FirmwareAxisValuesFragment = { __typename?: 'FirmwareAxisValues' } & {
   x: { __typename?: 'FirmwareSettingOfDecimal' } & FirmwareSettingDecimalFragment;
@@ -3504,12 +3907,13 @@ export type FirmwareApplicatorSettingsFragment = { __typename?: 'FirmwareApplica
   laserEnabled: { __typename?: 'FirmwareSettingOfBoolean' } & FirmwareSettingBoolFragment;
   shuttleRadius: { __typename?: 'FirmwareSettingOfDecimal' } & FirmwareSettingDecimalFragment;
   shuttleWeight: { __typename?: 'FirmwareSettingOfDecimal' } & FirmwareSettingDecimalFragment;
+  settings: Array<{ __typename?: 'FirmwareSetting' } & FirmwareSettingPolymorphicFragment>;
 };
 
 export type FirmwareCalibrationSettingsFragment = { __typename?: 'FirmwareCalibrationSettings' } & {
   kinematics: { __typename?: 'FirmwareSettingOfKinematicsMode' } & Pick<
     FirmwareSettingOfKinematicsMode,
-    'id' | 'title' | 'key' | 'currentValue'
+    'id' | 'title' | 'key' | 'data'
   >;
   motorDistance: { __typename?: 'FirmwareAxisValues' } & FirmwareAxisValuesFragment;
   scaling: { __typename?: 'FirmwareAxisValues' } & FirmwareAxisValuesFragment;
@@ -3520,15 +3924,17 @@ export type FirmwareCalibrationSettingsFragment = { __typename?: 'FirmwareCalibr
   leftChainTolerance: { __typename?: 'FirmwareSettingOfDecimal' } & FirmwareSettingDecimalFragment;
   rightChainTolerance: { __typename?: 'FirmwareSettingOfDecimal' } & FirmwareSettingDecimalFragment;
   homeChainLengths: { __typename?: 'FirmwareSettingOfDecimal' } & FirmwareSettingDecimalFragment;
+  settings: Array<{ __typename?: 'FirmwareSetting' } & FirmwareSettingPolymorphicFragment>;
 };
 
 export type FirmwareHomingSettingsFragment = { __typename?: 'FirmwareHomingSettings' } & {
   enabled: { __typename?: 'FirmwareSettingOfBoolean' } & FirmwareSettingBoolFragment;
-  directionInvert: { __typename?: 'FirmwareSettingOfFirmwareAxisFlags' } & FirmwareAxisFlagsFragment;
+  directionInvert: { __typename?: 'FirmwareSettingOfAxisFlags' } & FirmwareSettingAxisFlagsFragment;
   feedRate: { __typename?: 'FirmwareSettingOfDecimal' } & FirmwareSettingDecimalFragment;
   seekRate: { __typename?: 'FirmwareSettingOfDecimal' } & FirmwareSettingDecimalFragment;
   debounce: { __typename?: 'FirmwareSettingOfDecimal' } & FirmwareSettingDecimalFragment;
   pullOff: { __typename?: 'FirmwareSettingOfDecimal' } & FirmwareSettingDecimalFragment;
+  settings: Array<{ __typename?: 'FirmwareSetting' } & FirmwareSettingPolymorphicFragment>;
 };
 
 export type FirmwareMovementSettingsFragment = { __typename?: 'FirmwareMovementSettings' } & {
@@ -3541,13 +3947,14 @@ export type FirmwareMovementSettingsFragment = { __typename?: 'FirmwareMovementS
   positionMax: { __typename?: 'FirmwareAxisValues' } & FirmwareAxisValuesFragment;
   positionMin: { __typename?: 'FirmwareAxisValues' } & FirmwareAxisValuesFragment;
   machineSize: { __typename?: 'FirmwareAxisValues' } & FirmwareAxisValuesFragment;
+  settings: Array<{ __typename?: 'FirmwareSetting' } & FirmwareSettingPolymorphicFragment>;
 };
 
 export type FirmwarePinsSettingsFragment = { __typename?: 'FirmwarePinsSettings' } & {
   stepPulse: { __typename?: 'FirmwareSettingOfDecimal' } & FirmwareSettingDecimalFragment;
   stepIdleDelay: { __typename?: 'FirmwareSettingOfDecimal' } & FirmwareSettingDecimalFragment;
-  stepSignalInvert: { __typename?: 'FirmwareSettingOfFirmwareAxisFlags' } & FirmwareAxisFlagsFragment;
-  stepDirectionInvert: { __typename?: 'FirmwareSettingOfFirmwareAxisFlags' } & FirmwareAxisFlagsFragment;
+  stepSignalInvert: { __typename?: 'FirmwareSettingOfAxisFlags' } & FirmwareSettingAxisFlagsFragment;
+  stepDirectionInvert: { __typename?: 'FirmwareSettingOfAxisFlags' } & FirmwareSettingAxisFlagsFragment;
   stepEnableInvert: { __typename?: 'FirmwareSettingOfBoolean' } & FirmwareSettingBoolFragment;
   limitPinsInvert: { __typename?: 'FirmwareSettingOfBoolean' } & FirmwareSettingBoolFragment;
   probePinInvert: { __typename?: 'FirmwareSettingOfBoolean' } & FirmwareSettingBoolFragment;
@@ -3556,17 +3963,23 @@ export type FirmwarePinsSettingsFragment = { __typename?: 'FirmwarePinsSettings'
   kDerivative: { __typename?: 'FirmwareAxisValues' } & FirmwareAxisValuesFragment;
   kIntegral: { __typename?: 'FirmwareAxisValues' } & FirmwareAxisValuesFragment;
   imax: { __typename?: 'FirmwareAxisValues' } & FirmwareAxisValuesFragment;
+  settings: Array<{ __typename?: 'FirmwareSetting' } & FirmwareSettingPolymorphicFragment>;
 };
 
 export type FirmwareReportingSettingsFragment = { __typename?: 'FirmwareReportingSettings' } & {
   statusReport: { __typename?: 'FirmwareSettingOfStatusReportType' } & Pick<
     FirmwareSettingOfStatusReportType,
-    'id' | 'title' | 'settingType' | 'key' | 'currentValue'
+    'id' | 'title' | 'settingType' | 'key' | 'data'
   >;
   reportInches: { __typename?: 'FirmwareSettingOfBoolean' } & FirmwareSettingBoolFragment;
+  settings: Array<{ __typename?: 'FirmwareSetting' } & FirmwareSettingPolymorphicFragment>;
 };
 
-export type FirmwareSettingsFragment = { __typename?: 'FirmwareSettings' } & {
+export type FirmwareSettingsListFragment = { __typename?: 'FirmwareSettings' } & {
+  settings: Array<{ __typename?: 'FirmwareSetting' } & FirmwareSettingPolymorphicFragment>;
+};
+
+export type FirmwareSettingsTypedFragment = { __typename?: 'FirmwareSettings' } & {
   applicator: { __typename?: 'FirmwareApplicatorSettings' } & FirmwareApplicatorSettingsFragment;
   calibration: { __typename?: 'FirmwareCalibrationSettings' } & FirmwareCalibrationSettingsFragment;
   homing: { __typename?: 'FirmwareHomingSettings' } & FirmwareHomingSettingsFragment;
@@ -3581,7 +3994,7 @@ export type MachineSettingsSubscriptionVariables = Exact<{
 
 export type MachineSettingsSubscription = { __typename?: 'Subscription' } & {
   machine: { __typename?: 'ControlledMachine' } & Pick<ControlledMachine, 'topicId'> & {
-      settings: { __typename?: 'FirmwareSettings' } & FirmwareSettingsFragment;
+      settings: { __typename?: 'FirmwareSettings' } & FirmwareSettingsTypedFragment;
     };
 };
 
@@ -3902,6 +4315,7 @@ export type AlertErrorFragment = { __typename?: 'AlertError' } & Pick<AlertError
 
 export const MachineAlertFragmentDoc = gql`
   fragment MachineAlert on MachineAlert {
+    type
     code
     name
     message
@@ -3922,6 +4336,7 @@ export const MachineLogEntryFragmentDoc = gql`
     message
     logLevel
     source
+    writeState
     error {
       ...MachineAlert
     }
@@ -3931,6 +4346,17 @@ export const MachineLogEntryFragmentDoc = gql`
   }
   ${MachineAlertFragmentDoc}
   ${SyntaxChunkFragmentDoc}
+`;
+export const MachineInstructionResultFragmentDoc = gql`
+  fragment MachineInstructionResult on MachineInstructionResult {
+    writeLogEntry {
+      ...MachineLogEntry
+    }
+    responseLogEntry {
+      ...MachineLogEntry
+    }
+  }
+  ${MachineLogEntryFragmentDoc}
 `;
 export const FirmwareRequirementFragmentDoc = gql`
   fragment FirmwareRequirement on IMachineFirmwareRequirement {
@@ -3988,7 +4414,8 @@ export const MachineModalsFragmentDoc = gql`
       code
       value
     }
-    workCoordinateSystem
+    workCoordinateSystemCurrent
+    workCoordinateSystemCount
   }
 `;
 export const MachinePositionFragmentDoc = gql`
@@ -4104,7 +4531,7 @@ export const FirmwareSettingDecimalFragmentDoc = gql`
     id
     title
     key
-    currentValue
+    data
   }
 `;
 export const FirmwareSettingBoolFragmentDoc = gql`
@@ -4112,7 +4539,41 @@ export const FirmwareSettingBoolFragmentDoc = gql`
     id
     title
     key
-    currentValue
+    data
+  }
+`;
+export const FirmwareSettingPolymorphicFragmentDoc = gql`
+  fragment FirmwareSettingPolymorphic on FirmwareSetting {
+    id
+    title
+    key
+    value
+    units
+    hasBeenRead
+    currentValue {
+      ... on ParsedDecimal {
+        valueDecimal
+      }
+      ... on ParsedString {
+        valueString
+      }
+      ... on ParsedAxisFlags {
+        valueAxisFlags {
+          x
+          y
+          z
+        }
+      }
+      ... on ParsedBool {
+        valueBool
+      }
+      ... on ParsedEnumOfKinematicsMode {
+        valueKinematicsMode: valueEnum
+      }
+      ... on ParsedEnumOfStatusReportType {
+        valueStatusReportType: valueEnum
+      }
+    }
   }
 `;
 export const FirmwareApplicatorSettingsFragmentDoc = gql`
@@ -4132,9 +4593,13 @@ export const FirmwareApplicatorSettingsFragmentDoc = gql`
     shuttleWeight {
       ...FirmwareSettingDecimal
     }
+    settings {
+      ...FirmwareSettingPolymorphic
+    }
   }
   ${FirmwareSettingDecimalFragmentDoc}
   ${FirmwareSettingBoolFragmentDoc}
+  ${FirmwareSettingPolymorphicFragmentDoc}
 `;
 export const FirmwareAxisValuesFragmentDoc = gql`
   fragment FirmwareAxisValues on FirmwareAxisValues {
@@ -4156,7 +4621,7 @@ export const FirmwareCalibrationSettingsFragmentDoc = gql`
       id
       title
       key
-      currentValue
+      data
     }
     motorDistance {
       ...FirmwareAxisValues
@@ -4185,17 +4650,21 @@ export const FirmwareCalibrationSettingsFragmentDoc = gql`
     homeChainLengths {
       ...FirmwareSettingDecimal
     }
+    settings {
+      ...FirmwareSettingPolymorphic
+    }
   }
   ${FirmwareAxisValuesFragmentDoc}
   ${FirmwareSettingDecimalFragmentDoc}
   ${FirmwareSettingBoolFragmentDoc}
+  ${FirmwareSettingPolymorphicFragmentDoc}
 `;
-export const FirmwareAxisFlagsFragmentDoc = gql`
-  fragment FirmwareAxisFlags on FirmwareSettingOfFirmwareAxisFlags {
+export const FirmwareSettingAxisFlagsFragmentDoc = gql`
+  fragment FirmwareSettingAxisFlags on FirmwareSettingOfAxisFlags {
     id
     title
     key
-    currentValue {
+    data {
       x
       y
       z
@@ -4208,7 +4677,7 @@ export const FirmwareHomingSettingsFragmentDoc = gql`
       ...FirmwareSettingBool
     }
     directionInvert {
-      ...FirmwareAxisFlags
+      ...FirmwareSettingAxisFlags
     }
     feedRate {
       ...FirmwareSettingDecimal
@@ -4222,10 +4691,14 @@ export const FirmwareHomingSettingsFragmentDoc = gql`
     pullOff {
       ...FirmwareSettingDecimal
     }
+    settings {
+      ...FirmwareSettingPolymorphic
+    }
   }
   ${FirmwareSettingBoolFragmentDoc}
-  ${FirmwareAxisFlagsFragmentDoc}
+  ${FirmwareSettingAxisFlagsFragmentDoc}
   ${FirmwareSettingDecimalFragmentDoc}
+  ${FirmwareSettingPolymorphicFragmentDoc}
 `;
 export const FirmwareMovementSettingsFragmentDoc = gql`
   fragment FirmwareMovementSettings on FirmwareMovementSettings {
@@ -4256,10 +4729,14 @@ export const FirmwareMovementSettingsFragmentDoc = gql`
     machineSize {
       ...FirmwareAxisValues
     }
+    settings {
+      ...FirmwareSettingPolymorphic
+    }
   }
   ${FirmwareSettingDecimalFragmentDoc}
   ${FirmwareSettingBoolFragmentDoc}
   ${FirmwareAxisValuesFragmentDoc}
+  ${FirmwareSettingPolymorphicFragmentDoc}
 `;
 export const FirmwarePinsSettingsFragmentDoc = gql`
   fragment FirmwarePinsSettings on FirmwarePinsSettings {
@@ -4270,10 +4747,10 @@ export const FirmwarePinsSettingsFragmentDoc = gql`
       ...FirmwareSettingDecimal
     }
     stepSignalInvert {
-      ...FirmwareAxisFlags
+      ...FirmwareSettingAxisFlags
     }
     stepDirectionInvert {
-      ...FirmwareAxisFlags
+      ...FirmwareSettingAxisFlags
     }
     stepEnableInvert {
       ...FirmwareSettingBool
@@ -4299,11 +4776,15 @@ export const FirmwarePinsSettingsFragmentDoc = gql`
     imax {
       ...FirmwareAxisValues
     }
+    settings {
+      ...FirmwareSettingPolymorphic
+    }
   }
   ${FirmwareSettingDecimalFragmentDoc}
-  ${FirmwareAxisFlagsFragmentDoc}
+  ${FirmwareSettingAxisFlagsFragmentDoc}
   ${FirmwareSettingBoolFragmentDoc}
   ${FirmwareAxisValuesFragmentDoc}
+  ${FirmwareSettingPolymorphicFragmentDoc}
 `;
 export const FirmwareReportingSettingsFragmentDoc = gql`
   fragment FirmwareReportingSettings on FirmwareReportingSettings {
@@ -4312,16 +4793,20 @@ export const FirmwareReportingSettingsFragmentDoc = gql`
       title
       settingType
       key
-      currentValue
+      data
     }
     reportInches {
       ...FirmwareSettingBool
     }
+    settings {
+      ...FirmwareSettingPolymorphic
+    }
   }
   ${FirmwareSettingBoolFragmentDoc}
+  ${FirmwareSettingPolymorphicFragmentDoc}
 `;
-export const FirmwareSettingsFragmentDoc = gql`
-  fragment FirmwareSettings on FirmwareSettings {
+export const FirmwareSettingsTypedFragmentDoc = gql`
+  fragment FirmwareSettingsTyped on FirmwareSettings {
     applicator {
       ...FirmwareApplicatorSettings
     }
@@ -4394,26 +4879,26 @@ export const ControlledMachineFragmentDoc = gql`
       ...MachineStatus
     }
     settings {
-      ...FirmwareSettings
+      ...FirmwareSettingsTyped
     }
     ...MachineLogs
   }
   ${FirmwareRequirementFragmentDoc}
   ${MachineConfigFragmentDoc}
   ${MachineStatusFragmentDoc}
-  ${FirmwareSettingsFragmentDoc}
+  ${FirmwareSettingsTypedFragmentDoc}
   ${MachineLogsFragmentDoc}
 `;
 export const MachineExecutionResultFragmentDoc = gql`
   fragment MachineExecutionResult on MachineExecutionResult {
-    logs {
-      ...MachineLogEntry
+    instructionResults {
+      ...MachineInstructionResult
     }
     machine {
       ...ControlledMachine
     }
   }
-  ${MachineLogEntryFragmentDoc}
+  ${MachineInstructionResultFragmentDoc}
   ${ControlledMachineFragmentDoc}
 `;
 export const OpenControllerUserMinFragmentDoc = gql`
@@ -4573,6 +5058,14 @@ export const MachineSearchResultFragmentDoc = gql`
     ...MachineProfileProps
   }
   ${MachineProfilePropsFragmentDoc}
+`;
+export const FirmwareSettingsListFragmentDoc = gql`
+  fragment FirmwareSettingsList on FirmwareSettings {
+    settings {
+      ...FirmwareSettingPolymorphic
+    }
+  }
+  ${FirmwareSettingPolymorphicFragmentDoc}
 `;
 export const AlertErrorFragmentDoc = gql`
   fragment AlertError on AlertError {
@@ -4890,6 +5383,54 @@ export const WorkspaceEssentialSettingsFragmentDoc = gql`
   }
   ${WorkspaceFullSettingsFragmentDoc}
 `;
+export const SetFirmwareSettingsDocument = gql`
+  mutation SetFirmwareSettings($workspaceId: String!, $changeSet: [FirmwareSettingChangeInput!]!) {
+    controller: controlMachine(workspaceId: $workspaceId) {
+      id
+      results: setFirmwareSettings(settingChanges: $changeSet) {
+        ...MachineExecutionResult
+      }
+    }
+  }
+  ${MachineExecutionResultFragmentDoc}
+`;
+export type SetFirmwareSettingsMutationFn = Apollo.MutationFunction<
+  SetFirmwareSettingsMutation,
+  SetFirmwareSettingsMutationVariables
+>;
+
+/**
+ * __useSetFirmwareSettingsMutation__
+ *
+ * To run a mutation, you first call `useSetFirmwareSettingsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetFirmwareSettingsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setFirmwareSettingsMutation, { data, loading, error }] = useSetFirmwareSettingsMutation({
+ *   variables: {
+ *      workspaceId: // value for 'workspaceId'
+ *      changeSet: // value for 'changeSet'
+ *   },
+ * });
+ */
+export function useSetFirmwareSettingsMutation(
+  baseOptions?: Apollo.MutationHookOptions<SetFirmwareSettingsMutation, SetFirmwareSettingsMutationVariables>,
+) {
+  return Apollo.useMutation<SetFirmwareSettingsMutation, SetFirmwareSettingsMutationVariables>(
+    SetFirmwareSettingsDocument,
+    baseOptions,
+  );
+}
+export type SetFirmwareSettingsMutationHookResult = ReturnType<typeof useSetFirmwareSettingsMutation>;
+export type SetFirmwareSettingsMutationResult = Apollo.MutationResult<SetFirmwareSettingsMutation>;
+export type SetFirmwareSettingsMutationOptions = Apollo.BaseMutationOptions<
+  SetFirmwareSettingsMutation,
+  SetFirmwareSettingsMutationVariables
+>;
 export const CommandMachineDocument = gql`
   mutation CommandMachine($workspaceId: String!, $code: String!, $source: String!) {
     controller: controlMachine(workspaceId: $workspaceId) {
@@ -5271,11 +5812,11 @@ export const MachineSettingsDocument = gql`
     machine: onMachineSetting(portName: $portName) {
       topicId
       settings {
-        ...FirmwareSettings
+        ...FirmwareSettingsTyped
       }
     }
   }
-  ${FirmwareSettingsFragmentDoc}
+  ${FirmwareSettingsTypedFragmentDoc}
 `;
 
 /**

@@ -6,25 +6,54 @@ fragment MachinePresetSettingProps on MachinePresetSetting {
   value
 }
 
+fragment FirmwareSettingPolymorphic on FirmwareSetting {
+  id
+  title
+  key
+  value
+  units
+  hasBeenRead
+  currentValue {
+    ...on ParsedDecimal {
+      valueDecimal
+    }
+    ...on ParsedString {
+      valueString
+    }
+    ...on ParsedAxisFlags {
+      valueAxisFlags { x, y, z }
+    }
+    ...on ParsedBool {
+      valueBool
+    }
+    ...on ParsedEnumOfKinematicsMode {
+      valueKinematicsMode: valueEnum
+    }
+    ...on ParsedEnumOfStatusReportType {
+      valueStatusReportType: valueEnum
+    }
+  }
+}
+
 fragment FirmwareSettingDecimal on FirmwareSettingOfDecimal {
   id
   title
   key
-  currentValue
+  data
 }
 
 fragment FirmwareSettingBool on FirmwareSettingOfBoolean {
   id
   title
   key
-  currentValue
+  data
 }
 
-fragment FirmwareAxisFlags on FirmwareSettingOfFirmwareAxisFlags {
+fragment FirmwareSettingAxisFlags on FirmwareSettingOfAxisFlags {
   id
   title
   key
-  currentValue {
+  data {
     x
     y
     z
@@ -43,6 +72,8 @@ fragment FirmwareApplicatorSettings on FirmwareApplicatorSettings {
   laserEnabled { ...FirmwareSettingBool }
   shuttleRadius { ...FirmwareSettingDecimal }
   shuttleWeight { ...FirmwareSettingDecimal }
+  # Or just get all:
+  settings { ...FirmwareSettingPolymorphic }
 }
 
 fragment FirmwareCalibrationSettings on FirmwareCalibrationSettings {
@@ -50,7 +81,7 @@ fragment FirmwareCalibrationSettings on FirmwareCalibrationSettings {
     id
     title
     key
-    currentValue
+    data
   }
   motorDistance { ...FirmwareAxisValues }
   scaling { ...FirmwareAxisValues }
@@ -61,15 +92,19 @@ fragment FirmwareCalibrationSettings on FirmwareCalibrationSettings {
   leftChainTolerance { ...FirmwareSettingDecimal }
   rightChainTolerance { ...FirmwareSettingDecimal }
   homeChainLengths { ...FirmwareSettingDecimal }
+  # Or just get all:
+  settings { ...FirmwareSettingPolymorphic }
 }
 
 fragment FirmwareHomingSettings on FirmwareHomingSettings {
   enabled { ...FirmwareSettingBool }
-  directionInvert { ...FirmwareAxisFlags }
+  directionInvert { ...FirmwareSettingAxisFlags }
   feedRate { ...FirmwareSettingDecimal }
   seekRate { ...FirmwareSettingDecimal }
   debounce { ...FirmwareSettingDecimal }
   pullOff { ...FirmwareSettingDecimal }
+  # Or just get all:
+  settings { ...FirmwareSettingPolymorphic }
 }
 
 fragment FirmwareMovementSettings on FirmwareMovementSettings {
@@ -82,13 +117,15 @@ fragment FirmwareMovementSettings on FirmwareMovementSettings {
   positionMax { ...FirmwareAxisValues }
   positionMin { ...FirmwareAxisValues }
   machineSize { ...FirmwareAxisValues }
+  # Or just get all:
+  settings { ...FirmwareSettingPolymorphic }
 }
 
 fragment FirmwarePinsSettings on FirmwarePinsSettings {
   stepPulse { ...FirmwareSettingDecimal }
   stepIdleDelay { ...FirmwareSettingDecimal }
-  stepSignalInvert { ...FirmwareAxisFlags }
-  stepDirectionInvert { ...FirmwareAxisFlags }
+  stepSignalInvert { ...FirmwareSettingAxisFlags }
+  stepDirectionInvert { ...FirmwareSettingAxisFlags }
   stepEnableInvert { ...FirmwareSettingBool }
   limitPinsInvert { ...FirmwareSettingBool }
   probePinInvert { ...FirmwareSettingBool }
@@ -97,6 +134,9 @@ fragment FirmwarePinsSettings on FirmwarePinsSettings {
   kDerivative { ...FirmwareAxisValues }
   kIntegral { ...FirmwareAxisValues }
   imax { ...FirmwareAxisValues }
+
+  # Or just get all:
+  settings { ...FirmwareSettingPolymorphic }
 }
 
 fragment FirmwareReportingSettings on FirmwareReportingSettings {
@@ -105,12 +145,24 @@ fragment FirmwareReportingSettings on FirmwareReportingSettings {
     title
     settingType
     key
-    currentValue
+    data
   }
   reportInches { ...FirmwareSettingBool }
+  # Or just get all:
+  settings { ...FirmwareSettingPolymorphic }
 }
 
-fragment FirmwareSettings on FirmwareSettings {
+# TWO OPTIONS for FirmwareSettings
+
+# 1) [List]: Polymorphic typed settings get everything in one list (requires unboxing polymorhism, good for iterating)
+fragment FirmwareSettingsList on FirmwareSettings {
+  settings {
+    ...FirmwareSettingPolymorphic
+  }
+}
+
+# 2) [Typed]: each object in the tree is strongly typed
+fragment FirmwareSettingsTyped on FirmwareSettings {
   applicator { ...FirmwareApplicatorSettings }
   calibration { ...FirmwareCalibrationSettings }
   homing { ...FirmwareHomingSettings }
@@ -122,6 +174,6 @@ fragment FirmwareSettings on FirmwareSettings {
 subscription MachineSettings($portName: String!) {
   machine: onMachineSetting(portName: $portName) {
     topicId
-    settings { ...FirmwareSettings }
+    settings { ...FirmwareSettingsTyped  }
   }
 }

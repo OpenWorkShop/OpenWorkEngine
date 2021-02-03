@@ -9,7 +9,7 @@
     <e p="$PROJECT_DIR$/../.nuget/packages/xunit.runner.visualstudio/2.4.3/build/netcoreapp2.1/xunit.runner.utility.netcoreapp10.dll" t="Include" />
     <e p="$PROJECT_DIR$/../.nuget/packages/xunit.runner.visualstudio/2.4.3/build/netcoreapp2.1/xunit.runner.visualstudio.dotnetcore.testadapter.dll" t="Include" />
     <e p="$PROJECT_DIR$/../Library/Caches/JetBrains/Rider2020.3/extResources" t="IncludeRecursive" />
-    <e p="$PROJECT_DIR$/../Library/Caches/JetBrains/Rider2020.3/resharper-host/local/Transient/Rider/v203/SolutionCaches/_OpenWorkEngine.705098016.00" t="ExcludeRecursive" />
+    <e p="$PROJECT_DIR$/../Library/Caches/JetBrains/Rider2020.3/resharper-host/local/Transient/Rider/v203/SolutionCaches/_OpenWorkEngine.705098016.01" t="ExcludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeFlat">
       <e p="Makerverse" t="IncludeRecursive">
         <e p=".dockerignore" t="Include" />
@@ -164,22 +164,14 @@
             <e p="IControllerInstruction.cs" t="Include" />
           </e>
           <e p="Messages" t="Include">
-            <e p="FirmwareAxisFlags.cs" t="Include" />
-            <e p="FirmwareAxisValues.cs" t="Include" />
             <e p="MachineExecutionResult.cs" t="Include" />
+            <e p="MachineInstructionResult.cs" t="Include" />
             <e p="MoveCommand.cs" t="Include" />
           </e>
           <e p="Models" t="Include">
             <e p="CompiledInstruction.cs" t="Include" />
+            <e p="ControllerExecutionOptions.cs" t="Include" />
             <e p="ControllerScript.cs" t="Include" />
-            <e p="FirmwareApplicatorSettings.cs" t="Include" />
-            <e p="FirmwareCalibrationSettings.cs" t="Include" />
-            <e p="FirmwareHomingSettings.cs" t="Include" />
-            <e p="FirmwareMovementSettings.cs" t="Include" />
-            <e p="FirmwarePinsSettings.cs" t="Include" />
-            <e p="FirmwareReportingSettings.cs" t="Include" />
-            <e p="FirmwareSetting.cs" t="Include" />
-            <e p="FirmwareSettings.cs" t="Include" />
           </e>
           <e p="Services" t="Include">
             <e p="Controller.cs" t="Include" />
@@ -192,6 +184,14 @@
               <e p="SerialPoll.cs" t="Include" />
             </e>
             <e p="SerialBuffer.cs" t="Include" />
+            <e p="Values" t="Include">
+              <e p="ParsedAxisFlags.cs" t="Include" />
+              <e p="ParsedBool.cs" t="Include" />
+              <e p="ParsedDecimal.cs" t="Include" />
+              <e p="ParsedEnum.cs" t="Include" />
+              <e p="ParsedString.cs" t="Include" />
+              <e p="ParsedValue.cs" t="Include" />
+            </e>
           </e>
         </e>
         <e p="ControllerSyntax" t="Include">
@@ -307,6 +307,7 @@
           <e p="Enums" t="Include">
             <e p="ActiveState.cs" t="Include" />
             <e p="FeedRateMode.cs" t="Include" />
+            <e p="MachineAlertType.cs" t="Include" />
             <e p="MachineCommandType.cs" t="Include" />
             <e p="MachineErrorType.cs" t="Include" />
             <e p="MachineLogLevel.cs" t="Include" />
@@ -332,6 +333,7 @@
             <e p="IMachineFirmwareRequirement.cs" t="Include" />
           </e>
           <e p="Messages" t="Include">
+            <e p="AxisFlags.cs" t="Include" />
             <e p="MachineConnectionOptions.cs" t="Include" />
             <e p="MachineLogEntryFilterInputType.cs" t="Include" />
             <e p="MachineModalState.cs" t="Include" />
@@ -341,6 +343,15 @@
             <e p="ApplicatorConfig.cs" t="Include" />
             <e p="ApplicatorState.cs" t="Include" />
             <e p="ControlledMachine.cs" t="Include" />
+            <e p="FirmwareApplicatorSettings.cs" t="Include" />
+            <e p="FirmwareAxisValues.cs" t="Include" />
+            <e p="FirmwareCalibrationSettings.cs" t="Include" />
+            <e p="FirmwareHomingSettings.cs" t="Include" />
+            <e p="FirmwareMovementSettings.cs" t="Include" />
+            <e p="FirmwarePinsSettings.cs" t="Include" />
+            <e p="FirmwareReportingSettings.cs" t="Include" />
+            <e p="FirmwareSetting.cs" t="Include" />
+            <e p="FirmwareSettings.cs" t="Include" />
             <e p="MachineAlert.cs" t="Include" />
             <e p="MachineApplicatorState.cs" t="Include" />
             <e p="MachineBuffer.cs" t="Include" />

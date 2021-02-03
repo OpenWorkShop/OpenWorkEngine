@@ -13,18 +13,22 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode {
   // https://www.cnccookbook.com/g-code-basics-program-format-structure-blocks/
   public class GCodeBlock : IControllerInstruction {
     // Those commands which are realtime (sent inline, no Response expected).
-    private static readonly string[] RealTimeCommands = new[] { "?", "!", "~", "\u0018" };
+    private static readonly string[] InLineCommands = new[] { "?", "!", "~", "\u0018" };
 
     public string InstructionSource { get; }
     public string Template { get; }
     public bool Inline { get; }
+    public bool Immediate { get; }
+    public bool ResponseExpected => !Inline; // Grbl sends responses to commands with line-breaks only.
 
     public GCodeBlock(string line, string instructionSource) {
       if (line.Contains('\n') || line.Contains('\r'))
         throw new ArgumentException($"GCode block '{line}' had a line break.");
       InstructionSource = instructionSource;
       Template = line;
-      Inline = RealTimeCommands.Contains(line);
+      Inline = InLineCommands.Contains(line);
+      // $X, $H, etc. all bypass the queue.
+      Immediate = Inline || (line.Length == 2 && line.StartsWith("$"));
       Chunks = ParseLine(line);
     }
 
@@ -60,11 +64,16 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode {
           }
         } else if (c == ' ') {
           whitespace = true;
+        } else if (c == '=') {
+          chunks.Add(curChunk);
+          chunks.Add(new SyntaxChunk() { Value = "=", Type = SyntaxType.Operator });
+          curChunk = new SyntaxChunk() { Type = SyntaxType.Value };
+          whitespace = false;
         } else {
           // Not a comment. If we had whitespace w/ a valid command, we need a new chunk.
           if (whitespace && curChunk.IsCode) {
             chunks.Add(curChunk);
-            curChunk = new SyntaxChunk();
+            curChunk = new SyntaxChunk() {Type = SyntaxType.Value}; // After the first chunk, everything should be vals
             whitespace = false;
           }
           // Append to a command.

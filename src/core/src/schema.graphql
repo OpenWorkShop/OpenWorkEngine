@@ -29,6 +29,8 @@ interface ISerialPortOptions {
     writeTimeout: Int
 }
 
+union IParsedValue = ParsedAxisFlags | ParsedBool | ParsedDecimal | ParsedEnumOfKinematicsMode | ParsedEnumOfStatusReportType | ParsedString
+
 type AlertError {
     message: String!
     name: String!
@@ -50,12 +52,24 @@ type ApplicatorConfig {
     toolLengthOffset: MachinePosition
 }
 
+type AxisFlags {
+    x: Boolean!
+    y: Boolean!
+    z: Boolean!
+}
+
 type CommandSettings {
     commands: String!
     enabled: Boolean!
     id: String!
     mtime: Long!
     title: String!
+}
+
+type CompiledInstruction {
+    chunks: [SyntaxChunk!]!
+    code: String!
+    source: String!
 }
 
 type ConnectedPort {
@@ -99,6 +113,8 @@ type Controller {
     pause: MachineExecutionResult!
     play: MachineExecutionResult!
     reset: MachineExecutionResult!
+    setFirmwareSetting(settingChange: FirmwareSettingChangeInput!): MachineExecutionResult!
+    setFirmwareSettings(settingChanges: [FirmwareSettingChangeInput!]!): [MachineExecutionResult!]!
     settings: MachineExecutionResult!
     startup: MachineExecutionResult!
     status: MachineExecutionResult!
@@ -129,13 +145,8 @@ type FirmwareApplicatorSettings {
     speedMin: FirmwareSettingOfDecimal!
 }
 
-type FirmwareAxisFlags {
-    x: Boolean!
-    y: Boolean!
-    z: Boolean!
-}
-
 type FirmwareAxisValues {
+    settings: [FirmwareSetting!]!
     x: FirmwareSettingOfDecimal!
     y: FirmwareSettingOfDecimal!
     z: FirmwareSettingOfDecimal!
@@ -157,7 +168,7 @@ type FirmwareCalibrationSettings {
 
 type FirmwareHomingSettings {
     debounce: FirmwareSettingOfDecimal!
-    directionInvert: FirmwareSettingOfFirmwareAxisFlags!
+    directionInvert: FirmwareSettingOfAxisFlags!
     enabled: FirmwareSettingOfBoolean!
     feedRate: FirmwareSettingOfDecimal!
     pullOff: FirmwareSettingOfDecimal!
@@ -186,11 +197,11 @@ type FirmwarePinsSettings {
     limitPinsInvert: FirmwareSettingOfBoolean!
     probePinInvert: FirmwareSettingOfBoolean!
     settings: [FirmwareSetting!]!
-    stepDirectionInvert: FirmwareSettingOfFirmwareAxisFlags!
+    stepDirectionInvert: FirmwareSettingOfAxisFlags!
     stepEnableInvert: FirmwareSettingOfBoolean!
     stepIdleDelay: FirmwareSettingOfDecimal!
     stepPulse: FirmwareSettingOfDecimal!
-    stepSignalInvert: FirmwareSettingOfFirmwareAxisFlags!
+    stepSignalInvert: FirmwareSettingOfAxisFlags!
     steps: FirmwareAxisValues!
 }
 
@@ -212,7 +223,25 @@ type FirmwareRequirement implements IMachineFirmwareRequirement {
 
 type FirmwareSetting {
     comment: String
+    currentValue: IParsedValue
+    defaultValue: IParsedValue
+    hasBeenRead: Boolean!
     id: String!
+    index: Int!
+    key: String!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+}
+
+type FirmwareSettingOfAxisFlags {
+    comment: String
+    currentValue: IParsedValue
+    data: AxisFlags!
+    hasBeenRead: Boolean!
+    id: String!
+    index: Int!
     key: String!
     settingType: MachineSettingType!
     title: String
@@ -222,9 +251,11 @@ type FirmwareSetting {
 
 type FirmwareSettingOfBoolean {
     comment: String
-    currentValue: Boolean!
-    defaultVaule: Boolean!
+    currentValue: IParsedValue
+    data: Boolean!
+    hasBeenRead: Boolean!
     id: String!
+    index: Int!
     key: String!
     settingType: MachineSettingType!
     title: String
@@ -234,21 +265,11 @@ type FirmwareSettingOfBoolean {
 
 type FirmwareSettingOfDecimal {
     comment: String
-    currentValue: Decimal!
-    defaultVaule: Decimal!
+    currentValue: IParsedValue
+    data: Decimal!
+    hasBeenRead: Boolean!
     id: String!
-    key: String!
-    settingType: MachineSettingType!
-    title: String
-    units: MachineSettingUnits!
-    value: String!
-}
-
-type FirmwareSettingOfFirmwareAxisFlags {
-    comment: String
-    currentValue: FirmwareAxisFlags!
-    defaultVaule: FirmwareAxisFlags!
-    id: String!
+    index: Int!
     key: String!
     settingType: MachineSettingType!
     title: String
@@ -258,9 +279,11 @@ type FirmwareSettingOfFirmwareAxisFlags {
 
 type FirmwareSettingOfKinematicsMode {
     comment: String
-    currentValue: KinematicsMode!
-    defaultVaule: KinematicsMode!
+    currentValue: IParsedValue
+    data: KinematicsMode!
+    hasBeenRead: Boolean!
     id: String!
+    index: Int!
     key: String!
     settingType: MachineSettingType!
     title: String
@@ -270,9 +293,11 @@ type FirmwareSettingOfKinematicsMode {
 
 type FirmwareSettingOfStatusReportType {
     comment: String
-    currentValue: StatusReportType!
-    defaultVaule: StatusReportType!
+    currentValue: IParsedValue
+    data: StatusReportType!
+    hasBeenRead: Boolean!
     id: String!
+    index: Int!
     key: String!
     settingType: MachineSettingType!
     title: String
@@ -281,19 +306,30 @@ type FirmwareSettingOfStatusReportType {
 }
 
 type FirmwareSettings {
-    allSettings: [FirmwareSetting!]!
     applicator: FirmwareApplicatorSettings!
     calibration: FirmwareCalibrationSettings!
     homing: FirmwareHomingSettings!
     movement: FirmwareMovementSettings!
     pins: FirmwarePinsSettings!
     reporting: FirmwareReportingSettings!
+    settings: [FirmwareSetting!]!
+}
+
+type KeyValuePairOfKinematicsModeAndInt32 {
+    key: KinematicsMode!
+    value: Int!
+}
+
+type KeyValuePairOfStatusReportTypeAndInt32 {
+    key: StatusReportType!
+    value: Int!
 }
 
 type MachineAlert {
     code: String!
     message: String!
     name: String!
+    type: MachineAlertType!
 }
 
 type MachineApplicatorState {
@@ -329,6 +365,8 @@ type MachineBuffer {
     availableReceive: Int!
     availableSend: Int!
     lineNumber: Int!
+    responseQueueLength: Int!
+    writeQueueLength: Int!
 }
 
 type MachineCommand {
@@ -367,7 +405,7 @@ type MachineDetectedFirmware {
 }
 
 type MachineExecutionResult {
-    logs: [MachineLogEntry!]!
+    instructionResults: [MachineInstructionResult!]!
     machine: ControlledMachine!
 }
 
@@ -419,6 +457,12 @@ type MachineFirmwareSettings implements IMachineFirmwareRequirement {
     suggestedVersion: Decimal!
 }
 
+type MachineInstructionResult {
+    instruction: CompiledInstruction!
+    responseLogEntry: MachineLogEntry
+    writeLogEntry: MachineLogEntry!
+}
+
 type MachineLogEntry {
     canMergeWith: Boolean!
     code: [SyntaxChunk!]!
@@ -431,6 +475,7 @@ type MachineLogEntry {
     source: MachineLogSource!
     timestamp: DateTime!
     timestamps: [DateTime!]!
+    writeState: SerialWriteState!
 }
 
 "A connection to a list of items."
@@ -495,7 +540,8 @@ type MachineModals {
     programState: MachineModalStateOfMachineProgramState
     spindleDirection: MachineModalStateOfSpinDirection!
     units: MachineModalStateOfUnitType
-    workCoordinateSystem: Int!
+    workCoordinateSystemCount: Int!
+    workCoordinateSystemCurrent: Int!
 }
 
 type MachineOptions {
@@ -666,6 +712,37 @@ type PageInfo {
     hasPreviousPage: Boolean!
     "When paginating backwards, the cursor to continue."
     startCursor: String
+}
+
+type ParsedAxisFlags {
+    valueAxisFlags: AxisFlags!
+    valueString: String!
+}
+
+type ParsedBool {
+    valueBool: Boolean!
+    valueString: String!
+}
+
+type ParsedDecimal {
+    valueDecimal: Decimal!
+    valueString: String!
+}
+
+type ParsedEnumOfKinematicsMode {
+    valueEnum: KinematicsMode!
+    valueString: String!
+    values: [KeyValuePairOfKinematicsModeAndInt32!]!
+}
+
+type ParsedEnumOfStatusReportType {
+    valueEnum: StatusReportType!
+    valueString: String!
+    values: [KeyValuePairOfStatusReportTypeAndInt32!]!
+}
+
+type ParsedString {
+    valueString: String!
 }
 
 type PortOptions implements ISerialPortOptions {
@@ -840,6 +917,12 @@ enum Handshake {
 enum KinematicsMode {
     LINEAR
     TRIANGULAR
+}
+
+enum MachineAlertType {
+    ALARM
+    ERROR
+    EXCEPTION
 }
 
 enum MachineCategory {
@@ -1020,6 +1103,14 @@ enum ProgramSyntax {
     G_CODE
 }
 
+enum SerialWriteState {
+    ERROR
+    NONE
+    OK
+    QUEUED
+    SENT
+}
+
 enum SortEnumType {
     ASC
     DESC
@@ -1099,6 +1190,7 @@ input ComparableInt32OperationFilterInput {
     nlte: Int
 }
 
+
 input ConnectionSettingsInput {
     firmware: MachineFirmwareSettingsInput!
     machineProfileId: String
@@ -1114,6 +1206,11 @@ input FirmwareRequirementInput {
     name: String
     requiredVersion: Decimal!
     suggestedVersion: Decimal!
+}
+
+input FirmwareSettingChangeInput {
+    id: String!
+    value: String!
 }
 
 input ListComparableDateTimeOperationFilterInput {
@@ -1143,12 +1240,21 @@ input MachineAlertFilterInput {
     message: StringOperationFilterInput
     name: StringOperationFilterInput
     or: [MachineAlertFilterInput!]
+    type: MachineAlertTypeOperationFilterInput
 }
 
 input MachineAlertSortInput {
     code: SortEnumType
     message: SortEnumType
     name: SortEnumType
+    type: SortEnumType
+}
+
+input MachineAlertTypeOperationFilterInput {
+    eq: MachineAlertType
+    in: [MachineAlertType!]
+    neq: MachineAlertType
+    nin: [MachineAlertType!]
 }
 
 input MachineAxisSettingsInput {
@@ -1202,6 +1308,7 @@ input MachineLogEntryFilterInput {
     source: MachineLogSourceOperationFilterInput
     timestamp: ComparableDateTimeOperationFilterInput
     timestamps: ListComparableDateTimeOperationFilterInput
+    writeState: SerialWriteStateOperationFilterInput
 }
 
 input MachineLogEntrySortInput {
@@ -1213,6 +1320,7 @@ input MachineLogEntrySortInput {
     message: SortEnumType
     source: SortEnumType
     timestamp: SortEnumType
+    writeState: SortEnumType
 }
 
 input MachineLogLevelOperationFilterInput {
@@ -1284,6 +1392,13 @@ input SerialPortOptionsInput {
     stopBits: StopBits
     writeBufferSize: Int
     writeTimeout: Int
+}
+
+input SerialWriteStateOperationFilterInput {
+    eq: SerialWriteState
+    in: [SerialWriteState!]
+    neq: SerialWriteState
+    nin: [SerialWriteState!]
 }
 
 input StringOperationFilterInput {

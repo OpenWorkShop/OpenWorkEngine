@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     maxWidth: 64,
     width: '100%',
     minWidth: 44,
+    backgroundColor: theme.palette.background.paper,
   },
   jogAxisIcon: {
     minWidth: 20,
@@ -21,6 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '100%',
     padding: 0,
     margin: 0,
+    backgroundColor: theme.palette.background.paper,
   },
   numberSelect: {
     maxHeight: 44,

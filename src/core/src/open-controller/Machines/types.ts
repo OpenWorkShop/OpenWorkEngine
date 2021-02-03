@@ -20,3 +20,7 @@ export interface IMachinePosition {
 }
 
 export type Axis3D = AxisName.X | AxisName.Y | AxisName.Z;
+
+export type FirmwareSettingsGroupName = 'applicator' | 'pins' | 'movement' | 'reporting' | 'homing' | 'calibration';
+
+export type AxisFlagKey = 'x' | 'y' | 'z';

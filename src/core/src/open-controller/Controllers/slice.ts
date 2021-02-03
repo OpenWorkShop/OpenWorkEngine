@@ -63,6 +63,7 @@ const controllersSlice = createSlice({
 
     onControlledMachineSettings(state, action: PayloadAction<IMachineSettingsUpdate>) {
       state.controllerMap[action.payload.topicId].machine.settings = action.payload.settings;
+      console.log('[SETTINGS]', action.payload.settings);
       return state;
     },
 
