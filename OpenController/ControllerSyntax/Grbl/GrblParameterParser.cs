@@ -19,9 +19,9 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
       MachinePosition pos = GrblStatusParser.GetPositionArgument(parts.First());
 
       if (key.Equals("TLO")) {
-        line.Machine.Configuration.Applicator.ToolLengthOffset = pos;
+        line.Machine.Status.Applicator.LengthOffset = pos;
       } else if (key.Equals("PRB")) {
-        line.Machine.Configuration.Applicator.ProbePosition = pos;
+        line.Machine.Status.Applicator.ProbePosition = pos;
       } else {
         GCodeWord word = new GCodeWord(key);
         if (word.Value >= 54 && word.Value <= 59) {

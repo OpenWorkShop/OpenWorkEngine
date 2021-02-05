@@ -26,9 +26,9 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
 
       MachineDetectedFirmware fw = machine.Configuration.Firmware;
       fw.Should().NotBeNull();
-      fw?.Name.Should().Be("MaslowDue");
-      fw?.Edition.Should().Be("1.1g");
-      fw?.Value?.Should().Be(20200915);
+      fw?.Name.DetectedValue.Should().Be("MaslowDue");
+      fw?.Edition.DetectedValue.Should().Be("1.1g");
+      fw?.Version.DetectedValue.Should().Be(20200915);
     }
 
     [Theory]

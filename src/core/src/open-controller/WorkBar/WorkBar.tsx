@@ -15,10 +15,8 @@ import {
   PortState,
   WorkspaceState
 } from '../graphql';
-import FirmwareChip from './FirmwareChip';
 import GWizChip from './GWizChip';
 import WorkspaceSettingsDialog from '../Workspaces/WorkspaceSettingsDialog';
-import {isMachinePositionValid} from '../Machines/MachinePosition';
 
 type Props = IHaveWorkspace & IMaybeHavePortStatus & {
   orientation?: 'horizontal' | 'vertical';
@@ -34,11 +32,8 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
   const controller: IController | undefined = tryUseWorkspaceController(workspaceId);
   const machine = controller?.machine;
   const machineStatus = machine?.status;
-  const fwRequirement = machine?.firmwareRequirement;
-  const fwDetected = machine?.configuration.firmware;
+  const firmware = machine?.configuration.firmware;
   const isActive = workspaceState === WorkspaceState.Active;
-  const mPos = isActive && machineStatus ? machineStatus.machinePosition : undefined;
-  const wPos = isActive && machineStatus ? machineStatus.workPosition : undefined;
   const portState = port?.state ?? PortState.Unplugged;
   // const bkCol = useMachineStatusColor(machineStatus);
 
@@ -46,32 +41,6 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
 
   return (
     <div className={classes.root} >
-      <ButtonGroup
-        className={classes.titleBarButtonGroup}
-        color="primary"
-        variant="text"
-        orientation={orientation ?? 'horizontal'}
-        aria-label={t('Workspace Shortcuts')}
-      >
-        <PortStatusChip port={port} workspaceId={workspaceId} />
-        {portState === PortState.Unplugged && (
-          <Tooltip title={t('Port is not plugged in')} >
-            <Button
-              color="primary"
-            >
-              <FontAwesomeIcon icon={faExclamationCircle} className={classes.error} />
-            </Button>
-          </Tooltip>
-        )}
-        {fwDetected && <FirmwareChip
-          detectedFirmware={fwDetected}
-          requiredFirmware={fwRequirement}
-        />}
-        {mPos && <MachinePositionChip positionType="machine" position={mPos} />}
-        {wPos && isMachinePositionValid(wPos) && <MachinePositionChip positionType="work" position={wPos} />}
-        {isActive && <WorkspaceChip workspaceId={workspaceId} />}
-        {isActive && <GWizChip />}
-      </ButtonGroup>
       <ButtonGroup
         className={classes.titleBarRightGroup}
         color="primary"
@@ -81,6 +50,26 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
         <Button onClick={() => setSettingsOpen(true)} className={classes.titleBarButton}>
           <FontAwesomeIcon icon={faCogs} size={'lg'} />
         </Button>
+      </ButtonGroup>
+      <ButtonGroup
+        className={classes.titleBarButtonGroup}
+        color="primary"
+        variant="text"
+        orientation={orientation ?? 'horizontal'}
+        aria-label={t('Workspace Shortcuts')}
+      >
+        <PortStatusChip port={port} workspaceId={workspaceId} firmware={firmware} />
+        {portState === PortState.Unplugged && (
+          <Tooltip title={t('Port is not plugged in')} >
+            <Button
+              color="primary"
+            >
+              <FontAwesomeIcon icon={faExclamationCircle} className={classes.error} />
+            </Button>
+          </Tooltip>
+        )}
+        {isActive && <GWizChip />}
+        {isActive && machineStatus && <MachinePositionChip positionType="machine" workspaceId={workspaceId} />}
       </ButtonGroup>
       <WorkspaceSettingsDialog
         workspaceId={workspaceId}

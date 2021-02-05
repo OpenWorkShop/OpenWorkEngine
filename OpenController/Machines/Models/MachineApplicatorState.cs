@@ -10,5 +10,15 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
 
     // Lasers, etc. can simply be on/off.
     public bool IsOn => SpinDirection != SpinDirection.None;
+
+    public string ToolId { get; internal set; } = "";
+
+    public MachinePosition? LengthOffset { get; internal set; }
+
+    public FactorType LengthOffsetFactorType { get; internal set; } = FactorType.None;
+
+    public RadiusCompensation RadiusCompensation { get; internal set; } = RadiusCompensation.None;
+
+    public MachinePosition? ProbePosition { get; internal set; }
   }
 }

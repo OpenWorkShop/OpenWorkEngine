@@ -22,7 +22,7 @@ function getAxisValueString(val: string | number, precision: number, isImperial:
   return precision > 0 ? str : str.split('.')[0];
 }
 
-function axisRound(axis: IMachineAxis, val: string | number, isImperialUnits: boolean): number {
+export function axisRound(axis: IMachineAxis, val: string | number, isImperialUnits: boolean): number {
   return Number(getAxisValueString(val, axis.precision, isImperialUnits));
 }
 

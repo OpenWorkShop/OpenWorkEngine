@@ -5,8 +5,6 @@ using OpenWorkEngine.OpenController.Machines.Messages;
 namespace OpenWorkEngine.OpenController.Machines.Models {
   // http://linuxcnc.org/docs/html/gcode/overview.html#cap:word
   public record MachineModals {
-    // MASLOW: Feedback
-
     // Motion (Group 1)
     public MachineModalState<MachineMotionType> Motion { get; internal set; } = new (MachineMotionType.Rapid);
 
@@ -25,24 +23,36 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     // Units (Group 6)
     public MachineModalState<UnitType>? Units { get; internal set; }
 
-    // Cutter Diameter Compensation (Group 7)
-    // Tool Length Offset (Group 8)
+    // Cutter Diameter Compensation (Group 7) -> Applicator.RadiusCompensation
+
+    // Tool Length Offset (Group 8) -> Applicator.LengthOffset
+
     // Canned Cycles Return Mode (Group 10)
-    // Coordinate System (Group 12)
+    public MachineModalState<TimingMode>? CannedCycleReturnMode { get; internal set; }
+
     // Control Mode (Group 13)
+    public MachineModalState<PathControlMode>? PathControlMode { get; internal set; }
+
     // Spindle Speed Mode (Group 14)
+    public MachineModalState<SpindleSpeedMode>? SpindleSpeed { get; internal set; }
+
     // Lathe Diameter Mode (Group 15)
+    public MachineModalState<EnabledType>? CylindricalInterpolation { get; internal set; }
 
     // M
-    // Stopping (Group 4)
+    // [M] Stopping (Group 4)
     public MachineModalState<MachineProgramState>? ProgramState { get; internal set; }
 
-    // Spindle (Group 7)
-    public MachineModalState<SpinDirection> SpindleDirection { get; internal set; } = new(SpinDirection.None);
+    // [M] Spindle (Group 7)
 
-    // Coolant (Group 8)
-    // Override Switches (Group 9)
-    // User Defined (Group 10)
+    // [M] Coolant (Group 8) -> Applicator.IsCoolant...
+
+    // [M] Override Switches (Group 9) -> Overrides.FeedAllowed/SpeedAllowed
+
+    // [M] User Defined (Group 10)
+    public int UserDefinedCurrent { get; internal set; }
+
+    public int UserDefinedCount { get; internal set; } = 100;
 
     public int WorkCoordinateSystemCurrent { get; internal set; } = 0; // G54 == #0
 

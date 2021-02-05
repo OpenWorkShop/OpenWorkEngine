@@ -11,7 +11,8 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
     public GrblConfigParser() : base(@"^\[(?:GC:)?(?<data>(?:[a-zA-Z][0-9]+(?:\.[0-9]*)?\s*)+)\]$") { }
 
     protected override MachineOutputLine OnData(MachineOutputLine line, Dictionary<string, string> values) {
-      int orig = line.Machine.Configuration.GetHashCode();
+      int origConfig = line.Machine.Configuration.GetHashCode();
+      int origStatus = line.Machine.Status.GetHashCode();
 
       string data = values["data"];
       line.Machine.Log.Debug("[CONFIG] {data}", data.Trim());
@@ -23,7 +24,13 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
 
       foreach (string word in words) line.Machine.SetGCodeConfigurationWord(word);
 
-      return CheckChange(line, orig, line.Machine.Configuration.GetHashCode(), MachineTopic.Configuration);
+      if (origConfig != line.Machine.Configuration.GetHashCode()) {
+        line = line.WithTopics(MachineTopic.Configuration);
+      }
+      if (origStatus != line.Machine.Status.GetHashCode()) {
+        line = line.WithTopics(MachineTopic.Status);
+      }
+      return line;
     }
   }
 }

@@ -25,32 +25,30 @@ fragment MachineModals on MachineModals {
         code
         value
     }
-    # ...
+    cannedCycleReturnMode {
+        code
+        value
+    }
+    pathControlMode {
+        code
+        value
+    }
+    spindleSpeed {
+        code
+        value
+    }
+    cylindricalInterpolation {
+        code
+        value
+    }
     programState {
         code
         value
     }
-    spindleDirection {
-        code
-        value
-    }
-    # ...
+    userDefinedCurrent
+    userDefinedCount
     workCoordinateSystemCurrent
     workCoordinateSystemCount
-}
-
-fragment ApplicatorConfig on ApplicatorConfig {
-    toolId
-    toolLengthOffset {
-        ...MachinePosition
-    }
-    probePosition {
-        ...MachinePosition
-    }
-    spinSpeed
-    feedRate
-    isFloodCoolantEnabled
-    isMistCoolantEnabled
 }
 
 fragment MachineConfig on MachineConfiguration {
@@ -59,9 +57,6 @@ fragment MachineConfig on MachineConfiguration {
     }
     modals {
         ...MachineModals
-    }
-    applicator {
-        ...ApplicatorConfig
     }
     workCoordinates {
         ...MachinePosition

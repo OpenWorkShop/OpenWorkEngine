@@ -14,6 +14,8 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     // How fast it's rotating, if a spindle.
     public decimal SpinSpeed { get; set; }
 
+
+
     //
     public bool IsFloodCoolantEnabled { get; set; } = false;
 

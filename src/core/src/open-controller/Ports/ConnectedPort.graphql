@@ -1,13 +1,3 @@
-fragment FirmwareRequirement on IMachineFirmwareRequirement {
-    controllerType
-    name
-    edition
-    requiredVersion
-    suggestedVersion
-    helpUrl
-    downloadUrl
-}
-
 fragment ConnectedPort on ConnectedPort {
     machine {
         ...ControlledMachine

@@ -17,6 +17,11 @@ type Props = {
   modals: MachineModalsFragment;
 }
 
+const modalGroups = [
+  'units', 'motion', 'arcDistance', 'distance', 'feedRate', 'cannedCycleReturnMode',
+  'pathControlMode', 'spindleSpeed', 'cylindricalInterpolation', 'plane', 'programState'] as const;
+type ModalGroup = typeof modalGroups[number];
+
 const MachineModals: FunctionComponent<Props> = (props) => {
   const log = useLogger(MachineModals);
   const t = useTrans();
@@ -30,16 +35,18 @@ const MachineModals: FunctionComponent<Props> = (props) => {
     log.debug('wcs', wcs);
   }
 
-  function renderModal(modal: IModal | null): React.ReactNode {
+  function renderModal(modalGroup: ModalGroup): React.ReactNode {
+    const modal = modals[modalGroup];
     if (!modal) return null;
     if (!modal.__typename || !modal.code) {
       log.error('Modal missing type/code', modal);
       return null;
     }
     const [title, value, options] = getModalOptions(modal.__typename, modal.value);
-    log.debug('render', title, value, options, modal);
+    log.verbose('render', title, value, options, modal);
 
     return <IconSelect
+      key={modalGroup}
       items={options}
       selectedId={value}
       label={[title, `(${modal.code})`].join(' ')}
@@ -48,14 +55,7 @@ const MachineModals: FunctionComponent<Props> = (props) => {
   }
 
   return (<React.Fragment>
-    {renderModal(modals.units)}
-    {renderModal(modals.motion)}
-    {renderModal(modals.arcDistance)}
-    {renderModal(modals.distance)}
-    {renderModal(modals.feedRate)}
-    {renderModal(modals.plane)}
-    {renderModal(modals.programState)}
-    {renderModal(modals.spindleDirection)}
+    {modalGroups.map(renderModal)}
     <IconSelect
       items={[...Array(modals.workCoordinateSystemCount || 0).keys()].map(v => {
         const va = v?.toString();

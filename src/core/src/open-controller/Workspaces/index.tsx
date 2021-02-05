@@ -5,11 +5,13 @@ import {
   ControlledMachineFragment,
   WorkspaceState
 } from '../graphql';
-import {WorkspaceConnector, IHaveWorkspace, useWorkspaceSelector} from '../Workspaces';
 import ControllerProvider from '../Controllers/ControllerProvider';
 import Workspace from './Workspace';
 import {useDispatch} from 'react-redux';
-
+import {useLogger} from '../../hooks';
+import {IHaveWorkspace} from './types';
+import {useWorkspaceSelector} from './hooks';
+import WorkspaceConnector from './WorkspaceConnector';
 export { default as WorkspaceStatus } from './WorkspaceStatus';
 export { default as WorkspaceConnector } from './WorkspaceConnector';
 export { default as WorkspaceUnitSelect } from './WorkspaceUnitSelect';
@@ -19,8 +21,9 @@ export * from './hooks';
 
 type Props = IHaveWorkspace;
 
-const index: FunctionComponent<Props> = (props) => {
+const Index: FunctionComponent<Props> = (props) => {
   const ports = useSystemPorts();
+  const log = useLogger(Index);
   const { workspaceId } = props;
   const dispatch = useDispatch();
   const workspaceState = useWorkspaceSelector(workspaceId, ws => ws.state);
@@ -32,6 +35,7 @@ const index: FunctionComponent<Props> = (props) => {
   // When the connector connects, save the initial machine state.
   React.useEffect(() => {
     if (machine) {
+      log.debug('update machine', machine);
       dispatch(controllersSlice.actions.updateControlledMachine(machine));
     }
   }, [machine, controllersSlice]);
@@ -42,4 +46,4 @@ const index: FunctionComponent<Props> = (props) => {
   </ControllerProvider>;
 };
 
-export default index;
+export default Index;

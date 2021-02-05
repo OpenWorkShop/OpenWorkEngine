@@ -8,20 +8,25 @@ import useStyles from './styles';
 import HelpfulHeader from '../../components/Text/HelpfulHeader';
 import {getMachineAxisPosition, isMachinePositionValid} from '../Machines/MachinePosition';
 import {Axis3D} from '../Machines';
+import {IHaveWorkspace, useWorkspaceControllerSelector} from '../Workspaces';
+import {useSelector} from 'react-redux';
 
 export type PositionType = 'work' | 'machine';
 
-type Props = {
+type Props = IHaveWorkspace & {
   positionType: PositionType;
-  position: MachinePositionFragment;
 };
 
 const MachinePositionChip: React.FunctionComponent<Props> = (props) => {
   const t = useTrans();
   const classes = useStyles();
-  const { positionType, position } = props;
+  const { positionType, workspaceId } = props;
+  const machineStatus = useWorkspaceControllerSelector(workspaceId, c => c.machine.status );
+
+  const mPos = machineStatus.machinePosition;
+  const wPos = machineStatus.workPosition;
+
   const isWPos = positionType === 'work';
-  const isValid = isMachinePositionValid(position);
   const icon = isWPos ? faMapMarkerAlt : faMapMarkedAlt;
   const tip = isWPos ?
     t('WPos (work position), relative to the work origin (where the program execution will begin).') :
@@ -29,15 +34,16 @@ const MachinePositionChip: React.FunctionComponent<Props> = (props) => {
 
   const axes: Axis3D[] = [AxisName.X, AxisName.Y, AxisName.Z];
   const positionText = axes
-    .map((a) => getMachineAxisPosition(position, a))
-    .filter(v => v !== null).join(', ');
+    .map((a) => getMachineAxisPosition(mPos, a))
+    .filter(v => v !== null)
+    .map(v => Math.round(v ?? 0))
+    .join(', ') + ' mm';
 
   return (<PopoverWorkBarChip faIcon={icon} label={positionText}>
     <Grid item xs={12} className={classes.popoverRowAlt} >
       <HelpfulHeader tip={tip} title={t(isWPos ? 'WPos' : 'MPos')} variant="h6" />
     </Grid>
     <Grid item xs={12} className={classes.popoverRow} >
-      {isValid}
     </Grid>
   </PopoverWorkBarChip>);
 };

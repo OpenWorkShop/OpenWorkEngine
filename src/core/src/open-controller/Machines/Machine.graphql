@@ -3,9 +3,6 @@
 fragment ControlledMachine on ControlledMachine {
     topicId
     machineProfileId
-    firmwareRequirement {
-        ...FirmwareRequirement
-    }
     configuration {
         ...MachineConfig
     }
@@ -18,14 +15,48 @@ fragment ControlledMachine on ControlledMachine {
     ...MachineLogs
 }
 
+fragment FirmwareRequirement on IMachineFirmwareRequirement {
+    controllerType
+    name
+    edition
+    requiredVersion
+    suggestedVersion
+    helpUrl
+    downloadUrl
+}
+
 fragment DetectedFirmware on MachineDetectedFirmware {
     friendlyName
     isValid
-    name
-    value
-    edition
-    protocol
+    name {
+        requiredValue
+        detectedValue
+        hasDetectedValue
+        meetsRequirement
+    }
+    version {
+        requiredValue
+        detectedValue
+        hasDetectedValue
+        meetsRequirement
+    }
+    edition {
+        requiredValue
+        detectedValue
+        hasDetectedValue
+        meetsRequirement
+    }
+    protocol {
+        requiredValue
+        detectedValue
+        hasDetectedValue
+        meetsRequirement
+    }
     welcomeMessage
+    requirement {
+        ...FirmwareRequirement
+    }
+    meetsRequirements
 }
 
 fragment MachineAlert on MachineAlert {

@@ -26,7 +26,7 @@ const PortStatus: FunctionComponent<Props> = (props) => {
   return (
     <React.Fragment >
       {showType && port && port.connection && <Typography variant="subtitle1">
-        [{port.connection.machine.firmwareRequirement.controllerType}]
+        [{port.connection.machine.configuration.firmware.protocol}]
       </Typography>}
       {showName && port && port.portName && <Typography variant="subtitle2">
         {port.portName}

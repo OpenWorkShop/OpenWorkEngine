@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using FluentAssertions;
 using HotChocolate.Language;
@@ -49,8 +50,8 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
       fw.Should().NotBeNull();
       fw.Name.Should().Be(MachineControllerType.Grbl.ToString());
       fw.IsValid.Should().BeTrue();
-      versionString.Should().Contain(fw.Edition);
-      versionString.Should().Contain(fw.Value?.ToString());
+      versionString.Should().Contain(fw.Edition.DetectedValue);
+      versionString.Should().Contain(fw.Version.DetectedValue.ToString(CultureInfo.InvariantCulture));
     }
 
     [Theory]
@@ -106,9 +107,9 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
       ControlledMachine machine = TestParser(new GrblConfigParser(), line);
 
       Log.Information("Machine Spindle {@config}",
-        JsonConvert.SerializeObject(machine.Configuration.Applicator, Formatting.Indented));
+        JsonConvert.SerializeObject(machine.Status.Applicator, Formatting.Indented));
 
-      ApplicatorState sp = machine.Configuration.Applicator;
+      ApplicatorState sp = machine.Status.Applicator;
       sp.FeedRate.Should().Be((decimal) (feed ?? 0));
       sp.SpinSpeed.Should().Be((decimal) (speed ?? 0));
       sp.IsMistCoolantEnabled.Should().Be(mist ?? false);

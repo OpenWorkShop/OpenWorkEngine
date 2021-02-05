@@ -22,8 +22,7 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
 
     public string? MachineProfileId { get; }
 
-    // Controllers are internal concepts. The type is all that is exposed to the API.
-    public FirmwareRequirement FirmwareRequirement { get; }
+    // public FirmwareRequirement FirmwareRequirement { get; }
 
     public MachineStatus Status { get; } = new();
 
@@ -41,7 +40,7 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
       PortName = portName;
       if (opts != null) {
         IMachineFirmwareRequirement req = opts.GetFirmwareRequirement();
-        FirmwareRequirement = new FirmwareRequirement {
+        Configuration.Firmware.Requirement = new FirmwareRequirement {
           ControllerType = req.ControllerType,
           Name = req.Name,
           Edition = req.Edition,
@@ -51,11 +50,6 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
           RequiredVersion = req.RequiredVersion
         };
         MachineProfileId = opts.MachineProfileId;
-      } else {
-        FirmwareRequirement = new FirmwareRequirement {
-          RequiredVersion = 0,
-          SuggestedVersion = 0
-        };
       }
       Log = log.ForContext("portName", portName)
                .ForContext("machineProfileId", MachineProfileId);

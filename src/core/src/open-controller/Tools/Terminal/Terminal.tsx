@@ -15,7 +15,6 @@ import {IMachineLogFilters} from './types';
 import LogFiltersDialog from './LogFiltersDialog';
 import LogHistory from './LogHistory';
 import TerminalInput from './TerminalInput';
-import {useSafeMutation} from '../../../utils';
 import {useControllerCommand} from '../../Controllers/hooks';
 
 const Terminal: ToolBase = (props) => {

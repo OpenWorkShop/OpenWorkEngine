@@ -2,64 +2,60 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8fd422ea-5df6-42eb-af5b-60ca5556a3a7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/OpenController/Machines/Models/FirmwareAxisValues.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/ControllerSyntax/ControllerTranslator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/ControllerSyntax/ControllerTranslator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblSettingsParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblSettingsParser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Interfaces/IControllerInstruction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Controllers/Interfaces/IControllerInstruction.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Messages/FirmwareAxisFlags.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Messages/AxisFlags.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Messages/FirmwareAxisValues.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Models/CompiledInstruction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Controllers/Models/CompiledInstruction.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareApplicatorSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/FirmwareApplicatorSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareCalibrationSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/FirmwareCalibrationSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareHomingSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/FirmwareHomingSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareMovementSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/FirmwareMovementSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwarePinsSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/FirmwarePinsSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareReportingSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/FirmwareReportingSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareSetting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/FirmwareSetting.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Models/FirmwareSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/FirmwareSettings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblConfigParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblConfigParser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblParameterParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblParameterParser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblStatusParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblStatusParser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblVersionParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblVersionParser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblWelcomeParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/ControllerSyntax/Grbl/GrblWelcomeParser.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Services/Controller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Controllers/Services/Controller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Services/SerialBuffer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Controllers/Services/SerialBuffer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/MachineProfiles/Interfaces/IMachineSetting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/MachineProfiles/Interfaces/IMachineSetting.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Graph/MachinesSchema.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Graph/MachinesSchema.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Models/MachineBuffer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/MachineBuffer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Models/MachineLogEntry.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/MachineLogEntry.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Controllers/Services/Serial/SerialPoll.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Controllers/Services/Serial/SerialPoll.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Extensions/FirmwareRequirementExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Messages/AxisFlags.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Messages/AxisFlags.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Models/ApplicatorConfig.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Models/ApplicatorState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/ApplicatorState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Models/ControlledMachine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/ControlledMachine.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Models/MachineApplicatorState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/MachineApplicatorState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Models/MachineConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/MachineConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Models/MachineDetectedFirmware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/MachineDetectedFirmware.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/Machines/Models/MachineModals.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/MachineModals.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Models/MachineSetting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/MachineSetting.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Machines/Models/MachineOverrides.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Machines/Models/MachineOverrides.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Ports/Messages/FirmwareRequirement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Ports/Messages/FirmwareRequirement.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/Syntax/GCode/Extensions/MachineGCodeExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Syntax/GCode/Extensions/MachineGCodeExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Syntax/GCode/GCodeBlock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Syntax/GCode/GCodeBlock.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Syntax/SyntaxChunk.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Syntax/SyntaxChunk.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenControllerTests/Controllers/GrblTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenControllerTests/Controllers/GrblTests.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenControllerTests/Controllers/MaslowTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenControllerTests/Controllers/MaslowTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/components/AnyIcon.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/components/AnyIcon.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/components/Forms/IconSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/components/Forms/IconSelect.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/components/Forms/NumericInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/components/Forms/NumericInput.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Controllers/Controller.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Controllers/Controller.graphql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Controllers/hooks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Controllers/hooks.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Controllers/slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Controllers/slice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Controllers/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Controllers/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Controllers/ControllerCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Controllers/ControllerCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Controllers/ControllerProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Controllers/ControllerProvider.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Machines/Machine.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Machines/Machine.graphql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Machines/MachineAxis.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Machines/MachineAxis.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Machines/MachineConfig.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Machines/MachineConfig.graphql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Machines/MachineLog.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Machines/MachineLog.graphql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Machines/MachineSetting.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Machines/MachineSetting.graphql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Machines/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Machines/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Machines/MachineStatus.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Machines/MachineStatus.graphql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Machines/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Machines/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Jogger/styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Jogger/styles.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Machine/Machine.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Machine/Machine.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Ports/ConnectedPort.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Ports/ConnectedPort.graphql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Ports/PortStatus.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Ports/PortStatus.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Applicator/Applicator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Applicator/Applicator.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Jogger/JogButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Controls/JogButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Jogger/JogStepSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Controls/JogStepSelect.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Jogger/Jogger.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Controls/Jogger.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Jogger/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Controls/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Jogger/styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Controls/styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Jogger/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Controls/types.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Machine/MachineModals.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Machine/MachineModals.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Machine/styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Machine/styles.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Terminal/LogLine.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Terminal/LogLine.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Terminal/Terminal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Terminal/Terminal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/hooks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/hooks.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/WorkBar/FirmwareChip.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/WorkBar/MachinePositionChip.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/WorkBar/MachinePositionChip.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/WorkBar/PortStatusChip.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/WorkBar/PortStatusChip.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/WorkBar/WorkBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/WorkBar/WorkBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/WorkspaceSettingsDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/WorkspaceSettingsDialog.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/graphql.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/graphql.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/schema.graphql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/themes/consts/rows.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/themes/consts/rows.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/utils/enums.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/utils/enums.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/utils/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/utils/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/utils/slugify.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/utils/strs.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,8 +66,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="GraphQL File" />
-        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -120,10 +116,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/core/src/open-controller/Machines" />
+      <recent name="$PROJECT_DIR$/src/core/src/open-controller/Tools/Applicator" />
+      <recent name="$PROJECT_DIR$/src/core/src/open-controller/Tools/Controls" />
       <recent name="$PROJECT_DIR$/src/core/src/open-controller" />
       <recent name="$PROJECT_DIR$/src/core/src/open-controller/Settings" />
-      <recent name="$PROJECT_DIR$/src/core/src/themes/consts" />
-      <recent name="$PROJECT_DIR$/src/core/src/open-controller/Tools" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -149,7 +146,7 @@
       <workItem from="1611844640905" duration="2579000" />
       <workItem from="1611875184757" duration="30298000" />
       <workItem from="1612120103992" duration="13951000" />
-      <workItem from="1612198749434" duration="15363000" />
+      <workItem from="1612198749434" duration="38928000" />
     </task>
     <servers />
   </component>

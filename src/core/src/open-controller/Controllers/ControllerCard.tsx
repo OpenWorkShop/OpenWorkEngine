@@ -12,6 +12,7 @@ import ToolGroupPanel from '../Tools/ToolGroupPanel';
 import {useLogger} from '../../hooks';
 import HelpfulHeader from '../../components/Text/HelpfulHeader';
 import StopButton from './StopButton';
+import {getActiveStateSubTitleKey, getActiveStateTipKey, getActiveStateTitleKey} from './ActiveState';
 
 type Props = IHaveWorkspace;
 
@@ -25,47 +26,6 @@ const ControllerCard: FunctionComponent<Props> = (props) => {
   const tools = getWorkspaceTools(workspaceId);
   const [selectedTab, setSelectedTab] = React.useState(tools[0].id);
   const hasAlarm = activeState == ActiveState.Alarm || alarm;
-
-  function getStateTitle(): string {
-    if (alarm) return t('Alarm: {{ alarm }}', { alarm: alarm.name });
-    if (activeState === ActiveState.Alarm) return t('Alarm');
-    if (activeState === ActiveState.IdleReady) return t('Ready');
-    if (activeState === ActiveState.Run) return t('Active');
-    if (activeState === ActiveState.Initializing) return t('Initializing...');
-    if (activeState === ActiveState.Check) return t('Check');
-    if (activeState === ActiveState.Hold) return t('Hold');
-    if (activeState === ActiveState.Sleep) return t('Sleep');
-    if (activeState === ActiveState.Door) return t('Door');
-    if (activeState === ActiveState.Home) return t('Home');
-    return t('Unknown');
-  }
-
-  function getStateTip(): string {
-    if (alarm || activeState === ActiveState.Alarm) return t('The machine has stopped and is awaiting un-lock.');
-    if (activeState === ActiveState.IdleReady) return t('The machine is idle and ready for instructions.');
-    if (activeState === ActiveState.Run) return t('Operation in progress.');
-    if (activeState === ActiveState.Initializing) return t('Initializing...');
-    if (activeState === ActiveState.Sleep) return t('Sleeping... ');
-    if (activeState === ActiveState.Check) return t('Machine requires user attention.');
-    if (activeState === ActiveState.Hold) return t('Hold');
-    if (activeState === ActiveState.Door) return t('Door');
-    if (activeState === ActiveState.Home) return t('Home');
-    return t('Unknown');
-  }
-
-  function getStateSubTitle(): string {
-    if (alarm) return alarm.message;
-    if (activeState === ActiveState.Alarm) return t('Reset to continue.');
-    if (activeState === ActiveState.IdleReady) return t('Machine is idle.');
-    if (activeState === ActiveState.Run) return t('Executing command(s).');
-    if (activeState === ActiveState.Initializing) return t('Awaiting machine...');
-    // if (activeState === ActiveState.Check) return t('Check');
-    // if (activeState === ActiveState.Hold) return t('Hold');
-    // if (activeState === ActiveState.Sleep) return t('Sleep');
-    // if (activeState === ActiveState.Door) return t('Door');
-    // if (activeState === ActiveState.Home) return t('Home');
-    return '';
-  }
 
   log.verbose('draw');
 
@@ -83,8 +43,12 @@ const ControllerCard: FunctionComponent<Props> = (props) => {
             [classes.disabled]: activeState === ActiveState.Sleep,
           })}
           avatar={<StopButton workspaceId={workspaceId} />}
-          title={<HelpfulHeader tip={getStateTip()} title={getStateTitle()} variant="h6" />}
-          subheader={<Typography variant="subtitle2">{getStateSubTitle()}</Typography>}
+          title={<HelpfulHeader
+            tip={t(getActiveStateTipKey(activeState))}
+            title={t(getActiveStateTitleKey(activeState))}
+            variant="h6"
+          />}
+          subheader={<Typography variant="subtitle2">{getActiveStateSubTitleKey(activeState, alarm)}</Typography>}
         />
         <CardActions className={classes.controllerCardActions} >
           <TabList onChange={(e, val) => setSelectedTab(val)}>

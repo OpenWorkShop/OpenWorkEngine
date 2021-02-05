@@ -1,26 +1,31 @@
 using System.Linq;
+using OpenWorkEngine.OpenController.Machines.Interfaces;
+using OpenWorkEngine.OpenController.Ports.Messages;
 
 namespace OpenWorkEngine.OpenController.Machines.Models {
   public record MachineDetectedFirmware {
-    public string? Name { get; set; }
+    public FirmwareComparisonNode<string> Name { get; } = new();
 
-    // GRBL, etc.
-    public string? Protocol { get; set; }
+    public FirmwareComparisonNode<string> Protocol { get; } = new();
+
+    public FirmwareComparisonNode<string> Edition { get; } = new();
+
+    public FirmwareComparisonNode<decimal> Version { get; } = new();
 
     public string? WelcomeMessage { get; internal set; }
 
     public string? FriendlyName { get; set; }
 
-    public string? Edition { get; set; }
+    public bool IsValid => Protocol.HasDetectedValue && Name.HasDetectedValue && Version.HasDetectedValue;
 
-    public decimal? Value { get; set; }
+    public bool MeetsRequirements => IsValid &&
+      Name.MeetsRequirement && Protocol.MeetsRequirement && Edition.MeetsRequirement && Version.MeetsRequirement;
 
-    public bool IsValid =>
-      !string.IsNullOrWhiteSpace(Protocol) &&
-      !string.IsNullOrWhiteSpace(Name) &&
-      Value.HasValue;
+    public FirmwareRequirement Requirement { get; internal set; } = new FirmwareRequirement {
+      RequiredVersion = 0,
+      SuggestedVersion = 0
+    };
 
-    public override string ToString() =>
-      string.Join('.', new[] {Name, FriendlyName, Edition, Value?.ToString()}.Where(s => s != null));
+    public override string ToString() => Requirement.ToString();
   }
 }

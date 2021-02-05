@@ -22,7 +22,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services.Serial {
 
     private DateTime _lastCommandAt;
 
-    internal SerialPoll(string methodName, Parser parser, int timeoutMs = 5000, int repeatMs = 250) {
+    internal SerialPoll(string methodName, Parser parser, int timeoutMs = 2000, int repeatMs = 500) {
       MethodName = methodName;
       Parser = parser;
       TimeoutMs = timeoutMs;
@@ -52,6 +52,9 @@ namespace OpenWorkEngine.OpenController.Controllers.Services.Serial {
       int max = PendingResponse ? TimeoutMs : RepeatMs;
       double elapsed = (now - since).TotalMilliseconds;
       if (elapsed > max) {
+        if (PendingResponse) {
+          controller.Log.Debug("[TIMEOUT] waiting for {MethodName}", MethodName);
+        }
         _lastCommandAt = DateTime.Now;
         await controller.ExecuteCommand(MethodName, new ControllerExecutionOptions() {
           LogLevel = MachineLogLevel.Dbg

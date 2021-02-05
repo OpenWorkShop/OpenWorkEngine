@@ -39,6 +39,11 @@ const WorkspaceSettingsDialog: React.FunctionComponent<Props> = (props) => {
       title: t('Parts'),
       component: <PartsTab workspaceId={workspaceId} />
     },
+    {
+      key: 'firmware',
+      title: t('Firmware'),
+      component: <PartsTab workspaceId={workspaceId} />
+    },
   ];
 
   log.verbose('open', open, 'selectedTab', selectedTab);

@@ -3,21 +3,35 @@ fragment MachineBuffer on MachineBuffer {
     lineNumber
     availableReceive
     availableSend
+    writeQueueLength
+    responseQueueLength
 }
 
-fragment MachineApplicatorState on MachineApplicatorState {
+
+fragment ApplicatorState on MachineApplicatorState {
     isOn
+    toolId
     spinDirection
     spinSpeed
     feedRate
+    lengthOffset {
+        ...MachinePosition
+    }
+    lengthOffsetFactorType
+    radiusCompensation
+    probePosition {
+        ...MachinePosition
+    }
     isFloodCoolantEnabled
     isMistCoolantEnabled
 }
 
 fragment MachineOverrides on MachineOverrides {
     feed
+    feedAllowed
     rapids
-    spindle
+    speed
+    speedAllowed
 }
 
 fragment MachineStatus on MachineStatus {
@@ -39,7 +53,7 @@ fragment MachineStatus on MachineStatus {
     }
     activePins
     applicator {
-        ...MachineApplicatorState
+        ...ApplicatorState
     }
     overrides {
         ...MachineOverrides

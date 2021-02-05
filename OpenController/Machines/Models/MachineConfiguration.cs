@@ -12,9 +12,6 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     // n.b., the FirmwareRequirement is compared against this value.
     public MachineDetectedFirmware Firmware { get; } = new();
 
-    // n.b., the MachineApplicatorStsate reperesents *actual, current* sate. This is the "target" state.
-    public ApplicatorConfig Applicator { get; } = new();
-
     // Mostly matches GCode Modal Groups.
     public MachineModals Modals { get; } = new();
 
@@ -37,7 +34,7 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
 
     public override int GetHashCode() {
       // ReSharper disable once NonReadonlyMemberInGetHashCode
-      long hc = Firmware.GetHashCode() + Applicator.GetHashCode() + Modals.GetHashCode() +
+      long hc = Firmware.GetHashCode() + Modals.GetHashCode() +
         (Options?.GetHashCode() ?? 0) + WorkOffset.GetHashCode() +
         WorkCoordinates.Sum(wc => (long)wc.GetHashCode()) + ReferencePosition.Sum(rp => (long)rp.GetHashCode());
       return (int) (hc % int.MaxValue);

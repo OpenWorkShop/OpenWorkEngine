@@ -67,18 +67,6 @@ export type AppUpdates = {
   prereleases: Scalars['Boolean'];
 };
 
-export type ApplicatorConfig = {
-  __typename?: 'ApplicatorConfig';
-  feedRate: Scalars['Decimal'];
-  isFloodCoolantEnabled: Scalars['Boolean'];
-  isMistCoolantEnabled: Scalars['Boolean'];
-  probePosition: Maybe<MachinePosition>;
-  spinSpeed: Scalars['Decimal'];
-  temperature: Maybe<Scalars['Decimal']>;
-  toolId: Scalars['String'];
-  toolLengthOffset: Maybe<MachinePosition>;
-};
-
 export type AxisFlags = {
   __typename?: 'AxisFlags';
   x: Scalars['Boolean'];
@@ -123,7 +111,6 @@ export type ConnectionSettings = {
 export type ControlledMachine = {
   __typename?: 'ControlledMachine';
   configuration: MachineConfiguration;
-  firmwareRequirement: FirmwareRequirement;
   id: Scalars['String'];
   logs: Maybe<MachineLogEntryConnection>;
   machineProfileId: Maybe<Scalars['String']>;
@@ -229,6 +216,22 @@ export type FirmwareCalibrationSettings = {
   rightChainTolerance: FirmwareSettingOfDecimal;
   scaling: FirmwareAxisValues;
   settings: Array<FirmwareSetting>;
+};
+
+export type FirmwareComparisonNodeOfDecimal = {
+  __typename?: 'FirmwareComparisonNodeOfDecimal';
+  detectedValue: Scalars['Decimal'];
+  hasDetectedValue: Scalars['Boolean'];
+  meetsRequirement: Scalars['Boolean'];
+  requiredValue: Scalars['Decimal'];
+};
+
+export type FirmwareComparisonNodeOfString = {
+  __typename?: 'FirmwareComparisonNodeOfString';
+  detectedValue: Maybe<Scalars['String']>;
+  hasDetectedValue: Scalars['Boolean'];
+  meetsRequirement: Scalars['Boolean'];
+  requiredValue: Maybe<Scalars['String']>;
 };
 
 export type FirmwareHomingSettings = {
@@ -418,9 +421,14 @@ export type MachineApplicatorState = {
   isFloodCoolantEnabled: Scalars['Boolean'];
   isMistCoolantEnabled: Scalars['Boolean'];
   isOn: Scalars['Boolean'];
+  lengthOffset: Maybe<MachinePosition>;
+  lengthOffsetFactorType: FactorType;
+  probePosition: Maybe<MachinePosition>;
+  radiusCompensation: RadiusCompensation;
   spinDirection: SpinDirection;
   spinSpeed: Scalars['Decimal'];
   temperature: Maybe<Scalars['Decimal']>;
+  toolId: Scalars['String'];
 };
 
 export type MachineAxis = {
@@ -472,7 +480,6 @@ export type MachineCommandSettings = {
 
 export type MachineConfiguration = {
   __typename?: 'MachineConfiguration';
-  applicator: ApplicatorConfig;
   firmware: MachineDetectedFirmware;
   modals: MachineModals;
   options: Maybe<MachineOptions>;
@@ -483,12 +490,14 @@ export type MachineConfiguration = {
 
 export type MachineDetectedFirmware = {
   __typename?: 'MachineDetectedFirmware';
-  edition: Maybe<Scalars['String']>;
+  edition: FirmwareComparisonNodeOfString;
   friendlyName: Maybe<Scalars['String']>;
   isValid: Scalars['Boolean'];
-  name: Maybe<Scalars['String']>;
-  protocol: Maybe<Scalars['String']>;
-  value: Maybe<Scalars['Decimal']>;
+  meetsRequirements: Scalars['Boolean'];
+  name: FirmwareComparisonNodeOfString;
+  protocol: FirmwareComparisonNodeOfString;
+  requirement: FirmwareRequirement;
+  version: FirmwareComparisonNodeOfDecimal;
   welcomeMessage: Maybe<Scalars['String']>;
 };
 
@@ -599,6 +608,12 @@ export type MachineModalStateOfAxisPlane = {
   value: AxisPlane;
 };
 
+export type MachineModalStateOfEnabledType = {
+  __typename?: 'MachineModalStateOfEnabledType';
+  code: Maybe<Scalars['String']>;
+  value: EnabledType;
+};
+
 export type MachineModalStateOfFeedRateMode = {
   __typename?: 'MachineModalStateOfFeedRateMode';
   code: Maybe<Scalars['String']>;
@@ -623,10 +638,22 @@ export type MachineModalStateOfMovementDistanceType = {
   value: MovementDistanceType;
 };
 
-export type MachineModalStateOfSpinDirection = {
-  __typename?: 'MachineModalStateOfSpinDirection';
+export type MachineModalStateOfPathControlMode = {
+  __typename?: 'MachineModalStateOfPathControlMode';
   code: Maybe<Scalars['String']>;
-  value: SpinDirection;
+  value: PathControlMode;
+};
+
+export type MachineModalStateOfSpindleSpeedMode = {
+  __typename?: 'MachineModalStateOfSpindleSpeedMode';
+  code: Maybe<Scalars['String']>;
+  value: SpindleSpeedMode;
+};
+
+export type MachineModalStateOfTimingMode = {
+  __typename?: 'MachineModalStateOfTimingMode';
+  code: Maybe<Scalars['String']>;
+  value: TimingMode;
 };
 
 export type MachineModalStateOfUnitType = {
@@ -638,13 +665,18 @@ export type MachineModalStateOfUnitType = {
 export type MachineModals = {
   __typename?: 'MachineModals';
   arcDistance: Maybe<MachineModalStateOfMovementDistanceType>;
+  cannedCycleReturnMode: Maybe<MachineModalStateOfTimingMode>;
+  cylindricalInterpolation: Maybe<MachineModalStateOfEnabledType>;
   distance: Maybe<MachineModalStateOfMovementDistanceType>;
   feedRate: Maybe<MachineModalStateOfFeedRateMode>;
   motion: MachineModalStateOfMachineMotionType;
+  pathControlMode: Maybe<MachineModalStateOfPathControlMode>;
   plane: Maybe<MachineModalStateOfAxisPlane>;
   programState: Maybe<MachineModalStateOfMachineProgramState>;
-  spindleDirection: MachineModalStateOfSpinDirection;
+  spindleSpeed: Maybe<MachineModalStateOfSpindleSpeedMode>;
   units: Maybe<MachineModalStateOfUnitType>;
+  userDefinedCount: Scalars['Int'];
+  userDefinedCurrent: Scalars['Int'];
   workCoordinateSystemCount: Scalars['Int'];
   workCoordinateSystemCurrent: Scalars['Int'];
 };
@@ -657,8 +689,10 @@ export type MachineOptions = {
 export type MachineOverrides = {
   __typename?: 'MachineOverrides';
   feed: Scalars['Decimal'];
+  feedAllowed: Scalars['Boolean'];
   rapids: Scalars['Decimal'];
-  spindle: Scalars['Decimal'];
+  speed: Scalars['Decimal'];
+  speedAllowed: Scalars['Boolean'];
 };
 
 export type MachinePart = {
@@ -1125,6 +1159,17 @@ export enum BaudRate {
   Br9600 = 'BR9600',
 }
 
+export enum EnabledType {
+  Disabled = 'DISABLED',
+  Enabled = 'ENABLED',
+}
+
+export enum FactorType {
+  Negative = 'NEGATIVE',
+  None = 'NONE',
+  Positive = 'POSITIVE',
+}
+
 export enum FeedRateMode {
   InverseTime = 'INVERSE_TIME',
   UnitsPerMinute = 'UNITS_PER_MINUTE',
@@ -1312,6 +1357,11 @@ export enum Parity {
   Space = 'SPACE',
 }
 
+export enum PathControlMode {
+  Blended = 'BLENDED',
+  Exact = 'EXACT',
+}
+
 export enum PortState {
   Active = 'ACTIVE',
   Error = 'ERROR',
@@ -1325,6 +1375,14 @@ export enum PortState {
 
 export enum ProgramSyntax {
   GCode = 'G_CODE',
+}
+
+export enum RadiusCompensation {
+  DynamicLeft = 'DYNAMIC_LEFT',
+  DynamicRight = 'DYNAMIC_RIGHT',
+  Left = 'LEFT',
+  None = 'NONE',
+  Right = 'RIGHT',
 }
 
 export enum SerialWriteState {
@@ -1346,6 +1404,11 @@ export enum SpinDirection {
   None = 'NONE',
 }
 
+export enum SpindleSpeedMode {
+  ConstantSpindleSpeed = 'CONSTANT_SPINDLE_SPEED',
+  ConstantSurfaceSpeed = 'CONSTANT_SURFACE_SPEED',
+}
+
 export enum StatusReportType {
   BufferData = 'BUFFER_DATA',
   Position = 'POSITION',
@@ -1363,6 +1426,11 @@ export enum SyntaxType {
   Operator = 'OPERATOR',
   Unknown = 'UNKNOWN',
   Value = 'VALUE',
+}
+
+export enum TimingMode {
+  PerMinutEected = 'PER_MINUTEected',
+  PerRevolution = 'PER_REVOLUTION',
 }
 
 export enum UnitType {
@@ -1774,7 +1842,6 @@ export type ResolversTypes = {
     | ResolversTypes['ParsedString'];
   AlertError: ResolverTypeWrapper<AlertError>;
   AppUpdates: ResolverTypeWrapper<AppUpdates>;
-  ApplicatorConfig: ResolverTypeWrapper<ApplicatorConfig>;
   AxisFlags: ResolverTypeWrapper<AxisFlags>;
   CommandSettings: ResolverTypeWrapper<CommandSettings>;
   CompiledInstruction: ResolverTypeWrapper<CompiledInstruction>;
@@ -1787,6 +1854,8 @@ export type ResolversTypes = {
   FirmwareApplicatorSettings: ResolverTypeWrapper<FirmwareApplicatorSettings>;
   FirmwareAxisValues: ResolverTypeWrapper<FirmwareAxisValues>;
   FirmwareCalibrationSettings: ResolverTypeWrapper<FirmwareCalibrationSettings>;
+  FirmwareComparisonNodeOfDecimal: ResolverTypeWrapper<FirmwareComparisonNodeOfDecimal>;
+  FirmwareComparisonNodeOfString: ResolverTypeWrapper<FirmwareComparisonNodeOfString>;
   FirmwareHomingSettings: ResolverTypeWrapper<FirmwareHomingSettings>;
   FirmwareMovementSettings: ResolverTypeWrapper<FirmwareMovementSettings>;
   FirmwarePinsSettings: ResolverTypeWrapper<FirmwarePinsSettings>;
@@ -1835,11 +1904,14 @@ export type ResolversTypes = {
   MachineLogEntryConnection: ResolverTypeWrapper<MachineLogEntryConnection>;
   MachineLogEntryEdge: ResolverTypeWrapper<MachineLogEntryEdge>;
   MachineModalStateOfAxisPlane: ResolverTypeWrapper<MachineModalStateOfAxisPlane>;
+  MachineModalStateOfEnabledType: ResolverTypeWrapper<MachineModalStateOfEnabledType>;
   MachineModalStateOfFeedRateMode: ResolverTypeWrapper<MachineModalStateOfFeedRateMode>;
   MachineModalStateOfMachineMotionType: ResolverTypeWrapper<MachineModalStateOfMachineMotionType>;
   MachineModalStateOfMachineProgramState: ResolverTypeWrapper<MachineModalStateOfMachineProgramState>;
   MachineModalStateOfMovementDistanceType: ResolverTypeWrapper<MachineModalStateOfMovementDistanceType>;
-  MachineModalStateOfSpinDirection: ResolverTypeWrapper<MachineModalStateOfSpinDirection>;
+  MachineModalStateOfPathControlMode: ResolverTypeWrapper<MachineModalStateOfPathControlMode>;
+  MachineModalStateOfSpindleSpeedMode: ResolverTypeWrapper<MachineModalStateOfSpindleSpeedMode>;
+  MachineModalStateOfTimingMode: ResolverTypeWrapper<MachineModalStateOfTimingMode>;
   MachineModalStateOfUnitType: ResolverTypeWrapper<MachineModalStateOfUnitType>;
   MachineModals: ResolverTypeWrapper<MachineModals>;
   MachineOptions: ResolverTypeWrapper<MachineOptions>;
@@ -1883,6 +1955,8 @@ export type ResolversTypes = {
   AxisName: AxisName;
   AxisPlane: AxisPlane;
   BaudRate: BaudRate;
+  EnabledType: EnabledType;
+  FactorType: FactorType;
   FeedRateMode: FeedRateMode;
   Handshake: Handshake;
   KinematicsMode: KinematicsMode;
@@ -1900,14 +1974,18 @@ export type ResolversTypes = {
   MachineSpecType: MachineSpecType;
   MovementDistanceType: MovementDistanceType;
   Parity: Parity;
+  PathControlMode: PathControlMode;
   PortState: PortState;
   ProgramSyntax: ProgramSyntax;
+  RadiusCompensation: RadiusCompensation;
   SerialWriteState: SerialWriteState;
   SortEnumType: SortEnumType;
   SpinDirection: SpinDirection;
+  SpindleSpeedMode: SpindleSpeedMode;
   StatusReportType: StatusReportType;
   StopBits: StopBits;
   SyntaxType: SyntaxType;
+  TimingMode: TimingMode;
   UnitType: UnitType;
   WorkspaceState: WorkspaceState;
   BooleanOperationFilterInput: BooleanOperationFilterInput;
@@ -1965,7 +2043,6 @@ export type ResolversParentTypes = {
     | ResolversParentTypes['ParsedString'];
   AlertError: AlertError;
   AppUpdates: AppUpdates;
-  ApplicatorConfig: ApplicatorConfig;
   AxisFlags: AxisFlags;
   CommandSettings: CommandSettings;
   CompiledInstruction: CompiledInstruction;
@@ -1978,6 +2055,8 @@ export type ResolversParentTypes = {
   FirmwareApplicatorSettings: FirmwareApplicatorSettings;
   FirmwareAxisValues: FirmwareAxisValues;
   FirmwareCalibrationSettings: FirmwareCalibrationSettings;
+  FirmwareComparisonNodeOfDecimal: FirmwareComparisonNodeOfDecimal;
+  FirmwareComparisonNodeOfString: FirmwareComparisonNodeOfString;
   FirmwareHomingSettings: FirmwareHomingSettings;
   FirmwareMovementSettings: FirmwareMovementSettings;
   FirmwarePinsSettings: FirmwarePinsSettings;
@@ -2024,11 +2103,14 @@ export type ResolversParentTypes = {
   MachineLogEntryConnection: MachineLogEntryConnection;
   MachineLogEntryEdge: MachineLogEntryEdge;
   MachineModalStateOfAxisPlane: MachineModalStateOfAxisPlane;
+  MachineModalStateOfEnabledType: MachineModalStateOfEnabledType;
   MachineModalStateOfFeedRateMode: MachineModalStateOfFeedRateMode;
   MachineModalStateOfMachineMotionType: MachineModalStateOfMachineMotionType;
   MachineModalStateOfMachineProgramState: MachineModalStateOfMachineProgramState;
   MachineModalStateOfMovementDistanceType: MachineModalStateOfMovementDistanceType;
-  MachineModalStateOfSpinDirection: MachineModalStateOfSpinDirection;
+  MachineModalStateOfPathControlMode: MachineModalStateOfPathControlMode;
+  MachineModalStateOfSpindleSpeedMode: MachineModalStateOfSpindleSpeedMode;
+  MachineModalStateOfTimingMode: MachineModalStateOfTimingMode;
   MachineModalStateOfUnitType: MachineModalStateOfUnitType;
   MachineModals: MachineModals;
   MachineOptions: MachineOptions;
@@ -2172,21 +2254,6 @@ export type AppUpdatesResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ApplicatorConfigResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['ApplicatorConfig'] = ResolversParentTypes['ApplicatorConfig']
-> = {
-  feedRate: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
-  isFloodCoolantEnabled: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  isMistCoolantEnabled: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  probePosition: Resolver<Maybe<ResolversTypes['MachinePosition']>, ParentType, ContextType>;
-  spinSpeed: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
-  temperature: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
-  toolId: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  toolLengthOffset: Resolver<Maybe<ResolversTypes['MachinePosition']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type AxisFlagsResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['AxisFlags'] = ResolversParentTypes['AxisFlags']
@@ -2248,7 +2315,6 @@ export type ControlledMachineResolvers<
   ParentType extends ResolversParentTypes['ControlledMachine'] = ResolversParentTypes['ControlledMachine']
 > = {
   configuration: Resolver<ResolversTypes['MachineConfiguration'], ParentType, ContextType>;
-  firmwareRequirement: Resolver<ResolversTypes['FirmwareRequirement'], ParentType, ContextType>;
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   logs: Resolver<
     Maybe<ResolversTypes['MachineLogEntryConnection']>,
@@ -2371,6 +2437,28 @@ export type FirmwareCalibrationSettingsResolvers<
   rightChainTolerance: Resolver<ResolversTypes['FirmwareSettingOfDecimal'], ParentType, ContextType>;
   scaling: Resolver<ResolversTypes['FirmwareAxisValues'], ParentType, ContextType>;
   settings: Resolver<Array<ResolversTypes['FirmwareSetting']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type FirmwareComparisonNodeOfDecimalResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['FirmwareComparisonNodeOfDecimal'] = ResolversParentTypes['FirmwareComparisonNodeOfDecimal']
+> = {
+  detectedValue: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
+  hasDetectedValue: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  meetsRequirement: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  requiredValue: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type FirmwareComparisonNodeOfStringResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['FirmwareComparisonNodeOfString'] = ResolversParentTypes['FirmwareComparisonNodeOfString']
+> = {
+  detectedValue: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  hasDetectedValue: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  meetsRequirement: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  requiredValue: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2608,9 +2696,14 @@ export type MachineApplicatorStateResolvers<
   isFloodCoolantEnabled: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   isMistCoolantEnabled: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   isOn: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  lengthOffset: Resolver<Maybe<ResolversTypes['MachinePosition']>, ParentType, ContextType>;
+  lengthOffsetFactorType: Resolver<ResolversTypes['FactorType'], ParentType, ContextType>;
+  probePosition: Resolver<Maybe<ResolversTypes['MachinePosition']>, ParentType, ContextType>;
+  radiusCompensation: Resolver<ResolversTypes['RadiusCompensation'], ParentType, ContextType>;
   spinDirection: Resolver<ResolversTypes['SpinDirection'], ParentType, ContextType>;
   spinSpeed: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
   temperature: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
+  toolId: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2680,7 +2773,6 @@ export type MachineConfigurationResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['MachineConfiguration'] = ResolversParentTypes['MachineConfiguration']
 > = {
-  applicator: Resolver<ResolversTypes['ApplicatorConfig'], ParentType, ContextType>;
   firmware: Resolver<ResolversTypes['MachineDetectedFirmware'], ParentType, ContextType>;
   modals: Resolver<ResolversTypes['MachineModals'], ParentType, ContextType>;
   options: Resolver<Maybe<ResolversTypes['MachineOptions']>, ParentType, ContextType>;
@@ -2694,12 +2786,14 @@ export type MachineDetectedFirmwareResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['MachineDetectedFirmware'] = ResolversParentTypes['MachineDetectedFirmware']
 > = {
-  edition: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  edition: Resolver<ResolversTypes['FirmwareComparisonNodeOfString'], ParentType, ContextType>;
   friendlyName: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   isValid: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  name: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  protocol: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
+  meetsRequirements: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  name: Resolver<ResolversTypes['FirmwareComparisonNodeOfString'], ParentType, ContextType>;
+  protocol: Resolver<ResolversTypes['FirmwareComparisonNodeOfString'], ParentType, ContextType>;
+  requirement: Resolver<ResolversTypes['FirmwareRequirement'], ParentType, ContextType>;
+  version: Resolver<ResolversTypes['FirmwareComparisonNodeOfDecimal'], ParentType, ContextType>;
   welcomeMessage: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -2834,6 +2928,15 @@ export type MachineModalStateOfAxisPlaneResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type MachineModalStateOfEnabledTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MachineModalStateOfEnabledType'] = ResolversParentTypes['MachineModalStateOfEnabledType']
+> = {
+  code: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value: Resolver<ResolversTypes['EnabledType'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type MachineModalStateOfFeedRateModeResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['MachineModalStateOfFeedRateMode'] = ResolversParentTypes['MachineModalStateOfFeedRateMode']
@@ -2870,12 +2973,30 @@ export type MachineModalStateOfMovementDistanceTypeResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MachineModalStateOfSpinDirectionResolvers<
+export type MachineModalStateOfPathControlModeResolvers<
   ContextType = any,
-  ParentType extends ResolversParentTypes['MachineModalStateOfSpinDirection'] = ResolversParentTypes['MachineModalStateOfSpinDirection']
+  ParentType extends ResolversParentTypes['MachineModalStateOfPathControlMode'] = ResolversParentTypes['MachineModalStateOfPathControlMode']
 > = {
   code: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value: Resolver<ResolversTypes['SpinDirection'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['PathControlMode'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MachineModalStateOfSpindleSpeedModeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MachineModalStateOfSpindleSpeedMode'] = ResolversParentTypes['MachineModalStateOfSpindleSpeedMode']
+> = {
+  code: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value: Resolver<ResolversTypes['SpindleSpeedMode'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MachineModalStateOfTimingModeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MachineModalStateOfTimingMode'] = ResolversParentTypes['MachineModalStateOfTimingMode']
+> = {
+  code: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value: Resolver<ResolversTypes['TimingMode'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2893,13 +3014,18 @@ export type MachineModalsResolvers<
   ParentType extends ResolversParentTypes['MachineModals'] = ResolversParentTypes['MachineModals']
 > = {
   arcDistance: Resolver<Maybe<ResolversTypes['MachineModalStateOfMovementDistanceType']>, ParentType, ContextType>;
+  cannedCycleReturnMode: Resolver<Maybe<ResolversTypes['MachineModalStateOfTimingMode']>, ParentType, ContextType>;
+  cylindricalInterpolation: Resolver<Maybe<ResolversTypes['MachineModalStateOfEnabledType']>, ParentType, ContextType>;
   distance: Resolver<Maybe<ResolversTypes['MachineModalStateOfMovementDistanceType']>, ParentType, ContextType>;
   feedRate: Resolver<Maybe<ResolversTypes['MachineModalStateOfFeedRateMode']>, ParentType, ContextType>;
   motion: Resolver<ResolversTypes['MachineModalStateOfMachineMotionType'], ParentType, ContextType>;
+  pathControlMode: Resolver<Maybe<ResolversTypes['MachineModalStateOfPathControlMode']>, ParentType, ContextType>;
   plane: Resolver<Maybe<ResolversTypes['MachineModalStateOfAxisPlane']>, ParentType, ContextType>;
   programState: Resolver<Maybe<ResolversTypes['MachineModalStateOfMachineProgramState']>, ParentType, ContextType>;
-  spindleDirection: Resolver<ResolversTypes['MachineModalStateOfSpinDirection'], ParentType, ContextType>;
+  spindleSpeed: Resolver<Maybe<ResolversTypes['MachineModalStateOfSpindleSpeedMode']>, ParentType, ContextType>;
   units: Resolver<Maybe<ResolversTypes['MachineModalStateOfUnitType']>, ParentType, ContextType>;
+  userDefinedCount: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  userDefinedCurrent: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   workCoordinateSystemCount: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   workCoordinateSystemCurrent: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -2918,8 +3044,10 @@ export type MachineOverridesResolvers<
   ParentType extends ResolversParentTypes['MachineOverrides'] = ResolversParentTypes['MachineOverrides']
 > = {
   feed: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
+  feedAllowed: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   rapids: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
-  spindle: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
+  speed: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
+  speedAllowed: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -3473,7 +3601,6 @@ export type Resolvers<ContextType = any> = {
   IParsedValue: IParsedValueResolvers<ContextType>;
   AlertError: AlertErrorResolvers<ContextType>;
   AppUpdates: AppUpdatesResolvers<ContextType>;
-  ApplicatorConfig: ApplicatorConfigResolvers<ContextType>;
   AxisFlags: AxisFlagsResolvers<ContextType>;
   CommandSettings: CommandSettingsResolvers<ContextType>;
   CompiledInstruction: CompiledInstructionResolvers<ContextType>;
@@ -3486,6 +3613,8 @@ export type Resolvers<ContextType = any> = {
   FirmwareApplicatorSettings: FirmwareApplicatorSettingsResolvers<ContextType>;
   FirmwareAxisValues: FirmwareAxisValuesResolvers<ContextType>;
   FirmwareCalibrationSettings: FirmwareCalibrationSettingsResolvers<ContextType>;
+  FirmwareComparisonNodeOfDecimal: FirmwareComparisonNodeOfDecimalResolvers<ContextType>;
+  FirmwareComparisonNodeOfString: FirmwareComparisonNodeOfStringResolvers<ContextType>;
   FirmwareHomingSettings: FirmwareHomingSettingsResolvers<ContextType>;
   FirmwareMovementSettings: FirmwareMovementSettingsResolvers<ContextType>;
   FirmwarePinsSettings: FirmwarePinsSettingsResolvers<ContextType>;
@@ -3519,11 +3648,14 @@ export type Resolvers<ContextType = any> = {
   MachineLogEntryConnection: MachineLogEntryConnectionResolvers<ContextType>;
   MachineLogEntryEdge: MachineLogEntryEdgeResolvers<ContextType>;
   MachineModalStateOfAxisPlane: MachineModalStateOfAxisPlaneResolvers<ContextType>;
+  MachineModalStateOfEnabledType: MachineModalStateOfEnabledTypeResolvers<ContextType>;
   MachineModalStateOfFeedRateMode: MachineModalStateOfFeedRateModeResolvers<ContextType>;
   MachineModalStateOfMachineMotionType: MachineModalStateOfMachineMotionTypeResolvers<ContextType>;
   MachineModalStateOfMachineProgramState: MachineModalStateOfMachineProgramStateResolvers<ContextType>;
   MachineModalStateOfMovementDistanceType: MachineModalStateOfMovementDistanceTypeResolvers<ContextType>;
-  MachineModalStateOfSpinDirection: MachineModalStateOfSpinDirectionResolvers<ContextType>;
+  MachineModalStateOfPathControlMode: MachineModalStateOfPathControlModeResolvers<ContextType>;
+  MachineModalStateOfSpindleSpeedMode: MachineModalStateOfSpindleSpeedModeResolvers<ContextType>;
+  MachineModalStateOfTimingMode: MachineModalStateOfTimingModeResolvers<ContextType>;
   MachineModalStateOfUnitType: MachineModalStateOfUnitTypeResolvers<ContextType>;
   MachineModals: MachineModalsResolvers<ContextType>;
   MachineOptions: MachineOptionsResolvers<ContextType>;
@@ -3667,16 +3799,53 @@ export type ControlledMachineFragment = { __typename?: 'ControlledMachine' } & P
   ControlledMachine,
   'topicId' | 'machineProfileId'
 > & {
-    firmwareRequirement: { __typename?: 'FirmwareRequirement' } & FirmwareRequirement_FirmwareRequirement_Fragment;
     configuration: { __typename?: 'MachineConfiguration' } & MachineConfigFragment;
     status: { __typename?: 'MachineStatus' } & MachineStatusFragment;
     settings: { __typename?: 'FirmwareSettings' } & FirmwareSettingsTypedFragment;
   } & MachineLogsFragment;
 
+type FirmwareRequirement_FirmwareRequirement_Fragment = { __typename?: 'FirmwareRequirement' } & Pick<
+  FirmwareRequirement,
+  'controllerType' | 'name' | 'edition' | 'requiredVersion' | 'suggestedVersion' | 'helpUrl' | 'downloadUrl'
+>;
+
+type FirmwareRequirement_MachineFirmware_Fragment = { __typename?: 'MachineFirmware' } & Pick<
+  MachineFirmware,
+  'controllerType' | 'name' | 'edition' | 'requiredVersion' | 'suggestedVersion' | 'helpUrl' | 'downloadUrl'
+>;
+
+type FirmwareRequirement_MachineFirmwareSettings_Fragment = { __typename?: 'MachineFirmwareSettings' } & Pick<
+  MachineFirmwareSettings,
+  'controllerType' | 'name' | 'edition' | 'requiredVersion' | 'suggestedVersion' | 'helpUrl' | 'downloadUrl'
+>;
+
+export type FirmwareRequirementFragment =
+  | FirmwareRequirement_FirmwareRequirement_Fragment
+  | FirmwareRequirement_MachineFirmware_Fragment
+  | FirmwareRequirement_MachineFirmwareSettings_Fragment;
+
 export type DetectedFirmwareFragment = { __typename?: 'MachineDetectedFirmware' } & Pick<
   MachineDetectedFirmware,
-  'friendlyName' | 'isValid' | 'name' | 'value' | 'edition' | 'protocol' | 'welcomeMessage'
->;
+  'friendlyName' | 'isValid' | 'welcomeMessage' | 'meetsRequirements'
+> & {
+    name: { __typename?: 'FirmwareComparisonNodeOfString' } & Pick<
+      FirmwareComparisonNodeOfString,
+      'requiredValue' | 'detectedValue' | 'hasDetectedValue' | 'meetsRequirement'
+    >;
+    version: { __typename?: 'FirmwareComparisonNodeOfDecimal' } & Pick<
+      FirmwareComparisonNodeOfDecimal,
+      'requiredValue' | 'detectedValue' | 'hasDetectedValue' | 'meetsRequirement'
+    >;
+    edition: { __typename?: 'FirmwareComparisonNodeOfString' } & Pick<
+      FirmwareComparisonNodeOfString,
+      'requiredValue' | 'detectedValue' | 'hasDetectedValue' | 'meetsRequirement'
+    >;
+    protocol: { __typename?: 'FirmwareComparisonNodeOfString' } & Pick<
+      FirmwareComparisonNodeOfString,
+      'requiredValue' | 'detectedValue' | 'hasDetectedValue' | 'meetsRequirement'
+    >;
+    requirement: { __typename?: 'FirmwareRequirement' } & FirmwareRequirement_FirmwareRequirement_Fragment;
+  };
 
 export type MachineAlertFragment = { __typename?: 'MachineAlert' } & Pick<
   MachineAlert,
@@ -3700,7 +3869,7 @@ export type MachineCommandPropsFragment = { __typename?: 'MachineCommand' } & Pi
 
 export type MachineModalsFragment = { __typename?: 'MachineModals' } & Pick<
   MachineModals,
-  'workCoordinateSystemCurrent' | 'workCoordinateSystemCount'
+  'userDefinedCurrent' | 'userDefinedCount' | 'workCoordinateSystemCurrent' | 'workCoordinateSystemCount'
 > & {
     motion: { __typename?: 'MachineModalStateOfMachineMotionType' } & Pick<
       MachineModalStateOfMachineMotionType,
@@ -3725,30 +3894,32 @@ export type MachineModalsFragment = { __typename?: 'MachineModals' } & Pick<
       { __typename?: 'MachineModalStateOfFeedRateMode' } & Pick<MachineModalStateOfFeedRateMode, 'code' | 'value'>
     >;
     units: Maybe<{ __typename?: 'MachineModalStateOfUnitType' } & Pick<MachineModalStateOfUnitType, 'code' | 'value'>>;
+    cannedCycleReturnMode: Maybe<
+      { __typename?: 'MachineModalStateOfTimingMode' } & Pick<MachineModalStateOfTimingMode, 'code' | 'value'>
+    >;
+    pathControlMode: Maybe<
+      { __typename?: 'MachineModalStateOfPathControlMode' } & Pick<MachineModalStateOfPathControlMode, 'code' | 'value'>
+    >;
+    spindleSpeed: Maybe<
+      { __typename?: 'MachineModalStateOfSpindleSpeedMode' } & Pick<
+        MachineModalStateOfSpindleSpeedMode,
+        'code' | 'value'
+      >
+    >;
+    cylindricalInterpolation: Maybe<
+      { __typename?: 'MachineModalStateOfEnabledType' } & Pick<MachineModalStateOfEnabledType, 'code' | 'value'>
+    >;
     programState: Maybe<
       { __typename?: 'MachineModalStateOfMachineProgramState' } & Pick<
         MachineModalStateOfMachineProgramState,
         'code' | 'value'
       >
     >;
-    spindleDirection: { __typename?: 'MachineModalStateOfSpinDirection' } & Pick<
-      MachineModalStateOfSpinDirection,
-      'code' | 'value'
-    >;
-  };
-
-export type ApplicatorConfigFragment = { __typename?: 'ApplicatorConfig' } & Pick<
-  ApplicatorConfig,
-  'toolId' | 'spinSpeed' | 'feedRate' | 'isFloodCoolantEnabled' | 'isMistCoolantEnabled'
-> & {
-    toolLengthOffset: Maybe<{ __typename?: 'MachinePosition' } & MachinePositionFragment>;
-    probePosition: Maybe<{ __typename?: 'MachinePosition' } & MachinePositionFragment>;
   };
 
 export type MachineConfigFragment = { __typename?: 'MachineConfiguration' } & {
   firmware: { __typename?: 'MachineDetectedFirmware' } & DetectedFirmwareFragment;
   modals: { __typename?: 'MachineModals' } & MachineModalsFragment;
-  applicator: { __typename?: 'ApplicatorConfig' } & ApplicatorConfigFragment;
   workCoordinates: Array<{ __typename?: 'MachinePosition' } & MachinePositionFragment>;
   workOffset: { __typename?: 'MachinePosition' } & MachinePositionFragment;
   referencePosition: Array<{ __typename?: 'MachinePosition' } & MachinePositionFragment>;
@@ -4002,17 +4173,28 @@ export type MachineSpecPropsFragment = { __typename?: 'MachineSpec' } & Pick<Mac
 
 export type MachineBufferFragment = { __typename?: 'MachineBuffer' } & Pick<
   MachineBuffer,
-  'lineNumber' | 'availableReceive' | 'availableSend'
+  'lineNumber' | 'availableReceive' | 'availableSend' | 'writeQueueLength' | 'responseQueueLength'
 >;
 
-export type MachineApplicatorStateFragment = { __typename?: 'MachineApplicatorState' } & Pick<
+export type ApplicatorStateFragment = { __typename?: 'MachineApplicatorState' } & Pick<
   MachineApplicatorState,
-  'isOn' | 'spinDirection' | 'spinSpeed' | 'feedRate' | 'isFloodCoolantEnabled' | 'isMistCoolantEnabled'
->;
+  | 'isOn'
+  | 'toolId'
+  | 'spinDirection'
+  | 'spinSpeed'
+  | 'feedRate'
+  | 'lengthOffsetFactorType'
+  | 'radiusCompensation'
+  | 'isFloodCoolantEnabled'
+  | 'isMistCoolantEnabled'
+> & {
+    lengthOffset: Maybe<{ __typename?: 'MachinePosition' } & MachinePositionFragment>;
+    probePosition: Maybe<{ __typename?: 'MachinePosition' } & MachinePositionFragment>;
+  };
 
 export type MachineOverridesFragment = { __typename?: 'MachineOverrides' } & Pick<
   MachineOverrides,
-  'feed' | 'rapids' | 'spindle'
+  'feed' | 'feedAllowed' | 'rapids' | 'speed' | 'speedAllowed'
 >;
 
 export type MachineStatusFragment = { __typename?: 'MachineStatus' } & Pick<
@@ -4024,7 +4206,7 @@ export type MachineStatusFragment = { __typename?: 'MachineStatus' } & Pick<
     workCoordinateOffset: Maybe<{ __typename?: 'MachinePosition' } & MachinePositionFragment>;
     alarm: Maybe<{ __typename?: 'MachineAlert' } & MachineAlertFragment>;
     buffer: { __typename?: 'MachineBuffer' } & MachineBufferFragment;
-    applicator: { __typename?: 'MachineApplicatorState' } & MachineApplicatorStateFragment;
+    applicator: { __typename?: 'MachineApplicatorState' } & ApplicatorStateFragment;
     overrides: Maybe<{ __typename?: 'MachineOverrides' } & MachineOverridesFragment>;
   };
 
@@ -4037,26 +4219,6 @@ export type MachineStatusSubscription = { __typename?: 'Subscription' } & {
       status: { __typename?: 'MachineStatus' } & MachineStatusFragment;
     };
 };
-
-type FirmwareRequirement_FirmwareRequirement_Fragment = { __typename?: 'FirmwareRequirement' } & Pick<
-  FirmwareRequirement,
-  'controllerType' | 'name' | 'edition' | 'requiredVersion' | 'suggestedVersion' | 'helpUrl' | 'downloadUrl'
->;
-
-type FirmwareRequirement_MachineFirmware_Fragment = { __typename?: 'MachineFirmware' } & Pick<
-  MachineFirmware,
-  'controllerType' | 'name' | 'edition' | 'requiredVersion' | 'suggestedVersion' | 'helpUrl' | 'downloadUrl'
->;
-
-type FirmwareRequirement_MachineFirmwareSettings_Fragment = { __typename?: 'MachineFirmwareSettings' } & Pick<
-  MachineFirmwareSettings,
-  'controllerType' | 'name' | 'edition' | 'requiredVersion' | 'suggestedVersion' | 'helpUrl' | 'downloadUrl'
->;
-
-export type FirmwareRequirementFragment =
-  | FirmwareRequirement_FirmwareRequirement_Fragment
-  | FirmwareRequirement_MachineFirmware_Fragment
-  | FirmwareRequirement_MachineFirmwareSettings_Fragment;
 
 export type ConnectedPortFragment = { __typename?: 'ConnectedPort' } & {
   machine: { __typename?: 'ControlledMachine' } & ControlledMachineFragment;
@@ -4373,12 +4535,37 @@ export const DetectedFirmwareFragmentDoc = gql`
   fragment DetectedFirmware on MachineDetectedFirmware {
     friendlyName
     isValid
-    name
-    value
-    edition
-    protocol
+    name {
+      requiredValue
+      detectedValue
+      hasDetectedValue
+      meetsRequirement
+    }
+    version {
+      requiredValue
+      detectedValue
+      hasDetectedValue
+      meetsRequirement
+    }
+    edition {
+      requiredValue
+      detectedValue
+      hasDetectedValue
+      meetsRequirement
+    }
+    protocol {
+      requiredValue
+      detectedValue
+      hasDetectedValue
+      meetsRequirement
+    }
     welcomeMessage
+    requirement {
+      ...FirmwareRequirement
+    }
+    meetsRequirements
   }
+  ${FirmwareRequirementFragmentDoc}
 `;
 export const MachineModalsFragmentDoc = gql`
   fragment MachineModals on MachineModals {
@@ -4406,14 +4593,28 @@ export const MachineModalsFragmentDoc = gql`
       code
       value
     }
+    cannedCycleReturnMode {
+      code
+      value
+    }
+    pathControlMode {
+      code
+      value
+    }
+    spindleSpeed {
+      code
+      value
+    }
+    cylindricalInterpolation {
+      code
+      value
+    }
     programState {
       code
       value
     }
-    spindleDirection {
-      code
-      value
-    }
+    userDefinedCurrent
+    userDefinedCount
     workCoordinateSystemCurrent
     workCoordinateSystemCount
   }
@@ -4428,22 +4629,6 @@ export const MachinePositionFragmentDoc = gql`
     c
   }
 `;
-export const ApplicatorConfigFragmentDoc = gql`
-  fragment ApplicatorConfig on ApplicatorConfig {
-    toolId
-    toolLengthOffset {
-      ...MachinePosition
-    }
-    probePosition {
-      ...MachinePosition
-    }
-    spinSpeed
-    feedRate
-    isFloodCoolantEnabled
-    isMistCoolantEnabled
-  }
-  ${MachinePositionFragmentDoc}
-`;
 export const MachineConfigFragmentDoc = gql`
   fragment MachineConfig on MachineConfiguration {
     firmware {
@@ -4451,9 +4636,6 @@ export const MachineConfigFragmentDoc = gql`
     }
     modals {
       ...MachineModals
-    }
-    applicator {
-      ...ApplicatorConfig
     }
     workCoordinates {
       ...MachinePosition
@@ -4467,7 +4649,6 @@ export const MachineConfigFragmentDoc = gql`
   }
   ${DetectedFirmwareFragmentDoc}
   ${MachineModalsFragmentDoc}
-  ${ApplicatorConfigFragmentDoc}
   ${MachinePositionFragmentDoc}
 `;
 export const MachineBufferFragmentDoc = gql`
@@ -4475,23 +4656,37 @@ export const MachineBufferFragmentDoc = gql`
     lineNumber
     availableReceive
     availableSend
+    writeQueueLength
+    responseQueueLength
   }
 `;
-export const MachineApplicatorStateFragmentDoc = gql`
-  fragment MachineApplicatorState on MachineApplicatorState {
+export const ApplicatorStateFragmentDoc = gql`
+  fragment ApplicatorState on MachineApplicatorState {
     isOn
+    toolId
     spinDirection
     spinSpeed
     feedRate
+    lengthOffset {
+      ...MachinePosition
+    }
+    lengthOffsetFactorType
+    radiusCompensation
+    probePosition {
+      ...MachinePosition
+    }
     isFloodCoolantEnabled
     isMistCoolantEnabled
   }
+  ${MachinePositionFragmentDoc}
 `;
 export const MachineOverridesFragmentDoc = gql`
   fragment MachineOverrides on MachineOverrides {
     feed
+    feedAllowed
     rapids
-    spindle
+    speed
+    speedAllowed
   }
 `;
 export const MachineStatusFragmentDoc = gql`
@@ -4514,7 +4709,7 @@ export const MachineStatusFragmentDoc = gql`
     }
     activePins
     applicator {
-      ...MachineApplicatorState
+      ...ApplicatorState
     }
     overrides {
       ...MachineOverrides
@@ -4523,7 +4718,7 @@ export const MachineStatusFragmentDoc = gql`
   ${MachinePositionFragmentDoc}
   ${MachineAlertFragmentDoc}
   ${MachineBufferFragmentDoc}
-  ${MachineApplicatorStateFragmentDoc}
+  ${ApplicatorStateFragmentDoc}
   ${MachineOverridesFragmentDoc}
 `;
 export const FirmwareSettingDecimalFragmentDoc = gql`
@@ -4869,9 +5064,6 @@ export const ControlledMachineFragmentDoc = gql`
   fragment ControlledMachine on ControlledMachine {
     topicId
     machineProfileId
-    firmwareRequirement {
-      ...FirmwareRequirement
-    }
     configuration {
       ...MachineConfig
     }
@@ -4883,7 +5075,6 @@ export const ControlledMachineFragmentDoc = gql`
     }
     ...MachineLogs
   }
-  ${FirmwareRequirementFragmentDoc}
   ${MachineConfigFragmentDoc}
   ${MachineStatusFragmentDoc}
   ${FirmwareSettingsTypedFragmentDoc}

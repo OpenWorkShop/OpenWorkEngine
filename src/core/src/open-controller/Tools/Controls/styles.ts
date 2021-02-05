@@ -1,4 +1,5 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import {rowAlternateCss} from '../../../themes';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -26,6 +27,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   numberSelect: {
     maxHeight: 44,
+  },
+  dialogFooter: {
+    ...rowAlternateCss,
+    padding: theme.spacing(2),
+  },
+  override: {
+    margin: theme.spacing(0.5),
+    marginTop: theme.spacing(1),
   },
 }));
 

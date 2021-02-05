@@ -5,23 +5,18 @@ import useLogger from '../../utils/logging/UseLogger';
 import PopoverWorkBarChip from './PopoverWorkBarChip';
 import HelpfulHeader from '../../components/Text/HelpfulHeader';
 import {useTrans} from '../Context';
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Grid,
-  Typography
-} from '@material-ui/core';
+import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid} from '@material-ui/core';
 import useStyles from './styles';
-import {ConnectedPortFragment, useChangeWorkspacePortMutation} from '../graphql';
+import {ActiveState, DetectedFirmwareFragment, MachineBuffer, useChangeWorkspacePortMutation} from '../graphql';
 import PortSelect from '../Ports/PortSelect';
-import {IHaveWorkspace} from '../Workspaces';
+import {IHaveWorkspace, tryUseWorkspaceControllerSelector} from '../Workspaces';
 import {AlertList, IAlertMessage} from '../../components';
+import FirmwareComparisonTable from '../Machines/FirmwareComparisonTable';
+import {getActiveStateTitleKey} from '../Controllers/ActiveState';
 
-type Props = IMaybeHavePortStatus & IHaveWorkspace;
+type Props = IMaybeHavePortStatus & IHaveWorkspace & {
+  firmware?: DetectedFirmwareFragment;
+}
 
 const PortStatusChip: React.FunctionComponent<Props> = (props) => {
   const log = useLogger(PortStatusChip);
@@ -30,10 +25,13 @@ const PortStatusChip: React.FunctionComponent<Props> = (props) => {
   const [changeWorkspacePort, changedWorkspace] = useChangeWorkspacePortMutation();
   const [error, setError] = React.useState<IAlertMessage | undefined>(undefined);
   const classes = useStyles();
-  const { port, workspaceId } = props;
+  const { port, workspaceId, firmware } = props;
   const ports = useSystemPorts();
+  const buffer = tryUseWorkspaceControllerSelector(workspaceId, c => c.machine.status.buffer);
+  const state = tryUseWorkspaceControllerSelector(workspaceId, c => c.machine.status.activityState);
   const changeToPort = changeToPortName.length > 0 ? ports.portMap[changeToPortName] : undefined;
   const errors = [error, changedWorkspace.error];
+  const label = getStateLabel(state, buffer);
 
   log.verbose(port);
 
@@ -50,29 +48,24 @@ const PortStatusChip: React.FunctionComponent<Props> = (props) => {
     }
   }
 
+  function getStateLabel(s?: ActiveState, b?: MachineBuffer): string {
+    const ret: string[] = [];
+    if (s) ret.push(t(getActiveStateTitleKey(s)));
+    if (b) ret.push(getQueueLabel(b.writeQueueLength, b.responseQueueLength));
+    return ret.join('');
+  }
+
+  function getQueueLabel(write: number, response: number): string {
+    const num = write + (response ? 1 : 0);
+    return num > 0 ? ` (${num})` : '';
+  }
+
   function closeDialog() {
     setChangeToPortName('');
   }
 
-  function renderConnection(conn: ConnectedPortFragment) {
-    return [
-      <Grid item key="h-linesRead" xs={8} className={classes.popoverRowAlt} >
-        <Typography variant="body1">{t('Lines Read')}</Typography>
-      </Grid>,
-      <Grid item key="linesRead" xs={4} className={classes.popoverRowAlt} style={{ textAlign: 'right' }} >
-        <Typography variant="subtitle2">{conn.status.linesRead}</Typography>
-      </Grid>,
-      <Grid item key="h-linesWritten" xs={8} className={classes.popoverRow} >
-        <Typography variant="body1">{t('Lines Written')}</Typography>
-      </Grid>,
-      <Grid item key="linesWritten" xs={4} className={classes.popoverRow} style={{ textAlign: 'right' }} >
-        <Typography variant="subtitle2">{conn.status.linesWritten}</Typography>
-      </Grid>,
-    ];
-  }
-
   return (
-    <PopoverWorkBarChip faIcon={getPortIcon(port)} >
+    <PopoverWorkBarChip faIcon={getPortIcon(port)} label={label} >
       <Grid item xs={12} className={classes.popoverRowAlt} >
         <HelpfulHeader
           variant="h6"
@@ -86,7 +79,7 @@ const PortStatusChip: React.FunctionComponent<Props> = (props) => {
           setSelectedPortName={setChangeToPortName}
         />
       </Grid>
-      {port?.connection && renderConnection(port.connection)}
+      {firmware && <FirmwareComparisonTable firmware={firmware} />}
       <Dialog
         open={!!changeToPort}
         onClose={closeDialog}

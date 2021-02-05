@@ -1,9 +1,11 @@
 using System;
 using System.Globalization;
+using HotChocolate;
 using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 using OpenWorkEngine.OpenController.MachineProfiles.Interfaces;
 using OpenWorkEngine.OpenController.Machines.Enums;
+using OpenWorkEngine.OpenController.Machines.Messages;
 using OpenWorkEngine.OpenController.Machines.Models;
 
 namespace OpenWorkEngine.OpenController.Syntax.GCode.Extensions {
@@ -15,15 +17,15 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode.Extensions {
 
     public static bool SetGCodeConfigurationWord(this ControlledMachine machine, GCodeWord word) {
       if (word.Letter == GCodeLetter.F) {
-        machine.Configuration.Applicator.FeedRate = word.Value;
+        machine.Status.Applicator.FeedRate = word.Value;
       } else if (word.Letter == GCodeLetter.G) {
         return machine.ApplyGCodeConfigurationValue(word);
       } else if (word.Letter == GCodeLetter.M) {
         return machine.ApplyMCodeConfigurationValue(word);
       } else if (word.Letter == GCodeLetter.S) {
-        machine.Configuration.Applicator.SpinSpeed = word.Value;
+        machine.Status.Applicator.SpinSpeed = word.Value;
       } else if (word.Letter == GCodeLetter.T) {
-        machine.Configuration.Applicator.ToolId = word.Value.ToString(CultureInfo.InvariantCulture);
+        machine.Status.Applicator.ToolId = word.Value.ToString(CultureInfo.InvariantCulture);
       } else {
         machine.Log.Error($"Invalid GCode '{word.Letter}' from word: {word.Raw}");
         return false;
@@ -45,6 +47,10 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode.Extensions {
         modals.Motion = new (MachineMotionType.ArcCCW, word.Raw);
       } else if (v == 4) {
         modals.Motion = new (MachineMotionType.Dwell, word.Raw);
+      } else if (v == 7) {
+        modals.CylindricalInterpolation = new (EnabledType.Enabled, word.Raw);
+      } else if (v == 8) {
+        modals.CylindricalInterpolation = new (EnabledType.Disabled, word.Raw);
       } else if (v == 17) {
         modals.Plane = new (AxisPlane.Xy, word.Raw);
       } else if (v == 18) {
@@ -57,8 +63,28 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode.Extensions {
         modals.Units = new (UnitType.Metric, word.Raw);
       } else if (v == 38.2M || v == 38.3M || v == 38.4M || v == 38.5M) {
         modals.Motion = new (MachineMotionType.Probe, word.Raw);
+      } else if (v == 40) {
+        machine.Status.Applicator.RadiusCompensation = RadiusCompensation.None;
+      } else if (v == 41) {
+        machine.Status.Applicator.RadiusCompensation = RadiusCompensation.Left;
+      } else if (v == 41.1M) {
+        machine.Status.Applicator.RadiusCompensation = RadiusCompensation.DynamicLeft;
+      } else if (v == 42) {
+        machine.Status.Applicator.RadiusCompensation = RadiusCompensation.Right;
+      } else if (v == 42.1M) {
+        machine.Status.Applicator.RadiusCompensation = RadiusCompensation.DynamicRight;
+      } else if (v == 43 || v == 43.1M) {
+        machine.Status.Applicator.LengthOffsetFactorType = FactorType.Positive;
+      } else if (v == 44 || v == 44.1M) {
+        machine.Status.Applicator.LengthOffsetFactorType = FactorType.Negative;
+      } else if (v == 49) {
+        machine.Status.Applicator.LengthOffsetFactorType = FactorType.None;
       } else if (v >= 54 && v <= 59) {
         modals.WorkCoordinateSystemCurrent = (int) Math.Floor(v) - 54;
+      } else if (v == 64) {
+        modals.PathControlMode = new MachineModalState<PathControlMode>(PathControlMode.Blended, word.Raw);
+      } else if (v == 61 || v == 61.1M) { // ????
+        modals.PathControlMode = new MachineModalState<PathControlMode>(PathControlMode.Exact, word.Raw);
       } else if (v == 80) {
         modals.Motion = new (MachineMotionType.Cancel, word.Raw);
       } else if (v == 90) {
@@ -75,6 +101,14 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode.Extensions {
         modals.FeedRate = new (FeedRateMode.UnitsPerMinute, word.Raw);
       } else if (v == 95) {
         modals.FeedRate = new (FeedRateMode.UnitsPerRevolution, word.Raw);
+      } else if (v == 96) {
+        modals.SpindleSpeed = new (SpindleSpeedMode.ConstantSurfaceSpeed, word.Raw);
+      } else if (v == 97) {
+        modals.SpindleSpeed = new (SpindleSpeedMode.ConstantSpindleSpeed, word.Raw);
+      } else if (v == 98) {
+        modals.CannedCycleReturnMode = new (TimingMode.PerMinute, word.Raw);
+      } else if (v == 99) {
+        modals.CannedCycleReturnMode = new (TimingMode.PerRevolution, word.Raw);
       } else {
         machine.Log.Error("Unhandled GCode: G{code}", v);
         return false;
@@ -93,22 +127,32 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode.Extensions {
       } else if (v == 2 || v == 30) {
         modals.ProgramState = new (MachineProgramState.EndOfProgram, word.Raw);
       } else if (v == 3) {
-        modals.SpindleDirection = new (SpinDirection.CW, word.Raw);
+        machine.Status.Applicator.SpinDirection = SpinDirection.CW;
       } else if (v == 4) {
-        modals.SpindleDirection = new (SpinDirection.CCW, word.Raw);
+        machine.Status.Applicator.SpinDirection = SpinDirection.CCW;
       } else if (v == 5) {
-        modals.SpindleDirection = new (SpinDirection.None, word.Raw);
+        machine.Status.Applicator.SpinDirection = SpinDirection.None;
       } else if (v == 6) {
         machine.Log.Error("ATC (Automatic Tool Change) state?");
       } else if (v == 7) {
-        machine.Configuration.Applicator.IsMistCoolantEnabled = true;
+        machine.Status.Applicator.IsMistCoolantEnabled = true;
       } else if (v == 8) {
-        machine.Configuration.Applicator.IsFloodCoolantEnabled = true;
+        machine.Status.Applicator.IsFloodCoolantEnabled = true;
       } else if (v == 9) {
-        machine.Configuration.Applicator.IsMistCoolantEnabled = false;
-        machine.Configuration.Applicator.IsFloodCoolantEnabled = true;
+        machine.Status.Applicator.IsMistCoolantEnabled = false;
+        machine.Status.Applicator.IsFloodCoolantEnabled = true;
+      } else if (v == 51 || v == 50 || v == 49 || v == 48) {
+        if (machine.Status.Overrides == null) machine.Status.Overrides = new MachineOverrides();
+        if (v == 50 || v == 48) machine.Status.Overrides.FeedAllowed = true;
+        if (v == 51 || v == 48) machine.Status.Overrides.SpeedAllowed = true;
+        if (v == 49) {
+          machine.Status.Overrides.FeedAllowed = false;
+          machine.Status.Overrides.SpeedAllowed = false;
+        }
       } else if (v == 60) {
         modals.ProgramState = new (MachineProgramState.AutomaticChange, word.Raw);
+      } else if (v >= 100 && v <= 199) {
+        modals.UserDefinedCurrent = (int) Math.Floor(v) - 100;
       } else {
         machine.Log.Error("Unhandled MCode: M{code}", v);
       }

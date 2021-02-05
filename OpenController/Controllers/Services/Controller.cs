@@ -11,9 +11,6 @@ using OpenWorkEngine.OpenController.Controllers.Services.Values;
 using OpenWorkEngine.OpenController.ControllerSyntax;
 using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
-using OpenWorkEngine.OpenController.MachineProfiles.Interfaces;
-using OpenWorkEngine.OpenController.Machines.Enums;
-using OpenWorkEngine.OpenController.Machines.Extensions;
 using OpenWorkEngine.OpenController.Machines.Interfaces;
 using OpenWorkEngine.OpenController.Machines.Models;
 using OpenWorkEngine.OpenController.Ports.Enums;
@@ -200,17 +197,17 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
           () => new SystemException("No firmware version could be detected."))
         )
           return;
-        Log.Debug("[FIRMWARE] requirement?: {firmwareRequirement}", Connection.Machine.FirmwareRequirement.ToString());
+        Log.Debug("[FIRMWARE] requirement?: {firmwareRequirement}", firmware.Requirement.ToString());
 
         // Load settings before flagging port as active.
         await Task.Delay(100);
         await GetSettings();
 
         // Ensure that any required firmware is met.
-        IMachineFirmwareRequirement req = Connection.Machine.FirmwareRequirement;
+        IMachineFirmwareRequirement req = firmware.Requirement;
         if (!await StartupCondition(
           PortState.Active,
-          () => req.IsSatisfiedBy(firmware),
+          () => firmware.MeetsRequirements,
           () => new FirmwareException("No firmware version could be detected.", firmware, req))
         )
           return;

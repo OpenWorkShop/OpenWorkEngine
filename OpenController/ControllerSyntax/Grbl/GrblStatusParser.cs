@@ -126,7 +126,7 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
         if (machine.Status.Overrides == null) machine.Status.Overrides = new MachineOverrides();
         machine.Status.Overrides.Feed = nums[0];
         machine.Status.Overrides.Rapids = nums[1];
-        machine.Status.Overrides.Spindle = nums[2];
+        machine.Status.Overrides.Speed = nums[2];
       } else if (key.Equals("A")) {
         // Accessory State (v1.1)
         // * A:SFM indicates the current state of accessory machine components, such as the spindle and coolant.
