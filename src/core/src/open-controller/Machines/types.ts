@@ -19,7 +19,9 @@ export interface IMachinePosition {
   c?: number | null;
 }
 
-export type Axis3D = AxisName.X | AxisName.Y | AxisName.Z;
+const a3d = [AxisName.X, AxisName.Y, AxisName.Z] as const;
+export type Axis3D = typeof a3d[number];
+export const threeDimensionalAxes: Axis3D[] = [ ...a3d ];
 
 // export type FirmwareSettingsGroupName = 'applicator' | 'pins' | 'movement' | 'reporting' | 'homing' | 'calibration';
 

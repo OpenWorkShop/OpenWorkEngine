@@ -8,26 +8,27 @@ import useStyles from './styles';
 import HelpfulHeader from '../../components/Text/HelpfulHeader';
 import {getMachineAxisPosition, isMachinePositionValid} from '../Machines/MachinePosition';
 import {Axis3D} from '../Machines';
-import {IHaveWorkspace, useWorkspaceControllerSelector} from '../Workspaces';
+import {IHaveWorkspace, useWorkspaceControllerSelector, useWorkspaceUnits} from '../Workspaces';
 import {useSelector} from 'react-redux';
+import {getDistanceUnitAbbreviationKey} from '../../components/Units';
 
 export type PositionType = 'work' | 'machine';
 
-type Props = IHaveWorkspace & {
-  positionType: PositionType;
-};
+type Props = IHaveWorkspace;
 
 const MachinePositionChip: React.FunctionComponent<Props> = (props) => {
   const t = useTrans();
   const classes = useStyles();
-  const { positionType, workspaceId } = props;
+  const { workspaceId } = props;
   const machineStatus = useWorkspaceControllerSelector(workspaceId, c => c.machine.status );
+  const units = useWorkspaceUnits(workspaceId);
+  const unitsStr = t(getDistanceUnitAbbreviationKey(units, false));
 
   const mPos = machineStatus.machinePosition;
   const wPos = machineStatus.workPosition;
 
-  const isWPos = positionType === 'work';
-  const icon = isWPos ? faMapMarkerAlt : faMapMarkedAlt;
+  const isWPos = !Boolean(wPos);
+  const icon = isWPos ? faMapMarkedAlt : faMapMarkerAlt;
   const tip = isWPos ?
     t('WPos (work position), relative to the work origin (where the program execution will begin).') :
     t('MPos (machine position), in absolute real-world coordinates.');
@@ -37,13 +38,19 @@ const MachinePositionChip: React.FunctionComponent<Props> = (props) => {
     .map((a) => getMachineAxisPosition(mPos, a))
     .filter(v => v !== null)
     .map(v => Math.round(v ?? 0))
-    .join(', ') + ' mm';
+    .join(', ') + ' ' + unitsStr;
 
   return (<PopoverWorkBarChip faIcon={icon} label={positionText}>
     <Grid item xs={12} className={classes.popoverRowAlt} >
-      <HelpfulHeader tip={tip} title={t(isWPos ? 'WPos' : 'MPos')} variant="h6" />
+      <HelpfulHeader tip={tip} title={t('Machine Position')} variant="h6" />
     </Grid>
     <Grid item xs={12} className={classes.popoverRow} >
+    </Grid>
+    <Grid item xs={12} className={classes.popoverRowAlt} >
+      <HelpfulHeader tip={tip} title={t('WPos')} variant="h6" />
+    </Grid>
+    <Grid item xs={12} className={classes.popoverRow} >
+      Modal Groups ...
     </Grid>
   </PopoverWorkBarChip>);
 };

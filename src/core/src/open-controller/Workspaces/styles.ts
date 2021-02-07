@@ -158,6 +158,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   selectMenu: {
     height: 24,
   },
+  settingsTab: {
+    minWidth: 150,
+  }
 }));
 
 export default useStyles;

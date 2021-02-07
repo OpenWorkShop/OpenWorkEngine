@@ -10,8 +10,8 @@ export function mm2in(mm: number): number {
   return mm / inchesMillimetersConversion;
 }
 
-export function getDistanceUnitAbbreviationKey(units: UnitType): string {
-  return units === UnitType.Imperial ? 'in.' : 'mm.';
+export function getDistanceUnitAbbreviationKey(units: UnitType, dot = true): string {
+  return (units === UnitType.Imperial ? 'in' : 'mm') + (dot ? '.' : '');
 }
 
 export function getDistanceUnitIconKey(units: UnitType): string {

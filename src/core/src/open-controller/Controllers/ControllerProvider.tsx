@@ -56,7 +56,7 @@ const ControllerProvider: React.FunctionComponent<Props> = (props) => {
     }
   }, [newMachineLogs]);
 
-  log.debug('machine', variables);
+  log.verbose('machine', variables);
 
   return (
     <React.Fragment>

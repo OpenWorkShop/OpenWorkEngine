@@ -242,6 +242,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
     private void WriteInstruction(MachineInstructionResult res) {
       if (res.Instruction.InstructionDefinition.ResponseExpected) {
         ResponseQueue.Enqueue(res);
+        Connection.Machine.Status.Buffer.LastInstructionResult = res;
         Log.Debug("[WRITE] {code} via {buffer}", res.WriteLogEntry.Code, ToString());
       } else {
         Log.Verbose("[WRITE] {code} via {buffer}", res.WriteLogEntry.Code, ToString());

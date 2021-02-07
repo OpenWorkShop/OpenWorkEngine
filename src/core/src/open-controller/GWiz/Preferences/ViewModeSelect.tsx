@@ -11,8 +11,8 @@ const ViewModeSelect: React.FunctionComponent = () => {
   const t = useTrans();
   const viewPlane = useSelector<AppState, ViewPlane>(s => s.gWiz.visualizerPreferences.viewPlane);
   const dispatch = useDispatch();
-  const planeNumbers = [...Array(ViewPlane.NumPlanes).keys()];
-  const planeOptions = planeNumbers.map((p) => {
+  const viewPlanes: ViewPlane[] = Object.values(ViewPlane).map(k => k as ViewPlane);
+  const planeOptions = viewPlanes.map((p) => {
     return {
       itemId: p.valueOf(),
       title: t(getViewPlaneNameKey(p)),

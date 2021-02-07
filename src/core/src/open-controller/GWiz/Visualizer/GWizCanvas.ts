@@ -1,14 +1,17 @@
 import _ from 'lodash';
 import * as THREE from 'three';
-import {IVisualizerStyles, ViewPlane} from './types';
-import {IOpenController} from '../Context';
-import {Logger} from '../../utils/logging';
+import {IVisualizerStyles, ViewPlane} from '../types';
+import {IOpenController} from '../../Context';
+import {Logger} from '../../../utils/logging';
 import GWizAxes from './GWizAxes';
-import {getMachineAxisRange, getMachineAxisBoundingBox} from '../Machines';
-import {IMachineAxis} from '../Machines';
-import {defaultVisualizerStyles} from './GWizSlice';
+import {getMachineAxisRange, getMachineAxisBoundingBox} from '../../Machines';
+import {IMachineAxis} from '../../Machines';
+import {defaultVisualizerStyles} from '../GWizSlice';
 import GWizControls from './GWizControls';
 import GWizCamera from './GWizCamera';
+import GWizApplicator from './GWizApplicator';
+import NavCube from './NavCube';
+import {MachinePositionFragment} from '../../graphql';
 
 const defaultCameraNear = 0.1;
 const defaultCameraFar = 2000;
@@ -24,8 +27,11 @@ class GWizCanvas {
   public styles: IVisualizerStyles = defaultVisualizerStyles;
   public controls: GWizControls;
   public axes: GWizAxes;
+  public applicator: GWizApplicator;
   public log: Logger;
   public target?: THREE.Object3D;
+  public center: THREE.Vector3 = new THREE.Vector3(0, 0, 0);
+  public navCube: NavCube;
 
   private _axes: IMachineAxis[] = [];
   private _viewPlane: ViewPlane = ViewPlane.None;
@@ -42,33 +48,42 @@ class GWizCanvas {
     // Scene
     this.scene = new THREE.Scene();
     this.axes = new GWizAxes(this.styles);
-    this.scene.add(this.axes);
+    this.applicator = new GWizApplicator(this.styles);
+    this.scene.add(this.axes, this.applicator);
 
-    // Camera
     this.camera = new GWizCamera();
+    this.controls = new GWizControls(this);
 
-    // Controls
-    this.controls = new GWizControls(this.camera, this.domElement, oc);
+    this.navCube = new NavCube(this, this.styles);
   }
 
   // Main startup (draw axes)
-  draw(axes: IMachineAxis[]): void {
+  draw(axes: IMachineAxis[], navCubeDiv: HTMLDivElement): void {
     this.log.verbose('axes', axes, this.styles);
     this._axes = axes;
 
     const maxAxisRange = _.max(Object.values(axes).map(getMachineAxisRange)) ?? defaultCameraFar;
     const minAccuracy = _.min(Object.values(axes).map(a => a.accuracy)) ?? defaultCameraNear;
+    const maxRange = maxAxisRange * 1.25;
 
-    this.camera.setRange( minAccuracy, maxAxisRange);
-    this.controls.setRange(minAccuracy, maxAxisRange);
+    this.camera.setRange( minAccuracy, maxRange);
+    this.controls.setRange(minAccuracy, maxAxisRange * .75);
 
-    // this.scene.fog = new THREE.Fog(this.styles.backgroundColor, maxAxisRange * 0.75, maxAxisRange);
+    const color = new THREE.Color(this.styles.backgroundColor);
+    this.scene.fog = new THREE.Fog(color, maxAxisRange, maxRange);
 
     this.axes.redraw(axes);
     this.lookAt(this.target);
 
     // Start the animation loop.
     this.animate();
+
+    // Begin nav cube
+    this.navCube.draw(navCubeDiv);
+  }
+
+  updatePosition(pos: MachinePositionFragment): void {
+    this.applicator.position.copy(new THREE.Vector3(pos.x, pos.y, pos.z));
   }
 
   getBoundingBox(obj?: THREE.Object3D): THREE.Box3 {
@@ -84,8 +99,8 @@ class GWizCanvas {
     const box = this.getBoundingBox(obj);
 
     const size = box.getSize( new THREE.Vector3() );
-    const center = obj ? box.getCenter( new THREE.Vector3() ) : new THREE.Vector3();
-    const target = center;
+    this.center = obj ? box.getCenter( new THREE.Vector3() ) : new THREE.Vector3();
+    const target = this.center;
 
     const maxSize = Math.max( size.x, size.y, size.z );
     const fitHeightDistance = maxSize / ( 2 * Math.atan( Math.PI * this.camera.fov / 360 ) );
@@ -94,13 +109,21 @@ class GWizCanvas {
 
     const direction = target.clone()
       .sub( this.camera.position )
-      .normalize()
-      .multiplyScalar( distance );
+      .normalize();
 
-    this.controls.lookAt(center);
-    this.camera.position.copy( target ).sub(direction);
+    const distanceVector = direction.multiplyScalar( distance );
 
-    this.log.debug('cam', size, center, this.camera.position);
+    this.controls.lookAt(this.center);
+    this.camera.position.copy( target ).sub(distanceVector);
+
+    this.log.debug('cam', size, this.center, this.camera.position);
+    this.updateNavCube();
+  }
+
+  updateNavCube(): void {
+    const lookVector = this.center.clone().sub(this.camera.position).normalize();
+    const camVector = this.camera.position.clone().normalize();
+    this.navCube.update(camVector, lookVector);
   }
 
   applyViewPlane(viewPlane: ViewPlane): void {
@@ -129,7 +152,7 @@ class GWizCanvas {
     const xDiff = Math.abs(this._lastWidth - width);
     const yDiff = Math.abs(this._lastHeight - height);
     const diff = xDiff + yDiff;
-    if (diff < 1) {
+    if (diff < 1 || width < 1 || height < 1) {
       return;
     }
 

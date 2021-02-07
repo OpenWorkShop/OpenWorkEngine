@@ -7,9 +7,21 @@ export const iconSizeSm = 16;
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    padding: theme.spacing(0.5),
-    height: componentHeight,
+    backgroundColor: theme.palette.background.paper,
+    color: theme.palette.text.primary,
     display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0.5),
+  },
+  workBarTitle: {
+    flexGrow: 1,
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  },
+  workBarTitleText: {
+    margin: 0,
+    padding: 0,
   },
   workbarChip: {
     marginLeft: theme.spacing(0.5),
@@ -20,13 +32,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: theme.spacing(0.5),
     marginRight: theme.spacing(0.5),
   },
-  titleBarButtonGroup: {
+  titleBarLeftGroup: {
     height: componentHeight,
+    textAlign: 'right',
+    marginRight: theme.spacing(0.5),
   },
   titleBarRightGroup: {
+    height: componentHeight,
     textAlign: 'right',
-    // position: 'absolute',
-    // right: theme.spacing(1),
   },
   titleBarButton: {
     padding: 0,

@@ -6,17 +6,21 @@ import {
 import theme from '../../themes/GWiz';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-const axisColor = theme.palette.grey.A200;
-
 export const defaultVisualizerStyles = {
   backgroundColor: theme.palette.background.default,
+  gridLines: { color: theme.palette.grey.A200 },
   renderGroups: {
     [RenderGroupType.P]: { color: theme.palette.primary.light },
     [RenderGroupType.H]: { color: theme.palette.secondary.main },
     [RenderGroupType.E]: { color: theme.palette.info.main },
-    [RenderGroupType.X]: { color: axisColor },
-    [RenderGroupType.Y]: { color: axisColor },
-    [RenderGroupType.Z]: { color: axisColor },
+    [RenderGroupType.X]: { color: '#AA0000' }, // Red
+    [RenderGroupType.Y]: { color: '#00BB00' }, // Green
+    [RenderGroupType.Z]: { color: '#0000AA' }, // Blue
+  },
+  navCube: {
+    chamfer: 0.3,
+    edgeColor: '#EEEEEE',
+    cornerColor: '#AAAAAA',
   },
 };
 

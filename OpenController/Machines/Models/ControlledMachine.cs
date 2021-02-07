@@ -36,6 +36,9 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     [UseSorting]
     public IQueryable<MachineLogEntry> Logs() => LogEntries.AsQueryable();
 
+    [UsePaging]
+    public IQueryable<MachineTimelineNode> Timeline() => MachineTimelineNode.GroupLogEntries(LogEntries).AsQueryable();
+
     public ControlledMachine(string portName, IMachineConnectionSettings? opts, ILogger log) {
       PortName = portName;
       if (opts != null) {

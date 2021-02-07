@@ -368,6 +368,7 @@
             <e p="MachinePosition.cs" t="Include" />
             <e p="MachineSetting.cs" t="Include" />
             <e p="MachineStatus.cs" t="Include" />
+            <e p="MachineTimelineNode.cs" t="Include" />
           </e>
         </e>
         <e p="obj" t="ExcludeRecursive">

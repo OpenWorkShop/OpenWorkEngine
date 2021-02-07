@@ -5,6 +5,12 @@ fragment MachineBuffer on MachineBuffer {
     availableSend
     writeQueueLength
     responseQueueLength
+    lastInstructionResult {
+        ...MachineInstructionResult
+    }
+    pendingInstructionResults {
+        ...MachineInstructionResult
+    }
 }
 
 

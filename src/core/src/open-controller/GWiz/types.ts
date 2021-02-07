@@ -6,13 +6,13 @@ export enum ViewMode {
 
 export enum ViewPlane {
   None, // aka, 3d
+  ThreeD,
   Top,
   Bottom,
   Left,
   Right,
   Front,
   Back,
-  NumPlanes,
 }
 
 // Groups of things rendered on-screen, each may have styles.
@@ -20,11 +20,10 @@ export enum RenderGroupType {
   None = -3,
   H = -2, // History
   P = -1, // Plan
-  E,// Extruder / End-Mill
+  E, // Extruder / End-Mill
   X,
   Y,
   Z,
-  NumRenderGroups,
 }
 
 export interface IVisualizerControlsPreferences {
@@ -37,6 +36,13 @@ export interface IVisualizerControlsPreferences {
 export interface IMaterial {
   color: string;
   opacity?: number;
+  // linewidth doesn't work right due to bugs in canvas
+}
+
+export interface INavCubePreferences {
+  chamfer?: number; // percentage.
+  edgeColor: string;
+  cornerColor: string;
 }
 
 export interface ChangeMaterialPayload {
@@ -45,8 +51,10 @@ export interface ChangeMaterialPayload {
 }
 
 export interface IVisualizerStyles {
-  backgroundColor: string,
+  backgroundColor: string;
+  gridLines: IMaterial;
   renderGroups: { [key: string]: IMaterial };
+  navCube: INavCubePreferences;
 }
 
 // Things the user changes directly through UI forms.

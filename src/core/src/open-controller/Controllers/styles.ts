@@ -77,7 +77,38 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: lightColor,
   },
   toolTab: {
-    minWidth: 60, // Get rid of 160
+    minWidth: 100, // Get rid of 160
+  },
+  timeline: {
+    padding: 0,
+    margin: 0,
+    position: 'absolute',
+    textAlign: 'left',
+  },
+  timelineItem: {
+    minHeight: 20,
+    maxHeight: 24,
+  },
+  timelineSep: {
+    paddingTop: 0,
+  },
+  timelineDot: {
+    marginTop: theme.spacing(0.5),
+  },
+  timelineLeft: {
+    width: 50,
+    textAlign: 'right',
+    paddingTop: 0,
+    paddingLeft: 0,
+    paddingBottom: 0,
+    paddingRight: theme.spacing(0.5),
+  },
+  timelineRight: {
+    width: 50,
+    paddingTop: 0,
+    paddingLeft: theme.spacing(0.5),
+    paddingBottom: 0,
+    paddingRight: 0,
   },
 }));
 

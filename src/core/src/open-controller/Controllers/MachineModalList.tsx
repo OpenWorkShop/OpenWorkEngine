@@ -1,11 +1,11 @@
 import React, {FunctionComponent} from 'react';
 import {
   MachineModalsFragment,
-} from '../../graphql';
-import {useLogger} from '../../../hooks';
-import {useTrans} from '../../Context';
-import {getModalOptions} from '../../Machines/MachineModals';
-import IconSelect from '../../../components/Forms/IconSelect';
+} from '../graphql';
+import {useLogger} from '../../hooks';
+import {useTrans} from '../Context';
+import {getModalOptions} from '../Machines/MachineModals';
+import IconSelect from '../../components/Forms/IconSelect';
 
 interface IModal {
   value: string;
@@ -22,8 +22,8 @@ const modalGroups = [
   'pathControlMode', 'spindleSpeed', 'cylindricalInterpolation', 'plane', 'programState'] as const;
 type ModalGroup = typeof modalGroups[number];
 
-const MachineModals: FunctionComponent<Props> = (props) => {
-  const log = useLogger(MachineModals);
+const MachineModalList: FunctionComponent<Props> = (props) => {
+  const log = useLogger(MachineModalList);
   const t = useTrans();
   const { modals } = props;
 
@@ -68,4 +68,4 @@ const MachineModals: FunctionComponent<Props> = (props) => {
   </React.Fragment>);
 };
 
-export default MachineModals;
+export default MachineModalList;

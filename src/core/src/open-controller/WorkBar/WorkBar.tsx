@@ -2,15 +2,14 @@ import * as React from 'react';
 import {IHaveWorkspace, tryUseWorkspaceController, useWorkspaceSelector} from '../Workspaces';
 import {IMaybeHavePortStatus} from '../Ports';
 import useStyles from './styles';
-import {Button, ButtonGroup, Tooltip} from '@material-ui/core';
+import {Button, ButtonGroup, Grid, Toolbar, Tooltip, Typography} from '@material-ui/core';
 import {useTrans} from '../Context';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCogs, faExclamationCircle} from '@fortawesome/free-solid-svg-icons';
 import {IController} from '../Controllers';
 import MachinePositionChip from './MachinePositionChip';
 import useLogger from '../../utils/logging/UseLogger';
-import WorkspaceChip from './WorkspaceChip';
-import PortStatusChip from './PortStatusChip';
+import ApplicatorChip from './ApplicatorChip';
 import {
   PortState,
   WorkspaceState
@@ -42,7 +41,7 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
   return (
     <div className={classes.root} >
       <ButtonGroup
-        className={classes.titleBarRightGroup}
+        className={classes.titleBarLeftGroup}
         color="primary"
         variant="outlined"
         orientation={orientation ?? 'horizontal'}
@@ -51,14 +50,20 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
           <FontAwesomeIcon icon={faCogs} size={'lg'} />
         </Button>
       </ButtonGroup>
+      <Grid container className={classes.workBarTitle} spacing={0}>
+        <Grid item xs={12}>
+          <Typography className={classes.workBarTitleText} variant="subtitle2">No file loaded.</Typography>
+        </Grid>
+      </Grid>
       <ButtonGroup
-        className={classes.titleBarButtonGroup}
+        className={classes.titleBarRightGroup}
         color="primary"
         variant="text"
         orientation={orientation ?? 'horizontal'}
         aria-label={t('Workspace Shortcuts')}
       >
-        <PortStatusChip port={port} workspaceId={workspaceId} firmware={firmware} />
+        {isActive && machineStatus && <MachinePositionChip workspaceId={workspaceId} />}
+        {isActive && machineStatus && <ApplicatorChip workspaceId={workspaceId} />}
         {portState === PortState.Unplugged && (
           <Tooltip title={t('Port is not plugged in')} >
             <Button
@@ -69,10 +74,11 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
           </Tooltip>
         )}
         {isActive && <GWizChip />}
-        {isActive && machineStatus && <MachinePositionChip positionType="machine" workspaceId={workspaceId} />}
       </ButtonGroup>
       <WorkspaceSettingsDialog
         workspaceId={workspaceId}
+        port={port}
+        firmware={firmware}
         open={settingsOpen}
         onClose={() => setSettingsOpen(false)}
       />

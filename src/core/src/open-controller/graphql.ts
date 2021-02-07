@@ -116,6 +116,7 @@ export type ControlledMachine = {
   machineProfileId: Maybe<Scalars['String']>;
   settings: FirmwareSettings;
   status: MachineStatus;
+  timeline: Maybe<MachineTimelineNodeConnection>;
   topicId: Scalars['String'];
 };
 
@@ -126,6 +127,13 @@ export type ControlledMachineLogsArgs = {
   last: Maybe<Scalars['Int']>;
   order: Maybe<Array<MachineLogEntrySortInput>>;
   where: Maybe<MachineLogEntryFilterInput>;
+};
+
+export type ControlledMachineTimelineArgs = {
+  after: Maybe<Scalars['String']>;
+  before: Maybe<Scalars['String']>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
 };
 
 export type Controller = {
@@ -456,7 +464,9 @@ export type MachineBuffer = {
   __typename?: 'MachineBuffer';
   availableReceive: Scalars['Int'];
   availableSend: Scalars['Int'];
+  lastInstructionResult: Maybe<MachineInstructionResult>;
   lineNumber: Scalars['Int'];
+  pendingInstructionResults: Array<MachineInstructionResult>;
   responseQueueLength: Scalars['Int'];
   writeQueueLength: Scalars['Int'];
 };
@@ -796,6 +806,32 @@ export type MachineStatus = {
   overrides: Maybe<MachineOverrides>;
   workCoordinateOffset: Maybe<MachinePosition>;
   workPosition: Maybe<MachinePosition>;
+};
+
+export type MachineTimelineNode = {
+  __typename?: 'MachineTimelineNode';
+  logEntries: Array<MachineLogEntry>;
+  logLevel: MachineLogLevel;
+};
+
+/** A connection to a list of items. */
+export type MachineTimelineNodeConnection = {
+  __typename?: 'MachineTimelineNodeConnection';
+  /** A list of edges. */
+  edges: Maybe<Array<MachineTimelineNodeEdge>>;
+  /** A flattened list of the nodes. */
+  nodes: Maybe<Array<MachineTimelineNode>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+/** An edge in a connection. */
+export type MachineTimelineNodeEdge = {
+  __typename?: 'MachineTimelineNodeEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge. */
+  node: MachineTimelineNode;
 };
 
 export type MacroSettings = {
@@ -1429,7 +1465,7 @@ export enum SyntaxType {
 }
 
 export enum TimingMode {
-  PerMinutEected = 'PER_MINUTEected',
+  PerMinute = 'PER_MINUTE',
   PerRevolution = 'PER_REVOLUTION',
 }
 
@@ -1925,6 +1961,9 @@ export type ResolversTypes = {
   MachineSpec: ResolverTypeWrapper<MachineSpec>;
   MachineSpecSettings: ResolverTypeWrapper<MachineSpecSettings>;
   MachineStatus: ResolverTypeWrapper<MachineStatus>;
+  MachineTimelineNode: ResolverTypeWrapper<MachineTimelineNode>;
+  MachineTimelineNodeConnection: ResolverTypeWrapper<MachineTimelineNodeConnection>;
+  MachineTimelineNodeEdge: ResolverTypeWrapper<MachineTimelineNodeEdge>;
   MacroSettings: ResolverTypeWrapper<MacroSettings>;
   MakerHubSettings: ResolverTypeWrapper<MakerHubSettings>;
   MountPointSettings: ResolverTypeWrapper<MountPointSettings>;
@@ -2124,6 +2163,9 @@ export type ResolversParentTypes = {
   MachineSpec: MachineSpec;
   MachineSpecSettings: MachineSpecSettings;
   MachineStatus: MachineStatus;
+  MachineTimelineNode: MachineTimelineNode;
+  MachineTimelineNodeConnection: MachineTimelineNodeConnection;
+  MachineTimelineNodeEdge: MachineTimelineNodeEdge;
   MacroSettings: MacroSettings;
   MakerHubSettings: MakerHubSettings;
   MountPointSettings: MountPointSettings;
@@ -2325,6 +2367,12 @@ export type ControlledMachineResolvers<
   machineProfileId: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   settings: Resolver<ResolversTypes['FirmwareSettings'], ParentType, ContextType>;
   status: Resolver<ResolversTypes['MachineStatus'], ParentType, ContextType>;
+  timeline: Resolver<
+    Maybe<ResolversTypes['MachineTimelineNodeConnection']>,
+    ParentType,
+    ContextType,
+    RequireFields<ControlledMachineTimelineArgs, never>
+  >;
   topicId: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -2740,7 +2788,9 @@ export type MachineBufferResolvers<
 > = {
   availableReceive: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   availableSend: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  lastInstructionResult: Resolver<Maybe<ResolversTypes['MachineInstructionResult']>, ParentType, ContextType>;
   lineNumber: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  pendingInstructionResults: Resolver<Array<ResolversTypes['MachineInstructionResult']>, ParentType, ContextType>;
   responseQueueLength: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   writeQueueLength: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -3178,6 +3228,34 @@ export type MachineStatusResolvers<
   overrides: Resolver<Maybe<ResolversTypes['MachineOverrides']>, ParentType, ContextType>;
   workCoordinateOffset: Resolver<Maybe<ResolversTypes['MachinePosition']>, ParentType, ContextType>;
   workPosition: Resolver<Maybe<ResolversTypes['MachinePosition']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MachineTimelineNodeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MachineTimelineNode'] = ResolversParentTypes['MachineTimelineNode']
+> = {
+  logEntries: Resolver<Array<ResolversTypes['MachineLogEntry']>, ParentType, ContextType>;
+  logLevel: Resolver<ResolversTypes['MachineLogLevel'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MachineTimelineNodeConnectionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MachineTimelineNodeConnection'] = ResolversParentTypes['MachineTimelineNodeConnection']
+> = {
+  edges: Resolver<Maybe<Array<ResolversTypes['MachineTimelineNodeEdge']>>, ParentType, ContextType>;
+  nodes: Resolver<Maybe<Array<ResolversTypes['MachineTimelineNode']>>, ParentType, ContextType>;
+  pageInfo: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MachineTimelineNodeEdgeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MachineTimelineNodeEdge'] = ResolversParentTypes['MachineTimelineNodeEdge']
+> = {
+  cursor: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  node: Resolver<ResolversTypes['MachineTimelineNode'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -3669,6 +3747,9 @@ export type Resolvers<ContextType = any> = {
   MachineSpec: MachineSpecResolvers<ContextType>;
   MachineSpecSettings: MachineSpecSettingsResolvers<ContextType>;
   MachineStatus: MachineStatusResolvers<ContextType>;
+  MachineTimelineNode: MachineTimelineNodeResolvers<ContextType>;
+  MachineTimelineNodeConnection: MachineTimelineNodeConnectionResolvers<ContextType>;
+  MachineTimelineNodeEdge: MachineTimelineNodeEdgeResolvers<ContextType>;
   MacroSettings: MacroSettingsResolvers<ContextType>;
   MakerHubSettings: MakerHubSettingsResolvers<ContextType>;
   MountPointSettings: MountPointSettingsResolvers<ContextType>;
@@ -3963,7 +4044,24 @@ export type MachineLogEntryConnectionFragment = { __typename?: 'MachineLogEntryC
   pageInfo: { __typename?: 'PageInfo' } & PageInfoFragment;
 };
 
+export type MachineTimelineNodeConnectionFragment = { __typename?: 'MachineTimelineNodeConnection' } & {
+  edges: Maybe<
+    Array<
+      { __typename?: 'MachineTimelineNodeEdge' } & Pick<MachineTimelineNodeEdge, 'cursor'> & {
+          node: { __typename?: 'MachineTimelineNode' } & MachineTimelineNodeFragment;
+        }
+    >
+  >;
+  nodes: Maybe<Array<{ __typename?: 'MachineTimelineNode' } & MachineTimelineNodeFragment>>;
+  pageInfo: { __typename?: 'PageInfo' } & PageInfoFragment;
+};
+
 export type PageInfoFragment = { __typename?: 'PageInfo' } & Pick<PageInfo, 'endCursor' | 'hasNextPage'>;
+
+export type MachineTimelineNodeFragment = { __typename?: 'MachineTimelineNode' } & Pick<
+  MachineTimelineNode,
+  'logLevel'
+> & { logEntries: Array<{ __typename?: 'MachineLogEntry' } & MachineLogEntryFragment> };
 
 export type MachineLogEntryFragment = { __typename?: 'MachineLogEntry' } & Pick<
   MachineLogEntry,
@@ -3975,6 +4073,7 @@ export type MachineLogEntryFragment = { __typename?: 'MachineLogEntry' } & Pick<
 
 export type MachineLogsFragment = { __typename?: 'ControlledMachine' } & {
   logs: Maybe<{ __typename?: 'MachineLogEntryConnection' } & MachineLogEntryConnectionFragment>;
+  timeline: Maybe<{ __typename?: 'MachineTimelineNodeConnection' } & MachineTimelineNodeConnectionFragment>;
 };
 
 export type MachineLogsSubscriptionVariables = Exact<{
@@ -4174,7 +4273,10 @@ export type MachineSpecPropsFragment = { __typename?: 'MachineSpec' } & Pick<Mac
 export type MachineBufferFragment = { __typename?: 'MachineBuffer' } & Pick<
   MachineBuffer,
   'lineNumber' | 'availableReceive' | 'availableSend' | 'writeQueueLength' | 'responseQueueLength'
->;
+> & {
+    lastInstructionResult: Maybe<{ __typename?: 'MachineInstructionResult' } & MachineInstructionResultFragment>;
+    pendingInstructionResults: Array<{ __typename?: 'MachineInstructionResult' } & MachineInstructionResultFragment>;
+  };
 
 export type ApplicatorStateFragment = { __typename?: 'MachineApplicatorState' } & Pick<
   MachineApplicatorState,
@@ -4658,7 +4760,14 @@ export const MachineBufferFragmentDoc = gql`
     availableSend
     writeQueueLength
     responseQueueLength
+    lastInstructionResult {
+      ...MachineInstructionResult
+    }
+    pendingInstructionResults {
+      ...MachineInstructionResult
+    }
   }
+  ${MachineInstructionResultFragmentDoc}
 `;
 export const ApplicatorStateFragmentDoc = gql`
   fragment ApplicatorState on MachineApplicatorState {
@@ -5052,13 +5161,44 @@ export const MachineLogEntryConnectionFragmentDoc = gql`
   ${MachineLogEntryFragmentDoc}
   ${PageInfoFragmentDoc}
 `;
+export const MachineTimelineNodeFragmentDoc = gql`
+  fragment MachineTimelineNode on MachineTimelineNode {
+    logLevel
+    logEntries {
+      ...MachineLogEntry
+    }
+  }
+  ${MachineLogEntryFragmentDoc}
+`;
+export const MachineTimelineNodeConnectionFragmentDoc = gql`
+  fragment MachineTimelineNodeConnection on MachineTimelineNodeConnection {
+    edges {
+      cursor
+      node {
+        ...MachineTimelineNode
+      }
+    }
+    nodes {
+      ...MachineTimelineNode
+    }
+    pageInfo {
+      ...PageInfo
+    }
+  }
+  ${MachineTimelineNodeFragmentDoc}
+  ${PageInfoFragmentDoc}
+`;
 export const MachineLogsFragmentDoc = gql`
   fragment MachineLogs on ControlledMachine {
     logs(first: 50, order: { timestamp: DESC }) {
       ...MachineLogEntryConnection
     }
+    timeline(first: 50) {
+      ...MachineTimelineNodeConnection
+    }
   }
   ${MachineLogEntryConnectionFragmentDoc}
+  ${MachineTimelineNodeConnectionFragmentDoc}
 `;
 export const ControlledMachineFragmentDoc = gql`
   fragment ControlledMachine on ControlledMachine {

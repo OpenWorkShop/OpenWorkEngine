@@ -5,7 +5,7 @@ import {IMaterial, IVisualizerStyles, RenderGroupType} from '../types';
 import {AppState} from '../../redux';
 import {useDispatch, useSelector} from 'react-redux';
 import MaterialPicker from './MaterialPicker';
-import {defaultAxisMaterialParams} from '../GWizAxes';
+import {defaultAxisMaterialParams} from '../Visualizer/GWizAxes';
 import {useTrans} from '../../Context';
 import HelpfulExponent from '../../../components/Text/HelpfulExponent';
 import gWizSlice from '../GWizSlice';

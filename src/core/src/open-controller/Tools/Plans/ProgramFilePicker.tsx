@@ -18,7 +18,7 @@ const ProgramFilePicker: React.FunctionComponent = () => {
 
   return (
     <FormControl >
-      <Button component="label">
+      <Button variant="outlined" component="label">
         {t('Upload Program')}
         <input
           type='file'

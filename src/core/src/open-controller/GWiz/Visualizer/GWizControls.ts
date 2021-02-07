@@ -1,26 +1,29 @@
-import {IVisualizerControlsPreferences, ViewPlane} from './types';
-import {Logger} from '../../utils/logging';
+import {IVisualizerControlsPreferences, ViewPlane} from '../types';
+import {Logger} from '../../../utils/logging';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import {Vector3} from 'three';
-import GWizCamera from './GWizCamera';
-import {IOpenController} from '../Context';
+import {IOpenController} from '../../Context';
+import GWizCanvas from './GWizCanvas';
 
 class GWizControls extends OrbitControls {
   public log: Logger;
-  private _openController: IOpenController;
-  private _camera: GWizCamera;
+  private _canvas: GWizCanvas;
   private _prefs: IVisualizerControlsPreferences = {};
   private _viewPlane: ViewPlane = ViewPlane.None;
 
-  constructor(camera: GWizCamera, domElement: HTMLCanvasElement, oc: IOpenController) {
-    super(camera, domElement);
-    this.log = oc.ows.logManager.getLogger('GWizControls');
-    this._openController = oc;
-    this._camera = camera;
+  private get openController(): IOpenController {
+    return this._canvas.openController;
+  }
+
+  constructor(canvas: GWizCanvas) {
+    super(canvas.camera, canvas.domElement);
+    this._canvas = canvas;
+    this.log = this.openController.ows.logManager.getLogger('GWizControls');
     // this.controls.enableDamping = true;
     this.enableKeys = true;
     this.addEventListener('change', (e) => {
-      this.log.verbose('change', camera.position, e);
+      this.log.verbose('change', e);
+      this._canvas.updateNavCube();
     });
   }
 

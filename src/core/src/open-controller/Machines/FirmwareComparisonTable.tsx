@@ -28,7 +28,10 @@ const FirmwareComparisonTable: React.FunctionComponent<Props> = (props) => {
   const log = useLogger(FirmwareComparisonTable);
   const theme = useTheme();
   const classes = useStyles();
-  const tip = t('Firmware is flashed directly on the board of the connected machine.');
+  const tip = t(
+    'Firmware is flashed directly on the board of the connected machine. ' +
+    'It actually "drives" the behavior. In most cases, firmware is open-source Arduino code.'
+  );
   const { firmware } = props;
   const requiredFirmware = firmware.requirement;
   const { downloadUrl, helpUrl } = requiredFirmware;
@@ -48,19 +51,19 @@ const FirmwareComparisonTable: React.FunctionComponent<Props> = (props) => {
       t('(No firmware requirement in the workspace.)');
     const tip = allowed ? successTip : failTip;
     return [
-      <Grid key={`${key}-title`} item xs={6} className={classes.popoverRow}>
+      <Grid key={`${key}-title`} item xs={6} >
         <Typography variant="subtitle1">
           {t(titlize(key))}
         </Typography>
       </Grid>,
-      <Grid key={`${key}-icon`} item xs={2} className={classes.popoverRow}>
+      <Grid key={`${key}-icon`} item xs={2} >
         <Tooltip title={tip} >
           <IconButton aria-label={tip} size='small' disableFocusRipple>
             <FontAwesomeIcon icon={icon} color={color} />
           </IconButton>
         </Tooltip>
       </Grid>,
-      <Grid key={`${key}-value`} item xs={4} className={classes.popoverRow}>
+      <Grid key={`${key}-value`} item xs={4} >
         <Typography variant="body1">
           {value}
         </Typography>
@@ -68,32 +71,29 @@ const FirmwareComparisonTable: React.FunctionComponent<Props> = (props) => {
     ];
   }
 
-  return (<React.Fragment >
-    <Grid item xs={12} className={classes.popoverRowAlt} >
+  return (<Grid container>
+    <Grid item xs={12} >
       <HelpfulHeader tip={tip} title={'Detected Firmware'} variant="h6" />
     </Grid>
     {renderFirmwareComparison('name', firmware.name)}
     {renderFirmwareComparison('protocol', firmware.protocol)}
     {renderFirmwareComparison('edition', firmware.edition)}
     {renderFirmwareComparison('version', firmware.version)}
-    {(downloadUrl || helpUrl) && <Grid item xs={12} className={classes.popoverRowAlt} >
-      <HelpfulHeader tip={tip} title={'Help'} variant="h6" />
-    </Grid>}
-    {downloadUrl && <Grid item xs={12} className={classes.popoverRow}>
+    {downloadUrl && <Grid item xs={6}>
       <Typography variant="subtitle2">
         <ReactGA.OutboundLink eventLabel='firmware_download' to={downloadUrl} target='_blank'>
-          {t('Download firmware')}
+          {t('Download Latest Firmware')}
         </ReactGA.OutboundLink>
       </Typography>
     </Grid>}
-    {helpUrl && <Grid item xs={12} className={classes.popoverRow}>
+    {helpUrl && <Grid item xs={6} >
       <Typography variant="subtitle2">
         <ReactGA.OutboundLink eventLabel='firmware_help' to={helpUrl} target='_blank'>
           {t('Firmware Documentation')}
         </ReactGA.OutboundLink>
       </Typography>
     </Grid>}
-  </React.Fragment>);
+  </Grid>);
 };
 
 export default FirmwareComparisonTable;

@@ -1,8 +1,8 @@
 import * as THREE from 'three';
-import {IMaterial, IVisualizerStyles, RenderGroupType} from './types';
-import {getMachineAxisMap, IMachineAxis, MachineAxisMap, iterateMachineAxisGridLines} from '../Machines';
+import {IMaterial, IVisualizerStyles, RenderGroupType} from '../types';
+import {Axis3D, getMachineAxisMap, IMachineAxis, iterateMachineAxisGridLines, MachineAxisMap} from '../../Machines';
 import createTextSprite from './TextSprite';
-import {AxisName} from '../graphql';
+import {AxisName} from '../../graphql';
 
 type LineMaterial = THREE.LineBasicMaterial | THREE.LineDashedMaterial;
 
@@ -12,6 +12,7 @@ export const defaultAxisMaterialParams: IMaterial = {
 
 interface IAxisLine {
   dist: number,
+  colorize: boolean,
   isMajor: boolean,
   isEdge: boolean,
 }
@@ -23,7 +24,8 @@ interface IDrawnAxisLine extends IAxisLine {
 
 interface IDrawnAxis {
   axisName: AxisName;
-  lines: IDrawnAxisLine[];
+  primaryLine?: IDrawnAxisLine;
+  gridLines: IDrawnAxisLine[];
 }
 
 class GWizAxes extends THREE.Group {
@@ -90,8 +92,9 @@ class GWizAxes extends THREE.Group {
   }
 
   private getAxisMaterial(axisName: AxisName, line: IAxisLine): LineMaterial {
-    const key = `${axisName}-${line.isMajor ? 'major' : 'minor'}-${line.isEdge ? 'edge' : 'inner'}`;
-    if (!this._materials[key]) this._materials[key] = this.createAxisMaterial(axisName, line.isMajor, line.isEdge);
+    const key = `${axisName}-${line.isMajor ? 'major' : ''}-${line.isEdge ? 'edge' : ''}-${line.colorize ? 'c' : ''}`;
+    if (!this._materials[key])
+      this._materials[key] = this.createAxisMaterial(axisName, line.colorize, line.isMajor, line.isEdge);
     return this._materials[key];
   }
 
@@ -102,9 +105,10 @@ class GWizAxes extends THREE.Group {
     return RenderGroupType.None;
   }
 
-  private createAxisMaterial(axisName: AxisName, isMajor: boolean, isEdge: boolean): LineMaterial {
+  private createAxisMaterial(axisName: AxisName, colorize: boolean, isMajor: boolean, isEdge: boolean): LineMaterial {
     const renderGroup = GWizAxes.getRenderGroup(axisName);
-    const params = { ...(this._styles.renderGroups[renderGroup] ?? defaultAxisMaterialParams) };
+    const groupParams = colorize ? this._styles.renderGroups[renderGroup] : this._styles.gridLines;
+    const params = { ...(groupParams ?? defaultAxisMaterialParams) };
 
     const dashed = !isMajor && !isEdge;
 
@@ -118,14 +122,34 @@ class GWizAxes extends THREE.Group {
     return new THREE.LineBasicMaterial(params);
   }
 
+  private drawPrimaryAxisLine(a: Axis3D, axis: IMachineAxis): IDrawnAxisLine {
+    const axisLine: IAxisLine = { dist: 0, isMajor: true, isEdge: false, colorize: true };
+    const material = this.getAxisMaterial(a, axisLine);
+    const max = 100000;
+    const line = GWizAxes.createLine(
+      new THREE.Vector3(0, 0, 0),
+      new THREE.Vector3(
+        axis.name === AxisName.X ? max : 0,
+        axis.name === AxisName.Y ? max : 0,
+        axis.name === AxisName.Z ? max : 0
+      ),
+      material
+    );
+    this._lineGroups[a].add(line);
+    return { ...axisLine, obj: line };
+  }
+
   private drawAxis(axis: IMachineAxis): IDrawnAxis {
-    const a = axis.name;
-    const ret: IDrawnAxis = { axisName: a, lines: [] };
+    const a = axis.name as Axis3D;
+
+    const ret: IDrawnAxis = { axisName: a, gridLines: [], primaryLine: this.drawPrimaryAxisLine(a, axis) };
     const yAxis = this._axisMap[AxisName.Y];
     const xAxis = this._axisMap[AxisName.X];
+    const plane = [AxisName.X, AxisName.Y];
 
     iterateMachineAxisGridLines(axis, (dist: number, isMajor: boolean, isEdge: boolean) => {
-      const axisLine: IAxisLine = { dist, isMajor, isEdge };
+      if (!plane.includes(axis.name)) return;
+      const axisLine: IAxisLine = { dist, isMajor, isEdge, colorize: false };
       const material = this.getAxisMaterial(a, axisLine);
       const p = new THREE.Vector3(0, 0, 0);
       let line: THREE.Line | undefined = undefined;
@@ -185,7 +209,7 @@ class GWizAxes extends THREE.Group {
         // else if (a === 'Z') mesh.position.z = dist;
         // this._textGroups[a].add(mesh);
       }
-      ret.lines.push(drawnAxisLine);
+      ret.gridLines.push(drawnAxisLine);
     }, this._imperial);
     return ret;
   }

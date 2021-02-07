@@ -8,8 +8,12 @@ import useLogger from '../../utils/logging/UseLogger';
 import AxesTab from './Settings/AxesTab';
 import WorkspaceTab from './Settings/WorkspaceTab';
 import PartsTab from './Settings/PartsTab';
+import {IMaybeHavePortStatus} from '../Ports';
+import PortTab from './Settings/PortTab';
+import {DetectedFirmwareFragment} from '../graphql';
 
-type Props = IHaveWorkspace & {
+type Props = IHaveWorkspace & IMaybeHavePortStatus & {
+  firmware?: DetectedFirmwareFragment;
   open: boolean;
   onClose: () => void;
 };
@@ -17,7 +21,7 @@ type Props = IHaveWorkspace & {
 const WorkspaceSettingsDialog: React.FunctionComponent<Props> = (props) => {
   const t = useTrans();
   const log = useLogger(WorkspaceSettingsDialog);
-  const { open, onClose, workspaceId } = props;
+  const { open, onClose, workspaceId, port, firmware } = props;
   const classes = useStyles();
   const scroll = 'paper';
   const title = t('Settings');
@@ -40,9 +44,9 @@ const WorkspaceSettingsDialog: React.FunctionComponent<Props> = (props) => {
       component: <PartsTab workspaceId={workspaceId} />
     },
     {
-      key: 'firmware',
-      title: t('Firmware'),
-      component: <PartsTab workspaceId={workspaceId} />
+      key: 'port',
+      title: t('Port'),
+      component: <PortTab workspaceId={workspaceId} port={port} firmware={firmware} />
     },
   ];
 
@@ -64,7 +68,7 @@ const WorkspaceSettingsDialog: React.FunctionComponent<Props> = (props) => {
         </DialogTitle>
         <TabList onChange={(e, val) => setSelectedTab(val)}>
           {tabs.map((tab) => {
-            return <Tab key={tab.key} value={tab.key} label={tab.title} />;
+            return <Tab key={tab.key} className={classes.settingsTab} value={tab.key} label={tab.title} />;
           })}
         </TabList>
         <DialogContent className={classes.dialogContent}>

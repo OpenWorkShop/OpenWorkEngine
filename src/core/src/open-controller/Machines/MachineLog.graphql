@@ -14,9 +14,29 @@ fragment MachineLogEntryConnection on MachineLogEntryConnection {
     }
 }
 
+fragment MachineTimelineNodeConnection on MachineTimelineNodeConnection {
+    edges {
+        cursor
+        node {
+            ...MachineTimelineNode
+        }
+    }
+    nodes {
+        ...MachineTimelineNode
+    }
+    pageInfo {
+        ...PageInfo
+    }
+}
+
 fragment PageInfo on PageInfo {
     endCursor
     hasNextPage
+}
+
+fragment MachineTimelineNode on MachineTimelineNode {
+    logLevel
+    logEntries { ...MachineLogEntry }
 }
 
 fragment MachineLogEntry on MachineLogEntry {
@@ -38,6 +58,9 @@ fragment MachineLogEntry on MachineLogEntry {
 fragment MachineLogs on ControlledMachine {
     logs(first: 50, order: { timestamp: DESC }) {
         ...MachineLogEntryConnection
+    }
+    timeline(first: 50) {
+        ...MachineTimelineNodeConnection
     }
 }
 

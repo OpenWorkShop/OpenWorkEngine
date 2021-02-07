@@ -6,7 +6,7 @@ import {ToolBase} from '../types';
 import useStyles from './styles';
 import {useWorkspaceControllerSelector} from '../../Workspaces';
 import {useLogger} from '../../../hooks';
-import MachineModals from './MachineModals';
+import MachineModalList from '../../Controllers/MachineModalList';
 import FirmwareSettingsDialog from './FirmwareSettingsDialog';
 import {useTrans} from '../../Context';
 import {faMicrochip} from '@fortawesome/free-solid-svg-icons';
@@ -30,7 +30,7 @@ const Machine: ToolBase = (props) => {
   return (
     <React.Fragment>
       <div className={classes.root}>
-        <MachineModals modals={modals} />
+        <MachineModalList modals={modals} />
       </div>
       <div className={classes.dialogFooter}>
         <Button

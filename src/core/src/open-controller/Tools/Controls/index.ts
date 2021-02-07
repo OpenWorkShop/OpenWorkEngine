@@ -1,2 +1,2 @@
 export * from './types';
-export { default as default } from './Jogger';
+export { default as default } from './Controls';

@@ -84,6 +84,7 @@ type ControlledMachine {
     machineProfileId: String
     settings: FirmwareSettings!
     status: MachineStatus!
+    timeline(after: String, before: String, first: Int, last: Int): MachineTimelineNodeConnection
     topicId: String!
 }
 
@@ -371,7 +372,9 @@ type MachineAxisSettings {
 type MachineBuffer {
     availableReceive: Int!
     availableSend: Int!
+    lastInstructionResult: MachineInstructionResult
     lineNumber: Int!
+    pendingInstructionResults: [MachineInstructionResult!]!
     responseQueueLength: Int!
     writeQueueLength: Int!
 }
@@ -676,6 +679,29 @@ type MachineStatus {
     overrides: MachineOverrides
     workCoordinateOffset: MachinePosition
     workPosition: MachinePosition
+}
+
+type MachineTimelineNode {
+    logEntries: [MachineLogEntry!]!
+    logLevel: MachineLogLevel!
+}
+
+"A connection to a list of items."
+type MachineTimelineNodeConnection {
+    "A list of edges."
+    edges: [MachineTimelineNodeEdge!]
+    "A flattened list of the nodes."
+    nodes: [MachineTimelineNode!]
+    "Information to aid in pagination."
+    pageInfo: PageInfo!
+}
+
+"An edge in a connection."
+type MachineTimelineNodeEdge {
+    "A cursor for use in pagination."
+    cursor: String!
+    "The item at the end of the edge."
+    node: MachineTimelineNode!
 }
 
 type MacroSettings {
@@ -1201,7 +1227,7 @@ enum SyntaxType {
 }
 
 enum TimingMode {
-    PER_MINUTEected
+    PER_MINUTE
     PER_REVOLUTION
 }
 

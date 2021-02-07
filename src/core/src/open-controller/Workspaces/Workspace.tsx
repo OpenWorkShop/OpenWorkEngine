@@ -28,7 +28,7 @@ const Workspace: React.FunctionComponent<Props> = (props) => {
       </Grid>
       <Grid item xs={12}>
         {controllerTopic && <ControllerCard workspaceId={workspaceId} />}
-        <GWiz id={workspaceId} className={classes.visualizer} axes={axes} />
+        <GWiz workspaceId={workspaceId} className={classes.visualizer} axes={axes} />
       </Grid>
     </Grid>
   );

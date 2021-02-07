@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 using OpenWorkEngine.OpenController.Controllers.Interfaces;
 using OpenWorkEngine.OpenController.Controllers.Messages;
 using OpenWorkEngine.OpenController.Controllers.Models;
@@ -20,6 +22,10 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     public int WriteQueueLength => WriteQueue.Count;
 
     public int ResponseQueueLength => ResponseQueue.Count;
+
+    public List<MachineInstructionResult> PendingInstructionResults => ResponseQueue.Concat(WriteQueue).ToList();
+
+    public MachineInstructionResult? LastInstructionResult { get; internal set; }
 
     internal ConcurrentQueue<MachineInstructionResult> WriteQueue { get; } = new ();
 

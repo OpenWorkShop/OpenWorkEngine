@@ -1,9 +1,9 @@
 import React, {FunctionComponent} from 'react';
 import {Card, CardActions, CardHeader, Tab, Typography,} from '@material-ui/core';
-import {IHaveWorkspace, useWorkspaceControllerSelector} from '../Workspaces';
+import {IHaveWorkspace, tryUseWorkspaceControllerSelector, useWorkspaceControllerSelector} from '../Workspaces';
 import clsx from 'clsx';
 import useStyles from './styles';
-import {ActiveState} from '../graphql';
+import {ActiveState, MachineBufferFragment} from '../graphql';
 import {useTrans} from '../Context';
 import {getWorkspaceTools} from '../Tools';
 import {TabContext, TabList, TabPanel} from '@material-ui/lab';
@@ -23,11 +23,24 @@ const ControllerCard: FunctionComponent<Props> = (props) => {
   const { workspaceId } = props;
   const activeState = useWorkspaceControllerSelector(workspaceId, c => c.machine.status.activityState);
   const alarm = useWorkspaceControllerSelector(workspaceId, c => c.machine.status.alarm);
+  const buffer = tryUseWorkspaceControllerSelector(workspaceId, c => c.machine.status.buffer);
   const tools = getWorkspaceTools(workspaceId);
   const [selectedTab, setSelectedTab] = React.useState(tools[0].id);
   const hasAlarm = activeState == ActiveState.Alarm || alarm;
 
   log.verbose('draw');
+
+  function getStateLabel(s?: ActiveState, b?: MachineBufferFragment): string {
+    const ret: string[] = [];
+    log.debug('state', s, b);
+    if (s === ActiveState.Run && b?.lastInstructionResult) ret.push(b.lastInstructionResult.writeLogEntry.message);
+    else if (s) ret.push(t(getActiveStateTitleKey(s)));
+    if (b) {
+      const num = b.writeQueueLength + b.responseQueueLength;
+      if (num > 0) ret.push(`+${num}`);
+    }
+    return ret.join(' ');
+  }
 
   return (
     <TabContext value={selectedTab}>
@@ -45,7 +58,7 @@ const ControllerCard: FunctionComponent<Props> = (props) => {
           avatar={<StopButton workspaceId={workspaceId} />}
           title={<HelpfulHeader
             tip={t(getActiveStateTipKey(activeState))}
-            title={t(getActiveStateTitleKey(activeState))}
+            title={t(getStateLabel(activeState, buffer))}
             variant="h6"
           />}
           subheader={<Typography variant="subtitle2">{getActiveStateSubTitleKey(activeState, alarm)}</Typography>}
