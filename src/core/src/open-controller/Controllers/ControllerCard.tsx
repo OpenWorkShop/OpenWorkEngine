@@ -1,6 +1,11 @@
 import React, {FunctionComponent} from 'react';
-import {Card, CardActions, CardHeader, Tab, Typography,} from '@material-ui/core';
-import {IHaveWorkspace, tryUseWorkspaceControllerSelector, useWorkspaceControllerSelector} from '../Workspaces';
+import {Card, CardActions, CardHeader, IconButton, Tab, Tooltip, Typography,} from '@material-ui/core';
+import {
+  IHaveWorkspace,
+  tryUseWorkspaceControllerSelector,
+  useWorkspaceControllerSelector,
+  useWorkspaceSelector
+} from '../Workspaces';
 import clsx from 'clsx';
 import useStyles from './styles';
 import {ActiveState, MachineBufferFragment} from '../graphql';
@@ -13,6 +18,8 @@ import {useLogger} from '../../hooks';
 import HelpfulHeader from '../../components/Text/HelpfulHeader';
 import StopButton from './StopButton';
 import {getActiveStateSubTitleKey, getActiveStateTipKey, getActiveStateTitleKey} from './ActiveState';
+import {faEllipsisV, faHome, faLink} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type Props = IHaveWorkspace;
 
@@ -24,11 +31,10 @@ const ControllerCard: FunctionComponent<Props> = (props) => {
   const activeState = useWorkspaceControllerSelector(workspaceId, c => c.machine.status.activityState);
   const alarm = useWorkspaceControllerSelector(workspaceId, c => c.machine.status.alarm);
   const buffer = tryUseWorkspaceControllerSelector(workspaceId, c => c.machine.status.buffer);
+  // const features = useWorkspaceSelector(workspaceId, ws => ws.settings.features);
   const tools = getWorkspaceTools(workspaceId);
   const [selectedTab, setSelectedTab] = React.useState(tools[0].id);
   const hasAlarm = activeState == ActiveState.Alarm || alarm;
-
-  log.verbose('draw');
 
   function getStateLabel(s?: ActiveState, b?: MachineBufferFragment): string {
     const ret: string[] = [];
@@ -62,6 +68,11 @@ const ControllerCard: FunctionComponent<Props> = (props) => {
             variant="h6"
           />}
           subheader={<Typography variant="subtitle2">{getActiveStateSubTitleKey(activeState, alarm)}</Typography>}
+          action={<Tooltip title={t('Reset Chains')} >
+            <IconButton color="secondary">
+              <FontAwesomeIcon icon={faEllipsisV} />
+            </IconButton>
+          </Tooltip>}
         />
         <CardActions className={classes.controllerCardActions} >
           <TabList onChange={(e, val) => setSelectedTab(val)}>
@@ -84,9 +95,6 @@ const ControllerCard: FunctionComponent<Props> = (props) => {
             );
           })}
         </div>
-        {/*<CardActions className={classes.controllerCardActions} >*/}
-        {/*  Moar Stuff*/}
-        {/*</CardActions>*/}
       </Card>
     </TabContext>
   );

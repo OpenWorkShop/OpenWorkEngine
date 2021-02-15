@@ -38,8 +38,7 @@ const ApplicatorChip: FunctionComponent<Props> = (props) => {
         <HelpfulHeader tip={tip} title={t('Machine Settings')} variant="h6" />
       </Grid>
       <Grid item xs={12} className={classes.popoverRow} >
-        <WorkspaceUnitSelect workspaceId={workspaceId} />
-        <MachineModalList modals={modals} />
+        <MachineModalList modals={modals} workspaceId={workspaceId} />
       </Grid>
       <Grid item xs={12} className={classes.popoverRowAlt} >
         <Button

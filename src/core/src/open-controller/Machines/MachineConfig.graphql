@@ -1,54 +1,113 @@
-
+#fragment SelectOption on SelectOption {
+#    itemId
+#    name
+#}
 
 fragment MachineModals on MachineModals {
     motion {
-        code
+        id
+        title
         value
+        data
+        hasBeenRead
+        options { code value }
     }
     plane {
-        code
+        id
+        title
         value
+        data
+        hasBeenRead
+        options { code value }
     }
     distance {
-        code
+        id
+        title
         value
+        data
+        hasBeenRead
+        options { code value }
     }
     arcDistance {
-        code
+        id
+        title
         value
+        data
+        hasBeenRead
+        options { code value }
     }
     feedRate {
-        code
+        id
+        title
         value
+        data
+        hasBeenRead
+        options { code value }
     }
     units {
-        code
+        id
+        title
         value
+        data
+        hasBeenRead
+        options { code value }
     }
     cannedCycleReturnMode {
-        code
+        id
+        title
         value
+        data
+        hasBeenRead
+        options { code value }
     }
     pathControlMode {
-        code
+        id
+        title
         value
+        data
+        hasBeenRead
+        options { code value }
     }
     spindleSpeed {
-        code
+        id
+        title
         value
+        data
+        hasBeenRead
+        options { code value }
     }
     cylindricalInterpolation {
-        code
+        id
+        title
         value
+        data
+        hasBeenRead
+        options { code value }
     }
     programState {
-        code
+        id
+        title
         value
+        data
+        hasBeenRead
+        options { code value }
     }
-    userDefinedCurrent
-    userDefinedCount
-    workCoordinateSystemCurrent
-    workCoordinateSystemCount
+    userDefined {
+        id
+        title
+        value
+        data
+        hasBeenRead
+        options { code value }
+    }
+    workCoordinateSystem {
+        id
+        title
+        value
+        data
+        hasBeenRead
+        options { code value }
+    }
 }
 
 fragment MachineConfig on MachineConfiguration {

@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using FluentAssertions;
 using HotChocolate.Language;
-using MakerverseServerTests;
 using Newtonsoft.Json;
 using OpenWorkEngine.OpenController.Controllers.Interfaces;
 using OpenWorkEngine.OpenController.Controllers.Messages;
@@ -48,8 +47,9 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
 
       MachineDetectedFirmware fw = machine.Configuration.Firmware;
       fw.Should().NotBeNull();
-      fw.Name.Should().Be(MachineControllerType.Grbl.ToString());
-      fw.IsValid.Should().BeTrue();
+      fw.Name.DetectedValue.Should().Be(MachineControllerType.Grbl.ToString());
+      fw.Protocol.HasDetectedValue.Should().BeFalse();
+      fw.Version.HasDetectedValue.Should().BeTrue();
       versionString.Should().Contain(fw.Edition.DetectedValue);
       versionString.Should().Contain(fw.Version.DetectedValue.ToString(CultureInfo.InvariantCulture));
     }
@@ -110,10 +110,9 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
         JsonConvert.SerializeObject(machine.Status.Applicator, Formatting.Indented));
 
       ApplicatorState sp = machine.Status.Applicator;
-      sp.FeedRate.Should().Be((decimal) (feed ?? 0));
-      sp.SpinSpeed.Should().Be((decimal) (speed ?? 0));
-      sp.IsMistCoolantEnabled.Should().Be(mist ?? false);
-      sp.IsFloodCoolantEnabled.Should().Be(flood ?? false);
+      sp.FeedRate.Data.Should().Be((decimal) (feed ?? 0));
+      sp.SpinSpeed.Data.Should().Be((decimal) (speed ?? 0));
+
     }
 
     [Theory]
@@ -227,16 +226,17 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
       List<FirmwareSetting> changedSettings = machine.Settings.Settings.Where(s => s.HasBeenRead).ToList();
       changedSettings.Count.Should().Be(1);
       FirmwareSetting setting = changedSettings.First();
+
       Log.Information("Machine Setting {@setting}", JsonConvert.SerializeObject(setting, Formatting.Indented));
       setting.Key.Should().NotBeEmpty();
       setting.Title.Should().NotBeEmpty();
-      setting.Value.Should().Be(value);
+      setting.ValueCode.Should().Be(value);
       setting.Key.Should().Be(key);
       line.Should().Contain(setting.ToString());
 
       IControllerInstruction i = Translator.SettingScript.Instructions[0];
       CompiledInstruction setter = i.Compile(new ControllerExecutionOptions() { Args = setting });
-      line.Should().StartWith(setter.Code);
+      line.Should().StartWith(setter.Line.Raw);
     }
   }
 }

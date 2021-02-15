@@ -51,8 +51,23 @@ export type IParsedValue =
   | ParsedAxisFlags
   | ParsedBool
   | ParsedDecimal
+  | ParsedEnumOfApplicatorRadiusCompensation
+  | ParsedEnumOfApplicatorSpinDirection
+  | ParsedEnumOfAxisPlane
+  | ParsedEnumOfEnabledType
+  | ParsedEnumOfFactorType
+  | ParsedEnumOfFeedRateMode
   | ParsedEnumOfKinematicsMode
+  | ParsedEnumOfMachineCoolantState
+  | ParsedEnumOfMachineMotionType
+  | ParsedEnumOfMachineOverridesMode
+  | ParsedEnumOfMachineProgramState
+  | ParsedEnumOfMovementDistanceType
+  | ParsedEnumOfPathControlMode
+  | ParsedEnumOfSpindleSpeedMode
   | ParsedEnumOfStatusReportType
+  | ParsedEnumOfTimingMode
+  | ParsedEnumOfUnitType
   | ParsedString;
 
 export type AlertError = {
@@ -85,8 +100,7 @@ export type CommandSettings = {
 
 export type CompiledInstruction = {
   __typename?: 'CompiledInstruction';
-  chunks: Array<SyntaxChunk>;
-  code: Scalars['String'];
+  line: SyntaxLine;
   source: Scalars['String'];
 };
 
@@ -153,6 +167,7 @@ export type Controller = {
   reset: MachineExecutionResult;
   setFirmwareSetting: MachineExecutionResult;
   setFirmwareSettings: Array<MachineExecutionResult>;
+  setModal: MachineExecutionResult;
   settings: MachineExecutionResult;
   startup: MachineExecutionResult;
   status: MachineExecutionResult;
@@ -170,6 +185,10 @@ export type ControllerSetFirmwareSettingArgs = {
 
 export type ControllerSetFirmwareSettingsArgs = {
   settingChanges: Array<FirmwareSettingChangeInput>;
+};
+
+export type ControllerSetModalArgs = {
+  change: ModalChangeInput;
 };
 
 export type ControllerWriteCommandArgs = {
@@ -315,6 +334,14 @@ export type FirmwareSetting = {
   title: Maybe<Scalars['String']>;
   units: MachineSettingUnits;
   value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type FirmwareSettingMutation = {
+  __typename?: 'FirmwareSettingMutation';
+  hasChanged: Scalars['Boolean'];
+  origValue: Maybe<Scalars['String']>;
+  value: Scalars['String'];
 };
 
 export type FirmwareSettingOfAxisFlags = {
@@ -326,10 +353,16 @@ export type FirmwareSettingOfAxisFlags = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
   units: MachineSettingUnits;
   value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type FirmwareSettingOfAxisFlagsMutationArgs = {
+  value: AxisFlagsInput;
 };
 
 export type FirmwareSettingOfBoolean = {
@@ -341,10 +374,16 @@ export type FirmwareSettingOfBoolean = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
   units: MachineSettingUnits;
   value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type FirmwareSettingOfBooleanMutationArgs = {
+  value: Scalars['Boolean'];
 };
 
 export type FirmwareSettingOfDecimal = {
@@ -356,10 +395,16 @@ export type FirmwareSettingOfDecimal = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
   units: MachineSettingUnits;
   value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type FirmwareSettingOfDecimalMutationArgs = {
+  value: Scalars['Decimal'];
 };
 
 export type FirmwareSettingOfKinematicsMode = {
@@ -371,10 +416,16 @@ export type FirmwareSettingOfKinematicsMode = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
   units: MachineSettingUnits;
   value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type FirmwareSettingOfKinematicsModeMutationArgs = {
+  value: KinematicsMode;
 };
 
 export type FirmwareSettingOfStatusReportType = {
@@ -386,9 +437,36 @@ export type FirmwareSettingOfStatusReportType = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
   units: MachineSettingUnits;
+  value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type FirmwareSettingOfStatusReportTypeMutationArgs = {
+  value: StatusReportType;
+};
+
+export type FirmwareSettingOfString = {
+  __typename?: 'FirmwareSettingOfString';
+  comment: Maybe<Scalars['String']>;
+  currentValue: Maybe<IParsedValue>;
+  data: Scalars['String'];
+  hasBeenRead: Scalars['Boolean'];
+  id: Scalars['String'];
+  index: Scalars['Int'];
+  key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
+  settingType: MachineSettingType;
+  title: Maybe<Scalars['String']>;
+  units: MachineSettingUnits;
+  value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type FirmwareSettingOfStringMutationArgs = {
   value: Scalars['String'];
 };
 
@@ -403,15 +481,105 @@ export type FirmwareSettings = {
   settings: Array<FirmwareSetting>;
 };
 
+export type KeyValuePairOfApplicatorRadiusCompensationAndInt32 = {
+  __typename?: 'KeyValuePairOfApplicatorRadiusCompensationAndInt32';
+  key: ApplicatorRadiusCompensation;
+  value: Scalars['Int'];
+};
+
+export type KeyValuePairOfApplicatorSpinDirectionAndInt32 = {
+  __typename?: 'KeyValuePairOfApplicatorSpinDirectionAndInt32';
+  key: ApplicatorSpinDirection;
+  value: Scalars['Int'];
+};
+
+export type KeyValuePairOfAxisPlaneAndInt32 = {
+  __typename?: 'KeyValuePairOfAxisPlaneAndInt32';
+  key: AxisPlane;
+  value: Scalars['Int'];
+};
+
+export type KeyValuePairOfEnabledTypeAndInt32 = {
+  __typename?: 'KeyValuePairOfEnabledTypeAndInt32';
+  key: EnabledType;
+  value: Scalars['Int'];
+};
+
+export type KeyValuePairOfFactorTypeAndInt32 = {
+  __typename?: 'KeyValuePairOfFactorTypeAndInt32';
+  key: FactorType;
+  value: Scalars['Int'];
+};
+
+export type KeyValuePairOfFeedRateModeAndInt32 = {
+  __typename?: 'KeyValuePairOfFeedRateModeAndInt32';
+  key: FeedRateMode;
+  value: Scalars['Int'];
+};
+
 export type KeyValuePairOfKinematicsModeAndInt32 = {
   __typename?: 'KeyValuePairOfKinematicsModeAndInt32';
   key: KinematicsMode;
   value: Scalars['Int'];
 };
 
+export type KeyValuePairOfMachineCoolantStateAndInt32 = {
+  __typename?: 'KeyValuePairOfMachineCoolantStateAndInt32';
+  key: MachineCoolantState;
+  value: Scalars['Int'];
+};
+
+export type KeyValuePairOfMachineMotionTypeAndInt32 = {
+  __typename?: 'KeyValuePairOfMachineMotionTypeAndInt32';
+  key: MachineMotionType;
+  value: Scalars['Int'];
+};
+
+export type KeyValuePairOfMachineOverridesModeAndInt32 = {
+  __typename?: 'KeyValuePairOfMachineOverridesModeAndInt32';
+  key: MachineOverridesMode;
+  value: Scalars['Int'];
+};
+
+export type KeyValuePairOfMachineProgramStateAndInt32 = {
+  __typename?: 'KeyValuePairOfMachineProgramStateAndInt32';
+  key: MachineProgramState;
+  value: Scalars['Int'];
+};
+
+export type KeyValuePairOfMovementDistanceTypeAndInt32 = {
+  __typename?: 'KeyValuePairOfMovementDistanceTypeAndInt32';
+  key: MovementDistanceType;
+  value: Scalars['Int'];
+};
+
+export type KeyValuePairOfPathControlModeAndInt32 = {
+  __typename?: 'KeyValuePairOfPathControlModeAndInt32';
+  key: PathControlMode;
+  value: Scalars['Int'];
+};
+
+export type KeyValuePairOfSpindleSpeedModeAndInt32 = {
+  __typename?: 'KeyValuePairOfSpindleSpeedModeAndInt32';
+  key: SpindleSpeedMode;
+  value: Scalars['Int'];
+};
+
 export type KeyValuePairOfStatusReportTypeAndInt32 = {
   __typename?: 'KeyValuePairOfStatusReportTypeAndInt32';
   key: StatusReportType;
+  value: Scalars['Int'];
+};
+
+export type KeyValuePairOfTimingModeAndInt32 = {
+  __typename?: 'KeyValuePairOfTimingModeAndInt32';
+  key: TimingMode;
+  value: Scalars['Int'];
+};
+
+export type KeyValuePairOfUnitTypeAndInt32 = {
+  __typename?: 'KeyValuePairOfUnitTypeAndInt32';
+  key: UnitType;
   value: Scalars['Int'];
 };
 
@@ -425,18 +593,17 @@ export type MachineAlert = {
 
 export type MachineApplicatorState = {
   __typename?: 'MachineApplicatorState';
-  feedRate: Scalars['Decimal'];
-  isFloodCoolantEnabled: Scalars['Boolean'];
-  isMistCoolantEnabled: Scalars['Boolean'];
+  coolant: ModalSettingOfMachineCoolantState;
+  feedRate: FirmwareSettingOfDecimal;
   isOn: Scalars['Boolean'];
   lengthOffset: Maybe<MachinePosition>;
-  lengthOffsetFactorType: FactorType;
+  lengthOffsetFactorType: ModalSettingOfFactorType;
   probePosition: Maybe<MachinePosition>;
-  radiusCompensation: RadiusCompensation;
-  spinDirection: SpinDirection;
-  spinSpeed: Scalars['Decimal'];
-  temperature: Maybe<Scalars['Decimal']>;
-  toolId: Scalars['String'];
+  radiusCompensation: ModalSettingOfApplicatorRadiusCompensation;
+  spinDirection: ModalSettingOfApplicatorSpinDirection;
+  spinSpeed: FirmwareSettingOfDecimal;
+  temperature: FirmwareSettingOfDecimal;
+  toolId: FirmwareSettingOfString;
 };
 
 export type MachineAxis = {
@@ -464,6 +631,7 @@ export type MachineBuffer = {
   __typename?: 'MachineBuffer';
   availableReceive: Scalars['Int'];
   availableSend: Scalars['Int'];
+  canReceive: Scalars['Boolean'];
   lastInstructionResult: Maybe<MachineInstructionResult>;
   lineNumber: Scalars['Int'];
   pendingInstructionResults: Array<MachineInstructionResult>;
@@ -612,83 +780,22 @@ export type MachineLogEntryEdge = {
   node: MachineLogEntry;
 };
 
-export type MachineModalStateOfAxisPlane = {
-  __typename?: 'MachineModalStateOfAxisPlane';
-  code: Maybe<Scalars['String']>;
-  value: AxisPlane;
-};
-
-export type MachineModalStateOfEnabledType = {
-  __typename?: 'MachineModalStateOfEnabledType';
-  code: Maybe<Scalars['String']>;
-  value: EnabledType;
-};
-
-export type MachineModalStateOfFeedRateMode = {
-  __typename?: 'MachineModalStateOfFeedRateMode';
-  code: Maybe<Scalars['String']>;
-  value: FeedRateMode;
-};
-
-export type MachineModalStateOfMachineMotionType = {
-  __typename?: 'MachineModalStateOfMachineMotionType';
-  code: Maybe<Scalars['String']>;
-  value: MachineMotionType;
-};
-
-export type MachineModalStateOfMachineProgramState = {
-  __typename?: 'MachineModalStateOfMachineProgramState';
-  code: Maybe<Scalars['String']>;
-  value: MachineProgramState;
-};
-
-export type MachineModalStateOfMovementDistanceType = {
-  __typename?: 'MachineModalStateOfMovementDistanceType';
-  code: Maybe<Scalars['String']>;
-  value: MovementDistanceType;
-};
-
-export type MachineModalStateOfPathControlMode = {
-  __typename?: 'MachineModalStateOfPathControlMode';
-  code: Maybe<Scalars['String']>;
-  value: PathControlMode;
-};
-
-export type MachineModalStateOfSpindleSpeedMode = {
-  __typename?: 'MachineModalStateOfSpindleSpeedMode';
-  code: Maybe<Scalars['String']>;
-  value: SpindleSpeedMode;
-};
-
-export type MachineModalStateOfTimingMode = {
-  __typename?: 'MachineModalStateOfTimingMode';
-  code: Maybe<Scalars['String']>;
-  value: TimingMode;
-};
-
-export type MachineModalStateOfUnitType = {
-  __typename?: 'MachineModalStateOfUnitType';
-  code: Maybe<Scalars['String']>;
-  value: UnitType;
-};
-
 export type MachineModals = {
   __typename?: 'MachineModals';
-  arcDistance: Maybe<MachineModalStateOfMovementDistanceType>;
-  cannedCycleReturnMode: Maybe<MachineModalStateOfTimingMode>;
-  cylindricalInterpolation: Maybe<MachineModalStateOfEnabledType>;
-  distance: Maybe<MachineModalStateOfMovementDistanceType>;
-  feedRate: Maybe<MachineModalStateOfFeedRateMode>;
-  motion: MachineModalStateOfMachineMotionType;
-  pathControlMode: Maybe<MachineModalStateOfPathControlMode>;
-  plane: Maybe<MachineModalStateOfAxisPlane>;
-  programState: Maybe<MachineModalStateOfMachineProgramState>;
-  spindleSpeed: Maybe<MachineModalStateOfSpindleSpeedMode>;
-  units: Maybe<MachineModalStateOfUnitType>;
-  userDefinedCount: Scalars['Int'];
-  userDefinedCurrent: Scalars['Int'];
-  workCoordinateSystemCount: Scalars['Int'];
-  workCoordinateSystemCurrent: Scalars['Int'];
+  arcDistance: ModalSettingOfMovementDistanceType;
+  cannedCycleReturnMode: ModalSettingOfTimingMode;
+  cylindricalInterpolation: ModalSettingOfEnabledType;
+  distance: ModalSettingOfMovementDistanceType;
+  feedRate: ModalSettingOfFeedRateMode;
+  motion: ModalSettingOfMachineMotionType;
+  pathControlMode: ModalSettingOfPathControlMode;
+  plane: ModalSettingOfAxisPlane;
+  programState: ModalSettingOfMachineProgramState;
+  settings: Array<FirmwareSetting>;
+  spindleSpeed: ModalSettingOfSpindleSpeedMode;
+  units: ModalSettingOfUnitType;
+  userDefined: ModalSettingOfDecimal;
+  workCoordinateSystem: ModalSettingOfDecimal;
 };
 
 export type MachineOptions = {
@@ -698,11 +805,10 @@ export type MachineOptions = {
 
 export type MachineOverrides = {
   __typename?: 'MachineOverrides';
-  feed: Scalars['Decimal'];
-  feedAllowed: Scalars['Boolean'];
-  rapids: Scalars['Decimal'];
-  speed: Scalars['Decimal'];
-  speedAllowed: Scalars['Boolean'];
+  feed: FirmwareSettingOfDecimal;
+  mode: ModalSettingOfMachineOverridesMode;
+  rapids: FirmwareSettingOfDecimal;
+  speed: FirmwareSettingOfDecimal;
 };
 
 export type MachinePart = {
@@ -803,7 +909,7 @@ export type MachineStatus = {
   applicator: MachineApplicatorState;
   buffer: MachineBuffer;
   machinePosition: MachinePosition;
-  overrides: Maybe<MachineOverrides>;
+  overrides: MachineOverrides;
   workCoordinateOffset: Maybe<MachinePosition>;
   workPosition: Maybe<MachinePosition>;
 };
@@ -847,6 +953,470 @@ export type MakerHubSettings = {
   enabled: Scalars['Boolean'];
 };
 
+export type ModalOptionOfApplicatorRadiusCompensation = {
+  __typename?: 'ModalOptionOfApplicatorRadiusCompensation';
+  code: Scalars['String'];
+  data: ApplicatorRadiusCompensation;
+  value: Scalars['String'];
+};
+
+export type ModalOptionOfApplicatorSpinDirection = {
+  __typename?: 'ModalOptionOfApplicatorSpinDirection';
+  code: Scalars['String'];
+  data: ApplicatorSpinDirection;
+  value: Scalars['String'];
+};
+
+export type ModalOptionOfAxisPlane = {
+  __typename?: 'ModalOptionOfAxisPlane';
+  code: Scalars['String'];
+  data: AxisPlane;
+  value: Scalars['String'];
+};
+
+export type ModalOptionOfDecimal = {
+  __typename?: 'ModalOptionOfDecimal';
+  code: Scalars['String'];
+  data: Scalars['Decimal'];
+  value: Scalars['String'];
+};
+
+export type ModalOptionOfEnabledType = {
+  __typename?: 'ModalOptionOfEnabledType';
+  code: Scalars['String'];
+  data: EnabledType;
+  value: Scalars['String'];
+};
+
+export type ModalOptionOfFactorType = {
+  __typename?: 'ModalOptionOfFactorType';
+  code: Scalars['String'];
+  data: FactorType;
+  value: Scalars['String'];
+};
+
+export type ModalOptionOfFeedRateMode = {
+  __typename?: 'ModalOptionOfFeedRateMode';
+  code: Scalars['String'];
+  data: FeedRateMode;
+  value: Scalars['String'];
+};
+
+export type ModalOptionOfMachineCoolantState = {
+  __typename?: 'ModalOptionOfMachineCoolantState';
+  code: Scalars['String'];
+  data: MachineCoolantState;
+  value: Scalars['String'];
+};
+
+export type ModalOptionOfMachineMotionType = {
+  __typename?: 'ModalOptionOfMachineMotionType';
+  code: Scalars['String'];
+  data: MachineMotionType;
+  value: Scalars['String'];
+};
+
+export type ModalOptionOfMachineOverridesMode = {
+  __typename?: 'ModalOptionOfMachineOverridesMode';
+  code: Scalars['String'];
+  data: MachineOverridesMode;
+  value: Scalars['String'];
+};
+
+export type ModalOptionOfMachineProgramState = {
+  __typename?: 'ModalOptionOfMachineProgramState';
+  code: Scalars['String'];
+  data: MachineProgramState;
+  value: Scalars['String'];
+};
+
+export type ModalOptionOfMovementDistanceType = {
+  __typename?: 'ModalOptionOfMovementDistanceType';
+  code: Scalars['String'];
+  data: MovementDistanceType;
+  value: Scalars['String'];
+};
+
+export type ModalOptionOfPathControlMode = {
+  __typename?: 'ModalOptionOfPathControlMode';
+  code: Scalars['String'];
+  data: PathControlMode;
+  value: Scalars['String'];
+};
+
+export type ModalOptionOfSpindleSpeedMode = {
+  __typename?: 'ModalOptionOfSpindleSpeedMode';
+  code: Scalars['String'];
+  data: SpindleSpeedMode;
+  value: Scalars['String'];
+};
+
+export type ModalOptionOfTimingMode = {
+  __typename?: 'ModalOptionOfTimingMode';
+  code: Scalars['String'];
+  data: TimingMode;
+  value: Scalars['String'];
+};
+
+export type ModalOptionOfUnitType = {
+  __typename?: 'ModalOptionOfUnitType';
+  code: Scalars['String'];
+  data: UnitType;
+  value: Scalars['String'];
+};
+
+export type ModalSettingOfApplicatorRadiusCompensation = {
+  __typename?: 'ModalSettingOfApplicatorRadiusCompensation';
+  comment: Maybe<Scalars['String']>;
+  currentValue: Maybe<IParsedValue>;
+  data: ApplicatorRadiusCompensation;
+  hasBeenRead: Scalars['Boolean'];
+  id: Scalars['String'];
+  index: Scalars['Int'];
+  key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
+  options: Array<ModalOptionOfApplicatorRadiusCompensation>;
+  settingType: MachineSettingType;
+  title: Maybe<Scalars['String']>;
+  units: MachineSettingUnits;
+  value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type ModalSettingOfApplicatorRadiusCompensationMutationArgs = {
+  value: ApplicatorRadiusCompensation;
+};
+
+export type ModalSettingOfApplicatorSpinDirection = {
+  __typename?: 'ModalSettingOfApplicatorSpinDirection';
+  comment: Maybe<Scalars['String']>;
+  currentValue: Maybe<IParsedValue>;
+  data: ApplicatorSpinDirection;
+  hasBeenRead: Scalars['Boolean'];
+  id: Scalars['String'];
+  index: Scalars['Int'];
+  key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
+  options: Array<ModalOptionOfApplicatorSpinDirection>;
+  settingType: MachineSettingType;
+  title: Maybe<Scalars['String']>;
+  units: MachineSettingUnits;
+  value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type ModalSettingOfApplicatorSpinDirectionMutationArgs = {
+  value: ApplicatorSpinDirection;
+};
+
+export type ModalSettingOfAxisPlane = {
+  __typename?: 'ModalSettingOfAxisPlane';
+  comment: Maybe<Scalars['String']>;
+  currentValue: Maybe<IParsedValue>;
+  data: AxisPlane;
+  hasBeenRead: Scalars['Boolean'];
+  id: Scalars['String'];
+  index: Scalars['Int'];
+  key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
+  options: Array<ModalOptionOfAxisPlane>;
+  settingType: MachineSettingType;
+  title: Maybe<Scalars['String']>;
+  units: MachineSettingUnits;
+  value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type ModalSettingOfAxisPlaneMutationArgs = {
+  value: AxisPlane;
+};
+
+export type ModalSettingOfDecimal = {
+  __typename?: 'ModalSettingOfDecimal';
+  comment: Maybe<Scalars['String']>;
+  currentValue: Maybe<IParsedValue>;
+  data: Scalars['Decimal'];
+  hasBeenRead: Scalars['Boolean'];
+  id: Scalars['String'];
+  index: Scalars['Int'];
+  key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
+  options: Array<ModalOptionOfDecimal>;
+  settingType: MachineSettingType;
+  title: Maybe<Scalars['String']>;
+  units: MachineSettingUnits;
+  value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type ModalSettingOfDecimalMutationArgs = {
+  value: Scalars['Decimal'];
+};
+
+export type ModalSettingOfEnabledType = {
+  __typename?: 'ModalSettingOfEnabledType';
+  comment: Maybe<Scalars['String']>;
+  currentValue: Maybe<IParsedValue>;
+  data: EnabledType;
+  hasBeenRead: Scalars['Boolean'];
+  id: Scalars['String'];
+  index: Scalars['Int'];
+  key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
+  options: Array<ModalOptionOfEnabledType>;
+  settingType: MachineSettingType;
+  title: Maybe<Scalars['String']>;
+  units: MachineSettingUnits;
+  value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type ModalSettingOfEnabledTypeMutationArgs = {
+  value: EnabledType;
+};
+
+export type ModalSettingOfFactorType = {
+  __typename?: 'ModalSettingOfFactorType';
+  comment: Maybe<Scalars['String']>;
+  currentValue: Maybe<IParsedValue>;
+  data: FactorType;
+  hasBeenRead: Scalars['Boolean'];
+  id: Scalars['String'];
+  index: Scalars['Int'];
+  key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
+  options: Array<ModalOptionOfFactorType>;
+  settingType: MachineSettingType;
+  title: Maybe<Scalars['String']>;
+  units: MachineSettingUnits;
+  value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type ModalSettingOfFactorTypeMutationArgs = {
+  value: FactorType;
+};
+
+export type ModalSettingOfFeedRateMode = {
+  __typename?: 'ModalSettingOfFeedRateMode';
+  comment: Maybe<Scalars['String']>;
+  currentValue: Maybe<IParsedValue>;
+  data: FeedRateMode;
+  hasBeenRead: Scalars['Boolean'];
+  id: Scalars['String'];
+  index: Scalars['Int'];
+  key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
+  options: Array<ModalOptionOfFeedRateMode>;
+  settingType: MachineSettingType;
+  title: Maybe<Scalars['String']>;
+  units: MachineSettingUnits;
+  value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type ModalSettingOfFeedRateModeMutationArgs = {
+  value: FeedRateMode;
+};
+
+export type ModalSettingOfMachineCoolantState = {
+  __typename?: 'ModalSettingOfMachineCoolantState';
+  comment: Maybe<Scalars['String']>;
+  currentValue: Maybe<IParsedValue>;
+  data: MachineCoolantState;
+  hasBeenRead: Scalars['Boolean'];
+  id: Scalars['String'];
+  index: Scalars['Int'];
+  key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
+  options: Array<ModalOptionOfMachineCoolantState>;
+  settingType: MachineSettingType;
+  title: Maybe<Scalars['String']>;
+  units: MachineSettingUnits;
+  value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type ModalSettingOfMachineCoolantStateMutationArgs = {
+  value: MachineCoolantState;
+};
+
+export type ModalSettingOfMachineMotionType = {
+  __typename?: 'ModalSettingOfMachineMotionType';
+  comment: Maybe<Scalars['String']>;
+  currentValue: Maybe<IParsedValue>;
+  data: MachineMotionType;
+  hasBeenRead: Scalars['Boolean'];
+  id: Scalars['String'];
+  index: Scalars['Int'];
+  key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
+  options: Array<ModalOptionOfMachineMotionType>;
+  settingType: MachineSettingType;
+  title: Maybe<Scalars['String']>;
+  units: MachineSettingUnits;
+  value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type ModalSettingOfMachineMotionTypeMutationArgs = {
+  value: MachineMotionType;
+};
+
+export type ModalSettingOfMachineOverridesMode = {
+  __typename?: 'ModalSettingOfMachineOverridesMode';
+  comment: Maybe<Scalars['String']>;
+  currentValue: Maybe<IParsedValue>;
+  data: MachineOverridesMode;
+  hasBeenRead: Scalars['Boolean'];
+  id: Scalars['String'];
+  index: Scalars['Int'];
+  key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
+  options: Array<ModalOptionOfMachineOverridesMode>;
+  settingType: MachineSettingType;
+  title: Maybe<Scalars['String']>;
+  units: MachineSettingUnits;
+  value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type ModalSettingOfMachineOverridesModeMutationArgs = {
+  value: MachineOverridesMode;
+};
+
+export type ModalSettingOfMachineProgramState = {
+  __typename?: 'ModalSettingOfMachineProgramState';
+  comment: Maybe<Scalars['String']>;
+  currentValue: Maybe<IParsedValue>;
+  data: MachineProgramState;
+  hasBeenRead: Scalars['Boolean'];
+  id: Scalars['String'];
+  index: Scalars['Int'];
+  key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
+  options: Array<ModalOptionOfMachineProgramState>;
+  settingType: MachineSettingType;
+  title: Maybe<Scalars['String']>;
+  units: MachineSettingUnits;
+  value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type ModalSettingOfMachineProgramStateMutationArgs = {
+  value: MachineProgramState;
+};
+
+export type ModalSettingOfMovementDistanceType = {
+  __typename?: 'ModalSettingOfMovementDistanceType';
+  comment: Maybe<Scalars['String']>;
+  currentValue: Maybe<IParsedValue>;
+  data: MovementDistanceType;
+  hasBeenRead: Scalars['Boolean'];
+  id: Scalars['String'];
+  index: Scalars['Int'];
+  key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
+  options: Array<ModalOptionOfMovementDistanceType>;
+  settingType: MachineSettingType;
+  title: Maybe<Scalars['String']>;
+  units: MachineSettingUnits;
+  value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type ModalSettingOfMovementDistanceTypeMutationArgs = {
+  value: MovementDistanceType;
+};
+
+export type ModalSettingOfPathControlMode = {
+  __typename?: 'ModalSettingOfPathControlMode';
+  comment: Maybe<Scalars['String']>;
+  currentValue: Maybe<IParsedValue>;
+  data: PathControlMode;
+  hasBeenRead: Scalars['Boolean'];
+  id: Scalars['String'];
+  index: Scalars['Int'];
+  key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
+  options: Array<ModalOptionOfPathControlMode>;
+  settingType: MachineSettingType;
+  title: Maybe<Scalars['String']>;
+  units: MachineSettingUnits;
+  value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type ModalSettingOfPathControlModeMutationArgs = {
+  value: PathControlMode;
+};
+
+export type ModalSettingOfSpindleSpeedMode = {
+  __typename?: 'ModalSettingOfSpindleSpeedMode';
+  comment: Maybe<Scalars['String']>;
+  currentValue: Maybe<IParsedValue>;
+  data: SpindleSpeedMode;
+  hasBeenRead: Scalars['Boolean'];
+  id: Scalars['String'];
+  index: Scalars['Int'];
+  key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
+  options: Array<ModalOptionOfSpindleSpeedMode>;
+  settingType: MachineSettingType;
+  title: Maybe<Scalars['String']>;
+  units: MachineSettingUnits;
+  value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type ModalSettingOfSpindleSpeedModeMutationArgs = {
+  value: SpindleSpeedMode;
+};
+
+export type ModalSettingOfTimingMode = {
+  __typename?: 'ModalSettingOfTimingMode';
+  comment: Maybe<Scalars['String']>;
+  currentValue: Maybe<IParsedValue>;
+  data: TimingMode;
+  hasBeenRead: Scalars['Boolean'];
+  id: Scalars['String'];
+  index: Scalars['Int'];
+  key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
+  options: Array<ModalOptionOfTimingMode>;
+  settingType: MachineSettingType;
+  title: Maybe<Scalars['String']>;
+  units: MachineSettingUnits;
+  value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type ModalSettingOfTimingModeMutationArgs = {
+  value: TimingMode;
+};
+
+export type ModalSettingOfUnitType = {
+  __typename?: 'ModalSettingOfUnitType';
+  comment: Maybe<Scalars['String']>;
+  currentValue: Maybe<IParsedValue>;
+  data: UnitType;
+  hasBeenRead: Scalars['Boolean'];
+  id: Scalars['String'];
+  index: Scalars['Int'];
+  key: Scalars['String'];
+  mutation: FirmwareSettingMutation;
+  options: Array<ModalOptionOfUnitType>;
+  settingType: MachineSettingType;
+  title: Maybe<Scalars['String']>;
+  units: MachineSettingUnits;
+  value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type ModalSettingOfUnitTypeMutationArgs = {
+  value: UnitType;
+};
+
 export type MountPointSettings = {
   __typename?: 'MountPointSettings';
   route: Scalars['String'];
@@ -864,7 +1434,7 @@ export type Mutation = {
   openPort: SystemPort;
   openWorkspace: Workspace;
   updateWorkspace: Workspace;
-  uploadProgram: ProgramFileUpload;
+  uploadProgram: ProgramFile;
 };
 
 export type MutationChangeWorkspacePortArgs = {
@@ -954,37 +1524,163 @@ export type PageInfo = {
 export type ParsedAxisFlags = {
   __typename?: 'ParsedAxisFlags';
   valueAxisFlags: AxisFlags;
+  valueCode: Scalars['String'];
   valueString: Scalars['String'];
 };
 
 export type ParsedBool = {
   __typename?: 'ParsedBool';
   valueBool: Scalars['Boolean'];
+  valueCode: Scalars['String'];
   valueString: Scalars['String'];
 };
 
 export type ParsedDecimal = {
   __typename?: 'ParsedDecimal';
+  valueCode: Scalars['String'];
   valueDecimal: Scalars['Decimal'];
   valueString: Scalars['String'];
 };
 
+export type ParsedEnumOfApplicatorRadiusCompensation = {
+  __typename?: 'ParsedEnumOfApplicatorRadiusCompensation';
+  valueCode: Scalars['String'];
+  valueEnum: ApplicatorRadiusCompensation;
+  valueString: Scalars['String'];
+  values: Array<KeyValuePairOfApplicatorRadiusCompensationAndInt32>;
+};
+
+export type ParsedEnumOfApplicatorSpinDirection = {
+  __typename?: 'ParsedEnumOfApplicatorSpinDirection';
+  valueCode: Scalars['String'];
+  valueEnum: ApplicatorSpinDirection;
+  valueString: Scalars['String'];
+  values: Array<KeyValuePairOfApplicatorSpinDirectionAndInt32>;
+};
+
+export type ParsedEnumOfAxisPlane = {
+  __typename?: 'ParsedEnumOfAxisPlane';
+  valueCode: Scalars['String'];
+  valueEnum: AxisPlane;
+  valueString: Scalars['String'];
+  values: Array<KeyValuePairOfAxisPlaneAndInt32>;
+};
+
+export type ParsedEnumOfEnabledType = {
+  __typename?: 'ParsedEnumOfEnabledType';
+  valueCode: Scalars['String'];
+  valueEnum: EnabledType;
+  valueString: Scalars['String'];
+  values: Array<KeyValuePairOfEnabledTypeAndInt32>;
+};
+
+export type ParsedEnumOfFactorType = {
+  __typename?: 'ParsedEnumOfFactorType';
+  valueCode: Scalars['String'];
+  valueEnum: FactorType;
+  valueString: Scalars['String'];
+  values: Array<KeyValuePairOfFactorTypeAndInt32>;
+};
+
+export type ParsedEnumOfFeedRateMode = {
+  __typename?: 'ParsedEnumOfFeedRateMode';
+  valueCode: Scalars['String'];
+  valueEnum: FeedRateMode;
+  valueString: Scalars['String'];
+  values: Array<KeyValuePairOfFeedRateModeAndInt32>;
+};
+
 export type ParsedEnumOfKinematicsMode = {
   __typename?: 'ParsedEnumOfKinematicsMode';
+  valueCode: Scalars['String'];
   valueEnum: KinematicsMode;
   valueString: Scalars['String'];
   values: Array<KeyValuePairOfKinematicsModeAndInt32>;
 };
 
+export type ParsedEnumOfMachineCoolantState = {
+  __typename?: 'ParsedEnumOfMachineCoolantState';
+  valueCode: Scalars['String'];
+  valueEnum: MachineCoolantState;
+  valueString: Scalars['String'];
+  values: Array<KeyValuePairOfMachineCoolantStateAndInt32>;
+};
+
+export type ParsedEnumOfMachineMotionType = {
+  __typename?: 'ParsedEnumOfMachineMotionType';
+  valueCode: Scalars['String'];
+  valueEnum: MachineMotionType;
+  valueString: Scalars['String'];
+  values: Array<KeyValuePairOfMachineMotionTypeAndInt32>;
+};
+
+export type ParsedEnumOfMachineOverridesMode = {
+  __typename?: 'ParsedEnumOfMachineOverridesMode';
+  valueCode: Scalars['String'];
+  valueEnum: MachineOverridesMode;
+  valueString: Scalars['String'];
+  values: Array<KeyValuePairOfMachineOverridesModeAndInt32>;
+};
+
+export type ParsedEnumOfMachineProgramState = {
+  __typename?: 'ParsedEnumOfMachineProgramState';
+  valueCode: Scalars['String'];
+  valueEnum: MachineProgramState;
+  valueString: Scalars['String'];
+  values: Array<KeyValuePairOfMachineProgramStateAndInt32>;
+};
+
+export type ParsedEnumOfMovementDistanceType = {
+  __typename?: 'ParsedEnumOfMovementDistanceType';
+  valueCode: Scalars['String'];
+  valueEnum: MovementDistanceType;
+  valueString: Scalars['String'];
+  values: Array<KeyValuePairOfMovementDistanceTypeAndInt32>;
+};
+
+export type ParsedEnumOfPathControlMode = {
+  __typename?: 'ParsedEnumOfPathControlMode';
+  valueCode: Scalars['String'];
+  valueEnum: PathControlMode;
+  valueString: Scalars['String'];
+  values: Array<KeyValuePairOfPathControlModeAndInt32>;
+};
+
+export type ParsedEnumOfSpindleSpeedMode = {
+  __typename?: 'ParsedEnumOfSpindleSpeedMode';
+  valueCode: Scalars['String'];
+  valueEnum: SpindleSpeedMode;
+  valueString: Scalars['String'];
+  values: Array<KeyValuePairOfSpindleSpeedModeAndInt32>;
+};
+
 export type ParsedEnumOfStatusReportType = {
   __typename?: 'ParsedEnumOfStatusReportType';
+  valueCode: Scalars['String'];
   valueEnum: StatusReportType;
   valueString: Scalars['String'];
   values: Array<KeyValuePairOfStatusReportTypeAndInt32>;
 };
 
+export type ParsedEnumOfTimingMode = {
+  __typename?: 'ParsedEnumOfTimingMode';
+  valueCode: Scalars['String'];
+  valueEnum: TimingMode;
+  valueString: Scalars['String'];
+  values: Array<KeyValuePairOfTimingModeAndInt32>;
+};
+
+export type ParsedEnumOfUnitType = {
+  __typename?: 'ParsedEnumOfUnitType';
+  valueCode: Scalars['String'];
+  valueEnum: UnitType;
+  valueString: Scalars['String'];
+  values: Array<KeyValuePairOfUnitTypeAndInt32>;
+};
+
 export type ParsedString = {
   __typename?: 'ParsedString';
+  valueCode: Scalars['String'];
   valueString: Scalars['String'];
 };
 
@@ -1015,15 +1711,22 @@ export type PortStatus = {
 
 export type ProgramFile = {
   __typename?: 'ProgramFile';
-  name: Scalars['String'];
-  syntax: ProgramSyntax;
+  id: Scalars['String'];
+  instructionCount: Scalars['Int'];
+  instructionIndex: Scalars['Int'];
+  instructions: Array<CompiledInstruction>;
+  meta: ProgramFileMeta;
+  state: ProgramState;
 };
 
-export type ProgramFileUpload = {
-  __typename?: 'ProgramFileUpload';
+export type ProgramFileMeta = {
+  __typename?: 'ProgramFileMeta';
+  directory: Maybe<Scalars['String']>;
+  isUpload: Scalars['Boolean'];
   lastModified: Scalars['Long'];
   name: Scalars['String'];
-  size: Scalars['Int'];
+  size: Scalars['Long'];
+  syntax: ProgramSyntax;
   type: Scalars['String'];
 };
 
@@ -1103,6 +1806,12 @@ export type SyntaxChunk = {
   value: Scalars['String'];
 };
 
+export type SyntaxLine = {
+  __typename?: 'SyntaxLine';
+  chunks: Array<SyntaxChunk>;
+  raw: Scalars['String'];
+};
+
 export type SystemPort = {
   __typename?: 'SystemPort';
   connection: Maybe<ConnectedPort>;
@@ -1130,7 +1839,6 @@ export type Workspace = {
   settings: WorkspaceSettings;
   state: WorkspaceState;
   topicId: Scalars['String'];
-  units: UnitType;
 };
 
 export type WorkspaceSettings = {
@@ -1163,6 +1871,20 @@ export enum ActiveState {
   Initializing = 'INITIALIZING',
   Run = 'RUN',
   Sleep = 'SLEEP',
+}
+
+export enum ApplicatorRadiusCompensation {
+  DynamicLeft = 'DYNAMIC_LEFT',
+  DynamicRight = 'DYNAMIC_RIGHT',
+  Left = 'LEFT',
+  None = 'NONE',
+  Right = 'RIGHT',
+}
+
+export enum ApplicatorSpinDirection {
+  Ccw = 'CCW',
+  Cw = 'CW',
+  None = 'NONE',
 }
 
 export enum ApplyPolicy {
@@ -1244,6 +1966,13 @@ export enum MachineControllerType {
   Unknown = 'UNKNOWN',
 }
 
+export enum MachineCoolantState {
+  All = 'ALL',
+  Flood = 'FLOOD',
+  Mist = 'MIST',
+  None = 'NONE',
+}
+
 export enum MachineLogLevel {
   Cfg = 'CFG',
   Dbg = 'DBG',
@@ -1265,6 +1994,13 @@ export enum MachineMotionType {
   Linear = 'LINEAR',
   Probe = 'PROBE',
   Rapid = 'RAPID',
+}
+
+export enum MachineOverridesMode {
+  All = 'ALL',
+  Feeds = 'FEEDS',
+  None = 'NONE',
+  Speeds = 'SPEEDS',
 }
 
 export enum MachinePartType {
@@ -1409,16 +2145,16 @@ export enum PortState {
   Unplugged = 'UNPLUGGED',
 }
 
-export enum ProgramSyntax {
-  GCode = 'G_CODE',
+export enum ProgramState {
+  Complete = 'COMPLETE',
+  Created = 'CREATED',
+  Loaded = 'LOADED',
+  Paused = 'PAUSED',
+  Running = 'RUNNING',
 }
 
-export enum RadiusCompensation {
-  DynamicLeft = 'DYNAMIC_LEFT',
-  DynamicRight = 'DYNAMIC_RIGHT',
-  Left = 'LEFT',
-  None = 'NONE',
-  Right = 'RIGHT',
+export enum ProgramSyntax {
+  GCode = 'G_CODE',
 }
 
 export enum SerialWriteState {
@@ -1432,12 +2168,6 @@ export enum SerialWriteState {
 export enum SortEnumType {
   Asc = 'ASC',
   Desc = 'DESC',
-}
-
-export enum SpinDirection {
-  Ccw = 'CCW',
-  Cw = 'CW',
-  None = 'NONE',
 }
 
 export enum SpindleSpeedMode {
@@ -1482,6 +2212,12 @@ export enum WorkspaceState {
   Error = 'ERROR',
   Opening = 'OPENING',
 }
+
+export type AxisFlagsInput = {
+  x: Scalars['Boolean'];
+  y: Scalars['Boolean'];
+  z: Scalars['Boolean'];
+};
 
 export type BooleanOperationFilterInput = {
   eq: Maybe<Scalars['Boolean']>;
@@ -1690,6 +2426,12 @@ export type MachineSpecSettingsInput = {
   value: Scalars['Decimal'];
 };
 
+export type ModalChangeInput = {
+  code: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  value: Scalars['String'];
+};
+
 export type MoveCommandInput = {
   a: Maybe<Scalars['Decimal']>;
   b: Maybe<Scalars['Decimal']>;
@@ -1704,7 +2446,7 @@ export type MoveCommandInput = {
 export type ProgramFileUploadInput = {
   lastModified: Scalars['Long'];
   name: Scalars['String'];
-  size: Scalars['Int'];
+  size: Scalars['Long'];
   type: Scalars['String'];
 };
 
@@ -1873,8 +2615,23 @@ export type ResolversTypes = {
     | ResolversTypes['ParsedAxisFlags']
     | ResolversTypes['ParsedBool']
     | ResolversTypes['ParsedDecimal']
+    | ResolversTypes['ParsedEnumOfApplicatorRadiusCompensation']
+    | ResolversTypes['ParsedEnumOfApplicatorSpinDirection']
+    | ResolversTypes['ParsedEnumOfAxisPlane']
+    | ResolversTypes['ParsedEnumOfEnabledType']
+    | ResolversTypes['ParsedEnumOfFactorType']
+    | ResolversTypes['ParsedEnumOfFeedRateMode']
     | ResolversTypes['ParsedEnumOfKinematicsMode']
+    | ResolversTypes['ParsedEnumOfMachineCoolantState']
+    | ResolversTypes['ParsedEnumOfMachineMotionType']
+    | ResolversTypes['ParsedEnumOfMachineOverridesMode']
+    | ResolversTypes['ParsedEnumOfMachineProgramState']
+    | ResolversTypes['ParsedEnumOfMovementDistanceType']
+    | ResolversTypes['ParsedEnumOfPathControlMode']
+    | ResolversTypes['ParsedEnumOfSpindleSpeedMode']
     | ResolversTypes['ParsedEnumOfStatusReportType']
+    | ResolversTypes['ParsedEnumOfTimingMode']
+    | ResolversTypes['ParsedEnumOfUnitType']
     | ResolversTypes['ParsedString'];
   AlertError: ResolverTypeWrapper<AlertError>;
   AppUpdates: ResolverTypeWrapper<AppUpdates>;
@@ -1903,6 +2660,7 @@ export type ResolversTypes = {
       defaultValue: Maybe<ResolversTypes['IParsedValue']>;
     }
   >;
+  FirmwareSettingMutation: ResolverTypeWrapper<FirmwareSettingMutation>;
   FirmwareSettingOfAxisFlags: ResolverTypeWrapper<
     Omit<FirmwareSettingOfAxisFlags, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
   >;
@@ -1918,9 +2676,27 @@ export type ResolversTypes = {
   FirmwareSettingOfStatusReportType: ResolverTypeWrapper<
     Omit<FirmwareSettingOfStatusReportType, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
   >;
+  FirmwareSettingOfString: ResolverTypeWrapper<
+    Omit<FirmwareSettingOfString, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
   FirmwareSettings: ResolverTypeWrapper<FirmwareSettings>;
+  KeyValuePairOfApplicatorRadiusCompensationAndInt32: ResolverTypeWrapper<KeyValuePairOfApplicatorRadiusCompensationAndInt32>;
+  KeyValuePairOfApplicatorSpinDirectionAndInt32: ResolverTypeWrapper<KeyValuePairOfApplicatorSpinDirectionAndInt32>;
+  KeyValuePairOfAxisPlaneAndInt32: ResolverTypeWrapper<KeyValuePairOfAxisPlaneAndInt32>;
+  KeyValuePairOfEnabledTypeAndInt32: ResolverTypeWrapper<KeyValuePairOfEnabledTypeAndInt32>;
+  KeyValuePairOfFactorTypeAndInt32: ResolverTypeWrapper<KeyValuePairOfFactorTypeAndInt32>;
+  KeyValuePairOfFeedRateModeAndInt32: ResolverTypeWrapper<KeyValuePairOfFeedRateModeAndInt32>;
   KeyValuePairOfKinematicsModeAndInt32: ResolverTypeWrapper<KeyValuePairOfKinematicsModeAndInt32>;
+  KeyValuePairOfMachineCoolantStateAndInt32: ResolverTypeWrapper<KeyValuePairOfMachineCoolantStateAndInt32>;
+  KeyValuePairOfMachineMotionTypeAndInt32: ResolverTypeWrapper<KeyValuePairOfMachineMotionTypeAndInt32>;
+  KeyValuePairOfMachineOverridesModeAndInt32: ResolverTypeWrapper<KeyValuePairOfMachineOverridesModeAndInt32>;
+  KeyValuePairOfMachineProgramStateAndInt32: ResolverTypeWrapper<KeyValuePairOfMachineProgramStateAndInt32>;
+  KeyValuePairOfMovementDistanceTypeAndInt32: ResolverTypeWrapper<KeyValuePairOfMovementDistanceTypeAndInt32>;
+  KeyValuePairOfPathControlModeAndInt32: ResolverTypeWrapper<KeyValuePairOfPathControlModeAndInt32>;
+  KeyValuePairOfSpindleSpeedModeAndInt32: ResolverTypeWrapper<KeyValuePairOfSpindleSpeedModeAndInt32>;
   KeyValuePairOfStatusReportTypeAndInt32: ResolverTypeWrapper<KeyValuePairOfStatusReportTypeAndInt32>;
+  KeyValuePairOfTimingModeAndInt32: ResolverTypeWrapper<KeyValuePairOfTimingModeAndInt32>;
+  KeyValuePairOfUnitTypeAndInt32: ResolverTypeWrapper<KeyValuePairOfUnitTypeAndInt32>;
   MachineAlert: ResolverTypeWrapper<MachineAlert>;
   MachineApplicatorState: ResolverTypeWrapper<MachineApplicatorState>;
   MachineAxis: ResolverTypeWrapper<MachineAxis>;
@@ -1939,16 +2715,6 @@ export type ResolversTypes = {
   MachineLogEntry: ResolverTypeWrapper<MachineLogEntry>;
   MachineLogEntryConnection: ResolverTypeWrapper<MachineLogEntryConnection>;
   MachineLogEntryEdge: ResolverTypeWrapper<MachineLogEntryEdge>;
-  MachineModalStateOfAxisPlane: ResolverTypeWrapper<MachineModalStateOfAxisPlane>;
-  MachineModalStateOfEnabledType: ResolverTypeWrapper<MachineModalStateOfEnabledType>;
-  MachineModalStateOfFeedRateMode: ResolverTypeWrapper<MachineModalStateOfFeedRateMode>;
-  MachineModalStateOfMachineMotionType: ResolverTypeWrapper<MachineModalStateOfMachineMotionType>;
-  MachineModalStateOfMachineProgramState: ResolverTypeWrapper<MachineModalStateOfMachineProgramState>;
-  MachineModalStateOfMovementDistanceType: ResolverTypeWrapper<MachineModalStateOfMovementDistanceType>;
-  MachineModalStateOfPathControlMode: ResolverTypeWrapper<MachineModalStateOfPathControlMode>;
-  MachineModalStateOfSpindleSpeedMode: ResolverTypeWrapper<MachineModalStateOfSpindleSpeedMode>;
-  MachineModalStateOfTimingMode: ResolverTypeWrapper<MachineModalStateOfTimingMode>;
-  MachineModalStateOfUnitType: ResolverTypeWrapper<MachineModalStateOfUnitType>;
   MachineModals: ResolverTypeWrapper<MachineModals>;
   MachineOptions: ResolverTypeWrapper<MachineOptions>;
   MachineOverrides: ResolverTypeWrapper<MachineOverrides>;
@@ -1966,6 +2732,74 @@ export type ResolversTypes = {
   MachineTimelineNodeEdge: ResolverTypeWrapper<MachineTimelineNodeEdge>;
   MacroSettings: ResolverTypeWrapper<MacroSettings>;
   MakerHubSettings: ResolverTypeWrapper<MakerHubSettings>;
+  ModalOptionOfApplicatorRadiusCompensation: ResolverTypeWrapper<ModalOptionOfApplicatorRadiusCompensation>;
+  ModalOptionOfApplicatorSpinDirection: ResolverTypeWrapper<ModalOptionOfApplicatorSpinDirection>;
+  ModalOptionOfAxisPlane: ResolverTypeWrapper<ModalOptionOfAxisPlane>;
+  ModalOptionOfDecimal: ResolverTypeWrapper<ModalOptionOfDecimal>;
+  ModalOptionOfEnabledType: ResolverTypeWrapper<ModalOptionOfEnabledType>;
+  ModalOptionOfFactorType: ResolverTypeWrapper<ModalOptionOfFactorType>;
+  ModalOptionOfFeedRateMode: ResolverTypeWrapper<ModalOptionOfFeedRateMode>;
+  ModalOptionOfMachineCoolantState: ResolverTypeWrapper<ModalOptionOfMachineCoolantState>;
+  ModalOptionOfMachineMotionType: ResolverTypeWrapper<ModalOptionOfMachineMotionType>;
+  ModalOptionOfMachineOverridesMode: ResolverTypeWrapper<ModalOptionOfMachineOverridesMode>;
+  ModalOptionOfMachineProgramState: ResolverTypeWrapper<ModalOptionOfMachineProgramState>;
+  ModalOptionOfMovementDistanceType: ResolverTypeWrapper<ModalOptionOfMovementDistanceType>;
+  ModalOptionOfPathControlMode: ResolverTypeWrapper<ModalOptionOfPathControlMode>;
+  ModalOptionOfSpindleSpeedMode: ResolverTypeWrapper<ModalOptionOfSpindleSpeedMode>;
+  ModalOptionOfTimingMode: ResolverTypeWrapper<ModalOptionOfTimingMode>;
+  ModalOptionOfUnitType: ResolverTypeWrapper<ModalOptionOfUnitType>;
+  ModalSettingOfApplicatorRadiusCompensation: ResolverTypeWrapper<
+    Omit<ModalSettingOfApplicatorRadiusCompensation, 'currentValue'> & {
+      currentValue: Maybe<ResolversTypes['IParsedValue']>;
+    }
+  >;
+  ModalSettingOfApplicatorSpinDirection: ResolverTypeWrapper<
+    Omit<ModalSettingOfApplicatorSpinDirection, 'currentValue'> & {
+      currentValue: Maybe<ResolversTypes['IParsedValue']>;
+    }
+  >;
+  ModalSettingOfAxisPlane: ResolverTypeWrapper<
+    Omit<ModalSettingOfAxisPlane, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
+  ModalSettingOfDecimal: ResolverTypeWrapper<
+    Omit<ModalSettingOfDecimal, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
+  ModalSettingOfEnabledType: ResolverTypeWrapper<
+    Omit<ModalSettingOfEnabledType, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
+  ModalSettingOfFactorType: ResolverTypeWrapper<
+    Omit<ModalSettingOfFactorType, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
+  ModalSettingOfFeedRateMode: ResolverTypeWrapper<
+    Omit<ModalSettingOfFeedRateMode, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
+  ModalSettingOfMachineCoolantState: ResolverTypeWrapper<
+    Omit<ModalSettingOfMachineCoolantState, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
+  ModalSettingOfMachineMotionType: ResolverTypeWrapper<
+    Omit<ModalSettingOfMachineMotionType, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
+  ModalSettingOfMachineOverridesMode: ResolverTypeWrapper<
+    Omit<ModalSettingOfMachineOverridesMode, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
+  ModalSettingOfMachineProgramState: ResolverTypeWrapper<
+    Omit<ModalSettingOfMachineProgramState, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
+  ModalSettingOfMovementDistanceType: ResolverTypeWrapper<
+    Omit<ModalSettingOfMovementDistanceType, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
+  ModalSettingOfPathControlMode: ResolverTypeWrapper<
+    Omit<ModalSettingOfPathControlMode, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
+  ModalSettingOfSpindleSpeedMode: ResolverTypeWrapper<
+    Omit<ModalSettingOfSpindleSpeedMode, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
+  ModalSettingOfTimingMode: ResolverTypeWrapper<
+    Omit<ModalSettingOfTimingMode, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
+  ModalSettingOfUnitType: ResolverTypeWrapper<
+    Omit<ModalSettingOfUnitType, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
   MountPointSettings: ResolverTypeWrapper<MountPointSettings>;
   Mutation: ResolverTypeWrapper<{}>;
   OpenControllerSession: ResolverTypeWrapper<OpenControllerSession>;
@@ -1975,21 +2809,39 @@ export type ResolversTypes = {
   ParsedAxisFlags: ResolverTypeWrapper<ParsedAxisFlags>;
   ParsedBool: ResolverTypeWrapper<ParsedBool>;
   ParsedDecimal: ResolverTypeWrapper<ParsedDecimal>;
+  ParsedEnumOfApplicatorRadiusCompensation: ResolverTypeWrapper<ParsedEnumOfApplicatorRadiusCompensation>;
+  ParsedEnumOfApplicatorSpinDirection: ResolverTypeWrapper<ParsedEnumOfApplicatorSpinDirection>;
+  ParsedEnumOfAxisPlane: ResolverTypeWrapper<ParsedEnumOfAxisPlane>;
+  ParsedEnumOfEnabledType: ResolverTypeWrapper<ParsedEnumOfEnabledType>;
+  ParsedEnumOfFactorType: ResolverTypeWrapper<ParsedEnumOfFactorType>;
+  ParsedEnumOfFeedRateMode: ResolverTypeWrapper<ParsedEnumOfFeedRateMode>;
   ParsedEnumOfKinematicsMode: ResolverTypeWrapper<ParsedEnumOfKinematicsMode>;
+  ParsedEnumOfMachineCoolantState: ResolverTypeWrapper<ParsedEnumOfMachineCoolantState>;
+  ParsedEnumOfMachineMotionType: ResolverTypeWrapper<ParsedEnumOfMachineMotionType>;
+  ParsedEnumOfMachineOverridesMode: ResolverTypeWrapper<ParsedEnumOfMachineOverridesMode>;
+  ParsedEnumOfMachineProgramState: ResolverTypeWrapper<ParsedEnumOfMachineProgramState>;
+  ParsedEnumOfMovementDistanceType: ResolverTypeWrapper<ParsedEnumOfMovementDistanceType>;
+  ParsedEnumOfPathControlMode: ResolverTypeWrapper<ParsedEnumOfPathControlMode>;
+  ParsedEnumOfSpindleSpeedMode: ResolverTypeWrapper<ParsedEnumOfSpindleSpeedMode>;
   ParsedEnumOfStatusReportType: ResolverTypeWrapper<ParsedEnumOfStatusReportType>;
+  ParsedEnumOfTimingMode: ResolverTypeWrapper<ParsedEnumOfTimingMode>;
+  ParsedEnumOfUnitType: ResolverTypeWrapper<ParsedEnumOfUnitType>;
   ParsedString: ResolverTypeWrapper<ParsedString>;
   PortOptions: ResolverTypeWrapper<PortOptions>;
   PortStatus: ResolverTypeWrapper<PortStatus>;
   ProgramFile: ResolverTypeWrapper<ProgramFile>;
-  ProgramFileUpload: ResolverTypeWrapper<ProgramFileUpload>;
+  ProgramFileMeta: ResolverTypeWrapper<ProgramFileMeta>;
   Query: ResolverTypeWrapper<{}>;
   Subscription: ResolverTypeWrapper<{}>;
   SyntaxChunk: ResolverTypeWrapper<SyntaxChunk>;
+  SyntaxLine: ResolverTypeWrapper<SyntaxLine>;
   SystemPort: ResolverTypeWrapper<SystemPort>;
   UserProfile: ResolverTypeWrapper<UserProfile>;
   Workspace: ResolverTypeWrapper<Workspace>;
   WorkspaceSettings: ResolverTypeWrapper<WorkspaceSettings>;
   ActiveState: ActiveState;
+  ApplicatorRadiusCompensation: ApplicatorRadiusCompensation;
+  ApplicatorSpinDirection: ApplicatorSpinDirection;
   ApplyPolicy: ApplyPolicy;
   AxisName: AxisName;
   AxisPlane: AxisPlane;
@@ -2002,9 +2854,11 @@ export type ResolversTypes = {
   MachineAlertType: MachineAlertType;
   MachineCategory: MachineCategory;
   MachineControllerType: MachineControllerType;
+  MachineCoolantState: MachineCoolantState;
   MachineLogLevel: MachineLogLevel;
   MachineLogSource: MachineLogSource;
   MachineMotionType: MachineMotionType;
+  MachineOverridesMode: MachineOverridesMode;
   MachinePartType: MachinePartType;
   MachinePinType: MachinePinType;
   MachineProgramState: MachineProgramState;
@@ -2015,11 +2869,10 @@ export type ResolversTypes = {
   Parity: Parity;
   PathControlMode: PathControlMode;
   PortState: PortState;
+  ProgramState: ProgramState;
   ProgramSyntax: ProgramSyntax;
-  RadiusCompensation: RadiusCompensation;
   SerialWriteState: SerialWriteState;
   SortEnumType: SortEnumType;
-  SpinDirection: SpinDirection;
   SpindleSpeedMode: SpindleSpeedMode;
   StatusReportType: StatusReportType;
   StopBits: StopBits;
@@ -2027,6 +2880,7 @@ export type ResolversTypes = {
   TimingMode: TimingMode;
   UnitType: UnitType;
   WorkspaceState: WorkspaceState;
+  AxisFlagsInput: AxisFlagsInput;
   BooleanOperationFilterInput: BooleanOperationFilterInput;
   ComparableDateTimeOperationFilterInput: ComparableDateTimeOperationFilterInput;
   ComparableInt32OperationFilterInput: ComparableInt32OperationFilterInput;
@@ -2050,6 +2904,7 @@ export type ResolversTypes = {
   MachinePartSettingsInput: MachinePartSettingsInput;
   MachineSettingSettingsInput: MachineSettingSettingsInput;
   MachineSpecSettingsInput: MachineSpecSettingsInput;
+  ModalChangeInput: ModalChangeInput;
   MoveCommandInput: MoveCommandInput;
   ProgramFileUploadInput: ProgramFileUploadInput;
   SerialPortOptionsInput: SerialPortOptionsInput;
@@ -2077,8 +2932,23 @@ export type ResolversParentTypes = {
     | ResolversParentTypes['ParsedAxisFlags']
     | ResolversParentTypes['ParsedBool']
     | ResolversParentTypes['ParsedDecimal']
+    | ResolversParentTypes['ParsedEnumOfApplicatorRadiusCompensation']
+    | ResolversParentTypes['ParsedEnumOfApplicatorSpinDirection']
+    | ResolversParentTypes['ParsedEnumOfAxisPlane']
+    | ResolversParentTypes['ParsedEnumOfEnabledType']
+    | ResolversParentTypes['ParsedEnumOfFactorType']
+    | ResolversParentTypes['ParsedEnumOfFeedRateMode']
     | ResolversParentTypes['ParsedEnumOfKinematicsMode']
+    | ResolversParentTypes['ParsedEnumOfMachineCoolantState']
+    | ResolversParentTypes['ParsedEnumOfMachineMotionType']
+    | ResolversParentTypes['ParsedEnumOfMachineOverridesMode']
+    | ResolversParentTypes['ParsedEnumOfMachineProgramState']
+    | ResolversParentTypes['ParsedEnumOfMovementDistanceType']
+    | ResolversParentTypes['ParsedEnumOfPathControlMode']
+    | ResolversParentTypes['ParsedEnumOfSpindleSpeedMode']
     | ResolversParentTypes['ParsedEnumOfStatusReportType']
+    | ResolversParentTypes['ParsedEnumOfTimingMode']
+    | ResolversParentTypes['ParsedEnumOfUnitType']
     | ResolversParentTypes['ParsedString'];
   AlertError: AlertError;
   AppUpdates: AppUpdates;
@@ -2105,6 +2975,7 @@ export type ResolversParentTypes = {
     currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
     defaultValue: Maybe<ResolversParentTypes['IParsedValue']>;
   };
+  FirmwareSettingMutation: FirmwareSettingMutation;
   FirmwareSettingOfAxisFlags: Omit<FirmwareSettingOfAxisFlags, 'currentValue'> & {
     currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
   };
@@ -2120,9 +2991,27 @@ export type ResolversParentTypes = {
   FirmwareSettingOfStatusReportType: Omit<FirmwareSettingOfStatusReportType, 'currentValue'> & {
     currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
   };
+  FirmwareSettingOfString: Omit<FirmwareSettingOfString, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
   FirmwareSettings: FirmwareSettings;
+  KeyValuePairOfApplicatorRadiusCompensationAndInt32: KeyValuePairOfApplicatorRadiusCompensationAndInt32;
+  KeyValuePairOfApplicatorSpinDirectionAndInt32: KeyValuePairOfApplicatorSpinDirectionAndInt32;
+  KeyValuePairOfAxisPlaneAndInt32: KeyValuePairOfAxisPlaneAndInt32;
+  KeyValuePairOfEnabledTypeAndInt32: KeyValuePairOfEnabledTypeAndInt32;
+  KeyValuePairOfFactorTypeAndInt32: KeyValuePairOfFactorTypeAndInt32;
+  KeyValuePairOfFeedRateModeAndInt32: KeyValuePairOfFeedRateModeAndInt32;
   KeyValuePairOfKinematicsModeAndInt32: KeyValuePairOfKinematicsModeAndInt32;
+  KeyValuePairOfMachineCoolantStateAndInt32: KeyValuePairOfMachineCoolantStateAndInt32;
+  KeyValuePairOfMachineMotionTypeAndInt32: KeyValuePairOfMachineMotionTypeAndInt32;
+  KeyValuePairOfMachineOverridesModeAndInt32: KeyValuePairOfMachineOverridesModeAndInt32;
+  KeyValuePairOfMachineProgramStateAndInt32: KeyValuePairOfMachineProgramStateAndInt32;
+  KeyValuePairOfMovementDistanceTypeAndInt32: KeyValuePairOfMovementDistanceTypeAndInt32;
+  KeyValuePairOfPathControlModeAndInt32: KeyValuePairOfPathControlModeAndInt32;
+  KeyValuePairOfSpindleSpeedModeAndInt32: KeyValuePairOfSpindleSpeedModeAndInt32;
   KeyValuePairOfStatusReportTypeAndInt32: KeyValuePairOfStatusReportTypeAndInt32;
+  KeyValuePairOfTimingModeAndInt32: KeyValuePairOfTimingModeAndInt32;
+  KeyValuePairOfUnitTypeAndInt32: KeyValuePairOfUnitTypeAndInt32;
   MachineAlert: MachineAlert;
   MachineApplicatorState: MachineApplicatorState;
   MachineAxis: MachineAxis;
@@ -2141,16 +3030,6 @@ export type ResolversParentTypes = {
   MachineLogEntry: MachineLogEntry;
   MachineLogEntryConnection: MachineLogEntryConnection;
   MachineLogEntryEdge: MachineLogEntryEdge;
-  MachineModalStateOfAxisPlane: MachineModalStateOfAxisPlane;
-  MachineModalStateOfEnabledType: MachineModalStateOfEnabledType;
-  MachineModalStateOfFeedRateMode: MachineModalStateOfFeedRateMode;
-  MachineModalStateOfMachineMotionType: MachineModalStateOfMachineMotionType;
-  MachineModalStateOfMachineProgramState: MachineModalStateOfMachineProgramState;
-  MachineModalStateOfMovementDistanceType: MachineModalStateOfMovementDistanceType;
-  MachineModalStateOfPathControlMode: MachineModalStateOfPathControlMode;
-  MachineModalStateOfSpindleSpeedMode: MachineModalStateOfSpindleSpeedMode;
-  MachineModalStateOfTimingMode: MachineModalStateOfTimingMode;
-  MachineModalStateOfUnitType: MachineModalStateOfUnitType;
   MachineModals: MachineModals;
   MachineOptions: MachineOptions;
   MachineOverrides: MachineOverrides;
@@ -2168,6 +3047,70 @@ export type ResolversParentTypes = {
   MachineTimelineNodeEdge: MachineTimelineNodeEdge;
   MacroSettings: MacroSettings;
   MakerHubSettings: MakerHubSettings;
+  ModalOptionOfApplicatorRadiusCompensation: ModalOptionOfApplicatorRadiusCompensation;
+  ModalOptionOfApplicatorSpinDirection: ModalOptionOfApplicatorSpinDirection;
+  ModalOptionOfAxisPlane: ModalOptionOfAxisPlane;
+  ModalOptionOfDecimal: ModalOptionOfDecimal;
+  ModalOptionOfEnabledType: ModalOptionOfEnabledType;
+  ModalOptionOfFactorType: ModalOptionOfFactorType;
+  ModalOptionOfFeedRateMode: ModalOptionOfFeedRateMode;
+  ModalOptionOfMachineCoolantState: ModalOptionOfMachineCoolantState;
+  ModalOptionOfMachineMotionType: ModalOptionOfMachineMotionType;
+  ModalOptionOfMachineOverridesMode: ModalOptionOfMachineOverridesMode;
+  ModalOptionOfMachineProgramState: ModalOptionOfMachineProgramState;
+  ModalOptionOfMovementDistanceType: ModalOptionOfMovementDistanceType;
+  ModalOptionOfPathControlMode: ModalOptionOfPathControlMode;
+  ModalOptionOfSpindleSpeedMode: ModalOptionOfSpindleSpeedMode;
+  ModalOptionOfTimingMode: ModalOptionOfTimingMode;
+  ModalOptionOfUnitType: ModalOptionOfUnitType;
+  ModalSettingOfApplicatorRadiusCompensation: Omit<ModalSettingOfApplicatorRadiusCompensation, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
+  ModalSettingOfApplicatorSpinDirection: Omit<ModalSettingOfApplicatorSpinDirection, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
+  ModalSettingOfAxisPlane: Omit<ModalSettingOfAxisPlane, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
+  ModalSettingOfDecimal: Omit<ModalSettingOfDecimal, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
+  ModalSettingOfEnabledType: Omit<ModalSettingOfEnabledType, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
+  ModalSettingOfFactorType: Omit<ModalSettingOfFactorType, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
+  ModalSettingOfFeedRateMode: Omit<ModalSettingOfFeedRateMode, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
+  ModalSettingOfMachineCoolantState: Omit<ModalSettingOfMachineCoolantState, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
+  ModalSettingOfMachineMotionType: Omit<ModalSettingOfMachineMotionType, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
+  ModalSettingOfMachineOverridesMode: Omit<ModalSettingOfMachineOverridesMode, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
+  ModalSettingOfMachineProgramState: Omit<ModalSettingOfMachineProgramState, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
+  ModalSettingOfMovementDistanceType: Omit<ModalSettingOfMovementDistanceType, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
+  ModalSettingOfPathControlMode: Omit<ModalSettingOfPathControlMode, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
+  ModalSettingOfSpindleSpeedMode: Omit<ModalSettingOfSpindleSpeedMode, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
+  ModalSettingOfTimingMode: Omit<ModalSettingOfTimingMode, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
+  ModalSettingOfUnitType: Omit<ModalSettingOfUnitType, 'currentValue'> & {
+    currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
+  };
   MountPointSettings: MountPointSettings;
   Mutation: {};
   OpenControllerSession: OpenControllerSession;
@@ -2177,20 +3120,37 @@ export type ResolversParentTypes = {
   ParsedAxisFlags: ParsedAxisFlags;
   ParsedBool: ParsedBool;
   ParsedDecimal: ParsedDecimal;
+  ParsedEnumOfApplicatorRadiusCompensation: ParsedEnumOfApplicatorRadiusCompensation;
+  ParsedEnumOfApplicatorSpinDirection: ParsedEnumOfApplicatorSpinDirection;
+  ParsedEnumOfAxisPlane: ParsedEnumOfAxisPlane;
+  ParsedEnumOfEnabledType: ParsedEnumOfEnabledType;
+  ParsedEnumOfFactorType: ParsedEnumOfFactorType;
+  ParsedEnumOfFeedRateMode: ParsedEnumOfFeedRateMode;
   ParsedEnumOfKinematicsMode: ParsedEnumOfKinematicsMode;
+  ParsedEnumOfMachineCoolantState: ParsedEnumOfMachineCoolantState;
+  ParsedEnumOfMachineMotionType: ParsedEnumOfMachineMotionType;
+  ParsedEnumOfMachineOverridesMode: ParsedEnumOfMachineOverridesMode;
+  ParsedEnumOfMachineProgramState: ParsedEnumOfMachineProgramState;
+  ParsedEnumOfMovementDistanceType: ParsedEnumOfMovementDistanceType;
+  ParsedEnumOfPathControlMode: ParsedEnumOfPathControlMode;
+  ParsedEnumOfSpindleSpeedMode: ParsedEnumOfSpindleSpeedMode;
   ParsedEnumOfStatusReportType: ParsedEnumOfStatusReportType;
+  ParsedEnumOfTimingMode: ParsedEnumOfTimingMode;
+  ParsedEnumOfUnitType: ParsedEnumOfUnitType;
   ParsedString: ParsedString;
   PortOptions: PortOptions;
   PortStatus: PortStatus;
   ProgramFile: ProgramFile;
-  ProgramFileUpload: ProgramFileUpload;
+  ProgramFileMeta: ProgramFileMeta;
   Query: {};
   Subscription: {};
   SyntaxChunk: SyntaxChunk;
+  SyntaxLine: SyntaxLine;
   SystemPort: SystemPort;
   UserProfile: UserProfile;
   Workspace: Workspace;
   WorkspaceSettings: WorkspaceSettings;
+  AxisFlagsInput: AxisFlagsInput;
   BooleanOperationFilterInput: BooleanOperationFilterInput;
   ComparableDateTimeOperationFilterInput: ComparableDateTimeOperationFilterInput;
   ComparableInt32OperationFilterInput: ComparableInt32OperationFilterInput;
@@ -2214,6 +3174,7 @@ export type ResolversParentTypes = {
   MachinePartSettingsInput: MachinePartSettingsInput;
   MachineSettingSettingsInput: MachineSettingSettingsInput;
   MachineSpecSettingsInput: MachineSpecSettingsInput;
+  ModalChangeInput: ModalChangeInput;
   MoveCommandInput: MoveCommandInput;
   ProgramFileUploadInput: ProgramFileUploadInput;
   SerialPortOptionsInput: SerialPortOptionsInput;
@@ -2270,8 +3231,23 @@ export type IParsedValueResolvers<
     | 'ParsedAxisFlags'
     | 'ParsedBool'
     | 'ParsedDecimal'
+    | 'ParsedEnumOfApplicatorRadiusCompensation'
+    | 'ParsedEnumOfApplicatorSpinDirection'
+    | 'ParsedEnumOfAxisPlane'
+    | 'ParsedEnumOfEnabledType'
+    | 'ParsedEnumOfFactorType'
+    | 'ParsedEnumOfFeedRateMode'
     | 'ParsedEnumOfKinematicsMode'
+    | 'ParsedEnumOfMachineCoolantState'
+    | 'ParsedEnumOfMachineMotionType'
+    | 'ParsedEnumOfMachineOverridesMode'
+    | 'ParsedEnumOfMachineProgramState'
+    | 'ParsedEnumOfMovementDistanceType'
+    | 'ParsedEnumOfPathControlMode'
+    | 'ParsedEnumOfSpindleSpeedMode'
     | 'ParsedEnumOfStatusReportType'
+    | 'ParsedEnumOfTimingMode'
+    | 'ParsedEnumOfUnitType'
     | 'ParsedString',
     ParentType,
     ContextType
@@ -2322,8 +3298,7 @@ export type CompiledInstructionResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['CompiledInstruction'] = ResolversParentTypes['CompiledInstruction']
 > = {
-  chunks: Resolver<Array<ResolversTypes['SyntaxChunk']>, ParentType, ContextType>;
-  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  line: Resolver<ResolversTypes['SyntaxLine'], ParentType, ContextType>;
   source: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -2410,6 +3385,12 @@ export type ControllerResolvers<
     ParentType,
     ContextType,
     RequireFields<ControllerSetFirmwareSettingsArgs, 'settingChanges'>
+  >;
+  setModal: Resolver<
+    ResolversTypes['MachineExecutionResult'],
+    ParentType,
+    ContextType,
+    RequireFields<ControllerSetModalArgs, 'change'>
   >;
   settings: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
   startup: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
@@ -2600,6 +3581,17 @@ export type FirmwareSettingResolvers<
   title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
   value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type FirmwareSettingMutationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['FirmwareSettingMutation'] = ResolversParentTypes['FirmwareSettingMutation']
+> = {
+  hasChanged: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  origValue: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2614,10 +3606,17 @@ export type FirmwareSettingOfAxisFlagsResolvers<
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<FirmwareSettingOfAxisFlagsMutationArgs, 'value'>
+  >;
   settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
   title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
   value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2632,10 +3631,17 @@ export type FirmwareSettingOfBooleanResolvers<
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<FirmwareSettingOfBooleanMutationArgs, 'value'>
+  >;
   settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
   title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
   value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2650,10 +3656,17 @@ export type FirmwareSettingOfDecimalResolvers<
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<FirmwareSettingOfDecimalMutationArgs, 'value'>
+  >;
   settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
   title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
   value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2668,10 +3681,17 @@ export type FirmwareSettingOfKinematicsModeResolvers<
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<FirmwareSettingOfKinematicsModeMutationArgs, 'value'>
+  >;
   settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
   title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
   value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2686,10 +3706,42 @@ export type FirmwareSettingOfStatusReportTypeResolvers<
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<FirmwareSettingOfStatusReportTypeMutationArgs, 'value'>
+  >;
   settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
   title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
   value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type FirmwareSettingOfStringResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['FirmwareSettingOfString'] = ResolversParentTypes['FirmwareSettingOfString']
+> = {
+  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<FirmwareSettingOfStringMutationArgs, 'value'>
+  >;
+  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
+  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2707,6 +3759,60 @@ export type FirmwareSettingsResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type KeyValuePairOfApplicatorRadiusCompensationAndInt32Resolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeyValuePairOfApplicatorRadiusCompensationAndInt32'] = ResolversParentTypes['KeyValuePairOfApplicatorRadiusCompensationAndInt32']
+> = {
+  key: Resolver<ResolversTypes['ApplicatorRadiusCompensation'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type KeyValuePairOfApplicatorSpinDirectionAndInt32Resolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeyValuePairOfApplicatorSpinDirectionAndInt32'] = ResolversParentTypes['KeyValuePairOfApplicatorSpinDirectionAndInt32']
+> = {
+  key: Resolver<ResolversTypes['ApplicatorSpinDirection'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type KeyValuePairOfAxisPlaneAndInt32Resolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeyValuePairOfAxisPlaneAndInt32'] = ResolversParentTypes['KeyValuePairOfAxisPlaneAndInt32']
+> = {
+  key: Resolver<ResolversTypes['AxisPlane'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type KeyValuePairOfEnabledTypeAndInt32Resolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeyValuePairOfEnabledTypeAndInt32'] = ResolversParentTypes['KeyValuePairOfEnabledTypeAndInt32']
+> = {
+  key: Resolver<ResolversTypes['EnabledType'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type KeyValuePairOfFactorTypeAndInt32Resolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeyValuePairOfFactorTypeAndInt32'] = ResolversParentTypes['KeyValuePairOfFactorTypeAndInt32']
+> = {
+  key: Resolver<ResolversTypes['FactorType'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type KeyValuePairOfFeedRateModeAndInt32Resolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeyValuePairOfFeedRateModeAndInt32'] = ResolversParentTypes['KeyValuePairOfFeedRateModeAndInt32']
+> = {
+  key: Resolver<ResolversTypes['FeedRateMode'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type KeyValuePairOfKinematicsModeAndInt32Resolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['KeyValuePairOfKinematicsModeAndInt32'] = ResolversParentTypes['KeyValuePairOfKinematicsModeAndInt32']
@@ -2716,11 +3822,92 @@ export type KeyValuePairOfKinematicsModeAndInt32Resolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type KeyValuePairOfMachineCoolantStateAndInt32Resolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeyValuePairOfMachineCoolantStateAndInt32'] = ResolversParentTypes['KeyValuePairOfMachineCoolantStateAndInt32']
+> = {
+  key: Resolver<ResolversTypes['MachineCoolantState'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type KeyValuePairOfMachineMotionTypeAndInt32Resolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeyValuePairOfMachineMotionTypeAndInt32'] = ResolversParentTypes['KeyValuePairOfMachineMotionTypeAndInt32']
+> = {
+  key: Resolver<ResolversTypes['MachineMotionType'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type KeyValuePairOfMachineOverridesModeAndInt32Resolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeyValuePairOfMachineOverridesModeAndInt32'] = ResolversParentTypes['KeyValuePairOfMachineOverridesModeAndInt32']
+> = {
+  key: Resolver<ResolversTypes['MachineOverridesMode'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type KeyValuePairOfMachineProgramStateAndInt32Resolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeyValuePairOfMachineProgramStateAndInt32'] = ResolversParentTypes['KeyValuePairOfMachineProgramStateAndInt32']
+> = {
+  key: Resolver<ResolversTypes['MachineProgramState'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type KeyValuePairOfMovementDistanceTypeAndInt32Resolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeyValuePairOfMovementDistanceTypeAndInt32'] = ResolversParentTypes['KeyValuePairOfMovementDistanceTypeAndInt32']
+> = {
+  key: Resolver<ResolversTypes['MovementDistanceType'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type KeyValuePairOfPathControlModeAndInt32Resolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeyValuePairOfPathControlModeAndInt32'] = ResolversParentTypes['KeyValuePairOfPathControlModeAndInt32']
+> = {
+  key: Resolver<ResolversTypes['PathControlMode'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type KeyValuePairOfSpindleSpeedModeAndInt32Resolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeyValuePairOfSpindleSpeedModeAndInt32'] = ResolversParentTypes['KeyValuePairOfSpindleSpeedModeAndInt32']
+> = {
+  key: Resolver<ResolversTypes['SpindleSpeedMode'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type KeyValuePairOfStatusReportTypeAndInt32Resolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['KeyValuePairOfStatusReportTypeAndInt32'] = ResolversParentTypes['KeyValuePairOfStatusReportTypeAndInt32']
 > = {
   key: Resolver<ResolversTypes['StatusReportType'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type KeyValuePairOfTimingModeAndInt32Resolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeyValuePairOfTimingModeAndInt32'] = ResolversParentTypes['KeyValuePairOfTimingModeAndInt32']
+> = {
+  key: Resolver<ResolversTypes['TimingMode'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type KeyValuePairOfUnitTypeAndInt32Resolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeyValuePairOfUnitTypeAndInt32'] = ResolversParentTypes['KeyValuePairOfUnitTypeAndInt32']
+> = {
+  key: Resolver<ResolversTypes['UnitType'], ParentType, ContextType>;
   value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -2740,18 +3927,17 @@ export type MachineApplicatorStateResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['MachineApplicatorState'] = ResolversParentTypes['MachineApplicatorState']
 > = {
-  feedRate: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
-  isFloodCoolantEnabled: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  isMistCoolantEnabled: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  coolant: Resolver<ResolversTypes['ModalSettingOfMachineCoolantState'], ParentType, ContextType>;
+  feedRate: Resolver<ResolversTypes['FirmwareSettingOfDecimal'], ParentType, ContextType>;
   isOn: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   lengthOffset: Resolver<Maybe<ResolversTypes['MachinePosition']>, ParentType, ContextType>;
-  lengthOffsetFactorType: Resolver<ResolversTypes['FactorType'], ParentType, ContextType>;
+  lengthOffsetFactorType: Resolver<ResolversTypes['ModalSettingOfFactorType'], ParentType, ContextType>;
   probePosition: Resolver<Maybe<ResolversTypes['MachinePosition']>, ParentType, ContextType>;
-  radiusCompensation: Resolver<ResolversTypes['RadiusCompensation'], ParentType, ContextType>;
-  spinDirection: Resolver<ResolversTypes['SpinDirection'], ParentType, ContextType>;
-  spinSpeed: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
-  temperature: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
-  toolId: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  radiusCompensation: Resolver<ResolversTypes['ModalSettingOfApplicatorRadiusCompensation'], ParentType, ContextType>;
+  spinDirection: Resolver<ResolversTypes['ModalSettingOfApplicatorSpinDirection'], ParentType, ContextType>;
+  spinSpeed: Resolver<ResolversTypes['FirmwareSettingOfDecimal'], ParentType, ContextType>;
+  temperature: Resolver<ResolversTypes['FirmwareSettingOfDecimal'], ParentType, ContextType>;
+  toolId: Resolver<ResolversTypes['FirmwareSettingOfString'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2788,6 +3974,7 @@ export type MachineBufferResolvers<
 > = {
   availableReceive: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   availableSend: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  canReceive: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   lastInstructionResult: Resolver<Maybe<ResolversTypes['MachineInstructionResult']>, ParentType, ContextType>;
   lineNumber: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   pendingInstructionResults: Resolver<Array<ResolversTypes['MachineInstructionResult']>, ParentType, ContextType>;
@@ -2969,115 +4156,24 @@ export type MachineLogEntryEdgeResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MachineModalStateOfAxisPlaneResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['MachineModalStateOfAxisPlane'] = ResolversParentTypes['MachineModalStateOfAxisPlane']
-> = {
-  code: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value: Resolver<ResolversTypes['AxisPlane'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type MachineModalStateOfEnabledTypeResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['MachineModalStateOfEnabledType'] = ResolversParentTypes['MachineModalStateOfEnabledType']
-> = {
-  code: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value: Resolver<ResolversTypes['EnabledType'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type MachineModalStateOfFeedRateModeResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['MachineModalStateOfFeedRateMode'] = ResolversParentTypes['MachineModalStateOfFeedRateMode']
-> = {
-  code: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value: Resolver<ResolversTypes['FeedRateMode'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type MachineModalStateOfMachineMotionTypeResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['MachineModalStateOfMachineMotionType'] = ResolversParentTypes['MachineModalStateOfMachineMotionType']
-> = {
-  code: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value: Resolver<ResolversTypes['MachineMotionType'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type MachineModalStateOfMachineProgramStateResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['MachineModalStateOfMachineProgramState'] = ResolversParentTypes['MachineModalStateOfMachineProgramState']
-> = {
-  code: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value: Resolver<ResolversTypes['MachineProgramState'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type MachineModalStateOfMovementDistanceTypeResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['MachineModalStateOfMovementDistanceType'] = ResolversParentTypes['MachineModalStateOfMovementDistanceType']
-> = {
-  code: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value: Resolver<ResolversTypes['MovementDistanceType'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type MachineModalStateOfPathControlModeResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['MachineModalStateOfPathControlMode'] = ResolversParentTypes['MachineModalStateOfPathControlMode']
-> = {
-  code: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value: Resolver<ResolversTypes['PathControlMode'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type MachineModalStateOfSpindleSpeedModeResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['MachineModalStateOfSpindleSpeedMode'] = ResolversParentTypes['MachineModalStateOfSpindleSpeedMode']
-> = {
-  code: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value: Resolver<ResolversTypes['SpindleSpeedMode'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type MachineModalStateOfTimingModeResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['MachineModalStateOfTimingMode'] = ResolversParentTypes['MachineModalStateOfTimingMode']
-> = {
-  code: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value: Resolver<ResolversTypes['TimingMode'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type MachineModalStateOfUnitTypeResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['MachineModalStateOfUnitType'] = ResolversParentTypes['MachineModalStateOfUnitType']
-> = {
-  code: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value: Resolver<ResolversTypes['UnitType'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type MachineModalsResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['MachineModals'] = ResolversParentTypes['MachineModals']
 > = {
-  arcDistance: Resolver<Maybe<ResolversTypes['MachineModalStateOfMovementDistanceType']>, ParentType, ContextType>;
-  cannedCycleReturnMode: Resolver<Maybe<ResolversTypes['MachineModalStateOfTimingMode']>, ParentType, ContextType>;
-  cylindricalInterpolation: Resolver<Maybe<ResolversTypes['MachineModalStateOfEnabledType']>, ParentType, ContextType>;
-  distance: Resolver<Maybe<ResolversTypes['MachineModalStateOfMovementDistanceType']>, ParentType, ContextType>;
-  feedRate: Resolver<Maybe<ResolversTypes['MachineModalStateOfFeedRateMode']>, ParentType, ContextType>;
-  motion: Resolver<ResolversTypes['MachineModalStateOfMachineMotionType'], ParentType, ContextType>;
-  pathControlMode: Resolver<Maybe<ResolversTypes['MachineModalStateOfPathControlMode']>, ParentType, ContextType>;
-  plane: Resolver<Maybe<ResolversTypes['MachineModalStateOfAxisPlane']>, ParentType, ContextType>;
-  programState: Resolver<Maybe<ResolversTypes['MachineModalStateOfMachineProgramState']>, ParentType, ContextType>;
-  spindleSpeed: Resolver<Maybe<ResolversTypes['MachineModalStateOfSpindleSpeedMode']>, ParentType, ContextType>;
-  units: Resolver<Maybe<ResolversTypes['MachineModalStateOfUnitType']>, ParentType, ContextType>;
-  userDefinedCount: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  userDefinedCurrent: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  workCoordinateSystemCount: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  workCoordinateSystemCurrent: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  arcDistance: Resolver<ResolversTypes['ModalSettingOfMovementDistanceType'], ParentType, ContextType>;
+  cannedCycleReturnMode: Resolver<ResolversTypes['ModalSettingOfTimingMode'], ParentType, ContextType>;
+  cylindricalInterpolation: Resolver<ResolversTypes['ModalSettingOfEnabledType'], ParentType, ContextType>;
+  distance: Resolver<ResolversTypes['ModalSettingOfMovementDistanceType'], ParentType, ContextType>;
+  feedRate: Resolver<ResolversTypes['ModalSettingOfFeedRateMode'], ParentType, ContextType>;
+  motion: Resolver<ResolversTypes['ModalSettingOfMachineMotionType'], ParentType, ContextType>;
+  pathControlMode: Resolver<ResolversTypes['ModalSettingOfPathControlMode'], ParentType, ContextType>;
+  plane: Resolver<ResolversTypes['ModalSettingOfAxisPlane'], ParentType, ContextType>;
+  programState: Resolver<ResolversTypes['ModalSettingOfMachineProgramState'], ParentType, ContextType>;
+  settings: Resolver<Array<ResolversTypes['FirmwareSetting']>, ParentType, ContextType>;
+  spindleSpeed: Resolver<ResolversTypes['ModalSettingOfSpindleSpeedMode'], ParentType, ContextType>;
+  units: Resolver<ResolversTypes['ModalSettingOfUnitType'], ParentType, ContextType>;
+  userDefined: Resolver<ResolversTypes['ModalSettingOfDecimal'], ParentType, ContextType>;
+  workCoordinateSystem: Resolver<ResolversTypes['ModalSettingOfDecimal'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -3093,11 +4189,10 @@ export type MachineOverridesResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['MachineOverrides'] = ResolversParentTypes['MachineOverrides']
 > = {
-  feed: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
-  feedAllowed: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  rapids: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
-  speed: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
-  speedAllowed: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  feed: Resolver<ResolversTypes['FirmwareSettingOfDecimal'], ParentType, ContextType>;
+  mode: Resolver<ResolversTypes['ModalSettingOfMachineOverridesMode'], ParentType, ContextType>;
+  rapids: Resolver<ResolversTypes['FirmwareSettingOfDecimal'], ParentType, ContextType>;
+  speed: Resolver<ResolversTypes['FirmwareSettingOfDecimal'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -3225,7 +4320,7 @@ export type MachineStatusResolvers<
   applicator: Resolver<ResolversTypes['MachineApplicatorState'], ParentType, ContextType>;
   buffer: Resolver<ResolversTypes['MachineBuffer'], ParentType, ContextType>;
   machinePosition: Resolver<ResolversTypes['MachinePosition'], ParentType, ContextType>;
-  overrides: Resolver<Maybe<ResolversTypes['MachineOverrides']>, ParentType, ContextType>;
+  overrides: Resolver<ResolversTypes['MachineOverrides'], ParentType, ContextType>;
   workCoordinateOffset: Resolver<Maybe<ResolversTypes['MachinePosition']>, ParentType, ContextType>;
   workPosition: Resolver<Maybe<ResolversTypes['MachinePosition']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -3275,6 +4370,582 @@ export type MakerHubSettingsResolvers<
   ParentType extends ResolversParentTypes['MakerHubSettings'] = ResolversParentTypes['MakerHubSettings']
 > = {
   enabled: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalOptionOfApplicatorRadiusCompensationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalOptionOfApplicatorRadiusCompensation'] = ResolversParentTypes['ModalOptionOfApplicatorRadiusCompensation']
+> = {
+  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  data: Resolver<ResolversTypes['ApplicatorRadiusCompensation'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalOptionOfApplicatorSpinDirectionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalOptionOfApplicatorSpinDirection'] = ResolversParentTypes['ModalOptionOfApplicatorSpinDirection']
+> = {
+  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  data: Resolver<ResolversTypes['ApplicatorSpinDirection'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalOptionOfAxisPlaneResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalOptionOfAxisPlane'] = ResolversParentTypes['ModalOptionOfAxisPlane']
+> = {
+  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  data: Resolver<ResolversTypes['AxisPlane'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalOptionOfDecimalResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalOptionOfDecimal'] = ResolversParentTypes['ModalOptionOfDecimal']
+> = {
+  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  data: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalOptionOfEnabledTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalOptionOfEnabledType'] = ResolversParentTypes['ModalOptionOfEnabledType']
+> = {
+  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  data: Resolver<ResolversTypes['EnabledType'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalOptionOfFactorTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalOptionOfFactorType'] = ResolversParentTypes['ModalOptionOfFactorType']
+> = {
+  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  data: Resolver<ResolversTypes['FactorType'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalOptionOfFeedRateModeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalOptionOfFeedRateMode'] = ResolversParentTypes['ModalOptionOfFeedRateMode']
+> = {
+  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  data: Resolver<ResolversTypes['FeedRateMode'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalOptionOfMachineCoolantStateResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalOptionOfMachineCoolantState'] = ResolversParentTypes['ModalOptionOfMachineCoolantState']
+> = {
+  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  data: Resolver<ResolversTypes['MachineCoolantState'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalOptionOfMachineMotionTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalOptionOfMachineMotionType'] = ResolversParentTypes['ModalOptionOfMachineMotionType']
+> = {
+  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  data: Resolver<ResolversTypes['MachineMotionType'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalOptionOfMachineOverridesModeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalOptionOfMachineOverridesMode'] = ResolversParentTypes['ModalOptionOfMachineOverridesMode']
+> = {
+  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  data: Resolver<ResolversTypes['MachineOverridesMode'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalOptionOfMachineProgramStateResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalOptionOfMachineProgramState'] = ResolversParentTypes['ModalOptionOfMachineProgramState']
+> = {
+  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  data: Resolver<ResolversTypes['MachineProgramState'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalOptionOfMovementDistanceTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalOptionOfMovementDistanceType'] = ResolversParentTypes['ModalOptionOfMovementDistanceType']
+> = {
+  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  data: Resolver<ResolversTypes['MovementDistanceType'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalOptionOfPathControlModeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalOptionOfPathControlMode'] = ResolversParentTypes['ModalOptionOfPathControlMode']
+> = {
+  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  data: Resolver<ResolversTypes['PathControlMode'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalOptionOfSpindleSpeedModeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalOptionOfSpindleSpeedMode'] = ResolversParentTypes['ModalOptionOfSpindleSpeedMode']
+> = {
+  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  data: Resolver<ResolversTypes['SpindleSpeedMode'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalOptionOfTimingModeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalOptionOfTimingMode'] = ResolversParentTypes['ModalOptionOfTimingMode']
+> = {
+  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  data: Resolver<ResolversTypes['TimingMode'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalOptionOfUnitTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalOptionOfUnitType'] = ResolversParentTypes['ModalOptionOfUnitType']
+> = {
+  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  data: Resolver<ResolversTypes['UnitType'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalSettingOfApplicatorRadiusCompensationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalSettingOfApplicatorRadiusCompensation'] = ResolversParentTypes['ModalSettingOfApplicatorRadiusCompensation']
+> = {
+  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['ApplicatorRadiusCompensation'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<ModalSettingOfApplicatorRadiusCompensationMutationArgs, 'value'>
+  >;
+  options: Resolver<Array<ResolversTypes['ModalOptionOfApplicatorRadiusCompensation']>, ParentType, ContextType>;
+  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
+  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalSettingOfApplicatorSpinDirectionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalSettingOfApplicatorSpinDirection'] = ResolversParentTypes['ModalSettingOfApplicatorSpinDirection']
+> = {
+  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['ApplicatorSpinDirection'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<ModalSettingOfApplicatorSpinDirectionMutationArgs, 'value'>
+  >;
+  options: Resolver<Array<ResolversTypes['ModalOptionOfApplicatorSpinDirection']>, ParentType, ContextType>;
+  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
+  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalSettingOfAxisPlaneResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalSettingOfAxisPlane'] = ResolversParentTypes['ModalSettingOfAxisPlane']
+> = {
+  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['AxisPlane'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<ModalSettingOfAxisPlaneMutationArgs, 'value'>
+  >;
+  options: Resolver<Array<ResolversTypes['ModalOptionOfAxisPlane']>, ParentType, ContextType>;
+  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
+  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalSettingOfDecimalResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalSettingOfDecimal'] = ResolversParentTypes['ModalSettingOfDecimal']
+> = {
+  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<ModalSettingOfDecimalMutationArgs, 'value'>
+  >;
+  options: Resolver<Array<ResolversTypes['ModalOptionOfDecimal']>, ParentType, ContextType>;
+  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
+  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalSettingOfEnabledTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalSettingOfEnabledType'] = ResolversParentTypes['ModalSettingOfEnabledType']
+> = {
+  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['EnabledType'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<ModalSettingOfEnabledTypeMutationArgs, 'value'>
+  >;
+  options: Resolver<Array<ResolversTypes['ModalOptionOfEnabledType']>, ParentType, ContextType>;
+  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
+  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalSettingOfFactorTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalSettingOfFactorType'] = ResolversParentTypes['ModalSettingOfFactorType']
+> = {
+  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['FactorType'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<ModalSettingOfFactorTypeMutationArgs, 'value'>
+  >;
+  options: Resolver<Array<ResolversTypes['ModalOptionOfFactorType']>, ParentType, ContextType>;
+  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
+  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalSettingOfFeedRateModeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalSettingOfFeedRateMode'] = ResolversParentTypes['ModalSettingOfFeedRateMode']
+> = {
+  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['FeedRateMode'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<ModalSettingOfFeedRateModeMutationArgs, 'value'>
+  >;
+  options: Resolver<Array<ResolversTypes['ModalOptionOfFeedRateMode']>, ParentType, ContextType>;
+  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
+  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalSettingOfMachineCoolantStateResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalSettingOfMachineCoolantState'] = ResolversParentTypes['ModalSettingOfMachineCoolantState']
+> = {
+  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['MachineCoolantState'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<ModalSettingOfMachineCoolantStateMutationArgs, 'value'>
+  >;
+  options: Resolver<Array<ResolversTypes['ModalOptionOfMachineCoolantState']>, ParentType, ContextType>;
+  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
+  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalSettingOfMachineMotionTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalSettingOfMachineMotionType'] = ResolversParentTypes['ModalSettingOfMachineMotionType']
+> = {
+  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['MachineMotionType'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<ModalSettingOfMachineMotionTypeMutationArgs, 'value'>
+  >;
+  options: Resolver<Array<ResolversTypes['ModalOptionOfMachineMotionType']>, ParentType, ContextType>;
+  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
+  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalSettingOfMachineOverridesModeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalSettingOfMachineOverridesMode'] = ResolversParentTypes['ModalSettingOfMachineOverridesMode']
+> = {
+  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['MachineOverridesMode'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<ModalSettingOfMachineOverridesModeMutationArgs, 'value'>
+  >;
+  options: Resolver<Array<ResolversTypes['ModalOptionOfMachineOverridesMode']>, ParentType, ContextType>;
+  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
+  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalSettingOfMachineProgramStateResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalSettingOfMachineProgramState'] = ResolversParentTypes['ModalSettingOfMachineProgramState']
+> = {
+  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['MachineProgramState'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<ModalSettingOfMachineProgramStateMutationArgs, 'value'>
+  >;
+  options: Resolver<Array<ResolversTypes['ModalOptionOfMachineProgramState']>, ParentType, ContextType>;
+  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
+  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalSettingOfMovementDistanceTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalSettingOfMovementDistanceType'] = ResolversParentTypes['ModalSettingOfMovementDistanceType']
+> = {
+  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['MovementDistanceType'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<ModalSettingOfMovementDistanceTypeMutationArgs, 'value'>
+  >;
+  options: Resolver<Array<ResolversTypes['ModalOptionOfMovementDistanceType']>, ParentType, ContextType>;
+  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
+  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalSettingOfPathControlModeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalSettingOfPathControlMode'] = ResolversParentTypes['ModalSettingOfPathControlMode']
+> = {
+  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['PathControlMode'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<ModalSettingOfPathControlModeMutationArgs, 'value'>
+  >;
+  options: Resolver<Array<ResolversTypes['ModalOptionOfPathControlMode']>, ParentType, ContextType>;
+  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
+  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalSettingOfSpindleSpeedModeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalSettingOfSpindleSpeedMode'] = ResolversParentTypes['ModalSettingOfSpindleSpeedMode']
+> = {
+  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['SpindleSpeedMode'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<ModalSettingOfSpindleSpeedModeMutationArgs, 'value'>
+  >;
+  options: Resolver<Array<ResolversTypes['ModalOptionOfSpindleSpeedMode']>, ParentType, ContextType>;
+  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
+  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalSettingOfTimingModeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalSettingOfTimingMode'] = ResolversParentTypes['ModalSettingOfTimingMode']
+> = {
+  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['TimingMode'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<ModalSettingOfTimingModeMutationArgs, 'value'>
+  >;
+  options: Resolver<Array<ResolversTypes['ModalOptionOfTimingMode']>, ParentType, ContextType>;
+  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
+  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalSettingOfUnitTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalSettingOfUnitType'] = ResolversParentTypes['ModalSettingOfUnitType']
+> = {
+  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['UnitType'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['FirmwareSettingMutation'],
+    ParentType,
+    ContextType,
+    RequireFields<ModalSettingOfUnitTypeMutationArgs, 'value'>
+  >;
+  options: Resolver<Array<ResolversTypes['ModalOptionOfUnitType']>, ParentType, ContextType>;
+  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
+  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -3346,7 +5017,7 @@ export type MutationResolvers<
     RequireFields<MutationUpdateWorkspaceArgs, 'workspaceSettings'>
   >;
   uploadProgram: Resolver<
-    ResolversTypes['ProgramFileUpload'],
+    ResolversTypes['ProgramFile'],
     ParentType,
     ContextType,
     RequireFields<MutationUploadProgramArgs, 'fileUpload'>
@@ -3406,6 +5077,7 @@ export type ParsedAxisFlagsResolvers<
   ParentType extends ResolversParentTypes['ParsedAxisFlags'] = ResolversParentTypes['ParsedAxisFlags']
 > = {
   valueAxisFlags: Resolver<ResolversTypes['AxisFlags'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -3415,6 +5087,7 @@ export type ParsedBoolResolvers<
   ParentType extends ResolversParentTypes['ParsedBool'] = ResolversParentTypes['ParsedBool']
 > = {
   valueBool: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -3423,8 +5096,79 @@ export type ParsedDecimalResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['ParsedDecimal'] = ResolversParentTypes['ParsedDecimal']
 > = {
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   valueDecimal: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
   valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedEnumOfApplicatorRadiusCompensationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedEnumOfApplicatorRadiusCompensation'] = ResolversParentTypes['ParsedEnumOfApplicatorRadiusCompensation']
+> = {
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueEnum: Resolver<ResolversTypes['ApplicatorRadiusCompensation'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  values: Resolver<
+    Array<ResolversTypes['KeyValuePairOfApplicatorRadiusCompensationAndInt32']>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedEnumOfApplicatorSpinDirectionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedEnumOfApplicatorSpinDirection'] = ResolversParentTypes['ParsedEnumOfApplicatorSpinDirection']
+> = {
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueEnum: Resolver<ResolversTypes['ApplicatorSpinDirection'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  values: Resolver<Array<ResolversTypes['KeyValuePairOfApplicatorSpinDirectionAndInt32']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedEnumOfAxisPlaneResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedEnumOfAxisPlane'] = ResolversParentTypes['ParsedEnumOfAxisPlane']
+> = {
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueEnum: Resolver<ResolversTypes['AxisPlane'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  values: Resolver<Array<ResolversTypes['KeyValuePairOfAxisPlaneAndInt32']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedEnumOfEnabledTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedEnumOfEnabledType'] = ResolversParentTypes['ParsedEnumOfEnabledType']
+> = {
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueEnum: Resolver<ResolversTypes['EnabledType'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  values: Resolver<Array<ResolversTypes['KeyValuePairOfEnabledTypeAndInt32']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedEnumOfFactorTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedEnumOfFactorType'] = ResolversParentTypes['ParsedEnumOfFactorType']
+> = {
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueEnum: Resolver<ResolversTypes['FactorType'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  values: Resolver<Array<ResolversTypes['KeyValuePairOfFactorTypeAndInt32']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedEnumOfFeedRateModeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedEnumOfFeedRateMode'] = ResolversParentTypes['ParsedEnumOfFeedRateMode']
+> = {
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueEnum: Resolver<ResolversTypes['FeedRateMode'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  values: Resolver<Array<ResolversTypes['KeyValuePairOfFeedRateModeAndInt32']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -3432,9 +5176,87 @@ export type ParsedEnumOfKinematicsModeResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['ParsedEnumOfKinematicsMode'] = ResolversParentTypes['ParsedEnumOfKinematicsMode']
 > = {
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   valueEnum: Resolver<ResolversTypes['KinematicsMode'], ParentType, ContextType>;
   valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   values: Resolver<Array<ResolversTypes['KeyValuePairOfKinematicsModeAndInt32']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedEnumOfMachineCoolantStateResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedEnumOfMachineCoolantState'] = ResolversParentTypes['ParsedEnumOfMachineCoolantState']
+> = {
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueEnum: Resolver<ResolversTypes['MachineCoolantState'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  values: Resolver<Array<ResolversTypes['KeyValuePairOfMachineCoolantStateAndInt32']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedEnumOfMachineMotionTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedEnumOfMachineMotionType'] = ResolversParentTypes['ParsedEnumOfMachineMotionType']
+> = {
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueEnum: Resolver<ResolversTypes['MachineMotionType'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  values: Resolver<Array<ResolversTypes['KeyValuePairOfMachineMotionTypeAndInt32']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedEnumOfMachineOverridesModeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedEnumOfMachineOverridesMode'] = ResolversParentTypes['ParsedEnumOfMachineOverridesMode']
+> = {
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueEnum: Resolver<ResolversTypes['MachineOverridesMode'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  values: Resolver<Array<ResolversTypes['KeyValuePairOfMachineOverridesModeAndInt32']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedEnumOfMachineProgramStateResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedEnumOfMachineProgramState'] = ResolversParentTypes['ParsedEnumOfMachineProgramState']
+> = {
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueEnum: Resolver<ResolversTypes['MachineProgramState'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  values: Resolver<Array<ResolversTypes['KeyValuePairOfMachineProgramStateAndInt32']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedEnumOfMovementDistanceTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedEnumOfMovementDistanceType'] = ResolversParentTypes['ParsedEnumOfMovementDistanceType']
+> = {
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueEnum: Resolver<ResolversTypes['MovementDistanceType'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  values: Resolver<Array<ResolversTypes['KeyValuePairOfMovementDistanceTypeAndInt32']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedEnumOfPathControlModeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedEnumOfPathControlMode'] = ResolversParentTypes['ParsedEnumOfPathControlMode']
+> = {
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueEnum: Resolver<ResolversTypes['PathControlMode'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  values: Resolver<Array<ResolversTypes['KeyValuePairOfPathControlModeAndInt32']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedEnumOfSpindleSpeedModeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedEnumOfSpindleSpeedMode'] = ResolversParentTypes['ParsedEnumOfSpindleSpeedMode']
+> = {
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueEnum: Resolver<ResolversTypes['SpindleSpeedMode'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  values: Resolver<Array<ResolversTypes['KeyValuePairOfSpindleSpeedModeAndInt32']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -3442,9 +5264,32 @@ export type ParsedEnumOfStatusReportTypeResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['ParsedEnumOfStatusReportType'] = ResolversParentTypes['ParsedEnumOfStatusReportType']
 > = {
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   valueEnum: Resolver<ResolversTypes['StatusReportType'], ParentType, ContextType>;
   valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   values: Resolver<Array<ResolversTypes['KeyValuePairOfStatusReportTypeAndInt32']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedEnumOfTimingModeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedEnumOfTimingMode'] = ResolversParentTypes['ParsedEnumOfTimingMode']
+> = {
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueEnum: Resolver<ResolversTypes['TimingMode'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  values: Resolver<Array<ResolversTypes['KeyValuePairOfTimingModeAndInt32']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedEnumOfUnitTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedEnumOfUnitType'] = ResolversParentTypes['ParsedEnumOfUnitType']
+> = {
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueEnum: Resolver<ResolversTypes['UnitType'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  values: Resolver<Array<ResolversTypes['KeyValuePairOfUnitTypeAndInt32']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -3452,6 +5297,7 @@ export type ParsedStringResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['ParsedString'] = ResolversParentTypes['ParsedString']
 > = {
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -3491,18 +5337,25 @@ export type ProgramFileResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['ProgramFile'] = ResolversParentTypes['ProgramFile']
 > = {
-  name: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  syntax: Resolver<ResolversTypes['ProgramSyntax'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  instructionCount: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  instructionIndex: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  instructions: Resolver<Array<ResolversTypes['CompiledInstruction']>, ParentType, ContextType>;
+  meta: Resolver<ResolversTypes['ProgramFileMeta'], ParentType, ContextType>;
+  state: Resolver<ResolversTypes['ProgramState'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ProgramFileUploadResolvers<
+export type ProgramFileMetaResolvers<
   ContextType = any,
-  ParentType extends ResolversParentTypes['ProgramFileUpload'] = ResolversParentTypes['ProgramFileUpload']
+  ParentType extends ResolversParentTypes['ProgramFileMeta'] = ResolversParentTypes['ProgramFileMeta']
 > = {
+  directory: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  isUpload: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   lastModified: Resolver<ResolversTypes['Long'], ParentType, ContextType>;
   name: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  size: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  size: Resolver<ResolversTypes['Long'], ParentType, ContextType>;
+  syntax: Resolver<ResolversTypes['ProgramSyntax'], ParentType, ContextType>;
   type: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -3599,6 +5452,15 @@ export type SyntaxChunkResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type SyntaxLineResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['SyntaxLine'] = ResolversParentTypes['SyntaxLine']
+> = {
+  chunks: Resolver<Array<ResolversTypes['SyntaxChunk']>, ParentType, ContextType>;
+  raw: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type SystemPortResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['SystemPort'] = ResolversParentTypes['SystemPort']
@@ -3634,7 +5496,6 @@ export type WorkspaceResolvers<
   settings: Resolver<ResolversTypes['WorkspaceSettings'], ParentType, ContextType>;
   state: Resolver<ResolversTypes['WorkspaceState'], ParentType, ContextType>;
   topicId: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  units: Resolver<ResolversTypes['UnitType'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -3699,14 +5560,31 @@ export type Resolvers<ContextType = any> = {
   FirmwareReportingSettings: FirmwareReportingSettingsResolvers<ContextType>;
   FirmwareRequirement: FirmwareRequirementResolvers<ContextType>;
   FirmwareSetting: FirmwareSettingResolvers<ContextType>;
+  FirmwareSettingMutation: FirmwareSettingMutationResolvers<ContextType>;
   FirmwareSettingOfAxisFlags: FirmwareSettingOfAxisFlagsResolvers<ContextType>;
   FirmwareSettingOfBoolean: FirmwareSettingOfBooleanResolvers<ContextType>;
   FirmwareSettingOfDecimal: FirmwareSettingOfDecimalResolvers<ContextType>;
   FirmwareSettingOfKinematicsMode: FirmwareSettingOfKinematicsModeResolvers<ContextType>;
   FirmwareSettingOfStatusReportType: FirmwareSettingOfStatusReportTypeResolvers<ContextType>;
+  FirmwareSettingOfString: FirmwareSettingOfStringResolvers<ContextType>;
   FirmwareSettings: FirmwareSettingsResolvers<ContextType>;
+  KeyValuePairOfApplicatorRadiusCompensationAndInt32: KeyValuePairOfApplicatorRadiusCompensationAndInt32Resolvers<ContextType>;
+  KeyValuePairOfApplicatorSpinDirectionAndInt32: KeyValuePairOfApplicatorSpinDirectionAndInt32Resolvers<ContextType>;
+  KeyValuePairOfAxisPlaneAndInt32: KeyValuePairOfAxisPlaneAndInt32Resolvers<ContextType>;
+  KeyValuePairOfEnabledTypeAndInt32: KeyValuePairOfEnabledTypeAndInt32Resolvers<ContextType>;
+  KeyValuePairOfFactorTypeAndInt32: KeyValuePairOfFactorTypeAndInt32Resolvers<ContextType>;
+  KeyValuePairOfFeedRateModeAndInt32: KeyValuePairOfFeedRateModeAndInt32Resolvers<ContextType>;
   KeyValuePairOfKinematicsModeAndInt32: KeyValuePairOfKinematicsModeAndInt32Resolvers<ContextType>;
+  KeyValuePairOfMachineCoolantStateAndInt32: KeyValuePairOfMachineCoolantStateAndInt32Resolvers<ContextType>;
+  KeyValuePairOfMachineMotionTypeAndInt32: KeyValuePairOfMachineMotionTypeAndInt32Resolvers<ContextType>;
+  KeyValuePairOfMachineOverridesModeAndInt32: KeyValuePairOfMachineOverridesModeAndInt32Resolvers<ContextType>;
+  KeyValuePairOfMachineProgramStateAndInt32: KeyValuePairOfMachineProgramStateAndInt32Resolvers<ContextType>;
+  KeyValuePairOfMovementDistanceTypeAndInt32: KeyValuePairOfMovementDistanceTypeAndInt32Resolvers<ContextType>;
+  KeyValuePairOfPathControlModeAndInt32: KeyValuePairOfPathControlModeAndInt32Resolvers<ContextType>;
+  KeyValuePairOfSpindleSpeedModeAndInt32: KeyValuePairOfSpindleSpeedModeAndInt32Resolvers<ContextType>;
   KeyValuePairOfStatusReportTypeAndInt32: KeyValuePairOfStatusReportTypeAndInt32Resolvers<ContextType>;
+  KeyValuePairOfTimingModeAndInt32: KeyValuePairOfTimingModeAndInt32Resolvers<ContextType>;
+  KeyValuePairOfUnitTypeAndInt32: KeyValuePairOfUnitTypeAndInt32Resolvers<ContextType>;
   MachineAlert: MachineAlertResolvers<ContextType>;
   MachineApplicatorState: MachineApplicatorStateResolvers<ContextType>;
   MachineAxis: MachineAxisResolvers<ContextType>;
@@ -3725,16 +5603,6 @@ export type Resolvers<ContextType = any> = {
   MachineLogEntry: MachineLogEntryResolvers<ContextType>;
   MachineLogEntryConnection: MachineLogEntryConnectionResolvers<ContextType>;
   MachineLogEntryEdge: MachineLogEntryEdgeResolvers<ContextType>;
-  MachineModalStateOfAxisPlane: MachineModalStateOfAxisPlaneResolvers<ContextType>;
-  MachineModalStateOfEnabledType: MachineModalStateOfEnabledTypeResolvers<ContextType>;
-  MachineModalStateOfFeedRateMode: MachineModalStateOfFeedRateModeResolvers<ContextType>;
-  MachineModalStateOfMachineMotionType: MachineModalStateOfMachineMotionTypeResolvers<ContextType>;
-  MachineModalStateOfMachineProgramState: MachineModalStateOfMachineProgramStateResolvers<ContextType>;
-  MachineModalStateOfMovementDistanceType: MachineModalStateOfMovementDistanceTypeResolvers<ContextType>;
-  MachineModalStateOfPathControlMode: MachineModalStateOfPathControlModeResolvers<ContextType>;
-  MachineModalStateOfSpindleSpeedMode: MachineModalStateOfSpindleSpeedModeResolvers<ContextType>;
-  MachineModalStateOfTimingMode: MachineModalStateOfTimingModeResolvers<ContextType>;
-  MachineModalStateOfUnitType: MachineModalStateOfUnitTypeResolvers<ContextType>;
   MachineModals: MachineModalsResolvers<ContextType>;
   MachineOptions: MachineOptionsResolvers<ContextType>;
   MachineOverrides: MachineOverridesResolvers<ContextType>;
@@ -3752,6 +5620,38 @@ export type Resolvers<ContextType = any> = {
   MachineTimelineNodeEdge: MachineTimelineNodeEdgeResolvers<ContextType>;
   MacroSettings: MacroSettingsResolvers<ContextType>;
   MakerHubSettings: MakerHubSettingsResolvers<ContextType>;
+  ModalOptionOfApplicatorRadiusCompensation: ModalOptionOfApplicatorRadiusCompensationResolvers<ContextType>;
+  ModalOptionOfApplicatorSpinDirection: ModalOptionOfApplicatorSpinDirectionResolvers<ContextType>;
+  ModalOptionOfAxisPlane: ModalOptionOfAxisPlaneResolvers<ContextType>;
+  ModalOptionOfDecimal: ModalOptionOfDecimalResolvers<ContextType>;
+  ModalOptionOfEnabledType: ModalOptionOfEnabledTypeResolvers<ContextType>;
+  ModalOptionOfFactorType: ModalOptionOfFactorTypeResolvers<ContextType>;
+  ModalOptionOfFeedRateMode: ModalOptionOfFeedRateModeResolvers<ContextType>;
+  ModalOptionOfMachineCoolantState: ModalOptionOfMachineCoolantStateResolvers<ContextType>;
+  ModalOptionOfMachineMotionType: ModalOptionOfMachineMotionTypeResolvers<ContextType>;
+  ModalOptionOfMachineOverridesMode: ModalOptionOfMachineOverridesModeResolvers<ContextType>;
+  ModalOptionOfMachineProgramState: ModalOptionOfMachineProgramStateResolvers<ContextType>;
+  ModalOptionOfMovementDistanceType: ModalOptionOfMovementDistanceTypeResolvers<ContextType>;
+  ModalOptionOfPathControlMode: ModalOptionOfPathControlModeResolvers<ContextType>;
+  ModalOptionOfSpindleSpeedMode: ModalOptionOfSpindleSpeedModeResolvers<ContextType>;
+  ModalOptionOfTimingMode: ModalOptionOfTimingModeResolvers<ContextType>;
+  ModalOptionOfUnitType: ModalOptionOfUnitTypeResolvers<ContextType>;
+  ModalSettingOfApplicatorRadiusCompensation: ModalSettingOfApplicatorRadiusCompensationResolvers<ContextType>;
+  ModalSettingOfApplicatorSpinDirection: ModalSettingOfApplicatorSpinDirectionResolvers<ContextType>;
+  ModalSettingOfAxisPlane: ModalSettingOfAxisPlaneResolvers<ContextType>;
+  ModalSettingOfDecimal: ModalSettingOfDecimalResolvers<ContextType>;
+  ModalSettingOfEnabledType: ModalSettingOfEnabledTypeResolvers<ContextType>;
+  ModalSettingOfFactorType: ModalSettingOfFactorTypeResolvers<ContextType>;
+  ModalSettingOfFeedRateMode: ModalSettingOfFeedRateModeResolvers<ContextType>;
+  ModalSettingOfMachineCoolantState: ModalSettingOfMachineCoolantStateResolvers<ContextType>;
+  ModalSettingOfMachineMotionType: ModalSettingOfMachineMotionTypeResolvers<ContextType>;
+  ModalSettingOfMachineOverridesMode: ModalSettingOfMachineOverridesModeResolvers<ContextType>;
+  ModalSettingOfMachineProgramState: ModalSettingOfMachineProgramStateResolvers<ContextType>;
+  ModalSettingOfMovementDistanceType: ModalSettingOfMovementDistanceTypeResolvers<ContextType>;
+  ModalSettingOfPathControlMode: ModalSettingOfPathControlModeResolvers<ContextType>;
+  ModalSettingOfSpindleSpeedMode: ModalSettingOfSpindleSpeedModeResolvers<ContextType>;
+  ModalSettingOfTimingMode: ModalSettingOfTimingModeResolvers<ContextType>;
+  ModalSettingOfUnitType: ModalSettingOfUnitTypeResolvers<ContextType>;
   MountPointSettings: MountPointSettingsResolvers<ContextType>;
   Mutation: MutationResolvers<ContextType>;
   OpenControllerSession: OpenControllerSessionResolvers<ContextType>;
@@ -3761,16 +5661,32 @@ export type Resolvers<ContextType = any> = {
   ParsedAxisFlags: ParsedAxisFlagsResolvers<ContextType>;
   ParsedBool: ParsedBoolResolvers<ContextType>;
   ParsedDecimal: ParsedDecimalResolvers<ContextType>;
+  ParsedEnumOfApplicatorRadiusCompensation: ParsedEnumOfApplicatorRadiusCompensationResolvers<ContextType>;
+  ParsedEnumOfApplicatorSpinDirection: ParsedEnumOfApplicatorSpinDirectionResolvers<ContextType>;
+  ParsedEnumOfAxisPlane: ParsedEnumOfAxisPlaneResolvers<ContextType>;
+  ParsedEnumOfEnabledType: ParsedEnumOfEnabledTypeResolvers<ContextType>;
+  ParsedEnumOfFactorType: ParsedEnumOfFactorTypeResolvers<ContextType>;
+  ParsedEnumOfFeedRateMode: ParsedEnumOfFeedRateModeResolvers<ContextType>;
   ParsedEnumOfKinematicsMode: ParsedEnumOfKinematicsModeResolvers<ContextType>;
+  ParsedEnumOfMachineCoolantState: ParsedEnumOfMachineCoolantStateResolvers<ContextType>;
+  ParsedEnumOfMachineMotionType: ParsedEnumOfMachineMotionTypeResolvers<ContextType>;
+  ParsedEnumOfMachineOverridesMode: ParsedEnumOfMachineOverridesModeResolvers<ContextType>;
+  ParsedEnumOfMachineProgramState: ParsedEnumOfMachineProgramStateResolvers<ContextType>;
+  ParsedEnumOfMovementDistanceType: ParsedEnumOfMovementDistanceTypeResolvers<ContextType>;
+  ParsedEnumOfPathControlMode: ParsedEnumOfPathControlModeResolvers<ContextType>;
+  ParsedEnumOfSpindleSpeedMode: ParsedEnumOfSpindleSpeedModeResolvers<ContextType>;
   ParsedEnumOfStatusReportType: ParsedEnumOfStatusReportTypeResolvers<ContextType>;
+  ParsedEnumOfTimingMode: ParsedEnumOfTimingModeResolvers<ContextType>;
+  ParsedEnumOfUnitType: ParsedEnumOfUnitTypeResolvers<ContextType>;
   ParsedString: ParsedStringResolvers<ContextType>;
   PortOptions: PortOptionsResolvers<ContextType>;
   PortStatus: PortStatusResolvers<ContextType>;
   ProgramFile: ProgramFileResolvers<ContextType>;
-  ProgramFileUpload: ProgramFileUploadResolvers<ContextType>;
+  ProgramFileMeta: ProgramFileMetaResolvers<ContextType>;
   Query: QueryResolvers<ContextType>;
   Subscription: SubscriptionResolvers<ContextType>;
   SyntaxChunk: SyntaxChunkResolvers<ContextType>;
+  SyntaxLine: SyntaxLineResolvers<ContextType>;
   SystemPort: SystemPortResolvers<ContextType>;
   UserProfile: UserProfileResolvers<ContextType>;
   Workspace: WorkspaceResolvers<ContextType>;
@@ -3796,6 +5712,33 @@ export type MachineInstructionResultFragment = { __typename?: 'MachineInstructio
 export type MachineExecutionResultFragment = { __typename?: 'MachineExecutionResult' } & {
   instructionResults: Array<{ __typename?: 'MachineInstructionResult' } & MachineInstructionResultFragment>;
   machine: { __typename?: 'ControlledMachine' } & ControlledMachineFragment;
+};
+
+export type UploadProgramMutationVariables = Exact<{
+  fileUpload: ProgramFileUploadInput;
+}>;
+
+export type UploadProgramMutation = { __typename?: 'Mutation' } & {
+  uploadProgram: { __typename?: 'ProgramFile' } & Pick<
+    ProgramFile,
+    'id' | 'state' | 'instructionCount' | 'instructionIndex'
+  > & {
+      meta: { __typename?: 'ProgramFileMeta' } & Pick<
+        ProgramFileMeta,
+        'name' | 'lastModified' | 'size' | 'type' | 'directory' | 'syntax' | 'isUpload'
+      >;
+    };
+};
+
+export type SetModalSettingsMutationVariables = Exact<{
+  workspaceId: Scalars['String'];
+  change: ModalChangeInput;
+}>;
+
+export type SetModalSettingsMutation = { __typename?: 'Mutation' } & {
+  controller: { __typename?: 'Controller' } & Pick<Controller, 'id'> & {
+      result: { __typename?: 'MachineExecutionResult' } & MachineExecutionResultFragment;
+    };
 };
 
 export type SetFirmwareSettingsMutationVariables = Exact<{
@@ -3948,55 +5891,88 @@ export type MachineCommandPropsFragment = { __typename?: 'MachineCommand' } & Pi
   'id' | 'name' | 'value'
 >;
 
-export type MachineModalsFragment = { __typename?: 'MachineModals' } & Pick<
-  MachineModals,
-  'userDefinedCurrent' | 'userDefinedCount' | 'workCoordinateSystemCurrent' | 'workCoordinateSystemCount'
-> & {
-    motion: { __typename?: 'MachineModalStateOfMachineMotionType' } & Pick<
-      MachineModalStateOfMachineMotionType,
-      'code' | 'value'
-    >;
-    plane: Maybe<
-      { __typename?: 'MachineModalStateOfAxisPlane' } & Pick<MachineModalStateOfAxisPlane, 'code' | 'value'>
-    >;
-    distance: Maybe<
-      { __typename?: 'MachineModalStateOfMovementDistanceType' } & Pick<
-        MachineModalStateOfMovementDistanceType,
-        'code' | 'value'
-      >
-    >;
-    arcDistance: Maybe<
-      { __typename?: 'MachineModalStateOfMovementDistanceType' } & Pick<
-        MachineModalStateOfMovementDistanceType,
-        'code' | 'value'
-      >
-    >;
-    feedRate: Maybe<
-      { __typename?: 'MachineModalStateOfFeedRateMode' } & Pick<MachineModalStateOfFeedRateMode, 'code' | 'value'>
-    >;
-    units: Maybe<{ __typename?: 'MachineModalStateOfUnitType' } & Pick<MachineModalStateOfUnitType, 'code' | 'value'>>;
-    cannedCycleReturnMode: Maybe<
-      { __typename?: 'MachineModalStateOfTimingMode' } & Pick<MachineModalStateOfTimingMode, 'code' | 'value'>
-    >;
-    pathControlMode: Maybe<
-      { __typename?: 'MachineModalStateOfPathControlMode' } & Pick<MachineModalStateOfPathControlMode, 'code' | 'value'>
-    >;
-    spindleSpeed: Maybe<
-      { __typename?: 'MachineModalStateOfSpindleSpeedMode' } & Pick<
-        MachineModalStateOfSpindleSpeedMode,
-        'code' | 'value'
-      >
-    >;
-    cylindricalInterpolation: Maybe<
-      { __typename?: 'MachineModalStateOfEnabledType' } & Pick<MachineModalStateOfEnabledType, 'code' | 'value'>
-    >;
-    programState: Maybe<
-      { __typename?: 'MachineModalStateOfMachineProgramState' } & Pick<
-        MachineModalStateOfMachineProgramState,
-        'code' | 'value'
-      >
-    >;
-  };
+export type MachineModalsFragment = { __typename?: 'MachineModals' } & {
+  motion: { __typename?: 'ModalSettingOfMachineMotionType' } & Pick<
+    ModalSettingOfMachineMotionType,
+    'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+  > & {
+      options: Array<
+        { __typename?: 'ModalOptionOfMachineMotionType' } & Pick<ModalOptionOfMachineMotionType, 'code' | 'value'>
+      >;
+    };
+  plane: { __typename?: 'ModalSettingOfAxisPlane' } & Pick<
+    ModalSettingOfAxisPlane,
+    'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+  > & { options: Array<{ __typename?: 'ModalOptionOfAxisPlane' } & Pick<ModalOptionOfAxisPlane, 'code' | 'value'>> };
+  distance: { __typename?: 'ModalSettingOfMovementDistanceType' } & Pick<
+    ModalSettingOfMovementDistanceType,
+    'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+  > & {
+      options: Array<
+        { __typename?: 'ModalOptionOfMovementDistanceType' } & Pick<ModalOptionOfMovementDistanceType, 'code' | 'value'>
+      >;
+    };
+  arcDistance: { __typename?: 'ModalSettingOfMovementDistanceType' } & Pick<
+    ModalSettingOfMovementDistanceType,
+    'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+  > & {
+      options: Array<
+        { __typename?: 'ModalOptionOfMovementDistanceType' } & Pick<ModalOptionOfMovementDistanceType, 'code' | 'value'>
+      >;
+    };
+  feedRate: { __typename?: 'ModalSettingOfFeedRateMode' } & Pick<
+    ModalSettingOfFeedRateMode,
+    'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+  > & {
+      options: Array<{ __typename?: 'ModalOptionOfFeedRateMode' } & Pick<ModalOptionOfFeedRateMode, 'code' | 'value'>>;
+    };
+  units: { __typename?: 'ModalSettingOfUnitType' } & Pick<
+    ModalSettingOfUnitType,
+    'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+  > & { options: Array<{ __typename?: 'ModalOptionOfUnitType' } & Pick<ModalOptionOfUnitType, 'code' | 'value'>> };
+  cannedCycleReturnMode: { __typename?: 'ModalSettingOfTimingMode' } & Pick<
+    ModalSettingOfTimingMode,
+    'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+  > & { options: Array<{ __typename?: 'ModalOptionOfTimingMode' } & Pick<ModalOptionOfTimingMode, 'code' | 'value'>> };
+  pathControlMode: { __typename?: 'ModalSettingOfPathControlMode' } & Pick<
+    ModalSettingOfPathControlMode,
+    'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+  > & {
+      options: Array<
+        { __typename?: 'ModalOptionOfPathControlMode' } & Pick<ModalOptionOfPathControlMode, 'code' | 'value'>
+      >;
+    };
+  spindleSpeed: { __typename?: 'ModalSettingOfSpindleSpeedMode' } & Pick<
+    ModalSettingOfSpindleSpeedMode,
+    'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+  > & {
+      options: Array<
+        { __typename?: 'ModalOptionOfSpindleSpeedMode' } & Pick<ModalOptionOfSpindleSpeedMode, 'code' | 'value'>
+      >;
+    };
+  cylindricalInterpolation: { __typename?: 'ModalSettingOfEnabledType' } & Pick<
+    ModalSettingOfEnabledType,
+    'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+  > & {
+      options: Array<{ __typename?: 'ModalOptionOfEnabledType' } & Pick<ModalOptionOfEnabledType, 'code' | 'value'>>;
+    };
+  programState: { __typename?: 'ModalSettingOfMachineProgramState' } & Pick<
+    ModalSettingOfMachineProgramState,
+    'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+  > & {
+      options: Array<
+        { __typename?: 'ModalOptionOfMachineProgramState' } & Pick<ModalOptionOfMachineProgramState, 'code' | 'value'>
+      >;
+    };
+  userDefined: { __typename?: 'ModalSettingOfDecimal' } & Pick<
+    ModalSettingOfDecimal,
+    'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+  > & { options: Array<{ __typename?: 'ModalOptionOfDecimal' } & Pick<ModalOptionOfDecimal, 'code' | 'value'>> };
+  workCoordinateSystem: { __typename?: 'ModalSettingOfDecimal' } & Pick<
+    ModalSettingOfDecimal,
+    'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+  > & { options: Array<{ __typename?: 'ModalOptionOfDecimal' } & Pick<ModalOptionOfDecimal, 'code' | 'value'>> };
+};
 
 export type MachineConfigFragment = { __typename?: 'MachineConfiguration' } & {
   firmware: { __typename?: 'MachineDetectedFirmware' } & DetectedFirmwareFragment;
@@ -4140,12 +6116,27 @@ export type FirmwareSettingPolymorphicFragment = { __typename?: 'FirmwareSetting
         })
       | ({ __typename?: 'ParsedBool' } & Pick<ParsedBool, 'valueBool'>)
       | ({ __typename?: 'ParsedDecimal' } & Pick<ParsedDecimal, 'valueDecimal'>)
+      | { __typename?: 'ParsedEnumOfApplicatorRadiusCompensation' }
+      | { __typename?: 'ParsedEnumOfApplicatorSpinDirection' }
+      | { __typename?: 'ParsedEnumOfAxisPlane' }
+      | { __typename?: 'ParsedEnumOfEnabledType' }
+      | { __typename?: 'ParsedEnumOfFactorType' }
+      | { __typename?: 'ParsedEnumOfFeedRateMode' }
       | ({ __typename?: 'ParsedEnumOfKinematicsMode' } & {
           valueKinematicsMode: ParsedEnumOfKinematicsMode['valueEnum'];
         })
+      | { __typename?: 'ParsedEnumOfMachineCoolantState' }
+      | { __typename?: 'ParsedEnumOfMachineMotionType' }
+      | { __typename?: 'ParsedEnumOfMachineOverridesMode' }
+      | { __typename?: 'ParsedEnumOfMachineProgramState' }
+      | { __typename?: 'ParsedEnumOfMovementDistanceType' }
+      | { __typename?: 'ParsedEnumOfPathControlMode' }
+      | { __typename?: 'ParsedEnumOfSpindleSpeedMode' }
       | ({ __typename?: 'ParsedEnumOfStatusReportType' } & {
           valueStatusReportType: ParsedEnumOfStatusReportType['valueEnum'];
         })
+      | { __typename?: 'ParsedEnumOfTimingMode' }
+      | { __typename?: 'ParsedEnumOfUnitType' }
       | ({ __typename?: 'ParsedString' } & Pick<ParsedString, 'valueString'>)
     >;
   };
@@ -4280,24 +6271,75 @@ export type MachineBufferFragment = { __typename?: 'MachineBuffer' } & Pick<
 
 export type ApplicatorStateFragment = { __typename?: 'MachineApplicatorState' } & Pick<
   MachineApplicatorState,
-  | 'isOn'
-  | 'toolId'
-  | 'spinDirection'
-  | 'spinSpeed'
-  | 'feedRate'
-  | 'lengthOffsetFactorType'
-  | 'radiusCompensation'
-  | 'isFloodCoolantEnabled'
-  | 'isMistCoolantEnabled'
+  'isOn'
 > & {
+    toolId: { __typename?: 'FirmwareSettingOfString' } & Pick<
+      FirmwareSettingOfString,
+      'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+    >;
+    spinDirection: { __typename?: 'ModalSettingOfApplicatorSpinDirection' } & Pick<
+      ModalSettingOfApplicatorSpinDirection,
+      'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+    >;
+    spinSpeed: { __typename?: 'FirmwareSettingOfDecimal' } & Pick<
+      FirmwareSettingOfDecimal,
+      'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+    >;
+    feedRate: { __typename?: 'FirmwareSettingOfDecimal' } & Pick<
+      FirmwareSettingOfDecimal,
+      'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+    >;
     lengthOffset: Maybe<{ __typename?: 'MachinePosition' } & MachinePositionFragment>;
+    lengthOffsetFactorType: { __typename?: 'ModalSettingOfFactorType' } & Pick<
+      ModalSettingOfFactorType,
+      'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+    > & {
+        options: Array<{ __typename?: 'ModalOptionOfFactorType' } & Pick<ModalOptionOfFactorType, 'code' | 'value'>>;
+      };
+    radiusCompensation: { __typename?: 'ModalSettingOfApplicatorRadiusCompensation' } & Pick<
+      ModalSettingOfApplicatorRadiusCompensation,
+      'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+    > & {
+        options: Array<
+          { __typename?: 'ModalOptionOfApplicatorRadiusCompensation' } & Pick<
+            ModalOptionOfApplicatorRadiusCompensation,
+            'code' | 'value'
+          >
+        >;
+      };
     probePosition: Maybe<{ __typename?: 'MachinePosition' } & MachinePositionFragment>;
+    coolant: { __typename?: 'ModalSettingOfMachineCoolantState' } & Pick<
+      ModalSettingOfMachineCoolantState,
+      'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+    > & {
+        options: Array<
+          { __typename?: 'ModalOptionOfMachineCoolantState' } & Pick<ModalOptionOfMachineCoolantState, 'code' | 'value'>
+        >;
+      };
   };
 
-export type MachineOverridesFragment = { __typename?: 'MachineOverrides' } & Pick<
-  MachineOverrides,
-  'feed' | 'feedAllowed' | 'rapids' | 'speed' | 'speedAllowed'
->;
+export type MachineOverridesFragment = { __typename?: 'MachineOverrides' } & {
+  feed: { __typename?: 'FirmwareSettingOfDecimal' } & Pick<
+    FirmwareSettingOfDecimal,
+    'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+  >;
+  mode: { __typename?: 'ModalSettingOfMachineOverridesMode' } & Pick<
+    ModalSettingOfMachineOverridesMode,
+    'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+  > & {
+      options: Array<
+        { __typename?: 'ModalOptionOfMachineOverridesMode' } & Pick<ModalOptionOfMachineOverridesMode, 'code' | 'value'>
+      >;
+    };
+  rapids: { __typename?: 'FirmwareSettingOfDecimal' } & Pick<
+    FirmwareSettingOfDecimal,
+    'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+  >;
+  speed: { __typename?: 'FirmwareSettingOfDecimal' } & Pick<
+    FirmwareSettingOfDecimal,
+    'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
+  >;
+};
 
 export type MachineStatusFragment = { __typename?: 'MachineStatus' } & Pick<
   MachineStatus,
@@ -4309,7 +6351,7 @@ export type MachineStatusFragment = { __typename?: 'MachineStatus' } & Pick<
     alarm: Maybe<{ __typename?: 'MachineAlert' } & MachineAlertFragment>;
     buffer: { __typename?: 'MachineBuffer' } & MachineBufferFragment;
     applicator: { __typename?: 'MachineApplicatorState' } & ApplicatorStateFragment;
-    overrides: Maybe<{ __typename?: 'MachineOverrides' } & MachineOverridesFragment>;
+    overrides: { __typename?: 'MachineOverrides' } & MachineOverridesFragment;
   };
 
 export type MachineStatusSubscriptionVariables = Exact<{
@@ -4511,10 +6553,7 @@ export type WorkspacePortConnectionFragment = { __typename?: 'SystemPort' } & {
   >;
 };
 
-export type WorkspaceFullFragment = { __typename?: 'Workspace' } & Pick<
-  Workspace,
-  'id' | 'portName' | 'state' | 'units'
-> & {
+export type WorkspaceFullFragment = { __typename?: 'Workspace' } & Pick<Workspace, 'id' | 'portName' | 'state'> & {
     error: Maybe<{ __typename?: 'AlertError' } & AlertErrorFragment>;
     settings: { __typename?: 'WorkspaceSettings' } & WorkspaceFullSettingsFragment;
     port: Maybe<{ __typename?: 'SystemPort' } & WorkspacePortConnectionFragment>;
@@ -4672,53 +6711,148 @@ export const DetectedFirmwareFragmentDoc = gql`
 export const MachineModalsFragmentDoc = gql`
   fragment MachineModals on MachineModals {
     motion {
-      code
+      id
+      title
       value
+      data
+      hasBeenRead
+      options {
+        code
+        value
+      }
     }
     plane {
-      code
+      id
+      title
       value
+      data
+      hasBeenRead
+      options {
+        code
+        value
+      }
     }
     distance {
-      code
+      id
+      title
       value
+      data
+      hasBeenRead
+      options {
+        code
+        value
+      }
     }
     arcDistance {
-      code
+      id
+      title
       value
+      data
+      hasBeenRead
+      options {
+        code
+        value
+      }
     }
     feedRate {
-      code
+      id
+      title
       value
+      data
+      hasBeenRead
+      options {
+        code
+        value
+      }
     }
     units {
-      code
+      id
+      title
       value
+      data
+      hasBeenRead
+      options {
+        code
+        value
+      }
     }
     cannedCycleReturnMode {
-      code
+      id
+      title
       value
+      data
+      hasBeenRead
+      options {
+        code
+        value
+      }
     }
     pathControlMode {
-      code
+      id
+      title
       value
+      data
+      hasBeenRead
+      options {
+        code
+        value
+      }
     }
     spindleSpeed {
-      code
+      id
+      title
       value
+      data
+      hasBeenRead
+      options {
+        code
+        value
+      }
     }
     cylindricalInterpolation {
-      code
+      id
+      title
       value
+      data
+      hasBeenRead
+      options {
+        code
+        value
+      }
     }
     programState {
-      code
+      id
+      title
       value
+      data
+      hasBeenRead
+      options {
+        code
+        value
+      }
     }
-    userDefinedCurrent
-    userDefinedCount
-    workCoordinateSystemCurrent
-    workCoordinateSystemCount
+    userDefined {
+      id
+      title
+      value
+      data
+      hasBeenRead
+      options {
+        code
+        value
+      }
+    }
+    workCoordinateSystem {
+      id
+      title
+      value
+      data
+      hasBeenRead
+      options {
+        code
+        value
+      }
+    }
   }
 `;
 export const MachinePositionFragmentDoc = gql`
@@ -4772,30 +6906,110 @@ export const MachineBufferFragmentDoc = gql`
 export const ApplicatorStateFragmentDoc = gql`
   fragment ApplicatorState on MachineApplicatorState {
     isOn
-    toolId
-    spinDirection
-    spinSpeed
-    feedRate
+    toolId {
+      id
+      title
+      value
+      data
+      hasBeenRead
+    }
+    spinDirection {
+      id
+      title
+      value
+      data
+      hasBeenRead
+    }
+    spinSpeed {
+      id
+      title
+      value
+      data
+      hasBeenRead
+    }
+    feedRate {
+      id
+      title
+      value
+      data
+      hasBeenRead
+    }
     lengthOffset {
       ...MachinePosition
     }
-    lengthOffsetFactorType
-    radiusCompensation
+    lengthOffsetFactorType {
+      id
+      title
+      value
+      data
+      hasBeenRead
+      options {
+        code
+        value
+      }
+    }
+    radiusCompensation {
+      id
+      title
+      value
+      data
+      hasBeenRead
+      options {
+        code
+        value
+      }
+    }
     probePosition {
       ...MachinePosition
     }
-    isFloodCoolantEnabled
-    isMistCoolantEnabled
+    coolant {
+      id
+      title
+      value
+      data
+      hasBeenRead
+      options {
+        code
+        value
+      }
+    }
   }
   ${MachinePositionFragmentDoc}
 `;
 export const MachineOverridesFragmentDoc = gql`
   fragment MachineOverrides on MachineOverrides {
-    feed
-    feedAllowed
-    rapids
-    speed
-    speedAllowed
+    feed {
+      id
+      title
+      value
+      data
+      hasBeenRead
+    }
+    mode {
+      id
+      title
+      value
+      data
+      hasBeenRead
+      options {
+        code
+        value
+      }
+    }
+    rapids {
+      id
+      title
+      value
+      data
+      hasBeenRead
+    }
+    speed {
+      id
+      title
+      value
+      data
+      hasBeenRead
+    }
   }
 `;
 export const MachineStatusFragmentDoc = gql`
@@ -5681,7 +7895,6 @@ export const WorkspaceFullFragmentDoc = gql`
     id
     portName
     state
-    units
     error {
       ...AlertError
     }
@@ -5714,6 +7927,103 @@ export const WorkspaceEssentialSettingsFragmentDoc = gql`
   }
   ${WorkspaceFullSettingsFragmentDoc}
 `;
+export const UploadProgramDocument = gql`
+  mutation UploadProgram($fileUpload: ProgramFileUploadInput!) {
+    uploadProgram(fileUpload: $fileUpload) {
+      id
+      state
+      meta {
+        name
+        lastModified
+        size
+        type
+        directory
+        syntax
+        isUpload
+      }
+      instructionCount
+      instructionIndex
+    }
+  }
+`;
+export type UploadProgramMutationFn = Apollo.MutationFunction<UploadProgramMutation, UploadProgramMutationVariables>;
+
+/**
+ * __useUploadProgramMutation__
+ *
+ * To run a mutation, you first call `useUploadProgramMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUploadProgramMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [uploadProgramMutation, { data, loading, error }] = useUploadProgramMutation({
+ *   variables: {
+ *      fileUpload: // value for 'fileUpload'
+ *   },
+ * });
+ */
+export function useUploadProgramMutation(
+  baseOptions?: Apollo.MutationHookOptions<UploadProgramMutation, UploadProgramMutationVariables>,
+) {
+  return Apollo.useMutation<UploadProgramMutation, UploadProgramMutationVariables>(UploadProgramDocument, baseOptions);
+}
+export type UploadProgramMutationHookResult = ReturnType<typeof useUploadProgramMutation>;
+export type UploadProgramMutationResult = Apollo.MutationResult<UploadProgramMutation>;
+export type UploadProgramMutationOptions = Apollo.BaseMutationOptions<
+  UploadProgramMutation,
+  UploadProgramMutationVariables
+>;
+export const SetModalSettingsDocument = gql`
+  mutation SetModalSettings($workspaceId: String!, $change: ModalChangeInput!) {
+    controller: controlMachine(workspaceId: $workspaceId) {
+      id
+      result: setModal(change: $change) {
+        ...MachineExecutionResult
+      }
+    }
+  }
+  ${MachineExecutionResultFragmentDoc}
+`;
+export type SetModalSettingsMutationFn = Apollo.MutationFunction<
+  SetModalSettingsMutation,
+  SetModalSettingsMutationVariables
+>;
+
+/**
+ * __useSetModalSettingsMutation__
+ *
+ * To run a mutation, you first call `useSetModalSettingsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetModalSettingsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setModalSettingsMutation, { data, loading, error }] = useSetModalSettingsMutation({
+ *   variables: {
+ *      workspaceId: // value for 'workspaceId'
+ *      change: // value for 'change'
+ *   },
+ * });
+ */
+export function useSetModalSettingsMutation(
+  baseOptions?: Apollo.MutationHookOptions<SetModalSettingsMutation, SetModalSettingsMutationVariables>,
+) {
+  return Apollo.useMutation<SetModalSettingsMutation, SetModalSettingsMutationVariables>(
+    SetModalSettingsDocument,
+    baseOptions,
+  );
+}
+export type SetModalSettingsMutationHookResult = ReturnType<typeof useSetModalSettingsMutation>;
+export type SetModalSettingsMutationResult = Apollo.MutationResult<SetModalSettingsMutation>;
+export type SetModalSettingsMutationOptions = Apollo.BaseMutationOptions<
+  SetModalSettingsMutation,
+  SetModalSettingsMutationVariables
+>;
 export const SetFirmwareSettingsDocument = gql`
   mutation SetFirmwareSettings($workspaceId: String!, $changeSet: [FirmwareSettingChangeInput!]!) {
     controller: controlMachine(workspaceId: $workspaceId) {

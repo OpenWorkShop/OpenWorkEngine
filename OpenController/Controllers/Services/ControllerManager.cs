@@ -47,12 +47,6 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       }
     }
 
-    private Controller Create(MachineControllerType type, ConnectedPort connection) {
-      Controller controller = new Controller(this, connection, type);
-      controller.StartTask();
-      return controller;
-    }
-
     public async Task<Controller> Open(
       IMachineConnectionSettings machine, bool reconnect = false
     ) {
@@ -84,7 +78,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
         IMachineFirmwareRequirement req = machine.GetFirmwareRequirement();
         MachineControllerType controllerType = req.ControllerType;
         return _controllers.AddOrUpdate(systemPort.PortName,
-          v => Create(controllerType, systemPort.Connection),
+          v => new Controller(this, systemPort.Connection, controllerType),
           (k, v) => {
             if (v.ControllerType != controllerType || v.Connection != systemPort.Connection) // Updating an existng controller implies the connection was not closed correctly.
               throw new ArgumentException($"{systemPort.PortName} could not open because the last buffer was not closed.");

@@ -1,3 +1,5 @@
+using OpenWorkEngine.OpenController.Machines.Enums;
+
 namespace OpenWorkEngine.OpenController.Machines.Models {
   /// <summary>
   /// Represents a Spindle, Laser, or Hot-End configuration.
@@ -6,20 +8,15 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
   /// </summary>
   public record ApplicatorState {
     // How fast it's moving.
-    public decimal FeedRate { get; set; }
+    public FirmwareSetting<decimal> FeedRate { get; } = FirmwareSetting.Define(0M);
 
     // On a 3DP, the hotend temperature. Could be used as a temperature sensor on CNC (?)
-    public decimal? Temperature { get; set; }
+    public FirmwareSetting<decimal> Temperature { get; } = FirmwareSetting.Define(0M);
 
     // How fast it's rotating, if a spindle.
-    public decimal SpinSpeed { get; set; }
-
-
+    public FirmwareSetting<decimal> SpinSpeed { get; } = FirmwareSetting.Define(0M);
 
     //
-    public bool IsFloodCoolantEnabled { get; set; } = false;
-
-    //
-    public bool IsMistCoolantEnabled { get; set; } = false;
+    public ModalSetting<MachineCoolantState> Coolant { get; } = FirmwareSetting.Modal(MachineCoolantState.None);
   }
 }

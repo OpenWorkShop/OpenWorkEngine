@@ -9,7 +9,7 @@ import useLogger, {useComponentName} from '../../../utils/logging/UseLogger';
 import {AlertList} from '../../../components';
 import {getLogLevelNumber} from '../../Machines';
 import {useTrans} from '../../Context';
-import {faPencilAlt} from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {IMachineLogFilters} from './types';
 import LogFiltersDialog from './LogFiltersDialog';
@@ -23,6 +23,7 @@ const Terminal: ToolBase = (props) => {
   const source = useComponentName(Terminal);
   const classes = useStyles();
   const { workspaceId } = props;
+  const [awaiting, setAwaiting] = React.useState(false);
   const [filtersOpen, setFiltersOpen] = React.useState(false);
   const [filters, setFilters] =
     React.useState<IMachineLogFilters>({ minimumLogLevel: MachineLogLevel.Cfg });
@@ -34,9 +35,11 @@ const Terminal: ToolBase = (props) => {
 
   async function sendCommand(code: string) {
     const variables = { code, source, workspaceId };
+    setAwaiting(true);
     const res = await commandMutation({ variables });
-    log.debug('[CMD]', res);
   }
+
+  log.debug('draw', awaiting, commandResult);
 
   return (
     <div className={classes.root}>
@@ -49,8 +52,13 @@ const Terminal: ToolBase = (props) => {
           })}
         </Grid>
         <Grid item xs={1}>
-          <Button onClick={() => setFiltersOpen(true)} className={classes.modalButton} size="small" >
-            <FontAwesomeIcon icon={faPencilAlt} />
+          <Button
+            variant="outlined"
+            onClick={() => setFiltersOpen(true)}
+            className={classes.modalButton}
+            size="small"
+          >
+            <FontAwesomeIcon icon={faEllipsisV} />
           </Button>
         </Grid>
         {commandResult.error && <Grid item xs={12}>

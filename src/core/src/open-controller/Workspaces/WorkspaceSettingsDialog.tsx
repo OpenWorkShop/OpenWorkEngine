@@ -1,7 +1,7 @@
 import { Dialog, Toolbar, DialogTitle, DialogContent, Tab} from '@material-ui/core';
 import * as React from 'react';
 import useStyles from './styles';
-import {IHaveWorkspace, IWorkspaceSettingsTab} from './types';
+import {IHaveWorkspace, ITabDefinition} from './types';
 import {useTrans} from '../Context';
 import {TabContext, TabList, TabPanel } from '@material-ui/lab';
 import useLogger from '../../utils/logging/UseLogger';
@@ -25,9 +25,9 @@ const WorkspaceSettingsDialog: React.FunctionComponent<Props> = (props) => {
   const classes = useStyles();
   const scroll = 'paper';
   const title = t('Settings');
-  const [selectedTab, setSelectedTab] = React.useState('workspace');
+  const [selectedTab, setSelectedTab] = React.useState(firmware ? 'workspace' : 'port');
 
-  const tabs: IWorkspaceSettingsTab[] = [
+  const tabs: ITabDefinition[] = [
     {
       key: 'workspace',
       title: t('Workspace'),

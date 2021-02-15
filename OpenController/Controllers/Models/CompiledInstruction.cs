@@ -4,19 +4,18 @@ using OpenWorkEngine.OpenController.Syntax;
 
 namespace OpenWorkEngine.OpenController.Controllers.Models {
   public sealed class CompiledInstruction {
-    public string Code { get; }
-
     public string Source { get; }
 
-    public List<SyntaxChunk> Chunks { get; }
+    public SyntaxLine Line { get; }
 
     internal IControllerInstruction InstructionDefinition { get; }
 
+    public override string ToString() => Line.Raw;
+
     public CompiledInstruction(IControllerInstruction instructionDefinition, string code, string? source = null) {
-      Code = code;
+      Line = instructionDefinition.CompileSyntax(code);
       InstructionDefinition = instructionDefinition;
       Source = source ?? instructionDefinition.InstructionSource;
-      Chunks = instructionDefinition.CompileChunks(code);
     }
   }
 }

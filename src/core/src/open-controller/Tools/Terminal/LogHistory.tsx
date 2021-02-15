@@ -13,15 +13,16 @@ const LogHistory: FunctionComponent<Props> = (props) => {
   const log = useLogger(LogHistory);
   const classes = useStyles();
   const { filteredLogs } = props;
+  const [shouldAnimate, setShouldAnimate] = React.useState(true);
   const logsEndRef = React.useRef<HTMLDivElement>(null);
 
   function scrollToBottom() {
-    logsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    logsEndRef.current?.scrollIntoView(shouldAnimate ? { behavior: 'smooth' } : {});
   }
 
   React.useEffect(() => {
-    log.debug('scroll to bottom');
     scrollToBottom();
+    setShouldAnimate(false);
   }, [filteredLogs]);
 
   return (

@@ -1,4 +1,6 @@
-import {AxisPlane, FeedRateMode, MachineMotionType, MovementDistanceType, SpinDirection, UnitType} from '../graphql';
+import {
+  AxisPlane, FeedRateMode, MachineMotionType, MovementDistanceType, ApplicatorSpinDirection, UnitType
+} from '../graphql';
 import {createEnumKeyer, createEnumNormalizer} from '../../utils/enums';
 import _ from 'lodash';
 import {SelectItemIcon} from '../../components/Forms/IconSelect';
@@ -22,7 +24,7 @@ export const getDistanceTitleKey = createEnumTitle(MovementDistanceType);
 export const getMotionTypeTitleKey = createEnumTitle(MachineMotionType);
 export const getFeedRateTitleKey = createEnumTitle(FeedRateMode);
 export const getAxisPlaneTitleKey = createEnumTitle(AxisPlane);
-export const getSpinDirectionTitleKey = createEnumTitle(SpinDirection);
+export const getSpinDirectionTitleKey = createEnumTitle(ApplicatorSpinDirection);
 
 export function getModalEnum<T extends string, TEnumValue extends string>(
   title: string, value: string, enumVariable: { [key in T]: TEnumValue }, titlizer: (k: TEnumValue) => string
@@ -46,7 +48,7 @@ export function getModalOptions(typename: string, value:  string): [string, stri
   if (tn === 'FeedRateMode') return getModalEnum('Feed Rate', value, FeedRateMode, getFeedRateTitleKey);
   if (tn === 'MachineMotionType') return getModalEnum('Motion', value, MachineMotionType, getMotionTypeTitleKey);
   if (tn === 'AxisPlane') return getModalEnum('Axis Plane', value, AxisPlane, getAxisPlaneTitleKey);
-  if (tn === 'SpinDirection') return getModalEnum('Spindle Direction', value, SpinDirection, getSpinDirectionTitleKey);
+  if (tn === 'SpinDirection') return getModalEnum('Spindle Direction', value, ApplicatorSpinDirection, getSpinDirectionTitleKey);
   // if (tn === 'AxisPlane') return t('Axis Plane');
   return [tn, value, []];
 }

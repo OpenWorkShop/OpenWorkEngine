@@ -8,6 +8,7 @@ using OpenWorkEngine.OpenController.Controllers.Services;
 using OpenWorkEngine.OpenController.Controllers.Services.Serial;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 using OpenWorkEngine.OpenController.Machines.Enums;
+using OpenWorkEngine.OpenController.Machines.Models;
 
 namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
   internal static class GrblSyntax {
@@ -33,6 +34,107 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
       translator.SetCommandScript(nameof(Controller.Reset), "\u0018");        // ctrl+x
       translator.SetCommandScript(nameof(Controller.Move), MoveCommandTemplate);
 
+      translator.AddModalOptions(m => m.Configuration.Modals.Motion, new Dictionary<string, MachineMotionType>() {
+        ["G0"] = MachineMotionType.Rapid,
+        ["G1"] = MachineMotionType.Linear,
+        ["G2"] = MachineMotionType.Arc,
+        ["G3"] = MachineMotionType.ArcCCW,
+        ["G4"] = MachineMotionType.Dwell,
+        ["G38.2"] = MachineMotionType.Probe,
+        ["G38.3"] = MachineMotionType.Probe,
+        ["G38.4"] = MachineMotionType.Probe,
+        ["G38.5"] = MachineMotionType.Probe,
+        ["G80"] = MachineMotionType.Cancel,
+      });
+      translator.AddModalOptions(m => m.Configuration.Modals.CylindricalInterpolation, new Dictionary<string, EnabledType>() {
+        ["G7"] = EnabledType.Enabled,
+        ["G8"] = EnabledType.Disabled,
+      });
+      translator.AddModalOptions(m => m.Configuration.Modals.Plane, new Dictionary<string, AxisPlane>() {
+        ["G17"] = AxisPlane.Xy,
+        ["G18"] = AxisPlane.Xz,
+        ["G19"] = AxisPlane.Yz,
+      });
+      translator.AddModalOptions(m => m.Configuration.Modals.Units, new Dictionary<string, UnitType>() {
+        ["G20"] = UnitType.Imperial,
+        ["G21"] = UnitType.Metric,
+      });
+      translator.AddModalOptions(m => m.Status.Applicator.RadiusCompensation, new Dictionary<string, ApplicatorRadiusCompensation>() {
+        ["G40"] = ApplicatorRadiusCompensation.None,
+        ["G41"] = ApplicatorRadiusCompensation.Left,
+        ["G41.1"] = ApplicatorRadiusCompensation.DynamicLeft,
+        ["G42"] = ApplicatorRadiusCompensation.Right,
+        ["G42.1"] = ApplicatorRadiusCompensation.DynamicRight,
+      });
+      translator.AddModalOptions(m => m.Status.Applicator.LengthOffsetFactorType, new Dictionary<string, FactorType>() {
+        ["G43"] = FactorType.Positive,
+        ["G43.1"] = FactorType.Positive,
+        ["G44"] = FactorType.Negative,
+        ["G44.1"] = FactorType.Negative,
+        ["G49"] = FactorType.None,
+      });
+      translator.AddModalOptions(m => m.Configuration.Modals.WorkCoordinateSystem, new Dictionary<string, decimal>() {
+        ["G54"] = 1,
+        ["G55"] = 2,
+        ["G56"] = 3,
+        ["G57"] = 4,
+        ["G58"] = 5,
+      });
+      translator.AddModalOptions(m => m.Configuration.Modals.PathControlMode, new Dictionary<string, PathControlMode>() {
+        ["G64"] = PathControlMode.Blended,
+        ["G61"] = PathControlMode.Exact, // G65?
+        ["G61.1"] = PathControlMode.Exact,
+      });
+      translator.AddModalOptions(m => m.Configuration.Modals.Distance, new Dictionary<string, MovementDistanceType>() {
+        ["G90"] = MovementDistanceType.Absolute,
+        ["G90.1"] = MovementDistanceType.Absolute,
+        ["G91"] = MovementDistanceType.Relative,
+        ["G91.1"] = MovementDistanceType.Relative,
+      });
+      translator.AddModalOptions(m => m.Configuration.Modals.FeedRate, new Dictionary<string, FeedRateMode>() {
+        ["G93"] = FeedRateMode.InverseTime,
+        ["G94"] = FeedRateMode.UnitsPerMinute,
+        ["G95"] = FeedRateMode.UnitsPerRevolution,
+      });
+      translator.AddModalOptions(m => m.Configuration.Modals.SpindleSpeed, new Dictionary<string, SpindleSpeedMode>() {
+        ["G96"] = SpindleSpeedMode.ConstantSurfaceSpeed,
+        ["G97"] = SpindleSpeedMode.ConstantSpindleSpeed,
+      });
+      translator.AddModalOptions(m => m.Configuration.Modals.CannedCycleReturnMode, new Dictionary<string, TimingMode>() {
+        ["G98"] = TimingMode.PerMinute,
+        ["G99"] = TimingMode.PerRevolution,
+      });
+
+      translator.AddModalOptions(m => m.Configuration.Modals.ProgramState, new Dictionary<string, MachineProgramState>() {
+        ["M0"] = MachineProgramState.CompulsoryStop,
+        ["M1"] = MachineProgramState.OptionalStop,
+        ["M2"] = MachineProgramState.EndOfProgram,
+        ["M30"] = MachineProgramState.EndOfProgram,
+        ["M60"] = MachineProgramState.AutomaticChange,
+      });
+      translator.AddModalOptions(m => m.Status.Applicator.SpinDirection, new Dictionary<string, ApplicatorSpinDirection>() {
+        ["M3"] = ApplicatorSpinDirection.CW,
+        ["M4"] = ApplicatorSpinDirection.CCW,
+        ["M5"] = ApplicatorSpinDirection.None,
+      });
+      // M6 == ATC ?!?!
+      translator.AddModalOptions(m => m.Status.Applicator.Coolant, new Dictionary<string, MachineCoolantState>() {
+        ["M7"] = MachineCoolantState.Mist,
+        ["M8"] = MachineCoolantState.Flood,
+        ["M9"] = MachineCoolantState.None,
+      });
+      translator.AddModalOptions(m => m.Status.Overrides.Mode, new Dictionary<string, MachineOverridesMode>() {
+        ["M48"] = MachineOverridesMode.All,
+        ["M49"] = MachineOverridesMode.None,
+        ["M50"] = MachineOverridesMode.Feeds,
+        ["M51"] = MachineOverridesMode.Speeds,
+      });
+
+      Dictionary<string, decimal> userDef = new Dictionary<string, decimal>();
+      for (int x = 0; x < 100; x++) {
+        userDef[$"M{x + 100}"] = x;
+      }
+      translator.AddModalOptions(m => m.Configuration.Modals.UserDefined, userDef);
 
       // https://github.com/gnea/grbl/blob/master/doc/markdown/settings.md
       // https://github.com/makermadecnc/MaslowDue/blob/master/MaslowDue/settings.cpp

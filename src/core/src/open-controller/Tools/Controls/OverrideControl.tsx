@@ -15,6 +15,8 @@ import {getUnitsShort} from '../../Machines';
 type Props = {
   title: string;
   units: MachineSettingUnits;
+  disabled: boolean;
+  className?: string;
   value?: number;
   override?: number;
 };
@@ -23,7 +25,7 @@ const OverrideControl: FunctionComponent<Props> = (props) => {
   const t = useTrans();
   const theme = useTheme();
   const log = useLogger(OverrideControl);
-  const { title, value, override, units } = props;
+  const { title, value, override, units, className, disabled } = props;
   const classes = useStyles();
   const valStr = value && value !== 0 ? value.toString() : '0';
   const unitsStr = getUnitsShort(units);
@@ -40,12 +42,22 @@ const OverrideControl: FunctionComponent<Props> = (props) => {
   }
   // endAdornment: <span>%</span>,
 
+  const button = <IconButton
+    aria-label={tip}
+    size='small'
+    disabled={disabled}
+    disableFocusRipple onClick={() => onChange(0)}
+  >
+    <FontAwesomeIcon color={theme.palette.primary.main} icon={faCaretSquareDown} />
+  </IconButton>;
+
   return (
     <NumericInput
-      className={classes.override}
+      className={className}
       numericValue={override ?? 0}
       onChangeNumericValue={onChange}
       label={label}
+      disabled={disabled}
       size="small"
       InputProps={{
         endAdornment: <React.Fragment>
@@ -54,11 +66,9 @@ const OverrideControl: FunctionComponent<Props> = (props) => {
             style={{ marginRight: 0, marginLeft: 0 }}
             position='end'
           >
-            <Tooltip title={tip}>
-              <IconButton aria-label={tip} size='small' disableFocusRipple onClick={() => onChange(0)} >
-                <FontAwesomeIcon color={theme.palette.primary.main} icon={faCaretSquareDown} />
-              </IconButton>
-            </Tooltip>
+            {disabled ? button : <Tooltip title={tip}>
+              {button}
+            </Tooltip>}
           </InputAdornment>
         </React.Fragment>
       }}

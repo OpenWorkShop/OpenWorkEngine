@@ -2,7 +2,7 @@ import * as React from 'react';
 import {IHaveWorkspace, tryUseWorkspaceController, useWorkspaceSelector} from '../Workspaces';
 import {IMaybeHavePortStatus} from '../Ports';
 import useStyles from './styles';
-import {Button, ButtonGroup, Grid, Toolbar, Tooltip, Typography} from '@material-ui/core';
+import {Button, ButtonGroup, Grid, Tooltip, Typography} from '@material-ui/core';
 import {useTrans} from '../Context';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCogs, faExclamationCircle} from '@fortawesome/free-solid-svg-icons';
@@ -10,10 +10,7 @@ import {IController} from '../Controllers';
 import MachinePositionChip from './MachinePositionChip';
 import useLogger from '../../utils/logging/UseLogger';
 import ApplicatorChip from './ApplicatorChip';
-import {
-  PortState,
-  WorkspaceState
-} from '../graphql';
+import {PortState, WorkspaceState} from '../graphql';
 import GWizChip from './GWizChip';
 import WorkspaceSettingsDialog from '../Workspaces/WorkspaceSettingsDialog';
 
@@ -28,15 +25,18 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
   const [ settingsOpen, setSettingsOpen ] = React.useState<boolean>(false);
   const { workspaceId, port, orientation } = props;
   const workspaceState = useWorkspaceSelector(workspaceId, ws => ws.state);
+  const portName = useWorkspaceSelector(workspaceId, ws => ws.portName);
   const controller: IController | undefined = tryUseWorkspaceController(workspaceId);
   const machine = controller?.machine;
   const machineStatus = machine?.status;
   const firmware = machine?.configuration.firmware;
   const isActive = workspaceState === WorkspaceState.Active;
+  const isMachineReady = isActive && machineStatus;
   const portState = port?.state ?? PortState.Unplugged;
+  const isUnplugged = portState === PortState.Unplugged;
   // const bkCol = useMachineStatusColor(machineStatus);
 
-  log.verbose('draw');
+  log.debug('draw', portState);
 
   return (
     <div className={classes.root} >
@@ -46,13 +46,28 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
         variant="outlined"
         orientation={orientation ?? 'horizontal'}
       >
-        <Button onClick={() => setSettingsOpen(true)} className={classes.titleBarButton}>
+        {isUnplugged && (
+          <Tooltip title={t('Port is not plugged in')} >
+            <Button
+              color="primary"
+              onClick={() => setSettingsOpen(true)}
+            >
+              <FontAwesomeIcon icon={faExclamationCircle} className={classes.error} />
+            </Button>
+          </Tooltip>
+        )}
+        {!isUnplugged && <Button onClick={() => setSettingsOpen(true)} className={classes.titleBarButton}>
           <FontAwesomeIcon icon={faCogs} size={'lg'} />
-        </Button>
+        </Button>}
       </ButtonGroup>
       <Grid container className={classes.workBarTitle} spacing={0}>
         <Grid item xs={12}>
-          <Typography className={classes.workBarTitleText} variant="subtitle2">No file loaded.</Typography>
+          {isUnplugged && <Typography className={classes.workBarTitleText} color="error" variant="subtitle2">
+            {t('The port "{{ portName }}" is not available for use.', { portName })}
+          </Typography>}
+          {isMachineReady && <Typography className={classes.workBarTitleText} variant="subtitle2">
+            No file loaded.
+          </Typography>}
         </Grid>
       </Grid>
       <ButtonGroup
@@ -62,17 +77,8 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
         orientation={orientation ?? 'horizontal'}
         aria-label={t('Workspace Shortcuts')}
       >
-        {isActive && machineStatus && <MachinePositionChip workspaceId={workspaceId} />}
-        {isActive && machineStatus && <ApplicatorChip workspaceId={workspaceId} />}
-        {portState === PortState.Unplugged && (
-          <Tooltip title={t('Port is not plugged in')} >
-            <Button
-              color="primary"
-            >
-              <FontAwesomeIcon icon={faExclamationCircle} className={classes.error} />
-            </Button>
-          </Tooltip>
-        )}
+        {isMachineReady && <MachinePositionChip workspaceId={workspaceId} />}
+        {isMachineReady && <ApplicatorChip workspaceId={workspaceId} />}
         {isActive && <GWizChip />}
       </ButtonGroup>
       <WorkspaceSettingsDialog

@@ -10,7 +10,6 @@ fragment WorkspaceFull on Workspace {
     id
     portName
     state
-    units
     error {
         ...AlertError
     }

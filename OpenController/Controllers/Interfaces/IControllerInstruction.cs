@@ -12,7 +12,6 @@ using OpenWorkEngine.OpenController.Syntax;
 using Serilog;
 
 namespace OpenWorkEngine.OpenController.Controllers.Interfaces {
-
   /// <summary>
   /// Encapsulates text to be written to the serial port.
   ///
@@ -47,7 +46,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Interfaces {
     /// <summary>
     /// The parsed syntax chunks (words) from the line.
     /// </summary>
-    public List<SyntaxChunk> CompileChunks(string line);
+    public SyntaxLine CompileSyntax(string line);
   }
 
   public static class ControllerInstructionExtensions {
@@ -57,10 +56,13 @@ namespace OpenWorkEngine.OpenController.Controllers.Interfaces {
     /// <param name="instruction">Templated instruction</param>
     /// <param name="opts"></param>
     /// <returns>String which may be written to the serial port.</returns>
-    public static CompiledInstruction Compile(this IControllerInstruction instruction, ControllerExecutionOptions opts) {
+    public static CompiledInstruction Compile(
+      this IControllerInstruction instruction, ControllerExecutionOptions? opts = null
+    ) {
       string template = instruction.Template;
+      opts ??= new ControllerExecutionOptions();
       object? args = opts.Args;
-      if (args == null) return new CompiledInstruction(instruction, template, opts.Source);
+      if (args == null) return new CompiledInstruction(instruction, template, opts.OverrideSource);
 
       string compiled = $"{template}"; // lazy clone
       string pattern = @"((?<pre>\$)?{(?<name>\w+)(:=(?<def>[\w\d]+))?})";
@@ -117,7 +119,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Interfaces {
       if (compiled.Contains('\n') || compiled.Contains('\r'))
         throw new ArgumentException($"Compiled instruction '{compiled}' had a line break.");
 
-      return new CompiledInstruction(instruction, compiled, opts.Source);
+      return new CompiledInstruction(instruction, compiled, opts.OverrideSource);
     }
   }
 }

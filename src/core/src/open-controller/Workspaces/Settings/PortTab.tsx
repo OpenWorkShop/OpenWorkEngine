@@ -13,13 +13,14 @@ import {
   DialogContentText,
   DialogTitle,
   Grid,
-  Paper
+  Paper, Typography
 } from '@material-ui/core';
 import HelpfulHeader from '../../../components/Text/HelpfulHeader';
 import PortSelect from '../../Ports/PortSelect';
 import FirmwareComparisonTable from '../../Machines/FirmwareComparisonTable';
 import PopoverWorkBarChip from '../../WorkBar/PopoverWorkBarChip';
 import {useTrans} from '../../Context';
+import {useWorkspaceSelector} from '../hooks';
 
 type Props = IHaveWorkspace & IMaybeHavePortStatus & {
   firmware?: DetectedFirmwareFragment;
@@ -30,6 +31,7 @@ const PortTab: FunctionComponent<Props> = (props) => {
   const log = useLogger(PortTab);
   const { workspaceId, port, firmware } = props;
   const [changeToPortName, setChangeToPortName] = React.useState('');
+  const portName = useWorkspaceSelector(workspaceId, ws => ws.portName);
   const [changeWorkspacePort, changedWorkspace] = useChangeWorkspacePortMutation();
   const [error, setError] = React.useState<IAlertMessage | undefined>(undefined);
   const classes = useStyles();
@@ -72,6 +74,10 @@ const PortTab: FunctionComponent<Props> = (props) => {
     <Grid item xs={12} >
       <Paper className={classes.paper}>
         {firmware && <FirmwareComparisonTable firmware={firmware} />}
+        {!firmware && <AlertList error={{
+          name: t('Port') ,
+          message: t('The port "{{ portName }}" is not available for use.', { portName })
+        }} /> }
       </Paper>
     </Grid>
     <Dialog

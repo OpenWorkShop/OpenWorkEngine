@@ -3,13 +3,14 @@ import {
   MachineLogEntryFragment,
   MachineLogLevel,
   MachineLogSource,
+  SerialWriteState,
   SyntaxChunkFragment,
   SyntaxType
 } from '../../graphql';
 import {Grid, IconButton, Tooltip, useTheme} from '@material-ui/core';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {IconDefinition} from '@fortawesome/fontawesome-common-types';
-import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
+import {faDotCircle, faExclamationCircle, faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 import {getLogLevelColor, getLogLevelIcon, getLogLevelTitleKey} from '../../Machines';
 import {useTrans} from '../../Context';
 
@@ -58,17 +59,23 @@ const LogLine: FunctionComponent<Props> = (props) => {
       if (hv && hc) ret.push(renderTextSpan(' ', col, `${id}-${i}-space`));
       if (hc) ret.push(renderTextSpan(c.comment, logCommentColor, `${id}-${i}-comment`));
 
-      space = c.type === SyntaxType.Value || c.type === SyntaxType.Unknown;
+      space = c.type !== SyntaxType.Operator;
     });
     ret.push(renderTextSpan(']', logSysColor, `${id}-close`));
     return ret;
+  }
+
+  function getWriteStateIcon(writeState: SerialWriteState): IconDefinition {
+    if (writeState === SerialWriteState.Sent) return faDotCircle;
+    if (writeState === SerialWriteState.Ok) return faPaperPlane;
+    return faExclamationCircle;
   }
 
   function getLogEntryIcon(logEntry: MachineLogEntryFragment): IconDefinition {
     if (logEntry.source === MachineLogSource.SerialRead) {
       return getLogLevelIcon(logEntry.logLevel);
     } else {
-      return faPaperPlane;
+      return getWriteStateIcon(logEntry.writeState);
     }
   }
 

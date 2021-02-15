@@ -7,7 +7,7 @@ namespace OpenWorkEngine.OpenController.Lib.Filesystem {
 
     public long LastModified { get; }
 
-    public int Size { get; }
+    public long Size { get; }
 
     public string Type { get; }
   }

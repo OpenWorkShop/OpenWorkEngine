@@ -1,11 +1,11 @@
 import {IMachineAxis, MachineAxisMap} from './types';
 import * as THREE from 'three';
 import _ from 'lodash';
-
-const INCH = 25.4;
+import {UnitType} from '../graphql';
+import {inchesMillimetersConversion} from '../../components/Units';
 
 interface IJogStepsOpts {
-  imperialUnits: boolean;
+  units?: UnitType;
   min?: number;
   max?: number;
 }
@@ -15,15 +15,15 @@ export function getMachineAxisMap(axes: IMachineAxis[]): MachineAxisMap {
 }
 
 // Convert a value on the axis to a string, rounding it to the appropriate precision.
-function getAxisValueString(val: string | number, precision: number, isImperial: boolean): string {
+function getAxisValueString(val: string | number, precision: number, units?: UnitType): string {
   // Since inches are ~= 1 order of magnitude less precise than millimeters...
-  precision = precision + (isImperial ? 1 : 0);
+  precision = precision + (units === UnitType.Imperial ? 1 : 0);
   const str = Number(val || 0).toFixed(precision);
   return precision > 0 ? str : str.split('.')[0];
 }
 
-export function axisRound(axis: IMachineAxis, val: string | number, isImperialUnits: boolean): number {
-  return Number(getAxisValueString(val, axis.precision, isImperialUnits));
+export function axisRound(axis: IMachineAxis, val: string | number, units?: UnitType): number {
+  return Number(getAxisValueString(val, axis.precision, units));
 }
 
 export function getMachineAxisRange(axis: IMachineAxis): number {
@@ -35,9 +35,10 @@ export function getMachineAxisRange(axis: IMachineAxis): number {
 export function iterateMachineAxisGridLines(
   axis: IMachineAxis,
   callback: (dist: number, isMajor: boolean, isEdge: boolean) => void,
-  isImperialUnits: boolean
+  units: UnitType
 ): void {
-  const step = isImperialUnits ? INCH : 10;
+  const isImperialUnits = units === UnitType.Imperial;
+  const step = isImperialUnits ? inchesMillimetersConversion : 10;
   const majorStep = isImperialUnits ? 12 : 10;
   const numNegativeSteps = Math.ceil(axis.min < 0 ? (-axis.min / step) : 0);
   const numPositiveSteps = Math.ceil(axis.max > 0 ? (axis.max / step) : 0);
@@ -64,21 +65,20 @@ export function iterateMachineAxisGridLines(
 
 // Returns an array of jog steps for this axis.
 export function getMachineAxisJogSteps(axis: IMachineAxis, opts: IJogStepsOpts): number[] {
-  const isImperialUnits = opts.imperialUnits;
   const range = getMachineAxisRange(axis);
   const max = opts.max || range / 2;
   const min = opts.min || axis.accuracy;
   const steps = [];
   for (let v = min; v < max; v *= 10) {
-    steps.push(axisRound(axis, v, isImperialUnits));
+    steps.push(axisRound(axis, v, opts.units));
     const v2 = v * 10;
     if (v2 < max) {
-      steps.push(axisRound(axis, v2 / 2, isImperialUnits));
+      steps.push(axisRound(axis, v2 / 2, opts.units));
     }
   }
   // Remove the last element and add it in-order with the second-biggest element.
   const last = steps.pop() || 0;
-  const next = axisRound(axis, max / 2, isImperialUnits);
+  const next = axisRound(axis, max / 2, opts.units);
   steps.push(Math.min(last, next));
   steps.push(Math.max(last, next));
 

@@ -1,4 +1,5 @@
 using HotChocolate.Execution.Configuration;
+using HotChocolate.Types;
 using Microsoft.Extensions.DependencyInjection;
 using OpenWorkEngine.OpenController.Machines.Models;
 

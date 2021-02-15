@@ -32,7 +32,8 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     public List<DateTime> Timestamps { get; } = new();
     public int Count => Timestamps.Count;
     public DateTime Timestamp => Timestamps.Last();
-    public MachineLogLevel LogLevel { get; }
+    public MachineLogLevel LogLevel =>
+      Error != null || WriteState == SerialWriteState.Error ? MachineLogLevel.Err : _logLevel;
     public MachineLogSource Source { get; }
     public SyntaxChunk[] Code { get; }
     public MachineAlert? Error { get; internal set; }
@@ -42,6 +43,8 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
 
     // Write-only
     public SerialWriteState WriteState { get; set; }
+
+    private readonly MachineLogLevel _logLevel;
 
     private MachineLogEntry(
       string message,
@@ -57,7 +60,7 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
       Error = error;
       Message = message;
       IsResponse = isResponse;
-      LogLevel = logLevel;
+      _logLevel = logLevel;
       WriteState = writeState;
       Source = source;
       Code = code;
@@ -81,7 +84,7 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     ) => new (
       compiled.Source,
       logLevel,
-      code: compiled.Chunks.ToArray(),
+      code: compiled.Line.Chunks.ToArray(),
       source: MachineLogSource.SerialWrite,
       writeState: SerialWriteState.Queued
     );

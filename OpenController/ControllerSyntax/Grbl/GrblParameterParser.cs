@@ -16,7 +16,7 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
       string key = values["k"];
       string val = values["v"];
       string[] parts = val.Split(':');
-      MachinePosition pos = GrblStatusParser.GetPositionArgument(parts.First());
+      MachinePosition pos = GrblStatusParser.GetPositionArgument(parts.First(), line.Machine);
 
       if (key.Equals("TLO")) {
         line.Machine.Status.Applicator.LengthOffset = pos;

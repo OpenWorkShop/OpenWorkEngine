@@ -9,7 +9,7 @@
     <e p="$PROJECT_DIR$/../.nuget/packages/xunit.runner.visualstudio/2.4.3/build/netcoreapp2.1/xunit.runner.utility.netcoreapp10.dll" t="Include" />
     <e p="$PROJECT_DIR$/../.nuget/packages/xunit.runner.visualstudio/2.4.3/build/netcoreapp2.1/xunit.runner.visualstudio.dotnetcore.testadapter.dll" t="Include" />
     <e p="$PROJECT_DIR$/../Library/Caches/JetBrains/Rider2020.3/extResources" t="IncludeRecursive" />
-    <e p="$PROJECT_DIR$/../Library/Caches/JetBrains/Rider2020.3/resharper-host/local/Transient/Rider/v203/SolutionCaches/_OpenWorkEngine.705098016.01" t="ExcludeRecursive" />
+    <e p="$PROJECT_DIR$/../Library/Caches/JetBrains/Rider2020.3/resharper-host/local/Transient/Rider/v203/SolutionCaches/_OpenWorkEngine.705098016.00" t="ExcludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeFlat">
       <e p="Makerverse" t="IncludeRecursive">
         <e p=".dockerignore" t="Include" />
@@ -189,6 +189,7 @@
               <e p="ParsedBool.cs" t="Include" />
               <e p="ParsedDecimal.cs" t="Include" />
               <e p="ParsedEnum.cs" t="Include" />
+              <e p="ParsedInt.cs" t="Include" />
               <e p="ParsedString.cs" t="Include" />
               <e p="ParsedValue.cs" t="Include" />
             </e>
@@ -306,6 +307,8 @@
         <e p="Machines" t="Include">
           <e p="Enums" t="Include">
             <e p="ActiveState.cs" t="Include" />
+            <e p="ApplicatorRadiusCompensation.cs" t="Include" />
+            <e p="ApplicatorSpinDirection.cs" t="Include" />
             <e p="EnabledType.cs" t="Include" />
             <e p="FactorType.cs" t="Include" />
             <e p="FeedRateMode.cs" t="Include" />
@@ -315,6 +318,7 @@
             <e p="MachineErrorType.cs" t="Include" />
             <e p="MachineLogLevel.cs" t="Include" />
             <e p="MachineMotionType.cs" t="Include" />
+            <e p="MachineOverridesMode.cs" t="Include" />
             <e p="MachinePinType.cs" t="Include" />
             <e p="MachineProgramState.cs" t="Include" />
             <e p="MachineSettingUnits.cs" t="Include" />
@@ -322,8 +326,6 @@
             <e p="ModalGroup.cs" t="Include" />
             <e p="MovementDistanceType.cs" t="Include" />
             <e p="PathControlMode.cs" t="Include" />
-            <e p="RadiusCompensation.cs" t="Include" />
-            <e p="SpinDirection.cs" t="Include" />
             <e p="SpindleSpeedMode.cs" t="Include" />
             <e p="TimingMode.cs" t="Include" />
             <e p="UnitType.cs" t="Include" />
@@ -340,8 +342,9 @@
             <e p="AxisFlags.cs" t="Include" />
             <e p="MachineConnectionOptions.cs" t="Include" />
             <e p="MachineLogEntryFilterInputType.cs" t="Include" />
-            <e p="MachineModalState.cs" t="Include" />
+            <e p="MachineModalEnum.cs" t="Include" />
             <e p="MachinePatch.cs" t="Include" />
+            <e p="ModalChange.cs" t="Include" />
           </e>
           <e p="Models" t="Include">
             <e p="ApplicatorState.cs" t="Include" />
@@ -416,6 +419,7 @@
         <e p="programs" t="Include">
           <e p="Enums" t="Include">
             <e p="ProgramInstructionType.cs" t="Include" />
+            <e p="ProgramState.cs" t="Include" />
           </e>
           <e p="Graph" t="Include">
             <e p="ProgramsMutation.cs" t="Include" />
@@ -425,9 +429,12 @@
           <e p="Interfaces" t="Include">
             <e p="IProgramSource.cs" t="Include" />
           </e>
+          <e p="Messages" t="Include">
+            <e p="ProgramFileUpload.cs" t="Include" />
+          </e>
           <e p="Models" t="Include">
             <e p="ProgramFile.cs" t="Include" />
-            <e p="ProgramFileUpload.cs" t="Include" />
+            <e p="ProgramFileMeta.cs" t="Include" />
             <e p="ProgramInstruction.cs" t="Include" />
             <e p="ProgramParameter.cs" t="Include" />
           </e>
@@ -465,11 +472,12 @@
             </e>
             <e p="GCodeBlock.cs" t="Include" />
             <e p="GCodeLetter.cs" t="Include" />
-            <e p="GCodeProgram.cs" t="Include" />
             <e p="GCodeWord.cs" t="Include" />
           </e>
           <e p="ProgramSyntax.cs" t="Include" />
           <e p="SyntaxChunk.cs" t="Include" />
+          <e p="SyntaxLine.cs" t="Include" />
+          <e p="SyntaxType.cs" t="Include" />
         </e>
         <e p="Workspaces" t="Include">
           <e p="Enums" t="Include">
@@ -506,6 +514,9 @@
           <e p="MaslowTests.cs" t="Include" />
         </e>
         <e p="files" t="Include">
+          <e p="backs.nc" t="Include" />
+          <e p="heart-050_thick-025_bit.nc" t="Include" />
+          <e p="hexagon-4.5w-4bit.nc" t="Include" />
           <e p="makerverse112.json" t="Include" />
         </e>
         <e p="JsonFileDataAttribute.cs" t="Include" />

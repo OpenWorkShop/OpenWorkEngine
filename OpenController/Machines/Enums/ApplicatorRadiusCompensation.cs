@@ -1,5 +1,5 @@
 namespace OpenWorkEngine.OpenController.Machines.Enums {
-  public enum RadiusCompensation {
+  public enum ApplicatorRadiusCompensation {
     None,
     Left,
     Right,

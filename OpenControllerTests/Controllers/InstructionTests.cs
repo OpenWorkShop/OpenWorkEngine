@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using FluentAssertions;
-using MakerverseServerTests;
 using Newtonsoft.Json;
 using OpenWorkEngine.OpenController.Controllers.Interfaces;
 using OpenWorkEngine.OpenController.Controllers.Messages;
@@ -38,7 +37,7 @@ namespace OpenWorkEngine.OpenControllerTests.Controllers {
       GCodeBlock block = new GCodeBlock(template, src);
       MoveCommand move = json == null ? new MoveCommand() : JsonConvert.DeserializeObject<MoveCommand>(json);
       CompiledInstruction compiled = block.Compile(new ControllerExecutionOptions() { Args = move });
-      compiled.Code
+      compiled.Line.Raw
               .Should().NotBeEmpty()
               .And.NotContain("$", "{", "}")
               .And.NotContain("A", "B", "C")

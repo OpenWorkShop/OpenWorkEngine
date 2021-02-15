@@ -4,12 +4,12 @@ import {
   WorkspaceFullSettingsFragment,
   WorkspaceState, UnitType
 } from '../graphql';
+import {IconDefinition} from '@fortawesome/fontawesome-common-types';
 
 export interface IWorkspace {
   id: string;
   portName: string;
   state: WorkspaceState;
-  units: UnitType;
   error?: AlertError | null;
   settings: WorkspaceFullSettingsFragment;
   port?: WorkspacePortConnectionFragment | null;
@@ -27,7 +27,7 @@ export interface IHaveWorkspace {
   workspaceId: string;
 }
 
-export interface IWorkspaceSettingsTab {
+export interface ITabDefinition {
   key: string;
 
   title: string;
@@ -51,3 +51,10 @@ export type ControllerEventMap = { [key: string]: () => void };
 // export interface IWorkspaceEvent {
 //   type: WorkspaceEventType;
 // }
+
+export interface IWorkspaceFeature {
+  title: string,
+  icon?: IconDefinition,
+  disabled?: boolean;
+}
+

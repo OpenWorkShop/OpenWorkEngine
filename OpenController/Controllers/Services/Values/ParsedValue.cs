@@ -7,8 +7,11 @@ namespace OpenWorkEngine.OpenController.Controllers.Services.Values {
   public interface IParsedValue {
     public object? ValueObject { get; }
 
-    // Appropriate for setting the value.
+    // Might be enum name instead of the numeric value
     public string ValueString { get; }
+
+    // Appropriate for setting the value.
+    public string ValueCode { get; }
   }
 
   /// <summary>
@@ -18,6 +21,8 @@ namespace OpenWorkEngine.OpenController.Controllers.Services.Values {
     public abstract object? ValueObject { get; }
 
     public abstract string ValueString { get; }
+
+    public virtual string ValueCode => ValueString;
 
     internal abstract ParsedValue Parse(string val);
 
@@ -39,49 +44,4 @@ namespace OpenWorkEngine.OpenController.Controllers.Services.Values {
 
     public override int GetHashCode() => (ValueObject != null ? ValueObject.GetHashCode() : 0);
   }
-
-  /// <summary>
-  /// Contains data read from the SerialPort pertaining to a specific setting.
-  /// Wrapped by FirmwareSetting, which bridges the MachineSetting to this "current" value.
-  /// </summary>
-  // public class FirmwareSettingValue<TData> : FirmwareSettingValue {
-  //   public TData Value { get; } = default!;
-  //
-  //   public override object? ValueObject => Value;
-  //
-  //   public FirmwareSettingValue(TData value) {
-  //     Value = value;
-  //   }
-  //
-  //   public override IFirmwareSettingValue Parse(string value) {
-  //     return new FirmwareSettingValue<TData>(ParseValue(value));
-  //   }
-  //
-  //   public override TRes Get<TRes>() where TRes : class => Value is TRes res ? res : default!;
-  //
-  //   internal TData ParseValue(string value) {
-  //     Type t = typeof(TData);
-  //     decimal.TryParse(value, out decimal dVal);
-  //     int iVal = (int) dVal;
-  //     object obj = value;
-  //     if (t == typeof(KinematicsMode)) {
-  //       obj = (KinematicsMode) iVal;
-  //     }
-  //     if (t == typeof(bool)) {
-  //       obj = iVal == 0 ? "false" : "true";
-  //     }
-  //     if (t == typeof(StatusReportType)) {
-  //       obj = (StatusReportType) iVal;
-  //     }
-  //     if (t == typeof(FirmwareAxisFlags)) {
-  //       // Bit-flag mask.
-  //       obj = new FirmwareAxisFlags() {
-  //         X = (iVal & (1 << 0)) != 0,
-  //         Y = (iVal & (1 << 1)) != 0,
-  //         Z = (iVal & (1 << 2)) != 0,
-  //       };
-  //     }
-  //     return (TData) Convert.ChangeType(obj, typeof(TData));;
-  //   }
-  // }
 }

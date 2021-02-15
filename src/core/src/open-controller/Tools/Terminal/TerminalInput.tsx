@@ -18,10 +18,20 @@ const TerminalInput: FunctionComponent<Props> = (props) => {
   const { sendCommand } = props;
   const [code, setCode] = React.useState('');
 
-  useHotkeys('Shift+Enter', (e ) => {
-    // if (!e.ctrlKey && !e.metaKey && !e.shiftKey) return;
+  function execute() {
     sendCommand(code);
+    setCode('');
+  }
+
+  useHotkeys('Shift+Enter', ( ) => {
+    execute();
   }, [code, sendCommand]);
+
+  function onKeyPress(key: string): void {
+    if (key === 'Enter') {
+      execute();
+    }
+  }
 
   return (<FormControl
     className={clsx(classes.inputFormControl, classes.altRow)}
@@ -46,6 +56,7 @@ const TerminalInput: FunctionComponent<Props> = (props) => {
         </InputAdornment>
       }
       autoFocus={true}
+      onKeyDown={(e) => onKeyPress(e.key)}
       onChange={(e) => setCode(e.currentTarget.value)}
     />
   </FormControl>);

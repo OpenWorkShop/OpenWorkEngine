@@ -1,3 +1,4 @@
+using HotChocolate;
 using HotChocolate.Execution.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OpenWorkEngine.OpenController.Identity.Graph;
@@ -6,6 +7,7 @@ using OpenWorkEngine.OpenController.Ports.Graph;
 using OpenWorkEngine.OpenController.Programs.Graph;
 using OpenWorkEngine.OpenController.Settings.Graph;
 using OpenWorkEngine.OpenController.Workspaces.Graph;
+using Serilog;
 
 namespace OpenWorkEngine.OpenController {
   public static class OpenControllerSchema {
@@ -14,14 +16,20 @@ namespace OpenWorkEngine.OpenController {
     public const string Mutation = "Mutation";
 
     public static IRequestExecutorBuilder AddOpenControllerSchema(this IRequestExecutorBuilder builder) =>
-      builder.AddQueryType(d => d.Name(Query))
-             .AddSubscriptionType(d => d.Name(Subscription))
-             .AddMutationType(d => d.Name(Mutation))
-             .AddPortsSchema()
-             .AddMachineSchema()
-             .AddWorkspaceSchema()
-             .AddSettingsSchema()
-             .AddProgramsSchema()
-             .AddOpenControllerIdentitySchema();
+      builder
+       .AddQueryType(d => d.Name(Query))
+       .AddSubscriptionType(d => d.Name(Subscription))
+       .AddMutationType(d => d.Name(Mutation))
+       .AddPortsSchema()
+       .AddMachineSchema()
+       .AddWorkspaceSchema()
+       .AddSettingsSchema()
+       .AddProgramsSchema()
+       .AddOpenControllerIdentitySchema()
+       .OnSchemaError((context, e) => {
+          if (e is SchemaException ex) {
+            Log.Fatal(ex, "[SCHEMA] {errors}", ex.Errors);
+          }
+        });
   }
 }

@@ -15,7 +15,7 @@ namespace OpenWorkEngine.OpenController.Ports.Graph {
       [Service] ControllerManager controllers, string portName, FirmwareRequirement firmware, SerialPortOptions options
     ) => (await controllers.Open(
       new MachineConnectionOptions(portName, options, firmware)
-    )).Connection.Port;
+    )).StartTask().Connection.Port;
 
     [AuthorizeWriteControllers]
     public Task<SystemPort> ClosePort([Service] ControllerManager controllers, string portName) =>

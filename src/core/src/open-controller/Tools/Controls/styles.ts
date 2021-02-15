@@ -2,10 +2,13 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import {rowAlternateCss} from '../../../themes';
 
 const useStyles = makeStyles((theme: Theme) => ({
-  root: {
+  jogger: {
     marginTop: theme.spacing(0.5),
     padding: theme.spacing(1),
     textAlign: 'center',
+  },
+  override: {
+    marginTop: theme.spacing(1),
   },
   jogAxisButton: {
     padding: 0,
@@ -28,13 +31,22 @@ const useStyles = makeStyles((theme: Theme) => ({
   numberSelect: {
     maxHeight: 44,
   },
-  dialogFooter: {
+  footer: {
     ...rowAlternateCss,
-    padding: theme.spacing(2),
   },
-  override: {
-    margin: theme.spacing(0.5),
-    marginTop: theme.spacing(1),
+  buttonLeft: {
+    marginLeft: theme.spacing(1),
+    marginBottom: theme.spacing(0.5),
+  },
+  buttonRight: {
+    marginRight: theme.spacing(1),
+    marginBottom: theme.spacing(0.5),
+  },
+  buttonIcon: {
+    padding: 0,
+    margin: 0,
+    position: 'relative',
+    left: -8,
   },
 }));
 

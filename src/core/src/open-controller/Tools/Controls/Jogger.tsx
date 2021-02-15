@@ -7,17 +7,19 @@ import JogButton from './JogButton';
 import useStyles from './styles';
 import JogStepSelect from './JogStepSelect';
 import {useTrans} from '../../Context';
-import {useWorkspaceSelector, useWorkspaceUnits} from '../../Workspaces';
+import {useWorkspaceControllerSelector, useWorkspaceSelector, useWorkspaceUnits} from '../../Workspaces';
 import {getMachineAxisJogSteps} from '../../Machines';
 import {
   AxisName,
-  MachineMotionType,
+  MachineMotionType, MachineOverridesMode, MachineSettingUnits,
   MoveCommandInput,
   MovementDistanceType,
   UnitType,
   useMoveMachineMutation
 } from '../../graphql';
 import {useLogger} from '../../../hooks';
+import OverrideControl from './OverrideControl';
+import {useControllerCommand} from '../../Controllers/hooks';
 
 const Jogger: ToolBase = (props) => {
   const t = useTrans();
@@ -25,7 +27,7 @@ const Jogger: ToolBase = (props) => {
   const classes = useStyles();
   const { workspaceId } = props;
   const units = useWorkspaceUnits(workspaceId);
-  const jogOpts = { imperialUnits: units === UnitType.Imperial };
+  const jogOpts = { units };
   const axes = useWorkspaceSelector(workspaceId, ws => ws.settings.axes);
   const zAxis = _.find(axes, a => a.name === AxisName.Z);
   const xyAxis = _.find(axes, a => a.name === AxisName.X) ||
@@ -34,7 +36,10 @@ const Jogger: ToolBase = (props) => {
   const [zStep, setZStep] = React.useState<number>(1);
   const zSteps = zAxis ? getMachineAxisJogSteps(zAxis, jogOpts) : [];
   const xySteps = xyAxis ? getMachineAxisJogSteps(xyAxis, jogOpts) : [];
-  const [moveMachine] = useMoveMachineMutation();
+  const isEnabled = useWorkspaceControllerSelector(workspaceId, c => c.canReceiveCommands);
+  const applicator = useWorkspaceControllerSelector(workspaceId, c => c.machine.status.applicator);
+  const overrides = useWorkspaceControllerSelector(workspaceId, c => c.machine.status.overrides);
+  const [moveMachine] = useControllerCommand(workspaceId, useMoveMachineMutation());
 
   const reqs: IMoveRequest[] = [
     { distanceType: MovementDistanceType.Relative, x: -xyStep, y: xyStep },
@@ -56,32 +61,28 @@ const Jogger: ToolBase = (props) => {
   }
 
   async function move(req: IMoveRequest): Promise<void> {
-    try {
-      const moveCommand: MoveCommandInput = {
-        x: undefinedToNull(req.x),
-        y: undefinedToNull(req.y),
-        z: undefinedToNull(req.z),
-        a: undefinedToNull(req.a),
-        b: undefinedToNull(req.b),
-        c: undefinedToNull(req.c),
-        motionType: req.motionType || MachineMotionType.Rapid,
-        distanceType: req.distanceType,
-      };
-      log.debug('move', Object.keys(req), moveCommand);
-      await moveMachine({ variables: { workspaceId, moveCommand }});
-    } catch (e) {
-      log.error(e);
-    }
+    const moveCommand: MoveCommandInput = {
+      x: undefinedToNull(req.x),
+      y: undefinedToNull(req.y),
+      z: undefinedToNull(req.z),
+      a: undefinedToNull(req.a),
+      b: undefinedToNull(req.b),
+      c: undefinedToNull(req.c),
+      motionType: req.motionType || MachineMotionType.Rapid,
+      distanceType: req.distanceType,
+    };
+    log.debug('move', Object.keys(req), moveCommand);
+    await moveMachine({ variables: { workspaceId, moveCommand }});
   }
 
   function renderJogButtonCell(req: IMoveRequest) {
     return <Grid key={reqs.indexOf(req)} item xs={3}>
-      <JogButton moveRequest={req} move={move} />
+      <JogButton moveRequest={req} move={move} disabled={!isEnabled} />
     </Grid>;
   }
 
   return (
-    <Grid container spacing={1} className={classes.root} >
+    <Grid container spacing={1} className={classes.jogger} >
       <Grid item xs={6}>
         <JogStepSelect
           title={t('X/Y Axis Step')}
@@ -101,6 +102,28 @@ const Jogger: ToolBase = (props) => {
       {reqs.map((req) => {
         return renderJogButtonCell(req);
       })}
+      <Grid item xs={6}>
+        <OverrideControl
+          title={t('Feed')}
+          disabled={!isEnabled}
+          className={classes.override}
+          units={MachineSettingUnits.MillimetersPerMinute}
+          value={applicator.feedRate.data}
+          override={[MachineOverridesMode.All, MachineOverridesMode.Feeds].includes(overrides?.mode.data) ?
+            overrides.feed.data : undefined}
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <OverrideControl
+          title={t('Speed')}
+          disabled={!isEnabled}
+          className={classes.override}
+          units={MachineSettingUnits.Rpm}
+          value={applicator.spinSpeed.data}
+          override={[MachineOverridesMode.All, MachineOverridesMode.Speeds].includes(overrides?.mode.data) ?
+            overrides.speed.data : undefined}
+        />
+      </Grid>
     </Grid>
   );
 };

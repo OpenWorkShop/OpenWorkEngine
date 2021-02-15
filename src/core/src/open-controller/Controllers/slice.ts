@@ -1,5 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {
+  ActiveState,
   ControlledMachineFragment,
   MachineLogEntryConnectionFragment,
   MachineLogEntryFragment,
@@ -11,7 +12,7 @@ import {
   IMachineStatusUpdate,
   ControllersState,
   IMachineSettingsUpdate,
-  IMachineLogPageUpdate, IMachineLogs, IMachineLogsUpdate
+  IMachineLogPageUpdate, IMachineLogs, IMachineLogsUpdate, IController
 } from './types';
 
 const initialState: ControllersState = {
@@ -21,8 +22,7 @@ const initialState: ControllersState = {
 
 // Non-destructive update either inserts or updates all records provided.
 function getMachineLogs(state: ControllersState, id: string, newLogs: MachineLogEntryFragment[], pageInfo?: PageInfoFragment): IMachineLogs {
-  const oldMachine = state.controllerMap[id]?.machine;
-  const logs = [...(oldMachine?.logs?.nodes ?? [])];
+  const logs = [...state.controllerMap[id].logs.sortedLogs];
 
   newLogs.forEach((newLog) => {
     const oldLogIdx = _.findLastIndex(logs, { id: newLog.id });
@@ -41,16 +41,23 @@ function getMachineLogs(state: ControllersState, id: string, newLogs: MachineLog
 function updateMachineLogPage(state: ControllersState, id: string, newLogs?: MachineLogEntryConnectionFragment): ControllersState {
   if (!newLogs) return state;
   state.controllerMap[id].logs = getMachineLogs(state, id, newLogs.nodes ?? [], newLogs.pageInfo);
+  onControllerUpdated(state.controllerMap[id]);
   return state;
+}
+
+function onControllerUpdated(controller: IController): void {
+  const invalidStates = [ActiveState.Initializing, ActiveState.Alarm, undefined, null];
+  controller.canReceiveCommands = !invalidStates.includes(controller.machine.status.activityState);
 }
 
 function updateControlledMachine(state: ControllersState, machine: ControlledMachineFragment): ControllersState {
   const id = machine.topicId;
   if (!state.controllerMap[id]) {
-    state.controllerMap[id] = { machine, logs: { sortedLogs: [] } };
+    state.controllerMap[id] = { machine, logs: { sortedLogs: [] }, canReceiveCommands: false };
     state.controllerIds = Object.keys(state.controllerMap);
   }
   else state.controllerMap[id].machine = machine;
+  onControllerUpdated(state.controllerMap[id]);
   return updateMachineLogPage(state, id, machine.logs ?? undefined);
 }
 
@@ -63,17 +70,19 @@ const controllersSlice = createSlice({
 
     onControlledMachineSettings(state, action: PayloadAction<IMachineSettingsUpdate>) {
       state.controllerMap[action.payload.topicId].machine.settings = action.payload.settings;
-      console.log('[SETTINGS]', action.payload.settings);
+      onControllerUpdated(state.controllerMap[action.payload.topicId]);
       return state;
     },
 
     onControlledMachineStatus(state, action:  PayloadAction<IMachineStatusUpdate>) {
       state.controllerMap[action.payload.topicId].machine.status = action.payload.status;
+      onControllerUpdated(state.controllerMap[action.payload.topicId]);
       return state;
     },
 
     onControlledMachineConfiguration(state, action: PayloadAction<IMachineConfigUpdate>) {
       state.controllerMap[action.payload.topicId].machine.configuration = action.payload.configuration;
+      onControllerUpdated(state.controllerMap[action.payload.topicId]);
       return state;
     },
 
@@ -85,6 +94,7 @@ const controllersSlice = createSlice({
     onControlledMachineLogs(state, action: PayloadAction<IMachineLogsUpdate>) {
       const id = action.payload.topicId;
       state.controllerMap[id].logs = getMachineLogs(state, id, action.payload.logs);
+      onControllerUpdated(state.controllerMap[id]);
       return state;
     },
   }

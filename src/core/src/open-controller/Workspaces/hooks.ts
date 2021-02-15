@@ -1,8 +1,10 @@
-import {IWorkspace} from './types';
-import { useSelector } from 'react-redux';
+import {IWorkspace, IWorkspaceFeature} from './types';
+import {useSelector} from 'react-redux';
 import {AppState} from '../redux';
 import {ControlledMachineFragment, UnitType} from '../graphql';
 import {IController} from '../Controllers';
+import {faLink} from '@fortawesome/free-solid-svg-icons';
+import {mm2in} from '../../components/Units';
 
 export function useWorkspaceIds(): string[] {
   return useSelector<AppState, string[]>(s => s.workspaces.workspaceIds);
@@ -18,7 +20,15 @@ export function useWorkspaceSelector<T>(workspaceId: string, sel: (workspace: IW
 
 // Helper hook while inside a workspace to check if using imperial.
 export function useWorkspaceUnits(workspaceId: string): UnitType {
-  return useWorkspaceSelector(workspaceId, ws =>  ws.units);
+  const units = tryUseWorkspaceControllerSelector(workspaceId, c => c.machine.configuration.modals.units);
+  const preferImperial = useWorkspaceSelector(workspaceId, ws => ws.settings.preferImperial);
+  if (units) return units.data;
+  return preferImperial ? UnitType.Imperial : UnitType.Metric;
+}
+
+export function convertUnits(displayUnitType: UnitType, ...units: number[]): number[] {
+  if (displayUnitType === UnitType.Metric) return units;
+  return units.map(mm2in);
 }
 
 export function useWorkspace(workspaceId: string): IWorkspace {
@@ -62,4 +72,10 @@ export function useWorkspaceControllerSelector<T>(workspaceId: string, sel: (con
 
     return sel(controller);
   });
+}
+export function useWorkspaceFeature(workspaceId: string, key: string, def: IWorkspaceFeature): IWorkspaceFeature {
+  const f = useWorkspaceSelector(workspaceId, ws => ws.settings.features.find(f => f.key === key));
+  if (!f) return def;
+  const icon = f.icon === 'fa-link' ? faLink : undefined;
+  return { icon, title: f.title ?? def.title, disabled: f.disabled ?? false };
 }

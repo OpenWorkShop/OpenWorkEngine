@@ -1,12 +1,17 @@
 import React, { FunctionComponent } from 'react';
 import {useOpenController, useWindowSize} from '../Context';
 import GWizCanvas from './Visualizer/GWizCanvas';
-import {IVisualizerControlsPreferences, IVisualizerStyles, ViewPlane} from './types';
-import {useSelector} from 'react-redux';
+import {
+  IVisualizerControlsPreferences,
+  IVisualizerStyles,
+  GWizActions,
+  IVisualizerSceneState
+} from './types';
+import {useDispatch, useSelector} from 'react-redux';
 import {AppState} from '../redux';
 import {IMachineAxis} from '../Machines';
-import NavCube from './Visualizer/NavCube';
-import {IHaveWorkspace, tryUseWorkspaceControllerSelector, useWorkspaceControllerSelector} from '../Workspaces';
+import {IHaveWorkspace, tryUseWorkspaceControllerSelector} from '../Workspaces';
+import {gWizSlice} from './index';
 
 type Props = IHaveWorkspace & {
   className?: string,
@@ -15,6 +20,7 @@ type Props = IHaveWorkspace & {
 
 const GWiz: FunctionComponent<Props> = (props) => {
   const { className, axes, workspaceId } = props;
+  const sceneId = workspaceId;
   const oc = useOpenController();
   const domId = `gWiz-${workspaceId}`;
   const cubeId = `${domId}-cube`;
@@ -22,13 +28,24 @@ const GWiz: FunctionComponent<Props> = (props) => {
   const { width, height } = useWindowSize();
 
   // Redux state.
+  const dispatch = useDispatch();
   const controls =
     useSelector<AppState, IVisualizerControlsPreferences>(s => s.gWiz.visualizerPreferences.controls);
   const styles = useSelector<AppState, IVisualizerStyles>(s => s.gWiz.visualizerPreferences.styles);
-  const viewPlane = useSelector<AppState, ViewPlane>(s => s.gWiz.visualizerPreferences.viewPlane);
+  const sceneState = useSelector<AppState, IVisualizerSceneState | undefined>(s => s.gWiz.scenes[sceneId]);
+
+  function buildActions(): GWizActions {
+    return {
+      saveCameraState: (state) =>
+        dispatch(gWizSlice.actions.setCameraState({ sceneId, state })),
+    };
+  }
 
   // Memo canvas must depend only upon immutable objects, so it does not get re-created.
-  const canvas: GWizCanvas = React.useMemo(() => new GWizCanvas(oc), [oc]);
+  const canvas: GWizCanvas = React.useMemo(
+    () => new GWizCanvas(oc, buildActions()),
+    [oc, dispatch]
+  );
 
   // Infrequent changes to machine axes themselves.
   React.useEffect(() => {
@@ -36,9 +53,9 @@ const GWiz: FunctionComponent<Props> = (props) => {
     canvas.draw(axes, navCubeDiv);
   }, [canvas, axes, cubeId]);
 
-  // Respond to preferences changes.
+  // Respond to preferences & state changes.
+  React.useEffect(() => { canvas.applySceneState(sceneState); }, [canvas, sceneState]);
   React.useEffect(() => { canvas.controls.applyPreferences(controls); }, [canvas, controls]);
-  React.useEffect(() => { canvas.applyViewPlane(viewPlane); }, [canvas, viewPlane]);
   React.useEffect(() => { canvas.applyStyles( styles ); }, [ canvas, styles ]);
 
   // Update machine state
@@ -46,6 +63,14 @@ const GWiz: FunctionComponent<Props> = (props) => {
   React.useEffect(() => {
     if (mPos) canvas.updatePosition(mPos);
   }, [canvas, mPos]);
+
+
+  const units = tryUseWorkspaceControllerSelector(workspaceId, c => c.machine.configuration.modals.units.data);
+  const plane = tryUseWorkspaceControllerSelector(workspaceId, c => c.machine.configuration.modals.plane.data);
+  React.useEffect(() => {
+    if (units) dispatch(gWizSlice.actions.setSceneUnits({ sceneId, state: units }));
+    if (plane) dispatch(gWizSlice.actions.setScenePlane({ sceneId, state: plane }));
+  }, [canvas, sceneId, units, plane]);
 
   // Create and/or resize the canvas
   React.useEffect(() => {

@@ -1,8 +1,11 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using HotChocolate.Types;
 using OpenWorkEngine.OpenController.Controllers.Enums;
 using OpenWorkEngine.OpenController.Controllers.Messages;
 using OpenWorkEngine.OpenController.Controllers.Services.Values;
+using OpenWorkEngine.OpenController.ControllerSyntax;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
 using OpenWorkEngine.OpenController.MachineProfiles.Interfaces;
 using OpenWorkEngine.OpenController.Machines.Enums;
@@ -10,6 +13,9 @@ using OpenWorkEngine.OpenController.Machines.Messages;
 using Serilog;
 
 namespace OpenWorkEngine.OpenController.Machines.Models {
+
+  public record SelectOption(string ItemId, string Name);
+
   public class FirmwareSettingType : ObjectType<FirmwareSetting> {
     protected override void Configure(IObjectTypeDescriptor<FirmwareSetting> descriptor) {
       base.Configure(descriptor);
@@ -29,6 +35,8 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     public bool HasBeenRead => _value != null;
 
     internal bool IsDirty { get; set; }
+
+    internal virtual string GetValueKey(string value) => Key;
 
     public int Index {
       get => _index;
@@ -73,6 +81,8 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
       }
     }
 
+    public string ValueCode => CurrentValue?.ValueCode ?? "";
+
     // Must always return non-null, so before it's loaded, returns empty.
     public string Key {
       get => _key ?? "";
@@ -85,7 +95,7 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     private string? _key = null;
     private string? _value = null;
 
-    public override string ToString() => $"{Key}={Value}";
+    public override string ToString() => $"{Key}={ValueCode}";
 
     internal static FirmwareSetting<TData> Define<TData>(
       TData defaultValue, MachineSettingUnits units = MachineSettingUnits.Unknown
@@ -93,10 +103,26 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
       ParsedValue? val = null;
       if (defaultValue is decimal d) val = new ParsedDecimal(d);
       else if (defaultValue is bool b) val = new ParsedBool(b);
+      else if (defaultValue is int i) val = new ParsedInt(i);
       else if (defaultValue is string s) val = new ParsedString(s);
       else if (defaultValue is AxisFlags f) val = new ParsedAxisFlags(f);
       else if (defaultValue is StatusReportType srt) val = new ParsedEnum<StatusReportType>(srt);
       else if (defaultValue is KinematicsMode km) val = new ParsedEnum<KinematicsMode>(km);
+      else if (defaultValue is MachineMotionType mmt) val = new ParsedEnum<MachineMotionType>(mmt);
+      else if (defaultValue is MovementDistanceType mdt) val = new ParsedEnum<MovementDistanceType>(mdt);
+      else if (defaultValue is AxisPlane ap) val = new ParsedEnum<AxisPlane>(ap);
+      else if (defaultValue is FeedRateMode fr) val = new ParsedEnum<FeedRateMode>(fr);
+      else if (defaultValue is UnitType ut) val = new ParsedEnum<UnitType>(ut);
+      else if (defaultValue is TimingMode tm) val = new ParsedEnum<TimingMode>(tm);
+      else if (defaultValue is PathControlMode pcm) val = new ParsedEnum<PathControlMode>(pcm);
+      else if (defaultValue is SpindleSpeedMode spm) val = new ParsedEnum<SpindleSpeedMode>(spm);
+      else if (defaultValue is EnabledType et) val = new ParsedEnum<EnabledType>(et);
+      else if (defaultValue is MachineProgramState mps) val = new ParsedEnum<MachineProgramState>(mps);
+      else if (defaultValue is ApplicatorRadiusCompensation a) val = new ParsedEnum<ApplicatorRadiusCompensation>(a);
+      else if (defaultValue is ApplicatorSpinDirection spn) val = new ParsedEnum<ApplicatorSpinDirection>(spn);
+      else if (defaultValue is FactorType ft) val = new ParsedEnum<FactorType>(ft);
+      else if (defaultValue is MachineCoolantState cool) val = new ParsedEnum<MachineCoolantState>(cool);
+      else if (defaultValue is MachineOverridesMode orm) val = new ParsedEnum<MachineOverridesMode>(orm);
       else {
         Log.Error("Invalid FirmwareSetting {type} {value}", defaultValue?.GetType(), defaultValue);
       }
@@ -104,6 +130,13 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
         DefaultValue = val ?? new ParsedString(defaultValue?.ToString() ?? ""),
         Units = units,
       };
+    }
+
+    internal static ModalSetting<TData> Modal<TData>(
+      TData defaultValue, MachineSettingUnits units = MachineSettingUnits.Unknown
+    ) {
+      FirmwareSetting setting = Define(defaultValue, units);
+      return new ModalSetting<TData>() {DefaultValue = setting.DefaultValue, Units = setting.Units};
     }
   }
 
@@ -116,12 +149,75 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
       descriptor.Type<ParsedAxisFlagsType>();
       descriptor.Type<ParsedEnumType<StatusReportType>>();
       descriptor.Type<ParsedEnumType<KinematicsMode>>();
+      descriptor.Type<ParsedEnumType<MachineMotionType>>();
+      descriptor.Type<ParsedEnumType<MovementDistanceType>>();
+      descriptor.Type<ParsedEnumType<AxisPlane>>();
+      descriptor.Type<ParsedEnumType<FeedRateMode>>();
+      descriptor.Type<ParsedEnumType<UnitType>>();
+      descriptor.Type<ParsedEnumType<TimingMode>>();
+      descriptor.Type<ParsedEnumType<PathControlMode>>();
+      descriptor.Type<ParsedEnumType<SpindleSpeedMode>>();
+      descriptor.Type<ParsedEnumType<EnabledType>>();
+      descriptor.Type<ParsedEnumType<MachineProgramState>>();
+      descriptor.Type<ParsedEnumType<ApplicatorRadiusCompensation>>();
+      descriptor.Type<ParsedEnumType<ApplicatorSpinDirection>>();
+      descriptor.Type<ParsedEnumType<FactorType>>();
+      descriptor.Type<ParsedEnumType<MachineCoolantState>>();
+      descriptor.Type<ParsedEnumType<MachineOverridesMode>>();
     }
   }
 
+  public class FirmwareSettingMutation {
+    internal FirmwareSetting Setting { get; }
+    public string Value { get; }
+    public bool HasChanged => !Setting.Value.Equals(Value);
+    public string? OrigValue { get; internal set; }
+
+    public FirmwareSettingMutation(FirmwareSetting setting, string value) {
+      Setting = setting;
+      Value = value;
+    }
+
+    internal bool Apply(ControlledMachine machine) {
+      if (OrigValue != null) throw new ArgumentException($"Mutation already applied.");
+      if (!HasChanged) return false;
+      OrigValue = Setting.Value;
+      Setting.Value = Value;
+      return true;
+    }
+  }
 
   public class FirmwareSetting<TData> : FirmwareSetting {
-    public TData Data => Object is TData data ? data :
-      throw new ArgumentException($"Invalid setting value: '{Object?.GetType()}' is not a '{typeof(TData)}'");
+    public TData Data {
+      get => Object is TData data ? data : default!;
+      set => Value = value?.ToString() ?? throw new ArgumentException("Cannot un-set.");
+    }
+
+    public FirmwareSettingMutation GetMutation(TData value) {
+      // if (value == null) return null;
+      // if (Data != null && value.Equals(Data)) return null;
+      return new FirmwareSettingMutation(this, value?.ToString() ?? "");
+    }
+  }
+  //
+  //
+  // public class ModalOption<TData> {
+  //   public TData Data { get; internal set; }
+  //
+  //   public string Code { get; }
+  //
+  //   public string Name { get; }
+  // }
+
+  public record ModalOption<TData>(string Code, TData Data) {
+    public string Value => Data?.ToString() ?? "";
+
+    internal ModalDefinition SettingDefinition { get; init; }
+  }
+
+  public class ModalSetting<TData> : FirmwareSetting<TData> {
+    public List<ModalOption<TData>> Options { get; internal set; } = new();
+
+    internal override string GetValueKey(string value) => Options.First(o => o.Value.Equals(value)).Code;
   }
 }

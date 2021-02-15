@@ -11,7 +11,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Models {
 
     public bool AwaitResponse { get; internal init; } = false;
 
-    public string? Source { get; internal init; }
+    public string? OverrideSource { get; internal init; }
 
     public string? Comment { get; internal init; }
   }

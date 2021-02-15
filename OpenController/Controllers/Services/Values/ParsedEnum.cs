@@ -6,11 +6,13 @@ using OpenWorkEngine.OpenController.Controllers.Enums;
 namespace OpenWorkEngine.OpenController.Controllers.Services.Values {
   public class ParsedEnum<TEnum> : ParsedValue where TEnum : struct, IComparable {
 
-    public TEnum ValueEnum { get; }
+    public TEnum ValueEnum { get;  }
 
     public override object? ValueObject => ValueEnum;
 
-    public override string ValueString => Values[ValueEnum].ToString();
+    public override string ValueString => ValueEnum.ToString() ?? "";
+
+    public override string ValueCode => Values[ValueEnum].ToString();
 
     public Dictionary<TEnum, int> Values => _values ??= LoadValues();
 
@@ -19,7 +21,6 @@ namespace OpenWorkEngine.OpenController.Controllers.Services.Values {
     public ParsedEnum(TEnum? val) {
       if (!typeof(TEnum).IsEnum) throw new ArgumentException($"Not an enum: {typeof(TEnum)}");
       if (val.HasValue) ValueEnum = val.Value;
-
     }
 
     private Dictionary<TEnum, int> LoadValues() {

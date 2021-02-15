@@ -14,6 +14,34 @@ using OpenWorkEngine.OpenController.Syntax.GCode;
 using Serilog;
 
 namespace OpenWorkEngine.OpenController.ControllerSyntax {
+  internal abstract class ModalDefinition {
+    public string Path { get; internal init; } = default!;
+
+    public string Name { get; internal init; } = default!;
+
+    internal abstract List<SelectOption> SelectOptions { get; }
+
+    internal abstract void AddTo(ControlledMachine modals);
+
+    internal abstract FirmwareSetting GetFirmwareSetting(ControlledMachine machine);
+  }
+
+  internal class ModalDefinition<TData> : ModalDefinition {
+    internal Func<ControlledMachine, ModalSetting<TData>> Fetch { get; init; } = default!;
+
+    internal override FirmwareSetting GetFirmwareSetting(ControlledMachine machine) => Fetch.Invoke(machine);
+
+    internal List<ModalOption<TData>> Options { get; init; } = new();
+
+    internal override List<SelectOption> SelectOptions =>
+      Options.Select(o => new SelectOption(o.Code, o.ToString())).ToList();
+
+    internal override void AddTo(ControlledMachine modals) {
+      ModalSetting<TData> setting = Fetch(modals);
+      setting.Options = Options;
+      setting.Id = Path;
+    }
+  }
 
   internal class ControllerTranslator {
     // Generic command acknowledgement, e.g., "ok", executed before all others.
@@ -64,7 +92,38 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax {
     }
 
     internal ControllerScript SettingScript =
-      new (Compiler.LoadInstructions("{Key}={Value}", line => new GCodeBlock(line, "Setting")));
+      new (Compiler.LoadInstructions("{Key}={ValueCode}", line => new GCodeBlock(line, "Setting")));
+
+    internal ControllerScript ModalScript =
+      new (Compiler.LoadInstructions("{Key}", line => new GCodeBlock(line, "Modal")));
+
+    // Modal Name -> ModalDefinition
+    internal readonly Dictionary<string, ModalDefinition> modalDefinitions = new();
+
+    // Code -> function to set that code.
+    internal readonly Dictionary<string, Func<ControlledMachine, FirmwareSettingMutation>> modalSetters = new();
+
+    internal void AddModalOptions<TData>(
+      Expression<Func<ControlledMachine, ModalSetting<TData>>> expression, Dictionary<string, TData> map
+    ) {
+      string path = GetExpressionPath(expression);
+      ModalDefinition<TData> md = new ModalDefinition<TData>() {
+        Name = path.Split(".").Last(),
+        Path = path,
+        Fetch = expression.Compile(),
+        Options = new List<ModalOption<TData>>(),
+      };
+      md.Options.AddRange(map.Keys.Select(code => new ModalOption<TData>(code, map[code]) { SettingDefinition = md }));
+      foreach (string code in map.Keys) {
+        TData val = map[code];
+        modalSetters.Add(code, (m) => {
+          ModalSetting<TData> setting = md.Fetch(m);
+          return setting.GetMutation(val);
+        });
+      }
+      // Log.Verbose("Defining {prop} as {code} ({type})", path, code, typeof(TData).Name);
+      modalDefinitions.Add(md.Name, md);
+    }
 
     /// <summary>
     /// Directly set code for some well-known command (methodName) derived from an actual method name on the controller.
@@ -92,7 +151,8 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax {
     internal FirmwareSetting? GetSetting(ControlledMachine machine, string code) =>
       settingCodes.ContainsKey(code) ? settingCodes[code].Invoke(machine.Settings) : null;
 
-    internal void ApplyDefaultSettings(ControlledMachine machine) {
+    internal void ConfigureMachine(ControlledMachine machine) {
+      // Default settings
       foreach (string code in settingCodes.Keys) {
         FirmwareSetting? setting = GetSetting(machine, code);
         if (setting == null) {
@@ -108,6 +168,11 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax {
           setting.Title = title;
         }
       }
+
+      // Add options to modals
+      foreach (string key in modalDefinitions.Keys) {
+        modalDefinitions[key].AddTo(machine);
+      }
     }
 
     internal void DefineSetting(string code, Expression<Func<FirmwareSettings, FirmwareSetting>> expression) {
@@ -122,7 +187,7 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax {
     }
 
     // e.g., "StepperPins.Steps.X" -- the path from the root of the FirmwareSettings.
-    private string GetExpressionPath<T>(Expression<Func<FirmwareSettings, T>> expression)
+    private string GetExpressionPath<TData, TRet>(Expression<Func<TData, TRet>> expression)
     {
       var body = expression.Body as MemberExpression;
 
@@ -148,7 +213,6 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax {
           default:
             body = null;
             break;
-
         }
       }
     }

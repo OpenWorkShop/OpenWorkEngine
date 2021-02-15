@@ -8,12 +8,13 @@ import {useTrans} from '../../Context';
 type Props = {
   moveRequest: IMoveRequest;
   move: (req: IMoveRequest) => Promise<void>;
+  disabled: boolean;
 };
 
 const JogButton: React.FunctionComponent<Props> = (props) => {
   const t = useTrans();
   const classes = useStyles();
-  const { moveRequest, move } = props;
+  const { moveRequest, move, disabled } = props;
 
   function getIcon() {
     const parts = ['move'];
@@ -45,18 +46,17 @@ const JogButton: React.FunctionComponent<Props> = (props) => {
     return t('Move the tip {{ directions }}.', { directions: parts.join(' and ') } );
   }
 
-  return (
-    <Tooltip title={getTip()}>
-      <Button
-        color="primary"
-        variant="outlined"
-        className={classes.jogAxisButton}
-        onClick={() => move(moveRequest)}
-      >
-        {getIcon()}
-      </Button>
-    </Tooltip>
-  );
+  const button = <Button
+    color="primary"
+    variant="outlined"
+    className={classes.jogAxisButton}
+    onClick={() => move(moveRequest)}
+    disabled={disabled}
+  >
+    {getIcon()}
+  </Button>;
+
+  return disabled ? button : <Tooltip title={getTip()}>{button}</Tooltip>;
 };
 
 export default JogButton;

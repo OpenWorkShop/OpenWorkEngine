@@ -1,70 +1,86 @@
 import React, {FunctionComponent} from 'react';
 import {
-  MachineModalsFragment,
+  MachineModalsFragment, useSetModalSettingsMutation,
 } from '../graphql';
 import {useLogger} from '../../hooks';
 import {useTrans} from '../Context';
-import {getModalOptions} from '../Machines/MachineModals';
-import IconSelect from '../../components/Forms/IconSelect';
+import IconSelect, {ISelectItem} from '../../components/Forms/IconSelect';
+import {ModalGroup, modalGroups} from '../Machines';
+import {titlize} from '../../utils';
+import {useControllerCommand} from './hooks';
+import {IHaveWorkspaceId} from '../Workspaces';
+
+interface IModalOption {
+  code: string;
+  value: string;
+}
 
 interface IModal {
+  id: string;
+  title: string;
   value: string;
-  code: string | null;
-  __typename?: string;
+  hasBeenRead: boolean;
 }
 
-type Props = {
+type Props = IHaveWorkspaceId & {
   modals: MachineModalsFragment;
+  disabled?: boolean;
 }
-
-const modalGroups = [
-  'units', 'motion', 'arcDistance', 'distance', 'feedRate', 'cannedCycleReturnMode',
-  'pathControlMode', 'spindleSpeed', 'cylindricalInterpolation', 'plane', 'programState'] as const;
-type ModalGroup = typeof modalGroups[number];
 
 const MachineModalList: FunctionComponent<Props> = (props) => {
   const log = useLogger(MachineModalList);
   const t = useTrans();
-  const { modals } = props;
+  const { modals, workspaceId, disabled } = props;
+  const [ setModal ] = useControllerCommand(workspaceId, useSetModalSettingsMutation());
 
-  function setValue(modal: IModal, value: string) {
-    log.debug(modal, value);
+  async function setValue(modal: IModal, id: string) {
+    const [ value, code ] = id.split(('|'));
+    const change = { value, code, id: modal.id };
+    const res = await setModal({ variables: { workspaceId, change } });
+    log.debug(modal.id, value, code, res);
   }
 
-  function setWcs(wcs: string) {
-    log.debug('wcs', wcs);
+  function getSelectItem(opt: IModalOption): ISelectItem {
+    const title = t('{{ value }} [{{ code }}]', opt);
+    return { title: title, itemId: [opt.value, opt.code].join('|') };
+  }
+
+  function findOption(opts: IModalOption[], value: string) {
+    return opts.find(o => o.value === value);
   }
 
   function renderModal(modalGroup: ModalGroup): React.ReactNode {
     const modal = modals[modalGroup];
-    if (!modal) return null;
-    if (!modal.__typename || !modal.code) {
-      log.error('Modal missing type/code', modal);
+    if (!modal) {
+      log.debug('no modal for', modalGroup);
       return null;
     }
-    const [title, value, options] = getModalOptions(modal.__typename, modal.value);
-    log.verbose('render', title, value, options, modal);
+
+    log.debug(modalGroup, modal);
+    if (!modal.hasBeenRead) return null;
+
+    const opts = modal.options as IModalOption[];
+    const items = opts.map(getSelectItem);
+    const opt = findOption(opts, modal.value);
+    if (!opt) {
+      log.warn('Unknown option: ', opts, modal.value);
+      return null;
+    }
+
+    const m = modal as IModal;
 
     return <IconSelect
       key={modalGroup}
-      items={options}
-      selectedId={value}
-      label={[title, `(${modal.code})`].join(' ')}
-      setSelectedId={(s) => setValue(modal, s.toString())}
+      items={items}
+      selectedId={[opt.value, opt.code].join('|')}
+      label={t(titlize(modal.id))}
+      setSelectedId={(s) => setValue(m, s.toString())}
+      disabled={disabled}
     />;
   }
 
   return (<React.Fragment>
     {modalGroups.map(renderModal)}
-    <IconSelect
-      items={[...Array(modals.workCoordinateSystemCount || 0).keys()].map(v => {
-        const va = v?.toString();
-        return { itemId: va, title: `#${va}` };
-      })}
-      selectedId={modals.workCoordinateSystemCurrent}
-      label={t('Work Coordinate System')}
-      setSelectedId={(s) => setWcs(s.toString())}
-    />
   </React.Fragment>);
 };
 

@@ -4,15 +4,20 @@ using System.Linq;
 using HotChocolate.Data;
 using HotChocolate.Language;
 using HotChocolate.Types;
+using OpenWorkEngine.OpenController.Controllers.Messages;
 using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.Lib.Observables;
 using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Interfaces;
 using OpenWorkEngine.OpenController.Machines.Messages;
 using OpenWorkEngine.OpenController.Ports.Messages;
+using OpenWorkEngine.OpenController.Syntax;
+using OpenWorkEngine.OpenController.Syntax.GCode;
 using Serilog;
 
 namespace OpenWorkEngine.OpenController.Machines.Models {
+  internal record ControlledMachineHash(int StatusHash, int ConfigHash, int SettingsHash);
+
   /// <summary>
   /// </summary>
   public class ControlledMachine : ITopicMessage {
@@ -22,14 +27,11 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
 
     public string? MachineProfileId { get; }
 
-    // public FirmwareRequirement FirmwareRequirement { get; }
-
     public MachineStatus Status { get; } = new();
 
     public MachineConfiguration Configuration { get; } = new();
 
     public FirmwareSettings Settings { get; } = new();
-    // public List<MachineSetting> Settings { get; } = new();
 
     [UsePaging]
     [UseFiltering(typeof(MachineLogEntryFilterInputType))]
@@ -77,6 +79,26 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     //   Settings.Sort((a, b) => String.Compare(a.Key, b.Key, StringComparison.Ordinal));
     //   return true;
     // }
+
+    internal bool ApplyInstructionResult(MachineInstructionResult result) {
+      if (result.WriteLogEntry.WriteState != SerialWriteState.Ok) {
+        return false;
+      }
+      FirmwareSettingMutation? mut = result.Instruction.Line.GetMutation(this);
+      return mut?.Apply(this) ?? false;
+    }
+
+    internal ControlledMachineHash SnapshotHash() {
+      return new (Status.GetHashCode(), Configuration.GetHashCode(), Settings.GetHashCode());
+    }
+
+    internal HashSet<MachineTopic> GetMachineChanges(ControlledMachineHash hash) {
+      HashSet<MachineTopic> ret = new();
+      if (hash.StatusHash != Status.GetHashCode()) ret.Add(MachineTopic.Status);
+      if (hash.ConfigHash != Status.GetHashCode()) ret.Add(MachineTopic.Configuration);
+      if (hash.SettingsHash != Status.GetHashCode()) ret.Add(MachineTopic.Setting);
+      return ret;
+    }
 
     internal HashSet<MachineTopic> AddLogEntry(MachineLogEntry entry, bool dedupe = true) {
       if (dedupe && LogEntries.Any()) {

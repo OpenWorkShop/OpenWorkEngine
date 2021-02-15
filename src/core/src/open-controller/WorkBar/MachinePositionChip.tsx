@@ -8,7 +8,13 @@ import useStyles from './styles';
 import HelpfulHeader from '../../components/Text/HelpfulHeader';
 import {getMachineAxisPosition, isMachinePositionValid} from '../Machines/MachinePosition';
 import {Axis3D} from '../Machines';
-import {IHaveWorkspace, useWorkspaceControllerSelector, useWorkspaceUnits} from '../Workspaces';
+import {
+  convertUnits,
+  IHaveWorkspace,
+  useWorkspaceControllerSelector,
+  useWorkspaceSelector,
+  useWorkspaceUnits
+} from '../Workspaces';
 import {useSelector} from 'react-redux';
 import {getDistanceUnitAbbreviationKey} from '../../components/Units';
 
@@ -21,6 +27,7 @@ const MachinePositionChip: React.FunctionComponent<Props> = (props) => {
   const classes = useStyles();
   const { workspaceId } = props;
   const machineStatus = useWorkspaceControllerSelector(workspaceId, c => c.machine.status );
+  const axes = useWorkspaceSelector(workspaceId, ws => ws.settings.axes);
   const units = useWorkspaceUnits(workspaceId);
   const unitsStr = t(getDistanceUnitAbbreviationKey(units, false));
 
@@ -33,11 +40,9 @@ const MachinePositionChip: React.FunctionComponent<Props> = (props) => {
     t('WPos (work position), relative to the work origin (where the program execution will begin).') :
     t('MPos (machine position), in absolute real-world coordinates.');
 
-  const axes: Axis3D[] = [AxisName.X, AxisName.Y, AxisName.Z];
   const positionText = axes
-    .map((a) => getMachineAxisPosition(mPos, a))
+    .map((a) => getMachineAxisPosition(mPos, a, units))
     .filter(v => v !== null)
-    .map(v => Math.round(v ?? 0))
     .join(', ') + ' ' + unitsStr;
 
   return (<PopoverWorkBarChip faIcon={icon} label={positionText}>

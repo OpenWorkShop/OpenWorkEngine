@@ -61,13 +61,13 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
 
       if (key.Equals("WPos")) {
         // Work Position (v0.9, v1.1)
-        machine.Status.WorkPosition = GetPositionArgument(value);
+        machine.Status.WorkPosition = GetPositionArgument(value, machine);
       } else if (key.Equals("MPos")) {
         // Machine Position (v0.9, v1.1)
-        machine.Status.MachinePosition = GetPositionArgument(value);
+        machine.Status.MachinePosition = GetPositionArgument(value, machine);
       } else if (key.Equals("WCO")) {
         // Work Coordinate Offset (v1.1)
-        machine.Status.WorkCoordinateOffset = GetPositionArgument(value);
+        machine.Status.WorkCoordinateOffset = GetPositionArgument(value, machine);
       } else if (key.Equals("Buf")) {
         // Planner Buffer (v0.9)
         machine.Status.Buffer.AvailableSend = (int) GetNumbers(value)[0];
@@ -89,13 +89,13 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
         // Feed Rate (v0.9, v1.1)
         // F:500 contains real-time feed rate data as the value.
         // This appears only when VARIABLE_SPINDLE is disabled.
-        machine.Status.Applicator.FeedRate = GetNumbers(value)[0];
+        machine.Status.Applicator.FeedRate.Data = GetNumbers(value)[0];
       } else if (key.Equals("FS")) {
         // Current Feed and Speed (v1.1)
         // FS:500,8000 contains real-time feed rate, followed by spindle speed, data as the values.
         decimal[] nums = GetNumbers(value, 2);
-        machine.Status.Applicator.FeedRate = nums[0];
-        machine.Status.Applicator.SpinSpeed = nums[1];
+        machine.Status.Applicator.FeedRate.Data = nums[0];
+        machine.Status.Applicator.SpinSpeed.Data = nums[1];
       } else if (key.Equals("Lim")) {
         // Limit Pins (v0.9)
         // X_AXIS is (1<<0) or bit 0
@@ -123,10 +123,9 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
       } else if (key.Equals("Ov")) {
         // Override Values (v1.1)
         decimal[] nums = GetNumbers(value, 3);
-        if (machine.Status.Overrides == null) machine.Status.Overrides = new MachineOverrides();
-        machine.Status.Overrides.Feed = nums[0];
-        machine.Status.Overrides.Rapids = nums[1];
-        machine.Status.Overrides.Speed = nums[2];
+        machine.Status.Overrides.Feed.Data = nums[0];
+        machine.Status.Overrides.Rapids.Data = nums[1];
+        machine.Status.Overrides.Speed.Data = nums[2];
       } else if (key.Equals("A")) {
         // Accessory State (v1.1)
         // * A:SFM indicates the current state of accessory machine components, such as the spindle and coolant.
@@ -134,21 +133,24 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
 
         char[] chars = value.ToCharArray();
 
-        SpinDirection dir = SpinDirection.None;
+        ApplicatorSpinDirection dir = ApplicatorSpinDirection.None;
         //   - S indicates spindle is enabled in the CW direction. This does not appear with C.
         if (chars.Contains('S'))
-          dir = SpinDirection.CW;
+          dir = ApplicatorSpinDirection.CW;
         //   - C indicates spindle is enabled in the CCW direction. This does not appear with S.
-        else if (chars.Contains('C')) dir = SpinDirection.CCW;
+        else if (chars.Contains('C')) dir = ApplicatorSpinDirection.CCW;
 
-        if (dir != SpinDirection.None) machine.Status.Applicator.SpinDirection = dir;
+        if (dir != ApplicatorSpinDirection.None) machine.Status.Applicator.SpinDirection.Data = dir;
 
-        if (chars.Contains('F') || chars.Contains('M')) {
+        bool flood = chars.Contains('F');
+        bool mist = chars.Contains('M');
+        if (flood || mist) {
           //   - F indicates flood coolant is enabled.
-          machine.Status.Applicator.IsFloodCoolantEnabled = chars.Contains('F');
-
-          //   - M indicates mist coolant is enabled.
-          machine.Status.Applicator.IsMistCoolantEnabled = chars.Contains('M');
+          if (flood && mist) machine.Status.Applicator.Coolant.Data = MachineCoolantState.All;
+          else if (flood) machine.Status.Applicator.Coolant.Data = MachineCoolantState.Flood;
+          else if (mist) machine.Status.Applicator.Coolant.Data = MachineCoolantState.Mist;
+        } else {
+          machine.Status.Applicator.Coolant.Data = MachineCoolantState.None;
         }
       } else {
         throw new ArgumentException($"Invalid Grbl Status Argument: '{key}' = {value}");
@@ -162,16 +164,22 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
       return nums.ToArray();
     }
 
+    private static decimal ParseUnits(string val, decimal factor) {
+      if (!decimal.TryParse(val, out decimal ret)) return 0;
+      return ret * factor;
+    }
+
     // String to coordinates: "0.00,1.00,1.00" => { x: 0, y: 1, z: 1 }
-    public static MachinePosition GetPositionArgument(string? val) {
+    internal static MachinePosition GetPositionArgument(string? val, ControlledMachine machine) {
       string[] parts = val?.Split(',') ?? new string[] { };
       decimal x = 0, y = 0, z = 0, a = 0, b = 0, c = 0;
-      if (parts.Length >= 1) decimal.TryParse(parts[0], out x);
-      if (parts.Length >= 2) decimal.TryParse(parts[1], out y);
-      if (parts.Length >= 3) decimal.TryParse(parts[2], out z);
-      if (parts.Length >= 4) decimal.TryParse(parts[3], out a);
-      if (parts.Length >= 5) decimal.TryParse(parts[4], out b);
-      if (parts.Length >= 6) decimal.TryParse(parts[5], out c);
+      decimal factor = machine.Settings.Reporting.ReportInches.Data ? (1M /  25.4M) : 1M;
+      if (parts.Length >= 1) x = ParseUnits(parts[0], factor);
+      if (parts.Length >= 2) y = ParseUnits(parts[1], factor);
+      if (parts.Length >= 3) z = ParseUnits(parts[2], factor);
+      if (parts.Length >= 4) a = ParseUnits(parts[3], factor);
+      if (parts.Length >= 5) b = ParseUnits(parts[4], factor);
+      if (parts.Length >= 6) c = ParseUnits(parts[5], factor);
       return new MachinePosition {X = x, Y = y, Z = z, A = a, B = b, C = c};
     }
   }

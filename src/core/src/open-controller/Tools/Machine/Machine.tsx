@@ -30,7 +30,7 @@ const Machine: ToolBase = (props) => {
   return (
     <React.Fragment>
       <div className={classes.root}>
-        <MachineModalList modals={modals} />
+        <MachineModalList modals={modals} workspaceId={workspaceId} />
       </div>
       <div className={classes.dialogFooter}>
         <Button

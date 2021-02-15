@@ -18,6 +18,8 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
 
     public int AvailableReceive { get; set; } = 0;
 
+    public bool CanReceive => ResponseQueueLength < 3;
+
     // Internal tracking from SerialBuffer (how many lines pending?)
     public int WriteQueueLength => WriteQueue.Count;
 

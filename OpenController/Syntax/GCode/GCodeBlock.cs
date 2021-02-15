@@ -4,10 +4,6 @@ using System.Linq;
 using HotChocolate.Language;
 using OpenWorkEngine.OpenController.Controllers.Interfaces;
 using OpenWorkEngine.OpenController.Controllers.Models;
-using OpenWorkEngine.OpenController.Programs.Interfaces;
-using OpenWorkEngine.OpenController.Programs.Models;
-using Serilog;
-using Parser = OpenWorkEngine.OpenController.Controllers.Services.Serial.Parser;
 
 namespace OpenWorkEngine.OpenController.Syntax.GCode {
   // https://www.cnccookbook.com/g-code-basics-program-format-structure-blocks/
@@ -40,7 +36,14 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode {
 
     public List<SyntaxChunk> CodeChunks => Chunks.Where(c => c.IsCode).ToList();
 
-    public List<SyntaxChunk> CompileChunks(string line) => ParseLine(line);
+    public SyntaxLine CompileSyntax(string line) {
+      List<SyntaxChunk> chunks = ParseLine(line);
+      string? firstWord = chunks.FirstOrDefault()?.Value.Trim();
+      GCodeWord? word =
+        !string.IsNullOrWhiteSpace(firstWord) && firstWord.Length > 1 && !firstWord.StartsWith("$") ?
+        new GCodeWord(firstWord) : null;
+      return new SyntaxLine(line, chunks, (machine) => word?.GetMutation(machine));
+    }
 
     public static List<SyntaxChunk> ParseLine(string line) {
       List<SyntaxChunk> chunks = new();

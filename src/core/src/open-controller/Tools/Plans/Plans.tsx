@@ -14,7 +14,7 @@ const Plans: ToolBase = (props) => {
   return (
     <Grid container>
       {pendingInstructions.map(i => {
-        return <LogLine logEntry={i.writeLogEntry} />;
+        return <LogLine key={i.writeLogEntry.id} logEntry={i.writeLogEntry} />;
       })}
       <Grid item xs={12}>
         <ProgramFilePicker />

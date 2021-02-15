@@ -1,7 +1,9 @@
+using System;
+using System.IO;
 using System.Linq;
 using FluentAssertions;
-using MakerverseServerTests;
 using OpenWorkEngine.OpenController.Programs.Interfaces;
+using OpenWorkEngine.OpenController.Programs.Models;
 using OpenWorkEngine.OpenController.Syntax;
 using OpenWorkEngine.OpenController.Syntax.GCode;
 using Serilog;
@@ -27,6 +29,23 @@ namespace OpenWorkEngine.OpenControllerTests.Programs {
       string comments = string.Join(" ... ", gCodeBlock.Chunks.SelectMany(c => c.Comments));
       Log.Information(comments);
       comments.Should().Contain("Test");
+    }
+
+    [Theory]
+    [ProgramFileData("backs.nc")]
+    [ProgramFileData("hexagon-4.5w-4bit.nc")]
+    [ProgramFileData("heart-050_thick-025_bit.nc")]
+    public void CanParseFile(ProgramFileMeta programFileMeta) {
+      ProgramFile programFile = new ProgramFile(programFileMeta, Log.Logger);
+      while (programFile.Process()) { }
+      //
+      // foreach (string line in lines) {
+      //   GCodeBlock gCodeBlock = new(line, nameof(GCodeTests));
+      //   gCodeBlock.Should().NotBeNull();
+      //   AssertHealthyLogs();
+      //
+      //   Log.Information("Commands: {commands}", gCodeBlock.Chunks);
+      // }
     }
 
     public string Name => nameof(GCodeTests);

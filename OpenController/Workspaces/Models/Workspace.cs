@@ -1,12 +1,16 @@
 using System;
 using System.Threading.Tasks;
 using OpenWorkEngine.OpenController.Controllers.Exceptions;
+using OpenWorkEngine.OpenController.Controllers.Messages;
+using OpenWorkEngine.OpenController.Controllers.Services;
 using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.Lib.Observables;
 using OpenWorkEngine.OpenController.Machines.Enums;
+using OpenWorkEngine.OpenController.Machines.Models;
 using OpenWorkEngine.OpenController.Ports.Enums;
 using OpenWorkEngine.OpenController.Ports.Models;
 using OpenWorkEngine.OpenController.Ports.Services;
+using OpenWorkEngine.OpenController.Syntax;
 using OpenWorkEngine.OpenController.Workspaces.Enums;
 using OpenWorkEngine.OpenController.Workspaces.Services;
 using Serilog;
@@ -41,11 +45,13 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
 
     private WorkspaceManager Manager { get; }
 
-    public UnitType Units => GetUnits();
-
     private ILogger Log { get; }
 
     public void Dispose() {
+      if (Controller != null) {
+        Controller.OnCommandExecuted = null;
+        Controller = null;
+      }
       State = WorkspaceState.Closed;
       SetPortByName(null);
     }
@@ -60,11 +66,7 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
 
     public WorkspaceState State { get; set; } = WorkspaceState.Closed;
 
-    private UnitType GetUnits() {
-      UnitType def = Settings.PreferImperial ? UnitType.Imperial : UnitType.Metric;
-      UnitType movementUnits = Port?.Connection?.Machine.Configuration.Modals.Units?.Value ?? def;
-      return movementUnits == UnitType.Imperial ? UnitType.Imperial : UnitType.Metric;
-    }
+    private Controller? Controller { get; set; }
 
     internal async Task<Workspace> Open() {
       if (State >= WorkspaceState.Active) {
@@ -84,7 +86,9 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
         if (port == null) throw new PortException($"Port is not plugged in: {PortName}", PortName);
 
         // Open the controller by converting internal settings into OpenController types.
-        await Manager.Ports.Controllers.Open(Settings.Connection);
+        Controller = await Manager.Ports.Controllers.Open(Settings.Connection);
+        Controller.OnCommandExecuted = OnCommandExecuted;
+        Controller.StartTask();
 
         // Immediately update the port in case it was already open.
         UpdatePort(port);
@@ -94,6 +98,18 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
         Manager.EmitState(this, WorkspaceState.Error);
       }
       return this;
+    }
+
+    internal async Task<MachineExecutionResult> OnCommandExecuted(string commandName, MachineExecutionResult res) {
+      if (Controller == null) return res;
+      if (commandName.Equals(nameof(Controller.Unlock))) {
+        if (Settings.PreferImperial) {
+          MachineExecutionResult r =
+            await Controller.EnsureModalValue(res.Machine.Configuration.Modals.Units, UnitType.Imperial);
+          res.InstructionResults.AddRange(r.InstructionResults);
+        }
+      }
+      return res;
     }
 
     internal async Task<Workspace> Close() {
@@ -116,7 +132,9 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
       if (st == PortState.Ready) Manager.EmitState(this, WorkspaceState.Closed);
 
       if (State == WorkspaceState.Opening) {
-        if (st == PortState.Active) Manager.EmitState(this, WorkspaceState.Active);
+        if (st == PortState.Active) {
+          Manager.EmitState(this, WorkspaceState.Active);
+        }
         if (st == PortState.Error) {
           Error = port.Error ?? new AlertError(new PortException("Could not open port", port.PortName));
           Manager.EmitState(this, WorkspaceState.Error);
@@ -160,10 +178,9 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
       _portListSubscription = null;
 
       if (portName != null) {
-        if (ports.Map.TryGetValue(portName, out port))
-          _portListSubscription = ports
-                                 .GetSubscriptionTopic(PortTopic.State)
-                                 .SubscribeToTopicId(portName, this);
+        _portListSubscription = ports
+                               .GetSubscriptionTopic(PortTopic.State)
+                               .SubscribeToTopicId(portName, this);
       } else if (requirePort) {
         throw new ArgumentException($"Cannot change Workspace to use missing port: {portName}");
       }

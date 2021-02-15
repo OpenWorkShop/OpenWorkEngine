@@ -1,17 +1,16 @@
 import _ from 'lodash';
 import * as THREE from 'three';
-import {IVisualizerStyles, ViewPlane} from '../types';
+import {GWizActions, IVisualizerSceneState, IVisualizerStyles, ViewSide} from '../types';
 import {IOpenController} from '../../Context';
 import {Logger} from '../../../utils/logging';
 import GWizAxes from './GWizAxes';
-import {getMachineAxisRange, getMachineAxisBoundingBox} from '../../Machines';
-import {IMachineAxis} from '../../Machines';
+import {getMachineAxisBoundingBox, getMachineAxisRange, IMachineAxis} from '../../Machines';
 import {defaultVisualizerStyles} from '../GWizSlice';
 import GWizControls from './GWizControls';
 import GWizCamera from './GWizCamera';
 import GWizApplicator from './GWizApplicator';
 import NavCube from './NavCube';
-import {MachinePositionFragment} from '../../graphql';
+import {AxisPlane, MachinePositionFragment} from '../../graphql';
 
 const defaultCameraNear = 0.1;
 const defaultCameraFar = 2000;
@@ -33,13 +32,15 @@ class GWizCanvas {
   public center: THREE.Vector3 = new THREE.Vector3(0, 0, 0);
   public navCube: NavCube;
 
+  public actions: GWizActions;
+
   private _axes: IMachineAxis[] = [];
-  private _viewPlane: ViewPlane = ViewPlane.None;
 
   public get domElement(): HTMLCanvasElement { return this.renderer.domElement; }
 
-  constructor(oc: IOpenController) {
+  constructor(oc: IOpenController, actions: GWizActions) {
     this.openController = oc;
+    this.actions = actions;
     this.log = oc.ows.logManager.getLogger('GWizCanvas');
     this.log.debug('create');
 
@@ -51,7 +52,7 @@ class GWizCanvas {
     this.applicator = new GWizApplicator(this.styles);
     this.scene.add(this.axes, this.applicator);
 
-    this.camera = new GWizCamera();
+    this.camera = new GWizCamera(this);
     this.controls = new GWizControls(this);
 
     this.navCube = new NavCube(this, this.styles);
@@ -59,7 +60,6 @@ class GWizCanvas {
 
   // Main startup (draw axes)
   draw(axes: IMachineAxis[], navCubeDiv: HTMLDivElement): void {
-    this.log.verbose('axes', axes, this.styles);
     this._axes = axes;
 
     const maxAxisRange = _.max(Object.values(axes).map(getMachineAxisRange)) ?? defaultCameraFar;
@@ -72,8 +72,8 @@ class GWizCanvas {
     const color = new THREE.Color(this.styles.backgroundColor);
     this.scene.fog = new THREE.Fog(color, maxAxisRange, maxRange);
 
-    this.axes.redraw(axes);
-    this.lookAt(this.target);
+    this.axes.redraw(this._axes);
+    this.setTarget(this.target);
 
     // Start the animation loop.
     this.animate();
@@ -93,14 +93,51 @@ class GWizCanvas {
     return boundingBox;
   }
 
-  lookAt(obj?: THREE.Object3D): void {
+  onCameraChanged(): void {
+    // this.updateNavCube();
+  }
+
+  setCenter(point: THREE.Vector3): void {
+    this.center = point;
+    this.controls.lookAt(point);
+    this.camera.lookAt(point);
+  }
+
+  private _axisPlane?: AxisPlane;
+
+  applySceneState(sceneState?: IVisualizerSceneState): boolean {
+    if (!sceneState) return false;
+    let changed = false;
+    changed = this.axes.applySceneState(sceneState) || changed;
+    this.camera.applyState(sceneState.camera);
+    if (this._axisPlane != sceneState.axisPlane && sceneState.axisPlane) {
+      changed = true;
+      this._axisPlane = sceneState.axisPlane;
+      const dist = this.camera.far * 0.5;
+      if (this._axisPlane === AxisPlane.Xy) {
+        this.camera.position.copy(new THREE.Vector3(0, 0, dist));
+        this.camera.lookAtSides(ViewSide.Top);
+      } else if (this._axisPlane === AxisPlane.Yz) {
+        this.camera.position.copy(new THREE.Vector3(dist, 0, 0));
+        this.camera.lookAtSides(ViewSide.Front);
+      } else if (this._axisPlane === AxisPlane.Xz) {
+        this.camera.position.copy(new THREE.Vector3(0, dist, 0));
+        this.camera.lookAtSides(ViewSide.Right);
+      }
+    }
+    if (changed) {
+      this.log.debug('sceneState', sceneState);
+    }
+    return changed;
+  }
+
+  setTarget(obj?: THREE.Object3D): void {
     this.target = obj;
     const fitOffset = 0.5;
     const box = this.getBoundingBox(obj);
 
     const size = box.getSize( new THREE.Vector3() );
-    this.center = obj ? box.getCenter( new THREE.Vector3() ) : new THREE.Vector3();
-    const target = this.center;
+    const target = obj ? box.getCenter( new THREE.Vector3() ) : new THREE.Vector3();
 
     const maxSize = Math.max( size.x, size.y, size.z );
     const fitHeightDistance = maxSize / ( 2 * Math.atan( Math.PI * this.camera.fov / 360 ) );
@@ -113,10 +150,9 @@ class GWizCanvas {
 
     const distanceVector = direction.multiplyScalar( distance );
 
-    this.controls.lookAt(this.center);
     this.camera.position.copy( target ).sub(distanceVector);
+    this.setCenter(target);
 
-    this.log.debug('cam', size, this.center, this.camera.position);
     this.updateNavCube();
   }
 
@@ -124,19 +160,6 @@ class GWizCanvas {
     const lookVector = this.center.clone().sub(this.camera.position).normalize();
     const camVector = this.camera.position.clone().normalize();
     this.navCube.update(camVector, lookVector);
-  }
-
-  applyViewPlane(viewPlane: ViewPlane): void {
-    const dist = 100;
-    this._viewPlane = viewPlane;
-    if (viewPlane === ViewPlane.Top) this.camera.position.set(0, 0, dist);
-    if (viewPlane === ViewPlane.Bottom) this.camera.position.set(0, 0, -dist);
-    if (viewPlane === ViewPlane.Left) this.camera.position.set(-dist, 0, 0);
-    if (viewPlane === ViewPlane.Right) this.camera.position.set(dist, 0, 0);
-    if (viewPlane === ViewPlane.Front) this.camera.position.set(0, -dist, 0);
-    if (viewPlane === ViewPlane.Front) this.camera.position.set(0, dist, 0);
-    this.lookAt(this.target);
-    this.controls.applyViewPlane(viewPlane);
   }
 
   applyStyles(styles: IVisualizerStyles): void {
@@ -168,6 +191,12 @@ class GWizCanvas {
   animate(): void {
     requestAnimationFrame( this.animate.bind(this) );
     this.controls.animate();
+    const changes = this.camera.clearChanges();
+    if (changes) {
+      this.updateNavCube();
+      this.actions.saveCameraState(changes);
+    }
+
     this.renderer.render( this.scene, this.camera );
   }
 }

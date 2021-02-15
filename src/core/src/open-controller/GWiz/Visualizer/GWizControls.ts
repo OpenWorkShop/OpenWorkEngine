@@ -1,4 +1,4 @@
-import {IVisualizerControlsPreferences, ViewPlane} from '../types';
+import {IVisualizerControlsPreferences} from '../types';
 import {Logger} from '../../../utils/logging';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import {Vector3} from 'three';
@@ -9,7 +9,6 @@ class GWizControls extends OrbitControls {
   public log: Logger;
   private _canvas: GWizCanvas;
   private _prefs: IVisualizerControlsPreferences = {};
-  private _viewPlane: ViewPlane = ViewPlane.None;
 
   private get openController(): IOpenController {
     return this._canvas.openController;
@@ -22,13 +21,12 @@ class GWizControls extends OrbitControls {
     // this.controls.enableDamping = true;
     this.enableKeys = true;
     this.addEventListener('change', (e) => {
-      this.log.verbose('change', e);
-      this._canvas.updateNavCube();
+      this._canvas.onCameraChanged();
     });
   }
 
   applyPreferences(prefs: IVisualizerControlsPreferences): void {
-    this.log.debug('controls', prefs, this._viewPlane);
+    this.log.debug('controls', prefs);
     this._prefs = prefs;
     if (prefs.dampingFactor) {
       this.dampingFactor = prefs.dampingFactor;
@@ -51,13 +49,9 @@ class GWizControls extends OrbitControls {
       this.enableZoom = false;
     }
 
-    if (this._viewPlane !== ViewPlane.None) {
-      this.enableRotate = false;
-    } else if (prefs.rotateSpeed) {
+    if (prefs.rotateSpeed) {
       this.rotateSpeed = prefs.rotateSpeed;
       this.enableRotate = true;
-    } else if (prefs.rotateSpeed !== undefined) {
-      this.enableRotate = false;
     } else {
       this.enableRotate = true;
     }
@@ -75,11 +69,6 @@ class GWizControls extends OrbitControls {
     this.maxDistance = maxAxisRange * 1.2;
     this.minDistance = minAxisAccuracy;
     this.update();
-  }
-
-  applyViewPlane(viewPlane: ViewPlane): void {
-    this._viewPlane = viewPlane;
-    this.applyPreferences(this._prefs);
   }
 
   animate(): void {

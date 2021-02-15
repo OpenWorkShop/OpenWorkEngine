@@ -19,6 +19,7 @@ interface ISelectProps<T extends SelectItemIcon> {
   items: T[];
   selectedId: SelectId;
   setSelectedId: (v: SelectId) => void;
+  disabled?: boolean;
   className?: string;
   help?: string;
   helpColor?: string;
@@ -28,7 +29,7 @@ interface ISelectProps<T extends SelectItemIcon> {
 
 const IconSelect: React.FunctionComponent<ISelectProps<SelectItemIcon>> = (props) => {
   const classes = useStyles();
-  const { help, helpColor, items, label, selectedId, setSelectedId, variant } = props;
+  const { help, helpColor, items, label, selectedId, setSelectedId, variant, disabled } = props;
   const value = selectedId?.toString();
   const className = props.className ?? classes.formControl;
 
@@ -66,6 +67,7 @@ const IconSelect: React.FunctionComponent<ISelectProps<SelectItemIcon>> = (props
         variant={variant}
         onChange={(e) => setValue(e.target.value)}
         label={label}
+        disabled={disabled}
         className={classes.selectMenu}
         renderValue={renderValue}
       >

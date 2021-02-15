@@ -1,5 +1,6 @@
 export * from './types';
 export * from './hooks';
+export * from './sides';
 export { default as gWizSlice } from './GWizSlice';
 // export * from './GWiz';
 

@@ -16,28 +16,96 @@ fragment MachineBuffer on MachineBuffer {
 
 fragment ApplicatorState on MachineApplicatorState {
     isOn
-    toolId
-    spinDirection
-    spinSpeed
-    feedRate
+    toolId {
+        id
+        title
+        value
+        data
+        hasBeenRead
+    }
+    spinDirection {
+        id
+        title
+        value
+        data
+        hasBeenRead
+    }
+    spinSpeed {
+        id
+        title
+        value
+        data
+        hasBeenRead
+    }
+    feedRate {
+        id
+        title
+        value
+        data
+        hasBeenRead
+    }
     lengthOffset {
         ...MachinePosition
     }
-    lengthOffsetFactorType
-    radiusCompensation
+    lengthOffsetFactorType {
+        id
+        title
+        value
+        data
+        hasBeenRead
+        options { code value }
+    }
+    radiusCompensation {
+        id
+        title
+        value
+        data
+        hasBeenRead
+        options { code value }
+    }
     probePosition {
         ...MachinePosition
     }
-    isFloodCoolantEnabled
-    isMistCoolantEnabled
+    coolant {
+        id
+        title
+        value
+        data
+        hasBeenRead
+        options { code value }
+    }
 }
 
 fragment MachineOverrides on MachineOverrides {
-    feed
-    feedAllowed
-    rapids
-    speed
-    speedAllowed
+    feed {
+        id
+        title
+        value
+        data
+        hasBeenRead
+    }
+    mode {
+        id
+        title
+        value
+        data
+        hasBeenRead
+        options { code value }
+    }
+    rapids {
+        id
+        title
+        value
+        data
+        hasBeenRead
+    }
+    speed {
+        id
+        title
+        value
+        data
+        hasBeenRead
+    }
 }
 
 fragment MachineStatus on MachineStatus {

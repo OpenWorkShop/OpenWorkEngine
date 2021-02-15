@@ -29,7 +29,7 @@ interface ISerialPortOptions {
     writeTimeout: Int
 }
 
-union IParsedValue = ParsedAxisFlags | ParsedBool | ParsedDecimal | ParsedEnumOfKinematicsMode | ParsedEnumOfStatusReportType | ParsedString
+union IParsedValue = ParsedAxisFlags | ParsedBool | ParsedDecimal | ParsedEnumOfApplicatorRadiusCompensation | ParsedEnumOfApplicatorSpinDirection | ParsedEnumOfAxisPlane | ParsedEnumOfEnabledType | ParsedEnumOfFactorType | ParsedEnumOfFeedRateMode | ParsedEnumOfKinematicsMode | ParsedEnumOfMachineCoolantState | ParsedEnumOfMachineMotionType | ParsedEnumOfMachineOverridesMode | ParsedEnumOfMachineProgramState | ParsedEnumOfMovementDistanceType | ParsedEnumOfPathControlMode | ParsedEnumOfSpindleSpeedMode | ParsedEnumOfStatusReportType | ParsedEnumOfTimingMode | ParsedEnumOfUnitType | ParsedString
 
 type AlertError {
     message: String!
@@ -56,8 +56,7 @@ type CommandSettings {
 }
 
 type CompiledInstruction {
-    chunks: [SyntaxChunk!]!
-    code: String!
+    line: SyntaxLine!
     source: String!
 }
 
@@ -104,6 +103,7 @@ type Controller {
     reset: MachineExecutionResult!
     setFirmwareSetting(settingChange: FirmwareSettingChangeInput!): MachineExecutionResult!
     setFirmwareSettings(settingChanges: [FirmwareSettingChangeInput!]!): [MachineExecutionResult!]!
+    setModal(change: ModalChangeInput!): MachineExecutionResult!
     settings: MachineExecutionResult!
     startup: MachineExecutionResult!
     status: MachineExecutionResult!
@@ -236,6 +236,13 @@ type FirmwareSetting {
     title: String
     units: MachineSettingUnits!
     value: String!
+    valueCode: String!
+}
+
+type FirmwareSettingMutation {
+    hasChanged: Boolean!
+    origValue: String
+    value: String!
 }
 
 type FirmwareSettingOfAxisFlags {
@@ -246,10 +253,12 @@ type FirmwareSettingOfAxisFlags {
     id: String!
     index: Int!
     key: String!
+    mutation(value: AxisFlagsInput!): FirmwareSettingMutation!
     settingType: MachineSettingType!
     title: String
     units: MachineSettingUnits!
     value: String!
+    valueCode: String!
 }
 
 type FirmwareSettingOfBoolean {
@@ -260,10 +269,12 @@ type FirmwareSettingOfBoolean {
     id: String!
     index: Int!
     key: String!
+    mutation(value: Boolean!): FirmwareSettingMutation!
     settingType: MachineSettingType!
     title: String
     units: MachineSettingUnits!
     value: String!
+    valueCode: String!
 }
 
 type FirmwareSettingOfDecimal {
@@ -274,10 +285,12 @@ type FirmwareSettingOfDecimal {
     id: String!
     index: Int!
     key: String!
+    mutation(value: Decimal!): FirmwareSettingMutation!
     settingType: MachineSettingType!
     title: String
     units: MachineSettingUnits!
     value: String!
+    valueCode: String!
 }
 
 type FirmwareSettingOfKinematicsMode {
@@ -288,10 +301,12 @@ type FirmwareSettingOfKinematicsMode {
     id: String!
     index: Int!
     key: String!
+    mutation(value: KinematicsMode!): FirmwareSettingMutation!
     settingType: MachineSettingType!
     title: String
     units: MachineSettingUnits!
     value: String!
+    valueCode: String!
 }
 
 type FirmwareSettingOfStatusReportType {
@@ -302,10 +317,28 @@ type FirmwareSettingOfStatusReportType {
     id: String!
     index: Int!
     key: String!
+    mutation(value: StatusReportType!): FirmwareSettingMutation!
     settingType: MachineSettingType!
     title: String
     units: MachineSettingUnits!
     value: String!
+    valueCode: String!
+}
+
+type FirmwareSettingOfString {
+    comment: String
+    currentValue: IParsedValue
+    data: String!
+    hasBeenRead: Boolean!
+    id: String!
+    index: Int!
+    key: String!
+    mutation(value: String!): FirmwareSettingMutation!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+    valueCode: String!
 }
 
 type FirmwareSettings {
@@ -318,13 +351,88 @@ type FirmwareSettings {
     settings: [FirmwareSetting!]!
 }
 
+type KeyValuePairOfApplicatorRadiusCompensationAndInt32 {
+    key: ApplicatorRadiusCompensation!
+    value: Int!
+}
+
+type KeyValuePairOfApplicatorSpinDirectionAndInt32 {
+    key: ApplicatorSpinDirection!
+    value: Int!
+}
+
+type KeyValuePairOfAxisPlaneAndInt32 {
+    key: AxisPlane!
+    value: Int!
+}
+
+type KeyValuePairOfEnabledTypeAndInt32 {
+    key: EnabledType!
+    value: Int!
+}
+
+type KeyValuePairOfFactorTypeAndInt32 {
+    key: FactorType!
+    value: Int!
+}
+
+type KeyValuePairOfFeedRateModeAndInt32 {
+    key: FeedRateMode!
+    value: Int!
+}
+
 type KeyValuePairOfKinematicsModeAndInt32 {
     key: KinematicsMode!
     value: Int!
 }
 
+type KeyValuePairOfMachineCoolantStateAndInt32 {
+    key: MachineCoolantState!
+    value: Int!
+}
+
+type KeyValuePairOfMachineMotionTypeAndInt32 {
+    key: MachineMotionType!
+    value: Int!
+}
+
+type KeyValuePairOfMachineOverridesModeAndInt32 {
+    key: MachineOverridesMode!
+    value: Int!
+}
+
+type KeyValuePairOfMachineProgramStateAndInt32 {
+    key: MachineProgramState!
+    value: Int!
+}
+
+type KeyValuePairOfMovementDistanceTypeAndInt32 {
+    key: MovementDistanceType!
+    value: Int!
+}
+
+type KeyValuePairOfPathControlModeAndInt32 {
+    key: PathControlMode!
+    value: Int!
+}
+
+type KeyValuePairOfSpindleSpeedModeAndInt32 {
+    key: SpindleSpeedMode!
+    value: Int!
+}
+
 type KeyValuePairOfStatusReportTypeAndInt32 {
     key: StatusReportType!
+    value: Int!
+}
+
+type KeyValuePairOfTimingModeAndInt32 {
+    key: TimingMode!
+    value: Int!
+}
+
+type KeyValuePairOfUnitTypeAndInt32 {
+    key: UnitType!
     value: Int!
 }
 
@@ -336,18 +444,17 @@ type MachineAlert {
 }
 
 type MachineApplicatorState {
-    feedRate: Decimal!
-    isFloodCoolantEnabled: Boolean!
-    isMistCoolantEnabled: Boolean!
+    coolant: ModalSettingOfMachineCoolantState!
+    feedRate: FirmwareSettingOfDecimal!
     isOn: Boolean!
     lengthOffset: MachinePosition
-    lengthOffsetFactorType: FactorType!
+    lengthOffsetFactorType: ModalSettingOfFactorType!
     probePosition: MachinePosition
-    radiusCompensation: RadiusCompensation!
-    spinDirection: SpinDirection!
-    spinSpeed: Decimal!
-    temperature: Decimal
-    toolId: String!
+    radiusCompensation: ModalSettingOfApplicatorRadiusCompensation!
+    spinDirection: ModalSettingOfApplicatorSpinDirection!
+    spinSpeed: FirmwareSettingOfDecimal!
+    temperature: FirmwareSettingOfDecimal!
+    toolId: FirmwareSettingOfString!
 }
 
 type MachineAxis {
@@ -372,6 +479,7 @@ type MachineAxisSettings {
 type MachineBuffer {
     availableReceive: Int!
     availableSend: Int!
+    canReceive: Boolean!
     lastInstructionResult: MachineInstructionResult
     lineNumber: Int!
     pendingInstructionResults: [MachineInstructionResult!]!
@@ -507,72 +615,21 @@ type MachineLogEntryEdge {
     node: MachineLogEntry!
 }
 
-type MachineModalStateOfAxisPlane {
-    code: String
-    value: AxisPlane!
-}
-
-type MachineModalStateOfEnabledType {
-    code: String
-    value: EnabledType!
-}
-
-type MachineModalStateOfFeedRateMode {
-    code: String
-    value: FeedRateMode!
-}
-
-type MachineModalStateOfMachineMotionType {
-    code: String
-    value: MachineMotionType!
-}
-
-type MachineModalStateOfMachineProgramState {
-    code: String
-    value: MachineProgramState!
-}
-
-type MachineModalStateOfMovementDistanceType {
-    code: String
-    value: MovementDistanceType!
-}
-
-type MachineModalStateOfPathControlMode {
-    code: String
-    value: PathControlMode!
-}
-
-type MachineModalStateOfSpindleSpeedMode {
-    code: String
-    value: SpindleSpeedMode!
-}
-
-type MachineModalStateOfTimingMode {
-    code: String
-    value: TimingMode!
-}
-
-type MachineModalStateOfUnitType {
-    code: String
-    value: UnitType!
-}
-
 type MachineModals {
-    arcDistance: MachineModalStateOfMovementDistanceType
-    cannedCycleReturnMode: MachineModalStateOfTimingMode
-    cylindricalInterpolation: MachineModalStateOfEnabledType
-    distance: MachineModalStateOfMovementDistanceType
-    feedRate: MachineModalStateOfFeedRateMode
-    motion: MachineModalStateOfMachineMotionType!
-    pathControlMode: MachineModalStateOfPathControlMode
-    plane: MachineModalStateOfAxisPlane
-    programState: MachineModalStateOfMachineProgramState
-    spindleSpeed: MachineModalStateOfSpindleSpeedMode
-    units: MachineModalStateOfUnitType
-    userDefinedCount: Int!
-    userDefinedCurrent: Int!
-    workCoordinateSystemCount: Int!
-    workCoordinateSystemCurrent: Int!
+    arcDistance: ModalSettingOfMovementDistanceType!
+    cannedCycleReturnMode: ModalSettingOfTimingMode!
+    cylindricalInterpolation: ModalSettingOfEnabledType!
+    distance: ModalSettingOfMovementDistanceType!
+    feedRate: ModalSettingOfFeedRateMode!
+    motion: ModalSettingOfMachineMotionType!
+    pathControlMode: ModalSettingOfPathControlMode!
+    plane: ModalSettingOfAxisPlane!
+    programState: ModalSettingOfMachineProgramState!
+    settings: [FirmwareSetting!]!
+    spindleSpeed: ModalSettingOfSpindleSpeedMode!
+    units: ModalSettingOfUnitType!
+    userDefined: ModalSettingOfDecimal!
+    workCoordinateSystem: ModalSettingOfDecimal!
 }
 
 type MachineOptions {
@@ -580,11 +637,10 @@ type MachineOptions {
 }
 
 type MachineOverrides {
-    feed: Decimal!
-    feedAllowed: Boolean!
-    rapids: Decimal!
-    speed: Decimal!
-    speedAllowed: Boolean!
+    feed: FirmwareSettingOfDecimal!
+    mode: ModalSettingOfMachineOverridesMode!
+    rapids: FirmwareSettingOfDecimal!
+    speed: FirmwareSettingOfDecimal!
 }
 
 type MachinePart {
@@ -676,7 +732,7 @@ type MachineStatus {
     applicator: MachineApplicatorState!
     buffer: MachineBuffer!
     machinePosition: MachinePosition!
-    overrides: MachineOverrides
+    overrides: MachineOverrides!
     workCoordinateOffset: MachinePosition
     workPosition: MachinePosition
 }
@@ -715,6 +771,374 @@ type MakerHubSettings {
     enabled: Boolean!
 }
 
+type ModalOptionOfApplicatorRadiusCompensation {
+    code: String!
+    data: ApplicatorRadiusCompensation!
+    value: String!
+}
+
+type ModalOptionOfApplicatorSpinDirection {
+    code: String!
+    data: ApplicatorSpinDirection!
+    value: String!
+}
+
+type ModalOptionOfAxisPlane {
+    code: String!
+    data: AxisPlane!
+    value: String!
+}
+
+type ModalOptionOfDecimal {
+    code: String!
+    data: Decimal!
+    value: String!
+}
+
+type ModalOptionOfEnabledType {
+    code: String!
+    data: EnabledType!
+    value: String!
+}
+
+type ModalOptionOfFactorType {
+    code: String!
+    data: FactorType!
+    value: String!
+}
+
+type ModalOptionOfFeedRateMode {
+    code: String!
+    data: FeedRateMode!
+    value: String!
+}
+
+type ModalOptionOfMachineCoolantState {
+    code: String!
+    data: MachineCoolantState!
+    value: String!
+}
+
+type ModalOptionOfMachineMotionType {
+    code: String!
+    data: MachineMotionType!
+    value: String!
+}
+
+type ModalOptionOfMachineOverridesMode {
+    code: String!
+    data: MachineOverridesMode!
+    value: String!
+}
+
+type ModalOptionOfMachineProgramState {
+    code: String!
+    data: MachineProgramState!
+    value: String!
+}
+
+type ModalOptionOfMovementDistanceType {
+    code: String!
+    data: MovementDistanceType!
+    value: String!
+}
+
+type ModalOptionOfPathControlMode {
+    code: String!
+    data: PathControlMode!
+    value: String!
+}
+
+type ModalOptionOfSpindleSpeedMode {
+    code: String!
+    data: SpindleSpeedMode!
+    value: String!
+}
+
+type ModalOptionOfTimingMode {
+    code: String!
+    data: TimingMode!
+    value: String!
+}
+
+type ModalOptionOfUnitType {
+    code: String!
+    data: UnitType!
+    value: String!
+}
+
+type ModalSettingOfApplicatorRadiusCompensation {
+    comment: String
+    currentValue: IParsedValue
+    data: ApplicatorRadiusCompensation!
+    hasBeenRead: Boolean!
+    id: String!
+    index: Int!
+    key: String!
+    mutation(value: ApplicatorRadiusCompensation!): FirmwareSettingMutation!
+    options: [ModalOptionOfApplicatorRadiusCompensation!]!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+    valueCode: String!
+}
+
+type ModalSettingOfApplicatorSpinDirection {
+    comment: String
+    currentValue: IParsedValue
+    data: ApplicatorSpinDirection!
+    hasBeenRead: Boolean!
+    id: String!
+    index: Int!
+    key: String!
+    mutation(value: ApplicatorSpinDirection!): FirmwareSettingMutation!
+    options: [ModalOptionOfApplicatorSpinDirection!]!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+    valueCode: String!
+}
+
+type ModalSettingOfAxisPlane {
+    comment: String
+    currentValue: IParsedValue
+    data: AxisPlane!
+    hasBeenRead: Boolean!
+    id: String!
+    index: Int!
+    key: String!
+    mutation(value: AxisPlane!): FirmwareSettingMutation!
+    options: [ModalOptionOfAxisPlane!]!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+    valueCode: String!
+}
+
+type ModalSettingOfDecimal {
+    comment: String
+    currentValue: IParsedValue
+    data: Decimal!
+    hasBeenRead: Boolean!
+    id: String!
+    index: Int!
+    key: String!
+    mutation(value: Decimal!): FirmwareSettingMutation!
+    options: [ModalOptionOfDecimal!]!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+    valueCode: String!
+}
+
+type ModalSettingOfEnabledType {
+    comment: String
+    currentValue: IParsedValue
+    data: EnabledType!
+    hasBeenRead: Boolean!
+    id: String!
+    index: Int!
+    key: String!
+    mutation(value: EnabledType!): FirmwareSettingMutation!
+    options: [ModalOptionOfEnabledType!]!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+    valueCode: String!
+}
+
+type ModalSettingOfFactorType {
+    comment: String
+    currentValue: IParsedValue
+    data: FactorType!
+    hasBeenRead: Boolean!
+    id: String!
+    index: Int!
+    key: String!
+    mutation(value: FactorType!): FirmwareSettingMutation!
+    options: [ModalOptionOfFactorType!]!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+    valueCode: String!
+}
+
+type ModalSettingOfFeedRateMode {
+    comment: String
+    currentValue: IParsedValue
+    data: FeedRateMode!
+    hasBeenRead: Boolean!
+    id: String!
+    index: Int!
+    key: String!
+    mutation(value: FeedRateMode!): FirmwareSettingMutation!
+    options: [ModalOptionOfFeedRateMode!]!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+    valueCode: String!
+}
+
+type ModalSettingOfMachineCoolantState {
+    comment: String
+    currentValue: IParsedValue
+    data: MachineCoolantState!
+    hasBeenRead: Boolean!
+    id: String!
+    index: Int!
+    key: String!
+    mutation(value: MachineCoolantState!): FirmwareSettingMutation!
+    options: [ModalOptionOfMachineCoolantState!]!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+    valueCode: String!
+}
+
+type ModalSettingOfMachineMotionType {
+    comment: String
+    currentValue: IParsedValue
+    data: MachineMotionType!
+    hasBeenRead: Boolean!
+    id: String!
+    index: Int!
+    key: String!
+    mutation(value: MachineMotionType!): FirmwareSettingMutation!
+    options: [ModalOptionOfMachineMotionType!]!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+    valueCode: String!
+}
+
+type ModalSettingOfMachineOverridesMode {
+    comment: String
+    currentValue: IParsedValue
+    data: MachineOverridesMode!
+    hasBeenRead: Boolean!
+    id: String!
+    index: Int!
+    key: String!
+    mutation(value: MachineOverridesMode!): FirmwareSettingMutation!
+    options: [ModalOptionOfMachineOverridesMode!]!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+    valueCode: String!
+}
+
+type ModalSettingOfMachineProgramState {
+    comment: String
+    currentValue: IParsedValue
+    data: MachineProgramState!
+    hasBeenRead: Boolean!
+    id: String!
+    index: Int!
+    key: String!
+    mutation(value: MachineProgramState!): FirmwareSettingMutation!
+    options: [ModalOptionOfMachineProgramState!]!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+    valueCode: String!
+}
+
+type ModalSettingOfMovementDistanceType {
+    comment: String
+    currentValue: IParsedValue
+    data: MovementDistanceType!
+    hasBeenRead: Boolean!
+    id: String!
+    index: Int!
+    key: String!
+    mutation(value: MovementDistanceType!): FirmwareSettingMutation!
+    options: [ModalOptionOfMovementDistanceType!]!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+    valueCode: String!
+}
+
+type ModalSettingOfPathControlMode {
+    comment: String
+    currentValue: IParsedValue
+    data: PathControlMode!
+    hasBeenRead: Boolean!
+    id: String!
+    index: Int!
+    key: String!
+    mutation(value: PathControlMode!): FirmwareSettingMutation!
+    options: [ModalOptionOfPathControlMode!]!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+    valueCode: String!
+}
+
+type ModalSettingOfSpindleSpeedMode {
+    comment: String
+    currentValue: IParsedValue
+    data: SpindleSpeedMode!
+    hasBeenRead: Boolean!
+    id: String!
+    index: Int!
+    key: String!
+    mutation(value: SpindleSpeedMode!): FirmwareSettingMutation!
+    options: [ModalOptionOfSpindleSpeedMode!]!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+    valueCode: String!
+}
+
+type ModalSettingOfTimingMode {
+    comment: String
+    currentValue: IParsedValue
+    data: TimingMode!
+    hasBeenRead: Boolean!
+    id: String!
+    index: Int!
+    key: String!
+    mutation(value: TimingMode!): FirmwareSettingMutation!
+    options: [ModalOptionOfTimingMode!]!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+    valueCode: String!
+}
+
+type ModalSettingOfUnitType {
+    comment: String
+    currentValue: IParsedValue
+    data: UnitType!
+    hasBeenRead: Boolean!
+    id: String!
+    index: Int!
+    key: String!
+    mutation(value: UnitType!): FirmwareSettingMutation!
+    options: [ModalOptionOfUnitType!]!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+    valueCode: String!
+}
+
 type MountPointSettings {
     route: String!
     target: String!
@@ -730,7 +1154,7 @@ type Mutation {
     openPort(firmware: FirmwareRequirementInput!, options: SerialPortOptionsInput!, portName: String!): SystemPort!
     openWorkspace(workspaceId: String!): Workspace!
     updateWorkspace(workspaceSettings: WorkspaceSettingsInput!): Workspace!
-    uploadProgram(fileUpload: ProgramFileUploadInput!): ProgramFileUpload!
+    uploadProgram(fileUpload: ProgramFileUploadInput!): ProgramFile!
 }
 
 type OpenControllerSession {
@@ -772,32 +1196,143 @@ type PageInfo {
 
 type ParsedAxisFlags {
     valueAxisFlags: AxisFlags!
+    valueCode: String!
     valueString: String!
 }
 
 type ParsedBool {
     valueBool: Boolean!
+    valueCode: String!
     valueString: String!
 }
 
 type ParsedDecimal {
+    valueCode: String!
     valueDecimal: Decimal!
     valueString: String!
 }
 
+type ParsedEnumOfApplicatorRadiusCompensation {
+    valueCode: String!
+    valueEnum: ApplicatorRadiusCompensation!
+    valueString: String!
+    values: [KeyValuePairOfApplicatorRadiusCompensationAndInt32!]!
+}
+
+type ParsedEnumOfApplicatorSpinDirection {
+    valueCode: String!
+    valueEnum: ApplicatorSpinDirection!
+    valueString: String!
+    values: [KeyValuePairOfApplicatorSpinDirectionAndInt32!]!
+}
+
+type ParsedEnumOfAxisPlane {
+    valueCode: String!
+    valueEnum: AxisPlane!
+    valueString: String!
+    values: [KeyValuePairOfAxisPlaneAndInt32!]!
+}
+
+type ParsedEnumOfEnabledType {
+    valueCode: String!
+    valueEnum: EnabledType!
+    valueString: String!
+    values: [KeyValuePairOfEnabledTypeAndInt32!]!
+}
+
+type ParsedEnumOfFactorType {
+    valueCode: String!
+    valueEnum: FactorType!
+    valueString: String!
+    values: [KeyValuePairOfFactorTypeAndInt32!]!
+}
+
+type ParsedEnumOfFeedRateMode {
+    valueCode: String!
+    valueEnum: FeedRateMode!
+    valueString: String!
+    values: [KeyValuePairOfFeedRateModeAndInt32!]!
+}
+
 type ParsedEnumOfKinematicsMode {
+    valueCode: String!
     valueEnum: KinematicsMode!
     valueString: String!
     values: [KeyValuePairOfKinematicsModeAndInt32!]!
 }
 
+type ParsedEnumOfMachineCoolantState {
+    valueCode: String!
+    valueEnum: MachineCoolantState!
+    valueString: String!
+    values: [KeyValuePairOfMachineCoolantStateAndInt32!]!
+}
+
+type ParsedEnumOfMachineMotionType {
+    valueCode: String!
+    valueEnum: MachineMotionType!
+    valueString: String!
+    values: [KeyValuePairOfMachineMotionTypeAndInt32!]!
+}
+
+type ParsedEnumOfMachineOverridesMode {
+    valueCode: String!
+    valueEnum: MachineOverridesMode!
+    valueString: String!
+    values: [KeyValuePairOfMachineOverridesModeAndInt32!]!
+}
+
+type ParsedEnumOfMachineProgramState {
+    valueCode: String!
+    valueEnum: MachineProgramState!
+    valueString: String!
+    values: [KeyValuePairOfMachineProgramStateAndInt32!]!
+}
+
+type ParsedEnumOfMovementDistanceType {
+    valueCode: String!
+    valueEnum: MovementDistanceType!
+    valueString: String!
+    values: [KeyValuePairOfMovementDistanceTypeAndInt32!]!
+}
+
+type ParsedEnumOfPathControlMode {
+    valueCode: String!
+    valueEnum: PathControlMode!
+    valueString: String!
+    values: [KeyValuePairOfPathControlModeAndInt32!]!
+}
+
+type ParsedEnumOfSpindleSpeedMode {
+    valueCode: String!
+    valueEnum: SpindleSpeedMode!
+    valueString: String!
+    values: [KeyValuePairOfSpindleSpeedModeAndInt32!]!
+}
+
 type ParsedEnumOfStatusReportType {
+    valueCode: String!
     valueEnum: StatusReportType!
     valueString: String!
     values: [KeyValuePairOfStatusReportTypeAndInt32!]!
 }
 
+type ParsedEnumOfTimingMode {
+    valueCode: String!
+    valueEnum: TimingMode!
+    valueString: String!
+    values: [KeyValuePairOfTimingModeAndInt32!]!
+}
+
+type ParsedEnumOfUnitType {
+    valueCode: String!
+    valueEnum: UnitType!
+    valueString: String!
+    values: [KeyValuePairOfUnitTypeAndInt32!]!
+}
+
 type ParsedString {
+    valueCode: String!
     valueString: String!
 }
 
@@ -825,14 +1360,21 @@ type PortStatus {
 }
 
 type ProgramFile {
-    name: String!
-    syntax: ProgramSyntax!
+    id: String!
+    instructionCount: Int!
+    instructionIndex: Int!
+    instructions: [CompiledInstruction!]!
+    meta: ProgramFileMeta!
+    state: ProgramState!
 }
 
-type ProgramFileUpload {
+type ProgramFileMeta {
+    directory: String
+    isUpload: Boolean!
     lastModified: Long!
     name: String!
-    size: Int!
+    size: Long!
+    syntax: ProgramSyntax!
     type: String!
 }
 
@@ -869,6 +1411,11 @@ type SyntaxChunk {
     value: String!
 }
 
+type SyntaxLine {
+    chunks: [SyntaxChunk!]!
+    raw: String!
+}
+
 type SystemPort {
     connection: ConnectedPort
     error: AlertError
@@ -893,7 +1440,6 @@ type Workspace {
     settings: WorkspaceSettings!
     state: WorkspaceState!
     topicId: String!
-    units: UnitType!
 }
 
 type WorkspaceSettings {
@@ -925,6 +1471,20 @@ enum ActiveState {
     INITIALIZING
     RUN
     SLEEP
+}
+
+enum ApplicatorRadiusCompensation {
+    DYNAMIC_LEFT
+    DYNAMIC_RIGHT
+    LEFT
+    NONE
+    RIGHT
+}
+
+enum ApplicatorSpinDirection {
+    CCW
+    CW
+    NONE
 }
 
 enum ApplyPolicy {
@@ -1006,6 +1566,13 @@ enum MachineControllerType {
     UNKNOWN
 }
 
+enum MachineCoolantState {
+    ALL
+    FLOOD
+    MIST
+    NONE
+}
+
 enum MachineLogLevel {
     CFG
     DBG
@@ -1027,6 +1594,13 @@ enum MachineMotionType {
     LINEAR
     PROBE
     RAPID
+}
+
+enum MachineOverridesMode {
+    ALL
+    FEEDS
+    NONE
+    SPEEDS
 }
 
 enum MachinePartType {
@@ -1171,16 +1745,16 @@ enum PortState {
     UNPLUGGED
 }
 
-enum ProgramSyntax {
-    G_CODE
+enum ProgramState {
+    COMPLETE
+    CREATED
+    LOADED
+    PAUSED
+    RUNNING
 }
 
-enum RadiusCompensation {
-    DYNAMIC_LEFT
-    DYNAMIC_RIGHT
-    LEFT
-    NONE
-    RIGHT
+enum ProgramSyntax {
+    G_CODE
 }
 
 enum SerialWriteState {
@@ -1194,12 +1768,6 @@ enum SerialWriteState {
 enum SortEnumType {
     ASC
     DESC
-}
-
-enum SpinDirection {
-    CCW
-    CW
-    NONE
 }
 
 enum SpindleSpeedMode {
@@ -1243,6 +1811,12 @@ enum WorkspaceState {
     DISCONNECTED
     ERROR
     OPENING
+}
+
+input AxisFlagsInput {
+    x: Boolean!
+    y: Boolean!
+    z: Boolean!
 }
 
 input BooleanOperationFilterInput {
@@ -1452,6 +2026,12 @@ input MachineSpecSettingsInput {
     value: Decimal!
 }
 
+input ModalChangeInput {
+    code: String
+    id: String!
+    value: String!
+}
+
 input MoveCommandInput {
     a: Decimal
     b: Decimal
@@ -1466,7 +2046,7 @@ input MoveCommandInput {
 input ProgramFileUploadInput {
     lastModified: Long!
     name: String!
-    size: Int!
+    size: Long!
     type: String!
 }
 

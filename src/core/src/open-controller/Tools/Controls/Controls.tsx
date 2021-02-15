@@ -1,28 +1,34 @@
 import React from 'react';
 import {ToolBase} from '../types';
-import {Grid} from '@material-ui/core';
+import {Button, FormControl, Grid} from '@material-ui/core';
 import Jogger from './Jogger';
-import {useWorkspaceControllerSelector} from '../../Workspaces';
 import {useLogger} from '../../../hooks';
 import useStyles from './styles';
 import {useTrans} from '../../Context';
-import OverrideControl from './OverrideControl';
-import {faArrowCircleLeft, faArrowCircleRight, faStopCircle} from '@fortawesome/free-solid-svg-icons';
-import {MachineSettingUnits, SpinDirection} from '../../graphql';
+import {
+  faArrowCircleLeft,
+  faArrowCircleRight,
+  faBullseye,
+  faStopCircle
+} from '@fortawesome/free-solid-svg-icons';
+import {ApplicatorSpinDirection} from '../../graphql';
 import {IconDefinition} from '@fortawesome/fontawesome-common-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCreativeCommonsZero } from '@fortawesome/free-brands-svg-icons';
+import {CalibrationDialog} from '../../Calibration';
 
 const Controls: ToolBase = (props) => {
   const t = useTrans();
   const log = useLogger(Controls);
   const classes = useStyles();
   const { tool, workspaceId } = props;
-  const applicator = useWorkspaceControllerSelector(workspaceId, c => c.machine.status.applicator);
-  const overrides = useWorkspaceControllerSelector(workspaceId, c => c.machine.status.overrides);
+  const [ calibrating, setCalibrating ] = React.useState(false);
 
   log.debug('render', tool, workspaceId);
-  function getSpinDirectionIcon(spin: SpinDirection): IconDefinition {
-    if (spin === SpinDirection.Ccw) return faArrowCircleLeft;
-    if (spin === SpinDirection.Cw) return faArrowCircleRight;
+
+  function getSpinDirectionIcon(spin: ApplicatorSpinDirection): IconDefinition {
+    if (spin === ApplicatorSpinDirection.Ccw) return faArrowCircleLeft;
+    if (spin === ApplicatorSpinDirection.Cw) return faArrowCircleRight;
     return faStopCircle;
   }
 
@@ -30,22 +36,34 @@ const Controls: ToolBase = (props) => {
     <Grid item xs={12}>
       <Jogger tool={tool} workspaceId={workspaceId} />
     </Grid>
-    <Grid item xs={6} className={classes.dialogFooter}>
-      <OverrideControl
-        title={t('Feed')}
-        units={MachineSettingUnits.MillimetersPerMinute}
-        value={applicator.feedRate}
-        override={overrides?.feedAllowed ? overrides.feed : undefined}
-      />
+    <Grid item xs={6} className={classes.footer} >
+      <FormControl fullWidth={true}>
+        <Button
+          variant="outlined"
+          className={classes.buttonLeft}
+          onClick={() => setCalibrating(true)}
+        >
+          <FontAwesomeIcon icon={faBullseye} className={classes.buttonIcon} />
+          Calibrate
+        </Button>
+      </FormControl>
     </Grid>
-    <Grid item xs={6} className={classes.dialogFooter}>
-      <OverrideControl
-        title={t('Speed')}
-        units={MachineSettingUnits.Rpm}
-        value={applicator.spinSpeed}
-        override={overrides?.speedAllowed ? overrides.speed : undefined}
-      />
+    <Grid item xs={6} className={classes.footer} >
+      <FormControl fullWidth={true} >
+        <Button
+          variant="outlined"
+          className={classes.buttonRight}
+        >
+          <FontAwesomeIcon icon={faCreativeCommonsZero} className={classes.buttonIcon} />
+          Zero
+        </Button>
+      </FormControl>
     </Grid>
+    <CalibrationDialog
+      workspaceId={workspaceId}
+      open={calibrating}
+      onClose={() => setCalibrating(false)}
+    />
   </Grid>;
 };
 

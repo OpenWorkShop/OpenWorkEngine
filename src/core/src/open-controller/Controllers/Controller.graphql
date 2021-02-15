@@ -20,8 +20,32 @@ fragment MachineExecutionResult on MachineExecutionResult {
     }
 }
 
-
 # -- commands
+
+mutation UploadProgram($fileUpload: ProgramFileUploadInput!) {
+    uploadProgram(fileUpload: $fileUpload) {
+        id
+        state
+        meta {
+            name
+            lastModified
+            size
+            type
+            directory
+            syntax
+            isUpload
+        }
+        instructionCount
+        instructionIndex
+    }
+}
+
+mutation SetModalSettings($workspaceId: String!, $change: ModalChangeInput!) {
+    controller: controlMachine(workspaceId: $workspaceId) {
+        id
+        result: setModal(change: $change) { ...MachineExecutionResult }
+    }
+}
 
 mutation SetFirmwareSettings($workspaceId: String!, $changeSet: [FirmwareSettingChangeInput!]!) {
     controller: controlMachine(workspaceId: $workspaceId) {

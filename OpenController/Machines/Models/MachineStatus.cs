@@ -23,7 +23,7 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
 
     public MachineApplicatorState Applicator { get; } = new();
 
-    public MachineOverrides? Overrides { get; internal set; } = null;
+    public MachineOverrides Overrides { get; } = new();
 
     public override string ToString() =>
       $"<MPos:{MachinePosition}> <WPos:{WorkPosition}> <WCO:{WorkCoordinateOffset}> {Buffer} {Overrides}";

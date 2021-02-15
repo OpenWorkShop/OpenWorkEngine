@@ -15,6 +15,7 @@ using OpenWorkEngine.OpenController.Machines.Models;
 using OpenWorkEngine.OpenController.Ports.Enums;
 using OpenWorkEngine.OpenController.Ports.Models;
 using OpenWorkEngine.OpenController.Syntax;
+using OpenWorkEngine.OpenController.Syntax.GCode.Extensions;
 using Serilog;
 using Parser = OpenWorkEngine.OpenController.Controllers.Services.Serial.Parser;
 
@@ -51,12 +52,22 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
     // For those topics which are batched, store the timestamp of when they should be emitted.
     private readonly Dictionary<MachineTopic, DateTime> _batchedTopicDispatchTime = new();
 
+    private void AddBatchedTopics(HashSet<MachineTopic>? topics) {
+      if (!(topics?.Any() ?? false)) return;
+
+      foreach (MachineTopic topic in topics) {
+        double batchInterval = topic.GetBatchInterval();
+        if (batchInterval <= 0) {
+          Emit(topic);
+        } else if (!_batchedTopicDispatchTime.ContainsKey(topic)) {
+          _batchedTopicDispatchTime.Add(topic, DateTime.Now.AddMilliseconds(batchInterval));
+        }
+      }
+    }
 
     // When any parser indicates the line WasParsed...
     private void OnLineParsed(MachineOutputLine line) {
       line = line.Finish();
-
-      Log.Verbose("[READ] [PARSED] {line}", line.ToString());
 
       // ACK (ok/error) from machine.
       if (line.LogEntry?.IsResponse ?? false) {
@@ -66,18 +77,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
         }
       }
 
-      // Track topic changes....
-      if (!(line.Topics?.Any() ?? false)) return;
-
-      Log.Verbose("[MACHINE] add topics: {topics}", line.Topics.Select(ct => ct.ToString()));
-      foreach (MachineTopic topic in line.Topics) {
-        double batchInterval = topic.GetBatchInterval();
-        if (batchInterval <= 0) {
-          Emit(topic);
-        } else if (!_batchedTopicDispatchTime.ContainsKey(topic)) {
-          _batchedTopicDispatchTime.Add(topic, DateTime.Now.AddMilliseconds(batchInterval));
-        }
-      }
+      AddBatchedTopics(line.Topics);
     }
 
     // try/catch around a core read loop; broadcasts state & returns # of characters read.
@@ -188,6 +188,11 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       res.ResponseLogEntry = responseEntry;
       modifiedLogs.Add(res.WriteLogEntry);
 
+      // Process this code with the virtual machine.
+      ControlledMachineHash hash = Connection.Machine.SnapshotHash();
+      Connection.Machine.ApplyInstructionResult(res);
+      AddBatchedTopics(Connection.Machine.GetMachineChanges(hash));
+
       if (WriteQueue.Any() && WriteQueue.TryDequeue(out MachineInstructionResult? next)) {
         WriteInstruction(next);
         modifiedLogs.Add(next.WriteLogEntry);
@@ -243,12 +248,12 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       if (res.Instruction.InstructionDefinition.ResponseExpected) {
         ResponseQueue.Enqueue(res);
         Connection.Machine.Status.Buffer.LastInstructionResult = res;
-        Log.Debug("[WRITE] {code} via {buffer}", res.WriteLogEntry.Code, ToString());
+        Log.Debug("[WRITE] [AWAIT] {code} via {buffer}", res.WriteLogEntry.Code, ToString());
       } else {
-        Log.Verbose("[WRITE] {code} via {buffer}", res.WriteLogEntry.Code, ToString());
+        Log.Verbose("[WRITE] [SLIENT] {code} via {buffer}", res.WriteLogEntry.Code, ToString());
       }
       res.WriteLogEntry.WriteState = SerialWriteState.Sent;
-      string code = res.Instruction.Code;
+      string code = res.Instruction.Line.Raw;
 
       if (res.Instruction.InstructionDefinition.Inline) {
         Connection.Port.SerialPort.Write(code);
@@ -260,7 +265,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       }
     }
 
-    internal async Task<MachineInstructionResult> Instruct(
+    private async Task<MachineInstructionResult> Instruct(
       IControllerInstruction instruction, ControllerExecutionOptions? opts = null
     ) {
       opts ??= new ControllerExecutionOptions();
@@ -269,9 +274,9 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       Machine.AddLogEntry(logEntry);
 
       MachineInstructionResult res = new(compiled, logEntry);
-      if (!instruction.Immediate && ResponseQueue.Any()) {
+      if (!instruction.Immediate && !Machine.Status.Buffer.CanReceive) {
         // When waiting on a response, queue the send rather than sending immediately.
-        Log.Debug("[WRITE] [QUEUE] {source} {code} {buffer}", compiled.Source, compiled.Code, ToString());
+        Log.Debug("[WRITE] [ENQUEUE] {source} {code} {buffer}", compiled.Source, compiled.Line.Raw, ToString());
         WriteQueue.Enqueue(res);
       } else {
         // If we're not waiting on any responses, we can write immediately.

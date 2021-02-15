@@ -1,14 +1,14 @@
+using OpenWorkEngine.OpenController.Machines.Enums;
+
 namespace OpenWorkEngine.OpenController.Machines.Models {
   public record MachineOverrides {
-    public decimal Feed { get; internal set; } = 100;
+    public ModalSetting<MachineOverridesMode> Mode { get; } = FirmwareSetting.Modal(MachineOverridesMode.None);
 
-    public bool FeedAllowed { get; internal set; } = true;
+    public FirmwareSetting<decimal> Feed { get; } = FirmwareSetting.Define(100M);
 
-    public decimal Rapids { get; internal set; } = 100;
+    public FirmwareSetting<decimal> Rapids { get; } = FirmwareSetting.Define(100M);
 
-    public decimal Speed { get; internal set; } = 100;
-
-    public bool SpeedAllowed { get; internal set; } = true;
+    public FirmwareSetting<decimal> Speed { get; } = FirmwareSetting.Define(100M);
 
     public override string ToString() => $"<OV:F{Feed}:R{Rapids}:S{Speed}>";
   }

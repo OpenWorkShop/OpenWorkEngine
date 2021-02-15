@@ -3,21 +3,11 @@ import { Vector3 } from 'three';
 import GWizCanvas from './GWizCanvas';
 import GWizCamera from './GWizCamera';
 import {Logger} from '../../../utils/logging';
-import GWizApplicator from './GWizApplicator';
-import {INavCubePreferences, IVisualizerStyles, RenderGroupType} from '../types';
+import { IVisualizerStyles, RenderGroupType, ViewSide} from '../types';
+import { getSidesColor, isSide } from '../sides';
 
 //https://github.com/yoavmil/angular-threejs-starter/blob/nav-cube/src/app/nav-cube/nav-cube.ts
 
-enum Sides {
-  Front = 1 << 1,
-  Back = 1 << 2,
-  Left = 1 << 3,
-  Right = 1 << 4,
-  Top = 1 << 5,
-  Bottom = 1 << 6,
-}
-
-const allSides = [Sides.Front, Sides.Back, Sides.Left, Sides.Right, Sides.Top, Sides.Back];
 
 class NavCube {
   styles: IVisualizerStyles;
@@ -55,12 +45,15 @@ class NavCube {
 
     const geometry = new THREE.ConeGeometry(0.2, 0.5);
     const material = new THREE.MeshBasicMaterial(this.styles.renderGroups[RenderGroupType.P]);
+    geometry.rotateX(-Math.PI/2);
+    geometry.translate(0, 0, 0.5 / 2); // Tip of cone = origin
+
     this._northStar = new THREE.Mesh( geometry, material );
 
     this.scene = new THREE.Scene();
     this.scene.add(this._cubeMesh);
 
-    this.localCamera = new GWizCamera();
+    this.localCamera = new GWizCamera(this.canvas);
     // this.localCamera.up = this.camera.up.clone();
     this.localCamera.setRange( 0.01, this._range);
     this.localCamera.position.copy(new Vector3(0, 5, 0));
@@ -73,13 +66,17 @@ class NavCube {
     // this.localCamera.lookAt(0, 0, 0);
 
 
-    this._cubeMesh.position.copy(this.canvas.center);
-    this._northStar.position.copy(this.canvas.center);
+    //this._cubeMesh.position.copy(this.canvas.center);
+    //this._northStar.position.copy(lookNormal).multiplyScalar(this._range * (1 - this._zoom) * 0.5);
 
-    this.localCamera.position.copy(lookNormal).multiplyScalar(this._range * (1 - this._zoom));
-    this.localCamera.lookAt(this.canvas.center);
+    const vector: THREE.Vector3 = new THREE.Vector3(0, 0, 0);
+    this.trackedCamera.getWorldDirection(vector);
+    // const theta = Math.atan2(vector.x,vector.z);
 
-    this.log.debug('star', this._northStar.position, 'camera', this.localCamera.position);
+    this.localCamera.position.copy(vector).multiplyScalar(this._range * (1 - this._zoom) * -1);
+    this.localCamera.lookAt(new THREE.Vector3(0, 0, 0));
+
+    // this.log.debug('camera', this.localCamera.position, 'center', this._cubeMesh.position);
   }
 
   draw(div: HTMLDivElement): void {
@@ -111,12 +108,12 @@ class NavCube {
     const halfPi = Math.PI / 2;
     const geoms = [];
 
-    geoms[Sides.Front] = plane.clone().rotateX(halfPi);
-    geoms[Sides.Back] = plane.clone().rotateX(-halfPi).rotateY(Math.PI);
-    geoms[Sides.Left] = plane.clone().rotateY(-halfPi).rotateX(halfPi);
-    geoms[Sides.Right] = plane.clone().rotateY(halfPi).rotateX(halfPi);
-    geoms[Sides.Top] = plane.clone();
-    geoms[Sides.Bottom] = plane.clone().rotateX(-Math.PI);
+    geoms[ViewSide.Front] = plane.clone().rotateX(halfPi);
+    geoms[ViewSide.Back] = plane.clone().rotateX(-halfPi).rotateY(Math.PI);
+    geoms[ViewSide.Left] = plane.clone().rotateY(-halfPi).rotateX(halfPi);
+    geoms[ViewSide.Right] = plane.clone().rotateY(halfPi).rotateX(halfPi);
+    geoms[ViewSide.Top] = plane.clone();
+    geoms[ViewSide.Bottom] = plane.clone().rotateX(-Math.PI);
 
     geoms.forEach((geom, i) => {
       const mesh = new THREE.Mesh(geom, new THREE.MeshBasicMaterial());
@@ -138,46 +135,46 @@ class NavCube {
     plane.translate(0, 0, offset);
 
     // side edges
-    geoms[Sides.Front | Sides.Right] = plane
+    geoms[ViewSide.Front | ViewSide.Right] = plane
       .clone()
       .rotateX(piBy2)
       .rotateZ(piBy4);
-    geoms[Sides.Right | Sides.Back] = geoms[Sides.Front | Sides.Right]
+    geoms[ViewSide.Right | ViewSide.Back] = geoms[ViewSide.Front | ViewSide.Right]
       .clone()
       .rotateZ(piBy2);
-    geoms[Sides.Back | Sides.Left] = geoms[Sides.Right | Sides.Back]
+    geoms[ViewSide.Back | ViewSide.Left] = geoms[ViewSide.Right | ViewSide.Back]
       .clone()
       .rotateZ(piBy2);
-    geoms[Sides.Left | Sides.Front] = geoms[Sides.Back | Sides.Left]
+    geoms[ViewSide.Left | ViewSide.Front] = geoms[ViewSide.Back | ViewSide.Left]
       .clone()
       .rotateZ(piBy2);
 
     // top edges
-    geoms[Sides.Top | Sides.Right] = plane.clone().rotateY(piBy4);
-    geoms[Sides.Top | Sides.Back] = geoms[Sides.Top | Sides.Right]
+    geoms[ViewSide.Top | ViewSide.Right] = plane.clone().rotateY(piBy4);
+    geoms[ViewSide.Top | ViewSide.Back] = geoms[ViewSide.Top | ViewSide.Right]
       .clone()
       .rotateZ(piBy2);
-    geoms[Sides.Top | Sides.Left] = geoms[Sides.Top | Sides.Back]
+    geoms[ViewSide.Top | ViewSide.Left] = geoms[ViewSide.Top | ViewSide.Back]
       .clone()
       .rotateZ(piBy2);
-    geoms[Sides.Top | Sides.Front] = geoms[Sides.Top | Sides.Left]
+    geoms[ViewSide.Top | ViewSide.Front] = geoms[ViewSide.Top | ViewSide.Left]
       .clone()
       .rotateZ(piBy2);
 
     // botom edges
-    geoms[Sides.Bottom | Sides.Right] = plane.clone().rotateY(piBy4 + piBy2);
-    geoms[Sides.Bottom | Sides.Back] = geoms[Sides.Bottom | Sides.Right]
+    geoms[ViewSide.Bottom | ViewSide.Right] = plane.clone().rotateY(piBy4 + piBy2);
+    geoms[ViewSide.Bottom | ViewSide.Back] = geoms[ViewSide.Bottom | ViewSide.Right]
       .clone()
       .rotateZ(piBy2);
-    geoms[Sides.Bottom | Sides.Left] = geoms[Sides.Bottom | Sides.Back]
+    geoms[ViewSide.Bottom | ViewSide.Left] = geoms[ViewSide.Bottom | ViewSide.Back]
       .clone()
       .rotateZ(piBy2);
-    geoms[Sides.Bottom | Sides.Front] = geoms[Sides.Bottom | Sides.Left]
+    geoms[ViewSide.Bottom | ViewSide.Front] = geoms[ViewSide.Bottom | ViewSide.Left]
       .clone()
       .rotateZ(piBy2);
 
     geoms.forEach((geom, i) => {
-      const color = this.getEdgeColor(i);
+      const color = getSidesColor(i, this.styles);
       const sideMat = new THREE.MeshBasicMaterial({ color });
       const mesh = new THREE.Mesh(geom, sideMat);
       mesh.userData.sides = i;
@@ -211,16 +208,16 @@ class NavCube {
     return closest;
   }
 
-  getMeshOfSide(side: Sides): THREE.Mesh {
+  getMeshOfSide(side: ViewSide): THREE.Mesh {
     return this._cubeMesh.children.find(
       (m) => m.userData.sides == side
     ) as THREE.Mesh;
   }
 
   getTriangleOfSides(
-    a: Sides,
-    b: Sides,
-    c: Sides,
+    a: ViewSide,
+    b: ViewSide,
+    c: ViewSide,
     corner: Vector3
   ): THREE.Triangle {
     return new THREE.Triangle(
@@ -230,85 +227,84 @@ class NavCube {
     );
   }
 
-  createCornerMesh(a: Sides, b: Sides, c: Sides, corner: Vector3): THREE.Mesh {
+  createCornerMesh(a: ViewSide, b: ViewSide, c: ViewSide, corner: Vector3): THREE.Mesh {
     const geom = new THREE.Geometry();
     const triangle = this.getTriangleOfSides(a, b, c, corner);
     geom.vertices.push(triangle.a);
     geom.vertices.push(triangle.b);
     geom.vertices.push(triangle.c);
     geom.faces.push(new THREE.Face3(0, 1, 2));
-    const color = new THREE.Color(this.styles.navCube.cornerColor);
+    const color = getSidesColor(a | b | c, this.styles);
     const mat = new THREE.MeshBasicMaterial({ color });
     geom.computeFaceNormals();
     const mesh = new THREE.Mesh(geom, mat);
     mesh.userData.sides = a | b | c;
-    this.log.verbose('corner', a, b, c, corner, geom, triangle, mesh);
     return mesh;
   }
 
   createCornerFacets(): void {
     this._cubeMesh.add(
       this.createCornerMesh(
-        Sides.Left,
-        Sides.Front,
-        Sides.Top,
+        ViewSide.Left,
+        ViewSide.Front,
+        ViewSide.Top,
         new Vector3(-1, -1, 1)
       )
     );
     this._cubeMesh.add(
       this.createCornerMesh(
-        Sides.Front,
-        Sides.Right,
-        Sides.Top,
+        ViewSide.Front,
+        ViewSide.Right,
+        ViewSide.Top,
         new Vector3(1, -1, 1)
       )
     );
     this._cubeMesh.add(
       this.createCornerMesh(
-        Sides.Right,
-        Sides.Back,
-        Sides.Top,
+        ViewSide.Right,
+        ViewSide.Back,
+        ViewSide.Top,
         new Vector3(1, 1, 1)
       )
     );
     this._cubeMesh.add(
       this.createCornerMesh(
-        Sides.Back,
-        Sides.Left,
-        Sides.Top,
+        ViewSide.Back,
+        ViewSide.Left,
+        ViewSide.Top,
         new Vector3(-1, 1, 1)
       )
     );
 
     this._cubeMesh.add(
       this.createCornerMesh(
-        Sides.Front,
-        Sides.Left,
-        Sides.Bottom,
+        ViewSide.Front,
+        ViewSide.Left,
+        ViewSide.Bottom,
         new Vector3(-1, -1, -1)
       )
     );
     this._cubeMesh.add(
       this.createCornerMesh(
-        Sides.Right,
-        Sides.Front,
-        Sides.Bottom,
+        ViewSide.Right,
+        ViewSide.Front,
+        ViewSide.Bottom,
         new Vector3(1, -1, -1)
       )
     );
     this._cubeMesh.add(
       this.createCornerMesh(
-        Sides.Back,
-        Sides.Right,
-        Sides.Bottom,
+        ViewSide.Back,
+        ViewSide.Right,
+        ViewSide.Bottom,
         new Vector3(1, 1, -1)
       )
     );
     this._cubeMesh.add(
       this.createCornerMesh(
-        Sides.Left,
-        Sides.Back,
-        Sides.Bottom,
+        ViewSide.Left,
+        ViewSide.Back,
+        ViewSide.Bottom,
         new Vector3(-1, 1, -1)
       )
     );
@@ -321,19 +317,19 @@ class NavCube {
 
   createLabels(): void {
     const sides = [
-      Sides.Front,
-      Sides.Back,
-      Sides.Left,
-      Sides.Right,
-      Sides.Top,
-      Sides.Bottom,
+      ViewSide.Front,
+      ViewSide.Back,
+      ViewSide.Left,
+      ViewSide.Right,
+      ViewSide.Top,
+      ViewSide.Bottom,
     ];
     const canvasSize = 256; // textures need 2^N, N=7
     let fontSize = 72;
 
     {
       // find common font size
-      const longestString = Sides[Sides.Bottom];
+      const longestString = ViewSide[ViewSide.Bottom];
       const canvas = document.createElement('canvas');
       canvas.width = canvasSize;
       canvas.height = canvasSize;
@@ -349,7 +345,7 @@ class NavCube {
 
     for (let i=0; i<sides.length; i++) {
       const side = sides[i];
-      const str = Sides[side];
+      const str = ViewSide[side];
 
       const canvas = document.createElement('canvas');
       canvas.width = canvasSize;
@@ -359,9 +355,8 @@ class NavCube {
         this.log.warn('No 2D context for label.');
         continue;
       }
-      const colHex = this.getFaceColor(side).getHexString();
+      const colHex = getSidesColor(side, this.styles).getHexString();
       ctx.fillStyle = '#' + colHex;
-      this.log.debug('fill', ctx.fillStyle, colHex, this.getSideColor(side));
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       ctx.font = `bold ${fontSize}px Arial`;
@@ -376,39 +371,6 @@ class NavCube {
     }
   }
 
-  private fadeFace(col: THREE.Color): THREE.Color {
-    return col.lerp(new THREE.Color('#FFFFFF'), 0.5);
-  }
-
-  private getFaceColor(side: Sides): THREE.Color {
-    return this.fadeFace(new THREE.Color(this.getSideColor(side)));
-  }
-
-  private getEdgeColor(side: Sides): THREE.Color {
-    let col: THREE.Color | undefined = undefined;
-    allSides.forEach(s => {
-      const snum = s as number;
-      if (snum === undefined) return;
-      // if (typeof s !== 'number') return;
-      if ((side & snum) === 0) {
-        this.log.debug('side', snum, 'vs', side);
-        const scol = new THREE.Color(this.getSideColor(snum));
-        col = col?.lerp(scol, 0.5) ?? scol;
-      }
-    });
-    this.log.debug('final side', col);
-    const def = new THREE.Color('#FFFFFF');
-    if (!col) return def;
-    return this.fadeFace(col);
-  }
-
-  private getSideColor(side: Sides): string {
-    if (side === Sides.Top || side === Sides.Bottom) return this.styles.renderGroups[RenderGroupType.Z].color;
-    if (side === Sides.Left || side === Sides.Right) return this.styles.renderGroups[RenderGroupType.X].color;
-    if (side === Sides.Back || side === Sides.Front) return this.styles.renderGroups[RenderGroupType.Y].color;
-    return '#444444';
-  }
-
   private onClick(event: MouseEvent): void {
     if (this._cubeMesh) {
       const size = new THREE.Vector2();
@@ -420,10 +382,10 @@ class NavCube {
       const ray = new THREE.Raycaster();
       ray.setFromCamera(xy, this.localCamera);
       const intersects = ray.intersectObjects(this._cubeMesh.children, false);
-      this.log.debug('click intersects', intersects, this._cubeMesh);
-      intersects.forEach((intersection, i) => {
+      intersects.forEach((intersection) => {
         if (intersection.object.userData.sides && intersection.face?.normal) {
           this.onSideClicked(
+            intersection.object.userData.sides,
             intersection.object as THREE.Mesh,
             intersection.face?.normal
           );
@@ -433,15 +395,15 @@ class NavCube {
     }
   }
 
-  private onSideClicked(mesh: THREE.Mesh, normal: Vector3): void {
-    this.log.debug('side', mesh, 'normal', normal);
-    const camLen = this.trackedCamera.position.length();
-    if (normal.equals(this.trackedCamera.up)) {
-      normal.applyAxisAngle(new Vector3(1, 0, 0), 0.001);
-    }
+  private onSideClicked(sides: ViewSide, mesh: THREE.Mesh, normal: Vector3): void {
+    // const camLen = this.trackedCamera.position.length();
+    //if (normal.equals(this.trackedCamera.up)) {
+    //  normal.applyAxisAngle(new Vector3(1, 0, 0), 0.001);
+    //}
 
-    this.trackedCamera.position.copy(normal).multiplyScalar(camLen);
-    this.trackedCamera.lookAt(0, 0, 0);
+    //this.trackedCamera.position.copy(normal).multiplyScalar(camLen);
+    this.trackedCamera.lookAtSides(sides);
+    // this.log.debug(sides, 'side', mesh, 'normal', normal);
   }
 }
 

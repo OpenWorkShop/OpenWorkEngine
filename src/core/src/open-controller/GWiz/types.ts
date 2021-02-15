@@ -1,18 +1,11 @@
+import {Object3D, Quaternion, Vector3} from 'three';
+import {PayloadAction} from '@reduxjs/toolkit';
+import {AxisPlane, UnitType} from '../graphql';
+
 export enum ViewMode {
   Perspective,
   Plane,
   Layers,
-}
-
-export enum ViewPlane {
-  None, // aka, 3d
-  ThreeD,
-  Top,
-  Bottom,
-  Left,
-  Right,
-  Front,
-  Back,
 }
 
 // Groups of things rendered on-screen, each may have styles.
@@ -24,6 +17,15 @@ export enum RenderGroupType {
   X,
   Y,
   Z,
+}
+
+export enum ViewSide {
+  Front = 1 << 1,
+  Back = 1 << 2,
+  Left = 1 << 3,
+  Right = 1 << 4,
+  Top = 1 << 5,
+  Bottom = 1 << 6,
 }
 
 export interface IVisualizerControlsPreferences {
@@ -59,26 +61,38 @@ export interface IVisualizerStyles {
 
 // Things the user changes directly through UI forms.
 export interface IVisualizerPreferences {
-  viewPlane: ViewPlane;
   controls: IVisualizerControlsPreferences;
   styles: IVisualizerStyles;
 }
 
 // Implicit tracking of the camera's position within the scene.
 export interface IVisualizerCameraState {
-  position: IVector3;
+  position: Vector3;
+  quaternion: Quaternion;
+}
+
+export interface IVisualizerSceneState {
+  camera: IVisualizerCameraState;
+  units?: UnitType;
+  axisPlane?: AxisPlane;
+  viewSides?: ViewSide;
+  // selection?: Object3D;
 }
 
 export interface IHaveVisualizerPreferences {
   visualizerPreferences: IVisualizerPreferences;
-  cameraState: IVisualizerCameraState;
 }
 
-export interface IVector3 {
-  x: number,
-  y: number,
-  z: number,
+export type GWizState = IHaveVisualizerPreferences & {
+  scenes: { [key: string]: IVisualizerSceneState };
 }
 
-export type GWizState = IHaveVisualizerPreferences;
+export type VisualizerSceneStateAction<TState> = PayloadAction<{
+  sceneId: string;
+  state: TState;
+}>;
 
+// Passed into the classes such that they may broadcast state back to the dispatch()
+export type GWizActions = {
+  saveCameraState: (camera: IVisualizerCameraState) => void;
+}

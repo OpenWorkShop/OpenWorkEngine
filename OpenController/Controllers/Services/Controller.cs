@@ -11,7 +11,9 @@ using OpenWorkEngine.OpenController.Controllers.Services.Values;
 using OpenWorkEngine.OpenController.ControllerSyntax;
 using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
+using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Interfaces;
+using OpenWorkEngine.OpenController.Machines.Messages;
 using OpenWorkEngine.OpenController.Machines.Models;
 using OpenWorkEngine.OpenController.Ports.Enums;
 using OpenWorkEngine.OpenController.Ports.Models;
@@ -59,14 +61,57 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
     public Task<MachineExecutionResult> Pause() => Invoke(nameof(Pause));
     public Task<MachineExecutionResult> Play() => Invoke(nameof(Play));
 
-    public Task<MachineExecutionResult> Move(MoveCommand moveCommand) =>
-      ExecuteCommand(nameof(Move), new ControllerExecutionOptions() { Args = moveCommand });
+    public async Task<MachineExecutionResult> Move(MoveCommand moveCommand) {
+      List<MachineInstructionResult> lines = new List<MachineInstructionResult>();
+
+      ModalSetting<MovementDistanceType> dt = Connection.Machine.Configuration.Modals.Distance;
+      MachineExecutionResult? res = await EnsureModalValue(dt, moveCommand.DistanceType);
+      if (res != null) lines = lines.Concat(res.InstructionResults).ToList();
+
+      if (moveCommand.MotionType.HasValue) {
+        ModalSetting<MachineMotionType> mmt = Connection.Machine.Configuration.Modals.Motion;
+        res = await EnsureModalValue(mmt, moveCommand.MotionType.Value);
+        if (res != null) lines = lines.Concat(res.InstructionResults).ToList();
+      }
+
+      res = await ExecuteCommand(nameof(Move), new ControllerExecutionOptions() {Args = moveCommand});
+      return new MachineExecutionResult(Connection.Machine, lines.Concat(res.InstructionResults).ToList());
+    }
 
     // Raw command
     public Task<MachineExecutionResult> WriteCommand(string commandCode, string sourceName) {
       ControllerScript script = new (Compiler.LoadInstructions(commandCode, c => new GCodeBlock(c, sourceName)));
       Log.Verbose("[CMD] {code} from {src}", commandCode, sourceName);
       return Buffer.Execute(script);
+    }
+
+    private async Task<MachineExecutionResult> SaveModalSetting(FirmwareSetting setting, string? orig = null) {
+      if (orig != null && orig.Equals(setting.Value))
+        return new MachineExecutionResult(Connection.Machine, new List<MachineInstructionResult>()) { };
+      setting.Key = setting.GetValueKey(setting.Value) ?? setting.Key;
+      Log.Debug("[MODAL] {value} => {key}", setting.Key, setting.Value);
+      MachineExecutionResult res = await Buffer.Execute(Translator.ModalScript, new ControllerExecutionOptions() {
+        Args = setting,
+        AwaitResponse = true,
+        OverrideSource = setting.Title,
+      });
+
+      return res;
+    }
+
+    internal Task<MachineExecutionResult> EnsureModalValue<TData>(
+      ModalSetting<TData> modalSetting, TData value
+    ) where TData : Enum {
+      string orig = modalSetting.Value;
+      modalSetting.Data = value;
+      return SaveModalSetting(modalSetting, orig);
+    }
+
+    public Task<MachineExecutionResult> SetModal(ModalChange change) {
+      FirmwareSetting setting = Connection.Machine.Configuration.Modals.Settings.First(s => s.Id.Equals(change.Id));
+      string orig = setting.Value;
+      setting.Value = change.Value;
+      return SaveModalSetting(setting, orig);
     }
 
     // Directly modify a setting.
@@ -76,7 +121,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       MachineExecutionResult res = await Buffer.Execute(Translator.SettingScript, new ControllerExecutionOptions() {
         Args = setting,
         AwaitResponse = true,
-        Source = setting.Title,
+        OverrideSource = setting.Title,
       });
       // If the setting was successfully set, update the machine's state.
 
@@ -113,6 +158,8 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
     // Timeout for the entire startup process, including all firmware verification.
     internal int StartupTimeoutMs { get; } = 20000;
 
+    internal Func<string, MachineExecutionResult, Task<MachineExecutionResult>>? OnCommandExecuted { get; set; }
+
     // Thread managament liveness
     private bool _isAlive = true;
     private ILogger? _logger;
@@ -124,7 +171,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       Buffer = new SerialBuffer(this);
       CreatedAt = DateTime.Now;
       this.LoadMachineSyntax();
-      Translator.ApplyDefaultSettings(connection.Machine);
+      Translator.ConfigureMachine(connection.Machine);
     }
 
     // Look up the code for a given method name and write it to the port.
@@ -142,10 +189,14 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       return res;
     }
 
-    internal Task<MachineExecutionResult> ExecuteCommand(string commandName, ControllerExecutionOptions? opts = null) {
+    internal async Task<MachineExecutionResult> ExecuteCommand(string commandName, ControllerExecutionOptions? opts = null) {
       ControllerScript script = Translator.GetCommandScript(commandName);
       Log.Verbose("[CMD] {name} opts {@opts}", commandName, opts);
-      return Buffer.Execute(script, opts);
+      MachineExecutionResult res = await Buffer.Execute(script, opts);
+      if (OnCommandExecuted != null) {
+        res = await OnCommandExecuted.Invoke(commandName, res);
+      }
+      return res;
     }
 
     public void Dispose() {
@@ -213,6 +264,10 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
           return;
         Log.Information("[FIRMWARE] requirements satisfied: {firmware}", firmware.ToString());
 
+        if (_startupCallback != null) {
+          await _startupCallback.Invoke(this);
+          _startupCallback = null;
+        }
         // await GetParameters();
       } catch (Exception e) {
         Log.Error(e, "[STARTUP] failed");
@@ -248,7 +303,13 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       return true;
     }
 
-    public void StartTask() => Task.Run(Startup);
+    private Func<Controller, Task>? _startupCallback = null;
+
+    public Controller StartTask(Func<Controller, Task>? startupCallback = null) {
+      _startupCallback = startupCallback;
+      Task.Run(Startup);
+      return this;
+    }
 
     public override string ToString() => $"[{ControllerType}] {Connection}";
   }

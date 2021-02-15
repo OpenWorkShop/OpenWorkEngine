@@ -18,6 +18,7 @@ export interface IMachineLogs {
 export interface IController {
   machine: ControlledMachineFragment;
   logs: IMachineLogs;
+  canReceiveCommands: boolean;
 }
 
 export interface IHaveController {

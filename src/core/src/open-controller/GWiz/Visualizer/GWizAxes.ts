@@ -1,8 +1,17 @@
 import * as THREE from 'three';
-import {IMaterial, IVisualizerStyles, RenderGroupType} from '../types';
-import {Axis3D, getMachineAxisMap, IMachineAxis, iterateMachineAxisGridLines, MachineAxisMap} from '../../Machines';
+import {IMaterial, IVisualizerSceneState, IVisualizerStyles, RenderGroupType} from '../types';
+import {
+  Axis3D,
+  axisRound,
+  getMachineAxisMap,
+  IMachineAxis,
+  iterateMachineAxisGridLines,
+  MachineAxisMap
+} from '../../Machines';
 import createTextSprite from './TextSprite';
-import {AxisName} from '../../graphql';
+import {AxisName, AxisPlane, UnitType} from '../../graphql';
+import {getDistanceUnitAbbreviationKey, mm2} from '../../../components/Units';
+import {getAxisPlaneAxes} from '../../Machines/AxisName';
 
 type LineMaterial = THREE.LineBasicMaterial | THREE.LineDashedMaterial;
 
@@ -31,13 +40,13 @@ interface IDrawnAxis {
 class GWizAxes extends THREE.Group {
   private drawnAxes: IDrawnAxis[] = [];
 
+  private _sceneState?: IVisualizerSceneState;
+
   private _axisMap: MachineAxisMap = {};
 
   private _styles: IVisualizerStyles;
   private _backgroundColor = new THREE.Color('white');
   private _materials: { [key: string]: LineMaterial } = {};
-
-  private _imperial = false;
 
   private _lineGroups = {
     [AxisName.X]: new THREE.Group(),
@@ -51,11 +60,24 @@ class GWizAxes extends THREE.Group {
     [AxisName.Z]: new THREE.Group(),
   };
 
+  public get units(): UnitType { return this._sceneState?.units ?? UnitType.Metric; }
+  public get axisPlane(): AxisPlane { return this._sceneState?.axisPlane ?? AxisPlane.Xy; }
+
   public constructor(styles: IVisualizerStyles) {
     super();
     this._styles = styles;
     Object.values(this.allGroups).forEach(lg => this.add(lg));
     this.redraw();
+  }
+
+  public applySceneState(sceneState: IVisualizerSceneState): boolean {
+    const ss = this._sceneState;
+    const changed = !ss || sceneState.units != ss.units || sceneState.axisPlane != ss.axisPlane;
+    if (changed) {
+      this._sceneState = sceneState;
+      this.redraw();
+    }
+    return changed;
   }
 
   get allGroups(): THREE.Group[] {
@@ -145,10 +167,11 @@ class GWizAxes extends THREE.Group {
     const ret: IDrawnAxis = { axisName: a, gridLines: [], primaryLine: this.drawPrimaryAxisLine(a, axis) };
     const yAxis = this._axisMap[AxisName.Y];
     const xAxis = this._axisMap[AxisName.X];
-    const plane = [AxisName.X, AxisName.Y];
+    const planeAxes = getAxisPlaneAxes(this.axisPlane);
+    const abbr = getDistanceUnitAbbreviationKey(this.units);
 
     iterateMachineAxisGridLines(axis, (dist: number, isMajor: boolean, isEdge: boolean) => {
-      if (!plane.includes(axis.name)) return;
+      if (!planeAxes.includes(axis.name)) return;
       const axisLine: IAxisLine = { dist, isMajor, isEdge, colorize: false };
       const material = this.getAxisMaterial(a, axisLine);
       const p = new THREE.Vector3(0, 0, 0);
@@ -180,13 +203,15 @@ class GWizAxes extends THREE.Group {
       else {
         throw new Error('Invalid axis');
       }
+
       this._lineGroups[a].add(line);
       const drawnAxisLine: IDrawnAxisLine = { ...axisLine, obj: line };
       if (isMajor) {
+        const num = axisRound(axis, mm2(dist, this.units) || 0, this.units);
         drawnAxisLine.text = createTextSprite({
           ...p,
           size: 20,
-          text: `${dist}mm`,
+          text: `${num}${abbr}`,
           textAlign: 'center',
           textBaseline: 'bottom',
           color: '#' + material.color.getHexString(),
@@ -210,7 +235,7 @@ class GWizAxes extends THREE.Group {
         // this._textGroups[a].add(mesh);
       }
       ret.gridLines.push(drawnAxisLine);
-    }, this._imperial);
+    }, this.units);
     return ret;
   }
 
