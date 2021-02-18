@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.Machines.Enums;
 
 namespace OpenWorkEngine.OpenController.Machines.Models {

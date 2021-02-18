@@ -17,7 +17,7 @@ namespace OpenWorkEngine.OpenController.Programs.Services {
       Task.Run(DoWorkAsync);
     }
 
-    public ProgramFile Upload(ProgramFileUpload fileUpload) {
+    public ProgramFile Upload(ClientFileUpload fileUpload) {
       return Create(new ProgramFileMeta(fileUpload));
     }
 

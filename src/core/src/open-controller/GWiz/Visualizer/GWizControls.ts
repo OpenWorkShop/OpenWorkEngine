@@ -66,7 +66,7 @@ class GWizControls extends OrbitControls {
   setRange(minAxisAccuracy: number, maxAxisRange: number): void {
     // this._controls.maxZoom = near;
     this.log.debug('range', maxAxisRange);
-    this.maxDistance = maxAxisRange * 1.2;
+    this.maxDistance = maxAxisRange;
     this.minDistance = minAxisAccuracy;
     this.update();
   }

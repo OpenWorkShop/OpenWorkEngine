@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using OpenWorkEngine.OpenController.Lib.Linq;
 
 namespace OpenWorkEngine.OpenController.Machines.Models {
@@ -8,6 +10,12 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     public decimal? Y { get; set; }
 
     public decimal? Z { get; set; }
+
+    public decimal? U { get; set; }
+
+    public decimal? V { get; set; }
+
+    public decimal? W { get; set; }
 
     public decimal? A { get; set; }
 
@@ -19,8 +27,13 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
 
     // public bool IsValid => X != null || Y != null || Z != null;
 
-    public override string ToString() => string.Join(',', (new List<string?>() {
-      X?.ToString(), Y?.ToString(), Z?.ToString(), A?.ToString(), B?.ToString(), C?.ToString()
-    }).SelectNonNull());
+    protected virtual List<decimal?> Values => new List<decimal?>() { A, B, C, U, V, W, X, Y, Z };
+
+    protected List<decimal> ValidValues => Values.Where(v => v.HasValue).Select(v => v!.Value).ToList();
+
+    internal bool HasValue => Values.Any(v => v.HasValue);
+
+    public override string ToString() =>
+      string.Join(',', ValidValues.Select(v => v.ToString(CultureInfo.InvariantCulture)));
   }
 }

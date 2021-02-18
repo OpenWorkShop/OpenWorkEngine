@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.ControllerSyntax;
 using OpenWorkEngine.OpenController.ControllerSyntax.Grbl;
 using OpenWorkEngine.OpenController.Lib.Linq;
@@ -23,7 +24,7 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode {
 
     private string LetterStr { get; }
 
-    private char LetterChar { get; }
+    internal char LetterChar { get; }
 
     public decimal Value { get; }
 
@@ -58,7 +59,13 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode {
     }
 
     // GetCodeMap("G") => { 0: "Rapid", 1: ... }
-    private static Func<ControlledMachine, FirmwareSettingMutation>? GetModalSetter(char letter, decimal value) {
+    internal static Func<ControlledMachine, InstructionStep>? GetModalSetter(char letter, decimal value) {
+      string str = letter.ToString();
+      if (GrblTranslator.settingCodes.ContainsKey(str)) {
+        return (cm) => new InstructionStep(
+          GrblTranslator.settingCodes[str].Invoke(cm), value.ToString(CultureInfo.InvariantCulture));
+      }
+
       return GrblTranslator.modalSetters.Where(mv => {
         if (!mv.Key.StartsWith(letter)) return false;
         string num = mv.Key.Substring(1);
@@ -66,20 +73,6 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode {
 
         return val == value;
       }).Select(mv => mv.Value).FirstOrDefault();
-    }
-
-    internal FirmwareSettingMutation? GetMutation(ControlledMachine machine) {
-      if (Letter == GCodeLetter.F) {
-        return machine.Status.Applicator.FeedRate.GetMutation(Value);
-      } else if (Letter == GCodeLetter.S) {
-        return machine.Status.Applicator.SpinSpeed.GetMutation(Value);
-      } else if (Letter == GCodeLetter.T) {
-        return machine.Status.Applicator.ToolId.GetMutation(Value.ToString(CultureInfo.InvariantCulture));
-      } else {
-        Func<ControlledMachine, FirmwareSettingMutation>? setter = GetModalSetter(LetterChar, Value);
-        if (setter == null) throw new ArgumentException($"Invalid GCode: '{Raw}'");
-        return setter.Invoke(machine);
-      }
     }
 
 /*

@@ -190,7 +190,9 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
 
       // Process this code with the virtual machine.
       ControlledMachineHash hash = Connection.Machine.SnapshotHash();
-      Connection.Machine.ApplyInstructionResult(res);
+      if (res.WriteLogEntry.WriteState == SerialWriteState.Ok) {
+        res.Instruction.InstructionDefinition.GetSteps(Machine, res.Instruction.Line);
+      }
       AddBatchedTopics(Connection.Machine.GetMachineChanges(hash));
 
       if (WriteQueue.Any() && WriteQueue.TryDequeue(out MachineInstructionResult? next)) {
@@ -273,7 +275,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       MachineLogEntry logEntry = MachineLogEntry.FromWrittenInstruction(compiled, opts.LogLevel);
       Machine.AddLogEntry(logEntry);
 
-      MachineInstructionResult res = new(compiled, logEntry);
+      MachineInstructionResult res = new(Machine, compiled, logEntry);
       if (!instruction.Immediate && !Machine.Status.Buffer.CanReceive) {
         // When waiting on a response, queue the send rather than sending immediately.
         Log.Debug("[WRITE] [ENQUEUE] {source} {code} {buffer}", compiled.Source, compiled.Line.Raw, ToString());

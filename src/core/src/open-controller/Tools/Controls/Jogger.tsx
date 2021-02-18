@@ -20,6 +20,7 @@ import {
 import {useLogger} from '../../../hooks';
 import OverrideControl from './OverrideControl';
 import {useControllerCommand} from '../../Controllers/hooks';
+import AnyIcon from '../../../components/AnyIcon';
 
 const Jogger: ToolBase = (props) => {
   const t = useTrans();
@@ -27,19 +28,35 @@ const Jogger: ToolBase = (props) => {
   const classes = useStyles();
   const { workspaceId } = props;
   const units = useWorkspaceUnits(workspaceId);
-  const jogOpts = { units };
   const axes = useWorkspaceSelector(workspaceId, ws => ws.settings.axes);
   const zAxis = _.find(axes, a => a.name === AxisName.Z);
   const xyAxis = _.find(axes, a => a.name === AxisName.X) ||
     _.find(axes, a => a.name === AxisName.Y);
+  const jogOpts = { units };
+  const [zSteps, setZSteps] = React.useState<number[]>(zAxis ? getMachineAxisJogSteps(zAxis, jogOpts) : []);
+  const [xySteps, setXYSteps] = React.useState<number[]>(xyAxis ? getMachineAxisJogSteps(xyAxis, jogOpts) : []);
   const [xyStep, setXyStep] = React.useState<number>(1);
   const [zStep, setZStep] = React.useState<number>(1);
-  const zSteps = zAxis ? getMachineAxisJogSteps(zAxis, jogOpts) : [];
-  const xySteps = xyAxis ? getMachineAxisJogSteps(xyAxis, jogOpts) : [];
   const isEnabled = useWorkspaceControllerSelector(workspaceId, c => c.canReceiveCommands);
   const applicator = useWorkspaceControllerSelector(workspaceId, c => c.machine.status.applicator);
   const overrides = useWorkspaceControllerSelector(workspaceId, c => c.machine.status.overrides);
   const [moveMachine] = useControllerCommand(workspaceId, useMoveMachineMutation());
+
+  React.useEffect(() => {
+    if (zAxis) {
+      const zs = getMachineAxisJogSteps(zAxis, { units });
+      setZSteps(zs);
+      if (!zs.includes(zStep)) setZStep(zs[0]);
+    }
+    if (xyAxis) {
+      const xys = getMachineAxisJogSteps(xyAxis,  { units });
+      setXYSteps(xys);
+      if (!xys.includes(xyStep)) setXyStep(xys[0]);
+    }
+    log.debug(zAxis, xyAxis, units);
+  }, [zAxis, xyAxis, units]);
+
+  log.debug('draw', zSteps, xySteps);
 
   const reqs: IMoveRequest[] = [
     { distanceType: MovementDistanceType.Relative, x: -xyStep, y: xyStep },
@@ -86,6 +103,7 @@ const Jogger: ToolBase = (props) => {
       <Grid item xs={6}>
         <JogStepSelect
           title={t('X/Y Axis Step')}
+          units={units}
           stepValue={xyStep}
           setStepValue={setXyStep}
           steps={xySteps}
@@ -94,6 +112,7 @@ const Jogger: ToolBase = (props) => {
       <Grid item xs={6}>
         <JogStepSelect
           title={t('Z Axis Step')}
+          units={units}
           stepValue={zStep}
           setStepValue={setZStep}
           steps={zSteps}

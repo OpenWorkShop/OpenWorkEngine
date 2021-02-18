@@ -55,6 +55,7 @@ export interface ChangeMaterialPayload {
 export interface IVisualizerStyles {
   backgroundColor: string;
   gridLines: IMaterial;
+  highlighted: IMaterial;
   renderGroups: { [key: string]: IMaterial };
   navCube: INavCubePreferences;
 }
@@ -71,11 +72,17 @@ export interface IVisualizerCameraState {
   quaternion: Quaternion;
 }
 
+export interface ISelectedObject {
+  uuid: string;
+}
+
 export interface IVisualizerSceneState {
   camera: IVisualizerCameraState;
   units?: UnitType;
   axisPlane?: AxisPlane;
   viewSides?: ViewSide;
+  highlightedObject?: ISelectedObject;
+  selectedObject?: ISelectedObject;
   // selection?: Object3D;
 }
 
@@ -95,4 +102,6 @@ export type VisualizerSceneStateAction<TState> = PayloadAction<{
 // Passed into the classes such that they may broadcast state back to the dispatch()
 export type GWizActions = {
   saveCameraState: (camera: IVisualizerCameraState) => void;
+  setHighlightedObject: (obj?: ISelectedObject) => void;
+  setSelectedObject: (obj?: ISelectedObject) => void;
 }

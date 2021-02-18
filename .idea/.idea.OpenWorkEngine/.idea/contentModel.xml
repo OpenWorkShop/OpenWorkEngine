@@ -172,6 +172,10 @@
             <e p="CompiledInstruction.cs" t="Include" />
             <e p="ControllerExecutionOptions.cs" t="Include" />
             <e p="ControllerScript.cs" t="Include" />
+            <e p="InstructionStep.cs" t="Include" />
+            <e p="InstructionSteps" t="Include">
+              <e p="IInstructionStep.cs" t="Include" />
+            </e>
           </e>
           <e p="Services" t="Include">
             <e p="Controller.cs" t="Include" />
@@ -366,6 +370,7 @@
             <e p="MachineDetectedFirmware.cs" t="Include" />
             <e p="MachineLogEntry.cs" t="Include" />
             <e p="MachineModals.cs" t="Include" />
+            <e p="MachineMovement.cs" t="Include" />
             <e p="MachineOptions.cs" t="Include" />
             <e p="MachineOverrides.cs" t="Include" />
             <e p="MachinePosition.cs" t="Include" />
@@ -430,6 +435,7 @@
             <e p="IProgramSource.cs" t="Include" />
           </e>
           <e p="Messages" t="Include">
+            <e p="ClientFileUpload.cs" t="Include" />
             <e p="ProgramFileUpload.cs" t="Include" />
           </e>
           <e p="Models" t="Include">

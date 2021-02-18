@@ -12,7 +12,7 @@ interface INumericInputProps {
 type NumericInputProps = TextFieldProps & INumericInputProps;
 
 const NumericInput: React.FunctionComponent<NumericInputProps> = (props) => {
-  const { numericValue, onChangeNumericValue, integersOnly, min, max, className, ...tfProps } = props;
+  const { numericValue, onChangeNumericValue, integersOnly, min, max, className, style, ...tfProps } = props;
   const allowDecimal = !integersOnly;
   const dec = allowDecimal ? '.' : '';
   const [value, setValue] = React.useState<string>(numericValue.toString() || '');
@@ -48,7 +48,8 @@ const NumericInput: React.FunctionComponent<NumericInputProps> = (props) => {
       onChange={handleChange}
       onBlur={() => makeNumber()}
       className={className}
-      inputProps={{ inputMode: 'numeric', style: { textAlign: 'right' }, pattern: `[0-9${dec}\-]*` }}
+      style={style}
+      inputProps={{ inputMode: 'numeric', style: { ...style, textAlign: 'right' }, pattern: `[0-9${dec}\-]*` }}
     />
   );
 };

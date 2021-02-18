@@ -7,7 +7,7 @@ using OpenWorkEngine.OpenController.Syntax;
 using Serilog;
 
 namespace OpenWorkEngine.OpenController.Programs.Models {
-  public class ProgramFileMeta : ProgramFileUpload, IProgramSource {
+  public class ProgramFileMeta : ClientFileUpload, IProgramSource {
     public string? Directory { get; }
 
     public ProgramSyntax Syntax => ProgramSyntax.GCode;
@@ -16,7 +16,7 @@ namespace OpenWorkEngine.OpenController.Programs.Models {
 
     internal FileInfo? LocalFile { get; }
 
-    internal ProgramFileUpload? Upload { get; }
+    internal ClientFileUpload? Upload { get; }
 
     internal string GetId() => Directory == null ? Name : Path.Join(Directory, Name);
 
@@ -34,7 +34,7 @@ namespace OpenWorkEngine.OpenController.Programs.Models {
       LastModified = File.GetLastWriteTime(filePath).Ticks;
     }
 
-    public ProgramFileMeta(ProgramFileUpload upload) {
+    public ProgramFileMeta(ClientFileUpload upload) {
       Upload = upload;
       Name = upload.Name;
       LastModified = upload.LastModified;

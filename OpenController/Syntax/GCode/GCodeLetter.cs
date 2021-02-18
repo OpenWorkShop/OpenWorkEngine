@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace OpenWorkEngine.OpenController.Syntax.GCode {
   // http://linuxcnc.org/docs/html/gcode/overview.html#cap:word
   public enum GCodeLetter {
@@ -25,5 +27,20 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode {
     X,
     Y,
     Z
+  }
+
+  public static class GCodeLetterExtensions {
+    private static readonly GCodeLetter[] AxisLetters = new[] {
+      GCodeLetter.A, GCodeLetter.B, GCodeLetter.C,
+      GCodeLetter.U, GCodeLetter.V, GCodeLetter.W,
+      GCodeLetter.X, GCodeLetter.Y, GCodeLetter.Z,
+    };
+
+    private static readonly GCodeLetter[] MovementLetters =
+      AxisLetters.Concat(new[] {GCodeLetter.I, GCodeLetter.J, GCodeLetter.K, GCodeLetter.P}).ToArray();
+
+    public static bool IsAxisLetter(this GCodeLetter letter) => AxisLetters.Contains(letter);
+
+    public static bool IsMovementLetter(this GCodeLetter letter) => MovementLetters.Contains(letter);
   }
 }

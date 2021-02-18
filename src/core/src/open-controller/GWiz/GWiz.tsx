@@ -38,6 +38,10 @@ const GWiz: FunctionComponent<Props> = (props) => {
     return {
       saveCameraState: (state) =>
         dispatch(gWizSlice.actions.setCameraState({ sceneId, state })),
+      setHighlightedObject: (state) =>
+        dispatch(gWizSlice.actions.setSceneHighlightedObject({ sceneId, state })),
+      setSelectedObject: (state) =>
+        dispatch(gWizSlice.actions.setSceneSelectedObject({ sceneId, state })),
     };
   }
 
@@ -46,6 +50,16 @@ const GWiz: FunctionComponent<Props> = (props) => {
     () => new GWizCanvas(oc, buildActions()),
     [oc, dispatch]
   );
+
+  // DOM events
+  /*
+  React.useEffect(() => {
+    const parent = document.querySelector(`#${domId}`);
+    if (!parent) return;
+    const handler = canvas.handleMouseMove.bind(canvas);
+    parent.addEventListener('mousemove', handler);
+    return () => window.removeEventListener('mousemove', handler);
+  }, [canvas, domId]);*/
 
   // Infrequent changes to machine axes themselves.
   React.useEffect(() => {
@@ -63,7 +77,6 @@ const GWiz: FunctionComponent<Props> = (props) => {
   React.useEffect(() => {
     if (mPos) canvas.updatePosition(mPos);
   }, [canvas, mPos]);
-
 
   const units = tryUseWorkspaceControllerSelector(workspaceId, c => c.machine.configuration.modals.units.data);
   const plane = tryUseWorkspaceControllerSelector(workspaceId, c => c.machine.configuration.modals.plane.data);
@@ -92,11 +105,6 @@ const GWiz: FunctionComponent<Props> = (props) => {
       log.error('missing parent ID #', domId);
     }
   }, [canvas, width, height]);
-
-  // const Wiz = React.forwardRef<HTMLDivElement, Props>((props, ref) => (
-  //   <div className={className} ref={ref} id={domId} />
-  // ));
-  // return <Wiz {...props} />;
 
   return <React.Fragment>
     <div id={cubeId} style={{ width: 150, height: 150, position: 'absolute' }} />

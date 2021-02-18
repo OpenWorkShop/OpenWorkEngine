@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using HotChocolate.Language;
 using OpenWorkEngine.OpenController.Controllers.Interfaces;
 using OpenWorkEngine.OpenController.Controllers.Models;
+using OpenWorkEngine.OpenController.Machines.Models;
 
 namespace OpenWorkEngine.OpenController.Syntax.GCode {
   // https://www.cnccookbook.com/g-code-basics-program-format-structure-blocks/
@@ -36,14 +38,52 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode {
 
     public List<SyntaxChunk> CodeChunks => Chunks.Where(c => c.IsCode).ToList();
 
-    public SyntaxLine CompileSyntax(string line) {
-      List<SyntaxChunk> chunks = ParseLine(line);
-      string? firstWord = chunks.FirstOrDefault()?.Value.Trim();
-      GCodeWord? word =
-        !string.IsNullOrWhiteSpace(firstWord) && firstWord.Length > 1 && !firstWord.StartsWith("$") ?
-        new GCodeWord(firstWord) : null;
-      return new SyntaxLine(line, chunks, (machine) => word?.GetMutation(machine));
+    public SyntaxLine CompileSyntax(string line) => new (line, ParseLine(line));
+
+    public List<InstructionStep> GetSteps(ControlledMachine machine, SyntaxLine line) {
+      List<InstructionStep> steps = new List<InstructionStep>();
+      for(int i=0; i<line.Chunks.Count; i++) {
+        SyntaxChunk chunk = line.Chunks[i];
+        if (!chunk.IsCode || chunk.Value.StartsWith("$")) {
+          continue;
+        }
+        GCodeWord word = new GCodeWord(chunk.Value);
+        InstructionStep? step = null;
+
+        if (word.Letter.IsMovementLetter()) {
+          UpdateStepPosition(steps.Last(), word);
+        } else {
+          Func<ControlledMachine, InstructionStep>? setter = GCodeWord.GetModalSetter(word.LetterChar, word.Value);
+          if (setter == null) throw new ArgumentException($"Invalid GCode: '{word.Raw}'");
+          step = setter.Invoke(machine);
+        }
+
+        if (step != null) steps.Add(step);
+      }
+      return steps;
     }
+
+    private void UpdateStepPosition(InstructionStep step, GCodeWord word) {
+      if (!decimal.TryParse(word.Raw.Substring(1), out decimal val)) {
+        val = 0;
+      }
+      if (step.Movement == null) step.Movement = new MachineMovement();
+      if (word.Letter == GCodeLetter.A) step.Movement.A = val;
+      if (word.Letter == GCodeLetter.B) step.Movement.B = val;
+      if (word.Letter == GCodeLetter.C) step.Movement.C = val;
+      if (word.Letter == GCodeLetter.I) step.Movement.I = val;
+      if (word.Letter == GCodeLetter.J) step.Movement.J = val;
+      if (word.Letter == GCodeLetter.K) step.Movement.K = val;
+      if (word.Letter == GCodeLetter.U) step.Movement.U = val;
+      if (word.Letter == GCodeLetter.V) step.Movement.V = val;
+      if (word.Letter == GCodeLetter.W) step.Movement.W = val;
+      if (word.Letter == GCodeLetter.X) step.Movement.X = val;
+      if (word.Letter == GCodeLetter.Y) step.Movement.Y = val;
+      if (word.Letter == GCodeLetter.Z) step.Movement.Z = val;
+      if (word.Letter == GCodeLetter.P) step.Movement.Dwell = val;
+    }
+
+    private static bool IsCoordinateWord(string w) => w.StartsWith("X") || w.StartsWith("Y") || w.StartsWith("Z");
 
     public static List<SyntaxChunk> ParseLine(string line) {
       List<SyntaxChunk> chunks = new();

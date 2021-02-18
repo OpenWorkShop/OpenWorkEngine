@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.Machines.Models;
 
 namespace OpenWorkEngine.OpenController.Syntax {
@@ -7,12 +8,9 @@ namespace OpenWorkEngine.OpenController.Syntax {
     public string Raw { get; }
     public List<SyntaxChunk> Chunks { get; }
 
-    internal Func<ControlledMachine, FirmwareSettingMutation?> GetMutation;
-
-    public SyntaxLine(string raw, List<SyntaxChunk> chunks, Func<ControlledMachine, FirmwareSettingMutation?> mutation) {
+    public SyntaxLine(string raw, List<SyntaxChunk> chunks) {
       Raw = raw;
       Chunks = chunks;
-      GetMutation = mutation;
     }
   }
 }

@@ -1,7 +1,14 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FluentAssertions;
+using OpenWorkEngine.OpenController.Controllers.Messages;
+using OpenWorkEngine.OpenController.Controllers.Models;
+using OpenWorkEngine.OpenController.ControllerSyntax;
+using OpenWorkEngine.OpenController.ControllerSyntax.Grbl;
+using OpenWorkEngine.OpenController.Machines.Models;
+using OpenWorkEngine.OpenController.Programs.Enums;
 using OpenWorkEngine.OpenController.Programs.Interfaces;
 using OpenWorkEngine.OpenController.Programs.Models;
 using OpenWorkEngine.OpenController.Syntax;
@@ -38,14 +45,32 @@ namespace OpenWorkEngine.OpenControllerTests.Programs {
     public void CanParseFile(ProgramFileMeta programFileMeta) {
       ProgramFile programFile = new ProgramFile(programFileMeta, Log.Logger);
       while (programFile.Process()) { }
-      //
-      // foreach (string line in lines) {
-      //   GCodeBlock gCodeBlock = new(line, nameof(GCodeTests));
-      //   gCodeBlock.Should().NotBeNull();
-      //   AssertHealthyLogs();
-      //
-      //   Log.Information("Commands: {commands}", gCodeBlock.Chunks);
-      // }
+
+      programFile.UnprocessedLines.Count.Should().Be(0);
+      programFile.State.Should().Be(ProgramState.Loaded);
+      programFile.InstructionIndex.Should().Be(0);
+      programFile.InstructionCount.Should().BeGreaterThan(0);
+
+      ControlledMachine machine = new ("/dev/test", null, Log.Logger);
+      ControllerTranslator translator = new ControllerTranslator().UseGrblSyntax();
+      translator.ConfigureMachine(machine);
+
+      while (programFile.Advance()) {
+        CompiledInstruction inst = programFile.CurrentInstruction!;
+        MachineLogEntry write = MachineLogEntry.FromWrittenInstruction(inst);
+        MachineLogEntry ack = MachineLogEntry.FromReadAck("ok");
+        MachineInstructionResult res = new (machine, inst, write) { ResponseLogEntry = ack };
+        List<InstructionStep> steps = res.Apply();
+        foreach (InstructionStep step in steps) {
+          try {
+            Log.Verbose("{id}={value} {position}", step.Name, step.SettingValue, step.Movement?.ToString() ?? "");
+          } catch (Exception e) {
+            Log.Error(e, inst.Line.Raw);
+          }
+        }
+      }
+
+      programFile.State.Should().Be(ProgramState.Complete);
     }
 
     public string Name => nameof(GCodeTests);

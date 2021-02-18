@@ -10,7 +10,7 @@ import {
 } from '../../Machines';
 import createTextSprite from './TextSprite';
 import {AxisName, AxisPlane, UnitType} from '../../graphql';
-import {getDistanceUnitAbbreviationKey, mm2} from '../../../components/Units';
+import {mm2} from '../../../components/Units';
 import {getAxisPlaneAxes} from '../../Machines/AxisName';
 
 type LineMaterial = THREE.LineBasicMaterial | THREE.LineDashedMaterial;
@@ -80,6 +80,16 @@ class GWizAxes extends THREE.Group {
     return changed;
   }
 
+  public setZoom(percent: number): void {
+    const p = (1 - percent * percent) * 1.5;
+    const scaler = new THREE.Vector3(p, p, p);
+    this.drawnAxes.forEach(da => {
+      da.gridLines.forEach(gl => {
+        gl.text?.scale.copy(scaler);
+      });
+    });
+  }
+
   get allGroups(): THREE.Group[] {
     return Object.values(this._lineGroups).concat(Object.values(this._textGroups));
   }
@@ -121,9 +131,9 @@ class GWizAxes extends THREE.Group {
   }
 
   private static getRenderGroup(axisName: AxisName): RenderGroupType {
-    if (axisName === 'X') return RenderGroupType.X;
-    if (axisName === 'Y') return RenderGroupType.Y;
-    if (axisName === 'Z') return RenderGroupType.Z;
+    if (axisName === AxisName.X) return RenderGroupType.X;
+    if (axisName === AxisName.Y) return RenderGroupType.Y;
+    if (axisName === AxisName.Z) return RenderGroupType.Z;
     return RenderGroupType.None;
   }
 
@@ -168,7 +178,7 @@ class GWizAxes extends THREE.Group {
     const yAxis = this._axisMap[AxisName.Y];
     const xAxis = this._axisMap[AxisName.X];
     const planeAxes = getAxisPlaneAxes(this.axisPlane);
-    const abbr = getDistanceUnitAbbreviationKey(this.units);
+    // const abbr = getDistanceUnitAbbreviationKey(this.units);
 
     iterateMachineAxisGridLines(axis, (dist: number, isMajor: boolean, isEdge: boolean) => {
       if (!planeAxes.includes(axis.name)) return;
@@ -176,7 +186,7 @@ class GWizAxes extends THREE.Group {
       const material = this.getAxisMaterial(a, axisLine);
       const p = new THREE.Vector3(0, 0, 0);
       let line: THREE.Line | undefined = undefined;
-      if (a === 'X') {
+      if (a === AxisName.X) {
         line = GWizAxes.createLine(
           new THREE.Vector3(dist, yAxis?.min ?? 0, 0),
           new THREE.Vector3(dist, yAxis?.max ?? 0, 0),
@@ -184,7 +194,7 @@ class GWizAxes extends THREE.Group {
         );
         p.x = dist;
       }
-      else if (a === 'Y') {
+      else if (a === AxisName.Y) {
         line = GWizAxes.createLine(
           new THREE.Vector3(xAxis?.min ?? 0, dist, 0),
           new THREE.Vector3(xAxis?.max ?? 0, dist, 0),
@@ -192,7 +202,7 @@ class GWizAxes extends THREE.Group {
         );
         p.y = dist;
       }
-      else if (a === 'Z') {
+      else if (a === AxisName.Z) {
         line = GWizAxes.createLine(
           new THREE.Vector3(0, yAxis?.min ?? 0, dist),
           new THREE.Vector3(0, yAxis?.max ?? 0, dist),
@@ -211,7 +221,7 @@ class GWizAxes extends THREE.Group {
         drawnAxisLine.text = createTextSprite({
           ...p,
           size: 20,
-          text: `${num}${abbr}`,
+          text: `${num}`, // ${abbr}
           textAlign: 'center',
           textBaseline: 'bottom',
           color: '#' + material.color.getHexString(),

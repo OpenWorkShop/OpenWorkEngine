@@ -5,9 +5,15 @@ import {isSide} from '../sides';
 import GWizCanvas from './GWizCanvas';
 
 class GWizCamera extends THREE.PerspectiveCamera {
-  private _direction = new Vector3();
-
   private _canvas: GWizCanvas;
+
+  public get distance(): number {
+    return this.position.distanceTo(this._canvas.center);
+  }
+
+  public get zoomPercent(): number {
+    return 1 - Math.max(0, Math.min(1, (this.distance) / this._canvas.controls.maxDistance));
+  }
 
   constructor(canvas: GWizCanvas) {
     super();
@@ -22,11 +28,6 @@ class GWizCamera extends THREE.PerspectiveCamera {
 
   private _lastState?: IVisualizerCameraState;
 
-  public get state(): IVisualizerCameraState {
-    // this.getWorldDirection(this._direction);
-    return { position: this.position.clone(), quaternion: this.quaternion.clone() };
-  }
-
   // Load from settings... called often.
   applyState(state: IVisualizerCameraState): boolean {
     if (this.quaternion.equals(state.quaternion) ?? false) return false;
@@ -36,10 +37,11 @@ class GWizCamera extends THREE.PerspectiveCamera {
   }
 
   clearChanges(): IVisualizerCameraState | undefined {
-    const lq = this._lastState?.quaternion;
-    if (lq && this.quaternion.equals(lq)) return undefined;
-    this._lastState = this.state;
-    return this._lastState;
+    const quaternion = this.quaternion.clone();
+    const position = this.position.clone();
+    if (this._lastState && quaternion.equals(this._lastState.quaternion) && position.equals(this._lastState.position))
+      return undefined;
+    return this._lastState = { quaternion, position };
   }
 
   vectorEquals(v1?: Vector3, v2?: Vector3): boolean {

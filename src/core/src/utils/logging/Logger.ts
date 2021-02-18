@@ -1,8 +1,9 @@
 import { EventEmitter } from 'events';
 import { LogEntry, LogLevel } from './types';
+import LogManager from './LogManager';
 
 class Logger {
-  private logManager: EventEmitter;
+  public logManager: LogManager;
   private readonly minLevel: number;
   private readonly module: string;
   private readonly levels: { [key: string]: number } = {
@@ -14,7 +15,7 @@ class Logger {
   };
 
   constructor(
-    logManager: NodeJS.EventEmitter,
+    logManager: LogManager,
     module: string,
     minLevel: string
   ) {

@@ -14,7 +14,7 @@ using OpenWorkEngine.OpenController.Syntax.GCode;
 using Serilog;
 
 namespace OpenWorkEngine.OpenController.ControllerSyntax {
-  internal abstract class ModalDefinition {
+  internal abstract class FirmwareSettingDefinition {
     public string Path { get; internal init; } = default!;
 
     public string Name { get; internal init; } = default!;
@@ -26,7 +26,7 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax {
     internal abstract FirmwareSetting GetFirmwareSetting(ControlledMachine machine);
   }
 
-  internal class ModalDefinition<TData> : ModalDefinition {
+  internal class ModalDefinition<TData> : FirmwareSettingDefinition {
     internal Func<ControlledMachine, ModalSetting<TData>> Fetch { get; init; } = default!;
 
     internal override FirmwareSetting GetFirmwareSetting(ControlledMachine machine) => Fetch.Invoke(machine);
@@ -98,10 +98,10 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax {
       new (Compiler.LoadInstructions("{Key}", line => new GCodeBlock(line, "Modal")));
 
     // Modal Name -> ModalDefinition
-    internal readonly Dictionary<string, ModalDefinition> modalDefinitions = new();
+    internal readonly Dictionary<string, FirmwareSettingDefinition> modalDefinitions = new();
 
     // Code -> function to set that code.
-    internal readonly Dictionary<string, Func<ControlledMachine, FirmwareSettingMutation>> modalSetters = new();
+    internal readonly Dictionary<string, Func<ControlledMachine, InstructionStep>> modalSetters = new();
 
     internal void AddModalOptions<TData>(
       Expression<Func<ControlledMachine, ModalSetting<TData>>> expression, Dictionary<string, TData> map
@@ -125,6 +125,10 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax {
       modalDefinitions.Add(md.Name, md);
     }
 
+    internal void DefineFirmwareSetting<TData>(Expression<Func<ControlledMachine, ModalSetting<TData>>> expression) {
+
+    }
+
     /// <summary>
     /// Directly set code for some well-known command (methodName) derived from an actual method name on the controller.
     /// </summary>
@@ -145,11 +149,11 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax {
         new ControllerScript(Compiler.LoadInstructions(code, line => new GCodeBlock(line, methodName)));
     }
 
-    internal readonly Dictionary<string, Func<FirmwareSettings, FirmwareSetting>> settingCodes = new();
+    internal readonly Dictionary<string, Func<ControlledMachine, FirmwareSetting>> settingCodes = new();
     internal readonly Dictionary<string, string> settingPaths = new();
 
     internal FirmwareSetting? GetSetting(ControlledMachine machine, string code) =>
-      settingCodes.ContainsKey(code) ? settingCodes[code].Invoke(machine.Settings) : null;
+      settingCodes.ContainsKey(code) ? settingCodes[code].Invoke(machine) : null;
 
     internal void ConfigureMachine(ControlledMachine machine) {
       // Default settings
@@ -173,9 +177,11 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax {
       foreach (string key in modalDefinitions.Keys) {
         modalDefinitions[key].AddTo(machine);
       }
+
+      //
     }
 
-    internal void DefineSetting(string code, Expression<Func<FirmwareSettings, FirmwareSetting>> expression) {
+    internal void DefineSetting(string code, Expression<Func<ControlledMachine, FirmwareSetting>> expression) {
       // if (!(expression.Body is MemberExpression member))
       //   throw new ArgumentException($"Expression '{expression}' refers to a method, not a property.");
       // PropertyInfo? propInfo = member.Member as PropertyInfo;

@@ -1,14 +1,5 @@
-using OpenWorkEngine.OpenController.Lib.Filesystem;
-using OpenWorkEngine.OpenController.Programs.Models;
-
 namespace OpenWorkEngine.OpenController.Programs.Messages {
-  public class ProgramFileUpload : IClientSelectedFile {
-    public string Name { get; set; } = default!;
-
-    public long LastModified { get; set; } = 0;
-
-    public long Size { get; set; } = 0;
-
-    public string Type { get; set; } = default!;
+  public class ProgramFileUpload : ClientFileUpload {
+    public string Text { get; set; }
   }
 }

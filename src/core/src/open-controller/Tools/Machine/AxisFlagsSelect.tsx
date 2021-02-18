@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import {AxisFlags} from '../../graphql';
 import {Checkbox, Input, ListItemText, MenuItem, Select, Typography} from '@material-ui/core';
-import {AxisFlagKey} from '../../Machines';
+import {Axis3DKey} from '../../Machines';
 import {useLogger} from '../../../hooks';
 import {useTrans} from '../../Context';
 
@@ -15,11 +15,11 @@ const AxisFlagsSelect: FunctionComponent<Props> = (props) => {
   const t = useTrans();
   const log = useLogger(AxisFlagsSelect);
   const { axisFlags, setAxisFlags, className } = props;
-  const keys: AxisFlagKey[] =
-    Object.keys(axisFlags).filter(v => !v.startsWith('_')).map(s => s as AxisFlagKey);
+  const keys: Axis3DKey[] =
+    Object.keys(axisFlags).filter(v => !v.startsWith('_')).map(s => s as Axis3DKey);
   const [ activeKeys, setActiveKeys ] = React.useState(keys.filter(k => axisFlags[k]));
 
-  function onChange(v: AxisFlagKey[]): void {
+  function onChange(v: Axis3DKey[]): void {
     log.debug('flags', v);
     setActiveKeys(v);
     const flags = { ...axisFlags };

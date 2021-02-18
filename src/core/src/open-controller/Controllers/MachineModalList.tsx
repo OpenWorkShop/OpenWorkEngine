@@ -56,7 +56,7 @@ const MachineModalList: FunctionComponent<Props> = (props) => {
       return null;
     }
 
-    log.debug(modalGroup, modal);
+    log.verbose(modalGroup, modal);
     if (!modal.hasBeenRead) return null;
 
     const opts = modal.options as IModalOption[];

@@ -1,8 +1,8 @@
 import {IMachineAxis, MachineAxisMap} from './types';
 import * as THREE from 'three';
 import _ from 'lodash';
-import {UnitType} from '../graphql';
-import {inchesMillimetersConversion} from '../../components/Units';
+import {AxisName, UnitType} from '../graphql';
+import {inchesMillimetersConversion, mm2} from '../../components/Units';
 
 interface IJogStepsOpts {
   units?: UnitType;
@@ -66,24 +66,37 @@ export function iterateMachineAxisGridLines(
 // Returns an array of jog steps for this axis.
 export function getMachineAxisJogSteps(axis: IMachineAxis, opts: IJogStepsOpts): number[] {
   const range = getMachineAxisRange(axis);
-  const max = opts.max || range / 2;
-  const min = opts.min || axis.accuracy;
-  const steps = [];
+  const max = mm2(opts.max || range / 2, opts.units) || 0;
+  const min = mm2(opts.min || axis.accuracy, opts.units) || 0;
+
+  const frt = [0.0001, 0.001, 0.01, 0.10, 0.25, 0.50];
+  const mms = frt.concat([1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000]);
+  const ins = frt.concat([1, 2, 4, 6, 12, 24, 48]);
+  const def = opts.units === UnitType.Imperial ? ins : mms;
+  return _.uniq(def.filter(v => v >= min && v <= max).concat(axisRound(axis, max, opts.units)));
+/*
+  const steps: number[] = [];
+
+  const addVal = (val: number): void => {
+    steps.push(axisRound(axis, mm2(val, opts.units) || 0, opts.units));
+  };
+
   for (let v = min; v < max; v *= 10) {
-    steps.push(axisRound(axis, v, opts.units));
+    addVal(v);
     const v2 = v * 10;
     if (v2 < max) {
-      steps.push(axisRound(axis, v2 / 2, opts.units));
+      addVal(v2 / 2);
     }
   }
   // Remove the last element and add it in-order with the second-biggest element.
   const last = steps.pop() || 0;
-  const next = axisRound(axis, max / 2, opts.units);
-  steps.push(Math.min(last, next));
-  steps.push(Math.max(last, next));
+  const next = max / 2;
+  //addVal(Math.min(last, next));
+  addVal(Math.max(last, next));
+  addVal(max);
 
-  steps.push(max);
-  return steps;
+  console.log(axis, opts, steps);
+  return steps;*/
 }
 
 // Get a box containing all axes.
@@ -91,15 +104,15 @@ export function getMachineAxisBoundingBox(axes: IMachineAxis[]): THREE.Box3  {
   const min = new THREE.Vector3();
   const max = new THREE.Vector3();
   axes.forEach((a) => {
-    if (a.name === 'X') {
+    if (a.name === AxisName.X) {
       min.x = a.min;
       max.x = a.max;
     }
-    if (a.name === 'Y') {
+    if (a.name === AxisName.Y) {
       min.y = a.min;
       max.y = a.max;
     }
-    if (a.name === 'Z') {
+    if (a.name === AxisName.Z) {
       min.z = a.min;
       max.z = a.max;
     }

@@ -25,7 +25,11 @@ export const threeDimensionalAxes: Axis3D[] = [ ...a3d ];
 
 // export type FirmwareSettingsGroupName = 'applicator' | 'pins' | 'movement' | 'reporting' | 'homing' | 'calibration';
 
-export type AxisFlagKey = 'x' | 'y' | 'z';
+export type Axis3DKey = 'x' | 'y' | 'z';
+export const thereDimensionalAxisKeys: Axis3DKey[] = ['x', 'y', 'z'];
+
+export type AxisKey = Axis3DKey | 'a' | 'b' | 'c';
+export const axisKeys: AxisKey[] = thereDimensionalAxisKeys.map(k => k as AxisKey).concat('a', 'b', 'c');
 
 const fwsgn = ['applicator', 'pins', 'movement', 'reporting', 'homing', 'calibration'] as const;
 export type FirmwareSettingsGroupName = typeof fwsgn[number];

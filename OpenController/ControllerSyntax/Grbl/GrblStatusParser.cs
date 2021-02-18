@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using HotChocolate.Language;
 using OpenWorkEngine.OpenController.Controllers.Services;
 using OpenWorkEngine.OpenController.Controllers.Services.Serial;
+using OpenWorkEngine.OpenController.Lib.Linq;
 using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Models;
 using Serilog;
@@ -61,13 +62,15 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
 
       if (key.Equals("WPos")) {
         // Work Position (v0.9, v1.1)
-        machine.Status.WorkPosition = GetPositionArgument(value, machine);
+        MachinePosition wPos = GetPositionArgument(value, machine);
+        if (wPos.HasValue) machine.Status.WorkPosition = wPos;
       } else if (key.Equals("MPos")) {
         // Machine Position (v0.9, v1.1)
         machine.Status.MachinePosition = GetPositionArgument(value, machine);
       } else if (key.Equals("WCO")) {
         // Work Coordinate Offset (v1.1)
-        machine.Status.WorkCoordinateOffset = GetPositionArgument(value, machine);
+        MachinePosition wco = GetPositionArgument(value, machine);
+        if (wco.HasValue) machine.Status.WorkCoordinateOffset = GetPositionArgument(value, machine);
       } else if (key.Equals("Buf")) {
         // Planner Buffer (v0.9)
         machine.Status.Buffer.AvailableSend = (int) GetNumbers(value)[0];
@@ -172,7 +175,7 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
     // String to coordinates: "0.00,1.00,1.00" => { x: 0, y: 1, z: 1 }
     internal static MachinePosition GetPositionArgument(string? val, ControlledMachine machine) {
       string[] parts = val?.Split(',') ?? new string[] { };
-      decimal x = 0, y = 0, z = 0, a = 0, b = 0, c = 0;
+      decimal? x = null, y = null, z = null, a = null, b = null, c = null;
       decimal factor = machine.Settings.Reporting.ReportInches.Data ? (1M /  25.4M) : 1M;
       if (parts.Length >= 1) x = ParseUnits(parts[0], factor);
       if (parts.Length >= 2) y = ParseUnits(parts[1], factor);

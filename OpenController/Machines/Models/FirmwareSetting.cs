@@ -4,6 +4,7 @@ using System.Linq;
 using HotChocolate.Types;
 using OpenWorkEngine.OpenController.Controllers.Enums;
 using OpenWorkEngine.OpenController.Controllers.Messages;
+using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.Controllers.Services.Values;
 using OpenWorkEngine.OpenController.ControllerSyntax;
 using OpenWorkEngine.OpenController.MachineProfiles.Enums;
@@ -167,38 +168,19 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     }
   }
 
-  public class FirmwareSettingMutation {
-    internal FirmwareSetting Setting { get; }
-    public string Value { get; }
-    public bool HasChanged => !Setting.Value.Equals(Value);
-    public string? OrigValue { get; internal set; }
-
-    public FirmwareSettingMutation(FirmwareSetting setting, string value) {
-      Setting = setting;
-      Value = value;
-    }
-
-    internal bool Apply(ControlledMachine machine) {
-      if (OrigValue != null) throw new ArgumentException($"Mutation already applied.");
-      if (!HasChanged) return false;
-      OrigValue = Setting.Value;
-      Setting.Value = Value;
-      return true;
-    }
-  }
-
   public class FirmwareSetting<TData> : FirmwareSetting {
     public TData Data {
       get => Object is TData data ? data : default!;
       set => Value = value?.ToString() ?? throw new ArgumentException("Cannot un-set.");
     }
 
-    public FirmwareSettingMutation GetMutation(TData value) {
+    public InstructionStep GetMutation(TData value) {
       // if (value == null) return null;
       // if (Data != null && value.Equals(Data)) return null;
-      return new FirmwareSettingMutation(this, value?.ToString() ?? "");
+      return new InstructionStep(this, value?.ToString() ?? "");
     }
   }
+
   //
   //
   // public class ModalOption<TData> {
@@ -212,7 +194,7 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
   public record ModalOption<TData>(string Code, TData Data) {
     public string Value => Data?.ToString() ?? "";
 
-    internal ModalDefinition SettingDefinition { get; init; }
+    internal FirmwareSettingDefinition SettingDefinition { get; init; }
   }
 
   public class ModalSetting<TData> : FirmwareSetting<TData> {

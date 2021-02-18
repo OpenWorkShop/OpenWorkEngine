@@ -17,6 +17,7 @@ import {
 } from '../Workspaces';
 import {useSelector} from 'react-redux';
 import {getDistanceUnitAbbreviationKey} from '../../components/Units';
+import MachinePositionControl from '../Machines/MachinePositionControl';
 
 export type PositionType = 'work' | 'machine';
 
@@ -46,17 +47,12 @@ const MachinePositionChip: React.FunctionComponent<Props> = (props) => {
     .join(', ') + ' ' + unitsStr;
 
   return (<PopoverWorkBarChip faIcon={icon} label={positionText}>
-    <Grid item xs={12} className={classes.popoverRowAlt} >
-      <HelpfulHeader tip={tip} title={t('Machine Position')} variant="h6" />
-    </Grid>
     <Grid item xs={12} className={classes.popoverRow} >
+      <MachinePositionControl title={t('MPos')} unitsAbbr={unitsStr} position={mPos} />
     </Grid>
-    <Grid item xs={12} className={classes.popoverRowAlt} >
-      <HelpfulHeader tip={tip} title={t('WPos')} variant="h6" />
-    </Grid>
-    <Grid item xs={12} className={classes.popoverRow} >
-      Modal Groups ...
-    </Grid>
+    {wPos && <Grid item xs={12} className={classes.popoverRow} >
+      <MachinePositionControl title={t('WPos')} unitsAbbr={unitsStr} position={wPos} />
+    </Grid>}
   </PopoverWorkBarChip>);
 };
 

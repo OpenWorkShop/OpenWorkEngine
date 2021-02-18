@@ -11,6 +11,9 @@ import GWizCamera from './GWizCamera';
 import GWizApplicator from './GWizApplicator';
 import NavCube from './NavCube';
 import {AxisPlane, MachinePositionFragment} from '../../graphql';
+import GWizLocationPin from './GWizLocationPin';
+import {DragControls} from 'three/examples/jsm/controls/DragControls';
+import SelectableObjectGroup from './SelectableObjectGroup';
 
 const defaultCameraNear = 0.1;
 const defaultCameraFar = 2000;
@@ -27,6 +30,7 @@ class GWizCanvas {
   public controls: GWizControls;
   public axes: GWizAxes;
   public applicator: GWizApplicator;
+  public wcoPin: GWizLocationPin;
   public log: Logger;
   public target?: THREE.Object3D;
   public center: THREE.Vector3 = new THREE.Vector3(0, 0, 0);
@@ -35,8 +39,13 @@ class GWizCanvas {
   public actions: GWizActions;
 
   private _axes: IMachineAxis[] = [];
+  private _dragControls: DragControls[];
 
   public get domElement(): HTMLCanvasElement { return this.renderer.domElement; }
+
+  get selectableObjects(): SelectableObjectGroup[] {
+    return ([] as SelectableObjectGroup[]).concat(this.applicator).concat(this.wcoPin);
+  }
 
   constructor(oc: IOpenController, actions: GWizActions) {
     this.openController = oc;
@@ -49,13 +58,44 @@ class GWizCanvas {
     // Scene
     this.scene = new THREE.Scene();
     this.axes = new GWizAxes(this.styles);
-    this.applicator = new GWizApplicator(this.styles);
-    this.scene.add(this.axes, this.applicator);
+    this.applicator = new GWizApplicator(this);
+    this.wcoPin = new GWizLocationPin(this);
+    this.scene.add(this.axes, this.applicator, this.wcoPin);
 
     this.camera = new GWizCamera(this);
     this.controls = new GWizControls(this);
-
     this.navCube = new NavCube(this, this.styles);
+
+    this._dragControls = this.selectableObjects.map(this.addGroupDragControls.bind(this));
+  }
+
+  private getDragObject(obj: THREE.Object3D): SelectableObjectGroup {
+    return obj.parent as SelectableObjectGroup;
+  }
+
+  // For grouped objects, each object requires a different control.
+  private addGroupDragControls(group: SelectableObjectGroup): DragControls {
+    const dc = new DragControls([group], this.camera, this.domElement);
+    dc.transformGroup = true;
+    dc.addEventListener('dragstart', (e) => {
+      this.log.debug('drag start', e);
+      this.controls.enabled = false;
+    });
+    dc.addEventListener('dragend', (e) => {
+      this.log.debug('drag end', e);
+      this.controls.enabled = true;
+    });
+    dc.addEventListener('hoveron', (e) => {
+      const obj = this.getDragObject(e.object);
+      this.log.debug('hover', e, obj, obj === this.applicator, obj.uuid === this.applicator.uuid);
+      obj.setMaterials(this.styles.highlighted);
+    });
+    dc.addEventListener('hoveroff', (e) => {
+      const obj = this.getDragObject(e.object);
+      this.log.debug('hover end', e);
+      obj.setMaterials();
+    });
+    return dc;
   }
 
   // Main startup (draw axes)
@@ -66,11 +106,11 @@ class GWizCanvas {
     const minAccuracy = _.min(Object.values(axes).map(a => a.accuracy)) ?? defaultCameraNear;
     const maxRange = maxAxisRange * 1.25;
 
-    this.camera.setRange( minAccuracy, maxRange);
-    this.controls.setRange(minAccuracy, maxAxisRange * .75);
+    this.camera.setRange(minAccuracy, maxRange);
+    this.controls.setRange(minAccuracy, maxAxisRange * 0.75);
 
     const color = new THREE.Color(this.styles.backgroundColor);
-    this.scene.fog = new THREE.Fog(color, maxAxisRange, maxRange);
+    this.scene.fog = new THREE.Fog(color, maxRange * 0.95, maxRange);
 
     this.axes.redraw(this._axes);
     this.setTarget(this.target);
@@ -100,35 +140,44 @@ class GWizCanvas {
   setCenter(point: THREE.Vector3): void {
     this.center = point;
     this.controls.lookAt(point);
+    this.controls.target.copy(point);
     this.camera.lookAt(point);
   }
 
-  private _axisPlane?: AxisPlane;
+  private _sceneState?: IVisualizerSceneState;
+
+  get axisPlane(): AxisPlane | undefined { return this._sceneState?.axisPlane; }
+  get highlightedUuid(): string | undefined { return this._sceneState?.highlightedObject?.uuid; }
+  get selectedUuid(): string | undefined { return this._sceneState?.selectedObject?.uuid; }
 
   applySceneState(sceneState?: IVisualizerSceneState): boolean {
     if (!sceneState) return false;
     let changed = false;
     changed = this.axes.applySceneState(sceneState) || changed;
     this.camera.applyState(sceneState.camera);
-    if (this._axisPlane != sceneState.axisPlane && sceneState.axisPlane) {
-      changed = true;
-      this._axisPlane = sceneState.axisPlane;
-      const dist = this.camera.far * 0.5;
-      if (this._axisPlane === AxisPlane.Xy) {
-        this.camera.position.copy(new THREE.Vector3(0, 0, dist));
-        this.camera.lookAtSides(ViewSide.Top);
-      } else if (this._axisPlane === AxisPlane.Yz) {
-        this.camera.position.copy(new THREE.Vector3(dist, 0, 0));
-        this.camera.lookAtSides(ViewSide.Front);
-      } else if (this._axisPlane === AxisPlane.Xz) {
-        this.camera.position.copy(new THREE.Vector3(0, dist, 0));
-        this.camera.lookAtSides(ViewSide.Right);
-      }
-    }
+
+    const apChanged = this.axisPlane != sceneState.axisPlane && Boolean(sceneState.axisPlane);
+    changed = apChanged || changed;
     if (changed) {
       this.log.debug('sceneState', sceneState);
+      if (apChanged) this.updateAxisPlane();
     }
+    this._sceneState = sceneState;
     return changed;
+  }
+
+  updateAxisPlane(): void {
+    const dist = this.camera.far * 0.5;
+    if (this.axisPlane === AxisPlane.Xy) {
+      this.camera.position.copy(new THREE.Vector3(0, 0, dist));
+      this.camera.lookAtSides(ViewSide.Top);
+    } else if (this.axisPlane === AxisPlane.Yz) {
+      this.camera.position.copy(new THREE.Vector3(dist, 0, 0));
+      this.camera.lookAtSides(ViewSide.Front);
+    } else if (this.axisPlane === AxisPlane.Xz) {
+      this.camera.position.copy(new THREE.Vector3(0, dist, 0));
+      this.camera.lookAtSides(ViewSide.Right);
+    }
   }
 
   setTarget(obj?: THREE.Object3D): void {
@@ -191,10 +240,11 @@ class GWizCanvas {
   animate(): void {
     requestAnimationFrame( this.animate.bind(this) );
     this.controls.animate();
-    const changes = this.camera.clearChanges();
-    if (changes) {
+    const cameraChanges = this.camera.clearChanges();
+    if (cameraChanges) {
       this.updateNavCube();
-      this.actions.saveCameraState(changes);
+      this.axes.setZoom(this.camera.zoomPercent);
+      this.actions.saveCameraState(cameraChanges);
     }
 
     this.renderer.render( this.scene, this.camera );

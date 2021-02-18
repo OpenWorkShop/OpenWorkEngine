@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using OpenWorkEngine.OpenController.Controllers.Interfaces;
+using OpenWorkEngine.OpenController.Machines.Models;
 using OpenWorkEngine.OpenController.Syntax;
 
 namespace OpenWorkEngine.OpenController.Controllers.Models {
@@ -17,5 +18,7 @@ namespace OpenWorkEngine.OpenController.Controllers.Models {
       InstructionDefinition = instructionDefinition;
       Source = source ?? instructionDefinition.InstructionSource;
     }
+
+    internal List<InstructionStep> GetSteps(ControlledMachine machine) => InstructionDefinition.GetSteps(machine, Line);
   }
 }

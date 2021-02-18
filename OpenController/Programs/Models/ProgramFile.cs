@@ -20,9 +20,20 @@ namespace OpenWorkEngine.OpenController.Programs.Models {
     public int InstructionCount => Instructions.Count;
 
     // Current instruction (not yet run).
-    public int InstructionIndex { get; } = 0;
+    public int InstructionIndex {
+      get => _instructionIndex;
+      set {
+        _instructionIndex = Math.Max(0, Math.Min(value, InstructionCount));
+        if (_instructionIndex >= InstructionCount)
+          State = ProgramState.Complete;
+      }
+    }
+    private int _instructionIndex;
 
     public ProgramState State { get; private set; } = ProgramState.Created;
+
+    public CompiledInstruction? CurrentInstruction =>
+      InstructionIndex < InstructionCount ? Instructions[InstructionIndex] : null;
 
     public List<CompiledInstruction> Instructions { get; } = new();
 
@@ -51,6 +62,12 @@ namespace OpenWorkEngine.OpenController.Programs.Models {
       }
     }
 
+    internal bool Advance() {
+      InstructionIndex += 1;
+      return CurrentInstruction != null;
+    }
+
+    // Convert raw strings into CompiledInstructions
     private bool ProcessLine() {
       if (!UnprocessedLines.TryDequeue(out string? line)) {
         State = ProgramState.Loaded;
@@ -60,7 +77,7 @@ namespace OpenWorkEngine.OpenController.Programs.Models {
       GCodeBlock instruction = new GCodeBlock(line, Id);
       CompiledInstruction compiledInstruction = instruction.Compile();
       if (instruction.IsCode) {
-        Log.Debug("[PGM] [LINE] {instruction}", compiledInstruction.ToString());
+        Log.Verbose("[PGM] [LINE] {instruction}", compiledInstruction.ToString());
       }
       Instructions.Push(compiledInstruction);
       return true;

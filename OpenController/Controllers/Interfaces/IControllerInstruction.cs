@@ -8,6 +8,7 @@ using HotChocolate.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using OpenWorkEngine.OpenController.Controllers.Models;
+using OpenWorkEngine.OpenController.Machines.Models;
 using OpenWorkEngine.OpenController.Syntax;
 using Serilog;
 
@@ -47,6 +48,14 @@ namespace OpenWorkEngine.OpenController.Controllers.Interfaces {
     /// The parsed syntax chunks (words) from the line.
     /// </summary>
     public SyntaxLine CompileSyntax(string line);
+
+    /// <summary>
+    /// Apply the SyntaxLine to a given machine.
+    /// </summary>
+    /// <param name="machine">The machine to edit.</param>
+    /// <param name="line"></param>
+    /// <returns>A list of all mutations (steps) performed on the machine.</returns>
+    List<InstructionStep> GetSteps(ControlledMachine machine, SyntaxLine line);
   }
 
   public static class ControllerInstructionExtensions {

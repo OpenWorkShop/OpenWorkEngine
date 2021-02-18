@@ -1,6 +1,6 @@
 import {
   ChangeMaterialPayload,
-  GWizState, IVisualizerCameraState, IVisualizerSceneState, RenderGroupType,
+  GWizState, ISelectedObject, IVisualizerCameraState, IVisualizerSceneState, RenderGroupType,
   ViewSide, VisualizerSceneStateAction,
 } from './types';
 import theme from '../../themes/GWiz';
@@ -13,10 +13,11 @@ import {WorkspacesState} from '../Workspaces';
 export const defaultVisualizerStyles = {
   backgroundColor: theme.palette.background.default,
   gridLines: { color: theme.palette.grey.A200 },
+  highlighted: { color: theme.palette.secondary.dark },
   renderGroups: {
-    [RenderGroupType.P]: { color: theme.palette.primary.light },
-    [RenderGroupType.H]: { color: theme.palette.secondary.main },
-    [RenderGroupType.E]: { color: theme.palette.info.main },
+    [RenderGroupType.P]: { color: theme.palette.info.main },
+    [RenderGroupType.H]: { color: theme.palette.success.main },
+    [RenderGroupType.E]: { color: theme.palette.primary.light },
     [RenderGroupType.X]: { color: '#FF0000' }, // Red
     [RenderGroupType.Y]: { color: '#00FF00' }, // Green
     [RenderGroupType.Z]: { color: '#0000FF' }, // Blue
@@ -65,6 +66,14 @@ const gWizState = createSlice({
     },
     setScenePlane: (state, action: VisualizerSceneStateAction<AxisPlane>) => {
       ensureScene(action.payload.sceneId, state).axisPlane = action.payload.state;
+      return state;
+    },
+    setSceneHighlightedObject: (state, action: VisualizerSceneStateAction<ISelectedObject | undefined>) => {
+      ensureScene(action.payload.sceneId, state).highlightedObject = action.payload.state;
+      return state;
+    },
+    setSceneSelectedObject: (state, action: VisualizerSceneStateAction<ISelectedObject | undefined>) => {
+      ensureScene(action.payload.sceneId, state).selectedObject = action.payload.state;
       return state;
     },
   }

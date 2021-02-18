@@ -80,14 +80,6 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     //   return true;
     // }
 
-    internal bool ApplyInstructionResult(MachineInstructionResult result) {
-      if (result.WriteLogEntry.WriteState != SerialWriteState.Ok) {
-        return false;
-      }
-      FirmwareSettingMutation? mut = result.Instruction.Line.GetMutation(this);
-      return mut?.Apply(this) ?? false;
-    }
-
     internal ControlledMachineHash SnapshotHash() {
       return new (Status.GetHashCode(), Configuration.GetHashCode(), Settings.GetHashCode());
     }

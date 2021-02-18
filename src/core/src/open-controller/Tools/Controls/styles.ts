@@ -48,6 +48,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     position: 'relative',
     left: -8,
   },
+  unitsText: {
+    paddingRight: theme.spacing(0.5),
+    textAlign: 'right',
+  }
 }));
 
 export default useStyles;
