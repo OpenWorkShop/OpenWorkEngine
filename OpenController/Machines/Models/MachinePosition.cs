@@ -27,6 +27,8 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
 
     // public bool IsValid => X != null || Y != null || Z != null;
 
+    internal virtual bool IsValid => HasValue;
+
     protected virtual List<decimal?> Values => new List<decimal?>() { A, B, C, U, V, W, X, Y, Z };
 
     protected List<decimal> ValidValues => Values.Where(v => v.HasValue).Select(v => v!.Value).ToList();

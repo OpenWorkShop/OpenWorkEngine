@@ -17,6 +17,9 @@ export interface IMachinePosition {
   a?: number | null;
   b?: number | null;
   c?: number | null;
+  u?: number | null;
+  v?: number | null;
+  w?: number | null;
 }
 
 const a3d = [AxisName.X, AxisName.Y, AxisName.Z] as const;
@@ -26,10 +29,10 @@ export const threeDimensionalAxes: Axis3D[] = [ ...a3d ];
 // export type FirmwareSettingsGroupName = 'applicator' | 'pins' | 'movement' | 'reporting' | 'homing' | 'calibration';
 
 export type Axis3DKey = 'x' | 'y' | 'z';
-export const thereDimensionalAxisKeys: Axis3DKey[] = ['x', 'y', 'z'];
+export const threeDAxisKeys: Axis3DKey[] = ['x', 'y', 'z'];
 
-export type AxisKey = Axis3DKey | 'a' | 'b' | 'c';
-export const axisKeys: AxisKey[] = thereDimensionalAxisKeys.map(k => k as AxisKey).concat('a', 'b', 'c');
+export type AxisKey = Axis3DKey | 'a' | 'b' | 'c' | 'u' | 'v' | 'w';
+export const axisKeys: AxisKey[] = threeDAxisKeys.map(k => k as AxisKey).concat('a', 'b', 'c', 'u', 'v', 'w');
 
 const fwsgn = ['applicator', 'pins', 'movement', 'reporting', 'homing', 'calibration'] as const;
 export type FirmwareSettingsGroupName = typeof fwsgn[number];

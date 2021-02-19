@@ -11,12 +11,13 @@ using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Interfaces;
 using OpenWorkEngine.OpenController.Machines.Messages;
 using OpenWorkEngine.OpenController.Ports.Messages;
+using OpenWorkEngine.OpenController.Programs.Models;
 using OpenWorkEngine.OpenController.Syntax;
 using OpenWorkEngine.OpenController.Syntax.GCode;
 using Serilog;
 
 namespace OpenWorkEngine.OpenController.Machines.Models {
-  internal record ControlledMachineHash(int StatusHash, int ConfigHash, int SettingsHash);
+  internal record ControlledMachineHash(int StatusHash, int ConfigHash, int SettingsHash, int ProgramHash);
 
   /// <summary>
   /// </summary>
@@ -32,6 +33,8 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     public MachineConfiguration Configuration { get; } = new();
 
     public FirmwareSettings Settings { get; } = new();
+
+    public Program? Program { get; internal set; }
 
     [UsePaging]
     [UseFiltering(typeof(MachineLogEntryFilterInputType))]
@@ -81,7 +84,7 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
     // }
 
     internal ControlledMachineHash SnapshotHash() {
-      return new (Status.GetHashCode(), Configuration.GetHashCode(), Settings.GetHashCode());
+      return new (Status.GetHashCode(), Configuration.GetHashCode(), Settings.GetHashCode(), Program?.GetHashCode()??0);
     }
 
     internal HashSet<MachineTopic> GetMachineChanges(ControlledMachineHash hash) {
@@ -89,6 +92,7 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
       if (hash.StatusHash != Status.GetHashCode()) ret.Add(MachineTopic.Status);
       if (hash.ConfigHash != Status.GetHashCode()) ret.Add(MachineTopic.Configuration);
       if (hash.SettingsHash != Status.GetHashCode()) ret.Add(MachineTopic.Setting);
+      if (hash.ProgramHash != Status.GetHashCode()) ret.Add(MachineTopic.Program);
       return ret;
     }
 

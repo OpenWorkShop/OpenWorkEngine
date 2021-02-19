@@ -18,6 +18,8 @@ using OpenWorkEngine.OpenController.Machines.Models;
 using OpenWorkEngine.OpenController.Ports.Enums;
 using OpenWorkEngine.OpenController.Ports.Models;
 using OpenWorkEngine.OpenController.Programs.Interfaces;
+using OpenWorkEngine.OpenController.Programs.Messages;
+using OpenWorkEngine.OpenController.Programs.Models;
 using OpenWorkEngine.OpenController.Syntax;
 using OpenWorkEngine.OpenController.Syntax.GCode;
 using Serilog;
@@ -31,7 +33,6 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
   /// They wrap a ConnectedPort, which contains a machine.
   /// </summary>
   public sealed class Controller : IDisposable {
-
     public MachineControllerType ControllerType { get; }
 
     // Used by GraphQL client for caching purposes.
@@ -97,6 +98,16 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       });
 
       return res;
+    }
+
+    public Task<Program> UploadProgram(ProgramFileUpload upload) => LoadProgram(new ProgramFileMeta(upload));
+
+    public Task<Program> LoadProgram(string filePath) => LoadProgram(new ProgramFileMeta(filePath));
+
+    private Task<Program> LoadProgram(ProgramFileMeta meta) {
+      ProgramFile file = new ProgramFile(meta, Log);
+      Connection.Machine.Program = new Program(this, file);
+      return Task.FromResult(Connection.Machine.Program);
     }
 
     internal Task<MachineExecutionResult> EnsureModalValue<TData>(

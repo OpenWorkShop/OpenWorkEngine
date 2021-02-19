@@ -4,6 +4,7 @@ namespace OpenWorkEngine.OpenController.Machines.Enums {
     Configuration,
     Setting,
     Log,
+    Program,
   }
 
   public static class MachineTopicExtensions {

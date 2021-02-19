@@ -44,19 +44,14 @@ namespace OpenWorkEngine.OpenControllerTests.Programs {
     [ProgramFileData("heart-050_thick-025_bit.nc")]
     public void CanParseFile(ProgramFileMeta programFileMeta) {
       ProgramFile programFile = new ProgramFile(programFileMeta, Log.Logger);
-      while (programFile.Process()) { }
-
-      programFile.UnprocessedLines.Count.Should().Be(0);
-      programFile.State.Should().Be(ProgramState.Loaded);
-      programFile.InstructionIndex.Should().Be(0);
       programFile.InstructionCount.Should().BeGreaterThan(0);
 
       ControlledMachine machine = new ("/dev/test", null, Log.Logger);
       ControllerTranslator translator = new ControllerTranslator().UseGrblSyntax();
       translator.ConfigureMachine(machine);
 
-      while (programFile.Advance()) {
-        CompiledInstruction inst = programFile.CurrentInstruction!;
+      for(int x=0; x<programFile.InstructionCount; x++) {
+        CompiledInstruction inst = programFile.Instructions[x];
         MachineLogEntry write = MachineLogEntry.FromWrittenInstruction(inst);
         MachineLogEntry ack = MachineLogEntry.FromReadAck("ok");
         MachineInstructionResult res = new (machine, inst, write) { ResponseLogEntry = ack };
@@ -69,8 +64,6 @@ namespace OpenWorkEngine.OpenControllerTests.Programs {
           }
         }
       }
-
-      programFile.State.Should().Be(ProgramState.Complete);
     }
 
     public string Name => nameof(GCodeTests);

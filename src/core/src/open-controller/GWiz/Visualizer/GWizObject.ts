@@ -3,11 +3,12 @@ import GWizCanvas from './GWizCanvas';
 import {IMaterial, IVisualizerStyles, RenderGroupType} from '../types';
 import {Logger} from '../../../utils/logging';
 
-class SelectableObjectGroup extends THREE.Group {
+class GWizObject extends THREE.Group {
   protected canvas: GWizCanvas;
   protected log: Logger;
   protected get styles(): IVisualizerStyles { return this.canvas.styles; }
   protected renderGroup: RenderGroupType;
+  protected defaultMeshMaterial: THREE.MeshBasicMaterial;
 
   public get defaultMaterial(): IMaterial { return this.canvas.styles.renderGroups[this.renderGroup]; }
   public get isSelected(): boolean { return this.canvas.selectedUuid === this.uuid; }
@@ -18,6 +19,7 @@ class SelectableObjectGroup extends THREE.Group {
     this.canvas = canvas;
     this.log = this.canvas.log.logManager.getLogger(this.type);
     this.renderGroup = renderGroup;
+    this.defaultMeshMaterial = new THREE.MeshBasicMaterial(this.defaultMaterial);
   }
 
   public setMaterials(material?: IMaterial) {
@@ -35,4 +37,4 @@ class SelectableObjectGroup extends THREE.Group {
   }
 }
 
-export default SelectableObjectGroup;
+export default GWizObject;

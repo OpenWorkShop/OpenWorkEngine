@@ -38,7 +38,7 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
         ["G0"] = MachineMotionType.Rapid,
         ["G1"] = MachineMotionType.Linear,
         ["G2"] = MachineMotionType.Arc,
-        ["G3"] = MachineMotionType.ArcCCW,
+        ["G3"] = MachineMotionType.ArcCcw,
         ["G4"] = MachineMotionType.Dwell,
         ["G38.2"] = MachineMotionType.Probe,
         ["G38.3"] = MachineMotionType.Probe,
@@ -114,10 +114,10 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
         ["M30"] = MachineProgramState.EndOfProgram,
         ["M60"] = MachineProgramState.AutomaticChange,
       });
-      translator.AddModalOptions(m => m.Status.Applicator.SpinDirection, new Dictionary<string, ApplicatorSpinDirection>() {
-        ["M3"] = ApplicatorSpinDirection.CW,
-        ["M4"] = ApplicatorSpinDirection.CCW,
-        ["M5"] = ApplicatorSpinDirection.None,
+      translator.AddModalOptions(m => m.Status.Applicator.SpinDirection, new Dictionary<string, CircleDirection>() {
+        ["M3"] = CircleDirection.Cw,
+        ["M4"] = CircleDirection.Ccw,
+        ["M5"] = CircleDirection.None,
       });
       // M6 == ATC ?!?!
       translator.AddModalOptions(m => m.Status.Applicator.Coolant, new Dictionary<string, MachineCoolantState>() {

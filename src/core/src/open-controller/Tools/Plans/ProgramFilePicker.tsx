@@ -3,10 +3,14 @@ import * as React from 'react';
 import useLogger from '../../../utils/logging/UseLogger';
 import {useTrans} from '../../Context';
 import {useUploadProgramMutation} from '../../graphql';
+import {IHaveWorkspace} from '../../Workspaces';
 
-const ProgramFilePicker: React.FunctionComponent = () => {
+type Props = IHaveWorkspace;
+
+const ProgramFilePicker: React.FunctionComponent<Props> = (props) => {
   const log = useLogger(ProgramFilePicker);
   const t = useTrans();
+  const { workspaceId } = props;
   const [upload, uploaded ] = useUploadProgramMutation();
 
   async function onFilesChosen(files: FileList | null): Promise<void> {
@@ -24,7 +28,7 @@ const ProgramFilePicker: React.FunctionComponent = () => {
     log.debug('select', text);
     //const stream = files[0].stream();
     const { lastModified, type, name, size } = file;
-    const variables = { fileUpload: { text, lastModified, type, name, size } };
+    const variables = { workspaceId, fileUpload: { text, lastModified, type, name, size } };
     try {
       const res = await upload({ variables });
       log.debug('result', res, uploaded);

@@ -120,7 +120,7 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
       else if (defaultValue is EnabledType et) val = new ParsedEnum<EnabledType>(et);
       else if (defaultValue is MachineProgramState mps) val = new ParsedEnum<MachineProgramState>(mps);
       else if (defaultValue is ApplicatorRadiusCompensation a) val = new ParsedEnum<ApplicatorRadiusCompensation>(a);
-      else if (defaultValue is ApplicatorSpinDirection spn) val = new ParsedEnum<ApplicatorSpinDirection>(spn);
+      else if (defaultValue is CircleDirection spn) val = new ParsedEnum<CircleDirection>(spn);
       else if (defaultValue is FactorType ft) val = new ParsedEnum<FactorType>(ft);
       else if (defaultValue is MachineCoolantState cool) val = new ParsedEnum<MachineCoolantState>(cool);
       else if (defaultValue is MachineOverridesMode orm) val = new ParsedEnum<MachineOverridesMode>(orm);
@@ -161,7 +161,7 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
       descriptor.Type<ParsedEnumType<EnabledType>>();
       descriptor.Type<ParsedEnumType<MachineProgramState>>();
       descriptor.Type<ParsedEnumType<ApplicatorRadiusCompensation>>();
-      descriptor.Type<ParsedEnumType<ApplicatorSpinDirection>>();
+      descriptor.Type<ParsedEnumType<CircleDirection>>();
       descriptor.Type<ParsedEnumType<FactorType>>();
       descriptor.Type<ParsedEnumType<MachineCoolantState>>();
       descriptor.Type<ParsedEnumType<MachineOverridesMode>>();

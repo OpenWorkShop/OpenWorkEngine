@@ -5,6 +5,7 @@ using System.Linq;
 using HotChocolate.Language;
 using OpenWorkEngine.OpenController.Controllers.Interfaces;
 using OpenWorkEngine.OpenController.Controllers.Models;
+using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Models;
 
 namespace OpenWorkEngine.OpenController.Syntax.GCode {
@@ -58,7 +59,12 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode {
           step = setter.Invoke(machine);
         }
 
-        if (step != null) steps.Add(step);
+        if (step != null) {
+          if (!(step.Movement?.IsValid ?? true)) {
+            machine.Log.Error("Invalid step: {@step}", step);
+          }
+          steps.Add(step);
+        }
       }
       return steps;
     }
@@ -67,7 +73,9 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode {
       if (!decimal.TryParse(word.Raw.Substring(1), out decimal val)) {
         val = 0;
       }
-      if (step.Movement == null) step.Movement = new MachineMovement();
+      if (step.Movement == null)
+        step.Movement = new MachineMovement() { ArcDirection = GetMotionDirection(step.SettingValue) };
+
       if (word.Letter == GCodeLetter.A) step.Movement.A = val;
       if (word.Letter == GCodeLetter.B) step.Movement.B = val;
       if (word.Letter == GCodeLetter.C) step.Movement.C = val;
@@ -81,6 +89,16 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode {
       if (word.Letter == GCodeLetter.Y) step.Movement.Y = val;
       if (word.Letter == GCodeLetter.Z) step.Movement.Z = val;
       if (word.Letter == GCodeLetter.P) step.Movement.Dwell = val;
+    }
+
+    private CircleDirection? GetMotionDirection(string dir) {
+      Enum.TryParse(dir, true, out MachineMotionType type);
+      if (type == MachineMotionType.Linear || type == MachineMotionType.Rapid || type == MachineMotionType.Probe)
+        return CircleDirection.None;
+      if (type == MachineMotionType.Arc) return CircleDirection.Cw;
+      if (type == MachineMotionType.ArcCcw) return CircleDirection.Ccw;
+      if (type == MachineMotionType.Dwell) return null;
+      throw new ArgumentException($"{dir} is not movement.");
     }
 
     private static bool IsCoordinateWord(string w) => w.StartsWith("X") || w.StartsWith("Y") || w.StartsWith("Z");

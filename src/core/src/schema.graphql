@@ -81,6 +81,7 @@ type ControlledMachine {
     id: String!
     logs(after: String, before: String, first: Int, last: Int, order: [MachineLogEntrySortInput!], where: MachineLogEntryFilterInput): MachineLogEntryConnection
     machineProfileId: String
+    program: Program
     settings: FirmwareSettings!
     status: MachineStatus!
     timeline(after: String, before: String, first: Int, last: Int): MachineTimelineNodeConnection
@@ -96,6 +97,7 @@ type Controller {
     help: MachineExecutionResult!
     homing: MachineExecutionResult!
     id: String!
+    loadProgram(filePath: String!): Program!
     move(moveCommand: MoveCommandInput!): MachineExecutionResult!
     parameters: MachineExecutionResult!
     pause: MachineExecutionResult!
@@ -108,6 +110,7 @@ type Controller {
     startup: MachineExecutionResult!
     status: MachineExecutionResult!
     unlock: MachineExecutionResult!
+    uploadProgram(upload: ProgramFileUploadInput!): Program!
     writeCommand(commandCode: String!, sourceName: String!): MachineExecutionResult!
 }
 
@@ -239,12 +242,6 @@ type FirmwareSetting {
     valueCode: String!
 }
 
-type FirmwareSettingMutation {
-    hasChanged: Boolean!
-    origValue: String
-    value: String!
-}
-
 type FirmwareSettingOfAxisFlags {
     comment: String
     currentValue: IParsedValue
@@ -253,7 +250,7 @@ type FirmwareSettingOfAxisFlags {
     id: String!
     index: Int!
     key: String!
-    mutation(value: AxisFlagsInput!): FirmwareSettingMutation!
+    mutation(value: AxisFlagsInput!): InstructionStep!
     settingType: MachineSettingType!
     title: String
     units: MachineSettingUnits!
@@ -269,7 +266,7 @@ type FirmwareSettingOfBoolean {
     id: String!
     index: Int!
     key: String!
-    mutation(value: Boolean!): FirmwareSettingMutation!
+    mutation(value: Boolean!): InstructionStep!
     settingType: MachineSettingType!
     title: String
     units: MachineSettingUnits!
@@ -285,7 +282,7 @@ type FirmwareSettingOfDecimal {
     id: String!
     index: Int!
     key: String!
-    mutation(value: Decimal!): FirmwareSettingMutation!
+    mutation(value: Decimal!): InstructionStep!
     settingType: MachineSettingType!
     title: String
     units: MachineSettingUnits!
@@ -301,7 +298,7 @@ type FirmwareSettingOfKinematicsMode {
     id: String!
     index: Int!
     key: String!
-    mutation(value: KinematicsMode!): FirmwareSettingMutation!
+    mutation(value: KinematicsMode!): InstructionStep!
     settingType: MachineSettingType!
     title: String
     units: MachineSettingUnits!
@@ -317,7 +314,7 @@ type FirmwareSettingOfStatusReportType {
     id: String!
     index: Int!
     key: String!
-    mutation(value: StatusReportType!): FirmwareSettingMutation!
+    mutation(value: StatusReportType!): InstructionStep!
     settingType: MachineSettingType!
     title: String
     units: MachineSettingUnits!
@@ -333,7 +330,7 @@ type FirmwareSettingOfString {
     id: String!
     index: Int!
     key: String!
-    mutation(value: String!): FirmwareSettingMutation!
+    mutation(value: String!): InstructionStep!
     settingType: MachineSettingType!
     title: String
     units: MachineSettingUnits!
@@ -349,6 +346,15 @@ type FirmwareSettings {
     pins: FirmwarePinsSettings!
     reporting: FirmwareReportingSettings!
     settings: [FirmwareSetting!]!
+}
+
+type InstructionStep {
+    movement: MachineMovement
+    name: String!
+    settingId: String!
+    settingValue: String!
+    value: Decimal
+    willChangeSetting: Boolean!
 }
 
 type KeyValuePairOfApplicatorRadiusCompensationAndInt32 {
@@ -577,7 +583,9 @@ type MachineFirmwareSettings implements IMachineFirmwareRequirement {
 }
 
 type MachineInstructionResult {
+    apply: [InstructionStep!]!
     instruction: CompiledInstruction!
+    machine: ControlledMachine!
     responseLogEntry: MachineLogEntry
     writeLogEntry: MachineLogEntry!
 }
@@ -632,6 +640,22 @@ type MachineModals {
     workCoordinateSystem: ModalSettingOfDecimal!
 }
 
+type MachineMovement {
+    a: Decimal
+    b: Decimal
+    c: Decimal
+    dwell: Decimal
+    i: Decimal
+    j: Decimal
+    k: Decimal
+    u: Decimal
+    v: Decimal
+    w: Decimal
+    x: Decimal
+    y: Decimal
+    z: Decimal
+}
+
 type MachineOptions {
     raw: String!
 }
@@ -673,6 +697,9 @@ type MachinePosition {
     a: Decimal
     b: Decimal
     c: Decimal
+    u: Decimal
+    v: Decimal
+    w: Decimal
     x: Decimal
     y: Decimal
     z: Decimal
@@ -875,7 +902,7 @@ type ModalSettingOfApplicatorRadiusCompensation {
     id: String!
     index: Int!
     key: String!
-    mutation(value: ApplicatorRadiusCompensation!): FirmwareSettingMutation!
+    mutation(value: ApplicatorRadiusCompensation!): InstructionStep!
     options: [ModalOptionOfApplicatorRadiusCompensation!]!
     settingType: MachineSettingType!
     title: String
@@ -892,7 +919,7 @@ type ModalSettingOfApplicatorSpinDirection {
     id: String!
     index: Int!
     key: String!
-    mutation(value: ApplicatorSpinDirection!): FirmwareSettingMutation!
+    mutation(value: ApplicatorSpinDirection!): InstructionStep!
     options: [ModalOptionOfApplicatorSpinDirection!]!
     settingType: MachineSettingType!
     title: String
@@ -909,7 +936,7 @@ type ModalSettingOfAxisPlane {
     id: String!
     index: Int!
     key: String!
-    mutation(value: AxisPlane!): FirmwareSettingMutation!
+    mutation(value: AxisPlane!): InstructionStep!
     options: [ModalOptionOfAxisPlane!]!
     settingType: MachineSettingType!
     title: String
@@ -926,7 +953,7 @@ type ModalSettingOfDecimal {
     id: String!
     index: Int!
     key: String!
-    mutation(value: Decimal!): FirmwareSettingMutation!
+    mutation(value: Decimal!): InstructionStep!
     options: [ModalOptionOfDecimal!]!
     settingType: MachineSettingType!
     title: String
@@ -943,7 +970,7 @@ type ModalSettingOfEnabledType {
     id: String!
     index: Int!
     key: String!
-    mutation(value: EnabledType!): FirmwareSettingMutation!
+    mutation(value: EnabledType!): InstructionStep!
     options: [ModalOptionOfEnabledType!]!
     settingType: MachineSettingType!
     title: String
@@ -960,7 +987,7 @@ type ModalSettingOfFactorType {
     id: String!
     index: Int!
     key: String!
-    mutation(value: FactorType!): FirmwareSettingMutation!
+    mutation(value: FactorType!): InstructionStep!
     options: [ModalOptionOfFactorType!]!
     settingType: MachineSettingType!
     title: String
@@ -977,7 +1004,7 @@ type ModalSettingOfFeedRateMode {
     id: String!
     index: Int!
     key: String!
-    mutation(value: FeedRateMode!): FirmwareSettingMutation!
+    mutation(value: FeedRateMode!): InstructionStep!
     options: [ModalOptionOfFeedRateMode!]!
     settingType: MachineSettingType!
     title: String
@@ -994,7 +1021,7 @@ type ModalSettingOfMachineCoolantState {
     id: String!
     index: Int!
     key: String!
-    mutation(value: MachineCoolantState!): FirmwareSettingMutation!
+    mutation(value: MachineCoolantState!): InstructionStep!
     options: [ModalOptionOfMachineCoolantState!]!
     settingType: MachineSettingType!
     title: String
@@ -1011,7 +1038,7 @@ type ModalSettingOfMachineMotionType {
     id: String!
     index: Int!
     key: String!
-    mutation(value: MachineMotionType!): FirmwareSettingMutation!
+    mutation(value: MachineMotionType!): InstructionStep!
     options: [ModalOptionOfMachineMotionType!]!
     settingType: MachineSettingType!
     title: String
@@ -1028,7 +1055,7 @@ type ModalSettingOfMachineOverridesMode {
     id: String!
     index: Int!
     key: String!
-    mutation(value: MachineOverridesMode!): FirmwareSettingMutation!
+    mutation(value: MachineOverridesMode!): InstructionStep!
     options: [ModalOptionOfMachineOverridesMode!]!
     settingType: MachineSettingType!
     title: String
@@ -1045,7 +1072,7 @@ type ModalSettingOfMachineProgramState {
     id: String!
     index: Int!
     key: String!
-    mutation(value: MachineProgramState!): FirmwareSettingMutation!
+    mutation(value: MachineProgramState!): InstructionStep!
     options: [ModalOptionOfMachineProgramState!]!
     settingType: MachineSettingType!
     title: String
@@ -1062,7 +1089,7 @@ type ModalSettingOfMovementDistanceType {
     id: String!
     index: Int!
     key: String!
-    mutation(value: MovementDistanceType!): FirmwareSettingMutation!
+    mutation(value: MovementDistanceType!): InstructionStep!
     options: [ModalOptionOfMovementDistanceType!]!
     settingType: MachineSettingType!
     title: String
@@ -1079,7 +1106,7 @@ type ModalSettingOfPathControlMode {
     id: String!
     index: Int!
     key: String!
-    mutation(value: PathControlMode!): FirmwareSettingMutation!
+    mutation(value: PathControlMode!): InstructionStep!
     options: [ModalOptionOfPathControlMode!]!
     settingType: MachineSettingType!
     title: String
@@ -1096,7 +1123,7 @@ type ModalSettingOfSpindleSpeedMode {
     id: String!
     index: Int!
     key: String!
-    mutation(value: SpindleSpeedMode!): FirmwareSettingMutation!
+    mutation(value: SpindleSpeedMode!): InstructionStep!
     options: [ModalOptionOfSpindleSpeedMode!]!
     settingType: MachineSettingType!
     title: String
@@ -1113,7 +1140,7 @@ type ModalSettingOfTimingMode {
     id: String!
     index: Int!
     key: String!
-    mutation(value: TimingMode!): FirmwareSettingMutation!
+    mutation(value: TimingMode!): InstructionStep!
     options: [ModalOptionOfTimingMode!]!
     settingType: MachineSettingType!
     title: String
@@ -1130,7 +1157,7 @@ type ModalSettingOfUnitType {
     id: String!
     index: Int!
     key: String!
-    mutation(value: UnitType!): FirmwareSettingMutation!
+    mutation(value: UnitType!): InstructionStep!
     options: [ModalOptionOfUnitType!]!
     settingType: MachineSettingType!
     title: String
@@ -1359,13 +1386,21 @@ type PortStatus {
     linesWritten: Int!
 }
 
-type ProgramFile {
+type Program {
+    currentInstruction: ProgramInstruction
     id: String!
     instructionCount: Int!
     instructionIndex: Int!
+    instructions: [ProgramInstruction!]!
+    programFile: ProgramFile!
+    state: ProgramState!
+}
+
+type ProgramFile {
+    id: String!
+    instructionCount: Int!
     instructions: [CompiledInstruction!]!
     meta: ProgramFileMeta!
-    state: ProgramState!
 }
 
 type ProgramFileMeta {
@@ -1376,6 +1411,12 @@ type ProgramFileMeta {
     size: Long!
     syntax: ProgramSyntax!
     type: String!
+}
+
+type ProgramInstruction {
+    compiledInstruction: CompiledInstruction!
+    index: Int!
+    steps: [InstructionStep!]!
 }
 
 type Query {
@@ -1496,6 +1537,9 @@ enum AxisName {
     A
     B
     C
+    U
+    V
+    W
     X
     Y
     Z
@@ -1635,6 +1679,7 @@ enum MachineProgramState {
     AUTOMATIC_CHANGE
     COMPULSORY_STOP
     END_OF_PROGRAM
+    MANUAL_CHANGE
     OPTIONAL_STOP
 }
 
@@ -1747,9 +1792,8 @@ enum PortState {
 
 enum ProgramState {
     COMPLETE
-    CREATED
-    LOADED
     PAUSED
+    READY
     RUNNING
 }
 
@@ -2038,6 +2082,9 @@ input MoveCommandInput {
     c: Decimal
     distanceType: MovementDistanceType!
     motionType: MachineMotionType
+    u: Decimal
+    v: Decimal
+    w: Decimal
     x: Decimal
     y: Decimal
     z: Decimal
@@ -2047,6 +2094,7 @@ input ProgramFileUploadInput {
     lastModified: Long!
     name: String!
     size: Long!
+    text: String!
     type: String!
 }
 

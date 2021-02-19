@@ -312,7 +312,7 @@
           <e p="Enums" t="Include">
             <e p="ActiveState.cs" t="Include" />
             <e p="ApplicatorRadiusCompensation.cs" t="Include" />
-            <e p="ApplicatorSpinDirection.cs" t="Include" />
+            <e p="CircleDirection.cs" t="Include" />
             <e p="EnabledType.cs" t="Include" />
             <e p="FactorType.cs" t="Include" />
             <e p="FeedRateMode.cs" t="Include" />
@@ -439,6 +439,7 @@
             <e p="ProgramFileUpload.cs" t="Include" />
           </e>
           <e p="Models" t="Include">
+            <e p="Program.cs" t="Include" />
             <e p="ProgramFile.cs" t="Include" />
             <e p="ProgramFileMeta.cs" t="Include" />
             <e p="ProgramInstruction.cs" t="Include" />

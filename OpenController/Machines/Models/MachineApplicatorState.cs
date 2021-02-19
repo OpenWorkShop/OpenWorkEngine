@@ -7,11 +7,10 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
   /// </summary>
   public record MachineApplicatorState : ApplicatorState {
     // CW / CCW
-    public ModalSetting<ApplicatorSpinDirection> SpinDirection { get; } =
-      FirmwareSetting.Modal(ApplicatorSpinDirection.None);
+    public ModalSetting<CircleDirection> SpinDirection { get; } = FirmwareSetting.Modal(CircleDirection.None);
 
     // Lasers, etc. can simply be on/off.
-    public bool IsOn => SpinDirection.Data != ApplicatorSpinDirection.None;
+    public bool IsOn => SpinDirection.Data != CircleDirection.None;
 
     public FirmwareSetting<string> ToolId { get; } = FirmwareSetting.Define("");
 

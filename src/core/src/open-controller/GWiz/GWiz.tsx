@@ -72,6 +72,11 @@ const GWiz: FunctionComponent<Props> = (props) => {
   React.useEffect(() => { canvas.controls.applyPreferences(controls); }, [canvas, controls]);
   React.useEffect(() => { canvas.applyStyles( styles ); }, [ canvas, styles ]);
 
+  const program = tryUseWorkspaceControllerSelector(workspaceId, c => c.machine.program);
+  React.useEffect(() => {
+    canvas.plans.setProgram(program ?? undefined);
+  }, [canvas, program]);
+
   // Update machine state
   const mPos = tryUseWorkspaceControllerSelector(workspaceId, c => c.machine.status.machinePosition );
   React.useEffect(() => {

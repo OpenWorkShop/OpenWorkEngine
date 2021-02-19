@@ -17,7 +17,7 @@ const Plans: ToolBase = (props) => {
         return <LogLine key={i.writeLogEntry.id} logEntry={i.writeLogEntry} />;
       })}
       <Grid item xs={12}>
-        <ProgramFilePicker />
+        <ProgramFilePicker workspaceId={workspaceId} />
       </Grid>
     </Grid>
   );

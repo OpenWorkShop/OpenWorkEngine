@@ -128,6 +128,7 @@ export type ControlledMachine = {
   id: Scalars['String'];
   logs: Maybe<MachineLogEntryConnection>;
   machineProfileId: Maybe<Scalars['String']>;
+  program: Maybe<Program>;
   settings: FirmwareSettings;
   status: MachineStatus;
   timeline: Maybe<MachineTimelineNodeConnection>;
@@ -160,6 +161,7 @@ export type Controller = {
   help: MachineExecutionResult;
   homing: MachineExecutionResult;
   id: Scalars['String'];
+  loadProgram: Program;
   move: MachineExecutionResult;
   parameters: MachineExecutionResult;
   pause: MachineExecutionResult;
@@ -172,7 +174,12 @@ export type Controller = {
   startup: MachineExecutionResult;
   status: MachineExecutionResult;
   unlock: MachineExecutionResult;
+  uploadProgram: Program;
   writeCommand: MachineExecutionResult;
+};
+
+export type ControllerLoadProgramArgs = {
+  filePath: Scalars['String'];
 };
 
 export type ControllerMoveArgs = {
@@ -189,6 +196,10 @@ export type ControllerSetFirmwareSettingsArgs = {
 
 export type ControllerSetModalArgs = {
   change: ModalChangeInput;
+};
+
+export type ControllerUploadProgramArgs = {
+  upload: ProgramFileUploadInput;
 };
 
 export type ControllerWriteCommandArgs = {
@@ -337,13 +348,6 @@ export type FirmwareSetting = {
   valueCode: Scalars['String'];
 };
 
-export type FirmwareSettingMutation = {
-  __typename?: 'FirmwareSettingMutation';
-  hasChanged: Scalars['Boolean'];
-  origValue: Maybe<Scalars['String']>;
-  value: Scalars['String'];
-};
-
 export type FirmwareSettingOfAxisFlags = {
   __typename?: 'FirmwareSettingOfAxisFlags';
   comment: Maybe<Scalars['String']>;
@@ -353,7 +357,7 @@ export type FirmwareSettingOfAxisFlags = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
   units: MachineSettingUnits;
@@ -374,7 +378,7 @@ export type FirmwareSettingOfBoolean = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
   units: MachineSettingUnits;
@@ -395,7 +399,7 @@ export type FirmwareSettingOfDecimal = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
   units: MachineSettingUnits;
@@ -416,7 +420,7 @@ export type FirmwareSettingOfKinematicsMode = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
   units: MachineSettingUnits;
@@ -437,7 +441,7 @@ export type FirmwareSettingOfStatusReportType = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
   units: MachineSettingUnits;
@@ -458,7 +462,7 @@ export type FirmwareSettingOfString = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
   units: MachineSettingUnits;
@@ -479,6 +483,16 @@ export type FirmwareSettings = {
   pins: FirmwarePinsSettings;
   reporting: FirmwareReportingSettings;
   settings: Array<FirmwareSetting>;
+};
+
+export type InstructionStep = {
+  __typename?: 'InstructionStep';
+  movement: Maybe<MachineMovement>;
+  name: Scalars['String'];
+  settingId: Scalars['String'];
+  settingValue: Scalars['String'];
+  value: Maybe<Scalars['Decimal']>;
+  willChangeSetting: Scalars['Boolean'];
 };
 
 export type KeyValuePairOfApplicatorRadiusCompensationAndInt32 = {
@@ -739,7 +753,9 @@ export type MachineFirmwareSettings = IMachineFirmwareRequirement & {
 
 export type MachineInstructionResult = {
   __typename?: 'MachineInstructionResult';
+  apply: Array<InstructionStep>;
   instruction: CompiledInstruction;
+  machine: ControlledMachine;
   responseLogEntry: Maybe<MachineLogEntry>;
   writeLogEntry: MachineLogEntry;
 };
@@ -798,6 +814,23 @@ export type MachineModals = {
   workCoordinateSystem: ModalSettingOfDecimal;
 };
 
+export type MachineMovement = {
+  __typename?: 'MachineMovement';
+  a: Maybe<Scalars['Decimal']>;
+  b: Maybe<Scalars['Decimal']>;
+  c: Maybe<Scalars['Decimal']>;
+  dwell: Maybe<Scalars['Decimal']>;
+  i: Maybe<Scalars['Decimal']>;
+  j: Maybe<Scalars['Decimal']>;
+  k: Maybe<Scalars['Decimal']>;
+  u: Maybe<Scalars['Decimal']>;
+  v: Maybe<Scalars['Decimal']>;
+  w: Maybe<Scalars['Decimal']>;
+  x: Maybe<Scalars['Decimal']>;
+  y: Maybe<Scalars['Decimal']>;
+  z: Maybe<Scalars['Decimal']>;
+};
+
 export type MachineOptions = {
   __typename?: 'MachineOptions';
   raw: Scalars['String'];
@@ -844,6 +877,9 @@ export type MachinePosition = {
   a: Maybe<Scalars['Decimal']>;
   b: Maybe<Scalars['Decimal']>;
   c: Maybe<Scalars['Decimal']>;
+  u: Maybe<Scalars['Decimal']>;
+  v: Maybe<Scalars['Decimal']>;
+  w: Maybe<Scalars['Decimal']>;
   x: Maybe<Scalars['Decimal']>;
   y: Maybe<Scalars['Decimal']>;
   z: Maybe<Scalars['Decimal']>;
@@ -1074,7 +1110,7 @@ export type ModalSettingOfApplicatorRadiusCompensation = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   options: Array<ModalOptionOfApplicatorRadiusCompensation>;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -1096,7 +1132,7 @@ export type ModalSettingOfApplicatorSpinDirection = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   options: Array<ModalOptionOfApplicatorSpinDirection>;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -1118,7 +1154,7 @@ export type ModalSettingOfAxisPlane = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   options: Array<ModalOptionOfAxisPlane>;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -1140,7 +1176,7 @@ export type ModalSettingOfDecimal = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   options: Array<ModalOptionOfDecimal>;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -1162,7 +1198,7 @@ export type ModalSettingOfEnabledType = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   options: Array<ModalOptionOfEnabledType>;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -1184,7 +1220,7 @@ export type ModalSettingOfFactorType = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   options: Array<ModalOptionOfFactorType>;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -1206,7 +1242,7 @@ export type ModalSettingOfFeedRateMode = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   options: Array<ModalOptionOfFeedRateMode>;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -1228,7 +1264,7 @@ export type ModalSettingOfMachineCoolantState = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   options: Array<ModalOptionOfMachineCoolantState>;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -1250,7 +1286,7 @@ export type ModalSettingOfMachineMotionType = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   options: Array<ModalOptionOfMachineMotionType>;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -1272,7 +1308,7 @@ export type ModalSettingOfMachineOverridesMode = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   options: Array<ModalOptionOfMachineOverridesMode>;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -1294,7 +1330,7 @@ export type ModalSettingOfMachineProgramState = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   options: Array<ModalOptionOfMachineProgramState>;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -1316,7 +1352,7 @@ export type ModalSettingOfMovementDistanceType = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   options: Array<ModalOptionOfMovementDistanceType>;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -1338,7 +1374,7 @@ export type ModalSettingOfPathControlMode = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   options: Array<ModalOptionOfPathControlMode>;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -1360,7 +1396,7 @@ export type ModalSettingOfSpindleSpeedMode = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   options: Array<ModalOptionOfSpindleSpeedMode>;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -1382,7 +1418,7 @@ export type ModalSettingOfTimingMode = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   options: Array<ModalOptionOfTimingMode>;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -1404,7 +1440,7 @@ export type ModalSettingOfUnitType = {
   id: Scalars['String'];
   index: Scalars['Int'];
   key: Scalars['String'];
-  mutation: FirmwareSettingMutation;
+  mutation: InstructionStep;
   options: Array<ModalOptionOfUnitType>;
   settingType: MachineSettingType;
   title: Maybe<Scalars['String']>;
@@ -1709,14 +1745,23 @@ export type PortStatus = {
   linesWritten: Scalars['Int'];
 };
 
+export type Program = {
+  __typename?: 'Program';
+  currentInstruction: Maybe<ProgramInstruction>;
+  id: Scalars['String'];
+  instructionCount: Scalars['Int'];
+  instructionIndex: Scalars['Int'];
+  instructions: Array<ProgramInstruction>;
+  programFile: ProgramFile;
+  state: ProgramState;
+};
+
 export type ProgramFile = {
   __typename?: 'ProgramFile';
   id: Scalars['String'];
   instructionCount: Scalars['Int'];
-  instructionIndex: Scalars['Int'];
   instructions: Array<CompiledInstruction>;
   meta: ProgramFileMeta;
-  state: ProgramState;
 };
 
 export type ProgramFileMeta = {
@@ -1728,6 +1773,13 @@ export type ProgramFileMeta = {
   size: Scalars['Long'];
   syntax: ProgramSyntax;
   type: Scalars['String'];
+};
+
+export type ProgramInstruction = {
+  __typename?: 'ProgramInstruction';
+  compiledInstruction: CompiledInstruction;
+  index: Scalars['Int'];
+  steps: Array<InstructionStep>;
 };
 
 export type Query = {
@@ -1896,6 +1948,9 @@ export enum AxisName {
   A = 'A',
   B = 'B',
   C = 'C',
+  U = 'U',
+  V = 'V',
+  W = 'W',
   X = 'X',
   Y = 'Y',
   Z = 'Z',
@@ -2035,6 +2090,7 @@ export enum MachineProgramState {
   AutomaticChange = 'AUTOMATIC_CHANGE',
   CompulsoryStop = 'COMPULSORY_STOP',
   EndOfProgram = 'END_OF_PROGRAM',
+  ManualChange = 'MANUAL_CHANGE',
   OptionalStop = 'OPTIONAL_STOP',
 }
 
@@ -2147,9 +2203,8 @@ export enum PortState {
 
 export enum ProgramState {
   Complete = 'COMPLETE',
-  Created = 'CREATED',
-  Loaded = 'LOADED',
   Paused = 'PAUSED',
+  Ready = 'READY',
   Running = 'RUNNING',
 }
 
@@ -2438,6 +2493,9 @@ export type MoveCommandInput = {
   c: Maybe<Scalars['Decimal']>;
   distanceType: MovementDistanceType;
   motionType: Maybe<MachineMotionType>;
+  u: Maybe<Scalars['Decimal']>;
+  v: Maybe<Scalars['Decimal']>;
+  w: Maybe<Scalars['Decimal']>;
   x: Maybe<Scalars['Decimal']>;
   y: Maybe<Scalars['Decimal']>;
   z: Maybe<Scalars['Decimal']>;
@@ -2447,6 +2505,7 @@ export type ProgramFileUploadInput = {
   lastModified: Scalars['Long'];
   name: Scalars['String'];
   size: Scalars['Long'];
+  text: Scalars['String'];
   type: Scalars['String'];
 };
 
@@ -2660,7 +2719,6 @@ export type ResolversTypes = {
       defaultValue: Maybe<ResolversTypes['IParsedValue']>;
     }
   >;
-  FirmwareSettingMutation: ResolverTypeWrapper<FirmwareSettingMutation>;
   FirmwareSettingOfAxisFlags: ResolverTypeWrapper<
     Omit<FirmwareSettingOfAxisFlags, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
   >;
@@ -2680,6 +2738,7 @@ export type ResolversTypes = {
     Omit<FirmwareSettingOfString, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
   >;
   FirmwareSettings: ResolverTypeWrapper<FirmwareSettings>;
+  InstructionStep: ResolverTypeWrapper<InstructionStep>;
   KeyValuePairOfApplicatorRadiusCompensationAndInt32: ResolverTypeWrapper<KeyValuePairOfApplicatorRadiusCompensationAndInt32>;
   KeyValuePairOfApplicatorSpinDirectionAndInt32: ResolverTypeWrapper<KeyValuePairOfApplicatorSpinDirectionAndInt32>;
   KeyValuePairOfAxisPlaneAndInt32: ResolverTypeWrapper<KeyValuePairOfAxisPlaneAndInt32>;
@@ -2716,6 +2775,7 @@ export type ResolversTypes = {
   MachineLogEntryConnection: ResolverTypeWrapper<MachineLogEntryConnection>;
   MachineLogEntryEdge: ResolverTypeWrapper<MachineLogEntryEdge>;
   MachineModals: ResolverTypeWrapper<MachineModals>;
+  MachineMovement: ResolverTypeWrapper<MachineMovement>;
   MachineOptions: ResolverTypeWrapper<MachineOptions>;
   MachineOverrides: ResolverTypeWrapper<MachineOverrides>;
   MachinePart: ResolverTypeWrapper<MachinePart>;
@@ -2829,8 +2889,10 @@ export type ResolversTypes = {
   ParsedString: ResolverTypeWrapper<ParsedString>;
   PortOptions: ResolverTypeWrapper<PortOptions>;
   PortStatus: ResolverTypeWrapper<PortStatus>;
+  Program: ResolverTypeWrapper<Program>;
   ProgramFile: ResolverTypeWrapper<ProgramFile>;
   ProgramFileMeta: ResolverTypeWrapper<ProgramFileMeta>;
+  ProgramInstruction: ResolverTypeWrapper<ProgramInstruction>;
   Query: ResolverTypeWrapper<{}>;
   Subscription: ResolverTypeWrapper<{}>;
   SyntaxChunk: ResolverTypeWrapper<SyntaxChunk>;
@@ -2975,7 +3037,6 @@ export type ResolversParentTypes = {
     currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
     defaultValue: Maybe<ResolversParentTypes['IParsedValue']>;
   };
-  FirmwareSettingMutation: FirmwareSettingMutation;
   FirmwareSettingOfAxisFlags: Omit<FirmwareSettingOfAxisFlags, 'currentValue'> & {
     currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
   };
@@ -2995,6 +3056,7 @@ export type ResolversParentTypes = {
     currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
   };
   FirmwareSettings: FirmwareSettings;
+  InstructionStep: InstructionStep;
   KeyValuePairOfApplicatorRadiusCompensationAndInt32: KeyValuePairOfApplicatorRadiusCompensationAndInt32;
   KeyValuePairOfApplicatorSpinDirectionAndInt32: KeyValuePairOfApplicatorSpinDirectionAndInt32;
   KeyValuePairOfAxisPlaneAndInt32: KeyValuePairOfAxisPlaneAndInt32;
@@ -3031,6 +3093,7 @@ export type ResolversParentTypes = {
   MachineLogEntryConnection: MachineLogEntryConnection;
   MachineLogEntryEdge: MachineLogEntryEdge;
   MachineModals: MachineModals;
+  MachineMovement: MachineMovement;
   MachineOptions: MachineOptions;
   MachineOverrides: MachineOverrides;
   MachinePart: MachinePart;
@@ -3140,8 +3203,10 @@ export type ResolversParentTypes = {
   ParsedString: ParsedString;
   PortOptions: PortOptions;
   PortStatus: PortStatus;
+  Program: Program;
   ProgramFile: ProgramFile;
   ProgramFileMeta: ProgramFileMeta;
+  ProgramInstruction: ProgramInstruction;
   Query: {};
   Subscription: {};
   SyntaxChunk: SyntaxChunk;
@@ -3340,6 +3405,7 @@ export type ControlledMachineResolvers<
     RequireFields<ControlledMachineLogsArgs, never>
   >;
   machineProfileId: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  program: Resolver<Maybe<ResolversTypes['Program']>, ParentType, ContextType>;
   settings: Resolver<ResolversTypes['FirmwareSettings'], ParentType, ContextType>;
   status: Resolver<ResolversTypes['MachineStatus'], ParentType, ContextType>;
   timeline: Resolver<
@@ -3364,6 +3430,12 @@ export type ControllerResolvers<
   help: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
   homing: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  loadProgram: Resolver<
+    ResolversTypes['Program'],
+    ParentType,
+    ContextType,
+    RequireFields<ControllerLoadProgramArgs, 'filePath'>
+  >;
   move: Resolver<
     ResolversTypes['MachineExecutionResult'],
     ParentType,
@@ -3396,6 +3468,12 @@ export type ControllerResolvers<
   startup: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
   status: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
   unlock: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
+  uploadProgram: Resolver<
+    ResolversTypes['Program'],
+    ParentType,
+    ContextType,
+    RequireFields<ControllerUploadProgramArgs, 'upload'>
+  >;
   writeCommand: Resolver<
     ResolversTypes['MachineExecutionResult'],
     ParentType,
@@ -3585,16 +3663,6 @@ export type FirmwareSettingResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type FirmwareSettingMutationResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['FirmwareSettingMutation'] = ResolversParentTypes['FirmwareSettingMutation']
-> = {
-  hasChanged: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  origValue: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type FirmwareSettingOfAxisFlagsResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['FirmwareSettingOfAxisFlags'] = ResolversParentTypes['FirmwareSettingOfAxisFlags']
@@ -3607,7 +3675,7 @@ export type FirmwareSettingOfAxisFlagsResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<FirmwareSettingOfAxisFlagsMutationArgs, 'value'>
@@ -3632,7 +3700,7 @@ export type FirmwareSettingOfBooleanResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<FirmwareSettingOfBooleanMutationArgs, 'value'>
@@ -3657,7 +3725,7 @@ export type FirmwareSettingOfDecimalResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<FirmwareSettingOfDecimalMutationArgs, 'value'>
@@ -3682,7 +3750,7 @@ export type FirmwareSettingOfKinematicsModeResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<FirmwareSettingOfKinematicsModeMutationArgs, 'value'>
@@ -3707,7 +3775,7 @@ export type FirmwareSettingOfStatusReportTypeResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<FirmwareSettingOfStatusReportTypeMutationArgs, 'value'>
@@ -3732,7 +3800,7 @@ export type FirmwareSettingOfStringResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<FirmwareSettingOfStringMutationArgs, 'value'>
@@ -3756,6 +3824,19 @@ export type FirmwareSettingsResolvers<
   pins: Resolver<ResolversTypes['FirmwarePinsSettings'], ParentType, ContextType>;
   reporting: Resolver<ResolversTypes['FirmwareReportingSettings'], ParentType, ContextType>;
   settings: Resolver<Array<ResolversTypes['FirmwareSetting']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type InstructionStepResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['InstructionStep'] = ResolversParentTypes['InstructionStep']
+> = {
+  movement: Resolver<Maybe<ResolversTypes['MachineMovement']>, ParentType, ContextType>;
+  name: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  settingId: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  settingValue: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  value: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
+  willChangeSetting: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -4112,7 +4193,9 @@ export type MachineInstructionResultResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['MachineInstructionResult'] = ResolversParentTypes['MachineInstructionResult']
 > = {
+  apply: Resolver<Array<ResolversTypes['InstructionStep']>, ParentType, ContextType>;
   instruction: Resolver<ResolversTypes['CompiledInstruction'], ParentType, ContextType>;
+  machine: Resolver<ResolversTypes['ControlledMachine'], ParentType, ContextType>;
   responseLogEntry: Resolver<Maybe<ResolversTypes['MachineLogEntry']>, ParentType, ContextType>;
   writeLogEntry: Resolver<ResolversTypes['MachineLogEntry'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -4177,6 +4260,26 @@ export type MachineModalsResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type MachineMovementResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MachineMovement'] = ResolversParentTypes['MachineMovement']
+> = {
+  a: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
+  b: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
+  c: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
+  dwell: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
+  i: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
+  j: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
+  k: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
+  u: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
+  v: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
+  w: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
+  x: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
+  y: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
+  z: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type MachineOptionsResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['MachineOptions'] = ResolversParentTypes['MachineOptions']
@@ -4237,6 +4340,9 @@ export type MachinePositionResolvers<
   a: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
   b: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
   c: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
+  u: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
+  v: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
+  w: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
   x: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
   y: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
   z: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
@@ -4545,7 +4651,7 @@ export type ModalSettingOfApplicatorRadiusCompensationResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<ModalSettingOfApplicatorRadiusCompensationMutationArgs, 'value'>
@@ -4571,7 +4677,7 @@ export type ModalSettingOfApplicatorSpinDirectionResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<ModalSettingOfApplicatorSpinDirectionMutationArgs, 'value'>
@@ -4597,7 +4703,7 @@ export type ModalSettingOfAxisPlaneResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<ModalSettingOfAxisPlaneMutationArgs, 'value'>
@@ -4623,7 +4729,7 @@ export type ModalSettingOfDecimalResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<ModalSettingOfDecimalMutationArgs, 'value'>
@@ -4649,7 +4755,7 @@ export type ModalSettingOfEnabledTypeResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<ModalSettingOfEnabledTypeMutationArgs, 'value'>
@@ -4675,7 +4781,7 @@ export type ModalSettingOfFactorTypeResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<ModalSettingOfFactorTypeMutationArgs, 'value'>
@@ -4701,7 +4807,7 @@ export type ModalSettingOfFeedRateModeResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<ModalSettingOfFeedRateModeMutationArgs, 'value'>
@@ -4727,7 +4833,7 @@ export type ModalSettingOfMachineCoolantStateResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<ModalSettingOfMachineCoolantStateMutationArgs, 'value'>
@@ -4753,7 +4859,7 @@ export type ModalSettingOfMachineMotionTypeResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<ModalSettingOfMachineMotionTypeMutationArgs, 'value'>
@@ -4779,7 +4885,7 @@ export type ModalSettingOfMachineOverridesModeResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<ModalSettingOfMachineOverridesModeMutationArgs, 'value'>
@@ -4805,7 +4911,7 @@ export type ModalSettingOfMachineProgramStateResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<ModalSettingOfMachineProgramStateMutationArgs, 'value'>
@@ -4831,7 +4937,7 @@ export type ModalSettingOfMovementDistanceTypeResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<ModalSettingOfMovementDistanceTypeMutationArgs, 'value'>
@@ -4857,7 +4963,7 @@ export type ModalSettingOfPathControlModeResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<ModalSettingOfPathControlModeMutationArgs, 'value'>
@@ -4883,7 +4989,7 @@ export type ModalSettingOfSpindleSpeedModeResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<ModalSettingOfSpindleSpeedModeMutationArgs, 'value'>
@@ -4909,7 +5015,7 @@ export type ModalSettingOfTimingModeResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<ModalSettingOfTimingModeMutationArgs, 'value'>
@@ -4935,7 +5041,7 @@ export type ModalSettingOfUnitTypeResolvers<
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   mutation: Resolver<
-    ResolversTypes['FirmwareSettingMutation'],
+    ResolversTypes['InstructionStep'],
     ParentType,
     ContextType,
     RequireFields<ModalSettingOfUnitTypeMutationArgs, 'value'>
@@ -5333,16 +5439,28 @@ export type PortStatusResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type ProgramResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Program'] = ResolversParentTypes['Program']
+> = {
+  currentInstruction: Resolver<Maybe<ResolversTypes['ProgramInstruction']>, ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  instructionCount: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  instructionIndex: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  instructions: Resolver<Array<ResolversTypes['ProgramInstruction']>, ParentType, ContextType>;
+  programFile: Resolver<ResolversTypes['ProgramFile'], ParentType, ContextType>;
+  state: Resolver<ResolversTypes['ProgramState'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type ProgramFileResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['ProgramFile'] = ResolversParentTypes['ProgramFile']
 > = {
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   instructionCount: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  instructionIndex: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   instructions: Resolver<Array<ResolversTypes['CompiledInstruction']>, ParentType, ContextType>;
   meta: Resolver<ResolversTypes['ProgramFileMeta'], ParentType, ContextType>;
-  state: Resolver<ResolversTypes['ProgramState'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -5357,6 +5475,16 @@ export type ProgramFileMetaResolvers<
   size: Resolver<ResolversTypes['Long'], ParentType, ContextType>;
   syntax: Resolver<ResolversTypes['ProgramSyntax'], ParentType, ContextType>;
   type: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProgramInstructionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ProgramInstruction'] = ResolversParentTypes['ProgramInstruction']
+> = {
+  compiledInstruction: Resolver<ResolversTypes['CompiledInstruction'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  steps: Resolver<Array<ResolversTypes['InstructionStep']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -5560,7 +5688,6 @@ export type Resolvers<ContextType = any> = {
   FirmwareReportingSettings: FirmwareReportingSettingsResolvers<ContextType>;
   FirmwareRequirement: FirmwareRequirementResolvers<ContextType>;
   FirmwareSetting: FirmwareSettingResolvers<ContextType>;
-  FirmwareSettingMutation: FirmwareSettingMutationResolvers<ContextType>;
   FirmwareSettingOfAxisFlags: FirmwareSettingOfAxisFlagsResolvers<ContextType>;
   FirmwareSettingOfBoolean: FirmwareSettingOfBooleanResolvers<ContextType>;
   FirmwareSettingOfDecimal: FirmwareSettingOfDecimalResolvers<ContextType>;
@@ -5568,6 +5695,7 @@ export type Resolvers<ContextType = any> = {
   FirmwareSettingOfStatusReportType: FirmwareSettingOfStatusReportTypeResolvers<ContextType>;
   FirmwareSettingOfString: FirmwareSettingOfStringResolvers<ContextType>;
   FirmwareSettings: FirmwareSettingsResolvers<ContextType>;
+  InstructionStep: InstructionStepResolvers<ContextType>;
   KeyValuePairOfApplicatorRadiusCompensationAndInt32: KeyValuePairOfApplicatorRadiusCompensationAndInt32Resolvers<ContextType>;
   KeyValuePairOfApplicatorSpinDirectionAndInt32: KeyValuePairOfApplicatorSpinDirectionAndInt32Resolvers<ContextType>;
   KeyValuePairOfAxisPlaneAndInt32: KeyValuePairOfAxisPlaneAndInt32Resolvers<ContextType>;
@@ -5604,6 +5732,7 @@ export type Resolvers<ContextType = any> = {
   MachineLogEntryConnection: MachineLogEntryConnectionResolvers<ContextType>;
   MachineLogEntryEdge: MachineLogEntryEdgeResolvers<ContextType>;
   MachineModals: MachineModalsResolvers<ContextType>;
+  MachineMovement: MachineMovementResolvers<ContextType>;
   MachineOptions: MachineOptionsResolvers<ContextType>;
   MachineOverrides: MachineOverridesResolvers<ContextType>;
   MachinePart: MachinePartResolvers<ContextType>;
@@ -5681,8 +5810,10 @@ export type Resolvers<ContextType = any> = {
   ParsedString: ParsedStringResolvers<ContextType>;
   PortOptions: PortOptionsResolvers<ContextType>;
   PortStatus: PortStatusResolvers<ContextType>;
+  Program: ProgramResolvers<ContextType>;
   ProgramFile: ProgramFileResolvers<ContextType>;
   ProgramFileMeta: ProgramFileMetaResolvers<ContextType>;
+  ProgramInstruction: ProgramInstructionResolvers<ContextType>;
   Query: QueryResolvers<ContextType>;
   Subscription: SubscriptionResolvers<ContextType>;
   SyntaxChunk: SyntaxChunkResolvers<ContextType>;
@@ -5712,22 +5843,6 @@ export type MachineInstructionResultFragment = { __typename?: 'MachineInstructio
 export type MachineExecutionResultFragment = { __typename?: 'MachineExecutionResult' } & {
   instructionResults: Array<{ __typename?: 'MachineInstructionResult' } & MachineInstructionResultFragment>;
   machine: { __typename?: 'ControlledMachine' } & ControlledMachineFragment;
-};
-
-export type UploadProgramMutationVariables = Exact<{
-  fileUpload: ProgramFileUploadInput;
-}>;
-
-export type UploadProgramMutation = { __typename?: 'Mutation' } & {
-  uploadProgram: { __typename?: 'ProgramFile' } & Pick<
-    ProgramFile,
-    'id' | 'state' | 'instructionCount' | 'instructionIndex'
-  > & {
-      meta: { __typename?: 'ProgramFileMeta' } & Pick<
-        ProgramFileMeta,
-        'name' | 'lastModified' | 'size' | 'type' | 'directory' | 'syntax' | 'isUpload'
-      >;
-    };
 };
 
 export type SetModalSettingsMutationVariables = Exact<{
@@ -5826,6 +5941,7 @@ export type ControlledMachineFragment = { __typename?: 'ControlledMachine' } & P
     configuration: { __typename?: 'MachineConfiguration' } & MachineConfigFragment;
     status: { __typename?: 'MachineStatus' } & MachineStatusFragment;
     settings: { __typename?: 'FirmwareSettings' } & FirmwareSettingsTypedFragment;
+    program: Maybe<{ __typename?: 'Program' } & ProgramFragment>;
   } & MachineLogsFragment;
 
 type FirmwareRequirement_FirmwareRequirement_Fragment = { __typename?: 'FirmwareRequirement' } & Pick<
@@ -5878,7 +5994,7 @@ export type MachineAlertFragment = { __typename?: 'MachineAlert' } & Pick<
 
 export type MachinePositionFragment = { __typename?: 'MachinePosition' } & Pick<
   MachinePosition,
-  'x' | 'y' | 'z' | 'a' | 'b' | 'c'
+  'x' | 'y' | 'z' | 'a' | 'b' | 'c' | 'u' | 'v' | 'w'
 >;
 
 export type MachineAxisPropsFragment = { __typename?: 'MachineAxis' } & Pick<
@@ -6429,6 +6545,42 @@ export type ClosePortMutation = { __typename?: 'Mutation' } & {
   port: { __typename?: 'SystemPort' } & PortStatusFragment;
 };
 
+export type MachineMovementFragment = { __typename?: 'MachineMovement' } & Pick<
+  MachineMovement,
+  'x' | 'y' | 'z' | 'a' | 'b' | 'c' | 'u' | 'v' | 'w' | 'i' | 'j' | 'k' | 'dwell'
+>;
+
+export type InstructionStepFragment = { __typename?: 'InstructionStep' } & Pick<
+  InstructionStep,
+  'name' | 'settingValue'
+> & { movement: Maybe<{ __typename?: 'MachineMovement' } & MachineMovementFragment> };
+
+export type ProgramInstructionFragment = { __typename?: 'ProgramInstruction' } & {
+  steps: Array<{ __typename?: 'InstructionStep' } & InstructionStepFragment>;
+};
+
+export type ProgramFragment = { __typename?: 'Program' } & Pick<
+  Program,
+  'id' | 'state' | 'instructionIndex' | 'instructionCount'
+> & {
+    instructions: Array<{ __typename?: 'ProgramInstruction' } & ProgramInstructionFragment>;
+    programFile: { __typename?: 'ProgramFile' } & {
+      meta: { __typename?: 'ProgramFileMeta' } & Pick<
+        ProgramFileMeta,
+        'name' | 'lastModified' | 'size' | 'type' | 'directory' | 'syntax' | 'isUpload'
+      >;
+    };
+  };
+
+export type UploadProgramMutationVariables = Exact<{
+  workspaceId: Scalars['String'];
+  fileUpload: ProgramFileUploadInput;
+}>;
+
+export type UploadProgramMutation = { __typename?: 'Mutation' } & {
+  controller: { __typename?: 'Controller' } & { program: { __typename?: 'Program' } & ProgramFragment };
+};
+
 export type EventFragment = { __typename?: 'EventSettings' } & Pick<
   EventSettings,
   'id' | 'mtime' | 'enabled' | 'event' | 'trigger' | 'commands'
@@ -6863,6 +7015,9 @@ export const MachinePositionFragmentDoc = gql`
     a
     b
     c
+    u
+    v
+    w
   }
 `;
 export const MachineConfigFragmentDoc = gql`
@@ -7351,6 +7506,64 @@ export const FirmwareSettingsTypedFragmentDoc = gql`
   ${FirmwarePinsSettingsFragmentDoc}
   ${FirmwareReportingSettingsFragmentDoc}
 `;
+export const MachineMovementFragmentDoc = gql`
+  fragment MachineMovement on MachineMovement {
+    x
+    y
+    z
+    a
+    b
+    c
+    u
+    v
+    w
+    i
+    j
+    k
+    dwell
+  }
+`;
+export const InstructionStepFragmentDoc = gql`
+  fragment InstructionStep on InstructionStep {
+    name
+    settingValue
+    movement {
+      ...MachineMovement
+    }
+  }
+  ${MachineMovementFragmentDoc}
+`;
+export const ProgramInstructionFragmentDoc = gql`
+  fragment ProgramInstruction on ProgramInstruction {
+    steps {
+      ...InstructionStep
+    }
+  }
+  ${InstructionStepFragmentDoc}
+`;
+export const ProgramFragmentDoc = gql`
+  fragment Program on Program {
+    id
+    state
+    instructionIndex
+    instructionCount
+    instructions {
+      ...ProgramInstruction
+    }
+    programFile {
+      meta {
+        name
+        lastModified
+        size
+        type
+        directory
+        syntax
+        isUpload
+      }
+    }
+  }
+  ${ProgramInstructionFragmentDoc}
+`;
 export const PageInfoFragmentDoc = gql`
   fragment PageInfo on PageInfo {
     endCursor
@@ -7427,11 +7640,15 @@ export const ControlledMachineFragmentDoc = gql`
     settings {
       ...FirmwareSettingsTyped
     }
+    program {
+      ...Program
+    }
     ...MachineLogs
   }
   ${MachineConfigFragmentDoc}
   ${MachineStatusFragmentDoc}
   ${FirmwareSettingsTypedFragmentDoc}
+  ${ProgramFragmentDoc}
   ${MachineLogsFragmentDoc}
 `;
 export const MachineExecutionResultFragmentDoc = gql`
@@ -7927,55 +8144,6 @@ export const WorkspaceEssentialSettingsFragmentDoc = gql`
   }
   ${WorkspaceFullSettingsFragmentDoc}
 `;
-export const UploadProgramDocument = gql`
-  mutation UploadProgram($fileUpload: ProgramFileUploadInput!) {
-    uploadProgram(fileUpload: $fileUpload) {
-      id
-      state
-      meta {
-        name
-        lastModified
-        size
-        type
-        directory
-        syntax
-        isUpload
-      }
-      instructionCount
-      instructionIndex
-    }
-  }
-`;
-export type UploadProgramMutationFn = Apollo.MutationFunction<UploadProgramMutation, UploadProgramMutationVariables>;
-
-/**
- * __useUploadProgramMutation__
- *
- * To run a mutation, you first call `useUploadProgramMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUploadProgramMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [uploadProgramMutation, { data, loading, error }] = useUploadProgramMutation({
- *   variables: {
- *      fileUpload: // value for 'fileUpload'
- *   },
- * });
- */
-export function useUploadProgramMutation(
-  baseOptions?: Apollo.MutationHookOptions<UploadProgramMutation, UploadProgramMutationVariables>,
-) {
-  return Apollo.useMutation<UploadProgramMutation, UploadProgramMutationVariables>(UploadProgramDocument, baseOptions);
-}
-export type UploadProgramMutationHookResult = ReturnType<typeof useUploadProgramMutation>;
-export type UploadProgramMutationResult = Apollo.MutationResult<UploadProgramMutation>;
-export type UploadProgramMutationOptions = Apollo.BaseMutationOptions<
-  UploadProgramMutation,
-  UploadProgramMutationVariables
->;
 export const SetModalSettingsDocument = gql`
   mutation SetModalSettings($workspaceId: String!, $change: ModalChangeInput!) {
     controller: controlMachine(workspaceId: $workspaceId) {
@@ -8665,6 +8833,47 @@ export function useClosePortMutation(
 export type ClosePortMutationHookResult = ReturnType<typeof useClosePortMutation>;
 export type ClosePortMutationResult = Apollo.MutationResult<ClosePortMutation>;
 export type ClosePortMutationOptions = Apollo.BaseMutationOptions<ClosePortMutation, ClosePortMutationVariables>;
+export const UploadProgramDocument = gql`
+  mutation UploadProgram($workspaceId: String!, $fileUpload: ProgramFileUploadInput!) {
+    controller: controlMachine(workspaceId: $workspaceId) {
+      program: uploadProgram(upload: $fileUpload) {
+        ...Program
+      }
+    }
+  }
+  ${ProgramFragmentDoc}
+`;
+export type UploadProgramMutationFn = Apollo.MutationFunction<UploadProgramMutation, UploadProgramMutationVariables>;
+
+/**
+ * __useUploadProgramMutation__
+ *
+ * To run a mutation, you first call `useUploadProgramMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUploadProgramMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [uploadProgramMutation, { data, loading, error }] = useUploadProgramMutation({
+ *   variables: {
+ *      workspaceId: // value for 'workspaceId'
+ *      fileUpload: // value for 'fileUpload'
+ *   },
+ * });
+ */
+export function useUploadProgramMutation(
+  baseOptions?: Apollo.MutationHookOptions<UploadProgramMutation, UploadProgramMutationVariables>,
+) {
+  return Apollo.useMutation<UploadProgramMutation, UploadProgramMutationVariables>(UploadProgramDocument, baseOptions);
+}
+export type UploadProgramMutationHookResult = ReturnType<typeof useUploadProgramMutation>;
+export type UploadProgramMutationResult = Apollo.MutationResult<UploadProgramMutation>;
+export type UploadProgramMutationOptions = Apollo.BaseMutationOptions<
+  UploadProgramMutation,
+  UploadProgramMutationVariables
+>;
 export const StartupDocument = gql`
   query Startup($token: String!) {
     session: authenticate(token: $token) {

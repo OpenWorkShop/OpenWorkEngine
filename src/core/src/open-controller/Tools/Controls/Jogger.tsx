@@ -85,6 +85,9 @@ const Jogger: ToolBase = (props) => {
       a: undefinedToNull(req.a),
       b: undefinedToNull(req.b),
       c: undefinedToNull(req.c),
+      u: undefinedToNull(req.u),
+      v: undefinedToNull(req.v),
+      w: undefinedToNull(req.w),
       motionType: req.motionType || MachineMotionType.Rapid,
       distanceType: req.distanceType,
     };

@@ -1,0 +1,48 @@
+fragment MachineMovement on MachineMovement {
+    x y z a b c u v w
+    i j k
+    dwell
+}
+
+fragment InstructionStep on InstructionStep {
+    name
+    settingValue
+    movement {
+        ...MachineMovement
+    }
+}
+
+fragment ProgramInstruction on ProgramInstruction {
+    steps {
+        ...InstructionStep
+    }
+}
+
+fragment Program on Program {
+    id
+    state
+    instructionIndex
+    instructionCount
+    instructions {
+        ...ProgramInstruction
+    }
+    programFile {
+        meta {
+            name
+            lastModified
+            size
+            type
+            directory
+            syntax
+            isUpload
+        }
+    }
+}
+
+mutation UploadProgram($workspaceId: String!, $fileUpload: ProgramFileUploadInput!) {
+    controller: controlMachine(workspaceId: $workspaceId) {
+        program: uploadProgram(upload: $fileUpload) {
+            ...Program
+        }
+    }
+}

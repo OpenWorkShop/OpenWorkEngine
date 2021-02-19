@@ -3,11 +3,15 @@ namespace OpenWorkEngine.OpenController.MachineProfiles.Enums {
   /// Generally sorted in order of more -> less common.
   /// </summary>
   public enum AxisName {
-    X, // Do all machines have an X axis?
+    X,
     Y,
     Z,
     A,
     B,
     C,
+    U,
+    V,
+    W,
   }
 }
+

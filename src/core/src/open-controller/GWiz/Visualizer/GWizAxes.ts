@@ -94,12 +94,6 @@ class GWizAxes extends THREE.Group {
     return Object.values(this._lineGroups).concat(Object.values(this._textGroups));
   }
 
-  private static clearGroup(group: THREE.Group): void {
-    while (group.children.length > 0) {
-      group.remove(group.children[0]);
-    }
-  }
-
   applyStyles(styles: IVisualizerStyles): void {
     this._styles = styles;
     this._materials = {};
@@ -119,7 +113,7 @@ class GWizAxes extends THREE.Group {
 
   public redraw(axes?: IMachineAxis[]): void {
     this._axisMap = axes ? getMachineAxisMap(axes) : this._axisMap;
-    Object.values(this.allGroups).forEach(lg => GWizAxes.clearGroup(lg));
+    Object.values(this.allGroups).forEach(lg => lg.clear());
     this.drawnAxes = Object.values(this._axisMap).map(this.drawAxis.bind(this));
   }
 

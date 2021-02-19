@@ -13,7 +13,8 @@ import NavCube from './NavCube';
 import {AxisPlane, MachinePositionFragment} from '../../graphql';
 import GWizLocationPin from './GWizLocationPin';
 import {DragControls} from 'three/examples/jsm/controls/DragControls';
-import SelectableObjectGroup from './SelectableObjectGroup';
+import GWizObject from './GWizObject';
+import GWizPlans from './GWizPlans';
 
 const defaultCameraNear = 0.1;
 const defaultCameraFar = 2000;
@@ -29,6 +30,7 @@ class GWizCanvas {
   public styles: IVisualizerStyles = defaultVisualizerStyles;
   public controls: GWizControls;
   public axes: GWizAxes;
+  public plans: GWizPlans;
   public applicator: GWizApplicator;
   public wcoPin: GWizLocationPin;
   public log: Logger;
@@ -43,8 +45,8 @@ class GWizCanvas {
 
   public get domElement(): HTMLCanvasElement { return this.renderer.domElement; }
 
-  get selectableObjects(): SelectableObjectGroup[] {
-    return ([] as SelectableObjectGroup[]).concat(this.applicator).concat(this.wcoPin);
+  get selectableObjects(): GWizObject[] {
+    return ([] as GWizObject[]).concat(this.applicator).concat(this.wcoPin);
   }
 
   constructor(oc: IOpenController, actions: GWizActions) {
@@ -60,7 +62,8 @@ class GWizCanvas {
     this.axes = new GWizAxes(this.styles);
     this.applicator = new GWizApplicator(this);
     this.wcoPin = new GWizLocationPin(this);
-    this.scene.add(this.axes, this.applicator, this.wcoPin);
+    this.plans = new GWizPlans(this);
+    this.scene.add(this.axes, this.applicator, this.wcoPin, this.plans);
 
     this.camera = new GWizCamera(this);
     this.controls = new GWizControls(this);
@@ -69,12 +72,12 @@ class GWizCanvas {
     this._dragControls = this.selectableObjects.map(this.addGroupDragControls.bind(this));
   }
 
-  private getDragObject(obj: THREE.Object3D): SelectableObjectGroup {
-    return obj.parent as SelectableObjectGroup;
+  private getDragObject(obj: THREE.Object3D): GWizObject {
+    return obj.parent as GWizObject;
   }
 
   // For grouped objects, each object requires a different control.
-  private addGroupDragControls(group: SelectableObjectGroup): DragControls {
+  private addGroupDragControls(group: GWizObject): DragControls {
     const dc = new DragControls([group], this.camera, this.domElement);
     dc.transformGroup = true;
     dc.addEventListener('dragstart', (e) => {
@@ -115,8 +118,7 @@ class GWizCanvas {
     this.axes.redraw(this._axes);
     this.setTarget(this.target);
 
-    // Start the animation loop.
-    this.animate();
+    this.render();
 
     // Begin nav cube
     this.navCube.draw(navCubeDiv);
@@ -131,10 +133,6 @@ class GWizCanvas {
     const boundingBox = new THREE.Box3();
     boundingBox.setFromObject( obj );
     return boundingBox;
-  }
-
-  onCameraChanged(): void {
-    // this.updateNavCube();
   }
 
   setCenter(point: THREE.Vector3): void {
@@ -235,10 +233,14 @@ class GWizCanvas {
     this.renderer.setSize(width, height, false);
     this._lastWidth = width;
     this._lastHeight = height;
+
+    this.requestRender();
   }
 
-  animate(): void {
-    requestAnimationFrame( this.animate.bind(this) );
+  private _renderRequested = false;
+  private render(): void {
+    this._renderRequested = false;
+
     this.controls.animate();
     const cameraChanges = this.camera.clearChanges();
     if (cameraChanges) {
@@ -248,6 +250,13 @@ class GWizCanvas {
     }
 
     this.renderer.render( this.scene, this.camera );
+  }
+
+  public requestRender(): void {
+    if (!this._renderRequested) {
+      this._renderRequested = true;
+      requestAnimationFrame( this.render.bind(this) );
+    }
   }
 }
 

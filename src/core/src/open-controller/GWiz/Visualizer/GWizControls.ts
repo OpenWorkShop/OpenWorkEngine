@@ -21,7 +21,7 @@ class GWizControls extends OrbitControls {
     // this.controls.enableDamping = true;
     this.enableKeys = true;
     this.addEventListener('change', (e) => {
-      this._canvas.onCameraChanged();
+      this._canvas.requestRender();
     });
   }
 

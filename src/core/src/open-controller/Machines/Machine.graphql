@@ -12,6 +12,9 @@ fragment ControlledMachine on ControlledMachine {
     settings {
         ...FirmwareSettingsTyped
     }
+    program {
+        ...Program
+    }
     ...MachineLogs
 }
 
@@ -73,4 +76,7 @@ fragment MachinePosition on MachinePosition {
     a
     b
     c
+    u
+    v
+    w
 }

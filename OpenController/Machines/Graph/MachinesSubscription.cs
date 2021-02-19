@@ -61,5 +61,18 @@ namespace OpenWorkEngine.OpenController.Machines.Graph {
       [Service] ControllerManager controllers,
       CancellationToken cancellationToken
     ) => controllers.SubscribeToTopicId(MachineTopic.Log, portName, cancellationToken);
+
+    [Subscribe(With = nameof(SubscribeToMachineProgram))]
+    public ControlledMachine OnMachineProgram(
+      [Service] ControllerManager controllers,
+      string portName,
+      [EventMessage] ControlledMachine machine
+    ) => machine;
+
+    public ValueTask<IObservable<ControlledMachine>> SubscribeToMachineProgram(
+      string portName,
+      [Service] ControllerManager controllers,
+      CancellationToken cancellationToken
+    ) => controllers.SubscribeToTopicId(MachineTopic.Program, portName, cancellationToken);
   }
 }

@@ -16,7 +16,7 @@ namespace OpenWorkEngine.OpenController.Programs.Models {
 
     internal FileInfo? LocalFile { get; }
 
-    internal ClientFileUpload? Upload { get; }
+    internal ProgramFileUpload? Upload { get; }
 
     internal string GetId() => Directory == null ? Name : Path.Join(Directory, Name);
 
@@ -34,7 +34,7 @@ namespace OpenWorkEngine.OpenController.Programs.Models {
       LastModified = File.GetLastWriteTime(filePath).Ticks;
     }
 
-    public ProgramFileMeta(ClientFileUpload upload) {
+    public ProgramFileMeta(ProgramFileUpload upload) {
       Upload = upload;
       Name = upload.Name;
       LastModified = upload.LastModified;

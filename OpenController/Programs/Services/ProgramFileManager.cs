@@ -17,7 +17,7 @@ namespace OpenWorkEngine.OpenController.Programs.Services {
       Task.Run(DoWorkAsync);
     }
 
-    public ProgramFile Upload(ClientFileUpload fileUpload) {
+    public ProgramFile Upload(ProgramFileUpload fileUpload) {
       return Create(new ProgramFileMeta(fileUpload));
     }
 
@@ -30,9 +30,6 @@ namespace OpenWorkEngine.OpenController.Programs.Services {
     }
 
     private async Task DoWorkAsync() {
-      foreach (ProgramFile programFile in _programFiles.Values) {
-        programFile.Process();
-      }
       await Task.Delay(50);
     }
   }

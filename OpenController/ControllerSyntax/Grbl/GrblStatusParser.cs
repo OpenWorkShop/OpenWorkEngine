@@ -136,14 +136,14 @@ namespace OpenWorkEngine.OpenController.ControllerSyntax.Grbl {
 
         char[] chars = value.ToCharArray();
 
-        ApplicatorSpinDirection dir = ApplicatorSpinDirection.None;
+        CircleDirection dir = CircleDirection.None;
         //   - S indicates spindle is enabled in the CW direction. This does not appear with C.
         if (chars.Contains('S'))
-          dir = ApplicatorSpinDirection.CW;
+          dir = CircleDirection.Cw;
         //   - C indicates spindle is enabled in the CCW direction. This does not appear with S.
-        else if (chars.Contains('C')) dir = ApplicatorSpinDirection.CCW;
+        else if (chars.Contains('C')) dir = CircleDirection.Ccw;
 
-        if (dir != ApplicatorSpinDirection.None) machine.Status.Applicator.SpinDirection.Data = dir;
+        if (dir != CircleDirection.None) machine.Status.Applicator.SpinDirection.Data = dir;
 
         bool flood = chars.Contains('F');
         bool mist = chars.Contains('M');
