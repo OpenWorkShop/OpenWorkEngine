@@ -4,10 +4,12 @@ using HotChocolate.Types;
 using Microsoft.Extensions.DependencyInjection;
 using OpenWorkEngine.OpenController.Controllers.Services;
 using OpenWorkEngine.OpenController.Controllers.Services.Values;
+using OpenWorkEngine.OpenController.Identity;
+using OpenWorkEngine.OpenController.Identity.Models;
 using OpenWorkEngine.OpenController.Identity.Services;
+using OpenWorkEngine.OpenController.Lib;
 using OpenWorkEngine.OpenController.Lib.Filesystem;
 using OpenWorkEngine.OpenController.Lib.Graphql;
-using OpenWorkEngine.OpenController.Machines.Models;
 using OpenWorkEngine.OpenController.Programs.Services;
 using OpenWorkEngine.OpenController.Workspaces.Services;
 using Serilog;
@@ -23,6 +25,7 @@ namespace OpenWorkEngine.OpenController {
       services.AddSingleton<WorkspaceManager>();
       services.AddTransient<OpenControllerContext>();
       services.AddScoped<IdentityService>();
+      services.AddScoped<ICurrentUser<OpenControllerUser>, CurrentOpenControllerUser>();
       services.AddHttpContextAccessor();
     }
 

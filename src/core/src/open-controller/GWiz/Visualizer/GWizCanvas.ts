@@ -76,27 +76,35 @@ class GWizCanvas {
     return obj.parent as GWizObject;
   }
 
-  // For grouped objects, each object requires a different control.
+  private _dragging?: GWizObject;
+
+  // For grouped objects, each object requires a different DragControl
   private addGroupDragControls(group: GWizObject): DragControls {
     const dc = new DragControls([group], this.camera, this.domElement);
     dc.transformGroup = true;
     dc.addEventListener('dragstart', (e) => {
       this.log.debug('drag start', e);
       this.controls.enabled = false;
+      this._dragging = this.getDragObject(e.object);
+      this.render();
     });
     dc.addEventListener('dragend', (e) => {
       this.log.debug('drag end', e);
       this.controls.enabled = true;
+      this._dragging = undefined;
+      this.render();
     });
     dc.addEventListener('hoveron', (e) => {
       const obj = this.getDragObject(e.object);
       this.log.debug('hover', e, obj, obj === this.applicator, obj.uuid === this.applicator.uuid);
       obj.setMaterials(this.styles.highlighted);
+      this.render();
     });
     dc.addEventListener('hoveroff', (e) => {
       const obj = this.getDragObject(e.object);
       this.log.debug('hover end', e);
       obj.setMaterials();
+      this.render();
     });
     return dc;
   }
@@ -250,6 +258,10 @@ class GWizCanvas {
     }
 
     this.renderer.render( this.scene, this.camera );
+
+    if (this._dragging != null) {
+      this.requestRender();
+    }
   }
 
   public requestRender(): void {

@@ -157,7 +157,7 @@ class GWizAxes extends THREE.Group {
       new THREE.Vector3(
         axis.name === AxisName.X ? max : 0,
         axis.name === AxisName.Y ? max : 0,
-        axis.name === AxisName.Z ? max : 0
+        axis.name === AxisName.Z ? -max : 0
       ),
       material
     );

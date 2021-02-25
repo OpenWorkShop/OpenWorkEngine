@@ -52,8 +52,8 @@ export type IParsedValue =
   | ParsedBool
   | ParsedDecimal
   | ParsedEnumOfApplicatorRadiusCompensation
-  | ParsedEnumOfApplicatorSpinDirection
   | ParsedEnumOfAxisPlane
+  | ParsedEnumOfCircleDirection
   | ParsedEnumOfEnabledType
   | ParsedEnumOfFactorType
   | ParsedEnumOfFeedRateMode
@@ -128,7 +128,7 @@ export type ControlledMachine = {
   id: Scalars['String'];
   logs: Maybe<MachineLogEntryConnection>;
   machineProfileId: Maybe<Scalars['String']>;
-  program: Maybe<Program>;
+  program: Maybe<ProgramExecutor>;
   settings: FirmwareSettings;
   status: MachineStatus;
   timeline: Maybe<MachineTimelineNodeConnection>;
@@ -161,7 +161,6 @@ export type Controller = {
   help: MachineExecutionResult;
   homing: MachineExecutionResult;
   id: Scalars['String'];
-  loadProgram: Program;
   move: MachineExecutionResult;
   parameters: MachineExecutionResult;
   pause: MachineExecutionResult;
@@ -171,15 +170,11 @@ export type Controller = {
   setFirmwareSettings: Array<MachineExecutionResult>;
   setModal: MachineExecutionResult;
   settings: MachineExecutionResult;
+  startTask: Controller;
   startup: MachineExecutionResult;
   status: MachineExecutionResult;
   unlock: MachineExecutionResult;
-  uploadProgram: Program;
   writeCommand: MachineExecutionResult;
-};
-
-export type ControllerLoadProgramArgs = {
-  filePath: Scalars['String'];
 };
 
 export type ControllerMoveArgs = {
@@ -196,10 +191,6 @@ export type ControllerSetFirmwareSettingsArgs = {
 
 export type ControllerSetModalArgs = {
   change: ModalChangeInput;
-};
-
-export type ControllerUploadProgramArgs = {
-  upload: ProgramFileUploadInput;
 };
 
 export type ControllerWriteCommandArgs = {
@@ -221,6 +212,7 @@ export type FileSystemSettings = {
   __typename?: 'FileSystemSettings';
   documentsDirectory: Maybe<Scalars['String']>;
   mountPoints: Array<MountPointSettings>;
+  programsDirectory: Scalars['String'];
 };
 
 export type FirmwareApplicatorSettings = {
@@ -501,15 +493,15 @@ export type KeyValuePairOfApplicatorRadiusCompensationAndInt32 = {
   value: Scalars['Int'];
 };
 
-export type KeyValuePairOfApplicatorSpinDirectionAndInt32 = {
-  __typename?: 'KeyValuePairOfApplicatorSpinDirectionAndInt32';
-  key: ApplicatorSpinDirection;
-  value: Scalars['Int'];
-};
-
 export type KeyValuePairOfAxisPlaneAndInt32 = {
   __typename?: 'KeyValuePairOfAxisPlaneAndInt32';
   key: AxisPlane;
+  value: Scalars['Int'];
+};
+
+export type KeyValuePairOfCircleDirectionAndInt32 = {
+  __typename?: 'KeyValuePairOfCircleDirectionAndInt32';
+  key: CircleDirection;
   value: Scalars['Int'];
 };
 
@@ -614,7 +606,7 @@ export type MachineApplicatorState = {
   lengthOffsetFactorType: ModalSettingOfFactorType;
   probePosition: Maybe<MachinePosition>;
   radiusCompensation: ModalSettingOfApplicatorRadiusCompensation;
-  spinDirection: ModalSettingOfApplicatorSpinDirection;
+  spinDirection: ModalSettingOfCircleDirection;
   spinSpeed: FirmwareSettingOfDecimal;
   temperature: FirmwareSettingOfDecimal;
   toolId: FirmwareSettingOfString;
@@ -817,6 +809,7 @@ export type MachineModals = {
 export type MachineMovement = {
   __typename?: 'MachineMovement';
   a: Maybe<Scalars['Decimal']>;
+  arcDirection: Maybe<CircleDirection>;
   b: Maybe<Scalars['Decimal']>;
   c: Maybe<Scalars['Decimal']>;
   dwell: Maybe<Scalars['Decimal']>;
@@ -996,17 +989,17 @@ export type ModalOptionOfApplicatorRadiusCompensation = {
   value: Scalars['String'];
 };
 
-export type ModalOptionOfApplicatorSpinDirection = {
-  __typename?: 'ModalOptionOfApplicatorSpinDirection';
-  code: Scalars['String'];
-  data: ApplicatorSpinDirection;
-  value: Scalars['String'];
-};
-
 export type ModalOptionOfAxisPlane = {
   __typename?: 'ModalOptionOfAxisPlane';
   code: Scalars['String'];
   data: AxisPlane;
+  value: Scalars['String'];
+};
+
+export type ModalOptionOfCircleDirection = {
+  __typename?: 'ModalOptionOfCircleDirection';
+  code: Scalars['String'];
+  data: CircleDirection;
   value: Scalars['String'];
 };
 
@@ -1123,28 +1116,6 @@ export type ModalSettingOfApplicatorRadiusCompensationMutationArgs = {
   value: ApplicatorRadiusCompensation;
 };
 
-export type ModalSettingOfApplicatorSpinDirection = {
-  __typename?: 'ModalSettingOfApplicatorSpinDirection';
-  comment: Maybe<Scalars['String']>;
-  currentValue: Maybe<IParsedValue>;
-  data: ApplicatorSpinDirection;
-  hasBeenRead: Scalars['Boolean'];
-  id: Scalars['String'];
-  index: Scalars['Int'];
-  key: Scalars['String'];
-  mutation: InstructionStep;
-  options: Array<ModalOptionOfApplicatorSpinDirection>;
-  settingType: MachineSettingType;
-  title: Maybe<Scalars['String']>;
-  units: MachineSettingUnits;
-  value: Scalars['String'];
-  valueCode: Scalars['String'];
-};
-
-export type ModalSettingOfApplicatorSpinDirectionMutationArgs = {
-  value: ApplicatorSpinDirection;
-};
-
 export type ModalSettingOfAxisPlane = {
   __typename?: 'ModalSettingOfAxisPlane';
   comment: Maybe<Scalars['String']>;
@@ -1165,6 +1136,28 @@ export type ModalSettingOfAxisPlane = {
 
 export type ModalSettingOfAxisPlaneMutationArgs = {
   value: AxisPlane;
+};
+
+export type ModalSettingOfCircleDirection = {
+  __typename?: 'ModalSettingOfCircleDirection';
+  comment: Maybe<Scalars['String']>;
+  currentValue: Maybe<IParsedValue>;
+  data: CircleDirection;
+  hasBeenRead: Scalars['Boolean'];
+  id: Scalars['String'];
+  index: Scalars['Int'];
+  key: Scalars['String'];
+  mutation: InstructionStep;
+  options: Array<ModalOptionOfCircleDirection>;
+  settingType: MachineSettingType;
+  title: Maybe<Scalars['String']>;
+  units: MachineSettingUnits;
+  value: Scalars['String'];
+  valueCode: Scalars['String'];
+};
+
+export type ModalSettingOfCircleDirectionMutationArgs = {
+  value: CircleDirection;
 };
 
 export type ModalSettingOfDecimal = {
@@ -1469,8 +1462,11 @@ export type Mutation = {
   deleteWorkspace: Workspace;
   openPort: SystemPort;
   openWorkspace: Workspace;
+  /** Create a metadata object to represent a file selection before uploading. */
+  selectProgramFile: ProgramFileMeta;
   updateWorkspace: Workspace;
-  uploadProgram: ProgramFile;
+  /** Accept the text (body) of a file and (over)write the file on the server. */
+  uploadProgramFile: ProgramFile;
 };
 
 export type MutationChangeWorkspacePortArgs = {
@@ -1508,11 +1504,15 @@ export type MutationOpenWorkspaceArgs = {
   workspaceId: Scalars['String'];
 };
 
+export type MutationSelectProgramFileArgs = {
+  fileUpload: ClientFileUploadInput;
+};
+
 export type MutationUpdateWorkspaceArgs = {
   workspaceSettings: WorkspaceSettingsInput;
 };
 
-export type MutationUploadProgramArgs = {
+export type MutationUploadProgramFileArgs = {
   fileUpload: ProgramFileUploadInput;
 };
 
@@ -1586,20 +1586,20 @@ export type ParsedEnumOfApplicatorRadiusCompensation = {
   values: Array<KeyValuePairOfApplicatorRadiusCompensationAndInt32>;
 };
 
-export type ParsedEnumOfApplicatorSpinDirection = {
-  __typename?: 'ParsedEnumOfApplicatorSpinDirection';
-  valueCode: Scalars['String'];
-  valueEnum: ApplicatorSpinDirection;
-  valueString: Scalars['String'];
-  values: Array<KeyValuePairOfApplicatorSpinDirectionAndInt32>;
-};
-
 export type ParsedEnumOfAxisPlane = {
   __typename?: 'ParsedEnumOfAxisPlane';
   valueCode: Scalars['String'];
   valueEnum: AxisPlane;
   valueString: Scalars['String'];
   values: Array<KeyValuePairOfAxisPlaneAndInt32>;
+};
+
+export type ParsedEnumOfCircleDirection = {
+  __typename?: 'ParsedEnumOfCircleDirection';
+  valueCode: Scalars['String'];
+  valueEnum: CircleDirection;
+  valueString: Scalars['String'];
+  values: Array<KeyValuePairOfCircleDirectionAndInt32>;
 };
 
 export type ParsedEnumOfEnabledType = {
@@ -1745,15 +1745,24 @@ export type PortStatus = {
   linesWritten: Scalars['Int'];
 };
 
-export type Program = {
-  __typename?: 'Program';
+export type ProgramExecutor = {
+  __typename?: 'ProgramExecutor';
   currentInstruction: Maybe<ProgramInstruction>;
   id: Scalars['String'];
   instructionCount: Scalars['Int'];
   instructionIndex: Scalars['Int'];
-  instructions: Array<ProgramInstruction>;
+  instructions: Maybe<ProgramInstructionConnection>;
   programFile: ProgramFile;
-  state: ProgramState;
+  state: ExecutionState;
+};
+
+export type ProgramExecutorInstructionsArgs = {
+  after: Maybe<Scalars['String']>;
+  before: Maybe<Scalars['String']>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
+  order: Maybe<Array<ProgramInstructionSortInput>>;
+  where: Maybe<MachineLogEntryFilterInput>;
 };
 
 export type ProgramFile = {
@@ -1761,13 +1770,23 @@ export type ProgramFile = {
   id: Scalars['String'];
   instructionCount: Scalars['Int'];
   instructions: Array<CompiledInstruction>;
+  lineCount: Scalars['Int'];
+  lines: Array<CompiledInstruction>;
   meta: ProgramFileMeta;
+};
+
+export type ProgramFileDirectory = {
+  __typename?: 'ProgramFileDirectory';
+  allPrograms: Array<ProgramFileMeta>;
+  fileExtensions: Array<Scalars['String']>;
+  path: Scalars['String'];
 };
 
 export type ProgramFileMeta = {
   __typename?: 'ProgramFileMeta';
-  directory: Maybe<Scalars['String']>;
-  isUpload: Scalars['Boolean'];
+  directory: Scalars['String'];
+  fileExists: Scalars['Boolean'];
+  filePath: Scalars['String'];
   lastModified: Scalars['Long'];
   name: Scalars['String'];
   size: Scalars['Long'];
@@ -1782,6 +1801,26 @@ export type ProgramInstruction = {
   steps: Array<InstructionStep>;
 };
 
+/** A connection to a list of items. */
+export type ProgramInstructionConnection = {
+  __typename?: 'ProgramInstructionConnection';
+  /** A list of edges. */
+  edges: Maybe<Array<ProgramInstructionEdge>>;
+  /** A flattened list of the nodes. */
+  nodes: Maybe<Array<ProgramInstruction>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+/** An edge in a connection. */
+export type ProgramInstructionEdge = {
+  __typename?: 'ProgramInstructionEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge. */
+  node: ProgramInstruction;
+};
+
 export type Query = {
   __typename?: 'Query';
   authenticate: OpenControllerSession;
@@ -1790,11 +1829,14 @@ export type Query = {
   getWorkspace: Workspace;
   listPorts: Array<SystemPort>;
   listWorkspaces: Array<Workspace>;
+  /** Open a program file by its name, parsing the contents. */
+  loadProgram: ProgramFile;
   machineProfile: MachineProfile;
   machineProfileCount: Scalars['Int'];
   machineProfiles: Array<MachineProfile>;
   me: Maybe<UserProfile>;
-  programs: Array<ProgramFile>;
+  /** List all of the programs which exist in the program directory. */
+  programDirectory: ProgramFileDirectory;
   userProfile: UserProfile;
 };
 
@@ -1808,6 +1850,10 @@ export type QueryGetPortArgs = {
 
 export type QueryGetWorkspaceArgs = {
   workspaceId: Scalars['String'];
+};
+
+export type QueryLoadProgramArgs = {
+  name: Scalars['String'];
 };
 
 export type QueryMachineProfileArgs = {
@@ -1826,6 +1872,7 @@ export type Subscription = {
   __typename?: 'Subscription';
   onMachineConfiguration: ControlledMachine;
   onMachineLog: ControlledMachine;
+  onMachineProgram: ControlledMachine;
   onMachineSetting: ControlledMachine;
   onMachineStatus: ControlledMachine;
   onPortChange: SystemPort;
@@ -1837,6 +1884,10 @@ export type SubscriptionOnMachineConfigurationArgs = {
 };
 
 export type SubscriptionOnMachineLogArgs = {
+  portName: Scalars['String'];
+};
+
+export type SubscriptionOnMachineProgramArgs = {
   portName: Scalars['String'];
 };
 
@@ -1861,6 +1912,8 @@ export type SyntaxChunk = {
 export type SyntaxLine = {
   __typename?: 'SyntaxLine';
   chunks: Array<SyntaxChunk>;
+  hasCode: Scalars['Boolean'];
+  isValid: Scalars['Boolean'];
   raw: Scalars['String'];
 };
 
@@ -1933,12 +1986,6 @@ export enum ApplicatorRadiusCompensation {
   Right = 'RIGHT',
 }
 
-export enum ApplicatorSpinDirection {
-  Ccw = 'CCW',
-  Cw = 'CW',
-  None = 'NONE',
-}
-
 export enum ApplyPolicy {
   AfterResolver = 'AFTER_RESOLVER',
   BeforeResolver = 'BEFORE_RESOLVER',
@@ -1972,9 +2019,22 @@ export enum BaudRate {
   Br9600 = 'BR9600',
 }
 
+export enum CircleDirection {
+  Ccw = 'CCW',
+  Cw = 'CW',
+  None = 'NONE',
+}
+
 export enum EnabledType {
   Disabled = 'DISABLED',
   Enabled = 'ENABLED',
+}
+
+export enum ExecutionState {
+  Complete = 'COMPLETE',
+  Paused = 'PAUSED',
+  Ready = 'READY',
+  Running = 'RUNNING',
 }
 
 export enum FactorType {
@@ -2201,13 +2261,6 @@ export enum PortState {
   Unplugged = 'UNPLUGGED',
 }
 
-export enum ProgramState {
-  Complete = 'COMPLETE',
-  Paused = 'PAUSED',
-  Ready = 'READY',
-  Running = 'RUNNING',
-}
-
 export enum ProgramSyntax {
   GCode = 'G_CODE',
 }
@@ -2279,6 +2332,13 @@ export type BooleanOperationFilterInput = {
   neq: Maybe<Scalars['Boolean']>;
 };
 
+export type ClientFileUploadInput = {
+  lastModified: Scalars['Long'];
+  name: Scalars['String'];
+  size: Scalars['Long'];
+  type: Scalars['String'];
+};
+
 export type ComparableDateTimeOperationFilterInput = {
   eq: Maybe<Scalars['DateTime']>;
   gt: Maybe<Scalars['DateTime']>;
@@ -2307,6 +2367,11 @@ export type ComparableInt32OperationFilterInput = {
   nin: Maybe<Array<Scalars['Int']>>;
   nlt: Maybe<Scalars['Int']>;
   nlte: Maybe<Scalars['Int']>;
+};
+
+export type CompiledInstructionSortInput = {
+  line: Maybe<SyntaxLineSortInput>;
+  source: Maybe<SortEnumType>;
 };
 
 export type ConnectionSettingsInput = {
@@ -2509,6 +2574,11 @@ export type ProgramFileUploadInput = {
   type: Scalars['String'];
 };
 
+export type ProgramInstructionSortInput = {
+  compiledInstruction: Maybe<CompiledInstructionSortInput>;
+  index: Maybe<SortEnumType>;
+};
+
 export type SerialPortOptionsInput = {
   baudRate: Scalars['Int'];
   dataBits: Maybe<Scalars['Int']>;
@@ -2553,6 +2623,12 @@ export type SyntaxChunkFilterInput = {
   or: Maybe<Array<SyntaxChunkFilterInput>>;
   type: Maybe<SyntaxTypeOperationFilterInput>;
   value: Maybe<StringOperationFilterInput>;
+};
+
+export type SyntaxLineSortInput = {
+  hasCode: Maybe<SortEnumType>;
+  isValid: Maybe<SortEnumType>;
+  raw: Maybe<SortEnumType>;
 };
 
 export type SyntaxTypeOperationFilterInput = {
@@ -2675,8 +2751,8 @@ export type ResolversTypes = {
     | ResolversTypes['ParsedBool']
     | ResolversTypes['ParsedDecimal']
     | ResolversTypes['ParsedEnumOfApplicatorRadiusCompensation']
-    | ResolversTypes['ParsedEnumOfApplicatorSpinDirection']
     | ResolversTypes['ParsedEnumOfAxisPlane']
+    | ResolversTypes['ParsedEnumOfCircleDirection']
     | ResolversTypes['ParsedEnumOfEnabledType']
     | ResolversTypes['ParsedEnumOfFactorType']
     | ResolversTypes['ParsedEnumOfFeedRateMode']
@@ -2740,8 +2816,8 @@ export type ResolversTypes = {
   FirmwareSettings: ResolverTypeWrapper<FirmwareSettings>;
   InstructionStep: ResolverTypeWrapper<InstructionStep>;
   KeyValuePairOfApplicatorRadiusCompensationAndInt32: ResolverTypeWrapper<KeyValuePairOfApplicatorRadiusCompensationAndInt32>;
-  KeyValuePairOfApplicatorSpinDirectionAndInt32: ResolverTypeWrapper<KeyValuePairOfApplicatorSpinDirectionAndInt32>;
   KeyValuePairOfAxisPlaneAndInt32: ResolverTypeWrapper<KeyValuePairOfAxisPlaneAndInt32>;
+  KeyValuePairOfCircleDirectionAndInt32: ResolverTypeWrapper<KeyValuePairOfCircleDirectionAndInt32>;
   KeyValuePairOfEnabledTypeAndInt32: ResolverTypeWrapper<KeyValuePairOfEnabledTypeAndInt32>;
   KeyValuePairOfFactorTypeAndInt32: ResolverTypeWrapper<KeyValuePairOfFactorTypeAndInt32>;
   KeyValuePairOfFeedRateModeAndInt32: ResolverTypeWrapper<KeyValuePairOfFeedRateModeAndInt32>;
@@ -2793,8 +2869,8 @@ export type ResolversTypes = {
   MacroSettings: ResolverTypeWrapper<MacroSettings>;
   MakerHubSettings: ResolverTypeWrapper<MakerHubSettings>;
   ModalOptionOfApplicatorRadiusCompensation: ResolverTypeWrapper<ModalOptionOfApplicatorRadiusCompensation>;
-  ModalOptionOfApplicatorSpinDirection: ResolverTypeWrapper<ModalOptionOfApplicatorSpinDirection>;
   ModalOptionOfAxisPlane: ResolverTypeWrapper<ModalOptionOfAxisPlane>;
+  ModalOptionOfCircleDirection: ResolverTypeWrapper<ModalOptionOfCircleDirection>;
   ModalOptionOfDecimal: ResolverTypeWrapper<ModalOptionOfDecimal>;
   ModalOptionOfEnabledType: ResolverTypeWrapper<ModalOptionOfEnabledType>;
   ModalOptionOfFactorType: ResolverTypeWrapper<ModalOptionOfFactorType>;
@@ -2813,13 +2889,11 @@ export type ResolversTypes = {
       currentValue: Maybe<ResolversTypes['IParsedValue']>;
     }
   >;
-  ModalSettingOfApplicatorSpinDirection: ResolverTypeWrapper<
-    Omit<ModalSettingOfApplicatorSpinDirection, 'currentValue'> & {
-      currentValue: Maybe<ResolversTypes['IParsedValue']>;
-    }
-  >;
   ModalSettingOfAxisPlane: ResolverTypeWrapper<
     Omit<ModalSettingOfAxisPlane, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
+  >;
+  ModalSettingOfCircleDirection: ResolverTypeWrapper<
+    Omit<ModalSettingOfCircleDirection, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
   >;
   ModalSettingOfDecimal: ResolverTypeWrapper<
     Omit<ModalSettingOfDecimal, 'currentValue'> & { currentValue: Maybe<ResolversTypes['IParsedValue']> }
@@ -2870,8 +2944,8 @@ export type ResolversTypes = {
   ParsedBool: ResolverTypeWrapper<ParsedBool>;
   ParsedDecimal: ResolverTypeWrapper<ParsedDecimal>;
   ParsedEnumOfApplicatorRadiusCompensation: ResolverTypeWrapper<ParsedEnumOfApplicatorRadiusCompensation>;
-  ParsedEnumOfApplicatorSpinDirection: ResolverTypeWrapper<ParsedEnumOfApplicatorSpinDirection>;
   ParsedEnumOfAxisPlane: ResolverTypeWrapper<ParsedEnumOfAxisPlane>;
+  ParsedEnumOfCircleDirection: ResolverTypeWrapper<ParsedEnumOfCircleDirection>;
   ParsedEnumOfEnabledType: ResolverTypeWrapper<ParsedEnumOfEnabledType>;
   ParsedEnumOfFactorType: ResolverTypeWrapper<ParsedEnumOfFactorType>;
   ParsedEnumOfFeedRateMode: ResolverTypeWrapper<ParsedEnumOfFeedRateMode>;
@@ -2889,10 +2963,13 @@ export type ResolversTypes = {
   ParsedString: ResolverTypeWrapper<ParsedString>;
   PortOptions: ResolverTypeWrapper<PortOptions>;
   PortStatus: ResolverTypeWrapper<PortStatus>;
-  Program: ResolverTypeWrapper<Program>;
+  ProgramExecutor: ResolverTypeWrapper<ProgramExecutor>;
   ProgramFile: ResolverTypeWrapper<ProgramFile>;
+  ProgramFileDirectory: ResolverTypeWrapper<ProgramFileDirectory>;
   ProgramFileMeta: ResolverTypeWrapper<ProgramFileMeta>;
   ProgramInstruction: ResolverTypeWrapper<ProgramInstruction>;
+  ProgramInstructionConnection: ResolverTypeWrapper<ProgramInstructionConnection>;
+  ProgramInstructionEdge: ResolverTypeWrapper<ProgramInstructionEdge>;
   Query: ResolverTypeWrapper<{}>;
   Subscription: ResolverTypeWrapper<{}>;
   SyntaxChunk: ResolverTypeWrapper<SyntaxChunk>;
@@ -2903,12 +2980,13 @@ export type ResolversTypes = {
   WorkspaceSettings: ResolverTypeWrapper<WorkspaceSettings>;
   ActiveState: ActiveState;
   ApplicatorRadiusCompensation: ApplicatorRadiusCompensation;
-  ApplicatorSpinDirection: ApplicatorSpinDirection;
   ApplyPolicy: ApplyPolicy;
   AxisName: AxisName;
   AxisPlane: AxisPlane;
   BaudRate: BaudRate;
+  CircleDirection: CircleDirection;
   EnabledType: EnabledType;
+  ExecutionState: ExecutionState;
   FactorType: FactorType;
   FeedRateMode: FeedRateMode;
   Handshake: Handshake;
@@ -2931,7 +3009,6 @@ export type ResolversTypes = {
   Parity: Parity;
   PathControlMode: PathControlMode;
   PortState: PortState;
-  ProgramState: ProgramState;
   ProgramSyntax: ProgramSyntax;
   SerialWriteState: SerialWriteState;
   SortEnumType: SortEnumType;
@@ -2944,8 +3021,10 @@ export type ResolversTypes = {
   WorkspaceState: WorkspaceState;
   AxisFlagsInput: AxisFlagsInput;
   BooleanOperationFilterInput: BooleanOperationFilterInput;
+  ClientFileUploadInput: ClientFileUploadInput;
   ComparableDateTimeOperationFilterInput: ComparableDateTimeOperationFilterInput;
   ComparableInt32OperationFilterInput: ComparableInt32OperationFilterInput;
+  CompiledInstructionSortInput: CompiledInstructionSortInput;
   ConnectionSettingsInput: ConnectionSettingsInput;
   FirmwareRequirementInput: FirmwareRequirementInput;
   FirmwareSettingChangeInput: FirmwareSettingChangeInput;
@@ -2969,10 +3048,12 @@ export type ResolversTypes = {
   ModalChangeInput: ModalChangeInput;
   MoveCommandInput: MoveCommandInput;
   ProgramFileUploadInput: ProgramFileUploadInput;
+  ProgramInstructionSortInput: ProgramInstructionSortInput;
   SerialPortOptionsInput: SerialPortOptionsInput;
   SerialWriteStateOperationFilterInput: SerialWriteStateOperationFilterInput;
   StringOperationFilterInput: StringOperationFilterInput;
   SyntaxChunkFilterInput: SyntaxChunkFilterInput;
+  SyntaxLineSortInput: SyntaxLineSortInput;
   SyntaxTypeOperationFilterInput: SyntaxTypeOperationFilterInput;
   WorkspaceSettingsInput: WorkspaceSettingsInput;
   Decimal: ResolverTypeWrapper<Scalars['Decimal']>;
@@ -2995,8 +3076,8 @@ export type ResolversParentTypes = {
     | ResolversParentTypes['ParsedBool']
     | ResolversParentTypes['ParsedDecimal']
     | ResolversParentTypes['ParsedEnumOfApplicatorRadiusCompensation']
-    | ResolversParentTypes['ParsedEnumOfApplicatorSpinDirection']
     | ResolversParentTypes['ParsedEnumOfAxisPlane']
+    | ResolversParentTypes['ParsedEnumOfCircleDirection']
     | ResolversParentTypes['ParsedEnumOfEnabledType']
     | ResolversParentTypes['ParsedEnumOfFactorType']
     | ResolversParentTypes['ParsedEnumOfFeedRateMode']
@@ -3058,8 +3139,8 @@ export type ResolversParentTypes = {
   FirmwareSettings: FirmwareSettings;
   InstructionStep: InstructionStep;
   KeyValuePairOfApplicatorRadiusCompensationAndInt32: KeyValuePairOfApplicatorRadiusCompensationAndInt32;
-  KeyValuePairOfApplicatorSpinDirectionAndInt32: KeyValuePairOfApplicatorSpinDirectionAndInt32;
   KeyValuePairOfAxisPlaneAndInt32: KeyValuePairOfAxisPlaneAndInt32;
+  KeyValuePairOfCircleDirectionAndInt32: KeyValuePairOfCircleDirectionAndInt32;
   KeyValuePairOfEnabledTypeAndInt32: KeyValuePairOfEnabledTypeAndInt32;
   KeyValuePairOfFactorTypeAndInt32: KeyValuePairOfFactorTypeAndInt32;
   KeyValuePairOfFeedRateModeAndInt32: KeyValuePairOfFeedRateModeAndInt32;
@@ -3111,8 +3192,8 @@ export type ResolversParentTypes = {
   MacroSettings: MacroSettings;
   MakerHubSettings: MakerHubSettings;
   ModalOptionOfApplicatorRadiusCompensation: ModalOptionOfApplicatorRadiusCompensation;
-  ModalOptionOfApplicatorSpinDirection: ModalOptionOfApplicatorSpinDirection;
   ModalOptionOfAxisPlane: ModalOptionOfAxisPlane;
+  ModalOptionOfCircleDirection: ModalOptionOfCircleDirection;
   ModalOptionOfDecimal: ModalOptionOfDecimal;
   ModalOptionOfEnabledType: ModalOptionOfEnabledType;
   ModalOptionOfFactorType: ModalOptionOfFactorType;
@@ -3129,10 +3210,10 @@ export type ResolversParentTypes = {
   ModalSettingOfApplicatorRadiusCompensation: Omit<ModalSettingOfApplicatorRadiusCompensation, 'currentValue'> & {
     currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
   };
-  ModalSettingOfApplicatorSpinDirection: Omit<ModalSettingOfApplicatorSpinDirection, 'currentValue'> & {
+  ModalSettingOfAxisPlane: Omit<ModalSettingOfAxisPlane, 'currentValue'> & {
     currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
   };
-  ModalSettingOfAxisPlane: Omit<ModalSettingOfAxisPlane, 'currentValue'> & {
+  ModalSettingOfCircleDirection: Omit<ModalSettingOfCircleDirection, 'currentValue'> & {
     currentValue: Maybe<ResolversParentTypes['IParsedValue']>;
   };
   ModalSettingOfDecimal: Omit<ModalSettingOfDecimal, 'currentValue'> & {
@@ -3184,8 +3265,8 @@ export type ResolversParentTypes = {
   ParsedBool: ParsedBool;
   ParsedDecimal: ParsedDecimal;
   ParsedEnumOfApplicatorRadiusCompensation: ParsedEnumOfApplicatorRadiusCompensation;
-  ParsedEnumOfApplicatorSpinDirection: ParsedEnumOfApplicatorSpinDirection;
   ParsedEnumOfAxisPlane: ParsedEnumOfAxisPlane;
+  ParsedEnumOfCircleDirection: ParsedEnumOfCircleDirection;
   ParsedEnumOfEnabledType: ParsedEnumOfEnabledType;
   ParsedEnumOfFactorType: ParsedEnumOfFactorType;
   ParsedEnumOfFeedRateMode: ParsedEnumOfFeedRateMode;
@@ -3203,10 +3284,13 @@ export type ResolversParentTypes = {
   ParsedString: ParsedString;
   PortOptions: PortOptions;
   PortStatus: PortStatus;
-  Program: Program;
+  ProgramExecutor: ProgramExecutor;
   ProgramFile: ProgramFile;
+  ProgramFileDirectory: ProgramFileDirectory;
   ProgramFileMeta: ProgramFileMeta;
   ProgramInstruction: ProgramInstruction;
+  ProgramInstructionConnection: ProgramInstructionConnection;
+  ProgramInstructionEdge: ProgramInstructionEdge;
   Query: {};
   Subscription: {};
   SyntaxChunk: SyntaxChunk;
@@ -3217,8 +3301,10 @@ export type ResolversParentTypes = {
   WorkspaceSettings: WorkspaceSettings;
   AxisFlagsInput: AxisFlagsInput;
   BooleanOperationFilterInput: BooleanOperationFilterInput;
+  ClientFileUploadInput: ClientFileUploadInput;
   ComparableDateTimeOperationFilterInput: ComparableDateTimeOperationFilterInput;
   ComparableInt32OperationFilterInput: ComparableInt32OperationFilterInput;
+  CompiledInstructionSortInput: CompiledInstructionSortInput;
   ConnectionSettingsInput: ConnectionSettingsInput;
   FirmwareRequirementInput: FirmwareRequirementInput;
   FirmwareSettingChangeInput: FirmwareSettingChangeInput;
@@ -3242,10 +3328,12 @@ export type ResolversParentTypes = {
   ModalChangeInput: ModalChangeInput;
   MoveCommandInput: MoveCommandInput;
   ProgramFileUploadInput: ProgramFileUploadInput;
+  ProgramInstructionSortInput: ProgramInstructionSortInput;
   SerialPortOptionsInput: SerialPortOptionsInput;
   SerialWriteStateOperationFilterInput: SerialWriteStateOperationFilterInput;
   StringOperationFilterInput: StringOperationFilterInput;
   SyntaxChunkFilterInput: SyntaxChunkFilterInput;
+  SyntaxLineSortInput: SyntaxLineSortInput;
   SyntaxTypeOperationFilterInput: SyntaxTypeOperationFilterInput;
   WorkspaceSettingsInput: WorkspaceSettingsInput;
   Decimal: Scalars['Decimal'];
@@ -3297,8 +3385,8 @@ export type IParsedValueResolvers<
     | 'ParsedBool'
     | 'ParsedDecimal'
     | 'ParsedEnumOfApplicatorRadiusCompensation'
-    | 'ParsedEnumOfApplicatorSpinDirection'
     | 'ParsedEnumOfAxisPlane'
+    | 'ParsedEnumOfCircleDirection'
     | 'ParsedEnumOfEnabledType'
     | 'ParsedEnumOfFactorType'
     | 'ParsedEnumOfFeedRateMode'
@@ -3405,7 +3493,7 @@ export type ControlledMachineResolvers<
     RequireFields<ControlledMachineLogsArgs, never>
   >;
   machineProfileId: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  program: Resolver<Maybe<ResolversTypes['Program']>, ParentType, ContextType>;
+  program: Resolver<Maybe<ResolversTypes['ProgramExecutor']>, ParentType, ContextType>;
   settings: Resolver<ResolversTypes['FirmwareSettings'], ParentType, ContextType>;
   status: Resolver<ResolversTypes['MachineStatus'], ParentType, ContextType>;
   timeline: Resolver<
@@ -3430,12 +3518,6 @@ export type ControllerResolvers<
   help: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
   homing: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  loadProgram: Resolver<
-    ResolversTypes['Program'],
-    ParentType,
-    ContextType,
-    RequireFields<ControllerLoadProgramArgs, 'filePath'>
-  >;
   move: Resolver<
     ResolversTypes['MachineExecutionResult'],
     ParentType,
@@ -3465,15 +3547,10 @@ export type ControllerResolvers<
     RequireFields<ControllerSetModalArgs, 'change'>
   >;
   settings: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
+  startTask: Resolver<ResolversTypes['Controller'], ParentType, ContextType>;
   startup: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
   status: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
   unlock: Resolver<ResolversTypes['MachineExecutionResult'], ParentType, ContextType>;
-  uploadProgram: Resolver<
-    ResolversTypes['Program'],
-    ParentType,
-    ContextType,
-    RequireFields<ControllerUploadProgramArgs, 'upload'>
-  >;
   writeCommand: Resolver<
     ResolversTypes['MachineExecutionResult'],
     ParentType,
@@ -3502,6 +3579,7 @@ export type FileSystemSettingsResolvers<
 > = {
   documentsDirectory: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   mountPoints: Resolver<Array<ResolversTypes['MountPointSettings']>, ParentType, ContextType>;
+  programsDirectory: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -3849,20 +3927,20 @@ export type KeyValuePairOfApplicatorRadiusCompensationAndInt32Resolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type KeyValuePairOfApplicatorSpinDirectionAndInt32Resolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['KeyValuePairOfApplicatorSpinDirectionAndInt32'] = ResolversParentTypes['KeyValuePairOfApplicatorSpinDirectionAndInt32']
-> = {
-  key: Resolver<ResolversTypes['ApplicatorSpinDirection'], ParentType, ContextType>;
-  value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type KeyValuePairOfAxisPlaneAndInt32Resolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['KeyValuePairOfAxisPlaneAndInt32'] = ResolversParentTypes['KeyValuePairOfAxisPlaneAndInt32']
 > = {
   key: Resolver<ResolversTypes['AxisPlane'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type KeyValuePairOfCircleDirectionAndInt32Resolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeyValuePairOfCircleDirectionAndInt32'] = ResolversParentTypes['KeyValuePairOfCircleDirectionAndInt32']
+> = {
+  key: Resolver<ResolversTypes['CircleDirection'], ParentType, ContextType>;
   value: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -4015,7 +4093,7 @@ export type MachineApplicatorStateResolvers<
   lengthOffsetFactorType: Resolver<ResolversTypes['ModalSettingOfFactorType'], ParentType, ContextType>;
   probePosition: Resolver<Maybe<ResolversTypes['MachinePosition']>, ParentType, ContextType>;
   radiusCompensation: Resolver<ResolversTypes['ModalSettingOfApplicatorRadiusCompensation'], ParentType, ContextType>;
-  spinDirection: Resolver<ResolversTypes['ModalSettingOfApplicatorSpinDirection'], ParentType, ContextType>;
+  spinDirection: Resolver<ResolversTypes['ModalSettingOfCircleDirection'], ParentType, ContextType>;
   spinSpeed: Resolver<ResolversTypes['FirmwareSettingOfDecimal'], ParentType, ContextType>;
   temperature: Resolver<ResolversTypes['FirmwareSettingOfDecimal'], ParentType, ContextType>;
   toolId: Resolver<ResolversTypes['FirmwareSettingOfString'], ParentType, ContextType>;
@@ -4265,6 +4343,7 @@ export type MachineMovementResolvers<
   ParentType extends ResolversParentTypes['MachineMovement'] = ResolversParentTypes['MachineMovement']
 > = {
   a: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
+  arcDirection: Resolver<Maybe<ResolversTypes['CircleDirection']>, ParentType, ContextType>;
   b: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
   c: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
   dwell: Resolver<Maybe<ResolversTypes['Decimal']>, ParentType, ContextType>;
@@ -4489,22 +4568,22 @@ export type ModalOptionOfApplicatorRadiusCompensationResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ModalOptionOfApplicatorSpinDirectionResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['ModalOptionOfApplicatorSpinDirection'] = ResolversParentTypes['ModalOptionOfApplicatorSpinDirection']
-> = {
-  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  data: Resolver<ResolversTypes['ApplicatorSpinDirection'], ParentType, ContextType>;
-  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type ModalOptionOfAxisPlaneResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['ModalOptionOfAxisPlane'] = ResolversParentTypes['ModalOptionOfAxisPlane']
 > = {
   code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   data: Resolver<ResolversTypes['AxisPlane'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalOptionOfCircleDirectionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalOptionOfCircleDirection'] = ResolversParentTypes['ModalOptionOfCircleDirection']
+> = {
+  code: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  data: Resolver<ResolversTypes['CircleDirection'], ParentType, ContextType>;
   value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -4665,32 +4744,6 @@ export type ModalSettingOfApplicatorRadiusCompensationResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ModalSettingOfApplicatorSpinDirectionResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['ModalSettingOfApplicatorSpinDirection'] = ResolversParentTypes['ModalSettingOfApplicatorSpinDirection']
-> = {
-  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
-  data: Resolver<ResolversTypes['ApplicatorSpinDirection'], ParentType, ContextType>;
-  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  mutation: Resolver<
-    ResolversTypes['InstructionStep'],
-    ParentType,
-    ContextType,
-    RequireFields<ModalSettingOfApplicatorSpinDirectionMutationArgs, 'value'>
-  >;
-  options: Resolver<Array<ResolversTypes['ModalOptionOfApplicatorSpinDirection']>, ParentType, ContextType>;
-  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
-  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
-  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type ModalSettingOfAxisPlaneResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['ModalSettingOfAxisPlane'] = ResolversParentTypes['ModalSettingOfAxisPlane']
@@ -4709,6 +4762,32 @@ export type ModalSettingOfAxisPlaneResolvers<
     RequireFields<ModalSettingOfAxisPlaneMutationArgs, 'value'>
   >;
   options: Resolver<Array<ResolversTypes['ModalOptionOfAxisPlane']>, ParentType, ContextType>;
+  settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
+  title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
+  value: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ModalSettingOfCircleDirectionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ModalSettingOfCircleDirection'] = ResolversParentTypes['ModalSettingOfCircleDirection']
+> = {
+  comment: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentValue: Resolver<Maybe<ResolversTypes['IParsedValue']>, ParentType, ContextType>;
+  data: Resolver<ResolversTypes['CircleDirection'], ParentType, ContextType>;
+  hasBeenRead: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  key: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mutation: Resolver<
+    ResolversTypes['InstructionStep'],
+    ParentType,
+    ContextType,
+    RequireFields<ModalSettingOfCircleDirectionMutationArgs, 'value'>
+  >;
+  options: Resolver<Array<ResolversTypes['ModalOptionOfCircleDirection']>, ParentType, ContextType>;
   settingType: Resolver<ResolversTypes['MachineSettingType'], ParentType, ContextType>;
   title: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   units: Resolver<ResolversTypes['MachineSettingUnits'], ParentType, ContextType>;
@@ -5116,17 +5195,23 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationOpenWorkspaceArgs, 'workspaceId'>
   >;
+  selectProgramFile: Resolver<
+    ResolversTypes['ProgramFileMeta'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationSelectProgramFileArgs, 'fileUpload'>
+  >;
   updateWorkspace: Resolver<
     ResolversTypes['Workspace'],
     ParentType,
     ContextType,
     RequireFields<MutationUpdateWorkspaceArgs, 'workspaceSettings'>
   >;
-  uploadProgram: Resolver<
+  uploadProgramFile: Resolver<
     ResolversTypes['ProgramFile'],
     ParentType,
     ContextType,
-    RequireFields<MutationUploadProgramArgs, 'fileUpload'>
+    RequireFields<MutationUploadProgramFileArgs, 'fileUpload'>
   >;
 };
 
@@ -5223,17 +5308,6 @@ export type ParsedEnumOfApplicatorRadiusCompensationResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ParsedEnumOfApplicatorSpinDirectionResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['ParsedEnumOfApplicatorSpinDirection'] = ResolversParentTypes['ParsedEnumOfApplicatorSpinDirection']
-> = {
-  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  valueEnum: Resolver<ResolversTypes['ApplicatorSpinDirection'], ParentType, ContextType>;
-  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  values: Resolver<Array<ResolversTypes['KeyValuePairOfApplicatorSpinDirectionAndInt32']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type ParsedEnumOfAxisPlaneResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['ParsedEnumOfAxisPlane'] = ResolversParentTypes['ParsedEnumOfAxisPlane']
@@ -5242,6 +5316,17 @@ export type ParsedEnumOfAxisPlaneResolvers<
   valueEnum: Resolver<ResolversTypes['AxisPlane'], ParentType, ContextType>;
   valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   values: Resolver<Array<ResolversTypes['KeyValuePairOfAxisPlaneAndInt32']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ParsedEnumOfCircleDirectionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ParsedEnumOfCircleDirection'] = ResolversParentTypes['ParsedEnumOfCircleDirection']
+> = {
+  valueCode: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueEnum: Resolver<ResolversTypes['CircleDirection'], ParentType, ContextType>;
+  valueString: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  values: Resolver<Array<ResolversTypes['KeyValuePairOfCircleDirectionAndInt32']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -5439,17 +5524,22 @@ export type PortStatusResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ProgramResolvers<
+export type ProgramExecutorResolvers<
   ContextType = any,
-  ParentType extends ResolversParentTypes['Program'] = ResolversParentTypes['Program']
+  ParentType extends ResolversParentTypes['ProgramExecutor'] = ResolversParentTypes['ProgramExecutor']
 > = {
   currentInstruction: Resolver<Maybe<ResolversTypes['ProgramInstruction']>, ParentType, ContextType>;
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   instructionCount: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   instructionIndex: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  instructions: Resolver<Array<ResolversTypes['ProgramInstruction']>, ParentType, ContextType>;
+  instructions: Resolver<
+    Maybe<ResolversTypes['ProgramInstructionConnection']>,
+    ParentType,
+    ContextType,
+    RequireFields<ProgramExecutorInstructionsArgs, never>
+  >;
   programFile: Resolver<ResolversTypes['ProgramFile'], ParentType, ContextType>;
-  state: Resolver<ResolversTypes['ProgramState'], ParentType, ContextType>;
+  state: Resolver<ResolversTypes['ExecutionState'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -5460,7 +5550,19 @@ export type ProgramFileResolvers<
   id: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   instructionCount: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   instructions: Resolver<Array<ResolversTypes['CompiledInstruction']>, ParentType, ContextType>;
+  lineCount: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  lines: Resolver<Array<ResolversTypes['CompiledInstruction']>, ParentType, ContextType>;
   meta: Resolver<ResolversTypes['ProgramFileMeta'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProgramFileDirectoryResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ProgramFileDirectory'] = ResolversParentTypes['ProgramFileDirectory']
+> = {
+  allPrograms: Resolver<Array<ResolversTypes['ProgramFileMeta']>, ParentType, ContextType>;
+  fileExtensions: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  path: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -5468,8 +5570,9 @@ export type ProgramFileMetaResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['ProgramFileMeta'] = ResolversParentTypes['ProgramFileMeta']
 > = {
-  directory: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  isUpload: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  directory: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  fileExists: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  filePath: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   lastModified: Resolver<ResolversTypes['Long'], ParentType, ContextType>;
   name: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   size: Resolver<ResolversTypes['Long'], ParentType, ContextType>;
@@ -5485,6 +5588,25 @@ export type ProgramInstructionResolvers<
   compiledInstruction: Resolver<ResolversTypes['CompiledInstruction'], ParentType, ContextType>;
   index: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   steps: Resolver<Array<ResolversTypes['InstructionStep']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProgramInstructionConnectionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ProgramInstructionConnection'] = ResolversParentTypes['ProgramInstructionConnection']
+> = {
+  edges: Resolver<Maybe<Array<ResolversTypes['ProgramInstructionEdge']>>, ParentType, ContextType>;
+  nodes: Resolver<Maybe<Array<ResolversTypes['ProgramInstruction']>>, ParentType, ContextType>;
+  pageInfo: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProgramInstructionEdgeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ProgramInstructionEdge'] = ResolversParentTypes['ProgramInstructionEdge']
+> = {
+  cursor: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  node: Resolver<ResolversTypes['ProgramInstruction'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -5508,6 +5630,12 @@ export type QueryResolvers<
   >;
   listPorts: Resolver<Array<ResolversTypes['SystemPort']>, ParentType, ContextType>;
   listWorkspaces: Resolver<Array<ResolversTypes['Workspace']>, ParentType, ContextType>;
+  loadProgram: Resolver<
+    ResolversTypes['ProgramFile'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryLoadProgramArgs, 'name'>
+  >;
   machineProfile: Resolver<
     ResolversTypes['MachineProfile'],
     ParentType,
@@ -5522,7 +5650,7 @@ export type QueryResolvers<
     RequireFields<QueryMachineProfilesArgs, never>
   >;
   me: Resolver<Maybe<ResolversTypes['UserProfile']>, ParentType, ContextType>;
-  programs: Resolver<Array<ResolversTypes['ProgramFile']>, ParentType, ContextType>;
+  programDirectory: Resolver<ResolversTypes['ProgramFileDirectory'], ParentType, ContextType>;
   userProfile: Resolver<
     ResolversTypes['UserProfile'],
     ParentType,
@@ -5548,6 +5676,13 @@ export type SubscriptionResolvers<
     ParentType,
     ContextType,
     RequireFields<SubscriptionOnMachineLogArgs, 'portName'>
+  >;
+  onMachineProgram: SubscriptionResolver<
+    ResolversTypes['ControlledMachine'],
+    'onMachineProgram',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionOnMachineProgramArgs, 'portName'>
   >;
   onMachineSetting: SubscriptionResolver<
     ResolversTypes['ControlledMachine'],
@@ -5585,6 +5720,8 @@ export type SyntaxLineResolvers<
   ParentType extends ResolversParentTypes['SyntaxLine'] = ResolversParentTypes['SyntaxLine']
 > = {
   chunks: Resolver<Array<ResolversTypes['SyntaxChunk']>, ParentType, ContextType>;
+  hasCode: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  isValid: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   raw: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -5697,8 +5834,8 @@ export type Resolvers<ContextType = any> = {
   FirmwareSettings: FirmwareSettingsResolvers<ContextType>;
   InstructionStep: InstructionStepResolvers<ContextType>;
   KeyValuePairOfApplicatorRadiusCompensationAndInt32: KeyValuePairOfApplicatorRadiusCompensationAndInt32Resolvers<ContextType>;
-  KeyValuePairOfApplicatorSpinDirectionAndInt32: KeyValuePairOfApplicatorSpinDirectionAndInt32Resolvers<ContextType>;
   KeyValuePairOfAxisPlaneAndInt32: KeyValuePairOfAxisPlaneAndInt32Resolvers<ContextType>;
+  KeyValuePairOfCircleDirectionAndInt32: KeyValuePairOfCircleDirectionAndInt32Resolvers<ContextType>;
   KeyValuePairOfEnabledTypeAndInt32: KeyValuePairOfEnabledTypeAndInt32Resolvers<ContextType>;
   KeyValuePairOfFactorTypeAndInt32: KeyValuePairOfFactorTypeAndInt32Resolvers<ContextType>;
   KeyValuePairOfFeedRateModeAndInt32: KeyValuePairOfFeedRateModeAndInt32Resolvers<ContextType>;
@@ -5750,8 +5887,8 @@ export type Resolvers<ContextType = any> = {
   MacroSettings: MacroSettingsResolvers<ContextType>;
   MakerHubSettings: MakerHubSettingsResolvers<ContextType>;
   ModalOptionOfApplicatorRadiusCompensation: ModalOptionOfApplicatorRadiusCompensationResolvers<ContextType>;
-  ModalOptionOfApplicatorSpinDirection: ModalOptionOfApplicatorSpinDirectionResolvers<ContextType>;
   ModalOptionOfAxisPlane: ModalOptionOfAxisPlaneResolvers<ContextType>;
+  ModalOptionOfCircleDirection: ModalOptionOfCircleDirectionResolvers<ContextType>;
   ModalOptionOfDecimal: ModalOptionOfDecimalResolvers<ContextType>;
   ModalOptionOfEnabledType: ModalOptionOfEnabledTypeResolvers<ContextType>;
   ModalOptionOfFactorType: ModalOptionOfFactorTypeResolvers<ContextType>;
@@ -5766,8 +5903,8 @@ export type Resolvers<ContextType = any> = {
   ModalOptionOfTimingMode: ModalOptionOfTimingModeResolvers<ContextType>;
   ModalOptionOfUnitType: ModalOptionOfUnitTypeResolvers<ContextType>;
   ModalSettingOfApplicatorRadiusCompensation: ModalSettingOfApplicatorRadiusCompensationResolvers<ContextType>;
-  ModalSettingOfApplicatorSpinDirection: ModalSettingOfApplicatorSpinDirectionResolvers<ContextType>;
   ModalSettingOfAxisPlane: ModalSettingOfAxisPlaneResolvers<ContextType>;
+  ModalSettingOfCircleDirection: ModalSettingOfCircleDirectionResolvers<ContextType>;
   ModalSettingOfDecimal: ModalSettingOfDecimalResolvers<ContextType>;
   ModalSettingOfEnabledType: ModalSettingOfEnabledTypeResolvers<ContextType>;
   ModalSettingOfFactorType: ModalSettingOfFactorTypeResolvers<ContextType>;
@@ -5791,8 +5928,8 @@ export type Resolvers<ContextType = any> = {
   ParsedBool: ParsedBoolResolvers<ContextType>;
   ParsedDecimal: ParsedDecimalResolvers<ContextType>;
   ParsedEnumOfApplicatorRadiusCompensation: ParsedEnumOfApplicatorRadiusCompensationResolvers<ContextType>;
-  ParsedEnumOfApplicatorSpinDirection: ParsedEnumOfApplicatorSpinDirectionResolvers<ContextType>;
   ParsedEnumOfAxisPlane: ParsedEnumOfAxisPlaneResolvers<ContextType>;
+  ParsedEnumOfCircleDirection: ParsedEnumOfCircleDirectionResolvers<ContextType>;
   ParsedEnumOfEnabledType: ParsedEnumOfEnabledTypeResolvers<ContextType>;
   ParsedEnumOfFactorType: ParsedEnumOfFactorTypeResolvers<ContextType>;
   ParsedEnumOfFeedRateMode: ParsedEnumOfFeedRateModeResolvers<ContextType>;
@@ -5810,10 +5947,13 @@ export type Resolvers<ContextType = any> = {
   ParsedString: ParsedStringResolvers<ContextType>;
   PortOptions: PortOptionsResolvers<ContextType>;
   PortStatus: PortStatusResolvers<ContextType>;
-  Program: ProgramResolvers<ContextType>;
+  ProgramExecutor: ProgramExecutorResolvers<ContextType>;
   ProgramFile: ProgramFileResolvers<ContextType>;
+  ProgramFileDirectory: ProgramFileDirectoryResolvers<ContextType>;
   ProgramFileMeta: ProgramFileMetaResolvers<ContextType>;
   ProgramInstruction: ProgramInstructionResolvers<ContextType>;
+  ProgramInstructionConnection: ProgramInstructionConnectionResolvers<ContextType>;
+  ProgramInstructionEdge: ProgramInstructionEdgeResolvers<ContextType>;
   Query: QueryResolvers<ContextType>;
   Subscription: SubscriptionResolvers<ContextType>;
   SyntaxChunk: SyntaxChunkResolvers<ContextType>;
@@ -5941,7 +6081,7 @@ export type ControlledMachineFragment = { __typename?: 'ControlledMachine' } & P
     configuration: { __typename?: 'MachineConfiguration' } & MachineConfigFragment;
     status: { __typename?: 'MachineStatus' } & MachineStatusFragment;
     settings: { __typename?: 'FirmwareSettings' } & FirmwareSettingsTypedFragment;
-    program: Maybe<{ __typename?: 'Program' } & ProgramFragment>;
+    program: Maybe<{ __typename?: 'ProgramExecutor' } & ProgramExecutorFragment>;
   } & MachineLogsFragment;
 
 type FirmwareRequirement_FirmwareRequirement_Fragment = { __typename?: 'FirmwareRequirement' } & Pick<
@@ -6148,7 +6288,10 @@ export type MachineTimelineNodeConnectionFragment = { __typename?: 'MachineTimel
   pageInfo: { __typename?: 'PageInfo' } & PageInfoFragment;
 };
 
-export type PageInfoFragment = { __typename?: 'PageInfo' } & Pick<PageInfo, 'endCursor' | 'hasNextPage'>;
+export type PageInfoFragment = { __typename?: 'PageInfo' } & Pick<
+  PageInfo,
+  'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'
+>;
 
 export type MachineTimelineNodeFragment = { __typename?: 'MachineTimelineNode' } & Pick<
   MachineTimelineNode,
@@ -6233,8 +6376,8 @@ export type FirmwareSettingPolymorphicFragment = { __typename?: 'FirmwareSetting
       | ({ __typename?: 'ParsedBool' } & Pick<ParsedBool, 'valueBool'>)
       | ({ __typename?: 'ParsedDecimal' } & Pick<ParsedDecimal, 'valueDecimal'>)
       | { __typename?: 'ParsedEnumOfApplicatorRadiusCompensation' }
-      | { __typename?: 'ParsedEnumOfApplicatorSpinDirection' }
       | { __typename?: 'ParsedEnumOfAxisPlane' }
+      | { __typename?: 'ParsedEnumOfCircleDirection' }
       | { __typename?: 'ParsedEnumOfEnabledType' }
       | { __typename?: 'ParsedEnumOfFactorType' }
       | { __typename?: 'ParsedEnumOfFeedRateMode' }
@@ -6393,8 +6536,8 @@ export type ApplicatorStateFragment = { __typename?: 'MachineApplicatorState' } 
       FirmwareSettingOfString,
       'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
     >;
-    spinDirection: { __typename?: 'ModalSettingOfApplicatorSpinDirection' } & Pick<
-      ModalSettingOfApplicatorSpinDirection,
+    spinDirection: { __typename?: 'ModalSettingOfCircleDirection' } & Pick<
+      ModalSettingOfCircleDirection,
       'id' | 'title' | 'value' | 'data' | 'hasBeenRead'
     >;
     spinSpeed: { __typename?: 'FirmwareSettingOfDecimal' } & Pick<
@@ -6559,26 +6702,72 @@ export type ProgramInstructionFragment = { __typename?: 'ProgramInstruction' } &
   steps: Array<{ __typename?: 'InstructionStep' } & InstructionStepFragment>;
 };
 
-export type ProgramFragment = { __typename?: 'Program' } & Pick<
-  Program,
+export type ProgramFileMetaFragment = { __typename?: 'ProgramFileMeta' } & Pick<
+  ProgramFileMeta,
+  'name' | 'lastModified' | 'size' | 'type' | 'directory' | 'syntax' | 'fileExists' | 'filePath'
+>;
+
+export type ProgramFileFragment = { __typename?: 'ProgramFile' } & Pick<
+  ProgramFile,
+  'id' | 'instructionCount' | 'lineCount'
+> & { meta: { __typename?: 'ProgramFileMeta' } & ProgramFileMetaFragment };
+
+export type ProgramExecutorFragment = { __typename?: 'ProgramExecutor' } & Pick<
+  ProgramExecutor,
   'id' | 'state' | 'instructionIndex' | 'instructionCount'
 > & {
-    instructions: Array<{ __typename?: 'ProgramInstruction' } & ProgramInstructionFragment>;
-    programFile: { __typename?: 'ProgramFile' } & {
-      meta: { __typename?: 'ProgramFileMeta' } & Pick<
-        ProgramFileMeta,
-        'name' | 'lastModified' | 'size' | 'type' | 'directory' | 'syntax' | 'isUpload'
-      >;
-    };
+    instructions: Maybe<
+      { __typename?: 'ProgramInstructionConnection' } & {
+        pageInfo: { __typename?: 'PageInfo' } & PageInfoFragment;
+        nodes: Maybe<Array<{ __typename?: 'ProgramInstruction' } & ProgramInstructionFragment>>;
+      }
+    >;
+    programFile: { __typename?: 'ProgramFile' } & ProgramFileFragment;
   };
 
-export type UploadProgramMutationVariables = Exact<{
-  workspaceId: Scalars['String'];
+export type ProgramFileDirectoryFragment = { __typename?: 'ProgramFileDirectory' } & Pick<
+  ProgramFileDirectory,
+  'path' | 'fileExtensions'
+> & { allPrograms: Array<{ __typename?: 'ProgramFileMeta' } & ProgramFileMetaFragment> };
+
+export type SelectProgramFileMutationVariables = Exact<{
+  fileUpload: ClientFileUploadInput;
+}>;
+
+export type SelectProgramFileMutation = { __typename?: 'Mutation' } & {
+  programFileMeta: { __typename?: 'ProgramFileMeta' } & ProgramFileMetaFragment;
+};
+
+export type UploadProgramFileMutationVariables = Exact<{
   fileUpload: ProgramFileUploadInput;
 }>;
 
-export type UploadProgramMutation = { __typename?: 'Mutation' } & {
-  controller: { __typename?: 'Controller' } & { program: { __typename?: 'Program' } & ProgramFragment };
+export type UploadProgramFileMutation = { __typename?: 'Mutation' } & {
+  programFile: { __typename?: 'ProgramFile' } & ProgramFileFragment;
+};
+
+export type ProgramDirectoryQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ProgramDirectoryQuery = { __typename?: 'Query' } & {
+  programFileDirectory: { __typename?: 'ProgramFileDirectory' } & ProgramFileDirectoryFragment;
+};
+
+export type LoadProgramQueryVariables = Exact<{
+  name: Scalars['String'];
+}>;
+
+export type LoadProgramQuery = { __typename?: 'Query' } & {
+  programFile: { __typename?: 'ProgramFile' } & ProgramFileFragment;
+};
+
+export type MachineProgramSubscriptionVariables = Exact<{
+  portName: Scalars['String'];
+}>;
+
+export type MachineProgramSubscription = { __typename?: 'Subscription' } & {
+  machine: { __typename?: 'ControlledMachine' } & Pick<ControlledMachine, 'topicId'> & {
+      program: Maybe<{ __typename?: 'ProgramExecutor' } & ProgramExecutorFragment>;
+    };
 };
 
 export type EventFragment = { __typename?: 'EventSettings' } & Pick<
@@ -7506,6 +7695,14 @@ export const FirmwareSettingsTypedFragmentDoc = gql`
   ${FirmwarePinsSettingsFragmentDoc}
   ${FirmwareReportingSettingsFragmentDoc}
 `;
+export const PageInfoFragmentDoc = gql`
+  fragment PageInfo on PageInfo {
+    startCursor
+    endCursor
+    hasNextPage
+    hasPreviousPage
+  }
+`;
 export const MachineMovementFragmentDoc = gql`
   fragment MachineMovement on MachineMovement {
     x
@@ -7541,34 +7738,50 @@ export const ProgramInstructionFragmentDoc = gql`
   }
   ${InstructionStepFragmentDoc}
 `;
-export const ProgramFragmentDoc = gql`
-  fragment Program on Program {
+export const ProgramFileMetaFragmentDoc = gql`
+  fragment ProgramFileMeta on ProgramFileMeta {
+    name
+    lastModified
+    size
+    type
+    directory
+    syntax
+    fileExists
+    filePath
+  }
+`;
+export const ProgramFileFragmentDoc = gql`
+  fragment ProgramFile on ProgramFile {
+    id
+    instructionCount
+    lineCount
+    meta {
+      ...ProgramFileMeta
+    }
+  }
+  ${ProgramFileMetaFragmentDoc}
+`;
+export const ProgramExecutorFragmentDoc = gql`
+  fragment ProgramExecutor on ProgramExecutor {
     id
     state
     instructionIndex
     instructionCount
-    instructions {
-      ...ProgramInstruction
-    }
-    programFile {
-      meta {
-        name
-        lastModified
-        size
-        type
-        directory
-        syntax
-        isUpload
+    instructions(first: 50) {
+      pageInfo {
+        ...PageInfo
+      }
+      nodes {
+        ...ProgramInstruction
       }
     }
+    programFile {
+      ...ProgramFile
+    }
   }
+  ${PageInfoFragmentDoc}
   ${ProgramInstructionFragmentDoc}
-`;
-export const PageInfoFragmentDoc = gql`
-  fragment PageInfo on PageInfo {
-    endCursor
-    hasNextPage
-  }
+  ${ProgramFileFragmentDoc}
 `;
 export const MachineLogEntryConnectionFragmentDoc = gql`
   fragment MachineLogEntryConnection on MachineLogEntryConnection {
@@ -7641,14 +7854,14 @@ export const ControlledMachineFragmentDoc = gql`
       ...FirmwareSettingsTyped
     }
     program {
-      ...Program
+      ...ProgramExecutor
     }
     ...MachineLogs
   }
   ${MachineConfigFragmentDoc}
   ${MachineStatusFragmentDoc}
   ${FirmwareSettingsTypedFragmentDoc}
-  ${ProgramFragmentDoc}
+  ${ProgramExecutorFragmentDoc}
   ${MachineLogsFragmentDoc}
 `;
 export const MachineExecutionResultFragmentDoc = gql`
@@ -7902,6 +8115,16 @@ export const PortStatusFragmentDoc = gql`
   }
   ${AlertErrorFragmentDoc}
   ${ConnectedPortFragmentDoc}
+`;
+export const ProgramFileDirectoryFragmentDoc = gql`
+  fragment ProgramFileDirectory on ProgramFileDirectory {
+    path
+    fileExtensions
+    allPrograms {
+      ...ProgramFileMeta
+    }
+  }
+  ${ProgramFileMetaFragmentDoc}
 `;
 export const FileSystemFragmentDoc = gql`
   fragment FileSystem on FileSystemSettings {
@@ -8833,47 +9056,208 @@ export function useClosePortMutation(
 export type ClosePortMutationHookResult = ReturnType<typeof useClosePortMutation>;
 export type ClosePortMutationResult = Apollo.MutationResult<ClosePortMutation>;
 export type ClosePortMutationOptions = Apollo.BaseMutationOptions<ClosePortMutation, ClosePortMutationVariables>;
-export const UploadProgramDocument = gql`
-  mutation UploadProgram($workspaceId: String!, $fileUpload: ProgramFileUploadInput!) {
-    controller: controlMachine(workspaceId: $workspaceId) {
-      program: uploadProgram(upload: $fileUpload) {
-        ...Program
-      }
+export const SelectProgramFileDocument = gql`
+  mutation SelectProgramFile($fileUpload: ClientFileUploadInput!) {
+    programFileMeta: selectProgramFile(fileUpload: $fileUpload) {
+      ...ProgramFileMeta
     }
   }
-  ${ProgramFragmentDoc}
+  ${ProgramFileMetaFragmentDoc}
 `;
-export type UploadProgramMutationFn = Apollo.MutationFunction<UploadProgramMutation, UploadProgramMutationVariables>;
+export type SelectProgramFileMutationFn = Apollo.MutationFunction<
+  SelectProgramFileMutation,
+  SelectProgramFileMutationVariables
+>;
 
 /**
- * __useUploadProgramMutation__
+ * __useSelectProgramFileMutation__
  *
- * To run a mutation, you first call `useUploadProgramMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUploadProgramMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useSelectProgramFileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSelectProgramFileMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [uploadProgramMutation, { data, loading, error }] = useUploadProgramMutation({
+ * const [selectProgramFileMutation, { data, loading, error }] = useSelectProgramFileMutation({
  *   variables: {
- *      workspaceId: // value for 'workspaceId'
  *      fileUpload: // value for 'fileUpload'
  *   },
  * });
  */
-export function useUploadProgramMutation(
-  baseOptions?: Apollo.MutationHookOptions<UploadProgramMutation, UploadProgramMutationVariables>,
+export function useSelectProgramFileMutation(
+  baseOptions?: Apollo.MutationHookOptions<SelectProgramFileMutation, SelectProgramFileMutationVariables>,
 ) {
-  return Apollo.useMutation<UploadProgramMutation, UploadProgramMutationVariables>(UploadProgramDocument, baseOptions);
+  return Apollo.useMutation<SelectProgramFileMutation, SelectProgramFileMutationVariables>(
+    SelectProgramFileDocument,
+    baseOptions,
+  );
 }
-export type UploadProgramMutationHookResult = ReturnType<typeof useUploadProgramMutation>;
-export type UploadProgramMutationResult = Apollo.MutationResult<UploadProgramMutation>;
-export type UploadProgramMutationOptions = Apollo.BaseMutationOptions<
-  UploadProgramMutation,
-  UploadProgramMutationVariables
+export type SelectProgramFileMutationHookResult = ReturnType<typeof useSelectProgramFileMutation>;
+export type SelectProgramFileMutationResult = Apollo.MutationResult<SelectProgramFileMutation>;
+export type SelectProgramFileMutationOptions = Apollo.BaseMutationOptions<
+  SelectProgramFileMutation,
+  SelectProgramFileMutationVariables
 >;
+export const UploadProgramFileDocument = gql`
+  mutation UploadProgramFile($fileUpload: ProgramFileUploadInput!) {
+    programFile: uploadProgramFile(fileUpload: $fileUpload) {
+      ...ProgramFile
+    }
+  }
+  ${ProgramFileFragmentDoc}
+`;
+export type UploadProgramFileMutationFn = Apollo.MutationFunction<
+  UploadProgramFileMutation,
+  UploadProgramFileMutationVariables
+>;
+
+/**
+ * __useUploadProgramFileMutation__
+ *
+ * To run a mutation, you first call `useUploadProgramFileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUploadProgramFileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [uploadProgramFileMutation, { data, loading, error }] = useUploadProgramFileMutation({
+ *   variables: {
+ *      fileUpload: // value for 'fileUpload'
+ *   },
+ * });
+ */
+export function useUploadProgramFileMutation(
+  baseOptions?: Apollo.MutationHookOptions<UploadProgramFileMutation, UploadProgramFileMutationVariables>,
+) {
+  return Apollo.useMutation<UploadProgramFileMutation, UploadProgramFileMutationVariables>(
+    UploadProgramFileDocument,
+    baseOptions,
+  );
+}
+export type UploadProgramFileMutationHookResult = ReturnType<typeof useUploadProgramFileMutation>;
+export type UploadProgramFileMutationResult = Apollo.MutationResult<UploadProgramFileMutation>;
+export type UploadProgramFileMutationOptions = Apollo.BaseMutationOptions<
+  UploadProgramFileMutation,
+  UploadProgramFileMutationVariables
+>;
+export const ProgramDirectoryDocument = gql`
+  query ProgramDirectory {
+    programFileDirectory: programDirectory {
+      ...ProgramFileDirectory
+    }
+  }
+  ${ProgramFileDirectoryFragmentDoc}
+`;
+
+/**
+ * __useProgramDirectoryQuery__
+ *
+ * To run a query within a React component, call `useProgramDirectoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProgramDirectoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProgramDirectoryQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useProgramDirectoryQuery(
+  baseOptions?: Apollo.QueryHookOptions<ProgramDirectoryQuery, ProgramDirectoryQueryVariables>,
+) {
+  return Apollo.useQuery<ProgramDirectoryQuery, ProgramDirectoryQueryVariables>(ProgramDirectoryDocument, baseOptions);
+}
+export function useProgramDirectoryLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ProgramDirectoryQuery, ProgramDirectoryQueryVariables>,
+) {
+  return Apollo.useLazyQuery<ProgramDirectoryQuery, ProgramDirectoryQueryVariables>(
+    ProgramDirectoryDocument,
+    baseOptions,
+  );
+}
+export type ProgramDirectoryQueryHookResult = ReturnType<typeof useProgramDirectoryQuery>;
+export type ProgramDirectoryLazyQueryHookResult = ReturnType<typeof useProgramDirectoryLazyQuery>;
+export type ProgramDirectoryQueryResult = Apollo.QueryResult<ProgramDirectoryQuery, ProgramDirectoryQueryVariables>;
+export const LoadProgramDocument = gql`
+  query LoadProgram($name: String!) {
+    programFile: loadProgram(name: $name) {
+      ...ProgramFile
+    }
+  }
+  ${ProgramFileFragmentDoc}
+`;
+
+/**
+ * __useLoadProgramQuery__
+ *
+ * To run a query within a React component, call `useLoadProgramQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLoadProgramQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLoadProgramQuery({
+ *   variables: {
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function useLoadProgramQuery(baseOptions: Apollo.QueryHookOptions<LoadProgramQuery, LoadProgramQueryVariables>) {
+  return Apollo.useQuery<LoadProgramQuery, LoadProgramQueryVariables>(LoadProgramDocument, baseOptions);
+}
+export function useLoadProgramLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<LoadProgramQuery, LoadProgramQueryVariables>,
+) {
+  return Apollo.useLazyQuery<LoadProgramQuery, LoadProgramQueryVariables>(LoadProgramDocument, baseOptions);
+}
+export type LoadProgramQueryHookResult = ReturnType<typeof useLoadProgramQuery>;
+export type LoadProgramLazyQueryHookResult = ReturnType<typeof useLoadProgramLazyQuery>;
+export type LoadProgramQueryResult = Apollo.QueryResult<LoadProgramQuery, LoadProgramQueryVariables>;
+export const MachineProgramDocument = gql`
+  subscription MachineProgram($portName: String!) {
+    machine: onMachineProgram(portName: $portName) {
+      topicId
+      program {
+        ...ProgramExecutor
+      }
+    }
+  }
+  ${ProgramExecutorFragmentDoc}
+`;
+
+/**
+ * __useMachineProgramSubscription__
+ *
+ * To run a query within a React component, call `useMachineProgramSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useMachineProgramSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMachineProgramSubscription({
+ *   variables: {
+ *      portName: // value for 'portName'
+ *   },
+ * });
+ */
+export function useMachineProgramSubscription(
+  baseOptions: Apollo.SubscriptionHookOptions<MachineProgramSubscription, MachineProgramSubscriptionVariables>,
+) {
+  return Apollo.useSubscription<MachineProgramSubscription, MachineProgramSubscriptionVariables>(
+    MachineProgramDocument,
+    baseOptions,
+  );
+}
+export type MachineProgramSubscriptionHookResult = ReturnType<typeof useMachineProgramSubscription>;
+export type MachineProgramSubscriptionResult = Apollo.SubscriptionResult<MachineProgramSubscription>;
 export const StartupDocument = gql`
   query Startup($token: String!) {
     session: authenticate(token: $token) {

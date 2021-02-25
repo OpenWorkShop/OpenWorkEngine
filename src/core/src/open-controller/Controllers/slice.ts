@@ -12,7 +12,7 @@ import {
   IMachineStatusUpdate,
   ControllersState,
   IMachineSettingsUpdate,
-  IMachineLogPageUpdate, IMachineLogs, IMachineLogsUpdate, IController
+  IMachineLogPageUpdate, IMachineLogs, IMachineLogsUpdate, IController, IMachineProgramUpdate
 } from './types';
 
 const initialState: ControllersState = {
@@ -82,6 +82,12 @@ const controllersSlice = createSlice({
 
     onControlledMachineConfiguration(state, action: PayloadAction<IMachineConfigUpdate>) {
       state.controllerMap[action.payload.topicId].machine.configuration = action.payload.configuration;
+      onControllerUpdated(state.controllerMap[action.payload.topicId]);
+      return state;
+    },
+
+    onControlledMachineProgram(state, action: PayloadAction<IMachineProgramUpdate>) {
+      state.controllerMap[action.payload.topicId].machine.program = action.payload.program;
       onControllerUpdated(state.controllerMap[action.payload.topicId]);
       return state;
     },

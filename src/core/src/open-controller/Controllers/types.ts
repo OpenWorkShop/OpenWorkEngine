@@ -6,7 +6,8 @@ import {
   MachineLogEntryConnectionFragment,
   MachineLogEntryFragment,
   MachineStatusFragment,
-  PageInfoFragment
+  PageInfoFragment,
+  ProgramExecutorFragment
 } from '../graphql';
 
 export interface IMachineLogs {
@@ -51,6 +52,10 @@ export interface IMachineStatusUpdate extends IControlledMachineUpdate {
 
 export interface IMachineConfigUpdate extends IControlledMachineUpdate {
   configuration: MachineConfigFragment;
+}
+
+export interface IMachineProgramUpdate extends IControlledMachineUpdate {
+  program: ProgramExecutorFragment | null;
 }
 
 export interface IMachineLogPageUpdate extends IControlledMachineUpdate {

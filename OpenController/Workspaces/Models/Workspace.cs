@@ -172,15 +172,14 @@ namespace OpenWorkEngine.OpenController.Workspaces.Models {
 
     // Use any arbitrary port name to set the current port,
     private SystemPort? SetPortByName(string? portName, bool requirePort = false) {
-      PortManager ports = Manager.Ports;
-      SystemPort? port = null;
+      SystemPort? port = Manager.Ports.TryGetPort(portName);
       _portListSubscription?.Dispose();
       _portListSubscription = null;
 
       if (portName != null) {
-        _portListSubscription = ports
-                               .GetSubscriptionTopic(PortTopic.State)
-                               .SubscribeToTopicId(portName, this);
+        _portListSubscription = Manager.Ports
+                                       .GetSubscriptionTopic(PortTopic.State)
+                                       .SubscribeToTopicId(portName, this);
       } else if (requirePort) {
         throw new ArgumentException($"Cannot change Workspace to use missing port: {portName}");
       }

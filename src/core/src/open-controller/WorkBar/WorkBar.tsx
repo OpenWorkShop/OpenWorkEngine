@@ -1,5 +1,10 @@
 import * as React from 'react';
-import {IHaveWorkspace, tryUseWorkspaceController, useWorkspaceSelector} from '../Workspaces';
+import {
+  IHaveWorkspace,
+  tryUseWorkspaceController,
+  tryUseWorkspaceControllerSelector,
+  useWorkspaceSelector
+} from '../Workspaces';
 import {IMaybeHavePortStatus} from '../Ports';
 import useStyles from './styles';
 import {Button, ButtonGroup, Grid, Tooltip, Typography} from '@material-ui/core';
@@ -26,14 +31,15 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
   const { workspaceId, port, orientation } = props;
   const workspaceState = useWorkspaceSelector(workspaceId, ws => ws.state);
   const portName = useWorkspaceSelector(workspaceId, ws => ws.portName);
-  const controller: IController | undefined = tryUseWorkspaceController(workspaceId);
-  const machine = controller?.machine;
-  const machineStatus = machine?.status;
-  const firmware = machine?.configuration.firmware;
+  const machineStatus = tryUseWorkspaceControllerSelector(workspaceId, c => c.machine.status);
+  const firmware = tryUseWorkspaceControllerSelector(workspaceId, c => c.machine.configuration.firmware);
+  const programMeta = tryUseWorkspaceControllerSelector(workspaceId, c => c.machine.program?.programFile?.meta);
+
   const isActive = workspaceState === WorkspaceState.Active;
   const isMachineReady = isActive && machineStatus;
   const portState = port?.state ?? PortState.Unplugged;
   const isUnplugged = portState === PortState.Unplugged;
+  const programTitle = programMeta ? programMeta.name : t('No file loaded');
   // const bkCol = useMachineStatusColor(machineStatus);
 
   log.debug('draw', portState);
@@ -66,7 +72,7 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
             {t('The port "{{ portName }}" is not available for use.', { portName })}
           </Typography>}
           {isMachineReady && <Typography className={classes.workBarTitleText} variant="subtitle2">
-            No file loaded.
+            {programTitle}
           </Typography>}
         </Grid>
       </Grid>

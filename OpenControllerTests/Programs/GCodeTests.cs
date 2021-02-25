@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FluentAssertions;
+using HotChocolate.Language;
 using OpenWorkEngine.OpenController.Controllers.Messages;
 using OpenWorkEngine.OpenController.Controllers.Models;
 using OpenWorkEngine.OpenController.ControllerSyntax;
@@ -56,13 +57,19 @@ namespace OpenWorkEngine.OpenControllerTests.Programs {
         MachineLogEntry ack = MachineLogEntry.FromReadAck("ok");
         MachineInstructionResult res = new (machine, inst, write) { ResponseLogEntry = ack };
         List<InstructionStep> steps = res.Apply();
+
+        List<string> parts = new List<string>();
         foreach (InstructionStep step in steps) {
           try {
-            Log.Verbose("{id}={value} {position}", step.Name, step.SettingValue, step.Movement?.ToString() ?? "");
+            string msg = $"{step.Name}: {step.SettingValue}";
+            string? movement = step.Movement?.ToString();
+            if (!string.IsNullOrEmpty(movement)) msg += $" {movement}";
+            parts.Push(msg);
           } catch (Exception e) {
             Log.Error(e, inst.Line.Raw);
           }
         }
+        if (parts.Any()) Log.Debug(string.Join(", ", parts));
       }
     }
 

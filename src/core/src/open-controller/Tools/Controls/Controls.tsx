@@ -11,7 +11,7 @@ import {
   faBullseye,
   faStopCircle
 } from '@fortawesome/free-solid-svg-icons';
-import {ApplicatorSpinDirection} from '../../graphql';
+import {CircleDirection} from '../../graphql';
 import {IconDefinition} from '@fortawesome/fontawesome-common-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCreativeCommonsZero } from '@fortawesome/free-brands-svg-icons';
@@ -26,9 +26,9 @@ const Controls: ToolBase = (props) => {
 
   log.debug('render', tool, workspaceId);
 
-  function getSpinDirectionIcon(spin: ApplicatorSpinDirection): IconDefinition {
-    if (spin === ApplicatorSpinDirection.Ccw) return faArrowCircleLeft;
-    if (spin === ApplicatorSpinDirection.Cw) return faArrowCircleRight;
+  function getSpinDirectionIcon(spin: CircleDirection): IconDefinition {
+    if (spin === CircleDirection.Ccw) return faArrowCircleLeft;
+    if (spin === CircleDirection.Cw) return faArrowCircleRight;
     return faStopCircle;
   }
 

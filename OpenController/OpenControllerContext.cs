@@ -70,7 +70,10 @@ namespace OpenWorkEngine.OpenController {
     internal ILogger Log { get; }
 
     public List<OpenControllerUser> EnabledUsers => _enabledUsers ??=
-      Settings?.Users.Where(u => u.Enabled).ToList() ?? new List<OpenControllerUser>();
+      Settings.Users.Where(u => u.Enabled).ToList() ?? new List<OpenControllerUser>();
+
+    public OpenControllerUser? TryGetUser(string username) =>
+      EnabledUsers.FirstOrDefault(u => username.Equals(u.Username, StringComparison.InvariantCultureIgnoreCase));
 
     public void SaveSettings() => _configFile.Save();
 

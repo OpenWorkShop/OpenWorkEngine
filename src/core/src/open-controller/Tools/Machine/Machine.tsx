@@ -32,7 +32,7 @@ const Machine: ToolBase = (props) => {
       <div className={classes.root}>
         <MachineModalList modals={modals} workspaceId={workspaceId} />
       </div>
-      <div className={classes.dialogFooter}>
+      <div >
         <Button
           color="primary"
           onClick={() => setDialogOpen(true)}

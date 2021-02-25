@@ -103,6 +103,14 @@
             <e p="workspace-basics.md" t="Include" />
           </e>
         </e>
+        <e p="GCode" t="Include">
+          <e p=".heart-050_thick-025_bit.nc.json" t="Include" />
+          <e p=".hexagon-4.5w-4bit.nc.json" t="Include" />
+          <e p="backs.nc" t="Include" />
+          <e p="heart-050_thick-025_bit.nc" t="Include" />
+          <e p="hexagon-4.5w-4bit.nc" t="Include" />
+          <e p="test.nc" t="Include" />
+        </e>
         <e p="LICENSE" t="Include" />
         <e p="Makerverse.csproj" t="IncludeRecursive" />
         <e p="obj" t="ExcludeRecursive">
@@ -223,6 +231,7 @@
           <e p="SettingDefinition.cs" t="Include" />
         </e>
         <e p="Identity" t="Include">
+          <e p="CurrentOpenControllerUser.cs" t="Include" />
           <e p="Graph" t="Include">
             <e p="IdentityQuery.cs" t="Include" />
             <e p="IdentitySchema.cs" t="Include" />
@@ -271,6 +280,7 @@
             <e p="OpenControllerSocketSessionInterceptor.cs" t="Include" />
             <e p="TopicEventExtensions.cs" t="Include" />
           </e>
+          <e p="ICurrentUser.cs" t="Include" />
           <e p="IHasStringId.cs" t="Include" />
           <e p="Linq" t="Include">
             <e p="NonNullEnumerables.cs" t="Include" />
@@ -423,8 +433,8 @@
         </e>
         <e p="programs" t="Include">
           <e p="Enums" t="Include">
+            <e p="ExecutionState.cs" t="Include" />
             <e p="ProgramInstructionType.cs" t="Include" />
-            <e p="ProgramState.cs" t="Include" />
           </e>
           <e p="Graph" t="Include">
             <e p="ProgramsMutation.cs" t="Include" />
@@ -439,13 +449,16 @@
             <e p="ProgramFileUpload.cs" t="Include" />
           </e>
           <e p="Models" t="Include">
-            <e p="Program.cs" t="Include" />
+            <e p="ProgramExecutor.cs" t="Include" />
             <e p="ProgramFile.cs" t="Include" />
             <e p="ProgramFileMeta.cs" t="Include" />
+            <e p="ProgramFileMetaData.cs" t="Include" />
+            <e p="ProgramFileRevision.cs" t="Include" />
             <e p="ProgramInstruction.cs" t="Include" />
             <e p="ProgramParameter.cs" t="Include" />
           </e>
           <e p="Services" t="Include">
+            <e p="ProgramFileDirectory.cs" t="Include" />
             <e p="ProgramFileManager.cs" t="Include" />
           </e>
         </e>
@@ -669,8 +682,7 @@
             <e p="AuthCorsPolicyService.cs" t="Include" />
             <e p="AuthRedirectUriValidator.cs" t="Include" />
             <e p="AuthReturnUrl.cs" t="Include" />
-            <e p="CurrentUser.cs" t="Include" />
-            <e p="ICurrentUser.cs" t="Include" />
+            <e p="CurrentOpenWorkshopUser.cs" t="Include" />
           </e>
           <e p="Email" t="Include">
             <e p="Outbox.cs" t="Include" />

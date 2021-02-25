@@ -16,17 +16,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: 30,
     margin: 0,
   },
-  dialogHeader: {
-    padding: 0,
-  },
-  dialogContent: {
-    padding: theme.spacing(1),
-    backgroundColor: theme.palette.background.default,
-    minHeight: 400,
-  },
-  dialogFooter: {
-    ...rowAlternateCss,
-  },
   buttonIcon: {
     marginRight: theme.spacing(1),
   },

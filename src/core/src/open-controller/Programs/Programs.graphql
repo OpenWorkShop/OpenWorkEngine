@@ -18,31 +18,63 @@ fragment ProgramInstruction on ProgramInstruction {
     }
 }
 
-fragment Program on Program {
+fragment ProgramFileMeta on ProgramFileMeta {
+    name
+    lastModified
+    size
+    type
+    directory
+    syntax
+    fileExists
+    filePath
+}
+
+fragment ProgramFile on ProgramFile {
+    id
+    instructionCount
+    lineCount
+    meta { ...ProgramFileMeta }
+}
+
+fragment ProgramExecutor on ProgramExecutor {
     id
     state
     instructionIndex
     instructionCount
-    instructions {
-        ...ProgramInstruction
+    instructions(first: 50) {
+        pageInfo { ...PageInfo }
+        nodes { ...ProgramInstruction }
     }
     programFile {
-        meta {
-            name
-            lastModified
-            size
-            type
-            directory
-            syntax
-            isUpload
-        }
+        ...ProgramFile
     }
 }
 
-mutation UploadProgram($workspaceId: String!, $fileUpload: ProgramFileUploadInput!) {
-    controller: controlMachine(workspaceId: $workspaceId) {
-        program: uploadProgram(upload: $fileUpload) {
-            ...Program
-        }
+fragment ProgramFileDirectory on ProgramFileDirectory {
+    path
+    fileExtensions
+    allPrograms { ...ProgramFileMeta }
+}
+
+mutation SelectProgramFile($fileUpload: ClientFileUploadInput!) {
+    programFileMeta: selectProgramFile(fileUpload: $fileUpload) { ...ProgramFileMeta }
+}
+
+mutation UploadProgramFile($fileUpload: ProgramFileUploadInput!) {
+    programFile: uploadProgramFile(fileUpload: $fileUpload) { ...ProgramFile }
+}
+
+query ProgramDirectory {
+    programFileDirectory: programDirectory { ...ProgramFileDirectory }
+}
+
+query LoadProgram($name: String!) {
+    programFile: loadProgram(name: $name) { ...ProgramFile }
+}
+
+subscription MachineProgram($portName: String!) {
+    machine: onMachineProgram(portName: $portName) {
+        topicId
+        program { ...ProgramExecutor }
     }
 }

@@ -99,16 +99,17 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
 
       return res;
     }
-
-    public Task<Program> UploadProgram(ProgramFileUpload upload) => LoadProgram(new ProgramFileMeta(upload));
-
-    public Task<Program> LoadProgram(string filePath) => LoadProgram(new ProgramFileMeta(filePath));
-
-    private Task<Program> LoadProgram(ProgramFileMeta meta) {
-      ProgramFile file = new ProgramFile(meta, Log);
-      Connection.Machine.Program = new Program(this, file);
-      return Task.FromResult(Connection.Machine.Program);
-    }
+    //
+    // public Task<ProgramExecutor> UploadProgram(ProgramFileUpload upload) => LoadProgram(new ProgramFileMeta(upload));
+    //
+    // public Task<ProgramExecutor> LoadProgram(string filePath) => LoadProgram(new ProgramFileMeta(filePath));
+    //
+    // private Task<ProgramExecutor> LoadProgram(ProgramFileMeta meta) {
+    //   ProgramFile file = new ProgramFile(meta, Log);
+    //   Connection.Machine.Program = new ProgramExecutor(this, file);
+    //   Manager.GetSubscriptionTopic(MachineTopic.Program).Emit(Connection.Machine);
+    //   return Task.FromResult(Connection.Machine.Program);
+    // }
 
     internal Task<MachineExecutionResult> EnsureModalValue<TData>(
       ModalSetting<TData> modalSetting, TData value
@@ -275,10 +276,6 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
           return;
         Log.Information("[FIRMWARE] requirements satisfied: {firmware}", firmware.ToString());
 
-        if (_startupCallback != null) {
-          await _startupCallback.Invoke(this);
-          _startupCallback = null;
-        }
         // await GetParameters();
       } catch (Exception e) {
         Log.Error(e, "[STARTUP] failed");
@@ -314,10 +311,11 @@ namespace OpenWorkEngine.OpenController.Controllers.Services {
       return true;
     }
 
-    private Func<Controller, Task>? _startupCallback = null;
 
-    public Controller StartTask(Func<Controller, Task>? startupCallback = null) {
-      _startupCallback = startupCallback;
+    private bool _started = false;
+    public Controller StartTask() {
+      if (_started) return this;
+      _started = true;
       Task.Run(Startup);
       return this;
     }

@@ -9,10 +9,21 @@ using OpenWorkEngine.OpenController.Machines.Enums;
 using OpenWorkEngine.OpenController.Machines.Models;
 
 namespace OpenWorkEngine.OpenController.Syntax.GCode {
+  internal class GCodeStepSorter : IComparer<InstructionStep> {
+    public int Compare(InstructionStep? x, InstructionStep? y) {
+      if (x == null && y == null) return 0;
+      if (x == null || y?.Movement != null) return -1;
+      if (y == null || x?.Movement != null) return 1;
+      return 0;
+    }
+  }
+
   // https://www.cnccookbook.com/g-code-basics-program-format-structure-blocks/
   public class GCodeBlock : IControllerInstruction {
     // Those commands which are realtime (sent inline, no Response expected).
     private static readonly string[] InLineCommands = new[] { "?", "!", "~", "\u0018" };
+
+    private static readonly GCodeStepSorter Sorter = new GCodeStepSorter();
 
     public string InstructionSource { get; }
     public string Template { get; }
@@ -66,6 +77,8 @@ namespace OpenWorkEngine.OpenController.Syntax.GCode {
           steps.Add(step);
         }
       }
+
+      steps.Sort(Sorter);
       return steps;
     }
 

@@ -1,7 +1,7 @@
 import GWizObject from './GWizObject';
 import GWizCanvas from './GWizCanvas';
 import {RenderGroupType} from '@openworkshop/core/open-controller';
-import {MachineMovementFragment, ProgramFragment, ProgramInstructionFragment} from '../../graphql';
+import {MachineMovementFragment, ProgramExecutorFragment, ProgramInstructionFragment} from '../../graphql';
 import * as THREE from 'three';
 import OpenProgram from '../../Programs/OpenProgram';
 
@@ -12,7 +12,7 @@ class GWizPlans extends GWizObject {
     super(canvas, RenderGroupType.P);
   }
 
-  public setProgram(program?: ProgramFragment): void {
+  public setProgram(program?: ProgramExecutorFragment): void {
     const changed = program?.id != this._program?.id;
     if (!program) {
       this._program = undefined;
@@ -23,11 +23,12 @@ class GWizPlans extends GWizObject {
     } else {
       return;
     }
-    this.drawInstructions(program?.instructions ?? []);
+    this.drawInstructions(program?.instructions?.nodes ?? []);
   }
 
   private drawInstructions(instructions: ProgramInstructionFragment[]): void {
     this.clear();
+    this.log.debug('instructions', instructions);
     let pos = new THREE.Vector3(0, 0, 0);
     instructions.forEach(inst => {
       const motion = inst.steps.find(i => i.name === 'Motion');

@@ -26,7 +26,10 @@ namespace OpenWorkEngine.OpenController.Ports.Services {
     public override ILogger Log { get; }
 
     public SystemPort this[string portName] =>
-      Map.TryGetValue(portName, out SystemPort? val) ? val : throw new ArgumentException($"Port missing: {portName}");
+      TryGetPort(portName) ?? throw new ArgumentException($"Port missing: {portName}");
+
+    public SystemPort? TryGetPort(string? portName) =>
+      (!string.IsNullOrEmpty(portName) && Map.TryGetValue(portName, out SystemPort? val)) ? val : null;
 
     public ConcurrentDictionary<string, SystemPort> Map { get; } = new();
 

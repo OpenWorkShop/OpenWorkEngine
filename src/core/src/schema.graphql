@@ -29,7 +29,7 @@ interface ISerialPortOptions {
     writeTimeout: Int
 }
 
-union IParsedValue = ParsedAxisFlags | ParsedBool | ParsedDecimal | ParsedEnumOfApplicatorRadiusCompensation | ParsedEnumOfApplicatorSpinDirection | ParsedEnumOfAxisPlane | ParsedEnumOfEnabledType | ParsedEnumOfFactorType | ParsedEnumOfFeedRateMode | ParsedEnumOfKinematicsMode | ParsedEnumOfMachineCoolantState | ParsedEnumOfMachineMotionType | ParsedEnumOfMachineOverridesMode | ParsedEnumOfMachineProgramState | ParsedEnumOfMovementDistanceType | ParsedEnumOfPathControlMode | ParsedEnumOfSpindleSpeedMode | ParsedEnumOfStatusReportType | ParsedEnumOfTimingMode | ParsedEnumOfUnitType | ParsedString
+union IParsedValue = ParsedAxisFlags | ParsedBool | ParsedDecimal | ParsedEnumOfApplicatorRadiusCompensation | ParsedEnumOfAxisPlane | ParsedEnumOfCircleDirection | ParsedEnumOfEnabledType | ParsedEnumOfFactorType | ParsedEnumOfFeedRateMode | ParsedEnumOfKinematicsMode | ParsedEnumOfMachineCoolantState | ParsedEnumOfMachineMotionType | ParsedEnumOfMachineOverridesMode | ParsedEnumOfMachineProgramState | ParsedEnumOfMovementDistanceType | ParsedEnumOfPathControlMode | ParsedEnumOfSpindleSpeedMode | ParsedEnumOfStatusReportType | ParsedEnumOfTimingMode | ParsedEnumOfUnitType | ParsedString
 
 type AlertError {
     message: String!
@@ -81,7 +81,7 @@ type ControlledMachine {
     id: String!
     logs(after: String, before: String, first: Int, last: Int, order: [MachineLogEntrySortInput!], where: MachineLogEntryFilterInput): MachineLogEntryConnection
     machineProfileId: String
-    program: Program
+    program: ProgramExecutor
     settings: FirmwareSettings!
     status: MachineStatus!
     timeline(after: String, before: String, first: Int, last: Int): MachineTimelineNodeConnection
@@ -97,7 +97,6 @@ type Controller {
     help: MachineExecutionResult!
     homing: MachineExecutionResult!
     id: String!
-    loadProgram(filePath: String!): Program!
     move(moveCommand: MoveCommandInput!): MachineExecutionResult!
     parameters: MachineExecutionResult!
     pause: MachineExecutionResult!
@@ -107,10 +106,10 @@ type Controller {
     setFirmwareSettings(settingChanges: [FirmwareSettingChangeInput!]!): [MachineExecutionResult!]!
     setModal(change: ModalChangeInput!): MachineExecutionResult!
     settings: MachineExecutionResult!
+    startTask: Controller!
     startup: MachineExecutionResult!
     status: MachineExecutionResult!
     unlock: MachineExecutionResult!
-    uploadProgram(upload: ProgramFileUploadInput!): Program!
     writeCommand(commandCode: String!, sourceName: String!): MachineExecutionResult!
 }
 
@@ -126,6 +125,7 @@ type EventSettings {
 type FileSystemSettings {
     documentsDirectory: String
     mountPoints: [MountPointSettings!]!
+    programsDirectory: String!
 }
 
 type FirmwareApplicatorSettings {
@@ -362,13 +362,13 @@ type KeyValuePairOfApplicatorRadiusCompensationAndInt32 {
     value: Int!
 }
 
-type KeyValuePairOfApplicatorSpinDirectionAndInt32 {
-    key: ApplicatorSpinDirection!
+type KeyValuePairOfAxisPlaneAndInt32 {
+    key: AxisPlane!
     value: Int!
 }
 
-type KeyValuePairOfAxisPlaneAndInt32 {
-    key: AxisPlane!
+type KeyValuePairOfCircleDirectionAndInt32 {
+    key: CircleDirection!
     value: Int!
 }
 
@@ -457,7 +457,7 @@ type MachineApplicatorState {
     lengthOffsetFactorType: ModalSettingOfFactorType!
     probePosition: MachinePosition
     radiusCompensation: ModalSettingOfApplicatorRadiusCompensation!
-    spinDirection: ModalSettingOfApplicatorSpinDirection!
+    spinDirection: ModalSettingOfCircleDirection!
     spinSpeed: FirmwareSettingOfDecimal!
     temperature: FirmwareSettingOfDecimal!
     toolId: FirmwareSettingOfString!
@@ -642,6 +642,7 @@ type MachineModals {
 
 type MachineMovement {
     a: Decimal
+    arcDirection: CircleDirection
     b: Decimal
     c: Decimal
     dwell: Decimal
@@ -804,15 +805,15 @@ type ModalOptionOfApplicatorRadiusCompensation {
     value: String!
 }
 
-type ModalOptionOfApplicatorSpinDirection {
-    code: String!
-    data: ApplicatorSpinDirection!
-    value: String!
-}
-
 type ModalOptionOfAxisPlane {
     code: String!
     data: AxisPlane!
+    value: String!
+}
+
+type ModalOptionOfCircleDirection {
+    code: String!
+    data: CircleDirection!
     value: String!
 }
 
@@ -911,23 +912,6 @@ type ModalSettingOfApplicatorRadiusCompensation {
     valueCode: String!
 }
 
-type ModalSettingOfApplicatorSpinDirection {
-    comment: String
-    currentValue: IParsedValue
-    data: ApplicatorSpinDirection!
-    hasBeenRead: Boolean!
-    id: String!
-    index: Int!
-    key: String!
-    mutation(value: ApplicatorSpinDirection!): InstructionStep!
-    options: [ModalOptionOfApplicatorSpinDirection!]!
-    settingType: MachineSettingType!
-    title: String
-    units: MachineSettingUnits!
-    value: String!
-    valueCode: String!
-}
-
 type ModalSettingOfAxisPlane {
     comment: String
     currentValue: IParsedValue
@@ -938,6 +922,23 @@ type ModalSettingOfAxisPlane {
     key: String!
     mutation(value: AxisPlane!): InstructionStep!
     options: [ModalOptionOfAxisPlane!]!
+    settingType: MachineSettingType!
+    title: String
+    units: MachineSettingUnits!
+    value: String!
+    valueCode: String!
+}
+
+type ModalSettingOfCircleDirection {
+    comment: String
+    currentValue: IParsedValue
+    data: CircleDirection!
+    hasBeenRead: Boolean!
+    id: String!
+    index: Int!
+    key: String!
+    mutation(value: CircleDirection!): InstructionStep!
+    options: [ModalOptionOfCircleDirection!]!
     settingType: MachineSettingType!
     title: String
     units: MachineSettingUnits!
@@ -1180,8 +1181,11 @@ type Mutation {
     deleteWorkspace(workspaceId: String!): Workspace!
     openPort(firmware: FirmwareRequirementInput!, options: SerialPortOptionsInput!, portName: String!): SystemPort!
     openWorkspace(workspaceId: String!): Workspace!
+    "Create a metadata object to represent a file selection before uploading."
+    selectProgramFile(fileUpload: ClientFileUploadInput!): ProgramFileMeta!
     updateWorkspace(workspaceSettings: WorkspaceSettingsInput!): Workspace!
-    uploadProgram(fileUpload: ProgramFileUploadInput!): ProgramFile!
+    "Accept the text (body) of a file and (over)write the file on the server."
+    uploadProgramFile(fileUpload: ProgramFileUploadInput!): ProgramFile!
 }
 
 type OpenControllerSession {
@@ -1246,18 +1250,18 @@ type ParsedEnumOfApplicatorRadiusCompensation {
     values: [KeyValuePairOfApplicatorRadiusCompensationAndInt32!]!
 }
 
-type ParsedEnumOfApplicatorSpinDirection {
-    valueCode: String!
-    valueEnum: ApplicatorSpinDirection!
-    valueString: String!
-    values: [KeyValuePairOfApplicatorSpinDirectionAndInt32!]!
-}
-
 type ParsedEnumOfAxisPlane {
     valueCode: String!
     valueEnum: AxisPlane!
     valueString: String!
     values: [KeyValuePairOfAxisPlaneAndInt32!]!
+}
+
+type ParsedEnumOfCircleDirection {
+    valueCode: String!
+    valueEnum: CircleDirection!
+    valueString: String!
+    values: [KeyValuePairOfCircleDirectionAndInt32!]!
 }
 
 type ParsedEnumOfEnabledType {
@@ -1386,26 +1390,35 @@ type PortStatus {
     linesWritten: Int!
 }
 
-type Program {
+type ProgramExecutor {
     currentInstruction: ProgramInstruction
     id: String!
     instructionCount: Int!
     instructionIndex: Int!
-    instructions: [ProgramInstruction!]!
+    instructions(after: String, before: String, first: Int, last: Int, order: [ProgramInstructionSortInput!], where: MachineLogEntryFilterInput): ProgramInstructionConnection
     programFile: ProgramFile!
-    state: ProgramState!
+    state: ExecutionState!
 }
 
 type ProgramFile {
     id: String!
     instructionCount: Int!
     instructions: [CompiledInstruction!]!
+    lineCount: Int!
+    lines: [CompiledInstruction!]!
     meta: ProgramFileMeta!
 }
 
+type ProgramFileDirectory {
+    allPrograms: [ProgramFileMeta!]!
+    fileExtensions: [String!]!
+    path: String!
+}
+
 type ProgramFileMeta {
-    directory: String
-    isUpload: Boolean!
+    directory: String!
+    fileExists: Boolean!
+    filePath: String!
     lastModified: Long!
     name: String!
     size: Long!
@@ -1419,6 +1432,24 @@ type ProgramInstruction {
     steps: [InstructionStep!]!
 }
 
+"A connection to a list of items."
+type ProgramInstructionConnection {
+    "A list of edges."
+    edges: [ProgramInstructionEdge!]
+    "A flattened list of the nodes."
+    nodes: [ProgramInstruction!]
+    "Information to aid in pagination."
+    pageInfo: PageInfo!
+}
+
+"An edge in a connection."
+type ProgramInstructionEdge {
+    "A cursor for use in pagination."
+    cursor: String!
+    "The item at the end of the edge."
+    node: ProgramInstruction!
+}
+
 type Query {
     authenticate(token: String!): OpenControllerSession!
     getPort(portName: String!): SystemPort!
@@ -1426,17 +1457,21 @@ type Query {
     getWorkspace(workspaceId: String!): Workspace!
     listPorts: [SystemPort!]!
     listWorkspaces: [Workspace!]!
+    "Open a program file by its name, parsing the contents."
+    loadProgram(name: String!): ProgramFile!
     machineProfile(id: String!): MachineProfile!
     machineProfileCount: Int!
     machineProfiles(query: String): [MachineProfile!]!
     me: UserProfile
-    programs: [ProgramFile!]!
+    "List all of the programs which exist in the program directory."
+    programDirectory: ProgramFileDirectory!
     userProfile(id: String!): UserProfile!
 }
 
 type Subscription {
     onMachineConfiguration(portName: String!): ControlledMachine!
     onMachineLog(portName: String!): ControlledMachine!
+    onMachineProgram(portName: String!): ControlledMachine!
     onMachineSetting(portName: String!): ControlledMachine!
     onMachineStatus(portName: String!): ControlledMachine!
     onPortChange: SystemPort!
@@ -1454,6 +1489,8 @@ type SyntaxChunk {
 
 type SyntaxLine {
     chunks: [SyntaxChunk!]!
+    hasCode: Boolean!
+    isValid: Boolean!
     raw: String!
 }
 
@@ -1522,12 +1559,6 @@ enum ApplicatorRadiusCompensation {
     RIGHT
 }
 
-enum ApplicatorSpinDirection {
-    CCW
-    CW
-    NONE
-}
-
 enum ApplyPolicy {
     AFTER_RESOLVER
     BEFORE_RESOLVER
@@ -1561,9 +1592,22 @@ enum BaudRate {
     BR9600
 }
 
+enum CircleDirection {
+    CCW
+    CW
+    NONE
+}
+
 enum EnabledType {
     DISABLED
     ENABLED
+}
+
+enum ExecutionState {
+    COMPLETE
+    PAUSED
+    READY
+    RUNNING
 }
 
 enum FactorType {
@@ -1790,13 +1834,6 @@ enum PortState {
     UNPLUGGED
 }
 
-enum ProgramState {
-    COMPLETE
-    PAUSED
-    READY
-    RUNNING
-}
-
 enum ProgramSyntax {
     G_CODE
 }
@@ -1868,6 +1905,13 @@ input BooleanOperationFilterInput {
     neq: Boolean
 }
 
+input ClientFileUploadInput {
+    lastModified: Long!
+    name: String!
+    size: Long!
+    type: String!
+}
+
 input ComparableDateTimeOperationFilterInput {
     eq: DateTime
     gt: DateTime
@@ -1896,6 +1940,11 @@ input ComparableInt32OperationFilterInput {
     nin: [Int!]
     nlt: Int
     nlte: Int
+}
+
+input CompiledInstructionSortInput {
+    line: SyntaxLineSortInput
+    source: SortEnumType
 }
 
 input ConnectionSettingsInput {
@@ -2098,6 +2147,11 @@ input ProgramFileUploadInput {
     type: String!
 }
 
+input ProgramInstructionSortInput {
+    compiledInstruction: CompiledInstructionSortInput
+    index: SortEnumType
+}
+
 input SerialPortOptionsInput {
     baudRate: Int!
     dataBits: Int
@@ -2142,6 +2196,12 @@ input SyntaxChunkFilterInput {
     or: [SyntaxChunkFilterInput!]
     type: SyntaxTypeOperationFilterInput
     value: StringOperationFilterInput
+}
+
+input SyntaxLineSortInput {
+    hasCode: SortEnumType
+    isValid: SortEnumType
+    raw: SortEnumType
 }
 
 input SyntaxTypeOperationFilterInput {

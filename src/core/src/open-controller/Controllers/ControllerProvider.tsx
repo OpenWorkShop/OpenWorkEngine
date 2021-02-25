@@ -2,7 +2,9 @@ import * as React from 'react';
 import {
   useMachineConfigurationSubscription,
   useMachineStatusSubscription,
-  useMachineSettingsSubscription, useMachineLogsSubscription,
+  useMachineSettingsSubscription,
+  useMachineLogsSubscription,
+  useMachineProgramSubscription,
 } from '../graphql';
 import {useLogger} from '../../hooks';
 import {useDispatch} from 'react-redux';
@@ -55,6 +57,15 @@ const ControllerProvider: React.FunctionComponent<Props> = (props) => {
       dispatch(controllersSlice.actions.onControlledMachineLogPage(newMachineLogs));
     }
   }, [newMachineLogs]);
+
+  const onMachineProgramChanged = useMachineProgramSubscription({ variables });
+  const newMachineProgram = onMachineProgramChanged?.data?.machine;
+  React.useEffect(() => {
+    if (newMachineProgram) {
+      log.debug('[MACHINE]', '[PROGRAM]', newMachineProgram);
+      dispatch(controllersSlice.actions.onControlledMachineProgram(newMachineProgram));
+    }
+  }, [newMachineProgram]);
 
   log.verbose('machine', variables);
 

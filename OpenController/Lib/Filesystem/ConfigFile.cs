@@ -8,6 +8,8 @@ namespace OpenWorkEngine.OpenController.Lib.Filesystem {
 
     public ConfigFile(ILogger logger) : base(logger, "./.makerverse") { }
 
+    public OpenControllerSettings Settings => Data ?? new OpenControllerSettings();
+
     protected override void OnChanged(OpenControllerSettings data) {
       base.OnChanged(data);
       // Log.Information("Users: {users}", Data.Users);

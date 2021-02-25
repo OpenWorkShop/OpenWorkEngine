@@ -34,7 +34,7 @@ namespace OpenWorkEngine.OpenController.Machines.Models {
 
     public FirmwareSettings Settings { get; } = new();
 
-    public Program? Program { get; internal set; }
+    public ProgramExecutor? Program { get; internal set; }
 
     [UsePaging]
     [UseFiltering(typeof(MachineLogEntryFilterInputType))]

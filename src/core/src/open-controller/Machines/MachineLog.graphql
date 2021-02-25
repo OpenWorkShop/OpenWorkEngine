@@ -30,8 +30,10 @@ fragment MachineTimelineNodeConnection on MachineTimelineNodeConnection {
 }
 
 fragment PageInfo on PageInfo {
+    startCursor
     endCursor
     hasNextPage
+    hasPreviousPage
 }
 
 fragment MachineTimelineNode on MachineTimelineNode {

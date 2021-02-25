@@ -1,15 +1,15 @@
-import {ProgramFragment} from '../graphql';
+import {ProgramExecutorFragment} from '../graphql';
 
 class OpenProgram {
   public get id(): string { return this._program.id; }
 
-  private _program: ProgramFragment;
+  private _program: ProgramExecutorFragment;
 
-  public constructor(program: ProgramFragment) {
+  public constructor(program: ProgramExecutorFragment) {
     this._program = program;
   }
 
-  public update(program: ProgramFragment) {
+  public update(program: ProgramExecutorFragment) {
     this._program = program;
   }
 }
