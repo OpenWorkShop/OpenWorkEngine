@@ -1460,6 +1460,8 @@ export type Mutation = {
   controlMachine: Controller;
   createWorkspace: Workspace;
   deleteWorkspace: Workspace;
+  /** Open a program file by its name, parsing the contents. */
+  loadProgram: ProgramFile;
   openPort: SystemPort;
   openWorkspace: Workspace;
   /** Create a metadata object to represent a file selection before uploading. */
@@ -1492,6 +1494,10 @@ export type MutationCreateWorkspaceArgs = {
 
 export type MutationDeleteWorkspaceArgs = {
   workspaceId: Scalars['String'];
+};
+
+export type MutationLoadProgramArgs = {
+  name: Scalars['String'];
 };
 
 export type MutationOpenPortArgs = {
@@ -1777,13 +1783,14 @@ export type ProgramFile = {
 
 export type ProgramFileDirectory = {
   __typename?: 'ProgramFileDirectory';
-  allPrograms: Array<ProgramFileMeta>;
   fileExtensions: Array<Scalars['String']>;
   path: Scalars['String'];
+  programFileMetas: Array<ProgramFileMeta>;
 };
 
 export type ProgramFileMeta = {
   __typename?: 'ProgramFileMeta';
+  data: Maybe<ProgramFileMetaData>;
   directory: Scalars['String'];
   fileExists: Scalars['Boolean'];
   filePath: Scalars['String'];
@@ -1792,6 +1799,20 @@ export type ProgramFileMeta = {
   size: Scalars['Long'];
   syntax: ProgramSyntax;
   type: Scalars['String'];
+};
+
+export type ProgramFileMetaData = {
+  __typename?: 'ProgramFileMetaData';
+  revisions: Array<ProgramFileRevision>;
+  tags: Array<Scalars['String']>;
+};
+
+export type ProgramFileRevision = {
+  __typename?: 'ProgramFileRevision';
+  checksum: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  id: Scalars['Int'];
+  username: Scalars['String'];
 };
 
 export type ProgramInstruction = {
@@ -1829,8 +1850,6 @@ export type Query = {
   getWorkspace: Workspace;
   listPorts: Array<SystemPort>;
   listWorkspaces: Array<Workspace>;
-  /** Open a program file by its name, parsing the contents. */
-  loadProgram: ProgramFile;
   machineProfile: MachineProfile;
   machineProfileCount: Scalars['Int'];
   machineProfiles: Array<MachineProfile>;
@@ -1850,10 +1869,6 @@ export type QueryGetPortArgs = {
 
 export type QueryGetWorkspaceArgs = {
   workspaceId: Scalars['String'];
-};
-
-export type QueryLoadProgramArgs = {
-  name: Scalars['String'];
 };
 
 export type QueryMachineProfileArgs = {
@@ -2967,6 +2982,8 @@ export type ResolversTypes = {
   ProgramFile: ResolverTypeWrapper<ProgramFile>;
   ProgramFileDirectory: ResolverTypeWrapper<ProgramFileDirectory>;
   ProgramFileMeta: ResolverTypeWrapper<ProgramFileMeta>;
+  ProgramFileMetaData: ResolverTypeWrapper<ProgramFileMetaData>;
+  ProgramFileRevision: ResolverTypeWrapper<ProgramFileRevision>;
   ProgramInstruction: ResolverTypeWrapper<ProgramInstruction>;
   ProgramInstructionConnection: ResolverTypeWrapper<ProgramInstructionConnection>;
   ProgramInstructionEdge: ResolverTypeWrapper<ProgramInstructionEdge>;
@@ -3288,6 +3305,8 @@ export type ResolversParentTypes = {
   ProgramFile: ProgramFile;
   ProgramFileDirectory: ProgramFileDirectory;
   ProgramFileMeta: ProgramFileMeta;
+  ProgramFileMetaData: ProgramFileMetaData;
+  ProgramFileRevision: ProgramFileRevision;
   ProgramInstruction: ProgramInstruction;
   ProgramInstructionConnection: ProgramInstructionConnection;
   ProgramInstructionEdge: ProgramInstructionEdge;
@@ -5183,6 +5202,12 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationDeleteWorkspaceArgs, 'workspaceId'>
   >;
+  loadProgram: Resolver<
+    ResolversTypes['ProgramFile'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationLoadProgramArgs, 'name'>
+  >;
   openPort: Resolver<
     ResolversTypes['SystemPort'],
     ParentType,
@@ -5560,9 +5585,9 @@ export type ProgramFileDirectoryResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['ProgramFileDirectory'] = ResolversParentTypes['ProgramFileDirectory']
 > = {
-  allPrograms: Resolver<Array<ResolversTypes['ProgramFileMeta']>, ParentType, ContextType>;
   fileExtensions: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
   path: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  programFileMetas: Resolver<Array<ResolversTypes['ProgramFileMeta']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -5570,6 +5595,7 @@ export type ProgramFileMetaResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['ProgramFileMeta'] = ResolversParentTypes['ProgramFileMeta']
 > = {
+  data: Resolver<Maybe<ResolversTypes['ProgramFileMetaData']>, ParentType, ContextType>;
   directory: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   fileExists: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   filePath: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -5578,6 +5604,26 @@ export type ProgramFileMetaResolvers<
   size: Resolver<ResolversTypes['Long'], ParentType, ContextType>;
   syntax: Resolver<ResolversTypes['ProgramSyntax'], ParentType, ContextType>;
   type: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProgramFileMetaDataResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ProgramFileMetaData'] = ResolversParentTypes['ProgramFileMetaData']
+> = {
+  revisions: Resolver<Array<ResolversTypes['ProgramFileRevision']>, ParentType, ContextType>;
+  tags: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProgramFileRevisionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ProgramFileRevision'] = ResolversParentTypes['ProgramFileRevision']
+> = {
+  checksum: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  createdAt: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  username: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -5630,12 +5676,6 @@ export type QueryResolvers<
   >;
   listPorts: Resolver<Array<ResolversTypes['SystemPort']>, ParentType, ContextType>;
   listWorkspaces: Resolver<Array<ResolversTypes['Workspace']>, ParentType, ContextType>;
-  loadProgram: Resolver<
-    ResolversTypes['ProgramFile'],
-    ParentType,
-    ContextType,
-    RequireFields<QueryLoadProgramArgs, 'name'>
-  >;
   machineProfile: Resolver<
     ResolversTypes['MachineProfile'],
     ParentType,
@@ -5951,6 +5991,8 @@ export type Resolvers<ContextType = any> = {
   ProgramFile: ProgramFileResolvers<ContextType>;
   ProgramFileDirectory: ProgramFileDirectoryResolvers<ContextType>;
   ProgramFileMeta: ProgramFileMetaResolvers<ContextType>;
+  ProgramFileMetaData: ProgramFileMetaDataResolvers<ContextType>;
+  ProgramFileRevision: ProgramFileRevisionResolvers<ContextType>;
   ProgramInstruction: ProgramInstructionResolvers<ContextType>;
   ProgramInstructionConnection: ProgramInstructionConnectionResolvers<ContextType>;
   ProgramInstructionEdge: ProgramInstructionEdgeResolvers<ContextType>;
@@ -6702,10 +6744,19 @@ export type ProgramInstructionFragment = { __typename?: 'ProgramInstruction' } &
   steps: Array<{ __typename?: 'InstructionStep' } & InstructionStepFragment>;
 };
 
+export type ProgramFileRevisionFragment = { __typename?: 'ProgramFileRevision' } & Pick<
+  ProgramFileRevision,
+  'id' | 'username' | 'createdAt'
+>;
+
+export type ProgramFileMetaDataFragment = { __typename?: 'ProgramFileMetaData' } & Pick<ProgramFileMetaData, 'tags'> & {
+    revisions: Array<{ __typename?: 'ProgramFileRevision' } & ProgramFileRevisionFragment>;
+  };
+
 export type ProgramFileMetaFragment = { __typename?: 'ProgramFileMeta' } & Pick<
   ProgramFileMeta,
   'name' | 'lastModified' | 'size' | 'type' | 'directory' | 'syntax' | 'fileExists' | 'filePath'
->;
+> & { data: Maybe<{ __typename?: 'ProgramFileMetaData' } & ProgramFileMetaDataFragment> };
 
 export type ProgramFileFragment = { __typename?: 'ProgramFile' } & Pick<
   ProgramFile,
@@ -6728,7 +6779,7 @@ export type ProgramExecutorFragment = { __typename?: 'ProgramExecutor' } & Pick<
 export type ProgramFileDirectoryFragment = { __typename?: 'ProgramFileDirectory' } & Pick<
   ProgramFileDirectory,
   'path' | 'fileExtensions'
-> & { allPrograms: Array<{ __typename?: 'ProgramFileMeta' } & ProgramFileMetaFragment> };
+> & { programFileMetas: Array<{ __typename?: 'ProgramFileMeta' } & ProgramFileMetaFragment> };
 
 export type SelectProgramFileMutationVariables = Exact<{
   fileUpload: ClientFileUploadInput;
@@ -6752,11 +6803,11 @@ export type ProgramDirectoryQuery = { __typename?: 'Query' } & {
   programFileDirectory: { __typename?: 'ProgramFileDirectory' } & ProgramFileDirectoryFragment;
 };
 
-export type LoadProgramQueryVariables = Exact<{
+export type LoadProgramMutationVariables = Exact<{
   name: Scalars['String'];
 }>;
 
-export type LoadProgramQuery = { __typename?: 'Query' } & {
+export type LoadProgramMutation = { __typename?: 'Mutation' } & {
   programFile: { __typename?: 'ProgramFile' } & ProgramFileFragment;
 };
 
@@ -7738,6 +7789,22 @@ export const ProgramInstructionFragmentDoc = gql`
   }
   ${InstructionStepFragmentDoc}
 `;
+export const ProgramFileRevisionFragmentDoc = gql`
+  fragment ProgramFileRevision on ProgramFileRevision {
+    id
+    username
+    createdAt
+  }
+`;
+export const ProgramFileMetaDataFragmentDoc = gql`
+  fragment ProgramFileMetaData on ProgramFileMetaData {
+    tags
+    revisions {
+      ...ProgramFileRevision
+    }
+  }
+  ${ProgramFileRevisionFragmentDoc}
+`;
 export const ProgramFileMetaFragmentDoc = gql`
   fragment ProgramFileMeta on ProgramFileMeta {
     name
@@ -7748,7 +7815,11 @@ export const ProgramFileMetaFragmentDoc = gql`
     syntax
     fileExists
     filePath
+    data {
+      ...ProgramFileMetaData
+    }
   }
+  ${ProgramFileMetaDataFragmentDoc}
 `;
 export const ProgramFileFragmentDoc = gql`
   fragment ProgramFile on ProgramFile {
@@ -8120,7 +8191,7 @@ export const ProgramFileDirectoryFragmentDoc = gql`
   fragment ProgramFileDirectory on ProgramFileDirectory {
     path
     fileExtensions
-    allPrograms {
+    programFileMetas {
       ...ProgramFileMeta
     }
   }
@@ -9185,41 +9256,40 @@ export type ProgramDirectoryQueryHookResult = ReturnType<typeof useProgramDirect
 export type ProgramDirectoryLazyQueryHookResult = ReturnType<typeof useProgramDirectoryLazyQuery>;
 export type ProgramDirectoryQueryResult = Apollo.QueryResult<ProgramDirectoryQuery, ProgramDirectoryQueryVariables>;
 export const LoadProgramDocument = gql`
-  query LoadProgram($name: String!) {
+  mutation LoadProgram($name: String!) {
     programFile: loadProgram(name: $name) {
       ...ProgramFile
     }
   }
   ${ProgramFileFragmentDoc}
 `;
+export type LoadProgramMutationFn = Apollo.MutationFunction<LoadProgramMutation, LoadProgramMutationVariables>;
 
 /**
- * __useLoadProgramQuery__
+ * __useLoadProgramMutation__
  *
- * To run a query within a React component, call `useLoadProgramQuery` and pass it any options that fit your needs.
- * When your component renders, `useLoadProgramQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
+ * To run a mutation, you first call `useLoadProgramMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoadProgramMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
  *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const { data, loading, error } = useLoadProgramQuery({
+ * const [loadProgramMutation, { data, loading, error }] = useLoadProgramMutation({
  *   variables: {
  *      name: // value for 'name'
  *   },
  * });
  */
-export function useLoadProgramQuery(baseOptions: Apollo.QueryHookOptions<LoadProgramQuery, LoadProgramQueryVariables>) {
-  return Apollo.useQuery<LoadProgramQuery, LoadProgramQueryVariables>(LoadProgramDocument, baseOptions);
-}
-export function useLoadProgramLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<LoadProgramQuery, LoadProgramQueryVariables>,
+export function useLoadProgramMutation(
+  baseOptions?: Apollo.MutationHookOptions<LoadProgramMutation, LoadProgramMutationVariables>,
 ) {
-  return Apollo.useLazyQuery<LoadProgramQuery, LoadProgramQueryVariables>(LoadProgramDocument, baseOptions);
+  return Apollo.useMutation<LoadProgramMutation, LoadProgramMutationVariables>(LoadProgramDocument, baseOptions);
 }
-export type LoadProgramQueryHookResult = ReturnType<typeof useLoadProgramQuery>;
-export type LoadProgramLazyQueryHookResult = ReturnType<typeof useLoadProgramLazyQuery>;
-export type LoadProgramQueryResult = Apollo.QueryResult<LoadProgramQuery, LoadProgramQueryVariables>;
+export type LoadProgramMutationHookResult = ReturnType<typeof useLoadProgramMutation>;
+export type LoadProgramMutationResult = Apollo.MutationResult<LoadProgramMutation>;
+export type LoadProgramMutationOptions = Apollo.BaseMutationOptions<LoadProgramMutation, LoadProgramMutationVariables>;
 export const MachineProgramDocument = gql`
   subscription MachineProgram($portName: String!) {
     machine: onMachineProgram(portName: $portName) {

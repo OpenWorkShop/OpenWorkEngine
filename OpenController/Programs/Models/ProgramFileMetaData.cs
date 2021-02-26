@@ -7,11 +7,6 @@ namespace OpenWorkEngine.OpenController.Programs.Models {
   /// </summary>
   public class ProgramFileMetaData {
     /// <summary>
-    /// The name of the user who created the file.
-    /// </summary>
-    [JsonProperty("creatorUsername")] public string CreatorUsername { get; internal init; } = default!;
-
-    /// <summary>
     /// Generic tags on the program file
     /// </summary>
     [JsonProperty("tags")] public List<string> Tags { get; } = new();

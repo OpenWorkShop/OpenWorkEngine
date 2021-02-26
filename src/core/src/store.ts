@@ -15,12 +15,14 @@ import {
   ReducersMapObject,
   Store,
 } from '@reduxjs/toolkit';
+import { ProgramsState } from './open-controller/Programs/types';
 
 export interface IOwsState extends IApiState {
   oidc: Oidc.UserState;
   gWiz: GWizState;
   workspaces: WorkspacesState;
   controllers: ControllersState;
+  programs: ProgramsState;
 }
 
 export type ReducersTypes = AnyAction;

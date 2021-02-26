@@ -18,6 +18,18 @@ fragment ProgramInstruction on ProgramInstruction {
     }
 }
 
+fragment ProgramFileRevision on ProgramFileRevision {
+    id
+    username
+    createdAt
+    # checksum
+}
+
+fragment ProgramFileMetaData on ProgramFileMetaData {
+    tags
+    revisions { ...ProgramFileRevision }
+}
+
 fragment ProgramFileMeta on ProgramFileMeta {
     name
     lastModified
@@ -27,6 +39,7 @@ fragment ProgramFileMeta on ProgramFileMeta {
     syntax
     fileExists
     filePath
+    data { ...ProgramFileMetaData }
 }
 
 fragment ProgramFile on ProgramFile {
@@ -53,7 +66,7 @@ fragment ProgramExecutor on ProgramExecutor {
 fragment ProgramFileDirectory on ProgramFileDirectory {
     path
     fileExtensions
-    allPrograms { ...ProgramFileMeta }
+    programFileMetas { ...ProgramFileMeta }
 }
 
 mutation SelectProgramFile($fileUpload: ClientFileUploadInput!) {
@@ -68,7 +81,7 @@ query ProgramDirectory {
     programFileDirectory: programDirectory { ...ProgramFileDirectory }
 }
 
-query LoadProgram($name: String!) {
+mutation LoadProgram($name: String!) {
     programFile: loadProgram(name: $name) { ...ProgramFile }
 }
 

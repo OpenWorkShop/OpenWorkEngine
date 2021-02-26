@@ -1179,6 +1179,8 @@ type Mutation {
     controlMachine(workspaceId: String!): Controller!
     createWorkspace(workspaceSettings: WorkspaceSettingsInput!): Workspace!
     deleteWorkspace(workspaceId: String!): Workspace!
+    "Open a program file by its name, parsing the contents."
+    loadProgram(name: String!): ProgramFile!
     openPort(firmware: FirmwareRequirementInput!, options: SerialPortOptionsInput!, portName: String!): SystemPort!
     openWorkspace(workspaceId: String!): Workspace!
     "Create a metadata object to represent a file selection before uploading."
@@ -1410,12 +1412,13 @@ type ProgramFile {
 }
 
 type ProgramFileDirectory {
-    allPrograms: [ProgramFileMeta!]!
     fileExtensions: [String!]!
     path: String!
+    programFileMetas: [ProgramFileMeta!]!
 }
 
 type ProgramFileMeta {
+    data: ProgramFileMetaData
     directory: String!
     fileExists: Boolean!
     filePath: String!
@@ -1424,6 +1427,18 @@ type ProgramFileMeta {
     size: Long!
     syntax: ProgramSyntax!
     type: String!
+}
+
+type ProgramFileMetaData {
+    revisions: [ProgramFileRevision!]!
+    tags: [String!]!
+}
+
+type ProgramFileRevision {
+    checksum: String!
+    createdAt: DateTime!
+    id: Int!
+    username: String!
 }
 
 type ProgramInstruction {
@@ -1457,8 +1472,6 @@ type Query {
     getWorkspace(workspaceId: String!): Workspace!
     listPorts: [SystemPort!]!
     listWorkspaces: [Workspace!]!
-    "Open a program file by its name, parsing the contents."
-    loadProgram(name: String!): ProgramFile!
     machineProfile(id: String!): MachineProfile!
     machineProfileCount: Int!
     machineProfiles(query: String): [MachineProfile!]!

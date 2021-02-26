@@ -5,7 +5,7 @@ import HelpfulExponent from './HelpfulExponent';
 
 type Props = IHelpStep & {
   title: string;
-  variant?: 'h5' | 'h6' | 'subtitle1';
+  variant?: 'h5' | 'h6' | 'subtitle1' | 'subtitle2';
 };
 
 const HelpfulHeader: React.FunctionComponent<Props> = (props) => {

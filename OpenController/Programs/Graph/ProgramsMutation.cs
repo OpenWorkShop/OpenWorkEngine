@@ -24,5 +24,10 @@ namespace OpenWorkEngine.OpenController.Programs.Graph {
       [Service] ICurrentUser<OpenControllerUser> user,
       ProgramFileUpload fileUpload
     ) => await context.Programs.UploadFile(await user.GetProfile(), fileUpload);
+
+    [AuthorizeOpenControllerUser]
+    [GraphQLDescription("Open a program file by its name, parsing the contents.")]
+    public Task<ProgramFile> LoadProgram([Service] OpenControllerContext context, string name) =>
+      context.Programs.Load(name);
   }
 }

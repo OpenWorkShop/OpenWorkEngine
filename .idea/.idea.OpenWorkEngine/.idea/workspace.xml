@@ -6,16 +6,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="627b5cbe-4e90-410d-9ab6-326b1616b6e2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/ProgramFileTree.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/Makerverse.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Makerverse.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/src/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/src/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/src/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/OpenController.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/OpenController.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Programs/Graph/ProgramsMutation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Programs/Graph/ProgramsMutation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Programs/Graph/ProgramsQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Programs/Graph/ProgramsQuery.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenController/Programs/Models/ProgramFileMeta.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Programs/Models/ProgramFileMeta.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Programs/Models/ProgramFileRevision.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Programs/Models/ProgramFileRevision.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Programs/Models/ProgramFileMetaData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Programs/Models/ProgramFileMetaData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Programs/Services/ProgramFileDirectory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Programs/Services/ProgramFileDirectory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Programs/Services/ProgramFileManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Programs/Services/ProgramFileManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenControllerTests/files/hexagon-4.5w-4bit.nc" beforeDir="false" afterPath="$PROJECT_DIR$/OpenControllerTests/files/hexagon-4.5w-4bit.nc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Controllers/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Controllers/AuthController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Schema/IdentityQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Schema/IdentityQuery.cs" afterDir="false" />
@@ -31,6 +38,15 @@
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/OpenWorkShop.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/OpenWorkShop.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/StartupAuth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/StartupAuth.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/ci/openwork.shop.crt" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/ci/openwork.shop.crt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Programs/Programs.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Programs/Programs.graphql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Programs/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Programs/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/Plans.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/Plans.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/ProgramFileListMenu.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/ProgramFileUploadButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/ProgramFileUploadButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/graphql.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/graphql.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/redux.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/redux.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/schema.graphql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/store.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,8 +95,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/OpenController/Machines/Models/MachinePosition.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Machines/Models/MachineMovement.cs" />
       <option value="$PROJECT_DIR$/OpenController/Programs/Enums/ProgramState.cs" />
       <option value="$PROJECT_DIR$/OpenController/Programs/Enums/ExecutionState.cs" />
       <option value="$PROJECT_DIR$/OpenWorkShop/EfcDataSet.cs" />
@@ -106,17 +120,14 @@
       <option value="$PROJECT_DIR$/OpenController/Programs/Services/ProgramFileExtension.cs" />
       <option value="$PROJECT_DIR$/OpenController/Syntax/GCode/GCodeFileExtension.cs" />
       <option value="$PROJECT_DIR$/OpenController/Programs/Messages/ProgramFileExtension.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Programs/Graph/ProgramsQuery.cs" />
       <option value="$PROJECT_DIR$/Makerverse/gcode/hexagon-4.5w-4bit.nc" />
       <option value="$PROJECT_DIR$/Makerverse/gcode/hexagon-4.5w-4bit.nc copy" />
-      <option value="$PROJECT_DIR$/OpenController/Programs/Services/ProgramFileDirectory.cs" />
       <option value="$PROJECT_DIR$/OpenWorkShop/Lib/Auth/ICurrentUser.cs" />
       <option value="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Schema/IdentityQuery.cs" />
       <option value="$PROJECT_DIR$/OpenWorkShop/Lib/Auth/CurrentUser.cs" />
       <option value="$PROJECT_DIR$/OpenWorkShop/StartupAuth.cs" />
       <option value="$PROJECT_DIR$/OpenWorkShop/Lib/Auth/CurrentOpenWorkshopUser.cs" />
       <option value="$PROJECT_DIR$/OpenController/Identity/CurrentUser.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Programs/Graph/ProgramsMutation.cs" />
       <option value="$PROJECT_DIR$/OpenController/OpenControllerStartup.cs" />
       <option value="$PROJECT_DIR$/OpenController/OpenControllerContext.cs" />
       <option value="$PROJECT_DIR$/OpenController/Lib/ICurrentUser.cs" />
@@ -124,12 +135,17 @@
       <option value="$PROJECT_DIR$/OpenController/Workspaces/Models/Workspace.cs" />
       <option value="$PROJECT_DIR$/OpenController/Ports/Services/PortManager.cs" />
       <option value="$PROJECT_DIR$/OpenController/Lib/DateTimeExtensions.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Programs/Services/ProgramFileManager.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Programs/Models/ProgramFileMetaData.cs" />
       <option value="$PROJECT_DIR$/OpenController/Lib/DiffPatchMatch.cs" />
       <option value="$PROJECT_DIR$/OpenController/Programs/Models/ProgramFileRevision.cs" />
       <option value="$PROJECT_DIR$/OpenControllerTests/files/hexagon-4.5w-4bit.nc" />
+      <option value="$PROJECT_DIR$/OpenController/Programs/Models/ProgramFileMetaData.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Programs/Services/ProgramFileDirectory.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Programs/Services/ProgramFileManager.cs" />
+      <option value="$PROJECT_DIR$/Makerverse/gcode/.heart-050_thick-025_bit.nc.json" />
+      <option value="$PROJECT_DIR$/Makerverse/gcode/.backs.nc.json" />
       <option value="$PROJECT_DIR$/OpenController/Programs/Models/ProgramFileMeta.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Programs/Graph/ProgramsQuery.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Programs/Graph/ProgramsMutation.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1l4my4TnlSIUe2KMx2jkxdZSpZ6" />
@@ -274,7 +290,8 @@
       <workItem from="1613172963717" duration="3032000" />
       <workItem from="1613226001480" duration="71547000" />
       <workItem from="1613680615704" duration="53000" />
-      <workItem from="1613680722667" duration="56124000" />
+      <workItem from="1613680722667" duration="64692000" />
+      <workItem from="1614366271610" duration="3588000" />
     </task>
     <servers />
   </component>

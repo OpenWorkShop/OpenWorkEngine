@@ -19,7 +19,6 @@ const ProgramFileUploadButton: React.FunctionComponent<Props> = (props) => {
   const [file, setFile] = React.useState<File>();
 
   function onFilesChosen(files: FileList | null): void {
-    log.debug('files', files);
     setFile(files && files.length === 1 ? files[0] : undefined);
   }
 
@@ -30,7 +29,7 @@ const ProgramFileUploadButton: React.FunctionComponent<Props> = (props) => {
 
   return (
     <Button variant="outlined" className={className} component="label">
-      {t('Upload')}
+      {t('Import from My Computer')}
       <input
         type='file'
         hidden

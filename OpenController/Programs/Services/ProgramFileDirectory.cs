@@ -13,7 +13,7 @@ namespace OpenWorkEngine.OpenController.Programs.Services {
     public List<string> FileExtensions => new List<string>() {"gcode", "nc", "mpt", "mpf"};
 
     // List version of the programs (files) on disk, sorted.
-    public List<ProgramFileMeta> AllPrograms => allProgramFileMeta.Keys
+    public List<ProgramFileMeta> ProgramFileMetas => allProgramFileMeta.Keys
                                                                   .ToImmutableSortedSet()
                                                                   .Select(s => allProgramFileMeta[s])
                                                                   .ToList();
@@ -31,12 +31,22 @@ namespace OpenWorkEngine.OpenController.Programs.Services {
       Path = directoryPath;
       if (TryEnsureDirectory()) {
         allProgramFileMeta = Directory.EnumerateFiles(directoryPath)
-                                      .ToDictionary(f => f, f => new ProgramFileMeta(f));
+                                      .Where(f => !f.Split('/').Last().StartsWith(".") &&
+                                         FileExtensions.Any(ext => f.EndsWith($".{ext}")))
+                                      .Select(f => new ProgramFileMeta(f))
+                                      .ToDictionary(m => m.Name, m => m);
+        Log.Debug("[PGM] loaded all existing programs: {names}", ProgramFileMetas.Select(f => f.Name));
       }
     }
 
-    internal ProgramFileMeta GetProgramMeta(string name) => allProgramFileMeta.ContainsKey(name) ?
-      allProgramFileMeta[name] : throw new ArgumentException($"Program {name} does not exist in {Path}");
+    internal ProgramFileMeta GetProgramMeta(string name) {
+      string fp = System.IO.Path.Combine(Path, name);
+      bool fileExists = File.Exists(fp);
+      bool metaExists = allProgramFileMeta.ContainsKey(name);
+      if (fileExists != metaExists) throw new ArgumentException($"Directory mismatch; {name} has been changed.");
+      if (!metaExists) throw new ArgumentException($"Program {name} does not exist in {Path}");
+      return allProgramFileMeta[name];
+    }
 
     internal void EnsureDirectory() {
       if (!Directory.Exists(Path)) {
@@ -73,7 +83,7 @@ namespace OpenWorkEngine.OpenController.Programs.Services {
         allProgramFileMeta.Remove(name);
       }
 
-      Log.Debug("[CHANGE] [{type}] {name} @ {path}; files: {files}", e.ChangeType, e.Name, e.FullPath, AllPrograms);
+      Log.Debug("[CHANGE] [{type}] {name} @ {path}; files: {files}", e.ChangeType, e.Name, e.FullPath, ProgramFileMetas);
     }
 
     internal bool TryEnsureDirectory() {

@@ -37,6 +37,7 @@ namespace OpenWorkEngine.OpenController.Programs.Services {
         Log.Debug("[UPLOAD] {filename} from {username}", fileUpload.Name, user.Username);
         ProgramDirectory.EnsureDirectory();
         ProgramFileMeta meta = new (fileUpload, ProgramDirectory);
+        if (meta.Name.StartsWith(".")) throw new ArgumentException("File names may not begin with a dot.");
         DateTime mTime = (new DateTime(1970, 1, 1)).AddMilliseconds(fileUpload.LastModified);
         await meta.CreateRevision(user, fileUpload.Text, mTime);
         return await LoadFile(meta);
@@ -46,7 +47,14 @@ namespace OpenWorkEngine.OpenController.Programs.Services {
       }
     }
 
-    public Task<ProgramFile> Load(string name) => LoadFile(ProgramDirectory.GetProgramMeta(name));
+    public Task<ProgramFile> Load(string name) {
+      try {
+        return LoadFile(ProgramDirectory.GetProgramMeta(name));
+      } catch (Exception e) {
+        Log.Error(e, "Failed to load file.");
+        throw;
+      }
+    }
 
     private async Task<ProgramFile> LoadFile(ProgramFileMeta meta) {
       ProgramFile programFile = _loadedProgramFiles.GetOrAdd(meta.Name, (s) => new ProgramFile(meta, Log));

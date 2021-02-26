@@ -7,8 +7,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using DiffMatchPatch;
-using DiffPlex.DiffBuilder;
-using DiffPlex.DiffBuilder.Model;
 using HotChocolate.Language;
 using Newtonsoft.Json;
 using OpenWorkEngine.OpenController.Identity.Models;
@@ -113,16 +111,22 @@ namespace OpenWorkEngine.OpenController.Programs.Models {
     internal async Task CreateRevision(OpenControllerUser user, string text, DateTime mTime) {
       List<Patch> patches = await CreateRevertPatch(text);
       await Write(text, mTime);
+
+      ProgramFileRevision rev = new ProgramFileRevision() {
+        Id = (Data?.Revisions.Count ?? 0) + 1,
+        Checksum = ComputeChecksum(),
+        Username = user.Username,
+        CreatedAt = mTime
+      };
       if (Data == null) {
-        Data = new ProgramFileMetaData() {CreatorUsername = user.Username};
-      }
-      if (patches.Any()) {
-        ProgramFileRevision rev = new ProgramFileRevision() {
-          Id = Data.Revisions.Count, Checksum = ComputeChecksum(), Username = user.Username, CreatedAt = mTime
-        };
-        Data.Revisions.Push(rev);
+        Data = new ProgramFileMetaData();
+      } else if (patches.Any()) {
         await File.WriteAllTextAsync(GetPatchPath(rev.Id), Patcher.patch_toText(patches));
+      } else {
+        Log.Debug("[UPLOAD] file contents unchanged; no revision created.");
+        return;
       }
+      Data.Revisions.Push(rev);
       await File.WriteAllTextAsync(MetaDataPath, JsonConvert.SerializeObject(Data));
       InspectFile();
     }

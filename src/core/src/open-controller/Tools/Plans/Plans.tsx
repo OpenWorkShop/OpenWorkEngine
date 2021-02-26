@@ -7,10 +7,10 @@ import {MachineInstructionResultFragment, ProgramFileFragment} from '../../graph
 import LogLine from '../Terminal/LogLine';
 import {useLogger} from '../../../hooks';
 import SimpleDialog from '../../../components/Dialogs/SimpleDialog';
-import PreviewProgramFile from './PreviewProgramFile';
+import PreviewProgramFileDialog from './PreviewProgramFileDialog';
 import {useTrans} from '../../Context';
-import ProgramFileListMenu from './ProgramFileListMenu';
 import useStyles from './styles';
+import ProgramDirectoryDialog from './ProgramDirectoryDialog';
 
 const Plans: ToolBase = (props) => {
   const log = useLogger(Plans);
@@ -24,6 +24,7 @@ const Plans: ToolBase = (props) => {
 
   function openProgramFileDialog(programFile: ProgramFileFragment): void {
     log.debug('open program file dialog', programFile);
+    setSelectingFile(false);
     setSelectedProgramFile(programFile);
   }
 
@@ -32,36 +33,25 @@ const Plans: ToolBase = (props) => {
       {pendingInstructions.map(i => {
         return <LogLine key={i.writeLogEntry.id} logEntry={i.writeLogEntry} />;
       })}
-      <Grid item xs={6} className={classes.footer}>
+      <Grid item xs={12} className={classes.footer}>
         <FormControl fullWidth={true} >
           <Button
             variant="outlined"
-            className={classes.buttonLeft}
             onClick={() => setSelectingFile(true)}
           >
-            {t('Browse')}
+            {t('Open Gcode Program')}
           </Button>
         </FormControl>
       </Grid>
-      <Grid item xs={6} className={classes.footer}>
-        <FormControl fullWidth={true} >
-          <ProgramFileUploadButton className={classes.buttonRight} onUploaded={openProgramFileDialog} />
-        </FormControl>
-      </Grid>
-      <SimpleDialog
-        title={t('Select File')}
+      <ProgramDirectoryDialog
         open={selectingFile}
         onClose={() => setSelectingFile(false)}
-      >
-        {selectedProgramFile && <ProgramFileListMenu onLoaded={openProgramFileDialog} />}
-      </SimpleDialog>
-      <SimpleDialog
-        title={t('Gcode')}
-        open={Boolean(selectedProgramFile)}
-        onClose={() => setSelectedProgramFile(undefined)}
-      >
-        {selectedProgramFile && <PreviewProgramFile workspaceId={workspaceId} programFile={selectedProgramFile} />}
-      </SimpleDialog>
+        onSelected={openProgramFileDialog}
+      />
+      <PreviewProgramFileDialog
+        workspaceId={workspaceId}
+        programFile={selectedProgramFile}
+      />
     </Grid>
   );
 };
