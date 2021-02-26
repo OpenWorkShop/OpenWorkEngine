@@ -104,10 +104,9 @@
           </e>
         </e>
         <e p="GCode" t="Include">
-          <e p=".heart-050_thick-025_bit.nc.json" t="Include" />
+          <e p=".hexagon-4.5w-4bit-9.nc" t="Include" />
           <e p=".hexagon-4.5w-4bit.nc.json" t="Include" />
           <e p="backs.nc" t="Include" />
-          <e p="heart-050_thick-025_bit.nc" t="Include" />
           <e p="hexagon-4.5w-4bit.nc" t="Include" />
           <e p="test.nc" t="Include" />
         </e>
@@ -261,6 +260,7 @@
             <e p="ExecutionExtensions.cs" t="Include" />
           </e>
           <e p="ControllerPolicies.cs" t="Include" />
+          <e p="DiffPatchMatch.cs" t="Include" />
           <e p="ExceptionStatusCodes.cs" t="Include" />
           <e p="Filesystem" t="Include">
             <e p="ConfigFile.cs" t="Include" />

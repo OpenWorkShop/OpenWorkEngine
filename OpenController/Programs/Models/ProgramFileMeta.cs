@@ -1,7 +1,14 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
+using DiffMatchPatch;
+using DiffPlex.DiffBuilder;
+using DiffPlex.DiffBuilder.Model;
 using HotChocolate.Language;
 using Newtonsoft.Json;
 using OpenWorkEngine.OpenController.Identity.Models;
@@ -26,8 +33,16 @@ namespace OpenWorkEngine.OpenController.Programs.Models {
 
     private string MetaDataPath => Path.Combine(Directory, $".{Name}.json");
 
+    private string GetPatchPath(int id) => Path.Combine(Directory, $".{SpliceName($"-{id}")}");
+
     internal FileInfo LocalFile => _fileInfo ??= new FileInfo(FilePath);
     private FileInfo? _fileInfo;
+
+    internal string SpliceName(string part) {
+      return Name.Substring(0, Name.Length - LocalFile.Extension.Length) +
+        part +
+        Name.Substring(Name.Length - LocalFile.Extension.Length);
+    }
 
     public ProgramFileMeta(string filePath) {
       _fileInfo = new FileInfo(filePath);
@@ -56,6 +71,21 @@ namespace OpenWorkEngine.OpenController.Programs.Models {
       _fileInfo = new FileInfo(FilePath);
     }
 
+    internal string ComputeChecksum() {
+      using (FileStream fs = new FileStream(FilePath, FileMode.Open)) {
+        using (BufferedStream bs = new BufferedStream(fs)) {
+          using (SHA1Managed sha1 = new SHA1Managed()) {
+            byte[] hash = sha1.ComputeHash(bs);
+            StringBuilder formatted = new StringBuilder(2 * hash.Length);
+            foreach (byte b in hash) {
+              formatted.AppendFormat("{0:X2}", b);
+            }
+            return formatted.ToString();
+          }
+        }
+      }
+    }
+
     internal ProgramFileMetaData? LoadMetaData() {
       if (!File.Exists(MetaDataPath)) return Data = null;
       return Data = JsonConvert.DeserializeObject<ProgramFileMetaData>(File.ReadAllText(MetaDataPath));
@@ -70,12 +100,29 @@ namespace OpenWorkEngine.OpenController.Programs.Models {
       File.SetLastWriteTime(FilePath, mTime);
     }
 
+    private diff_match_patch Patcher => _patcher ??= new diff_match_patch();
+    private diff_match_patch? _patcher;
+
+    // Create a patch set going from the new text back to the old text (revert).
+    internal async Task<List<Patch>> CreateRevertPatch(string text) {
+      if (!FileExists) return new List<Patch>() { };
+      string oldText = await File.ReadAllTextAsync(FilePath);
+      return Patcher.patch_make(text, oldText);
+    }
+
     internal async Task CreateRevision(OpenControllerUser user, string text, DateTime mTime) {
+      List<Patch> patches = await CreateRevertPatch(text);
       await Write(text, mTime);
       if (Data == null) {
         Data = new ProgramFileMetaData() {CreatorUsername = user.Username};
       }
-      Data.Revisions.Push(new ProgramFileRevision() { Username = user.Username, CreatedAt = mTime });
+      if (patches.Any()) {
+        ProgramFileRevision rev = new ProgramFileRevision() {
+          Id = Data.Revisions.Count, Checksum = ComputeChecksum(), Username = user.Username, CreatedAt = mTime
+        };
+        Data.Revisions.Push(rev);
+        await File.WriteAllTextAsync(GetPatchPath(rev.Id), Patcher.patch_toText(patches));
+      }
       await File.WriteAllTextAsync(MetaDataPath, JsonConvert.SerializeObject(Data));
       InspectFile();
     }
