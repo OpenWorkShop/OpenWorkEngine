@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import HeaderBar from './HeaderBar';
 import SideDrawer from './SideDrawer';
 import useStyles from './styles';

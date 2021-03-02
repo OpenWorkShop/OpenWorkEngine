@@ -1,10 +1,7 @@
 import {controllersSlice} from '../Controllers';
 import React, {FunctionComponent} from 'react';
 import {useSystemPorts} from '../Ports';
-import {
-  ControlledMachineFragment,
-  WorkspaceState
-} from '../graphql';
+import {ControlledMachineFragment, WorkspaceState} from '../graphql';
 import ControllerProvider from '../Controllers/ControllerProvider';
 import Workspace from './Workspace';
 import {useDispatch} from 'react-redux';
@@ -12,6 +9,7 @@ import {useLogger} from '../../hooks';
 import {IHaveWorkspace} from './types';
 import {useWorkspaceSelector} from './hooks';
 import WorkspaceConnector from './WorkspaceConnector';
+
 export { default as WorkspaceStatus } from './WorkspaceStatus';
 export { default as WorkspaceConnector } from './WorkspaceConnector';
 export { default as WorkspaceUnitSelect } from './WorkspaceUnitSelect';

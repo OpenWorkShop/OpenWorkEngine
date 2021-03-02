@@ -1,10 +1,13 @@
 import {
   MachineCategory,
-  MachineCommandPropsFragment, MachineControllerType,
+  MachineCommandPropsFragment,
+  MachineControllerType,
   MachineFeaturePropsFragment,
-  MachineFirmwarePropsFragment, MachineSettingType, MachineSpecType,
+  MachineFirmwarePropsFragment,
+  MachinePartType,
+  MachineSettingType,
+  MachineSpecType,
 } from '../graphql';
-import {MachinePartType} from '../graphql';
 
 export interface IAxisProps {
   accuracy: number;

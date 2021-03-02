@@ -1,5 +1,5 @@
-import { getEnumTranslationKey } from '../../utils/i18n';
-import { MachinePartType } from '../graphql';
+import {getEnumTranslationKey} from '../../utils/i18n';
+import {MachinePartType} from '../graphql';
 
 export function getMachinePartTypeTranslationKey(mpt: MachinePartType | string): string {
   const str = mpt.toString();

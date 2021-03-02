@@ -1,4 +1,4 @@
-import {ProgramFileMetaFragment, ProgramFileFragment} from '../graphql';
+import {ProgramFileFragment, ProgramFileMetaFragment} from '../graphql';
 
 export type ProgramFileHandler = (programFile: ProgramFileFragment) => void;
 

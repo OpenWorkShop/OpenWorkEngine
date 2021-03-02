@@ -1,6 +1,7 @@
 import {
   AlertError,
-  ControlledMachineFragment, FirmwareSettingsTypedFragment,
+  ControlledMachineFragment,
+  FirmwareSettingsTypedFragment,
   MachineConfigFragment,
   MachineExecutionResultFragment,
   MachineLogEntryConnectionFragment,

@@ -1,5 +1,5 @@
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import { drawerWidthLg, drawerWidthSm } from '../../themes';
+import {makeStyles, Theme} from '@material-ui/core/styles';
+import {drawerWidthLg, drawerWidthSm} from '../../themes';
 
 const bkColor = '#dfdfdf';
 const drawerBreakpoint = 'sm';

@@ -1,13 +1,11 @@
 import * as React from 'react';
 import HelpfulHeader from '../../components/Text/HelpfulHeader';
 import {useTrans} from '../Context';
-import { faExclamationCircle, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faExclamationCircle} from '@fortawesome/free-solid-svg-icons';
 import {DetectedFirmwareFragment} from '../graphql';
-import { Grid, Tooltip } from '@material-ui/core';
+import {Grid, IconButton, Tooltip, Typography, useTheme} from '@material-ui/core';
 import useStyles from '../WorkBar/styles';
-import { Typography } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconButton, useTheme } from '@material-ui/core';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import ReactGA from 'react-ga';
 import {titlize} from '../../utils';
 import {useLogger} from '../../hooks';

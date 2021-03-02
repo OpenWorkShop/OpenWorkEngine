@@ -1,11 +1,7 @@
 /*eslint no-bitwise: ["error", { "allow": ["<<", "&", "&=", "|=", "~"] }] */
 import _ from 'lodash';
 import log from 'js-logger';
-import {
-    MASLOW,
-    GRBL,
-    TINYG,
-} from '../constants';
+import {GRBL, MASLOW, TINYG,} from '../constants';
 
 const GRBL_SETTINGS = {
     reportInInches: ['report in inches'],

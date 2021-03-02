@@ -1,10 +1,10 @@
-import {Typography } from '@material-ui/core';
+import {Typography} from '@material-ui/core';
 import useLogger from '../../utils/logging/UseLogger';
-import {AlertList, ToolbarCard, ThreeColumns} from '../../components/';
-import { User } from 'oidc-client';
-import React, { FunctionComponent } from 'react';
-import { Link } from 'react-router-dom';
-import { CallbackComponent } from 'redux-oidc';
+import {AlertList, ThreeColumns, ToolbarCard} from '../../components/';
+import {User} from 'oidc-client';
+import React, {FunctionComponent} from 'react';
+import {Link} from 'react-router-dom';
+import {CallbackComponent} from 'redux-oidc';
 import analytics from '../analytics';
 import {ReconnectRedirect} from '../Navigation';
 import useStyles from './styles';

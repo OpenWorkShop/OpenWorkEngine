@@ -1,9 +1,4 @@
-import {
-  AlertError,
-  WorkspacePortConnectionFragment,
-  WorkspaceFullSettingsFragment,
-  WorkspaceState,
-} from '../graphql';
+import {AlertError, WorkspaceFullSettingsFragment, WorkspacePortConnectionFragment, WorkspaceState,} from '../graphql';
 import {IconDefinition} from '@fortawesome/fontawesome-common-types';
 
 export interface IWorkspace {

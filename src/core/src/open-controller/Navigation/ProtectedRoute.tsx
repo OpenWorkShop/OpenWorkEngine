@@ -1,6 +1,6 @@
 import useLogger from '../../utils/logging/UseLogger';
-import React, { FunctionComponent } from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import React, {FunctionComponent} from 'react';
+import {Redirect, Route} from 'react-router-dom';
 import {IOpenController, useOpenController} from '../Context';
 
 interface OwnProps {

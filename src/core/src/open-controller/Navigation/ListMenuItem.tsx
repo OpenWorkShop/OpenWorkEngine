@@ -1,6 +1,6 @@
-import {ListItem, ListItemText, ListItemIcon, Typography, useTheme} from '@material-ui/core';
-import React, { FunctionComponent } from 'react';
-import { Link, LinkProps, useLocation } from 'react-router-dom';
+import {ListItem, ListItemIcon, ListItemText, Typography, useTheme} from '@material-ui/core';
+import React, {FunctionComponent} from 'react';
+import {Link, LinkProps, useLocation} from 'react-router-dom';
 import useStyles from './styles';
 
 interface OwnProps {

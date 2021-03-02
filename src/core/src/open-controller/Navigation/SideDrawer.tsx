@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import ListMenu from './ListMenu';
-import { Drawer } from '@material-ui/core';
+import {Drawer} from '@material-ui/core';
 import useStyles from './styles';
 import useLogger from '../../utils/logging/UseLogger';
 

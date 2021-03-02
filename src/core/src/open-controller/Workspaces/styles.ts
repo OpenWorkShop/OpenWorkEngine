@@ -1,4 +1,4 @@
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import {makeStyles, Theme} from '@material-ui/core/styles';
 import {borderBottomCss, workBarHeight} from '../../themes';
 
 export const toolBarSize = 44;

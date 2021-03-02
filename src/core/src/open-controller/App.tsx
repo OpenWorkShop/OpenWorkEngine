@@ -4,8 +4,7 @@ import {Route, Switch, useLocation} from 'react-router-dom';
 import analytics from './analytics';
 import {Docs, Home, Settings, WorkspaceCreator} from './';
 import Workspace, {IMaybeHaveWorkspace, tryUseWorkspace, useWorkspaceIds} from './Workspaces';
-import Navigation, {NotFound} from './Navigation';
-import {BackendDisconnectedModal} from './Navigation';
+import Navigation, {BackendDisconnectedModal, NotFound} from './Navigation';
 import {IOpenControllerPackage, useOpenControllerSettings} from './Context';
 
 type Props = IMaybeHaveWorkspace;

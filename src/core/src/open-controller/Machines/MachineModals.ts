@@ -1,6 +1,4 @@
-import {
-  AxisPlane, FeedRateMode, MachineMotionType, MovementDistanceType, CircleDirection, UnitType
-} from '../graphql';
+import {AxisPlane, CircleDirection, FeedRateMode, MachineMotionType, MovementDistanceType, UnitType} from '../graphql';
 import {createEnumKeyer, createEnumNormalizer} from '../../utils/enums';
 import _ from 'lodash';
 import {SelectItemIcon} from '../../components/Forms/IconSelect';

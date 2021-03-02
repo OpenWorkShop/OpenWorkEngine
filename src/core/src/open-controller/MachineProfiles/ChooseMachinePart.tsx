@@ -1,18 +1,18 @@
-import { MachinePartCompleteFragment } from '../graphql';
-import { getMachinePartTypeTranslationKey } from '../Machines';
+import {MachinePartCompleteFragment} from '../graphql';
+import {getMachinePartTypeTranslationKey} from '../Machines';
 import * as React from 'react';
 import _ from 'lodash';
 import {
+  Checkbox,
+  createStyles,
   FormControl,
+  FormControlLabel,
+  FormHelperText,
   InputLabel,
+  makeStyles,
   MenuItem,
   Select,
-  makeStyles,
   Theme,
-  createStyles,
-  FormHelperText,
-  Checkbox,
-  FormControlLabel,
 } from '@material-ui/core';
 import useLogger from '../../utils/logging/UseLogger';
 import {useOwsTrans} from '../../hooks';

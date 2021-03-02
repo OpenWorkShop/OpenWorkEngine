@@ -1,7 +1,7 @@
 import * as owsStore from '../store';
-import { Store } from 'redux';
-import { gWizSlice } from './GWiz';
-import { workspacesSlice } from './Workspaces';
+import {Store} from 'redux';
+import {gWizSlice} from './GWiz';
+import {workspacesSlice} from './Workspaces';
 import {controllersSlice} from './Controllers';
 import {programsSlice} from './Programs';
 

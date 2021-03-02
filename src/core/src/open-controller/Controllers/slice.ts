@@ -8,11 +8,15 @@ import {
 } from '../graphql';
 import _ from 'lodash';
 import {
-  IMachineConfigUpdate,
-  IMachineStatusUpdate,
   ControllersState,
+  IController,
+  IMachineConfigUpdate,
+  IMachineLogPageUpdate,
+  IMachineLogs,
+  IMachineLogsUpdate,
+  IMachineProgramUpdate,
   IMachineSettingsUpdate,
-  IMachineLogPageUpdate, IMachineLogs, IMachineLogsUpdate, IController, IMachineProgramUpdate
+  IMachineStatusUpdate
 } from './types';
 
 const initialState: ControllersState = {

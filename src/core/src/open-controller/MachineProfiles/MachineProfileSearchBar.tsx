@@ -1,10 +1,14 @@
-import {
-  MachineCategory,
-  MachineSearchResultFragment,
-  useSearchMachineProfilesLazyQuery
-} from '../graphql';
+import {MachineCategory, MachineSearchResultFragment, useSearchMachineProfilesLazyQuery} from '../graphql';
 import * as React from 'react';
-import {Autocomplete, CircularProgress, FormControl, FormHelperText, Grid, TextField, Typography} from '@material-ui/core';
+import {
+  Autocomplete,
+  CircularProgress,
+  FormControl,
+  FormHelperText,
+  Grid,
+  TextField,
+  Typography
+} from '@material-ui/core';
 import useLogger from '../../utils/logging/UseLogger';
 import {owsClientOpts} from '../../consts';
 import OfflineAlertList from '../../components/Alerts/OfflineAlertList';

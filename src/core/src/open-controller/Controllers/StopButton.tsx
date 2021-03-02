@@ -1,5 +1,5 @@
 import React, {FunctionComponent} from 'react';
-import {ActiveState, useUnlockMachineMutation, useResetMachineMutation} from '../graphql';
+import {ActiveState, useResetMachineMutation, useUnlockMachineMutation} from '../graphql';
 import useStyles from './styles';
 import {useTrans} from '../Context';
 import {useLogger} from '../../hooks';

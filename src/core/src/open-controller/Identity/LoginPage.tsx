@@ -1,21 +1,15 @@
-import {
-  Button,
-  Checkbox,
-  CircularProgress,
-  FormControlLabel,
-  Typography,
-} from '@material-ui/core';
-import { useOpenWorkShop } from '../../hooks';
+import {Button, Checkbox, CircularProgress, FormControlLabel, Typography,} from '@material-ui/core';
+import {useOpenWorkShop} from '../../hooks';
 import useLogger from '../../utils/logging/UseLogger';
 import {AlertList} from '../../components/Alerts';
 import ToolbarCard from '../../components/Cards/ToolbarCard';
 import ThreeColumns from '../../components/Layout/ThreeColumns';
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import {OpenControllerUser} from '../graphql';
 import useStyles from './styles';
 import analytics from '../analytics';
 import ReactGA from 'react-ga';
-import {useOpenControllerSettings, useTrans, useDocumentationUrl} from '../Context';
+import {useDocumentationUrl, useOpenControllerSettings, useTrans} from '../Context';
 
 const LoginPage: FunctionComponent = () => {
   const log = useLogger(LoginPage);

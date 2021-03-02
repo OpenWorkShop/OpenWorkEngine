@@ -1,10 +1,10 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import usePromise from 'react-promise-suspense';
-import { Redirect } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import {useOpenController, useTrans} from '../Context';
 import {useLogger} from '../../hooks';
 import CardDialog from '../../components/Cards/CardDialog';
-import {CircularProgress, Typography} from '@material-ui/core';
+import {Typography} from '@material-ui/core';
 
 interface OwnProps {
   to: string;

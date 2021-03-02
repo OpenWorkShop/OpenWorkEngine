@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {IProgramFileDirectory, ProgramsState} from './types';
-import {ProgramFileDirectoryFragment, ProgramFileMetaFragment, WorkspaceFullFragment, WorkspaceState} from '../graphql';
+import {ProgramFileDirectoryFragment, ProgramFileMetaFragment} from '../graphql';
 
 const defaultDirectory: IProgramFileDirectory = {
   path: '',

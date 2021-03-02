@@ -1,4 +1,4 @@
-import { MASLOW } from 'constants/index';
+import {MASLOW} from 'constants/index';
 import MachineSettings from '../MachineSettings';
 
 const maslowDefaultOpts = {

@@ -1,13 +1,9 @@
-import { Typography } from '@material-ui/core';
+import {Typography} from '@material-ui/core';
 import useLogger from '../utils/logging/UseLogger';
 import {Preloader} from '../components';
 import React from 'react';
-import {Link } from 'react-router-dom';
-import {
-  StartupFragment,
-  OpenControllerSessionFragment,
-  useStartupQuery,
-} from './graphql';
+import {Link} from 'react-router-dom';
+import {OpenControllerSessionFragment, StartupFragment, useStartupQuery,} from './graphql';
 import App from './App';
 import {AlertDialog} from '../components/Alerts';
 import {useTrans} from './Context';

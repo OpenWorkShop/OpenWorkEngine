@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import {IHaveWorkspaceId, ITabDefinition} from '../Workspaces';
 import {useTrans} from '../Context';
 import useLogger from '../../utils/logging/UseLogger';

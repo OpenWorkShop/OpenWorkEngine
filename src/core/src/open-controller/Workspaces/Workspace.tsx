@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Grid  } from '@material-ui/core';
+import {Grid} from '@material-ui/core';
 import useStyles from './styles';
 import {IHavePortStatus} from '../Ports';
-import GWiz  from '../GWiz';
+import GWiz from '../GWiz';
 import useLogger from '../../utils/logging/UseLogger';
 import {IHaveWorkspace} from './types';
 import {tryUseWorkspaceControllerSelector, useWorkspaceSelector} from './hooks';

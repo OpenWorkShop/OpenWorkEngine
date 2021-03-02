@@ -1,22 +1,10 @@
 import React, {FunctionComponent} from 'react';
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Button,
-  FormControl,
-  Grid,
-  Paper,
-  Typography
-} from '@material-ui/core';
+import {Button, FormControl, Paper, Typography} from '@material-ui/core';
 import {IHaveWorkspace} from '../Workspaces';
 import {ProgramFileFragment, ProgramSyntax} from '../graphql';
 import SimpleDialog from '../../components/Dialogs/SimpleDialog';
 import {useTrans} from '../Context';
-import HelpfulHeader from '../../components/Text/HelpfulHeader';
 import useStyles from './styles';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCaretSquareDown} from '@fortawesome/free-solid-svg-icons';
 
 type Props = IHaveWorkspace & {
   programFile?: ProgramFileFragment;

@@ -16,9 +16,9 @@ import * as React from 'react';
 import CardDialog from '../../components/Cards/CardDialog';
 import useStyles from './styles';
 import useLogger from '../../utils/logging/UseLogger';
-import {ICustomizedMachine} from '../Machines';
+import {ICustomizedMachine, normalizeAxisName} from '../Machines';
 import {slugify} from '../../utils';
-import {useSystemPorts, PortStatus} from '../Ports';
+import {PortStatus, useSystemPorts} from '../Ports';
 import {OpenWorkShopIcon} from '../../components';
 import ReactGA from 'react-ga';
 import {
@@ -35,7 +35,6 @@ import Colors from '../../themes/Colors';
 import {AlertList, IAlertMessage} from '../../components/Alerts';
 import {Redirect} from 'react-router-dom';
 import {useDocumentationUrl, useTrans} from '../Context';
-import {normalizeAxisName} from '../Machines';
 
 type Props = {
   machine?: ICustomizedMachine;

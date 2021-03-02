@@ -1,22 +1,21 @@
-import { useLogger } from '../../utils/logging/UseLogger';
+import {useLogger} from '../../utils/logging/UseLogger';
 import _ from 'lodash';
 import ChooseMachinePart from './ChooseMachinePart';
 import MachineSpecList from './MachineSpecList';
-import { getMachinePartTypeTranslationKey } from '../Machines';
+import {getMachinePartTypeTranslationKey, IMachinePartChoice} from '../Machines';
 import React from 'react';
 import {
-  Typography,
   Accordion,
-  AccordionSummary,
   AccordionDetails,
-  makeStyles,
+  AccordionSummary,
   createStyles,
+  makeStyles,
   Theme,
+  Typography,
 } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretSquareDown } from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCaretSquareDown} from '@fortawesome/free-solid-svg-icons';
 import {useOwsTrans} from '../../hooks';
-import { IMachinePartChoice } from '../Machines';
 
 interface IMachineOptionsProps {
   parts: IMachinePartChoice[];

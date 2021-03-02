@@ -1,4 +1,4 @@
-import { IOwsSettings, OwsEnvironment, HostnameMap, IOwsOptions } from './types';
+import { HostnameMap, IOwsOptions, IOwsSettings, OwsEnvironment } from './types';
 
 const defaultEnv: OwsEnvironment = 'Production';
 

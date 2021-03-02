@@ -1,6 +1,6 @@
 import React, {FunctionComponent} from 'react';
 import {useOpenController, useWindowSize} from '../Context';
-import { GWizCanvas } from './Visualizer';
+import {GWizCanvas} from './Visualizer';
 import {GWizActions, IVisualizerControlsPreferences, IVisualizerSceneState, IVisualizerStyles} from './types';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppState} from '../redux';

@@ -8,20 +8,15 @@ import {
 import _ from 'lodash';
 import useLogger from '../../utils/logging/UseLogger';
 import * as React from 'react';
-import {
-  ICustomizedMachine,
-  ICustomizedMachineProfile,
-  MachineAxes,
-} from '../Machines';
+import {ICustomizedMachine, ICustomizedMachineProfile, IMachinePartChoice, MachineAxes,} from '../Machines';
 import {owsClientOpts} from '../../consts';
 import ChooseMachineParts from './ChooseMachineParts';
 import CreateMachineProfile from './CreateMachineProfile';
 import MachineAxesEditor from './MachineAxesEditor';
 import MachineProfileSearchBar from './MachineProfileSearchBar';
-import { Grid, CircularProgress, Typography, Button, useTheme, Paper } from '@material-ui/core';
+import {Button, CircularProgress, Grid, Paper, Typography, useTheme} from '@material-ui/core';
 import {useOwsTrans} from '../../hooks';
 import HelpfulHeader from '../../components/Text/HelpfulHeader';
-import {IMachinePartChoice} from '../Machines';
 
 interface ICustomizeMachineProps {
   onCustomized: (machine?: ICustomizedMachine) => void;

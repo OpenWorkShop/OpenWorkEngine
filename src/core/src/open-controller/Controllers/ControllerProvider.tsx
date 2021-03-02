@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {
   useMachineConfigurationSubscription,
-  useMachineStatusSubscription,
-  useMachineSettingsSubscription,
   useMachineLogsSubscription,
   useMachineProgramSubscription,
+  useMachineSettingsSubscription,
+  useMachineStatusSubscription,
 } from '../graphql';
 import {useLogger} from '../../hooks';
 import {useDispatch} from 'react-redux';

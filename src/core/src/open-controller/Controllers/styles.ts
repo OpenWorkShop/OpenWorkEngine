@@ -1,5 +1,5 @@
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import {toolbarHeight, workBarHeight, rowAlternateCss} from '../../themes';
+import {makeStyles, Theme} from '@material-ui/core/styles';
+import {rowAlternateCss, toolbarHeight, workBarHeight} from '../../themes';
 
 const lightColor = 'white';
 

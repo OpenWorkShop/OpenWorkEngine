@@ -1,5 +1,5 @@
-import { Typography } from '@material-ui/core';
-import React, { FunctionComponent } from 'react';
+import {Typography} from '@material-ui/core';
+import React, {FunctionComponent} from 'react';
 import {useTrans} from '../Context';
 
 const NotFound: FunctionComponent = () => {

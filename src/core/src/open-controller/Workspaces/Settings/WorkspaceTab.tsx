@@ -1,11 +1,22 @@
-import {FormControl, FormControlLabel, Grid, Checkbox, DialogTitle, Paper } from '@material-ui/core';
+import {
+  Button,
+  Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  FormControl,
+  FormControlLabel,
+  Grid,
+  Paper
+} from '@material-ui/core';
 import * as React from 'react';
 import useStyles from '../styles';
 import {IHaveWorkspace} from '../types';
 import {useTrans} from '../../Context';
-import { Button, Dialog, DialogActions, DialogContentText, DialogContent } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faWindowClose } from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faTrash, faWindowClose} from '@fortawesome/free-solid-svg-icons';
 import useLogger from '../../../utils/logging/UseLogger';
 import {useCloseWorkspaceMutation, useDeleteWorkspaceMutation} from '../../graphql';
 import {Redirect} from 'react-router-dom';

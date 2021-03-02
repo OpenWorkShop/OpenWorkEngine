@@ -1,17 +1,16 @@
-import { StylesProvider} from '@material-ui/core';
+import {StylesProvider, ThemeProvider} from '@material-ui/core';
 import React from 'react';
-import { OpenWorkShopProvider } from '../components';
+import {OpenWorkShopProvider} from '../components';
 import configureStore from './redux';
-import { initReactI18next } from 'react-i18next';
-import { i18n } from 'i18next';
-import { ThemeProvider } from '@material-ui/core';
+import {initReactI18next} from 'react-i18next';
+import {i18n} from 'i18next';
 import theme from '../themes/Makerverse';
 import {IHaveOpenControllerDeployment} from './Context';
 import ControllerMain from './ControllerMain';
 import {ICustomizedOpenWorkShop, IOpenWorkShop} from '../';
 import useLogger from '../utils/logging/UseLogger';
-import { BackendConnection} from '../api';
-import { BrowserRouter as Router} from 'react-router-dom';
+import {BackendConnection} from '../api';
+import {BrowserRouter as Router} from 'react-router-dom';
 import analytics from './analytics';
 
 const container = document.createElement('div');

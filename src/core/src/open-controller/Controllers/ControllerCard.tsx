@@ -1,11 +1,6 @@
 import React, {FunctionComponent} from 'react';
 import {Card, CardActions, CardHeader, IconButton, Tab, Tooltip, Typography,} from '@material-ui/core';
-import {
-  IHaveWorkspace,
-  tryUseWorkspaceControllerSelector,
-  useWorkspaceControllerSelector,
-  useWorkspaceSelector
-} from '../Workspaces';
+import {IHaveWorkspace, tryUseWorkspaceControllerSelector, useWorkspaceControllerSelector} from '../Workspaces';
 import clsx from 'clsx';
 import useStyles from './styles';
 import {ActiveState, MachineBufferFragment} from '../graphql';
@@ -18,8 +13,8 @@ import {useLogger} from '../../hooks';
 import HelpfulHeader from '../../components/Text/HelpfulHeader';
 import StopButton from './StopButton';
 import {getActiveStateSubTitleKey, getActiveStateTipKey, getActiveStateTitleKey} from './ActiveState';
-import {faEllipsisV, faHome, faLink} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faEllipsisV} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 type Props = IHaveWorkspace;
 

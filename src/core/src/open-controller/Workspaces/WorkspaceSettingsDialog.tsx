@@ -1,9 +1,9 @@
-import { Dialog, Toolbar, DialogTitle, DialogContent, Tab} from '@material-ui/core';
+import {Dialog, DialogContent, DialogTitle, Tab, Toolbar} from '@material-ui/core';
 import * as React from 'react';
 import useStyles from './styles';
 import {IHaveWorkspace, ITabDefinition} from './types';
 import {useTrans} from '../Context';
-import {TabContext, TabList, TabPanel } from '@material-ui/lab';
+import {TabContext, TabList, TabPanel} from '@material-ui/lab';
 import useLogger from '../../utils/logging/UseLogger';
 import AxesTab from './Settings/AxesTab';
 import WorkspaceTab from './Settings/WorkspaceTab';

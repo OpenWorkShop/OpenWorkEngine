@@ -1,11 +1,7 @@
 import _ from 'lodash';
 import React, {ChangeEvent, FunctionComponent} from 'react';
 import SimpleDialog from '../../components/Dialogs/SimpleDialog';
-import {
-  ClientFileUploadInput,
-  useSelectProgramFileMutation,
-  useUploadProgramFileMutation,
-} from '../graphql';
+import {ClientFileUploadInput, useSelectProgramFileMutation, useUploadProgramFileMutation,} from '../graphql';
 import {useLogger} from '../../hooks';
 import {AlertList, IAlertMessage} from '../../components';
 import {useTrans} from '../Context';

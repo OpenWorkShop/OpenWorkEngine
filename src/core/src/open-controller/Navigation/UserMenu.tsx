@@ -1,4 +1,4 @@
-import {faUserShield, faUserSecret} from '@fortawesome/free-solid-svg-icons';
+import {faUserSecret, faUserShield} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {Alert, IconButton, Menu, MenuItem, Typography} from '@material-ui/core';
 import {useOpenWorkShop} from '../../hooks';
@@ -6,7 +6,7 @@ import {useNetworkStatus} from '../../utils/device';
 import useLogger from '../../utils/logging/UseLogger';
 import React, {FunctionComponent} from 'react';
 import {useBackendConnectionState, useOpenController, useTrans} from '../Context';
-import { ConnectionState } from '../../api';
+import {ConnectionState} from '../../api';
 
 const UserMenu: FunctionComponent = () => {
   const log = useLogger(UserMenu);

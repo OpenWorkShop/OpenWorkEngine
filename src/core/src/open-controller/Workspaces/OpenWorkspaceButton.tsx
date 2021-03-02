@@ -3,11 +3,7 @@ import {faPlug} from '@fortawesome/free-solid-svg-icons';
 import * as React from 'react';
 import useStyles from './styles';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {
-  useCloseWorkspaceMutation,
-  useOpenWorkspaceMutation,
-  WorkspaceState
-} from '../graphql';
+import {useCloseWorkspaceMutation, useOpenWorkspaceMutation, WorkspaceState} from '../graphql';
 import {AlertList, IAlertMessage} from '../../components/Alerts';
 import {useTrans} from '../Context';
 import {IHaveWorkspace} from './types';

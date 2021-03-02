@@ -1,13 +1,11 @@
 import _ from 'lodash';
 import {IControllerCommandResponse, IControllerCommandResponses} from './types';
-import { MutationTuple} from '@apollo/client/react/types/types';
+import {MutationTuple} from '@apollo/client/react/types/types';
 import {useSafeMutation} from '../../utils';
 import {useDispatch} from 'react-redux';
 import controllersSlice from './slice';
 import {useWorkspaceSelector} from '../Workspaces';
 import {MachineInstructionResultFragment, MachineLogEntryFragment} from '../graphql';
-import {useLogger} from '../../hooks';
-import ControlBar from './ControlBar';
 import React from 'react';
 import {useLoggerName} from '../../utils/logging/UseLogger';
 

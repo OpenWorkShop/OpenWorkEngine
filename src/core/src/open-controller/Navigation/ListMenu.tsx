@@ -1,18 +1,12 @@
 import _ from 'lodash';
 import useLogger from '../../utils/logging/UseLogger';
-import { OpenWorkShopIcon } from '../../components';
-import React, { FunctionComponent } from 'react';
-import {
-  makeStyles,
-  Theme,
-  createStyles,
-  Divider,
-  List,
-} from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCogs, faProjectDiagram, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
-import { faUsb } from '@fortawesome/free-brands-svg-icons';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import {OpenWorkShopIcon} from '../../components';
+import React, {FunctionComponent} from 'react';
+import {createStyles, Divider, List, makeStyles, Theme,} from '@material-ui/core';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCogs, faProjectDiagram, faQuestionCircle} from '@fortawesome/free-solid-svg-icons';
+import {faUsb} from '@fortawesome/free-brands-svg-icons';
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {PortStatusFragment} from '../graphql';
 import ListMenuItem from './ListMenuItem';
 import {useSystemPorts} from '../Ports';

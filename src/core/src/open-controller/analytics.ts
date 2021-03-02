@@ -1,8 +1,8 @@
-import { IOpenWorkShop } from '../';
+import {IOpenWorkShop} from '../';
 import _ from 'lodash';
-import ReactGA, { EventArgs } from 'react-ga';
-import { ISemver } from '../utils/semvers';
-import { Logger } from '../utils/logging';
+import ReactGA, {EventArgs} from 'react-ga';
+import {ISemver} from '../utils/semvers';
+import {Logger} from '../utils/logging';
 
 let log: Logger | undefined = undefined;
 

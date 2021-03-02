@@ -6,7 +6,7 @@ import {Grid} from '@material-ui/core';
 import HelpfulHeader from '../../components/Text/HelpfulHeader';
 import useStyles from './styles';
 import {useLogger} from '../../hooks';
-import { ViewSideSelect, AxisPalette } from '../GWiz';
+import {AxisPalette, ViewSideSelect} from '../GWiz';
 
 const GWizChip: React.FunctionComponent = () => {
   const log = useLogger(GWizChip);

@@ -1,5 +1,5 @@
-import { getEnumTranslationKey } from '../../utils/i18n';
-import { MachineSpecType } from '../graphql';
+import {getEnumTranslationKey} from '../../utils/i18n';
+import {MachineSpecType} from '../graphql';
 
 export function getMachineSpecTypeTranslationKey(mst: MachineSpecType | string): string {
   return getEnumTranslationKey(mst.toString());

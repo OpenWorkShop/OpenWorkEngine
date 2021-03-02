@@ -1,7 +1,8 @@
 import React, {FunctionComponent} from 'react';
 import {
   ProgramFileDirectoryFragment,
-  ProgramFileMetaFragment, useLoadProgramMutation,
+  ProgramFileMetaFragment,
+  useLoadProgramMutation,
   useProgramDirectoryQuery
 } from '../graphql';
 import {ICanClose} from '../../components/Dialogs/types';
@@ -16,7 +17,7 @@ import {Button, FormControl, Paper, Typography} from '@material-ui/core';
 import ProgramFileUploadButton from './ProgramFileUploadButton';
 import useStyles from './styles';
 import {AlertList, IAlertMessage} from '../../components';
-import { HelpfulHeader } from '../../components/Text';
+import {HelpfulHeader} from '../../components/Text';
 
 type Props = ICanClose & {
   onSelected: ProgramFileHandler;

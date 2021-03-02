@@ -1,6 +1,6 @@
 import { ApolloClient, ApolloLink, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import i18nModule, { StringMap, TFunction, i18n } from 'i18next';
+import i18nModule, { i18n, StringMap, TFunction } from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-xhr-backend';
 import JsLogger from 'js-logger';
@@ -11,8 +11,7 @@ import { createUserManager, loadUser } from 'redux-oidc';
 import { abbreviation } from './consts';
 import { loadSettings } from './OpenWorkShopSettings';
 import { IOwsState } from './store';
-import logManager, { LogManager } from './utils/logging';
-import { Logger } from './utils/logging';
+import logManager, { Logger, LogManager } from './utils/logging';
 import { defaultLogOptions, developmentLogOptions } from './utils/logging/LogOptions';
 import { ICustomizedOpenWorkShop, IOpenWorkShop, IOwsOptions, IOwsSettings } from './types';
 

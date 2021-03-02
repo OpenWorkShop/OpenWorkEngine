@@ -1,5 +1,5 @@
 import {WorkspaceState} from '../graphql';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 import {faUsb} from '@fortawesome/free-brands-svg-icons';
 import {faDraftingCompass, faExclamationCircle} from '@fortawesome/free-solid-svg-icons';
 import {Theme} from '@material-ui/core/styles';

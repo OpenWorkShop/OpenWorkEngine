@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Grid, Typography, InputAdornment } from '@material-ui/core';
+import {Grid, InputAdornment, Typography} from '@material-ui/core';
 import AlertList from '../../components/Alerts/AlertList';
 import HoverHelpStep from '../../components/Alerts/HoverHelpStep';
 import NumericInput from '../../components/Forms/NumericInput';

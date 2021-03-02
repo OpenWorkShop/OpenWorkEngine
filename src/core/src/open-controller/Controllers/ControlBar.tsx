@@ -1,6 +1,6 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import {Fab, Grid, Tooltip, Typography, useTheme} from '@material-ui/core';
-import {tryUseWorkspaceController, IHaveWorkspace} from '../Workspaces';
+import {IHaveWorkspace, tryUseWorkspaceController} from '../Workspaces';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faExclamationCircle} from '@fortawesome/free-solid-svg-icons';
 import {useTrans} from '../Context';

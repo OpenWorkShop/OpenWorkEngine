@@ -1,10 +1,10 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import {IHaveWorkspace} from '../types';
 import {DetectedFirmwareFragment, useChangeWorkspacePortMutation} from '../../graphql';
 import {AlertList, IAlertMessage} from '../../../components';
 import {useLogger} from '../../../hooks';
 import useStyles from '../styles';
-import {IMaybeHavePortStatus, useSystemPorts} from '../../Ports';
+import {IMaybeHavePortStatus, PortSelect, useSystemPorts} from '../../Ports';
 import {
   Button,
   Dialog,
@@ -16,8 +16,7 @@ import {
   Paper,
 } from '@material-ui/core';
 import HelpfulHeader from '../../../components/Text/HelpfulHeader';
-import {PortSelect} from '../../Ports';
-import { FirmwareComparisonTable } from '../../Machines';
+import {FirmwareComparisonTable} from '../../Machines';
 import {useTrans} from '../../Context';
 import {useWorkspaceSelector} from '../hooks';
 

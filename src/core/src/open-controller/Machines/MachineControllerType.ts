@@ -1,5 +1,5 @@
-import { createEnumNormalizer, createEnumChecker } from '../../utils/enums';
-import { MachineControllerType } from '../graphql';
+import {createEnumChecker, createEnumNormalizer} from '../../utils/enums';
+import {MachineControllerType} from '../graphql';
 
 export function getMachineControllerTypeIconName(controllerType: MachineControllerType): string {
   if (controllerType === MachineControllerType.Maslow) {

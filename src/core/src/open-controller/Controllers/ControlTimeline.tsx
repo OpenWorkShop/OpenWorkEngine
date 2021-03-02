@@ -1,10 +1,10 @@
 import React, {FunctionComponent} from 'react';
 import {
   Timeline,
-  TimelineConnector,
   TimelineContent,
   TimelineDot,
-  TimelineItem, TimelineOppositeContent,
+  TimelineItem,
+  TimelineOppositeContent,
   TimelineSeparator
 } from '@material-ui/lab';
 import {IHaveWorkspace, useWorkspaceControllerSelector} from '../Workspaces';

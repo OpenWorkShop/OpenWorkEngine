@@ -1,5 +1,5 @@
 import {Grid, Typography} from '@material-ui/core';
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import {MachinePositionFragment} from '../graphql';
 import {AxisKey, axisKeys} from './types';
 import {useLogger} from '../../hooks';

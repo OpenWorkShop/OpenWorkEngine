@@ -1,7 +1,5 @@
 import React, {FunctionComponent} from 'react';
-import {
-  MachineModalsFragment, useSetModalSettingsMutation,
-} from '../graphql';
+import {MachineModalsFragment, useSetModalSettingsMutation,} from '../graphql';
 import {useLogger} from '../../hooks';
 import {useTrans} from '../Context';
 import IconSelect, {ISelectItem} from '../../components/Forms/IconSelect';

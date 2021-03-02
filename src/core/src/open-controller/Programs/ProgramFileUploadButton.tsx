@@ -1,9 +1,9 @@
-import {Button } from '@material-ui/core';
+import {Button} from '@material-ui/core';
 import * as React from 'react';
 import {useTrans} from '../Context';
 import ProgramFileUploadDialog from './ProgramFileUploadDialog';
 import {useLogger} from '../../hooks';
-import {programPickerAccept, ProgramFileHandler} from './types';
+import {ProgramFileHandler, programPickerAccept} from './types';
 import {ProgramFileFragment} from '../graphql';
 
 type Props = {
