@@ -1,8 +1,7 @@
 import * as THREE from 'three';
-import {RenderGroupType} from '@openworkshop/core/open-controller';
 import GWizCanvas from './GWizCanvas';
 import GWizObject from './GWizObject';
-import {IMaterial} from '../types';
+import {IMaterial, RenderGroupType} from '../types';
 
 class GWizLocationPin extends GWizObject {
   private _pinRadius = 2;

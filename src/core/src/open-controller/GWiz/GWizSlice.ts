@@ -1,14 +1,12 @@
 import {
   ChangeMaterialPayload,
   GWizState, ISelectedObject, IVisualizerCameraState, IVisualizerSceneState, RenderGroupType,
-  ViewSide, VisualizerSceneStateAction,
+  VisualizerSceneStateAction,
 } from './types';
 import theme from '../../themes/GWiz';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Quaternion, Vector3} from 'three';
-import {AxisPlane, UnitType, WorkspaceFullFragment} from '../graphql';
-import {AppState} from '../redux';
-import {WorkspacesState} from '../Workspaces';
+import {AxisPlane, UnitType} from '../graphql';
 
 export const defaultVisualizerStyles = {
   backgroundColor: theme.palette.background.default,

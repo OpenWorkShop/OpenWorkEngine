@@ -1,21 +1,16 @@
 import * as React from 'react';
-import {AxisName, MachinePositionFragment} from '../graphql';
 import {faMapMarkedAlt, faMapMarkerAlt} from '@fortawesome/free-solid-svg-icons';
 import {useTrans} from '../Context';
 import PopoverWorkBarChip from './PopoverWorkBarChip';
 import {Grid} from '@material-ui/core';
 import useStyles from './styles';
-import HelpfulHeader from '../../components/Text/HelpfulHeader';
-import {getMachineAxisPosition, isMachinePositionValid} from '../Machines/MachinePosition';
-import {Axis3D} from '../Machines';
+import {getMachineAxisPosition} from '../Machines/MachinePosition';
 import {
-  convertUnits,
   IHaveWorkspace,
   useWorkspaceControllerSelector,
   useWorkspaceSelector,
   useWorkspaceUnits
 } from '../Workspaces';
-import {useSelector} from 'react-redux';
 import {getDistanceUnitAbbreviationKey} from '../../components/Units';
 import MachinePositionControl from '../Machines/MachinePositionControl';
 

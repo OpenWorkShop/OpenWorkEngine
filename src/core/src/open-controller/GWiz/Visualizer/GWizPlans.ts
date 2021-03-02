@@ -1,9 +1,9 @@
 import GWizObject from './GWizObject';
 import GWizCanvas from './GWizCanvas';
-import {RenderGroupType} from '@openworkshop/core/open-controller';
 import {MachineMovementFragment, ProgramExecutorFragment, ProgramInstructionFragment} from '../../graphql';
 import * as THREE from 'three';
 import OpenProgram from '../../Programs/OpenProgram';
+import {RenderGroupType} from '../types';
 
 class GWizPlans extends GWizObject {
   private _program?: OpenProgram;

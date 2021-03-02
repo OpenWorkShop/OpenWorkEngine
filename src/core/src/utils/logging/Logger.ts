@@ -1,4 +1,3 @@
-import { EventEmitter } from 'events';
 import { LogEntry, LogLevel } from './types';
 import LogManager from './LogManager';
 

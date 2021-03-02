@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
   IHaveWorkspace,
-  tryUseWorkspaceController,
   tryUseWorkspaceControllerSelector,
   useWorkspaceSelector
 } from '../Workspaces';
@@ -11,7 +10,6 @@ import {Button, ButtonGroup, Grid, Tooltip, Typography} from '@material-ui/core'
 import {useTrans} from '../Context';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCogs, faExclamationCircle} from '@fortawesome/free-solid-svg-icons';
-import {IController} from '../Controllers';
 import MachinePositionChip from './MachinePositionChip';
 import useLogger from '../../utils/logging/UseLogger';
 import ApplicatorChip from './ApplicatorChip';

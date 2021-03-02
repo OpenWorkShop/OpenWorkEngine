@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import {RenderGroupType} from '@openworkshop/core/open-controller';
 import GWizObject from './GWizObject';
 import GWizCanvas from './GWizCanvas';
+import {RenderGroupType} from '../types';
 
 class GWizApplicator extends GWizObject {
   private _tipRadius = 25.4/4;

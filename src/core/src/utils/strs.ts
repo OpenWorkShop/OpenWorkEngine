@@ -13,7 +13,7 @@ export function slugify (str: string): string {
     .replace(/-+$/, ''); // Trim - from end of text
 }
 
-export function titlize(str: string) {
+export function titlize(str: string): string {
   return str.replace('_', ' ')
     .split(' ').map(s => s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase()).join(' ');
 }
