@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from 'react';
-import {ProgramFileMetaFragment, ProgramFileRevisionFragment} from '../../graphql';
+import {ProgramFileMetaFragment, ProgramFileRevisionFragment} from '../graphql';
 import {TreeItem, TreeView} from '@material-ui/lab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCaretSquareDown, faCaretSquareRight, faCaretSquareUp, faFile, faFileAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import {useTrans} from '../../Context';
-import {useLogger} from '../../../hooks';
+import {useTrans} from '../Context';
+import {useLogger} from '../../hooks';
 
 type Props = {
   onSelected: (meta?: ProgramFileMetaFragment, revId?: number) => void;

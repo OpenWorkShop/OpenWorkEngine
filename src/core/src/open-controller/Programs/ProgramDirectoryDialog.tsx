@@ -1,22 +1,22 @@
-import React, {FunctionComponent, useState} from 'react';
+import React, {FunctionComponent} from 'react';
 import {
   ProgramFileDirectoryFragment,
   ProgramFileMetaFragment, useLoadProgramMutation,
   useProgramDirectoryQuery
-} from '../../graphql';
-import {ICanClose} from '../../../components/Dialogs/types';
-import SimpleDialog from '../../../components/Dialogs/SimpleDialog';
+} from '../graphql';
+import {ICanClose} from '../../components/Dialogs/types';
+import SimpleDialog from '../../components/Dialogs/SimpleDialog';
 import ProgramFileTree from './ProgramFileTree';
-import {useTrans} from '../../Context';
+import {useTrans} from '../Context';
 import {ProgramFileHandler} from './types';
 import {useDispatch, useSelector} from 'react-redux';
-import {AppState} from '../../redux';
-import programsSlice from '../../Programs/slice';
-import {Button, FormControl, Grid, Paper, Typography} from '@material-ui/core';
+import {AppState} from '../redux';
+import programsSlice from './slice';
+import {Button, FormControl, Paper, Typography} from '@material-ui/core';
 import ProgramFileUploadButton from './ProgramFileUploadButton';
 import useStyles from './styles';
-import {AlertList, IAlertMessage} from '../../../components';
-import HelpfulHeader from '../../../components/Text/HelpfulHeader';
+import {AlertList, IAlertMessage} from '../../components';
+import HelpfulHeader from '../../components/Text/HelpfulHeader';
 
 type Props = ICanClose & {
   onSelected: ProgramFileHandler;

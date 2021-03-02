@@ -1,11 +1,10 @@
-import {Button, FormControl } from '@material-ui/core';
+import {Button } from '@material-ui/core';
 import * as React from 'react';
-import {useTrans} from '../../Context';
+import {useTrans} from '../Context';
 import ProgramFileUploadDialog from './ProgramFileUploadDialog';
-import {useLogger} from '../../../hooks';
-import {programPickerAccept} from '../../Programs/types';
-import {ProgramFileFragment} from '../../graphql';
-import {ProgramFileHandler} from './types';
+import {useLogger} from '../../hooks';
+import {programPickerAccept, ProgramFileHandler} from './types';
+import {ProgramFileFragment} from '../graphql';
 
 type Props = {
   onUploaded: ProgramFileHandler;
@@ -19,6 +18,7 @@ const ProgramFileUploadButton: React.FunctionComponent<Props> = (props) => {
   const [file, setFile] = React.useState<File>();
 
   function onFilesChosen(files: FileList | null): void {
+    log.debug('files chosen', files);
     setFile(files && files.length === 1 ? files[0] : undefined);
   }
 

@@ -13,12 +13,11 @@ import {
   DialogContentText,
   DialogTitle,
   Grid,
-  Paper, Typography
+  Paper,
 } from '@material-ui/core';
 import HelpfulHeader from '../../../components/Text/HelpfulHeader';
 import PortSelect from '../../Ports/PortSelect';
 import FirmwareComparisonTable from '../../Machines/FirmwareComparisonTable';
-import PopoverWorkBarChip from '../../WorkBar/PopoverWorkBarChip';
 import {useTrans} from '../../Context';
 import {useWorkspaceSelector} from '../hooks';
 

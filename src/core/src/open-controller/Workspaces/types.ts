@@ -2,7 +2,7 @@ import {
   AlertError,
   WorkspacePortConnectionFragment,
   WorkspaceFullSettingsFragment,
-  WorkspaceState, UnitType
+  WorkspaceState,
 } from '../graphql';
 import {IconDefinition} from '@fortawesome/fontawesome-common-types';
 

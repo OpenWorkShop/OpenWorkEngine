@@ -9,7 +9,7 @@ import {
   IHaveWorkspace,
   useWorkspaceControllerSelector,
   useWorkspaceSelector,
-  useWorkspaceUnits
+  useWorkspaceUnits,
 } from '../Workspaces';
 import {getDistanceUnitAbbreviationKey} from '../../components/Units';
 import MachinePositionControl from '../Machines/MachinePositionControl';
@@ -32,9 +32,6 @@ const MachinePositionChip: React.FunctionComponent<Props> = (props) => {
 
   const isWPos = !Boolean(wPos);
   const icon = isWPos ? faMapMarkedAlt : faMapMarkerAlt;
-  const tip = isWPos ?
-    t('WPos (work position), relative to the work origin (where the program execution will begin).') :
-    t('MPos (machine position), in absolute real-world coordinates.');
 
   const positionText = axes
     .map((a) => getMachineAxisPosition(mPos, a, units))

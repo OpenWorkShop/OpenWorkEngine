@@ -2,20 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8fd422ea-5df6-42eb-af5b-60ca5556a3a7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/Makerverse.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Makerverse.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenControllerTests/OpenControllerTests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/OpenControllerTests/OpenControllerTests.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWizSlice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/GWizSlice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Visualizer/GWizApplicator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Visualizer/GWizApplicator.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Visualizer/GWizLocationPin.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Visualizer/GWizLocationPin.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Visualizer/GWizPlans.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Visualizer/GWizPlans.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Home/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Home/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Programs/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Programs/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/Plans.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/Plans.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/PreviewProgramFileDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Programs/PreviewProgramFileDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/ProgramDirectoryDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Programs/ProgramDirectoryDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/ProgramFileTree.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Programs/ProgramFileTree.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/ProgramFileUploadButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Programs/ProgramFileUploadButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/ProgramFileUploadDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Programs/ProgramFileUploadDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Programs/styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/types.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/WorkBar/MachinePositionChip.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/WorkBar/MachinePositionChip.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/WorkBar/WorkBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/WorkBar/WorkBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/Settings/PortTab.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/Settings/PortTab.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Workspaces/types.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/utils/apollo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/utils/apollo.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/utils/logging/Logger.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/utils/logging/Logger.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/utils/strs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/utils/strs.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,11 +78,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/core/src/open-controller/Programs" />
       <recent name="$PROJECT_DIR$/src/core/src/open-controller/GWiz/Visualizer" />
       <recent name="$PROJECT_DIR$/src/core/src/open-controller/Controllers" />
       <recent name="$PROJECT_DIR$/src/core/src/open-controller/Machines" />
       <recent name="$PROJECT_DIR$/src/core/src/open-controller/Tools/Controls" />
-      <recent name="$PROJECT_DIR$/src/core/src/open-controller/Tools/Applicator" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />

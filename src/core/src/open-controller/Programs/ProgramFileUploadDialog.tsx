@@ -1,18 +1,17 @@
 import _ from 'lodash';
 import React, {ChangeEvent, FunctionComponent} from 'react';
-import SimpleDialog from '../../../components/Dialogs/SimpleDialog';
+import SimpleDialog from '../../components/Dialogs/SimpleDialog';
 import {
   ClientFileUploadInput,
   useSelectProgramFileMutation,
   useUploadProgramFileMutation,
-} from '../../graphql';
-import {useLogger} from '../../../hooks';
-import {AlertList, IAlertMessage} from '../../../components';
-import {useTrans} from '../../Context';
+} from '../graphql';
+import {useLogger} from '../../hooks';
+import {AlertList, IAlertMessage} from '../../components';
+import {useTrans} from '../Context';
 import {Button, CircularProgress, FormControl, Grid, MenuItem, Select, TextField} from '@material-ui/core';
-import {ProgramFileExtension, programFileExtensions} from '../../Programs/types';
+import {ProgramFileExtension, programFileExtensions, ProgramFileHandler} from './types';
 import useStyles from './styles';
-import {ProgramFileHandler} from './types';
 
 type Props = {
   file?: File;

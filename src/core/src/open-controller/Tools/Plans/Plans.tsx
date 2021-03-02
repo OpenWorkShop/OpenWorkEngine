@@ -1,16 +1,14 @@
 import * as React from 'react';
 import {Button, FormControl, Grid} from '@material-ui/core';
 import {ToolBase} from '../types';
-import ProgramFileUploadButton from './ProgramFileUploadButton';
 import {useWorkspaceControllerSelector} from '../../Workspaces';
 import {MachineInstructionResultFragment, ProgramFileFragment} from '../../graphql';
 import LogLine from '../Terminal/LogLine';
 import {useLogger} from '../../../hooks';
-import SimpleDialog from '../../../components/Dialogs/SimpleDialog';
-import PreviewProgramFileDialog from './PreviewProgramFileDialog';
+import PreviewProgramFileDialog from '../../Programs/PreviewProgramFileDialog';
 import {useTrans} from '../../Context';
-import useStyles from './styles';
-import ProgramDirectoryDialog from './ProgramDirectoryDialog';
+import useStyles from '../../Programs/styles';
+import ProgramDirectoryDialog from '../../Programs/ProgramDirectoryDialog';
 
 const Plans: ToolBase = (props) => {
   const log = useLogger(Plans);
