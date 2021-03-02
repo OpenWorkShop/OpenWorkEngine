@@ -10,6 +10,7 @@ using DiffMatchPatch;
 using HotChocolate.Language;
 using Newtonsoft.Json;
 using OpenWorkEngine.OpenController.Identity.Models;
+using OpenWorkEngine.OpenController.Lib.Observables;
 using OpenWorkEngine.OpenController.Programs.Interfaces;
 using OpenWorkEngine.OpenController.Programs.Messages;
 using OpenWorkEngine.OpenController.Programs.Services;
@@ -18,7 +19,9 @@ using OpenWorkEngine.OpenController.Syntax;
 using Serilog;
 
 namespace OpenWorkEngine.OpenController.Programs.Models {
-  public class ProgramFileMeta : ClientFileUpload, IProgramSource {
+  public class ProgramFileMeta : ClientFileUpload, IProgramSource, ITopicMessage {
+    public string TopicId => FilePath;
+
     public string Directory { get; }
 
     public ProgramSyntax Syntax => ProgramSyntax.GCode;

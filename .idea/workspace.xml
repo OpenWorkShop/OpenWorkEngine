@@ -2,35 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8fd422ea-5df6-42eb-af5b-60ca5556a3a7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/ProgramFileTree.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/Makerverse.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Makerverse.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/src/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/src/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/src/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/OpenController.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/OpenController.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Programs/Graph/ProgramsMutation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Programs/Graph/ProgramsMutation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Programs/Graph/ProgramsQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Programs/Graph/ProgramsQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Programs/Models/ProgramFileMeta.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Programs/Models/ProgramFileMeta.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Programs/Models/ProgramFileMetaData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Programs/Models/ProgramFileMetaData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Programs/Services/ProgramFileDirectory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Programs/Services/ProgramFileDirectory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Programs/Services/ProgramFileManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Programs/Services/ProgramFileManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenControllerTests/files/hexagon-4.5w-4bit.nc" beforeDir="false" afterPath="$PROJECT_DIR$/OpenControllerTests/files/hexagon-4.5w-4bit.nc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/components/Text/HelpfulHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/components/Text/HelpfulHeader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Programs/Programs.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Programs/Programs.graphql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Programs/slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Programs/slice.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Programs/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Programs/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/Plans.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/Plans.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/PreviewProgramFile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/PreviewProgramFileDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/ProgramFileListMenu.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/ProgramFileUploadButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/ProgramFileUploadButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/graphql.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/graphql.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/redux.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/redux.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/schema.graphql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/PreviewProgramFileDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/PreviewProgramFileDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/ProgramDirectoryDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/ProgramDirectoryDialog.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +110,7 @@
       <workItem from="1613172911507" duration="2495000" />
       <workItem from="1613225961498" duration="55357000" />
       <workItem from="1613680448504" duration="54995000" />
-      <workItem from="1614359720078" duration="16328000" />
+      <workItem from="1614359720078" duration="19992000" />
     </task>
     <servers />
   </component>

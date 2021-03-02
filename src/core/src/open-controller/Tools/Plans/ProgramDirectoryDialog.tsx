@@ -58,6 +58,7 @@ const ProgramDirectoryDialog: FunctionComponent<Props> = (props) => {
 
       const programFile = res.data?.programFile;
       if (programFile) {
+        dispatch(programsSlice.actions.updateProgramMeta(programFile.meta));
         onSelected(programFile);
         setSelectedMetaRev(undefined);
       }

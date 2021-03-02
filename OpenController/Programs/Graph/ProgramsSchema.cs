@@ -6,6 +6,7 @@ namespace OpenWorkEngine.OpenController.Programs.Graph {
     public static IRequestExecutorBuilder AddProgramsSchema(this IRequestExecutorBuilder builder) =>
       builder
        .AddType<ProgramsQuery>()
-       .AddType<ProgramsMutation>();
+       .AddType<ProgramsMutation>()
+       .AddType<ProgramsSubscription>();
   }
 }

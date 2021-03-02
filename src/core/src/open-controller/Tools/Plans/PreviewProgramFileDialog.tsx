@@ -1,14 +1,22 @@
-import React, { FunctionComponent } from 'react';
-import {Accordion, Grid, AccordionSummary, Typography, AccordionDetails, FormControl, Button} from '@material-ui/core';
+import React, {FunctionComponent} from 'react';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Button,
+  FormControl,
+  Grid,
+  Paper,
+  Typography
+} from '@material-ui/core';
 import {IHaveWorkspace} from '../../Workspaces';
-import {ProgramFileFragment} from '../../graphql';
+import {ProgramFileFragment, ProgramSyntax} from '../../graphql';
 import SimpleDialog from '../../../components/Dialogs/SimpleDialog';
 import {useTrans} from '../../Context';
 import HelpfulHeader from '../../../components/Text/HelpfulHeader';
 import useStyles from './styles';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretSquareDown} from '@fortawesome/free-solid-svg-icons';
-import MachineSpecList from '../../MachineProfiles/MachineSpecList';
 
 type Props = IHaveWorkspace & {
   programFile?: ProgramFileFragment;
@@ -24,73 +32,63 @@ const PreviewProgramFileDialog: FunctionComponent<Props> = (props) => {
     setOpenProgramFile(programFile);
   }, [programFile, setOpenProgramFile]);
 
+  function getSyntaxName(syntax: ProgramSyntax) {
+    if (syntax === ProgramSyntax.GCode) return 'Gcode';
+    return syntax;
+  }
+
   function renderProgramFile(programFile: ProgramFileFragment) {
     const { meta, lineCount, instructionCount } = programFile;
     const { name, size, syntax, lastModified, data } = meta;
     //const tags = data?.tags ?? [];
+    const numLines = lineCount.toLocaleString();
+    const numInstructions = instructionCount.toLocaleString();
+    const syntaxName = getSyntaxName(syntax);
     const revisions = data?.revisions ?? [];
     const firstRevision = revisions.length > 0 ? revisions[0] : undefined;
-    const lastRevision = revisions.length > 0 ? revisions[revisions.length - 1] : undefined;
+    const lastRevision = revisions.length > 1 ? revisions[revisions.length - 1] : undefined;
     const username = firstRevision?.username;
+    const createdTime = firstRevision ? new Date(firstRevision.createdAt).toLocaleTimeString() : undefined;
+    const createdDate = firstRevision ? new Date(firstRevision.createdAt).toLocaleDateString() : undefined;
+    const modifiedTime = lastRevision ? new Date(lastRevision.createdAt).toLocaleTimeString() : undefined;
+    const modifiedDate = lastRevision ? new Date(lastRevision.createdAt).toLocaleDateString() : undefined;
+    const lm = new Date(lastModified * 1000).toLocaleString();
 
     return (
       <React.Fragment>
-        <Typography variant="subtitle2">{name}</Typography>
-
-        <Accordion className={classes.dialogContent}>
-          <AccordionSummary expandIcon={<FontAwesomeIcon icon={faCaretSquareDown} />}>
-            <HelpfulHeader
-              variant="h6"
-              tip={t('Information about the program, like its size and contents.')}
-              title={t('File Details')}
-            />
-          </AccordionSummary>
-          <AccordionDetails>
-            <Grid container >
-              <Grid item xs={10}>
-                <HelpfulHeader
-                  variant="subtitle1"
-                  title={t('Instruction Count')}
-                  tip={t('The number of valid Gcode lines / total number of lines which were detected in the file.')}
-                />
-              </Grid>
-              <Grid item xs={2}>
-                <Typography variant="body1">{instructionCount} / {lineCount}</Typography>
-              </Grid>
-              {username && <Grid item xs={10}>
-                <HelpfulHeader
-                  variant="subtitle1"
-                  title={t('Creator')}
-                  tip={t('The username of the person who created this file.')}
-                />
-              </Grid>}
-              {username && <Grid item xs={2}>
-                <Typography variant="body1">{username}</Typography>
-              </Grid>}
-              <Grid item xs={10}>
-                <HelpfulHeader
-                  variant="subtitle1"
-                  title={t('Revisions')}
-                  tip={t('The number of different versions of this file which have been created.')}
-                />
-              </Grid>
-              <Grid item xs={2}>
-                <Typography variant="body1">{revisions.length ?? 1}</Typography>
-              </Grid>
-            </Grid>
-          </AccordionDetails>
-        </Accordion>
+        <Paper className={classes.dialogContent}>
+          <Typography variant="h5">{name}</Typography>
+          {firstRevision && <Typography variant="body1">
+            {t('Created by {{ username }} on {{ createdDate }} at {{ createdTime }}',
+              { username, createdDate, createdTime })}
+          </Typography>}
+          {lastRevision && <Typography variant="body1">
+            {t('Last updated by {{ user2 }} on {{ modifiedDate }} at {{ modifiedTime }}',
+              { username: lastRevision.username, modifiedDate, modifiedTime })}
+          </Typography>}
+          <Typography variant="body1">
+            {t('Last modified at {{ lastModified }}.',
+              { lastModified })}
+          </Typography>
+          <Typography variant="body1">
+            {t('Contains {{ numInstructions }} valid {{ syntaxName }} instructions in {{ numLines}} lines of text.',
+              { numInstructions, syntaxName, numLines })}
+          </Typography>
+        </Paper>
       </React.Fragment>
     );
   }
 
   return (
     <SimpleDialog
-      title={t('Program Plans')}
+      title={t('Program File Preview')}
       open={Boolean(openProgramFile)}
       onClose={() => setOpenProgramFile(undefined)}
       footer={<FormControl fullWidth={true}>
-        <Button variant="contained" color="primary" >
+        <Button
+          variant="contained"
+          color="primary"
+        >
           {t('Load Program to Machine')}
         </Button>
       </FormControl> }

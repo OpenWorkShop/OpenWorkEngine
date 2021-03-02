@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
+using OpenWorkEngine.OpenController.Programs.Enums;
 using OpenWorkEngine.OpenController.Programs.Models;
 using Serilog;
 
@@ -25,9 +26,11 @@ namespace OpenWorkEngine.OpenController.Programs.Services {
 
     private ILogger Log { get; }
 
+    private ProgramFileManager Manager { get; }
 
-    public ProgramFileDirectory(string directoryPath, ILogger logger) {
-      Log = logger.ForContext("path", directoryPath);
+    public ProgramFileDirectory(ProgramFileManager manager, string directoryPath) {
+      Log = manager.Log.ForContext("path", directoryPath);
+      Manager = manager;
       Path = directoryPath;
       if (TryEnsureDirectory()) {
         allProgramFileMeta = Directory.EnumerateFiles(directoryPath)
@@ -72,15 +75,19 @@ namespace OpenWorkEngine.OpenController.Programs.Services {
 
     private void OnChanged(object source, FileSystemEventArgs e) {
       string name = e.Name ?? new FileInfo(e.FullPath).Name;
-      bool metaExists = allProgramFileMeta.ContainsKey(name);
+      bool metaExists = allProgramFileMeta.TryGetValue(name, out ProgramFileMeta? meta);
       if (File.Exists(e.FullPath)) {
-        if (metaExists) {
-          allProgramFileMeta[name].InspectFile();
+        if (meta != null) {
+          meta.InspectFile();
         } else {
-          allProgramFileMeta.Add(name, new ProgramFileMeta(e.FullPath));
+          meta = new ProgramFileMeta(e.FullPath);
+          allProgramFileMeta.Add(name, meta);
         }
       } else if (metaExists) {
         allProgramFileMeta.Remove(name);
+      }
+      if (meta != null) {
+        Manager.GetSubscriptionTopic(ProgramTopic.Meta).Emit(meta);
       }
 
       Log.Debug("[CHANGE] [{type}] {name} @ {path}; files: {files}", e.ChangeType, e.Name, e.FullPath, ProgramFileMetas);

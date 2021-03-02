@@ -7,15 +7,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using OpenWorkEngine.OpenController.Identity.Models;
 using OpenWorkEngine.OpenController.Lib.Filesystem;
+using OpenWorkEngine.OpenController.Lib.Observables;
+using OpenWorkEngine.OpenController.Programs.Enums;
 using OpenWorkEngine.OpenController.Programs.Messages;
 using OpenWorkEngine.OpenController.Programs.Models;
 using Serilog;
 
 namespace OpenWorkEngine.OpenController.Programs.Services {
-  public class ProgramFileManager {
-    private ILogger Log { get; }
+  public class ProgramFileManager : SubscriptionManager<ProgramTopic, ProgramFileMeta> {
+    public override ILogger Log { get; }
 
-    internal ProgramFileDirectory ProgramDirectory { get; }
+    internal ProgramFileDirectory ProgramDirectory =>
+      _programDirectory ??= new ProgramFileDirectory(this, Config.Settings.FileSystem.ProgramsDirectory);
+    private ProgramFileDirectory? _programDirectory = null;
 
     private ConfigFile Config { get; }
 
@@ -24,7 +28,6 @@ namespace OpenWorkEngine.OpenController.Programs.Services {
     public ProgramFileManager(ConfigFile config, ILogger logger) {
       Log = logger.ForContext(typeof(ProgramFileManager));
       Config = config;
-      ProgramDirectory = new ProgramFileDirectory(Config.Settings.FileSystem.ProgramsDirectory, Log);
       Task.Run(DoWorkAsync);
     }
 

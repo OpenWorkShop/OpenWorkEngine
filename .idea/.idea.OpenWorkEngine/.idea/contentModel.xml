@@ -104,13 +104,8 @@
           </e>
         </e>
         <e p="GCode" t="Include">
-          <e p=".backs.nc.json" t="Include" />
-          <e p=".heart-050_thick-025_bit.nc.json" t="Include" />
           <e p=".hexagon-4.5w-4bit.nc.json" t="Include" />
-          <e p="backs.nc" t="Include" />
-          <e p="heart-050_thick-025_bit.nc" t="Include" />
           <e p="hexagon-4.5w-4bit.nc" t="Include" />
-          <e p="test.nc" t="Include" />
         </e>
         <e p="LICENSE" t="Include" />
         <e p="Makerverse.csproj" t="IncludeRecursive" />
@@ -437,11 +432,13 @@
           <e p="Enums" t="Include">
             <e p="ExecutionState.cs" t="Include" />
             <e p="ProgramInstructionType.cs" t="Include" />
+            <e p="ProgramTopic.cs" t="Include" />
           </e>
           <e p="Graph" t="Include">
             <e p="ProgramsMutation.cs" t="Include" />
             <e p="ProgramsQuery.cs" t="Include" />
             <e p="ProgramsSchema.cs" t="Include" />
+            <e p="ProgramsSubscription.cs" t="Include" />
           </e>
           <e p="Interfaces" t="Include">
             <e p="IProgramSource.cs" t="Include" />

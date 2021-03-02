@@ -1,4 +1,4 @@
-import {ProgramFileDirectoryFragment} from '../graphql';
+import {ProgramFileMetaFragment} from '../graphql';
 
 export enum ProgramFileExtension {
   Gcode = 'gcode',
@@ -10,6 +10,13 @@ export enum ProgramFileExtension {
 export const programFileExtensions = Object.values(ProgramFileExtension);
 export const programPickerAccept = '.' + programFileExtensions.join(', .');
 
+export interface IProgramFileDirectory {
+  path: string;
+  fileExtensions: string[];
+  programFileMetas: ProgramFileMetaFragment[];
+  programFileMetaMap: { [key: string]: ProgramFileMetaFragment };
+}
+
 export type ProgramsState = {
-  directory: ProgramFileDirectoryFragment;
+  directory: IProgramFileDirectory;
 }
