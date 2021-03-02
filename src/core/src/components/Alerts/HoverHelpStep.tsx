@@ -1,7 +1,7 @@
-import React, { FunctionComponent } from 'react';
-import { useTheme, Tooltip, IconButton } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faQuestionCircle, faCheck } from '@fortawesome/free-solid-svg-icons';
+import React, {FunctionComponent} from 'react';
+import {IconButton, Tooltip, useTheme} from '@material-ui/core';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCheck, faQuestionCircle} from '@fortawesome/free-solid-svg-icons';
 
 export interface IHelpStep {
   tip: string;

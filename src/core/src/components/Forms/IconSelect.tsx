@@ -1,4 +1,4 @@
-import {Select, MenuItem, FormControl, InputLabel, Grid} from '@material-ui/core';
+import {FormControl, Grid, InputLabel, MenuItem, Select} from '@material-ui/core';
 import * as React from 'react';
 import _ from 'lodash';
 import useStyles from './styles';

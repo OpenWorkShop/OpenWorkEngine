@@ -1,7 +1,6 @@
-import React, { FunctionComponent } from 'react';
-import { Typography } from '@material-ui/core';
-import { favicon32 } from '../Images';
-import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import React, {FunctionComponent} from 'react';
+import {createStyles, makeStyles, Theme, Typography} from '@material-ui/core';
+import {favicon32} from '../Images';
 import {useOwsTrans} from '../../hooks';
 
 const useStyles = makeStyles((theme: Theme) =>

@@ -1,11 +1,11 @@
-import OpenWorkShop, { singleton as ows } from '../OpenWorkShop';
+import OpenWorkShop, {singleton as ows} from '../OpenWorkShop';
 import * as React from 'react';
-import { OidcProvider } from 'redux-oidc';
+import {OidcProvider} from 'redux-oidc';
 import usePromise from 'react-promise-suspense';
-import { ApolloProvider } from '@apollo/client';
+import {ApolloProvider} from '@apollo/client';
 import {IOwsOptions} from '../';
 import useLogger from '../utils/logging/UseLogger';
-import { Theme } from '@material-ui/core';
+import {Theme} from '@material-ui/core';
 import {Provider} from 'react-redux';
 
 export interface IOwsProps extends IOwsOptions {

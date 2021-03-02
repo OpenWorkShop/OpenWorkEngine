@@ -1,6 +1,6 @@
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Popover, Chip, Grid } from '@material-ui/core';
+import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {Chip, Grid, Popover} from '@material-ui/core';
 import * as React from 'react';
 import useStyles from './styles';
 

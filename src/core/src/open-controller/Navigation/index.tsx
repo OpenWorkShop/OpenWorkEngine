@@ -4,7 +4,10 @@ import SideDrawer from './SideDrawer';
 import useStyles from './styles';
 import useLogger from '../../utils/logging/UseLogger';
 import {IMaybeHaveWorkspace} from '../Workspaces';
+
 export { default as NotFound } from './NotFound';
+export { default as BackendDisconnectedModal } from './BackendDisconnectedModal';
+export { default as ReconnectRedirect } from './ReconnectRedirect';
 
 interface OwnProps {
   children: React.ReactNode;

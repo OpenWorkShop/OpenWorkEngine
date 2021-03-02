@@ -4,7 +4,7 @@ import {PortState} from '../graphql';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {Typography, useTheme} from '@material-ui/core';
 import {IMaybeHavePortStatus} from './types';
-import {getPortColor, getPortStatusText, getPortIcon} from './Ports';
+import {getPortColor, getPortIcon, getPortStatusText} from './Ports';
 
 interface OwnProps {
   showType?: boolean;

@@ -16,8 +16,8 @@ import {
   Paper,
 } from '@material-ui/core';
 import HelpfulHeader from '../../../components/Text/HelpfulHeader';
-import PortSelect from '../../Ports/PortSelect';
-import FirmwareComparisonTable from '../../Machines/FirmwareComparisonTable';
+import {PortSelect} from '../../Ports';
+import { FirmwareComparisonTable } from '../../Machines';
 import {useTrans} from '../../Context';
 import {useWorkspaceSelector} from '../hooks';
 

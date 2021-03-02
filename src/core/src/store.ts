@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import api from './api';
-import { IApiState } from './api';
+import api, { IApiState } from './api';
 import * as Oidc from 'redux-oidc';
 import thunk from 'redux-thunk';
 import { ControllersState, GWizState, WorkspacesState } from './open-controller';
@@ -15,7 +14,7 @@ import {
   ReducersMapObject,
   Store,
 } from '@reduxjs/toolkit';
-import { ProgramsState } from './open-controller/Programs/types';
+import { ProgramsState } from './open-controller/Programs';
 
 export interface IOwsState extends IApiState {
   oidc: Oidc.UserState;

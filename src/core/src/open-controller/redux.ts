@@ -3,7 +3,7 @@ import { Store } from 'redux';
 import { gWizSlice } from './GWiz';
 import { workspacesSlice } from './Workspaces';
 import {controllersSlice} from './Controllers';
-import programsSlice from './Programs/slice';
+import {programsSlice} from './Programs';
 
 // The top-level state object
 export type AppState = owsStore.IOwsState; // & IMakerverseState;

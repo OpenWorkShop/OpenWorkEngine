@@ -1,6 +1,6 @@
-import { Button, Tooltip } from '@material-ui/core';
+import {Button, Tooltip} from '@material-ui/core';
 import * as React from 'react';
-import { IMoveRequest } from './types';
+import {IMoveRequest} from './types';
 import useStyles from './styles';
 import OpenWorkShopIcon from '../../../components/OpenWorkShopIcon';
 import {useTrans} from '../../Context';

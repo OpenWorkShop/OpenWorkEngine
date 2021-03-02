@@ -1,12 +1,11 @@
 import * as React from 'react';
-import {Grid, Typography} from '@material-ui/core';
+import {Grid} from '@material-ui/core';
 import {ToolBase} from '../types';
 import {useWorkspaceControllerSelector} from '../../Workspaces';
 import {useLogger} from '../../../hooks';
 import useStyles from './styles';
-import OverrideControl from '../Controls/OverrideControl';
-import {faArrowCircleLeft, faArrowCircleRight, faArrowsAlt, faStopCircle} from '@fortawesome/free-solid-svg-icons';
 import {useTrans} from '../../Context';
+
 const Applicator: ToolBase = (props) => {
   const t = useTrans();
   const log = useLogger(Applicator);

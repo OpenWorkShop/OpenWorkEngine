@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import {Grid} from '@material-ui/core';
 import LogLine from './LogLine';
 import useStyles from './styles';

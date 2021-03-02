@@ -1,4 +1,4 @@
-import { Dialog, Toolbar, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
+import {Dialog, DialogActions, DialogContent, DialogTitle, Toolbar} from '@material-ui/core';
 import * as React from 'react';
 import {IToolbarCardProps} from './ToolbarCard';
 import useStyles from './CardStyles';

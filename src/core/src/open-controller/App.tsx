@@ -1,16 +1,12 @@
-import { useLogger } from '../utils/logging/UseLogger';
+import {useLogger} from '../utils/logging/UseLogger';
 import React from 'react';
-import {Route, Switch, useLocation } from 'react-router-dom';
+import {Route, Switch, useLocation} from 'react-router-dom';
 import analytics from './analytics';
-import { Settings, Home, WorkspaceCreator, Docs } from './';
-import Workspace from './Workspaces';
-import Navigation, { NotFound } from './Navigation';
-import BackendDisconnectedModal from './Modals/BackendDisconnectedModal';
-import {IMaybeHaveWorkspace, tryUseWorkspace, useWorkspaceIds} from './Workspaces';
-import {
-  IOpenControllerPackage,
-  useOpenControllerSettings
-} from './Context';
+import {Docs, Home, Settings, WorkspaceCreator} from './';
+import Workspace, {IMaybeHaveWorkspace, tryUseWorkspace, useWorkspaceIds} from './Workspaces';
+import Navigation, {NotFound} from './Navigation';
+import {BackendDisconnectedModal} from './Navigation';
+import {IOpenControllerPackage, useOpenControllerSettings} from './Context';
 
 type Props = IMaybeHaveWorkspace;
 

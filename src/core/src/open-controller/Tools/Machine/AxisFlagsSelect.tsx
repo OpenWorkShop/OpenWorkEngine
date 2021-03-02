@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import {AxisFlags} from '../../graphql';
 import {Checkbox, Input, ListItemText, MenuItem, Select, Typography} from '@material-ui/core';
 import {Axis3DKey} from '../../Machines';

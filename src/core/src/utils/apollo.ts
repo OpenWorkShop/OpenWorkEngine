@@ -1,7 +1,4 @@
-import {
-  MutationFunctionOptions,
-  MutationTuple
-} from '@apollo/client/react/types/types';
+import {MutationFunctionOptions, MutationTuple} from '@apollo/client/react/types/types';
 import {IAlertMessage} from '../components';
 import {FetchResult} from '@apollo/client/link/core';
 import {useLoggerName} from './logging/UseLogger';

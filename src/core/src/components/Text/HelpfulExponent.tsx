@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import {HoverHelpStep} from '../Alerts';
 import useStyles from './styles';
 import {IHelpStep} from '../Alerts/HoverHelpStep';

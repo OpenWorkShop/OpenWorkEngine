@@ -1,14 +1,8 @@
 import {AlertList} from '../../components/Alerts';
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  useTheme
-} from '@material-ui/core';
+import {FormControl, InputLabel, MenuItem, Select, useTheme} from '@material-ui/core';
 import useLogger from '../../utils/logging/UseLogger';
 import React, {FunctionComponent} from 'react';
-import {useSystemPorts, IPortCollection} from '../Ports';
+import {IPortCollection, useSystemPorts} from '../Ports';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import {PortState} from '../graphql';
 import {useTrans} from '../Context';

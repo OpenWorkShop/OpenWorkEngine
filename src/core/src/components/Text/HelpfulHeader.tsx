@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core';
+import {Typography} from '@material-ui/core';
 import * as React from 'react';
 import {IHelpStep} from '../Alerts/HoverHelpStep';
 import HelpfulExponent from './HelpfulExponent';

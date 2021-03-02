@@ -1,27 +1,24 @@
 import useLogger from '../../utils/logging/UseLogger';
-import React, { FunctionComponent } from 'react';
-import {Redirect, Route, Switch, useLocation } from 'react-router-dom';
-import {useOpenWorkShop } from '../../hooks';
-import { BackendConnection } from '../../api';
+import React, {FunctionComponent} from 'react';
+import {Redirect, Route, Switch, useLocation} from 'react-router-dom';
+import {useOpenWorkShop} from '../../hooks';
+import {BackendConnection} from '../../api';
 import {
-  StartupFragment,
   EssentialSettingsFragment,
   OpenControllerSessionFragment,
+  StartupFragment,
   useWorkspaceChangeSubscription,
 } from '../graphql';
-import {
-  IOpenController,
-  OpenControllerContext,
-} from '../Context';
-import { LoginPage, CallbackPage } from '../Identity';
-import { StringMap } from 'i18next';
+import {IOpenController, OpenControllerContext,} from '../Context';
+import {CallbackPage, LoginPage} from '../Identity';
+import {StringMap} from 'i18next';
 import {AppState} from '../redux';
 import ProtectedApp from '../ProtectedApp';
 import {useDispatch, useSelector} from 'react-redux';
-import { User } from 'oidc-client';
-import SystemPortProvider from '../Ports/SystemPortProvider';
+import {User} from 'oidc-client';
+import {SystemPortProvider} from '../Ports';
 import {IOpenControllerPackage} from './types';
-import { workspacesSlice} from '../Workspaces';
+import {workspacesSlice} from '../Workspaces';
 
 interface IProps {
   deployment: IOpenControllerPackage;

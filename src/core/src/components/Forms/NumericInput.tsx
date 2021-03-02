@@ -1,4 +1,4 @@
-import { TextFieldProps, TextField } from '@material-ui/core';
+import {TextField, TextFieldProps} from '@material-ui/core';
 import React from 'react';
 
 interface INumericInputProps {

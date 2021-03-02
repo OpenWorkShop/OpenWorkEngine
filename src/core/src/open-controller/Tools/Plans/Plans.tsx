@@ -5,10 +5,9 @@ import {useWorkspaceControllerSelector} from '../../Workspaces';
 import {MachineInstructionResultFragment, ProgramFileFragment} from '../../graphql';
 import LogLine from '../Terminal/LogLine';
 import {useLogger} from '../../../hooks';
-import PreviewProgramFileDialog from '../../Programs/PreviewProgramFileDialog';
+import {PreviewProgramFileDialog, ProgramDirectoryDialog} from '../../Programs';
 import {useTrans} from '../../Context';
-import useStyles from '../../Programs/styles';
-import ProgramDirectoryDialog from '../../Programs/ProgramDirectoryDialog';
+import useStyles from './styles';
 
 const Plans: ToolBase = (props) => {
   const log = useLogger(Plans);

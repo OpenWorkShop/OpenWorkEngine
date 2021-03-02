@@ -1,8 +1,8 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import useLogger from '../../utils/logging/UseLogger';
 import AlertMessage from './AlertMessage';
-import {IAlertMessage, AlertMessageList, sanitizeAlertMessages} from './types';
+import {AlertMessageList, IAlertMessage, sanitizeAlertMessages} from './types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

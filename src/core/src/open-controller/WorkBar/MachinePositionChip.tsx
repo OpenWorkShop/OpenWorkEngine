@@ -4,15 +4,9 @@ import {useTrans} from '../Context';
 import PopoverWorkBarChip from './PopoverWorkBarChip';
 import {Grid} from '@material-ui/core';
 import useStyles from './styles';
-import {getMachineAxisPosition} from '../Machines/MachinePosition';
-import {
-  IHaveWorkspace,
-  useWorkspaceControllerSelector,
-  useWorkspaceSelector,
-  useWorkspaceUnits,
-} from '../Workspaces';
+import {getMachineAxisPosition, MachinePositionControl} from '../Machines';
+import {IHaveWorkspace, useWorkspaceControllerSelector, useWorkspaceSelector, useWorkspaceUnits,} from '../Workspaces';
 import {getDistanceUnitAbbreviationKey} from '../../components/Units';
-import MachinePositionControl from '../Machines/MachinePositionControl';
 
 export type PositionType = 'work' | 'machine';
 

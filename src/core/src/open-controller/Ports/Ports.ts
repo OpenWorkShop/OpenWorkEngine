@@ -1,4 +1,4 @@
-import { useTheme } from '@material-ui/core';
+import {useTheme} from '@material-ui/core';
 import {PortState, PortStatusFragment} from '../graphql';
 import {useTrans} from '../Context';
 import {faUsb} from '@fortawesome/free-brands-svg-icons';

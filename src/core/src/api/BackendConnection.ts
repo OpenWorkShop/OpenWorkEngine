@@ -1,8 +1,8 @@
 import {Logger} from '../utils/logging';
-import { EventEmitter } from 'events';
-import { SubscriptionClient } from 'subscriptions-transport-ws';
+import {EventEmitter} from 'events';
+import {SubscriptionClient} from 'subscriptions-transport-ws';
 import {IOpenWorkShop} from '../types';
-import { WebSocketLink } from '@apollo/client/link/ws';
+import {WebSocketLink} from '@apollo/client/link/ws';
 
 export enum ConnectionState {
   Disconnected = -1,

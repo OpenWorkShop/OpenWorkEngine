@@ -1,5 +1,5 @@
 import { MachinePartCompleteFragment } from '../graphql';
-import { getMachinePartTypeTranslationKey } from '../Machines/MachinePartType';
+import { getMachinePartTypeTranslationKey } from '../Machines';
 import * as React from 'react';
 import _ from 'lodash';
 import {

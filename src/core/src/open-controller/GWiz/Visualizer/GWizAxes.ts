@@ -11,7 +11,7 @@ import {
 import createTextSprite from './TextSprite';
 import {AxisName, AxisPlane, UnitType} from '../../graphql';
 import {mm2} from '../../../components/Units';
-import {getAxisPlaneAxes} from '../../Machines/AxisName';
+import {getAxisPlaneAxes} from '../../Machines';
 
 type LineMaterial = THREE.LineBasicMaterial | THREE.LineDashedMaterial;
 

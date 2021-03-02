@@ -1,5 +1,6 @@
 import {createMuiTheme} from '@material-ui/core/styles';
 import {CSSProperties} from '@material-ui/styles';
+
 const defaultTheme = createMuiTheme();
 
 export const defaultBorderStyle = 'solid';

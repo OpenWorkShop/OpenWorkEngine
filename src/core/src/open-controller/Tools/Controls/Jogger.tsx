@@ -11,16 +11,16 @@ import {useWorkspaceControllerSelector, useWorkspaceSelector, useWorkspaceUnits}
 import {getMachineAxisJogSteps} from '../../Machines';
 import {
   AxisName,
-  MachineMotionType, MachineOverridesMode, MachineSettingUnits,
+  MachineMotionType,
+  MachineOverridesMode,
+  MachineSettingUnits,
   MoveCommandInput,
   MovementDistanceType,
-  UnitType,
   useMoveMachineMutation
 } from '../../graphql';
 import {useLogger} from '../../../hooks';
 import OverrideControl from './OverrideControl';
 import {useControllerCommand} from '../../Controllers/hooks';
-import AnyIcon from '../../../components/AnyIcon';
 
 const Jogger: ToolBase = (props) => {
   const t = useTrans();

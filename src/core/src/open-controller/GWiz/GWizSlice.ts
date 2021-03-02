@@ -1,6 +1,10 @@
 import {
   ChangeMaterialPayload,
-  GWizState, ISelectedObject, IVisualizerCameraState, IVisualizerSceneState, RenderGroupType,
+  GWizState,
+  ISelectedObject,
+  IVisualizerCameraState,
+  IVisualizerSceneState,
+  RenderGroupType,
   VisualizerSceneStateAction,
 } from './types';
 import theme from '../../themes/GWiz';

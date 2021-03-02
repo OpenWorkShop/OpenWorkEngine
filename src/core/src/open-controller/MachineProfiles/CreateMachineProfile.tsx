@@ -1,4 +1,4 @@
-import {ICustomizedMachineProfile} from '../Machines/CustomizedMachine';
+import {ICustomizedMachineProfile} from '../Machines';
 import {useLogger} from '../../utils/logging/UseLogger';
 import React from 'react';
 import {MachineCategory, MachineControllerType, MachineFirmwareMinimalFragment} from '../graphql';
@@ -18,8 +18,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import {ToggleButton, ToggleButtonGroup} from '@material-ui/lab';
-import {normalizeMachineControllerType} from '../Machines/MachineControllerType';
-import {BaudRate} from '../Machines/BaudRate';
+import {normalizeMachineControllerType} from '../Machines';
+import {BaudRate} from '../Machines';
 import {useOwsTrans} from '../../hooks';
 
 const useStyles = makeStyles((theme: Theme) =>

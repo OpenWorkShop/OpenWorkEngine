@@ -1,4 +1,4 @@
-import { LogEntry, LogLevel } from './types';
+import {LogEntry, LogLevel} from './types';
 import LogManager from './LogManager';
 
 class Logger {

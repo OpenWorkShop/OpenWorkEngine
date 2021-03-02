@@ -1,5 +1,5 @@
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import { rowAlternateCss } from '../../themes/consts';
+import {makeStyles, Theme} from '@material-ui/core/styles';
+import {rowAlternateCss} from '../../themes/consts';
 
 const padding = 2;
 

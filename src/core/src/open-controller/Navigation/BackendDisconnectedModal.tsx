@@ -1,9 +1,9 @@
 import * as React from 'react';
 import useLogger from '../../utils/logging/UseLogger';
 import {useBackendConnectionState, useTrans} from '../Context';
-import { ConnectionState } from '../../api';
+import {ConnectionState} from '../../api';
 import CardDialog from '../../components/Cards/CardDialog';
-import { CircularProgress, Typography } from '@material-ui/core';
+import {CircularProgress, Typography} from '@material-ui/core';
 
 const BackendDisconnectedModal: React.FunctionComponent = () => {
   const log = useLogger(BackendDisconnectedModal);

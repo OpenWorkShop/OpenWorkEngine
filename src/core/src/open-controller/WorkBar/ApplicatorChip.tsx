@@ -1,11 +1,5 @@
-import React, { FunctionComponent } from 'react';
-import {
-  IHaveWorkspace,
-  useWorkspaceControllerSelector,
-  useWorkspaceSelector,
-  useWorkspaceUnits,
-  WorkspaceUnitSelect
-} from '../Workspaces';
+import React, {FunctionComponent} from 'react';
+import {IHaveWorkspace, useWorkspaceControllerSelector, useWorkspaceSelector, useWorkspaceUnits} from '../Workspaces';
 import PopoverWorkBarChip from './PopoverWorkBarChip';
 import {useOwsTrans} from '../../hooks';
 import {Button, Grid} from '@material-ui/core';

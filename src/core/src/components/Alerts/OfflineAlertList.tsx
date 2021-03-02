@@ -1,4 +1,4 @@
-import { useNetworkStatus } from '../../utils/device';
+import {useNetworkStatus} from '../../utils/device';
 import React from 'react';
 import AlertList, {IAlertList} from './AlertList';
 import {IAlertMessage, sanitizeAlertMessages} from './types';

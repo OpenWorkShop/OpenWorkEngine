@@ -1,12 +1,10 @@
-import React, { FunctionComponent } from 'react';
-import {IconDefinition} from '@fortawesome/fontawesome-common-types';
+import React, {FunctionComponent} from 'react';
 import NumericInput from '../../../components/Forms/NumericInput';
 import {useLogger} from '../../../hooks';
 import {useTrans} from '../../Context';
 import useStyles from './styles';
-import {Grid, IconButton, InputAdornment, Tooltip, Typography, useTheme} from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {HoverHelpStep} from '../../../components';
+import {IconButton, InputAdornment, Tooltip, Typography, useTheme} from '@material-ui/core';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretSquareDown} from '@fortawesome/free-solid-svg-icons';
 import {MachineSettingUnits} from '../../graphql';
 import {getUnitsShort} from '../../Machines';

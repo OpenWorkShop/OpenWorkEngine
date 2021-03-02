@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from 'react';
-import { Grid } from '@material-ui/core';
+import React, {FunctionComponent} from 'react';
+import {Grid} from '@material-ui/core';
 
 
 type CenterSize = 'lg' | 'md' | 'sm';

@@ -1,6 +1,6 @@
-import { Grid, Typography, CircularProgress } from '@material-ui/core';
+import {CircularProgress, Grid, Typography} from '@material-ui/core';
 import * as React from 'react';
-import { IHaveToolGroup } from './index';
+import {IHaveToolGroup} from './index';
 import {useTrans} from '../Context';
 import ToolLoader from './ToolLoader';
 import {IHaveWorkspace} from '../Workspaces';

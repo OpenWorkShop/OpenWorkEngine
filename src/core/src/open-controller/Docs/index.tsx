@@ -1,5 +1,5 @@
 import {useNetworkStatus} from '../../utils/device';
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import {OfflineAlertList} from '../../components/Alerts';
 import {useOpenControllerSettings, useTrans} from '../Context';
 

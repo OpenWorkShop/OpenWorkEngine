@@ -1,4 +1,4 @@
-import {Object3D, Quaternion, Vector3} from 'three';
+import {Quaternion, Vector3} from 'three';
 import {PayloadAction} from '@reduxjs/toolkit';
 import {AxisPlane, UnitType} from '../graphql';
 

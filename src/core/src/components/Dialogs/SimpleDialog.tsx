@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import {Dialog, DialogActions, DialogContent, DialogTitle, Toolbar, Typography} from '@material-ui/core';
 import useStyles from './styles';
 import {ICanClose} from './types';

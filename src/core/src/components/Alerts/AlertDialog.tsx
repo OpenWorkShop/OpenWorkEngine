@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTitle, DialogActions } from '@material-ui/core';
+import {Dialog, DialogActions, DialogContent, DialogTitle} from '@material-ui/core';
 import * as React from 'react';
 import AlertList, {IAlertList} from './AlertList';
 import useLogger from '../../utils/logging/UseLogger';

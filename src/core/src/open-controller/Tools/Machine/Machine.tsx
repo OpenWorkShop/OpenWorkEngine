@@ -1,7 +1,5 @@
 import * as React from 'react';
-import {
-  Button,
-} from '@material-ui/core';
+import {Button,} from '@material-ui/core';
 import {ToolBase} from '../types';
 import useStyles from './styles';
 import {useWorkspaceControllerSelector} from '../../Workspaces';
@@ -10,7 +8,7 @@ import MachineModalList from '../../Controllers/MachineModalList';
 import FirmwareSettingsDialog from './FirmwareSettingsDialog';
 import {useTrans} from '../../Context';
 import {faMicrochip} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 const Machine: ToolBase = (props) => {
   const t = useTrans();

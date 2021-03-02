@@ -1,5 +1,5 @@
-import { CSSProperties } from '@material-ui/styles';
-import { borderBottomCss, borderTopCss } from './borders';
+import {CSSProperties} from '@material-ui/styles';
+import {borderBottomCss, borderTopCss} from './borders';
 
 export const altBackgroundColor: CSSProperties = {
   backgroundColor: '#f6f6f6',

@@ -1,8 +1,7 @@
 import * as React from 'react';
 import {IHaveWorkspace} from './types';
 import useLogger from '../../utils/logging/UseLogger';
-import PortStatus from '../Ports/PortStatus';
-import {IMaybeHavePortStatus} from '../Ports';
+import {IMaybeHavePortStatus, PortStatus} from '../Ports';
 import {WorkspaceState} from '../graphql';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useTheme} from '@material-ui/core';

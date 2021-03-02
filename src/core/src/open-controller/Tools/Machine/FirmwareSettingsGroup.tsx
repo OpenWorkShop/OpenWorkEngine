@@ -1,13 +1,12 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import {FirmwareSettingPolymorphicFragment} from '../../graphql';
 import {Accordion, AccordionDetails, AccordionSummary, Grid, Typography} from '@material-ui/core';
 import FirmwareSettingValueEditor from './FirmwareSettingValueEditor';
 import useStyles from './styles';
 import {useLogger} from '../../../hooks';
-import {FirmwareSettingsGroupName} from '../../Machines';
+import {FirmwareSettingsGroupName, getFirmwareSettingsGroupTitleKey} from '../../Machines';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretSquareDown} from '@fortawesome/free-solid-svg-icons';
-import { getFirmwareSettingsGroupTitleKey } from '../../Machines';
 
 type Props = {
   groupName: FirmwareSettingsGroupName;

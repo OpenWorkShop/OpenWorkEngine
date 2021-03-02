@@ -1,6 +1,6 @@
 import React from 'react';
 import OpenWorkShop from '../../OpenWorkShop';
-import { Logger } from './';
+import {Logger} from './';
 
 // type Components = React.ComponentType<unknown> | React.FunctionComponent<unknown>;
 //

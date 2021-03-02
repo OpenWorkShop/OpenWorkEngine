@@ -1,9 +1,8 @@
 import {BrowserRouter as Router} from 'react-router-dom';
 import React from 'react';
 import usePromise from 'react-promise-suspense';
-import OpenControllerProvider from './Context/OpenControllerProvider';
 import useLogger from '../utils/logging/UseLogger';
-import {IHaveOpenControllerDeployment} from './Context';
+import {IHaveOpenControllerDeployment, OpenControllerProvider} from './Context';
 
 const ControllerMain: React.FunctionComponent<IHaveOpenControllerDeployment> = (props) => {
   const log = useLogger(ControllerMain);

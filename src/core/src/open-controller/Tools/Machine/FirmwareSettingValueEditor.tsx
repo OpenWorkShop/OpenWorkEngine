@@ -1,14 +1,10 @@
 import React, {FunctionComponent} from 'react';
-import {
-  FirmwareSettingPolymorphicFragment,
-  KinematicsMode,
-  StatusReportType
-} from '../../graphql';
+import {FirmwareSettingPolymorphicFragment, KinematicsMode, StatusReportType} from '../../graphql';
 import {useTrans} from '../../Context';
 import IconSelect, {ISelectItem} from '../../../components/Forms/IconSelect';
 import {useLogger} from '../../../hooks';
 import NumericInput from '../../../components/Forms/NumericInput';
-import {Checkbox, FormControl, InputAdornment, MenuItem} from '@material-ui/core';
+import {FormControl, InputAdornment} from '@material-ui/core';
 import {
   getAxisFlagMask,
   getKinematicsModeTitleKey,

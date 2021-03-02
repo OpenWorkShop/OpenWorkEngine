@@ -16,8 +16,6 @@ import useStyles from './styles';
 import analytics from '../analytics';
 import ReactGA from 'react-ga';
 import {useOpenControllerSettings, useTrans, useDocumentationUrl} from '../Context';
-import BackendDisconnectedModal from '../Modals/BackendDisconnectedModal';
-import Navigation from '../Navigation';
 
 const LoginPage: FunctionComponent = () => {
   const log = useLogger(LoginPage);

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import clsx from 'clsx';
 import {FormControl, Input, InputAdornment, Typography} from '@material-ui/core';
 import {HoverHelpStep} from '../../../components';

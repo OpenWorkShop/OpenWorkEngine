@@ -1,4 +1,4 @@
-import { ITool, IToolGroup } from './types';
+import {ITool, IToolGroup} from './types';
 
 class ToolGroup implements IToolGroup {
   get id(): string { return this._id; }

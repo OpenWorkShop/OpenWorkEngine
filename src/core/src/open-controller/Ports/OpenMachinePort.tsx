@@ -1,10 +1,10 @@
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPlug, faPowerOff} from '@fortawesome/free-solid-svg-icons';
-import {Fab, Grid, Paper, Typography, Modal, FormControl} from '@material-ui/core';
-import {ICustomizedMachine} from '../Machines/CustomizedMachine';
+import {Fab, FormControl, Grid, Modal, Paper, Typography} from '@material-ui/core';
+import {ICustomizedMachine} from '../Machines';
 import useLogger from '../../utils/logging/UseLogger';
 import React, {FunctionComponent} from 'react';
-import {HoverHelpStep} from '../../components/Alerts';
+import {AlertList, HoverHelpStep} from '../../components/Alerts';
 import {
   FirmwareRequirementInput,
   MutationOpenPortArgs,
@@ -17,7 +17,6 @@ import PortSelect from './PortSelect';
 import {useSystemPorts} from '../Ports';
 import useStyles from './styles';
 import PortConnectionSteps from './PortConnectionSteps';
-import {AlertList} from '../../components/Alerts';
 import {useTrans} from '../Context';
 
 interface OwnProps {

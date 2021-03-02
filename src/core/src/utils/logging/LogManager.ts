@@ -1,8 +1,8 @@
-import { EventEmitter } from 'events';
-import { LogEntry } from './types';
+import {EventEmitter} from 'events';
+import {LogEntry} from './types';
 import Logger from './Logger';
 import JsLogger from 'js-logger';
-import { LogOptions, defaultLogOptions } from './LogOptions';
+import {defaultLogOptions, LogOptions} from './LogOptions';
 
 class LogManager extends EventEmitter {
   private options: LogOptions = { ...defaultLogOptions };

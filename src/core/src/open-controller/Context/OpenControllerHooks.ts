@@ -1,7 +1,7 @@
 import React from 'react';
 import {IOpenController, IOpenControllerPackage} from './types';
 import OpenControllerContext from './OpenControllerContext';
-import { BackendConnection, BackendConnectionEvent, ConnectionState } from '../../api';
+import {BackendConnection, BackendConnectionEvent, ConnectionState} from '../../api';
 import {TTranslateFunc} from '../../types';
 
 export function useOpenController(): IOpenController {

@@ -3,7 +3,6 @@ export * from './Controllers';
 export * from './GWiz';
 export * from './Identity';
 export * from './Machines';
-export * from './Modals';
 export * from './Navigation';
 export * from './Ports';
 export * from './Settings';

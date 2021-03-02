@@ -1,7 +1,7 @@
 import * as React from 'react';
-import OpenWorkShopCore, { IOwsProps } from './OpenWorkShopCore';
-import Preloader from './Preloader/Preloader';
-import { ThemeProvider } from '@material-ui/core';
+import OpenWorkShopCore, {IOwsProps} from './OpenWorkShopCore';
+import Preloader from './Layout/Preloader';
+import {ThemeProvider} from '@material-ui/core';
 
 // Loader for the core application; Suspense will remain until this is done.
 const OpenWorkShopProvider: React.FunctionComponent<IOwsProps> = (props: IOwsProps) => {

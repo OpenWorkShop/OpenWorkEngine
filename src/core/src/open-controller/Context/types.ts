@@ -1,8 +1,8 @@
-import {IOpenWorkShop, TTranslateFunc, HostnameMap} from '../../types';
+import {HostnameMap, IOpenWorkShop, TTranslateFunc} from '../../types';
 import {EssentialSettingsFragment, OpenControllerSessionFragment} from '../graphql';
 import {BackendConnection} from '../../api';
 import {ISemver} from '../../utils/semvers';
-import { UserManagerSettings } from 'oidc-client';
+import {UserManagerSettings} from 'oidc-client';
 
 // Can be loaded from package.json; represents the deployment context.
 export interface IOpenControllerPackage {

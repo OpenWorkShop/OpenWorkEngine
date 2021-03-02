@@ -1,9 +1,9 @@
 import * as React from 'react';
-import MachineAxesEditor from '../../MachineProfiles/MachineAxesEditor';
+import {MachineAxesEditor} from '../../MachineProfiles';
 import _ from 'lodash';
 import {IHaveWorkspace} from '../types';
 import useLogger from '../../../utils/logging/UseLogger';
-import {MachineAxes} from '../../Machines/CustomizedMachine';
+import {MachineAxes} from '../../Machines';
 import HelpfulHeader from '../../../components/Text/HelpfulHeader';
 import {useTrans} from '../../Context';
 import {useWorkspaceSelector} from '../hooks';

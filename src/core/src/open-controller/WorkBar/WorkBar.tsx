@@ -1,9 +1,5 @@
 import * as React from 'react';
-import {
-  IHaveWorkspace,
-  tryUseWorkspaceControllerSelector,
-  useWorkspaceSelector
-} from '../Workspaces';
+import {IHaveWorkspace, tryUseWorkspaceControllerSelector, useWorkspaceSelector} from '../Workspaces';
 import {IMaybeHavePortStatus} from '../Ports';
 import useStyles from './styles';
 import {Button, ButtonGroup, Grid, Tooltip, Typography} from '@material-ui/core';

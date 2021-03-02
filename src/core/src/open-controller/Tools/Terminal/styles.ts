@@ -1,4 +1,4 @@
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import {makeStyles, Theme} from '@material-ui/core/styles';
 import 'typeface-roboto-mono';
 import {getLogLevelColor} from '../../Machines';
 import {MachineLogLevel} from '../../graphql';

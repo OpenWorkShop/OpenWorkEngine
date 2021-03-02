@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import {CardDialog} from '../../../components';
 import {useTrans} from '../../Context';
 import IconSelect from '../../../components/Forms/IconSelect';

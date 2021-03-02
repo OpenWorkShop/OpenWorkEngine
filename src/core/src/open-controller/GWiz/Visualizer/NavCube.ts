@@ -1,10 +1,10 @@
 import * as THREE from 'three';
-import { Vector3 } from 'three';
+import {Vector3} from 'three';
 import GWizCanvas from './GWizCanvas';
 import GWizCamera from './GWizCamera';
 import {Logger} from '../../../utils/logging';
-import { IVisualizerStyles, RenderGroupType, ViewSide} from '../types';
-import { getSidesColor, isSide } from '../sides';
+import {IVisualizerStyles, RenderGroupType, ViewSide} from '../types';
+import {getSidesColor} from '../sides';
 
 //https://github.com/yoavmil/angular-threejs-starter/blob/nav-cube/src/app/nav-cube/nav-cube.ts
 

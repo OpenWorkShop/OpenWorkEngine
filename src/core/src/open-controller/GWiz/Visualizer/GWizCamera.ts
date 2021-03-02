@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {Quaternion, Vector3} from 'three';
+import {Vector3} from 'three';
 import {IVisualizerCameraState, ViewSide} from '../types';
 import {isSide} from '../sides';
 import GWizCanvas from './GWizCanvas';

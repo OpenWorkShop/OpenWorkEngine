@@ -1,6 +1,6 @@
 import ApiCall from './ApiCall';
 import {IApiArgs, IApiCallState, IApiResponseRecord, IRecord} from './types';
-import { UserManager, UserManagerSettings } from 'oidc-client';
+import {UserManager, UserManagerSettings} from 'oidc-client';
 
 // This data could be loaded via /api/auth/config/OpenWorkShop
 // However, it is more efficient to simply hardcode it.

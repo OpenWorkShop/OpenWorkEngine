@@ -1,7 +1,7 @@
 import {ITool, IToolGroup, ToolBase} from './types';
 import * as React from 'react';
 import ToolGroup from './ToolGroup';
-import { useWorkspaceSelector} from '../Workspaces';
+import {useWorkspaceSelector} from '../Workspaces';
 import {MachineCategory} from '../graphql';
 
 // Lives as its own function so that it might be statically generated or perhaps load remote tools (?)

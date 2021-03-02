@@ -5,16 +5,11 @@ import Jogger from './Jogger';
 import {useLogger} from '../../../hooks';
 import useStyles from './styles';
 import {useTrans} from '../../Context';
-import {
-  faArrowCircleLeft,
-  faArrowCircleRight,
-  faBullseye,
-  faStopCircle
-} from '@fortawesome/free-solid-svg-icons';
+import {faArrowCircleLeft, faArrowCircleRight, faBullseye, faStopCircle} from '@fortawesome/free-solid-svg-icons';
 import {CircleDirection} from '../../graphql';
 import {IconDefinition} from '@fortawesome/fontawesome-common-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCreativeCommonsZero } from '@fortawesome/free-brands-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCreativeCommonsZero} from '@fortawesome/free-brands-svg-icons';
 import {CalibrationDialog} from '../../Calibration';
 
 const Controls: ToolBase = (props) => {

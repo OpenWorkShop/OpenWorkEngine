@@ -4,9 +4,9 @@ import { Grid, Typography, InputAdornment } from '@material-ui/core';
 import AlertList from '../../components/Alerts/AlertList';
 import HoverHelpStep from '../../components/Alerts/HoverHelpStep';
 import NumericInput from '../../components/Forms/NumericInput';
-import {IAlertMessage} from '../../components/Alerts';
+import {IAlertMessage} from '../../components';
 import {useOwsTrans} from '../../hooks';
-import {IAxisProps} from '../Machines/CustomizedMachine';
+import {IAxisProps} from '../Machines';
 import useStyles from './styles';
 
 interface IMachineAxisEditorProps {

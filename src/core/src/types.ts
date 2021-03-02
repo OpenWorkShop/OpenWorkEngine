@@ -2,10 +2,9 @@ import { Store } from 'redux';
 import { IOwsState } from './store';
 import { Logger, LogManager } from './utils/logging';
 import { LogOptions } from './utils/logging/LogOptions';
-import OidcClient from 'oidc-client';
-import { UserManagerSettings } from 'oidc-client';
+import OidcClient, { UserManagerSettings } from 'oidc-client';
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
-import { StringMap, i18n } from 'i18next';
+import { i18n, StringMap } from 'i18next';
 import { BackendConnection } from './api';
 
 export type OwsEnvironment = 'Development' | 'Staging' | 'Production';

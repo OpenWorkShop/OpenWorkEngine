@@ -2,7 +2,7 @@ import GWizObject from './GWizObject';
 import GWizCanvas from './GWizCanvas';
 import {MachineMovementFragment, ProgramExecutorFragment, ProgramInstructionFragment} from '../../graphql';
 import * as THREE from 'three';
-import OpenProgram from '../../Programs/OpenProgram';
+import {OpenProgram} from '../../Programs';
 import {RenderGroupType} from '../types';
 
 class GWizPlans extends GWizObject {

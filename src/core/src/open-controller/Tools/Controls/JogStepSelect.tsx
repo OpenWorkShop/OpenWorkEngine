@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {FormControl, InputLabel, Select, MenuItem, Typography, Grid} from '@material-ui/core';
+import {FormControl, Grid, InputLabel, MenuItem, Select, Typography} from '@material-ui/core';
 import useStyles from './styles';
 import {useTrans} from '../../Context';
 import {UnitType} from '../../graphql';

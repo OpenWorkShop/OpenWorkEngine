@@ -16,7 +16,7 @@ import {Button, FormControl, Paper, Typography} from '@material-ui/core';
 import ProgramFileUploadButton from './ProgramFileUploadButton';
 import useStyles from './styles';
 import {AlertList, IAlertMessage} from '../../components';
-import HelpfulHeader from '../../components/Text/HelpfulHeader';
+import { HelpfulHeader } from '../../components/Text';
 
 type Props = ICanClose & {
   onSelected: ProgramFileHandler;

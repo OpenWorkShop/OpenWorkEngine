@@ -1,13 +1,9 @@
 import useLogger from '../../utils/logging/UseLogger';
 import _ from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import {IPortCollection} from './types';
-import { SystemPortContext } from './SystemPortContext';
-import {
-  PortStatusFragment,
-  useListPortsQuery,
-  usePortChangeSubscription
-} from '../graphql';
+import {SystemPortContext} from './SystemPortContext';
+import {PortStatusFragment, useListPortsQuery, usePortChangeSubscription} from '../graphql';
 import {AlertDialog} from '../../components/Alerts';
 import {useTrans} from '../Context';
 

@@ -1,8 +1,8 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import {IconButton, Tooltip} from '@material-ui/core';
 import {getPortColor, getPortIcon, getPortStatusText} from './Ports';
 import {IHavePortStatus} from './types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 type Props = IHavePortStatus;
 

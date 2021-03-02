@@ -1,6 +1,6 @@
 import useStyles from './CardStyles';
-import React, { FunctionComponent } from 'react';
-import { Card, CardActions, CardHeader, Toolbar, CardContent } from '@material-ui/core';
+import React, {FunctionComponent} from 'react';
+import {Card, CardActions, CardContent, CardHeader, Toolbar} from '@material-ui/core';
 
 export interface IToolbarCardProps {
   title: string;

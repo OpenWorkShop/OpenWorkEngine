@@ -1,10 +1,9 @@
 import * as React from 'react';
 import ThreeColumns from '../../components/Layout/ThreeColumns';
 import ToolbarCard from '../../components/Cards/ToolbarCard';
-import PortConnectionSteps from '../Ports/PortConnectionSteps';
 import {IHaveWorkspaceId} from './types';
 import { Grid } from '@material-ui/core';
-import {IMaybeHavePortStatus} from '../Ports';
+import {IMaybeHavePortStatus, PortConnectionSteps} from '../Ports';
 import useLogger from '../../utils/logging/UseLogger';
 import OpenWorkspaceButton from './OpenWorkspaceButton';
 import {useWorkspace} from './hooks';

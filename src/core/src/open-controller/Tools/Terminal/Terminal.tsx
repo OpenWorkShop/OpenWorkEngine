@@ -1,7 +1,7 @@
 import * as React from 'react';
 import _ from 'lodash';
 import useStyles from './styles';
-import {Grid, Button} from '@material-ui/core';
+import {Button, Grid} from '@material-ui/core';
 import {ToolBase} from '../types';
 import {useWorkspaceControllerSelector} from '../../Workspaces';
 import {MachineLogLevel, useCommandMachineMutation} from '../../graphql';
@@ -9,7 +9,7 @@ import useLogger, {useComponentName} from '../../../utils/logging/UseLogger';
 import {AlertList} from '../../../components';
 import {getLogLevelNumber} from '../../Machines';
 import {useTrans} from '../../Context';
-import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import {faEllipsisV} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {IMachineLogFilters} from './types';
 import LogFiltersDialog from './LogFiltersDialog';

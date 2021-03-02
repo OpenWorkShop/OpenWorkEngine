@@ -1,7 +1,7 @@
-import { IOpenWorkShop } from '../../types';
+import {IOpenWorkShop} from '../../types';
 import React from 'react';
 import {EssentialSettingsFragment, OpenControllerSessionFragment} from '../graphql';
-import { IWorkspace } from '../Workspaces';
+import {IWorkspace} from '../Workspaces';
 import {IOpenController, IOpenControllerPackage} from './types';
 import {BackendConnection} from '../../api';
 

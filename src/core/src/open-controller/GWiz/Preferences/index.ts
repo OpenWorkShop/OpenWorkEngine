@@ -1,2 +1,2 @@
 export { default as AxisPalette } from './AxisPalette';
-export { default as ViewModeSelect } from './ViewSideSelect';
+export { default as ViewSideSelect } from './ViewSideSelect';

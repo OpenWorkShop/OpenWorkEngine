@@ -1,6 +1,5 @@
-import React, { FunctionComponent } from 'react';
-import {FormControl, Grid} from '@material-ui/core';
-import {HoverHelpStep} from '../Alerts';
+import React, {FunctionComponent} from 'react';
+import {Grid} from '@material-ui/core';
 import {IHelpStep} from '../Alerts/HoverHelpStep';
 import HelpfulExponent from '../Text/HelpfulExponent';
 

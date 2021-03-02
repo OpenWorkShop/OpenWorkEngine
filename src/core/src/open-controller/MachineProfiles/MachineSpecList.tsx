@@ -1,10 +1,10 @@
 import {
   getMachineSpecTypeTranslationKey,
   getMachineSpecTypeUnits,
-} from '../Machines/MachineSpecType';
+} from '../Machines';
 import React from 'react';
 import {useOwsTrans} from '../../hooks';
-import {IMachinePartSpec} from '../Machines/CustomizedMachine';
+import {IMachinePartSpec} from '../Machines';
 
 interface IMachineSpecProps {
   specs: IMachinePartSpec[];

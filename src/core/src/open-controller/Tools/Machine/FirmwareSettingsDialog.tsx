@@ -3,15 +3,10 @@ import _ from 'lodash';
 import {
   FirmwareSettingChangeInput,
   FirmwareSettingPolymorphicFragment,
-  FirmwareSettingsTypedFragment, useSetFirmwareSettingsMutation,
+  FirmwareSettingsTypedFragment,
+  useSetFirmwareSettingsMutation,
 } from '../../graphql';
-import {
-  Button,
-  FormControl,
-  Grid,
-  Paper,
-  Typography
-} from '@material-ui/core';
+import {Button, FormControl, Grid, Paper, Typography} from '@material-ui/core';
 import {useTrans} from '../../Context';
 import useStyles from './styles';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';

@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import {createMuiTheme} from '@material-ui/core/styles';
 import Colors from './Colors';
 import themeBase from './';
 import 'typeface-roboto';

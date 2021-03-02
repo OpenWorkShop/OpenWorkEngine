@@ -1,4 +1,4 @@
-import { SimplePaletteColorOptions } from '@material-ui/core/styles';
+import {SimplePaletteColorOptions} from '@material-ui/core/styles';
 
 // export const brown: SimplePaletteColorOptions = {
 //   light: '#7b5e57',
