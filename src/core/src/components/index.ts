@@ -8,5 +8,6 @@ export * from './Cards';
 export * from './Forms';
 export * from './Layout';
 export * from './Text';
+export * from './Images';
 
 export default {};

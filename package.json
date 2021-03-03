@@ -7,16 +7,18 @@
     "schema": "yarn graphql-codegen --watch",
     "icons": "cd src/core && node ./generate-icons.js",
     "start": "NODE_OPTIONS=\"--trace-warnings\" PORT=8001 react-scripts start",
-    "build": "react-scripts build",
     "package": "yarn run pkg build core",
-    "dev": "concurrently \"yarn run start\" \"yarn run pkg dev core\"",
+
     "ows-app": "./ci/run-dir.sh \"OpenWorkShop/App\" \"yarn run start\"",
     "ows-server": "./ci/run-dir.sh \"OpenWorkShop\" \"dotnet watch run\"",
     "frontend": "concurrently \"yarn run start\" \"yarn run pkg dev core\" \"yarn run schema\" \"yarn run ows-app\"",
-    "backend": "concurrently --raw \"cd Makerverse && dotnet watch run\" \"yarn run ows-server\""
+    "backend": "concurrently --raw \"cd Makerverse && dotnet watch run\" \"yarn run ows-server\"",
+    "build": "lerna run build --stream",
+    "dev": "lerna run dev --stream --parallel",
+    "lint": "lerna run lint --stream --parallel",
+    "test": "yarn jest --coverage"
   },
   "resolutions": {
-    "@openworkshop/core": "./src/core/dist",
     "subscriptions-transport-ws": "^0.9.18",
     "nib/stylus": "0.54.8",
     "@material-ui/core": "5.0.0-alpha.23",
@@ -130,6 +132,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^4.3.5",
     "imagemin-lint-staged": "^0.4.0",
+    "lerna": "^4.0.0",
     "levenary": "^1.1.1",
     "lint-staged": "^10.5.3",
     "mini-css-extract-plugin": "^1.3.2",

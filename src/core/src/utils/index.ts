@@ -1,5 +1,5 @@
-export * as cookies from './cookies';
-export * as urls from './urls';
-export * as device from './device';
+export * from './cookies';
+export * from './urls';
+export * from './device';
 export * from './apollo';
 export * from './strs';

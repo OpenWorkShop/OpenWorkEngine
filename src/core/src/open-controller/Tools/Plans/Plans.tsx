@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {Button, FormControl, Grid} from '@material-ui/core';
 import {ToolBase} from '../types';
-
 import {useWorkspaceControllerSelector} from '../../Workspaces';
 import {MachineInstructionResultFragment, ProgramFileFragment} from '../../graphql';
 import LogLine from '../Terminal/LogLine';

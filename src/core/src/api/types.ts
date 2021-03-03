@@ -2,6 +2,7 @@
 import {IState as IAuthState} from './Auth';
 import {IState as IUsersState} from './Users';
 import {IOpenWorkShop} from '../types';
+import {UserManagerSettings} from 'oidc-client';
 
 export interface IApiState extends IAuthState, IUsersState {}
 
@@ -57,3 +58,15 @@ export interface IApiCallState<TResponse extends IApiResponse> {
 export interface IApiArgs {
   ows: IOpenWorkShop;
 }
+
+export interface IClientConfig extends IRecord, UserManagerSettings {}
+
+// Response Interfaces
+export interface IAuth {
+  username: string;
+  authenticationType: string;
+}
+
+export type ILoginResponse = IApiResponseRecord<IAuth>;
+
+export type IClientConfigResponse = IApiResponseRecord<IClientConfig>;

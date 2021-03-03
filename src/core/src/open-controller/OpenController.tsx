@@ -13,9 +13,6 @@ import {BackendConnection} from '../api';
 import {BrowserRouter as Router} from 'react-router-dom';
 import analytics from './analytics';
 
-const container = document.createElement('div');
-document.body.appendChild(container);
-
 const OpenController: React.FunctionComponent<IHaveOpenControllerDeployment> = (props) => {
   const log = useLogger(OpenController);
   const { deployment } = props;

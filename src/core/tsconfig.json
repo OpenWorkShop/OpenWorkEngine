@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
+    "outDir": "dist",
     "rootDir": "src",
     "baseUrl": "./src",
     "lib": [
@@ -31,6 +31,6 @@
     "dist"
   ],
   "include": [
-    "./src"
+    "src"
   ]
 }
