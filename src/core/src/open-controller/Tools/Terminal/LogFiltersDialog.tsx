@@ -1,15 +1,14 @@
 import React, {FunctionComponent} from 'react';
-import {CardDialog} from '../../../components';
+import {CardDialog, ICanClose} from '../../../components';
 import {useTrans} from '../../Context';
 import IconSelect from '../../../components/Forms/IconSelect';
 import {MachineLogLevel} from '../../graphql';
 import {getLogLevelColor, getLogLevelIcon, getLogLevelTitleKey, machineLogLevels} from '../../Machines';
 import {IMachineLogFilters} from './types';
 import {useLogger} from '../../../hooks';
-import {ICardDialogProps} from '../../../components/Cards/CardDialog';
 import {useTheme} from '@material-ui/core';
 
-type Props = ICardDialogProps & {
+type Props = ICanClose & {
   filters: IMachineLogFilters,
   setFilters: (filters: IMachineLogFilters) => void,
 }

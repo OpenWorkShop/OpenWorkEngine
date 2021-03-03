@@ -1,20 +1,19 @@
 import {Dialog, DialogActions, DialogContent, DialogTitle, Toolbar} from '@material-ui/core';
 import * as React from 'react';
-import {IToolbarCardProps} from './ToolbarCard';
-import useStyles from './CardStyles';
+import useStyles from './styles';
 import {useLogger} from '../../hooks';
+import {ICardProps, IMightBeDialog, IToolbarProps} from './types';
+import ToolbarContent from './ToolbarContent';
 
-export interface ICardDialogProps {
-  open?: boolean;
-  onClose?: () => void;
-  preventClose?: boolean;
+type Props = ICardProps & IMightBeDialog & {
+  scroll?: 'body' | 'paper';
 }
-
-type Props = IToolbarCardProps & ICardDialogProps;
 
 const CardDialog: React.FunctionComponent<Props> = (props) => {
   const log = useLogger(CardDialog);
-  const { open, onClose, preventClose } = props;
+  const { open, onClose } = props;
+  const toolbarProps = props as IToolbarProps;
+  const preventClose = onClose == undefined;
   const [ internalOpen, setInternalOpen ] = React.useState(Boolean(open));
   const classes = useStyles();
   const scroll = 'paper';
@@ -44,9 +43,7 @@ const CardDialog: React.FunctionComponent<Props> = (props) => {
       maxWidth="xs"
     >
       <DialogTitle className={classes.cardHeader}>
-        <Toolbar>
-          {props.title}
-        </Toolbar>
+        <ToolbarContent {...toolbarProps} />
       </DialogTitle>
       {props.subHeader && <DialogActions className={classes.subHeader}>{props.subHeader}</DialogActions>}
       <DialogContent className={classes.content}>

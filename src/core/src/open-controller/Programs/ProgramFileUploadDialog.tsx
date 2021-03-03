@@ -1,9 +1,8 @@
 import _ from 'lodash';
 import React, {ChangeEvent, FunctionComponent} from 'react';
-import SimpleDialog from '../../components/Dialogs/SimpleDialog';
 import {ClientFileUploadInput, useSelectProgramFileMutation, useUploadProgramFileMutation,} from '../graphql';
 import {useLogger} from '../../hooks';
-import {AlertList, IAlertMessage} from '../../components';
+import {AlertList, CardDialog, IAlertMessage} from '../../components';
 import {useTrans} from '../Context';
 import {Button, CircularProgress, FormControl, Grid, MenuItem, Select, TextField} from '@material-ui/core';
 import {ProgramFileExtension, programFileExtensions, ProgramFileHandler} from './types';
@@ -107,7 +106,7 @@ const ProgramFileUploadDialog: FunctionComponent<Props> = (props) => {
   log.debug('files', filename, defaultFilename, programExtension, fileExistMap, meta);
 
   return (
-    <SimpleDialog
+    <CardDialog
       open={open}
       onClose={onClose}
       title={t('Upload Gcode Program')}
@@ -157,7 +156,7 @@ const ProgramFileUploadDialog: FunctionComponent<Props> = (props) => {
         </Grid>
       </Grid>
       <AlertList error={error} />
-    </SimpleDialog>
+    </CardDialog>
   );
 };
 

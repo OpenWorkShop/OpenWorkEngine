@@ -5,7 +5,6 @@ export { default as OpenWorkShopProvider } from './OpenWorkShopProvider';
 export { default as OpenWorkShopIcon } from './OpenWorkShopIcon';
 export * from './Alerts';
 export * from './Cards';
-export * from './Dialogs';
 export * from './Forms';
 export * from './Layout';
 export * from './Text';

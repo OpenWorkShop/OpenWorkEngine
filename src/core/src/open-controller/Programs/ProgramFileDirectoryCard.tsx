@@ -1,30 +1,30 @@
-import React, {FunctionComponent} from 'react';
+import React, { FunctionComponent } from 'react';
+import {AlertList, HelpfulHeader, IAlertMessage, CardDialog, ToolbarCard, CardWidget} from '../../components';
+import {Button, FormControl, Paper, Typography} from '@material-ui/core';
+import {useTrans} from '../Context';
+import ProgramFileUploadButton from './ProgramFileUploadButton';
+import ProgramFileTree from './ProgramFileTree';
+import {useDispatch, useSelector} from 'react-redux';
+import useStyles from './styles';
 import {
   ProgramFileDirectoryFragment,
   ProgramFileMetaFragment,
   useLoadProgramMutation,
   useProgramDirectoryQuery
 } from '../graphql';
-import {ICanClose, CardDialog} from '../../components/Cards';
-import ProgramFileTree from './ProgramFileTree';
-import {useTrans} from '../Context';
-import {ProgramFileHandler} from './types';
-import {useDispatch, useSelector} from 'react-redux';
 import {AppState} from '../redux';
 import programsSlice from './slice';
-import {Button, FormControl, Paper, Typography} from '@material-ui/core';
-import ProgramFileUploadButton from './ProgramFileUploadButton';
-import useStyles from './styles';
-import {AlertList, IAlertMessage} from '../../components';
-import {HelpfulHeader} from '../../components/Text';
+import {ProgramFileHandler} from './types';
 
-type Props = ICanClose & {
+type Props = {
+  open?: boolean;
+  onClose?: () => void;
   onSelected: ProgramFileHandler;
 };
 
-const ProgramDirectoryDialog: FunctionComponent<Props> = (props) => {
+const ProgramFileDirectoryCard: FunctionComponent<Props> = (props) => {
   const t = useTrans();
-  const { open, onClose, onSelected } = props;
+  const {  onSelected } = props;
   const dispatch = useDispatch();
   const classes = useStyles();
   const loadDirectory = useProgramDirectoryQuery();
@@ -39,7 +39,6 @@ const ProgramDirectoryDialog: FunctionComponent<Props> = (props) => {
   const lastRevision = selectedRevisions.length > 0 ? selectedRevisions[selectedRevisions.length - 1] : undefined;
   const selectedRevision = selectedMetaRev && selectedMetaRev[1] && lastRevision?.id !== selectedMetaRev[1] ?
     selectedMetaRev[1] : 0;
-  const title =  t('Gcode Programs'); //selectedMeta ? selectedMeta.name :
   const hasSelectedRevision = selectedRevision > 0;
   const hasFiles = programFileMetas.length > 0;
   const isLoading = loadedProgram.loading;
@@ -75,27 +74,27 @@ const ProgramDirectoryDialog: FunctionComponent<Props> = (props) => {
     }
   }
 
+  const footer = (
+    <FormControl fullWidth={true} >
+      {!selectedMetaRev && <ProgramFileUploadButton onUploaded={onSelected} />}
+      {selectedMetaRev && (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => onClickedLoad()}
+          disabled={isDisabled}
+        >
+          {hasSelectedRevision && t('View Changes in Revision #{{ rev }}', { rev: selectedRevision })}
+          {!hasSelectedRevision && t('Open Program File')}
+        </Button>
+      )}
+    </FormControl>
+  );
+
   return (
-    <CardDialog
-      title={title}
-      tip={t('"Programs" are files which tell your machine how to print/cut some project.')}
-      open={open}
-      onClose={onClose}
-      footer={
-        <FormControl fullWidth={true} >
-          {!selectedMetaRev && <ProgramFileUploadButton onUploaded={onSelected} />}
-          {selectedMetaRev && (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => onClickedLoad()}
-            >
-              {hasSelectedRevision && t('View Changes in Revision #{{ rev }}', { rev: selectedRevision })}
-              {!hasSelectedRevision && t('Open Program File')}
-            </Button>
-          )}
-        </FormControl>
-      }
+    <CardWidget
+      title={t('Gcode Programs')}
+      footer={footer}
     >
       <AlertList error={error} />
       <div className={classes.dialogContent}>
@@ -115,8 +114,8 @@ const ProgramDirectoryDialog: FunctionComponent<Props> = (props) => {
           </Typography>
         </div>}
       </Paper>
-    </CardDialog>
+    </CardWidget>
   );
 };
 
-export default ProgramDirectoryDialog;
+export default ProgramFileDirectoryCard;

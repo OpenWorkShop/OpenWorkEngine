@@ -1,11 +1,12 @@
 import * as React from 'react';
 import {Button, FormControl, Grid} from '@material-ui/core';
 import {ToolBase} from '../types';
+
 import {useWorkspaceControllerSelector} from '../../Workspaces';
 import {MachineInstructionResultFragment, ProgramFileFragment} from '../../graphql';
 import LogLine from '../Terminal/LogLine';
 import {useLogger} from '../../../hooks';
-import {PreviewProgramFileDialog, ProgramDirectoryDialog} from '../../Programs';
+import {PreviewProgramFileDialog, ProgramFileDirectoryCard} from '../../Programs';
 import {useTrans} from '../../Context';
 import useStyles from './styles';
 
@@ -40,7 +41,7 @@ const Plans: ToolBase = (props) => {
           </Button>
         </FormControl>
       </Grid>
-      <ProgramDirectoryDialog
+      <ProgramFileDirectoryCard
         open={selectingFile}
         onClose={() => setSelectingFile(false)}
         onSelected={openProgramFileDialog}

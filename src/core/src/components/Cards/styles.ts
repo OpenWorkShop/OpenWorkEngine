@@ -1,7 +1,5 @@
 import {makeStyles, Theme} from '@material-ui/core/styles';
-import {rowAlternateCss} from '../../themes/consts';
-
-const padding = 2;
+import {rowAlternateCss} from '../../themes';
 
 const useStyles = makeStyles((theme: Theme) => ({
   cardHeader: {
@@ -23,13 +21,26 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   content: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(padding),
+    padding: theme.spacing(1),
     paddingRight: theme.spacing(4),
     paddingLeft: theme.spacing(4),
   },
   centered: {
     textAlign: 'center',
     verticalAlign: 'center',
+  },
+  dialogHeader: {
+    padding: 0,
+  },
+  dialogContent: {
+    padding: theme.spacing(0.5),
+    backgroundColor: theme.palette.background.default,
+    minWidth: 300,
+  },
+  dialogFooter: {
+    ...rowAlternateCss,
+    justifyContent: 'center',
+    margin: 0,
   },
 }));
 

@@ -16,7 +16,7 @@ import {FirmwareSettingsGroupName, hasSettingChanged} from '../../Machines';
 import FirmwareSettingsGroup from './FirmwareSettingsGroup';
 import {useControllerInstructions} from '../../Controllers/hooks';
 import {IHaveWorkspace} from '../../Workspaces';
-import SimpleDialog from '../../../components/Dialogs/SimpleDialog';
+import {CardDialog} from '../../../components/Cards';
 
 type Props = IHaveWorkspace & {
   settings: FirmwareSettingsTypedFragment;
@@ -106,7 +106,7 @@ const FirmwareSettingsDialog: FunctionComponent<Props> = (props) => {
   );
 
   return (
-    <SimpleDialog
+    <CardDialog
       open={open}
       onClose={onClose}
       title={title}
@@ -145,7 +145,7 @@ const FirmwareSettingsDialog: FunctionComponent<Props> = (props) => {
           }
         </Grid>
       </Grid>
-    </SimpleDialog>
+    </CardDialog>
   );
 };
 

@@ -33,7 +33,8 @@ const ReconnectRedirect: FunctionComponent<Props> = (props) => {
     <React.Fragment>
       {isConnected && <Redirect to={props.to} />}
       <CardDialog
-        open={!isConnected} title={t('Disconnected')} preventClose={true}
+        open={!isConnected}
+        title={t('Disconnected')}
       >
         <div style={{ textAlign: 'center' }}>
           <Typography variant="h6">{t('Failed to re-connect.')}</Typography>

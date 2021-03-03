@@ -1,32 +1,29 @@
-import useStyles from './CardStyles';
+import useStyles from './styles';
 import React, {FunctionComponent} from 'react';
 import {Card, CardActions, CardContent, CardHeader, Toolbar} from '@material-ui/core';
+import {HelpfulExponent} from '../Text';
+import {ICardProps, IToolbarProps} from './types';
+import ToolbarContent from './ToolbarContent';
 
-export interface IToolbarCardProps {
-  title: string;
-  action?: React.ReactNode;
-  subHeader?: React.ReactNode;
-  footer?: React.ReactNode;
-  children: React.ReactNode;
-}
-
-type Props = IToolbarCardProps;
+type Props = ICardProps;
 
 const ToolbarCard: FunctionComponent<Props> = (props) => {
   const classes = useStyles();
-
+  const { title, tip, action, subHeader, children, footer } = props;
+  const toolbarProps = props as IToolbarProps;
+  
   return (
     <Card className={classes.root}>
-      <CardHeader className={classes.cardHeader} action={props.action} title={
-        <Toolbar>
-          {props.title}
-        </Toolbar>}
+      <CardHeader
+        className={classes.cardHeader}
+        action={action}
+        title={<ToolbarContent {...toolbarProps} />}
       />
-      {props.subHeader && <CardActions className={classes.subHeader}>{props.subHeader}</CardActions>}
-      <CardContent className={classes.content}>
-        {props.children}
-      </CardContent>
-      {props.footer && <CardActions className={classes.cardFooter}>{props.footer}</CardActions>}
+      {subHeader && <CardActions className={classes.subHeader}>{subHeader}</CardActions>}
+      {children && <CardContent className={classes.content}>
+        {children}
+      </CardContent>}
+      {footer && <CardActions className={classes.cardFooter}>{footer}</CardActions>}
     </Card>
   );
 };

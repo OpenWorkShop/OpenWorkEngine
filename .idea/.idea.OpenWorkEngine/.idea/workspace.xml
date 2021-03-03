@@ -6,8 +6,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="627b5cbe-4e90-410d-9ab6-326b1616b6e2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/riderModule.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorkEngine/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/.gitignore" afterDir="false" />
@@ -15,11 +15,7 @@
       <change beforePath="$PROJECT_DIR$/Makerverse/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/src/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makerverse/src/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Makerverse/src/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Programs/Graph/ProgramsSchema.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Programs/Graph/ProgramsSchema.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Programs/Models/ProgramFileMeta.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Programs/Models/ProgramFileMeta.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Programs/Services/ProgramFileDirectory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Programs/Services/ProgramFileDirectory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenController/Programs/Services/ProgramFileManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Programs/Services/ProgramFileManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenControllerTests/files/hexagon-4.5w-4bit.nc" beforeDir="false" afterPath="$PROJECT_DIR$/OpenControllerTests/files/hexagon-4.5w-4bit.nc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenController/Programs/Graph/ProgramsSubscription.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenController/Programs/Graph/ProgramsSubscription.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Controllers/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Controllers/AuthController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Schema/IdentityQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Identity/Schema/IdentityQuery.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Controllers/MachinesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/Api/Machines/Controllers/MachinesController.cs" afterDir="false" />
@@ -34,10 +30,26 @@
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/OpenWorkShop.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/OpenWorkShop.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/StartupAuth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/StartupAuth.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenWorkShop/ci/openwork.shop.crt" beforeDir="false" afterPath="$PROJECT_DIR$/OpenWorkShop/ci/openwork.shop.crt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Programs/slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Programs/slice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Programs/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Programs/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/PreviewProgramFileDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/PreviewProgramFileDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/ProgramDirectoryDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/ProgramDirectoryDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/Cards/CardDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/components/Cards/CardDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/Cards/CardStyles.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/Cards/ToolbarCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/components/Cards/ToolbarCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/Cards/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/components/Cards/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/Dialogs/SimpleDialog.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/Dialogs/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/Dialogs/styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/components/Cards/styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/Dialogs/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/components/Cards/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/components/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/components/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Home/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Home/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Navigation/BackendDisconnectedModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Navigation/BackendDisconnectedModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Navigation/ReconnectRedirect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Navigation/ReconnectRedirect.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Programs/PreviewProgramFileDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Programs/PreviewProgramFileDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Programs/ProgramDirectoryDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Programs/ProgramDirectoryDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Programs/ProgramFileUploadDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Programs/ProgramFileUploadDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Programs/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Programs/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Machine/FirmwareSettingsDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Machine/FirmwareSettingsDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/Plans.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Plans/Plans.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Terminal/LogFiltersDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/Tools/Terminal/LogFiltersDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/src/open-controller/graphql.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/src/open-controller/graphql.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,9 +146,9 @@
       <option value="$PROJECT_DIR$/OpenController/Programs/Models/ProgramFileMeta.cs" />
       <option value="$PROJECT_DIR$/OpenController/Programs/Enums/ProgramTopic.cs" />
       <option value="$PROJECT_DIR$/OpenController/Programs/Graph/ProgramsSchema.cs" />
-      <option value="$PROJECT_DIR$/OpenController/Programs/Graph/ProgramsSubscription.cs" />
       <option value="$PROJECT_DIR$/OpenController/Programs/Services/ProgramFileDirectory.cs" />
       <option value="$PROJECT_DIR$/OpenController/Programs/Services/ProgramFileManager.cs" />
+      <option value="$PROJECT_DIR$/OpenController/Programs/Graph/ProgramsSubscription.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1l4my4TnlSIUe2KMx2jkxdZSpZ6" />
@@ -161,7 +173,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.standard" value="" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="InlayHintsGeneralOptionsPageId" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -282,7 +294,10 @@
       <workItem from="1613226001480" duration="71547000" />
       <workItem from="1613680615704" duration="53000" />
       <workItem from="1613680722667" duration="64692000" />
-      <workItem from="1614366271610" duration="7997000" />
+      <workItem from="1614366271610" duration="9850000" />
+      <workItem from="1614729028261" duration="2639000" />
+      <workItem from="1614773622301" duration="1882000" />
+      <workItem from="1614785172237" duration="80000" />
     </task>
     <servers />
   </component>

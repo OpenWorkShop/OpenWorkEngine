@@ -2,7 +2,7 @@ import React, {FunctionComponent} from 'react';
 import {Button, FormControl, Paper, Typography} from '@material-ui/core';
 import {IHaveWorkspace} from '../Workspaces';
 import {ProgramFileFragment, ProgramSyntax} from '../graphql';
-import SimpleDialog from '../../components/Dialogs/SimpleDialog';
+import { CardDialog } from '../../components/Cards';
 import {useTrans} from '../Context';
 import useStyles from './styles';
 
@@ -68,7 +68,7 @@ const PreviewProgramFileDialog: FunctionComponent<Props> = (props) => {
   }
 
   return (
-    <SimpleDialog
+    <CardDialog
       title={t('Program File Preview')}
       open={Boolean(openProgramFile)}
       onClose={() => setOpenProgramFile(undefined)}
@@ -82,7 +82,7 @@ const PreviewProgramFileDialog: FunctionComponent<Props> = (props) => {
       </FormControl> }
     >
       {openProgramFile && renderProgramFile(openProgramFile)}
-    </SimpleDialog>
+    </CardDialog>
   );
 };
 
