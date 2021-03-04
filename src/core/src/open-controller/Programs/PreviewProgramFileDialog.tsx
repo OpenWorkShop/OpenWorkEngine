@@ -13,7 +13,7 @@ type Props = IHaveWorkspace & {
 const PreviewProgramFileDialog: FunctionComponent<Props> = (props) => {
   const t = useTrans();
   const classes = useStyles();
-  const { workspaceId, programFile } = props;
+  const { programFile } = props;
   const [openProgramFile, setOpenProgramFile] = React.useState(programFile);
 
   React.useEffect(() => {
@@ -27,7 +27,7 @@ const PreviewProgramFileDialog: FunctionComponent<Props> = (props) => {
 
   function renderProgramFile(programFile: ProgramFileFragment) {
     const { meta, lineCount, instructionCount } = programFile;
-    const { name, size, syntax, lastModified, data } = meta;
+    const { name, syntax, lastModified, data } = meta;
     //const tags = data?.tags ?? [];
     const numLines = lineCount.toLocaleString();
     const numInstructions = instructionCount.toLocaleString();
@@ -40,7 +40,7 @@ const PreviewProgramFileDialog: FunctionComponent<Props> = (props) => {
     const createdDate = firstRevision ? new Date(firstRevision.createdAt).toLocaleDateString() : undefined;
     const modifiedTime = lastRevision ? new Date(lastRevision.createdAt).toLocaleTimeString() : undefined;
     const modifiedDate = lastRevision ? new Date(lastRevision.createdAt).toLocaleDateString() : undefined;
-    const lm = new Date(lastModified * 1000).toLocaleString();
+    // const lm = new Date(lastModified * 1000).toLocaleString();
 
     return (
       <React.Fragment>

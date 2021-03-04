@@ -42,7 +42,7 @@ const LogLine: FunctionComponent<Props> = (props) => {
     return <span style={{ color: color ?? 'white' }} key={key} >{text}</span>;
   }
 
-  function renderInstruction(id: number, stateColor: string, code: SyntaxChunkFragment[]) {
+  function renderInstruction(id: number, code: SyntaxChunkFragment[]) {
     const ret: React.ReactNode[] = [
       // renderTextSpan(inst.source, stateColor, `${id}-translation`),
       renderTextSpan(' [', logSysColor, `${id}-open`),
@@ -87,7 +87,7 @@ const LogLine: FunctionComponent<Props> = (props) => {
       </IconButton>
     </Tooltip>
     {renderTextSpan(logEntry.message, stateColor)}
-    {logEntry.code && logEntry.code.length > 0 && renderInstruction(logEntry.id, stateColor, logEntry.code)}
+    {logEntry.code && logEntry.code.length > 0 && renderInstruction(logEntry.id, logEntry.code)}
     {logEntry.count > 1 && renderTextSpan(` (x${logEntry.count})`, logSysColor)}
   </Grid>;
 };

@@ -18,7 +18,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import {ToggleButton, ToggleButtonGroup} from '@material-ui/lab';
-import {useOwsTrans} from '../../hooks';
+import {useTrans} from '../Context';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,7 +46,7 @@ type ProfileKey = 'brand' | 'model' | 'submit';
 
 const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> = (props) => {
   const log = useLogger(CreateMachineProfile);
-  const t = useOwsTrans();
+  const t = useTrans();
   const controllerTypes = [MachineControllerType.Grbl, MachineControllerType.Marlin];
   //Object.keys(MachineControllerType);
   const baudRates = Object.values(BaudRate).filter((br) => typeof br === 'number');
@@ -99,7 +99,7 @@ const CreateMachineProfile: React.FunctionComponent<ICreateMachineProfileProps> 
         <ToggleButtonGroup
           exclusive
           value={firmware.controllerType}
-          onChange={(e, v) => !!v && updateFirmware('controllerType', v)}>
+          onChange={(_, v) => !!v && updateFirmware('controllerType', v)}>
           {controllerTypes.map((ct) => {
             if (ct === MachineControllerType.Unknown) return null;
             return (

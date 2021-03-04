@@ -2,7 +2,7 @@ import {useNetworkStatus} from '../../utils/device';
 import React from 'react';
 import AlertList, {IAlertList} from './AlertList';
 import {IAlertMessage, sanitizeAlertMessages} from './types';
-import {useOwsTrans} from '../../hooks';
+import {useTrans} from '../../open-controller';
 
 type OfflineAlertListProps = IAlertList & {
   severity?: 'warning' | 'error';
@@ -11,7 +11,7 @@ type OfflineAlertListProps = IAlertList & {
 
 const OfflineAlertList: React.FunctionComponent<OfflineAlertListProps> = (props) => {
   const { isOnline } = useNetworkStatus();
-  const t = useOwsTrans();
+  const t = useTrans();
   const { error, errors, warning, warnings, severity } = props;
   const allErrors: IAlertMessage[] = sanitizeAlertMessages(errors, error);
   const allWarnings: IAlertMessage[] = sanitizeAlertMessages(warnings, warning);

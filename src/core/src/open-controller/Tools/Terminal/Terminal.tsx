@@ -37,6 +37,7 @@ const Terminal: ToolBase = (props) => {
     const variables = { code, source, workspaceId };
     setAwaiting(true);
     const res = await commandMutation({ variables });
+    log.debug('command result', res);
   }
 
   log.debug('draw', awaiting, commandResult);

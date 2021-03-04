@@ -21,6 +21,7 @@ export function getCookie(name: string): string | undefined {
       return ppop.split(';').shift();
     }
   }
+  return undefined;
 }
 
 export function deleteCookie(name: string): void {

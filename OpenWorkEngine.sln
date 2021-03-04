@@ -1,10 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenWorkShop", "OpenWorkShop\OpenWorkShop.csproj", "{C9C6DD4F-D6D8-42D1-AE31-7FB357B6E781}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenWorkShop", "src\OpenWorkShop\OpenWorkShop.csproj", "{C9C6DD4F-D6D8-42D1-AE31-7FB357B6E781}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makerverse", "Makerverse\Makerverse.csproj", "{3E704343-2001-43F9-BAFB-94FD92743449}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Makerverse", "src\Makerverse\Makerverse.csproj", "{3E704343-2001-43F9-BAFB-94FD92743449}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Makerverse", "Makerverse", "{A752CDE4-77A5-4422-B85C-B1CB770F185E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Makerverse", "src\Makerverse", "{A752CDE4-77A5-4422-B85C-B1CB770F185E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OWE", "OWE", "{D0646445-BA6A-467D-8BCF-99C61AEC789D}"
 EndProject

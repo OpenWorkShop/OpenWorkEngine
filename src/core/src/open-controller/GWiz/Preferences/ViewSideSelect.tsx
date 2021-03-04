@@ -17,7 +17,7 @@ const ViewSideSelect: React.FunctionComponent = () => {
     };
   });
 
-  function setViewPlane(vp: ViewSide) {
+  function setViewPlane(_: ViewSide) {
     // dispatch( gWizSlice.actions.setViewPlane( vp ) );
   }
 

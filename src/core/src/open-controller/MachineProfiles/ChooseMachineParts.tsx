@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretSquareDown} from '@fortawesome/free-solid-svg-icons';
-import {useOwsTrans} from '../../hooks';
+import {useTrans} from '../Context';
 
 interface IMachineOptionsProps {
   parts: IMachinePartChoice[];
@@ -41,7 +41,7 @@ type SelectedPartIdMap = { [key: string]: string };
 
 const ChooseMachineParts: React.FunctionComponent<IMachineOptionsProps> = (props) => {
   const parts = props.parts;
-  const t = useOwsTrans();
+  const t = useTrans();
   const log = useLogger(ChooseMachineParts);
   const classes = useStyles();
   const groupedParts = _.groupBy(parts, 'partType');

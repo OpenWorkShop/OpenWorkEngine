@@ -2,13 +2,11 @@ import React, {FunctionComponent} from 'react';
 import NumericInput from '../../../components/Forms/NumericInput';
 import {useLogger} from '../../../hooks';
 import {useTrans} from '../../Context';
-import useStyles from './styles';
 import {IconButton, InputAdornment, Tooltip, Typography, useTheme} from '@material-ui/core';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretSquareDown} from '@fortawesome/free-solid-svg-icons';
 import {MachineSettingUnits} from '../../graphql';
 import {getUnitsShort} from '../../Machines';
-
 
 type Props = {
   title: string;
@@ -24,7 +22,6 @@ const OverrideControl: FunctionComponent<Props> = (props) => {
   const theme = useTheme();
   const log = useLogger(OverrideControl);
   const { title, value, override, units, className, disabled } = props;
-  const classes = useStyles();
   const valStr = value && value !== 0 ? value.toString() : '0';
   const unitsStr = getUnitsShort(units);
   const label = t('{{ title }} ({{ value }} {{ units }})', {
@@ -33,6 +30,7 @@ const OverrideControl: FunctionComponent<Props> = (props) => {
     title,
   });
   const canOverride = override !== undefined;
+  const isDisabled = !canOverride || disabled;
   const tip = 'tip';
 
   function onChange(num: number) {
@@ -43,7 +41,7 @@ const OverrideControl: FunctionComponent<Props> = (props) => {
   const button = <IconButton
     aria-label={tip}
     size='small'
-    disabled={disabled}
+    disabled={isDisabled}
     disableFocusRipple onClick={() => onChange(0)}
   >
     <FontAwesomeIcon color={theme.palette.primary.main} icon={faCaretSquareDown} />

@@ -1,3 +1,4 @@
+import React from 'react';
 import {HostnameMap, IOpenWorkShop, TTranslateFunc} from '../../types';
 import {EssentialSettingsFragment, OpenControllerSessionFragment} from '../graphql';
 import {BackendConnection} from '../../api';
@@ -20,6 +21,8 @@ export interface IOpenControllerPackage {
 
   trackingId: string,
 
+  pathPrefix: string,
+
   client: UserManagerSettings;
 
   hostnameMap?: HostnameMap;
@@ -27,7 +30,11 @@ export interface IOpenControllerPackage {
   connection?: BackendConnection;
 }
 
-export interface IHaveOpenControllerDeployment {
+export interface ILazyRender {
+  childRenderer?: (ows: IOpenWorkShop, oc: IOpenController) => React.ReactNode;
+}
+
+export interface IHaveOpenControllerDeployment extends ILazyRender {
   deployment: IOpenControllerPackage;
 }
 

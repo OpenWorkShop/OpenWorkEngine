@@ -20,14 +20,14 @@ class GWizControls extends OrbitControls {
     this.log = this.openController.ows.logManager.getLogger('GWizControls');
     // this.controls.enableDamping = true;
     this.enableKeys = true;
-    this.addEventListener('change', (e) => {
+    this.addEventListener('change', () => {
       this._canvas.requestRender();
     });
   }
 
   applyPreferences(prefs: IVisualizerControlsPreferences): void {
-    this.log.debug('controls', prefs);
     this._prefs = prefs;
+    this.log.debug('controls', this._prefs);
     if (prefs.dampingFactor) {
       this.dampingFactor = prefs.dampingFactor;
       this.enableDamping = true;

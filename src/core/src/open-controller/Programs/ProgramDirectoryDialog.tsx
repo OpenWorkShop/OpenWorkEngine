@@ -88,6 +88,7 @@ const ProgramDirectoryDialog: FunctionComponent<Props> = (props) => {
             <Button
               variant="contained"
               color="primary"
+              disabled={isDisabled}
               onClick={() => onClickedLoad()}
             >
               {hasSelectedRevision && t('View Changes in Revision #{{ rev }}', { rev: selectedRevision })}

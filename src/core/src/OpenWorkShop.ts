@@ -30,8 +30,6 @@ class OpenWorkShop implements IOpenWorkShop {
 
   private _log?: Logger = undefined;
 
-  private _i = -1;
-
   private _i18n?: i18n;
 
   private _t?: TFunction;
@@ -40,7 +38,6 @@ class OpenWorkShop implements IOpenWorkShop {
     if (_i != 0) {
       throw new Error('OpenWorkShop already initialized in different context.');
     }
-    this._i = _i;
     _i++;
   }
 

@@ -3,13 +3,15 @@ import {IOpenController, IOpenControllerPackage} from './types';
 import OpenControllerContext from './OpenControllerContext';
 import {BackendConnection, BackendConnectionEvent, ConnectionState} from '../../api';
 import {TTranslateFunc} from '../../types';
+import {useOpenWorkShop} from '../../hooks';
 
 export function useOpenController(): IOpenController {
   return React.useContext(OpenControllerContext);
 }
 
 export function useTrans(): TTranslateFunc {
-  return useOpenController().t;
+  const ows = useOpenWorkShop();
+  return ows.t.bind(ows);
 }
 
 export function useOpenControllerSettings(): IOpenControllerPackage {

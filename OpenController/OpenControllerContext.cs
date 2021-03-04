@@ -38,7 +38,7 @@ namespace OpenWorkEngine.OpenController {
       Settings = _configFile.Data ?? new OpenControllerSettings();
       if (env.IsDevelopment()) {
         Subdomain = "dev";
-        OwsHost = "http://dev.openwork.shop:5000";
+        OwsHost = "http://dev.openwork.shop:8000";
       } else if (env.IsStaging()) {
         Subdomain = "staging";
         OwsHost = "https://staging.openwork.shop";

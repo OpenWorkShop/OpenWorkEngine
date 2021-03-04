@@ -7,7 +7,7 @@
   "extensions": {
     "endpoints": {
       "Makerverse": {
-        "url": "http://dev.openwork.shop:5000/api/graphql",
+        "url": "http://dev.openwork.shop:8000/api/graphql",
         "headers": {
           "user-agent": "OpenController"
         },

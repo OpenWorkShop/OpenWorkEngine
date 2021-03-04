@@ -70,7 +70,7 @@ const ControllerCard: FunctionComponent<Props> = (props) => {
           </Tooltip>}
         />
         <CardActions className={classes.controllerCardActions} >
-          <TabList onChange={(e, val) => setSelectedTab(val)}>
+          <TabList onChange={(_, val) => setSelectedTab(val)}>
             {tools.map((toolGroup) => {
               return <Tab
                 key={toolGroup.id}

@@ -3,7 +3,7 @@ import {Vector3} from 'three';
 import GWizCanvas from './GWizCanvas';
 import GWizCamera from './GWizCamera';
 import {Logger} from '../../../utils/logging';
-import {IVisualizerStyles, RenderGroupType, ViewSide} from '../types';
+import {IVisualizerStyles, ViewSide} from '../types';
 import {getSidesColor} from '../sides';
 
 //https://github.com/yoavmil/angular-threejs-starter/blob/nav-cube/src/app/nav-cube/nav-cube.ts
@@ -17,7 +17,7 @@ class NavCube {
   scene: THREE.Scene;
 
   private _cubeMesh: THREE.Mesh;
-  private _northStar: THREE.Mesh;
+  //private _northStar: THREE.Mesh;
   private _div?: HTMLDivElement;
   private _range = 10;
   private _zoom = 0.8;
@@ -43,12 +43,12 @@ class NavCube {
     this.createCornerFacets();
     this.createLabels();
 
-    const geometry = new THREE.ConeGeometry(0.2, 0.5);
-    const material = new THREE.MeshBasicMaterial(this.styles.renderGroups[RenderGroupType.P]);
-    geometry.rotateX(-Math.PI/2);
-    geometry.translate(0, 0, 0.5 / 2); // Tip of cone = origin
+    //const geometry = new THREE.ConeGeometry(0.2, 0.5);
+    //const material = new THREE.MeshBasicMaterial(this.styles.renderGroups[RenderGroupType.P]);
+    //geometry.rotateX(-Math.PI/2);
+    //geometry.translate(0, 0, 0.5 / 2); // Tip of cone = origin
 
-    this._northStar = new THREE.Mesh( geometry, material );
+    //this._northStar = new THREE.Mesh( geometry, material );
 
     this.scene = new THREE.Scene();
     this.scene.add(this._cubeMesh);
@@ -60,7 +60,7 @@ class NavCube {
     this.localCamera.lookAt(0, 0, 0);
   }
 
-  update(cameraNormal: THREE.Vector3, lookNormal: THREE.Vector3): void {
+  update(): void {
     // const distanceMult = this._range * 0.5;
     // this.localCamera.position.copy( cameraNormal.multiplyScalar(distanceMult) );
     // this.localCamera.lookAt(0, 0, 0);
@@ -385,9 +385,7 @@ class NavCube {
       intersects.forEach((intersection) => {
         if (intersection.object.userData.sides && intersection.face?.normal) {
           this.onSideClicked(
-            intersection.object.userData.sides,
-            intersection.object as THREE.Mesh,
-            intersection.face?.normal
+            intersection.object.userData.sides
           );
           return;
         }
@@ -395,7 +393,7 @@ class NavCube {
     }
   }
 
-  private onSideClicked(sides: ViewSide, mesh: THREE.Mesh, normal: Vector3): void {
+  private onSideClicked(sides: ViewSide): void {
     // const camLen = this.trackedCamera.position.length();
     //if (normal.equals(this.trackedCamera.up)) {
     //  normal.applyAxisAngle(new Vector3(1, 0, 0), 0.001);

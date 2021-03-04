@@ -3,7 +3,7 @@ import * as React from 'react';
 import AlertList, {IAlertList} from './AlertList';
 import useLogger from '../../utils/logging/UseLogger';
 import {sanitizeAlertMessages} from './types';
-import {useOwsTrans} from '../../hooks';
+import {useTrans} from '../../open-controller';
 
 type AlertDialogProps = IAlertList & {
   title: string;
@@ -13,7 +13,7 @@ type AlertDialogProps = IAlertList & {
 
 const AlertDialog: React.FunctionComponent<AlertDialogProps> = (props) => {
   const log = useLogger(AlertDialog);
-  const t = useOwsTrans();
+  const t = useTrans();
   const { title, children, permanent } = props;
   const warnings = sanitizeAlertMessages(props.warnings, props.warning);
   const errors = sanitizeAlertMessages(props.errors, props.error);

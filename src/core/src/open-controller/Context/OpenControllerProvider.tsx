@@ -23,6 +23,7 @@ import {workspacesSlice} from '../Workspaces';
 interface IProps {
   deployment: IOpenControllerPackage;
   connection: BackendConnection;
+  children?: React.ReactNode;
 }
 
 const OpenControllerProvider: FunctionComponent<IProps> = (props) => {
@@ -119,14 +120,15 @@ const OpenControllerProvider: FunctionComponent<IProps> = (props) => {
         <Switch>
           <Route path='/login' component={LoginPage} />
           <Route path='/callback' component={CallbackPage} />
-          {user && <Route path='/' >
+          {user && <Route path={deployment.pathPrefix} >
             <ProtectedApp
               token={user.access_token}
               onLoaded={onLoaded}
               currentWorkspaceId={currentWorkspaceId}
             />
           </Route>}
-          {!user && <Route path='/'>
+          {props.children && props.children}
+          {!user && <Route path={deployment.pathPrefix}>
             <Redirect to="/login" />
           </Route>}
         </Switch>

@@ -15,7 +15,7 @@ import {
   Theme,
 } from '@material-ui/core';
 import useLogger from '../../utils/logging/UseLogger';
-import {useOwsTrans} from '../../hooks';
+import {useTrans} from '../Context';
 
 interface IChooseMachinePartsProps {
   partGroup: MachinePartCompleteFragment[];
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const ChooseMachinePart: React.FunctionComponent<IChooseMachinePartsProps> = (props) => {
-  const t = useOwsTrans();
+  const t = useTrans();
   const log = useLogger(ChooseMachinePart);
   const classes = useStyles();
   const firstPart = props.partGroup[0];

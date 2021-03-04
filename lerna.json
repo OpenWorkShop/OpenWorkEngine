@@ -1,8 +1,4 @@
 {
-  "packages": [
-    "src/*",
-    "OpenWorkShop/App/"
-  ],
   "version": "independent",
   "npmClient": "yarn",
   "useWorkspaces": true

@@ -14,7 +14,7 @@ import {owsClientOpts} from '../../consts';
 import OfflineAlertList from '../../components/Alerts/OfflineAlertList';
 import OpenWorkShopIcon from '../../components/OpenWorkShopIcon';
 import useStyles from './styles';
-import {useOwsTrans} from '../../hooks';
+import { useTrans } from  '../Context' ;
 
 type MP = MachineSearchResultFragment;
 
@@ -23,7 +23,7 @@ interface IMachineProfileSearchProps {
 }
 
 const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProps> = (props) => {
-  const t = useOwsTrans();
+  const t = useTrans();
   const [open, setOpen] = React.useState(false);
   const log = useLogger(MachineProfileSearchBar);
   const classes = useStyles();
@@ -76,12 +76,12 @@ const MachineProfileSearchBar: React.FunctionComponent<IMachineProfileSearchProp
         loading={loading}
         onOpen={() => updateQuery('')}
         onClose={() => setOpen(false)}
-        onChange={(e, mp) => props.onSelectedMachineProfile(mp ?? undefined)}
+        onChange={(_, mp) => props.onSelectedMachineProfile(mp ?? undefined)}
         options={machineProfiles}
         getOptionSelected={(opt: MP, val: MP) => opt.id === val.id}
         groupBy={(mp: MP) => getGroupName(mp)}
         getOptionLabel={(mp: MP) => [mp.brand, mp.name, mp.model].filter((a) => a && a.length > 0).join(' ')}
-        onInputChange={(e, val) => updateQuery(val)}
+        onInputChange={(_, val) => updateQuery(val)}
         renderOption={(props: unknown, mp: MP) => {
           return (
             <Grid {...props} container alignItems='center'>

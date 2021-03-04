@@ -13,7 +13,9 @@ import {BackendConnection} from '../api';
 import {BrowserRouter as Router} from 'react-router-dom';
 import analytics from './analytics';
 
-const OpenController: React.FunctionComponent<IHaveOpenControllerDeployment> = (props) => {
+type Props = IHaveOpenControllerDeployment;
+
+const OpenController: React.FunctionComponent<Props> = (props) => {
   const log = useLogger(OpenController);
   const { deployment } = props;
 
@@ -23,7 +25,7 @@ const OpenController: React.FunctionComponent<IHaveOpenControllerDeployment> = (
     analytics.initialize(deployment.trackingId, deployment.version, ows);
     const i: i18n = ows.i18n;
     return {
-      i18n: i.use(initReactI18next),
+      i18n: ows.i18n ?? i.use(initReactI18next),
       connection: deployment.connection,
       store: configureStore(),
     };
@@ -41,7 +43,7 @@ const OpenController: React.FunctionComponent<IHaveOpenControllerDeployment> = (
       <ThemeProvider theme={theme}>
         <Router >
           <StylesProvider injectFirst>
-            <ControllerMain deployment={deployment} />
+            <ControllerMain {...props} />
           </StylesProvider>
         </Router>
       </ThemeProvider>

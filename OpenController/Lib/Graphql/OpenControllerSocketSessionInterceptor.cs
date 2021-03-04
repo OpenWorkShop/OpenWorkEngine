@@ -21,7 +21,7 @@ namespace OpenWorkEngine.OpenController.Lib.Graphql {
     }
 
     public override ValueTask OnRequestAsync(ISocketConnection connection, IQueryRequestBuilder requestBuilder, CancellationToken cancellationToken) {
-      Log.Verbose("[SOCKET] {connection} {query}", connection, requestBuilder);
+      Log.Debug("[SOCKET] {connection} {query}", connection, requestBuilder);
       return base.OnRequestAsync(connection, requestBuilder, cancellationToken);
     }
   }

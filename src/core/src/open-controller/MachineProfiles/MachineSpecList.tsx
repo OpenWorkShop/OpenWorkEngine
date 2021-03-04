@@ -1,13 +1,13 @@
 import {getMachineSpecTypeTranslationKey, getMachineSpecTypeUnits, IMachinePartSpec,} from '../Machines';
 import React from 'react';
-import {useOwsTrans} from '../../hooks';
+import {useTrans} from '../Context';
 
 interface IMachineSpecProps {
   specs: IMachinePartSpec[];
 }
 
 const MachineSpecList: React.FunctionComponent<IMachineSpecProps> = (props) => {
-  const t = useOwsTrans();
+  const t = useTrans();
 
   return (
     <span>

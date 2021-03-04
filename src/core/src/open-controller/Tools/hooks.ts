@@ -22,7 +22,7 @@ export function getWorkspaceTools(workspaceId: string): IToolGroup[] {
   return [
     new ToolGroup('Controls', 'control-pad', 'Controls'),
     new ToolGroup('Plans', 'blueprint', 'Plans'),
-    // new ToolGroup('Applicator', isCnc ? 'end-mill' : 'hot-end', 'Applicator'),
+    new ToolGroup('Applicator', isCnc ? 'end-mill' : 'hot-end', 'Applicator'),
     // new ToolGroup('Machine', 'machine', 'Machine'),
     new ToolGroup('Terminal', 'console', 'Terminal'),
   ];

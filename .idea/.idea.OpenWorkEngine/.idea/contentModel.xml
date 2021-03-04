@@ -11,143 +11,6 @@
     <e p="$PROJECT_DIR$/../Library/Caches/JetBrains/Rider2020.3/extResources" t="IncludeRecursive" />
     <e p="$PROJECT_DIR$/../Library/Caches/JetBrains/Rider2020.3/resharper-host/local/Transient/Rider/v203/SolutionCaches/_OpenWorkEngine.705098016.00" t="ExcludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeFlat">
-      <e p="Makerverse" t="IncludeRecursive">
-        <e p=".dockerignore" t="Include" />
-        <e p=".gitattributes" t="Include" />
-        <e p=".gitignore" t="Include" />
-        <e p=".makerverse" t="Include" />
-        <e p=".travis.yml" t="Include" />
-        <e p="App" t="Include">
-          <e p="src" t="Include">
-            <e p="makerverse-deployment.ts" t="Include" />
-            <e p="react-app-env.d.ts" t="Include" />
-          </e>
-        </e>
-        <e p="appsettings.Development.json" t="Include" />
-        <e p="appsettings.json" t="Include" />
-        <e p="appsettings.Production.json" t="Include" />
-        <e p="bin" t="ExcludeRecursive" />
-        <e p="CHANGELOG.md" t="Include" />
-        <e p="ci" t="Include">
-          <e p="amd64.Dockerfile" t="Include" />
-          <e p="arm.Dockerfile" t="Include" />
-          <e p="makerverse.default" t="Include" />
-          <e p="makerverse.docker" t="Include" />
-          <e p="raspbian-desktop.json" t="Include" />
-          <e p="raspbian-lite.json" t="Include" />
-        </e>
-        <e p="Docs" t="Include">
-          <e p=".gitignore" t="Include" />
-          <e p="404.html" t="Include" />
-          <e p="_config.yml" t="Include" />
-          <e p="_data" t="Include">
-            <e p="navigation.yaml" t="Include" />
-          </e>
-          <e p="_posts" t="Include">
-            <e p="building-from-source.markdown" t="Include" />
-          </e>
-          <e p="About" t="Include">
-            <e p="contribution.md" t="Include" />
-            <e p="history.md" t="Include" />
-            <e p="index.md" t="Include" />
-          </e>
-          <e p="assets" t="Include">
-            <e p="logo.png" t="Include" />
-            <e p="Machines" t="Include">
-              <e p="maslow" t="Include">
-                <e p="calibration_overview.png" t="Include" />
-              </e>
-            </e>
-            <e p="screenshot.png" t="Include" />
-          </e>
-          <e p="bak.md" t="Include" />
-          <e p="CNAME" t="Include" />
-          <e p="features" t="Include">
-            <e p="advanced.md" t="Include" />
-            <e p="commands.md" t="Include" />
-            <e p="events.md" t="Include" />
-            <e p="index.md" t="Include" />
-            <e p="programs.md" t="Include" />
-            <e p="security.md" t="Include" />
-            <e p="widgets.md" t="Include" />
-          </e>
-          <e p="Gemfile" t="Include" />
-          <e p="Gemfile.lock" t="Include" />
-          <e p="index.md" t="Include" />
-          <e p="installation" t="Include">
-            <e p="build-from-source.md" t="Include" />
-            <e p="index.md" t="Include" />
-            <e p="stand-alone.md" t="Include" />
-            <e p="updating.md" t="Include" />
-            <e p="web-server" t="Include">
-              <e p="docker.md" t="Include" />
-              <e p="index.md" t="Include" />
-              <e p="linux-service.md" t="Include" />
-              <e p="raspberry-pi.md" t="Include" />
-            </e>
-          </e>
-          <e p="Machines" t="Include">
-            <e p="3dp.md" t="Include" />
-            <e p="cnc" t="Include">
-              <e p="grbl.md" t="Include" />
-              <e p="index.md" t="Include" />
-              <e p="maslow.md" t="Include" />
-            </e>
-            <e p="index.md" t="Include" />
-          </e>
-          <e p="tutorial" t="Include">
-            <e p="create-workspace.md" t="Include" />
-            <e p="index.md" t="Include" />
-            <e p="open-makerverse.md" t="Include" />
-            <e p="run-programs.md" t="Include" />
-            <e p="workspace-basics.md" t="Include" />
-          </e>
-        </e>
-        <e p="GCode" t="Include">
-          <e p=".hexagon-4.5w-4bit.nc.json" t="Include" />
-          <e p="hexagon-4.5w-4bit.nc" t="Include" />
-        </e>
-        <e p="LICENSE" t="Include" />
-        <e p="Makerverse.csproj" t="IncludeRecursive" />
-        <e p="obj" t="ExcludeRecursive">
-          <e p="Debug" t="Include">
-            <e p="net5.0" t="Include">
-              <e p="Makerverse.AssemblyInfo.cs" t="Include" />
-            </e>
-          </e>
-        </e>
-        <e p="Program.cs" t="Include" />
-        <e p="Properties" t="Include">
-          <e p="launchSettings.json" t="Include" />
-        </e>
-        <e p="README.md" t="Include" />
-        <e p="scripts" t="Include">
-          <e p="add-osx-cert.sh" t="Include" />
-          <e p="bootstrap_resizerootfs.sh" t="Include" />
-          <e p="build-os.sh" t="Include" />
-          <e p="certs" t="Include">
-            <e p="Certum-Code-Signing-CA-SHA2.cer" t="Include" />
-          </e>
-          <e p="changelog.sh" t="Include" />
-          <e p="copy-build.sh" t="Include" />
-          <e p="docker.sh" t="Include" />
-          <e p="electron-builder.sh" t="Include" />
-          <e p="gpio.sh" t="Include" />
-          <e p="kiosk.sh" t="Include" />
-          <e p="pack-rpi.sh" t="Include" />
-          <e p="package-sync.js" t="Include" />
-          <e p="pishrink.sh" t="Include" />
-          <e p="prebuild-dev.sh" t="Include" />
-          <e p="prebuild-latest.sh" t="Include" />
-          <e p="prebuild-prod.sh" t="Include" />
-          <e p="resizerootfs" t="Include">
-            <e p="resizerootfs" t="Include" />
-            <e p="resizerootfs.service" t="Include" />
-          </e>
-          <e p="semver.sh" t="Include" />
-        </e>
-        <e p="Startup.cs" t="Include" />
-      </e>
       <e p="OpenController" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
@@ -291,6 +154,7 @@
             <e p="SubscriptionTopic.cs" t="Include" />
             <e p="TopicSubscription.cs" t="Include" />
           </e>
+          <e p="SerilogConfig.cs" t="Include" />
         </e>
         <e p="MachineProfiles" t="Include">
           <e p="Enums" t="Include">
@@ -557,7 +421,147 @@
         <e p="TestBase.cs" t="Include" />
       </e>
       <e p="OpenWorkEngine.sln" t="IncludeFlat" />
-      <e p="OpenWorkShop" t="IncludeRecursive">
+      <e p="OWE" t="Include" />
+      <e p="OWS" t="Include" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="src/Makerverse" t="IncludeRecursive">
+        <e p=".dockerignore" t="Include" />
+        <e p=".gitattributes" t="Include" />
+        <e p=".gitignore" t="Include" />
+        <e p=".makerverse" t="Include" />
+        <e p=".travis.yml" t="Include" />
+        <e p="App" t="Include">
+          <e p="src" t="Include">
+            <e p="makerverse-deployment.ts" t="Include" />
+            <e p="react-app-env.d.ts" t="Include" />
+          </e>
+        </e>
+        <e p="appsettings.Development.json" t="Include" />
+        <e p="appsettings.json" t="Include" />
+        <e p="appsettings.Production.json" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="CHANGELOG.md" t="Include" />
+        <e p="ci" t="Include">
+          <e p="amd64.Dockerfile" t="Include" />
+          <e p="arm.Dockerfile" t="Include" />
+          <e p="makerverse.default" t="Include" />
+          <e p="makerverse.docker" t="Include" />
+          <e p="raspbian-desktop.json" t="Include" />
+          <e p="raspbian-lite.json" t="Include" />
+        </e>
+        <e p="Docs" t="Include">
+          <e p=".gitignore" t="Include" />
+          <e p="404.html" t="Include" />
+          <e p="_config.yml" t="Include" />
+          <e p="_data" t="Include">
+            <e p="navigation.yaml" t="Include" />
+          </e>
+          <e p="_posts" t="Include">
+            <e p="building-from-source.markdown" t="Include" />
+          </e>
+          <e p="About" t="Include">
+            <e p="contribution.md" t="Include" />
+            <e p="history.md" t="Include" />
+            <e p="index.md" t="Include" />
+          </e>
+          <e p="assets" t="Include">
+            <e p="logo.png" t="Include" />
+            <e p="Machines" t="Include">
+              <e p="maslow" t="Include">
+                <e p="calibration_overview.png" t="Include" />
+              </e>
+            </e>
+            <e p="screenshot.png" t="Include" />
+          </e>
+          <e p="bak.md" t="Include" />
+          <e p="CNAME" t="Include" />
+          <e p="features" t="Include">
+            <e p="advanced.md" t="Include" />
+            <e p="commands.md" t="Include" />
+            <e p="events.md" t="Include" />
+            <e p="index.md" t="Include" />
+            <e p="programs.md" t="Include" />
+            <e p="security.md" t="Include" />
+            <e p="widgets.md" t="Include" />
+          </e>
+          <e p="Gemfile" t="Include" />
+          <e p="Gemfile.lock" t="Include" />
+          <e p="index.md" t="Include" />
+          <e p="installation" t="Include">
+            <e p="build-from-source.md" t="Include" />
+            <e p="index.md" t="Include" />
+            <e p="stand-alone.md" t="Include" />
+            <e p="updating.md" t="Include" />
+            <e p="web-server" t="Include">
+              <e p="docker.md" t="Include" />
+              <e p="index.md" t="Include" />
+              <e p="linux-service.md" t="Include" />
+              <e p="raspberry-pi.md" t="Include" />
+            </e>
+          </e>
+          <e p="Machines" t="Include">
+            <e p="3dp.md" t="Include" />
+            <e p="cnc" t="Include">
+              <e p="grbl.md" t="Include" />
+              <e p="index.md" t="Include" />
+              <e p="maslow.md" t="Include" />
+            </e>
+            <e p="index.md" t="Include" />
+          </e>
+          <e p="tutorial" t="Include">
+            <e p="create-workspace.md" t="Include" />
+            <e p="index.md" t="Include" />
+            <e p="open-makerverse.md" t="Include" />
+            <e p="run-programs.md" t="Include" />
+            <e p="workspace-basics.md" t="Include" />
+          </e>
+        </e>
+        <e p="GCode" t="Include">
+          <e p=".hexagon-4.5w-4bit.nc.json" t="Include" />
+          <e p="hexagon-4.5w-4bit.nc" t="Include" />
+        </e>
+        <e p="LICENSE" t="Include" />
+        <e p="Makerverse.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="net5.0" t="Include">
+              <e p="Makerverse.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="README.md" t="Include" />
+        <e p="scripts" t="Include">
+          <e p="add-osx-cert.sh" t="Include" />
+          <e p="bootstrap_resizerootfs.sh" t="Include" />
+          <e p="build-os.sh" t="Include" />
+          <e p="certs" t="Include">
+            <e p="Certum-Code-Signing-CA-SHA2.cer" t="Include" />
+          </e>
+          <e p="changelog.sh" t="Include" />
+          <e p="copy-build.sh" t="Include" />
+          <e p="docker.sh" t="Include" />
+          <e p="electron-builder.sh" t="Include" />
+          <e p="gpio.sh" t="Include" />
+          <e p="kiosk.sh" t="Include" />
+          <e p="pack-rpi.sh" t="Include" />
+          <e p="package-sync.js" t="Include" />
+          <e p="pishrink.sh" t="Include" />
+          <e p="prebuild-dev.sh" t="Include" />
+          <e p="prebuild-latest.sh" t="Include" />
+          <e p="prebuild-prod.sh" t="Include" />
+          <e p="resizerootfs" t="Include">
+            <e p="resizerootfs" t="Include" />
+            <e p="resizerootfs.service" t="Include" />
+          </e>
+          <e p="semver.sh" t="Include" />
+        </e>
+        <e p="Startup.cs" t="Include" />
+      </e>
+      <e p="src/OpenWorkShop" t="IncludeRecursive">
         <e p=".dockerignore" t="Include" />
         <e p=".gitignore" t="Include" />
         <e p=".makerverse" t="Include" />
@@ -753,9 +757,6 @@
         <e p="Startup.cs" t="Include" />
         <e p="StartupAuth.cs" t="Include" />
       </e>
-      <e p="OWE" t="Include" />
-      <e p="OWS" t="Include" />
-      <e p="packages" t="ExcludeRecursive" />
     </e>
   </component>
 </project>

@@ -31,7 +31,7 @@ export function suspend<TRet>(promise: Promise<TRet>): IRead<TRet> {
   return { read };
 }
 
-function useSuspendableQuery<TQuery, TVars>(doc: TypedDocumentNode<TQuery, TVars>) {
+export function useSuspendableQuery<TQuery, TVars>(doc: TypedDocumentNode<TQuery, TVars>) {
   const result = useQuery<TQuery, TVars>(doc);
   if (result.loading) {
     suspend(new Promise((resolve) => !result.loading && resolve(result.data))).read();

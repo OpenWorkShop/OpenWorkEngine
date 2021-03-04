@@ -43,7 +43,6 @@ namespace OpenWorkEngine.OpenController {
       //                      x => x.BindFieldsExplicitly()
       //                            .Name("FindMe")
       //                            .Field("Id").Type<StringType>()));
-      //                  s.AddType(
       //                    new InputObjectType<IParsedValue>(
       //                      x => x.BindFieldsExplicitly()
       //                            .Name("FindMe2")

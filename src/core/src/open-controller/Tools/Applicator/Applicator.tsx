@@ -4,10 +4,8 @@ import {ToolBase} from '../types';
 import {useWorkspaceControllerSelector} from '../../Workspaces';
 import {useLogger} from '../../../hooks';
 import useStyles from './styles';
-import {useTrans} from '../../Context';
 
 const Applicator: ToolBase = (props) => {
-  const t = useTrans();
   const log = useLogger(Applicator);
   const classes = useStyles();
   const { workspaceId } = props;

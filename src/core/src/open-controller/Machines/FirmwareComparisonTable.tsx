@@ -4,7 +4,6 @@ import {useTrans} from '../Context';
 import {faCheckCircle, faExclamationCircle} from '@fortawesome/free-solid-svg-icons';
 import {DetectedFirmwareFragment} from '../graphql';
 import {Grid, IconButton, Tooltip, Typography, useTheme} from '@material-ui/core';
-import useStyles from '../WorkBar/styles';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import ReactGA from 'react-ga';
 import {titlize} from '../../utils';
@@ -25,7 +24,6 @@ const FirmwareComparisonTable: React.FunctionComponent<Props> = (props) => {
   const t = useTrans();
   const log = useLogger(FirmwareComparisonTable);
   const theme = useTheme();
-  const classes = useStyles();
   const tip = t(
     'Firmware is flashed directly on the board of the connected machine. ' +
     'It actually "drives" the behavior. In most cases, firmware is open-source Arduino code.'

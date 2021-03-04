@@ -4,7 +4,7 @@ const defaultEnv: OwsEnvironment = 'Production';
 
 function getServerUrl(env: OwsEnvironment): URL {
   if (env === 'Development') {
-    return new URL('http://dev.openwork.shop:5000');
+    return new URL('http://dev.openwork.shop:8000');
   } else if (env === 'Staging') {
     return new URL('https://staging.openwork.shop');
   }

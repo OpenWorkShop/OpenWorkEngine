@@ -3,8 +3,8 @@ import * as React from 'react';
 import useStyles from './styles';
 import {OpenWorkShopIcon} from '../../components';
 import {getDistanceUnitAbbreviationKey, getDistanceUnitIconKey} from './InchesMillimeters';
-import {useOwsTrans} from '../../hooks';
 import {UnitType} from '../../open-controller/graphql';
+import {useTrans} from '../../open-controller';
 
 type Props = {
   units: UnitType;
@@ -12,7 +12,7 @@ type Props = {
 };
 
 const InchesMillimetersSelect: React.FunctionComponent<Props> = (props) => {
-  const t = useOwsTrans();
+  const t = useTrans();
   const classes = useStyles();
   const { units, setUnits } = props;
 

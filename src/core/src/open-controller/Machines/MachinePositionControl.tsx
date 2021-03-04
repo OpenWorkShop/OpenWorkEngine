@@ -25,7 +25,7 @@ function getCellSize(num: number): CellSize {
 const MachinePositionControl: FunctionComponent<Props> = (props) => {
   const log = useLogger(MachinePositionControl);
   const classes = useStyles();
-  const { position, title, unitsAbbr } = props;
+  const { position, title } = props;
   const validAxes = axisKeys.filter(ak => position[ak] !== null);
 
   if (validAxes.length <= 0) return null;

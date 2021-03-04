@@ -1,7 +1,6 @@
 import useStyles from './styles';
 import React, {FunctionComponent} from 'react';
-import {Card, CardActions, CardContent, CardHeader, Toolbar} from '@material-ui/core';
-import {HelpfulExponent} from '../Text';
+import {Card, CardActions, CardContent, CardHeader} from '@material-ui/core';
 import {ICardProps, IToolbarProps} from './types';
 import ToolbarContent from './ToolbarContent';
 
@@ -9,7 +8,7 @@ type Props = ICardProps;
 
 const ToolbarCard: FunctionComponent<Props> = (props) => {
   const classes = useStyles();
-  const { title, tip, action, subHeader, children, footer } = props;
+  const { action, subHeader, children, footer } = props;
   const toolbarProps = props as IToolbarProps;
   
   return (

@@ -41,7 +41,7 @@ class GWizCanvas {
   public actions: GWizActions;
 
   private _axes: IMachineAxis[] = [];
-  private _dragControls: DragControls[];
+  // private _dragControls: DragControls[];
 
   public get domElement(): HTMLCanvasElement { return this.renderer.domElement; }
 
@@ -69,7 +69,8 @@ class GWizCanvas {
     this.controls = new GWizControls(this);
     this.navCube = new NavCube(this, this.styles);
 
-    this._dragControls = this.selectableObjects.map(this.addGroupDragControls.bind(this));
+    //this._dragControls =
+    this.selectableObjects.map(this.addGroupDragControls.bind(this));
   }
 
   private getDragObject(obj: THREE.Object3D): GWizObject {
@@ -212,9 +213,9 @@ class GWizCanvas {
   }
 
   updateNavCube(): void {
-    const lookVector = this.center.clone().sub(this.camera.position).normalize();
-    const camVector = this.camera.position.clone().normalize();
-    this.navCube.update(camVector, lookVector);
+    // const lookVector = this.center.clone().sub(this.camera.position).normalize();
+    // const camVector = this.camera.position.clone().normalize();
+    this.navCube.update();
   }
 
   applyStyles(styles: IVisualizerStyles): void {
@@ -234,11 +235,15 @@ class GWizCanvas {
       return;
     }
 
-    this.log.debug('resize', width, height, xDiff, yDiff, this._lastWidth, this._lastHeight);
+    const dpi = window.devicePixelRatio;
+    const scale = 1 / dpi;
+    this.log.debug('resize', width, height, xDiff, yDiff, this._lastWidth, this._lastHeight, 'ratio', dpi);
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(width, height, false);
+    this.scene.scale.set(scale, scale, scale);
+    this.navCube.scene.scale.set(scale, scale, scale);
     this._lastWidth = width;
     this._lastHeight = height;
 

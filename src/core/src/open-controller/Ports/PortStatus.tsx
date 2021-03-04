@@ -21,12 +21,12 @@ const PortStatus: FunctionComponent<Props> = (props) => {
   const st = port ? port.state : PortState.Unplugged;
 
   const color = getPortColor(port);
-  log.verbose('port', portName, 'status', st);
+  log.debug('port', portName, 'status', st);
 
   return (
     <React.Fragment >
       {showType && port && port.connection && <Typography variant="subtitle1">
-        [{port.connection.machine.configuration.firmware.protocol}]
+        [{port.connection.machine.configuration.firmware.protocol.detectedValue}]
       </Typography>}
       {showName && port && port.portName && <Typography variant="subtitle2">
         {port.portName}

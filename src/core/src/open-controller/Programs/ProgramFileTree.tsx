@@ -48,7 +48,7 @@ const ProgramFileTree: FunctionComponent<Props> = (props) => {
     onSelected(meta, revId);
   }
 
-  function onSelectedNodes(event: React.SyntheticEvent, nodeIds: string[]) {
+  function onSelectedNodes(_: React.SyntheticEvent, nodeIds: string[]) {
     // Bug in material UI?
     if (typeof nodeIds === 'string') nodeIds = [nodeIds];
     const parts = nodeIds.length === 1 ? nodeIds[0].split(splitter) : [];

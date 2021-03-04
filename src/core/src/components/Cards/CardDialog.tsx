@@ -1,4 +1,4 @@
-import {Dialog, DialogActions, DialogContent, DialogTitle, Toolbar} from '@material-ui/core';
+import {Dialog, DialogActions, DialogContent, DialogTitle} from '@material-ui/core';
 import * as React from 'react';
 import useStyles from './styles';
 import {useLogger} from '../../hooks';

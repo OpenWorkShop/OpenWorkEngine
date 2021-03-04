@@ -15,8 +15,8 @@ import CreateMachineProfile from './CreateMachineProfile';
 import MachineAxesEditor from './MachineAxesEditor';
 import MachineProfileSearchBar from './MachineProfileSearchBar';
 import {Button, CircularProgress, Grid, Paper, Typography, useTheme} from '@material-ui/core';
-import {useOwsTrans} from '../../hooks';
 import HelpfulHeader from '../../components/Text/HelpfulHeader';
+import {useTrans} from '../Context';
 
 interface ICustomizeMachineProps {
   onCustomized: (machine?: ICustomizedMachine) => void;
@@ -25,7 +25,7 @@ interface ICustomizeMachineProps {
 
 const CustomizeMachine: React.FunctionComponent<ICustomizeMachineProps> = (props) => {
   const log = useLogger(CustomizeMachine);
-  const t = useOwsTrans();
+  const t = useTrans();
   const theme = useTheme();
   const [machineProfile, setMachineProfile] = React.useState<MachineSearchResultFragment | undefined>(undefined);
   const [getCompleteMachineProfile, { loading, error, data }] = useGetCompleteMachineProfileLazyQuery(owsClientOpts);

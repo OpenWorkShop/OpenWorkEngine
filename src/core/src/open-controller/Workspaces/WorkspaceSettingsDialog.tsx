@@ -66,7 +66,7 @@ const WorkspaceSettingsDialog: React.FunctionComponent<Props> = (props) => {
             {title}
           </Toolbar>
         </DialogTitle>
-        <TabList onChange={(e, val) => setSelectedTab(val)}>
+        <TabList onChange={(_, val) => setSelectedTab(val)}>
           {tabs.map((tab) => {
             return <Tab key={tab.key} className={classes.settingsTab} value={tab.key} label={tab.title} />;
           })}

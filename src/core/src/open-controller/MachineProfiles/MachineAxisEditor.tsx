@@ -4,9 +4,9 @@ import AlertList from '../../components/Alerts/AlertList';
 import HoverHelpStep from '../../components/Alerts/HoverHelpStep';
 import NumericInput from '../../components/Forms/NumericInput';
 import {IAlertMessage} from '../../components';
-import {useOwsTrans} from '../../hooks';
 import {IAxisProps} from '../Machines';
 import useStyles from './styles';
+import {useTrans} from '../Context';
 
 interface IMachineAxisEditorProps {
   axis: IAxisProps;
@@ -16,7 +16,7 @@ interface IMachineAxisEditorProps {
 type AxisKey = 'min' | 'max' | 'precision' | 'accuracy';
 
 const MachineAxisEditor: React.FunctionComponent<IMachineAxisEditorProps> = (props) => {
-  const t = useOwsTrans();
+  const t = useTrans();
   const classes = useStyles();
   const axis = props.axis;
   const axisName = axis.name.toLowerCase();

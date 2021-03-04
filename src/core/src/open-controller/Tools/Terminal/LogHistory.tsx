@@ -17,6 +17,7 @@ const LogHistory: FunctionComponent<Props> = (props) => {
   const logsEndRef = React.useRef<HTMLDivElement>(null);
 
   function scrollToBottom() {
+    log.debug('scroll to bottom');
     logsEndRef.current?.scrollIntoView(shouldAnimate ? { behavior: 'smooth' } : {});
   }
 

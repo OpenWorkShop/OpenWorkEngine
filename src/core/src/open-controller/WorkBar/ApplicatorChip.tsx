@@ -1,7 +1,6 @@
 import React, {FunctionComponent} from 'react';
-import {IHaveWorkspace, useWorkspaceControllerSelector, useWorkspaceSelector, useWorkspaceUnits} from '../Workspaces';
+import {IHaveWorkspace, useWorkspaceControllerSelector} from '../Workspaces';
 import PopoverWorkBarChip from './PopoverWorkBarChip';
-import {useOwsTrans} from '../../hooks';
 import {Button, Grid} from '@material-ui/core';
 import HelpfulHeader from '../../components/Text/HelpfulHeader';
 import useStyles from './styles';
@@ -9,15 +8,14 @@ import {faFan, faMicrochip} from '@fortawesome/free-solid-svg-icons';
 import FirmwareSettingsDialog from '../Tools/Machine/FirmwareSettingsDialog';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import MachineModalList from '../Controllers/MachineModalList';
+import {useTrans} from '../Context';
 
 type Props = IHaveWorkspace;
 
 const ApplicatorChip: FunctionComponent<Props> = (props) => {
-  const t = useOwsTrans();
+  const t = useTrans();
   const classes = useStyles();
   const { workspaceId } = props;
-  const units = useWorkspaceUnits(workspaceId);
-  const workspaceState = useWorkspaceSelector(workspaceId, ws => ws.state);
   const settings = useWorkspaceControllerSelector(workspaceId, c => c.machine.settings);
   const modals = useWorkspaceControllerSelector(workspaceId, c => c.machine.configuration.modals);
   const [dialogOpen, setDialogOpen] = React.useState(false);
