@@ -52,7 +52,7 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
               color="primary"
               onClick={() => setSettingsOpen(true)}
             >
-              <FontAwesomeIcon icon={faExclamationCircle} className={classes.error} />
+              <FontAwesomeIcon icon={faCogs} className={classes.error} />
             </Button>
           </Tooltip>
         )}
@@ -87,6 +87,7 @@ const WorkBar: React.FunctionComponent<Props> = (props) => {
         firmware={firmware}
         open={settingsOpen}
         onClose={() => setSettingsOpen(false)}
+        isUnplugged={isUnplugged}
       />
     </div>
   );

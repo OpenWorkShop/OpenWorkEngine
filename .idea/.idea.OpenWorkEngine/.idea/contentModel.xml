@@ -675,6 +675,11 @@
         <e p="docker-compose.yml" t="Include" />
         <e p="Dockerfile" t="Include" />
         <e p="EfcDataSet.cs" t="Include" />
+        <e p="electron.manifest.json" t="Include" />
+        <e p="GCode" t="Include">
+          <e p=".edges.nc.json" t="Include" />
+          <e p="edges.nc" t="Include" />
+        </e>
         <e p="Lib" t="Include">
           <e p="Api" t="Include">
             <e p="ApiControllerBase.cs" t="Include" />

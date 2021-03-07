@@ -33,7 +33,7 @@ const BackendDisconnectedModal: React.FunctionComponent = () => {
       open={!isConnected}
       title={t('Disconnected')}
     >
-      <div style={{ textAlign: 'center' }}>
+      <div style={{ textAlign: 'center', padding: 10 }}>
         <CircularProgress />
         <Typography variant="h6">{t('Trying to Reconnect...')}</Typography>
       </div>

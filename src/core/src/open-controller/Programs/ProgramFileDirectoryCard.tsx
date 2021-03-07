@@ -17,6 +17,7 @@ import programsSlice from './slice';
 import {ProgramFileHandler} from './types';
 
 type Props = {
+  title?: string;
   open?: boolean;
   onClose?: () => void;
   onSelected: ProgramFileHandler;
@@ -24,7 +25,7 @@ type Props = {
 
 const ProgramFileDirectoryCard: FunctionComponent<Props> = (props) => {
   const t = useTrans();
-  const {  onSelected } = props;
+  const { title, onSelected } = props;
   const dispatch = useDispatch();
   const classes = useStyles();
   const loadDirectory = useProgramDirectoryQuery();
@@ -93,7 +94,7 @@ const ProgramFileDirectoryCard: FunctionComponent<Props> = (props) => {
 
   return (
     <CardWidget
-      title={t('Gcode Programs')}
+      title={title}
       footer={footer}
     >
       <AlertList error={error} />

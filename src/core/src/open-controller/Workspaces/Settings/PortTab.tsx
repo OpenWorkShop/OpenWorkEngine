@@ -42,7 +42,7 @@ const PortTab: FunctionComponent<Props> = (props) => {
     setError(undefined);
     try {
       const vars = { workspaceId, portName: changeToPortName };
-      closeDialog();
+      closeConfirmationDialog();
       await changeWorkspacePort({ variables: vars });
       log.debug('[PORT] changed.');
     } catch (e) {
@@ -50,7 +50,7 @@ const PortTab: FunctionComponent<Props> = (props) => {
     }
   }
 
-  function closeDialog() {
+  function closeConfirmationDialog() {
     setChangeToPortName('');
   }
 
@@ -80,7 +80,7 @@ const PortTab: FunctionComponent<Props> = (props) => {
     </Grid>
     <Dialog
       open={!!changeToPort}
-      onClose={closeDialog}
+      onClose={closeConfirmationDialog}
     >
       <DialogTitle >
         {t('Are you Sure?')}
@@ -92,7 +92,7 @@ const PortTab: FunctionComponent<Props> = (props) => {
         </DialogContentText>
       </DialogContent>
       {!changedWorkspace.loading && <DialogActions>
-        <Button onClick={closeDialog}>{t('No')}</Button>
+        <Button onClick={closeConfirmationDialog}>{t('No')}</Button>
         <Button onClick={changePort} autoFocus>{t('Yes')}</Button>
       </DialogActions>}
     </Dialog>

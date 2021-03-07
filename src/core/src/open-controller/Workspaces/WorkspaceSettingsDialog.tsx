@@ -14,6 +14,7 @@ import {DetectedFirmwareFragment} from '../graphql';
 
 type Props = IHaveWorkspace & IMaybeHavePortStatus & {
   firmware?: DetectedFirmwareFragment;
+  isUnplugged: boolean;
   open: boolean;
   onClose: () => void;
 };
@@ -21,11 +22,13 @@ type Props = IHaveWorkspace & IMaybeHavePortStatus & {
 const WorkspaceSettingsDialog: React.FunctionComponent<Props> = (props) => {
   const t = useTrans();
   const log = useLogger(WorkspaceSettingsDialog);
-  const { open, onClose, workspaceId, port, firmware } = props;
+  const { open, onClose, workspaceId, port, firmware, isUnplugged } = props;
   const classes = useStyles();
   const scroll = 'paper';
   const title = t('Settings');
-  const [selectedTab, setSelectedTab] = React.useState(firmware ? 'workspace' : 'port');
+  const [selectedTab, setSelectedTab] =
+    // No React.Effect used here because we don't want to change tabs while connecting...
+    React.useState(isUnplugged ? 'port' : 'workspace');
 
   const tabs: ITabDefinition[] = [
     {

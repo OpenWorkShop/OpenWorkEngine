@@ -134,7 +134,10 @@ class GWizCanvas {
   }
 
   updatePosition(pos: MachinePositionFragment): void {
-    this.applicator.position.copy(new THREE.Vector3(pos.x, pos.y, pos.z));
+    const v = new THREE.Vector3(pos.x, pos.y, pos.z);
+    if (this.applicator.position.distanceTo(v) <= Number.EPSILON) return;
+    this.applicator.position.copy(v);
+    this.requestRender();
   }
 
   getBoundingBox(obj?: THREE.Object3D): THREE.Box3 {
@@ -243,7 +246,6 @@ class GWizCanvas {
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(width, height, false);
     this.scene.scale.set(scale, scale, scale);
-    this.navCube.scene.scale.set(scale, scale, scale);
     this._lastWidth = width;
     this._lastHeight = height;
 

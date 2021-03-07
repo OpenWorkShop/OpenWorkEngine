@@ -97,8 +97,8 @@ const GWiz: FunctionComponent<Props> = (props) => {
 
       // Remove the (absolute) position from the screen size to get the remaining size.
       const boundingRect = parent.getBoundingClientRect();
-      const w = width - boundingRect.left;
-      const h = height - boundingRect.top;
+      const w = (width - boundingRect.left) / window.devicePixelRatio;
+      const h = (height - boundingRect.top) / window.devicePixelRatio;
 
       canvas.resize(w, h);
     } else {

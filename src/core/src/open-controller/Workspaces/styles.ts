@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingTop: theme.spacing(2),
     marginTop: 80,
   },
+  floatingCard: {
+    margin: theme.spacing(4),
+  },
   topBar: {
     ...borderBottomCss,
     backgroundColor: theme.palette.background.paper,

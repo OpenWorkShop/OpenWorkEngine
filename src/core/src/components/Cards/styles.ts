@@ -16,14 +16,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: 0,
   },
   root: {
-    margin: theme.spacing(4),
     minWidth: 300,
   },
   content: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(1),
-    paddingRight: theme.spacing(4),
-    paddingLeft: theme.spacing(4),
+    padding: 0,
   },
   centered: {
     textAlign: 'center',

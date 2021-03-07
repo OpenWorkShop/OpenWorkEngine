@@ -92,8 +92,9 @@ class NavCube {
     }
     const canvasHeight = div.clientHeight;
     const canvasWidth = div.clientWidth;
-    this.renderer.setPixelRatio(window.devicePixelRatio);
-    this.renderer.setSize(canvasWidth, canvasHeight, false);
+    const dpi = window.devicePixelRatio;
+    this.renderer.setPixelRatio(dpi);
+    this.renderer.setSize(canvasWidth / dpi, canvasHeight / dpi, false);
     // const ratio = canvasWidth / canvasHeight;
     // div.appendChild(this.renderer.domElement);
 
@@ -375,9 +376,10 @@ class NavCube {
     if (this._cubeMesh) {
       const size = new THREE.Vector2();
       this.renderer.getSize(size);
+      const mult = window.devicePixelRatio / 2;
       const xy = {
-        x: +(event.offsetX / size.width) * 2 - 1,
-        y: -(event.offsetY / size.height) * 2 + 1,
+        x: +(event.offsetX / size.width) * mult - 1,
+        y: -(event.offsetY / size.height) * mult + 1,
       };
       const ray = new THREE.Raycaster();
       ray.setFromCamera(xy, this.localCamera);
